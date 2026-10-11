@@ -4,6 +4,32 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { BenchTop, TestTube, shade } from './kit';
+
+/** Rama de elodea: tallo con verticilos de tres hojas; el extremo cortado (arriba) libera las burbujas. */
+const ELODEA = (() => {
+  const stem = 'M536 244 C531 222 541 204 535 184 C530 166 540 150 536 132';
+  const whorls = Array.from({ length: 9 }, (_, i) => {
+    const t = i / 8;
+    const y = 238 - t * 100, x = 536 + Math.sin(t * 7) * 3;
+    const len = 15 - t * 4;
+    return [-48, 6, 58].map((a, k) => {
+      const ang = a + (i % 2 ? 14 : -10);
+      return (
+        <path key={`${i}-${k}`} d={`M0 0 Q${len * 0.5} ${-3.2} ${len} 0 Q${len * 0.5} 3.2 0 0 Z`} fill="url(#ph-leaf)" stroke="#256b29" strokeWidth="0.5"
+          transform={`translate(${x} ${y}) rotate(${k === 1 ? ang + 180 : ang - 90 + (k === 0 ? -20 : 20)})`} />
+      );
+    });
+  });
+  return (
+    <g>
+      <path d={stem} stroke="#2e7d32" strokeWidth="3" fill="none" strokeLinecap="round" />
+      {whorls}
+      <ellipse cx="536" cy="131" rx="2.6" ry="1.4" fill="#cfe8b0" stroke="#2e7d32" strokeWidth="0.8" />
+      <path d="M530 244 h12 v6 h-12 z" fill="url(#kit-metal)" stroke="#6f7a7c" strokeWidth="0.6" />
+    </g>
+  );
+})();
 
 export default function PhotoLab({ api }: LabProps) {
   const [distance, setDistance] = useState(20);
@@ -26,10 +52,11 @@ export default function PhotoLab({ api }: LabProps) {
   }, [res.bubblesPerMin]);
 
   const lampColor = LIGHT_COLORS.find((c) => c.id === color)!.color;
+  const waterColor = bicarbonate > 0 ? '#9fd3e6' : '#bfe3f0';
   const lampX = 470 - (distance / 100) * 330; // riel: 5 cm cerca del tubo, 100 cm lejos
   const bubbles = Array.from({ length: 6 }, (_, i) => {
     const prog = (phase + i / 6) % 1;
-    return res.bubblesPerMin > 0 ? { y: 200 - prog * 150, r: 3 + (i % 3) } : null;
+    return res.bubblesPerMin > 0 ? { y: 128 - prog * 64, r: 2 + (i % 3) * 0.8 } : null;
   }).filter(Boolean) as { y: number; r: number }[];
 
   const record = () => api.addTrial('ensayos', {
@@ -46,23 +73,50 @@ export default function PhotoLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
-          <svg viewBox="0 0 640 260" role="img" aria-labelledby="ph-t ph-d">
+          <svg viewBox="0 0 640 300" role="img" aria-labelledby="ph-t ph-d">
             <title id="ph-t">Planta acuática Elodea iluminada por una lámpara sobre un riel</title>
             <desc id="ph-d">{`Lámpara ${lampOn ? `encendida, luz ${color}, a ${distance} cm` : 'apagada'}. ${fmt(res.bubblesPerMin, 1)} burbujas por minuto.`}</desc>
-            <line x1="120" x2="480" y1="230" y2="230" stroke="var(--ink-2)" strokeWidth="3" />
+            <defs>
+              <linearGradient id="ph-beam" x1="0" x2="1">
+                <stop offset="0" stopColor={lampColor} stopOpacity="0.95" /><stop offset="1" stopColor={lampColor} stopOpacity="0.15" />
+              </linearGradient>
+              <radialGradient id="ph-bulb" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stopColor="#fff" /><stop offset="0.45" stopColor={lampColor} /><stop offset="1" stopColor={shade(lampColor, -0.35)} />
+              </radialGradient>
+              <linearGradient id="ph-leaf" x1="0" x2="1">
+                <stop offset="0" stopColor="#7cc36a" /><stop offset="1" stopColor="#2f7d32" />
+              </linearGradient>
+            </defs>
+            <BenchTop y={274} width={640} />
+            {/* haz de luz */}
+            {lampOn && <path d={`M${lampX + 20} 112 L512 52 L512 236 L${lampX + 20} 156 Z`} fill="url(#ph-beam)" opacity={Math.min(0.45, 0.06 + res.irradiance / 3000)} />}
+            {/* riel óptico graduado */}
+            <rect x="104" y="250" width="392" height="18" rx="3" fill="url(#kit-metal)" stroke="#8d989c" filter="url(#kit-shadow-soft)" />
+            <rect x="112" y="268" width="10" height="6" fill="#6f7a7c" /><rect x="478" y="268" width="10" height="6" fill="#6f7a7c" />
             {[5, 20, 40, 60, 80, 100].map((d) => (
-              <g key={d}><line x1={470 - (d / 100) * 330} x2={470 - (d / 100) * 330} y1="224" y2="236" stroke="var(--ink-2)" /><text x={470 - (d / 100) * 330} y="252" textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>{d} cm</text></g>
+              <g key={d}><line x1={470 - (d / 100) * 330} x2={470 - (d / 100) * 330} y1="250" y2="257" stroke="#33403f" /><text x={470 - (d / 100) * 330} y="265.5" textAnchor="middle" style={{ fontSize: 8.5, fill: '#24302f', fontFamily: 'var(--font-data)' }}>{d} cm</text></g>
             ))}
-            {lampOn && <path d={`M${lampX + 22} 120 L520 60 L520 210 Z`} fill={lampColor} opacity={Math.min(0.45, 0.06 + res.irradiance / 3000)} />}
-            <g transform={`translate(${lampX} 95)`}>
-              <rect x="-18" y="0" width="40" height="50" rx="8" fill={lampOn ? lampColor : 'var(--surface-2)'} stroke="var(--ink-2)" />
-              <line x1="2" x2="2" y1="50" y2="135" stroke="var(--ink-2)" strokeWidth="3" />
+            {/* lámpara sobre su carro */}
+            <g transform={`translate(${lampX} 0)`}>
+              <rect x="-16" y="238" width="36" height="13" rx="3" fill="url(#kit-body-dark)" />
+              <rect x="-1" y="146" width="6" height="94" fill="url(#kit-metal-h)" />
+              <circle cx="2" cy="148" r="4.5" fill="url(#kit-metal)" stroke="#6f7a7c" />
+              <path d="M-22 116 L6 110 L20 104 L20 164 L6 158 L-22 152 Z" fill="url(#kit-body-dark)" filter="url(#kit-shadow-soft)" />
+              <path d="M-20 119 L4 114" stroke="#fff" strokeOpacity="0.18" strokeWidth="2" />
+              <ellipse cx="20" cy="134" rx="6" ry="30" fill={lampOn ? 'url(#ph-bulb)' : '#4a5456'} stroke="#1c2325" strokeWidth="1.5" />
+              {lampOn && <ellipse cx="22" cy="134" rx="4" ry="22" fill="#fff" opacity="0.35" />}
             </g>
-            <rect x="500" y="40" width="70" height="180" rx="10" fill={`rgba(120,180,220,${0.15 + Math.min(0.3, bicarbonate * 0.05)})`} stroke="var(--ink-2)" strokeWidth="2" />
-            <path d="M535 215 C530 180 545 160 532 130 C524 110 540 95 535 70" stroke="#2e7d32" strokeWidth="5" fill="none" />
-            {[90, 115, 140, 165, 190].map((y, i) => <ellipse key={y} cx={535 + (i % 2 ? 10 : -10)} cy={y} rx="9" ry="4" fill="#4caf50" transform={`rotate(${i % 2 ? 30 : -30} ${535 + (i % 2 ? 10 : -10)} ${y})`} />)}
-            {bubbles.map((b, i) => <circle key={i} cx={536 + (i % 2 ? 3 : -3)} cy={b.y - 20} r={b.r} fill="rgba(255,255,255,0.8)" stroke="var(--fis)" />)}
-            <text x="535" y="32" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{temperature} °C</text>
+            {/* soporte universal con pinza */}
+            <rect x="572" y="264" width="58" height="10" rx="2" fill="url(#kit-body-dark)" />
+            <rect x="597" y="26" width="7" height="240" fill="url(#kit-metal-h)" />
+            <rect x="560" y="78" width="44" height="7" rx="2" fill="url(#kit-metal)" stroke="#8d989c" />
+            {/* tubo con agua, bicarbonato y elodea */}
+            <TestTube x={506} y={40} w={58} h={212} fill={0.9} liquid={waterColor} liquidOpacity={0.4 + Math.min(0.2, bicarbonate * 0.04)}>
+              {ELODEA}
+              {bubbles.map((b, i) => <circle key={i} cx={536 + (i % 2 ? 3 : -3)} cy={b.y} r={b.r} fill="#fff" fillOpacity="0.75" stroke="#2a6f9e" strokeWidth="1" />)}
+            </TestTube>
+            <rect x="500" y="76" width="70" height="10" rx="3" fill="url(#kit-body-dark)" />
+            <text x="535" y="30" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{temperature} °C</text>
           </svg>
         </div>
         <Readout items={[

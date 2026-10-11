@@ -418,7 +418,7 @@ test('equilibrio: agregar Fe³⁺ da Q < K y aumenta la absorbancia de 0,427 a 0
   await save(page).click();
   expect(await tableRows(page)).toBe(1);
   await page.getByRole('button', { name: 'Agregar 1 gota de Fe³⁺' }).click();
-  await expect(page.getByText('Q < K: se desplaza hacia los productos.')).toBeVisible();
+  await expect(page.locator('.notice').getByText(/Q < K: se desplaza hacia los productos/)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Medir absorbancia' })).toBeEnabled({ timeout: 8000 });
   await page.getByRole('button', { name: 'Medir absorbancia' }).click();
   await expect(page.locator('.readout').getByText('0,781')).toBeVisible();

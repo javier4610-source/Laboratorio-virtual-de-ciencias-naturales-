@@ -270,7 +270,7 @@ function FePart({ api }: LabProps) {
           </svg>
         </div>
         <Notice kind={direction === 'ninguno' ? 'info' : 'warn'}>
-          <strong>{resp ? `Justo después de «${perturbLabel.toLowerCase()}»: ` : 'Estado inicial: '}</strong>
+          <strong>{resp ? `Justo después de «${lowerFirst(perturbLabel)}»: ` : 'Estado inicial: '}</strong>
           Q = {qText(qImm)} · K = {fmtSig(eq.K, 3)}. {resp ? compareText(resp.qImmediate, resp.K) : 'Q = K: el sistema está en equilibrio.'}
           {resp && !settled ? ' El sistema está respondiendo…' : ''}
         </Notice>
@@ -412,7 +412,7 @@ function No2Part({ api }: LabProps) {
           </svg>
         </div>
         <Notice kind={direction === 'ninguno' ? 'info' : 'warn'}>
-          <strong>{resp ? `Justo después de «${last.toLowerCase()}»: ` : 'Estado inicial: '}</strong>
+          <strong>{resp ? `Justo después de «${lowerFirst(last)}»: ` : 'Estado inicial: '}</strong>
           Q = {qText(qImm)} bar⁻¹ · K = {fmtSig(eq.K, 3)} bar⁻¹. {resp ? compareText(resp.qImmediate, resp.K) : 'Q = K: el sistema está en equilibrio.'}
           {resp && !settled ? ' El sistema está respondiendo…' : ''}
         </Notice>
@@ -447,6 +447,9 @@ function No2Part({ api }: LabProps) {
     </div>
   );
 }
+
+/** Minúscula solo en la primera letra: conserva los símbolos químicos (Fe³⁺, SCN⁻, Ag⁺). */
+const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 
 export default function EquilibriumLab(props: LabProps) {
   const [sys, setSys] = useState<'A' | 'B'>('A');

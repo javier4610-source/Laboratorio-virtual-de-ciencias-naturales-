@@ -22,19 +22,95 @@ function pigment(z: number): string {
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
+/** Escarabajo visto desde arriba: patas articuladas, pronoto, élitros con sutura y brillo. */
 function Beetle({ x, y, angle, z }: { x: number; y: number; angle: number; z: number }) {
   const fill = pigment(z);
+  const edge = z > 0.6 ? 'rgba(255,255,255,0.22)' : 'rgba(0,0,0,0.35)';
+  const leg = pigment(Math.min(1, z + 0.18));
   return (
     <g transform={`translate(${x} ${y}) rotate(${angle})`}>
-      {[-6, 0, 6].map((dy) => (
-        <g key={dy}>
-          <line x1={-5} y1={dy} x2={-12} y2={dy + (dy === 0 ? 0 : dy > 0 ? 3 : -3)} stroke={fill} strokeWidth="1.6" />
-          <line x1={5} y1={dy} x2={12} y2={dy + (dy === 0 ? 0 : dy > 0 ? 3 : -3)} stroke={fill} strokeWidth="1.6" />
+      {[-5, 1, 7].map((dy, k) => (
+        <g key={dy} stroke={leg} strokeWidth="1.3" fill="none" strokeLinecap="round" strokeLinejoin="round">
+          <path d={`M-5 ${dy} L-10 ${dy + (k - 1) * 3 - 1} L-13 ${dy + (k - 1) * 5 + 1}`} />
+          <path d={`M5 ${dy} L10 ${dy + (k - 1) * 3 - 1} L13 ${dy + (k - 1) * 5 + 1}`} />
         </g>
       ))}
-      <ellipse cx="0" cy="2" rx="7" ry="10" fill={fill} stroke="rgba(0,0,0,0.18)" strokeWidth="0.8" />
-      <circle cx="0" cy="-10" r="4" fill={fill} stroke="rgba(0,0,0,0.18)" strokeWidth="0.8" />
-      <line x1="0" y1="-7" x2="0" y2="12" stroke="rgba(0,0,0,0.15)" strokeWidth="0.8" />
+      <path d="M-1.5 -12.5 Q -4 -17 -6.5 -18.5 M1.5 -12.5 Q 4 -17 6.5 -18.5" stroke={leg} strokeWidth="0.9" fill="none" strokeLinecap="round" />
+      <ellipse cx="0.6" cy="3.6" rx="7.6" ry="10.4" fill="rgba(0,0,0,0.22)" />
+      <path d="M-7 -1 Q -7.6 11 0 13 Q 7.6 11 7 -1 Q 6.6 -4 0 -4 Q -6.6 -4 -7 -1 Z" fill={fill} stroke={edge} strokeWidth="0.8" />
+      <path d="M-5.6 -6.5 Q -6 -3 -5 -3.6 L5 -3.6 Q 6 -3 5.6 -6.5 Q 4.6 -9.2 0 -9.2 Q -4.6 -9.2 -5.6 -6.5 Z" fill={fill} stroke={edge} strokeWidth="0.8" />
+      <ellipse cx="0" cy="-11" rx="3" ry="2.3" fill={fill} stroke={edge} strokeWidth="0.7" />
+      <path d="M0 -3.6 V 12.8" stroke={edge} strokeWidth="0.8" />
+      <path d="M-5.4 0 Q -5.8 6 -3 10" stroke="url(#sel-gloss)" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+      <ellipse cx="-2.2" cy="-7" rx="1.8" ry="0.9" fill="#fff" opacity="0.28" />
+    </g>
+  );
+}
+
+/** Textura del fondo según el ambiente, con trazos claros/oscuros relativos al color base. */
+function Ground({ kind, W, H, dark }: { kind: string; W: number; H: number; dark: boolean }) {
+  const hi = dark ? 'rgba(255,255,255,0.09)' : 'rgba(255,255,255,0.35)';
+  const lo = dark ? 'rgba(0,0,0,0.35)' : 'rgba(60,40,20,0.12)';
+  const marks = useMemo(() => {
+    const frac = (v: number) => v - Math.floor(v);
+    return Array.from({ length: 70 }, (_, i) => ({
+      x: frac(Math.sin(i * 12.99 + 4.1) * 43758.5) * W,
+      y: frac(Math.sin(i * 78.23 + 1.3) * 24634.6) * H,
+      r: 1 + frac(Math.sin(i * 3.7) * 9631.3) * 5,
+      a: frac(Math.sin(i * 5.1) * 7351.7) * 180,
+    }));
+  }, [W, H]);
+  if (kind === 'hojarasca') {
+    return (
+      <g aria-hidden="true">
+        {marks.slice(0, 38).map((m, i) => (
+          <g key={i} transform={`translate(${m.x} ${m.y}) rotate(${m.a}) scale(${0.8 + m.r / 5})`}>
+            <path d="M-12 0 Q -4 -7 12 0 Q -4 7 -12 0 Z" fill={i % 2 ? hi : lo} />
+            <path d="M-11 0 H 11" stroke={i % 2 ? lo : hi} strokeWidth="0.7" />
+          </g>
+        ))}
+      </g>
+    );
+  }
+  if (kind === 'volcanico') {
+    return (
+      <g aria-hidden="true">
+        {marks.map((m, i) => (
+          <ellipse key={i} cx={m.x} cy={m.y} rx={m.r} ry={m.r * 0.7} transform={`rotate(${m.a} ${m.x} ${m.y})`} fill={i % 3 ? lo : hi} />
+        ))}
+      </g>
+    );
+  }
+  // corteza (clara o con hollín): grietas verticales onduladas y placas
+  return (
+    <g aria-hidden="true">
+      {Array.from({ length: 16 }, (_, i) => {
+        const x0 = 14 + i * 33;
+        return (
+          <path key={i} d={`M${x0} 0 C ${x0 + (i % 2 ? 10 : -10)} ${H * 0.3} ${x0 + (i % 2 ? -8 : 8)} ${H * 0.6} ${x0 + (i % 3) * 3} ${H}`} fill="none" stroke={lo} strokeWidth={2 + (i % 3)} strokeLinecap="round" />
+        );
+      })}
+      {Array.from({ length: 16 }, (_, i) => (
+        <path key={`h${i}`} d={`M${18 + i * 33} 0 C ${26 + i * 33} ${H * 0.35} ${12 + i * 33} ${H * 0.65} ${22 + i * 33} ${H}`} fill="none" stroke={hi} strokeWidth="1.2" />
+      ))}
+    </g>
+  );
+}
+
+/** Ave insectívora posada en el borde (representa a los depredadores). */
+function Bird({ x, y }: { x: number; y: number }) {
+  return (
+    <g transform={`translate(${x} ${y})`} aria-hidden="true">
+      <path d="M-26 22 H 26" stroke="#5b4636" strokeWidth="4" strokeLinecap="round" />
+      <path d="M8 6 L 24 18 L 18 20 Z" fill="#3b3f46" />
+      <ellipse cx="0" cy="6" rx="12" ry="9" fill="#5d6670" />
+      <ellipse cx="-2" cy="9" rx="7" ry="5.5" fill="#e9d9b8" />
+      <path d="M2 2 Q 14 0 16 10 Q 8 9 2 2 Z" fill="#454c55" />
+      <circle cx="-9" cy="-4" r="6.5" fill="#5d6670" />
+      <circle cx="-11" cy="-5.5" r="1.6" fill="#fff" />
+      <circle cx="-11.3" cy="-5.5" r="0.9" fill="#111" />
+      <path d="M-15 -4 L -22 -2.5 L -15 -1 Z" fill="#e0a42b" />
+      <path d="M-3 14 V 21 M2 14 V 21" stroke="#c38b2c" strokeWidth="1.4" />
     </g>
   );
 }
@@ -116,16 +192,25 @@ export default function SelectionLab({ api }: LabProps) {
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="sel-t sel-d">
             <title id="sel-t">Muestra de 40 escarabajos sobre el fondo donde viven</title>
             <desc id="sel-d">{`Fondo: ${background.short.toLowerCase()}, de color ${fmt(shownB, 2)} en una escala de 0 (claro) a 1 (oscuro). Generación ${gens}. ${measured ? `Los escarabajos tienen color medio ${fmt(sim.finalMeanReading, 3)}.` : `Los escarabajos empiezan con color medio ${fmt(INITIAL_MEAN, 2)}: más claros que el fondo cuando este es oscuro.`}`}</desc>
+            <defs>
+              <linearGradient id="sel-gloss" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stopColor="#ffffff" stopOpacity="0.45" />
+                <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+              </linearGradient>
+              <radialGradient id="sel-vignette" cx="0.5" cy="0.5" r="0.75">
+                <stop offset="0.6" stopColor="#000" stopOpacity="0" />
+                <stop offset="1" stopColor="#000" stopOpacity="0.22" />
+              </radialGradient>
+            </defs>
             <rect x="0" y="0" width={W} height={H} fill={bgFill} />
-            {/* Textura de corteza o suelo, del mismo tono */}
-            {Array.from({ length: 14 }, (_, i) => (
-              <path key={i} d={`M${20 + i * 36} 0 q ${i % 2 ? 8 : -8} ${H / 2} 0 ${H}`} fill="none" stroke={darkBg ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.07)'} strokeWidth="3" />
-            ))}
+            <Ground kind={bg === 'hollin' ? 'corteza' : bg} W={W} H={H} dark={darkBg} />
+            <rect x="0" y="0" width={W} height={H} fill="url(#sel-vignette)" />
             {positions.map((p, i) => (
               <Beetle key={i} x={padX + p.x * (W - 2 * padX)} y={padY + p.y * (H - padY - 14)} angle={p.angle} z={sample[i]} />
             ))}
-            <rect x="8" y="6" width="300" height="22" rx="6" fill="var(--surface)" opacity="0.92" />
-            <text x="16" y="21" style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>{`${background.short} · B = ${fmt(shownB, 2)} · gen. ${anim && t < 1 ? Math.round(lerp(anim.from, anim.to, t)) : gens}`}</text>
+            <Bird x={W - 34} y={10} />
+            <rect x="8" y="6" width="300" height="24" rx="12" fill="var(--surface)" opacity="0.94" />
+            <text x="18" y="22" style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>{`${background.short} · B = ${fmt(shownB, 2)} · gen. ${anim && t < 1 ? Math.round(lerp(anim.from, anim.to, t)) : gens}`}</text>
           </svg>
         </div>
         <Readout items={[

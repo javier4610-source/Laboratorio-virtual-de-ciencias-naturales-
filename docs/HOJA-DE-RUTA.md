@@ -19,6 +19,17 @@ se construye, se verifica y se marca como hecho. El orden puede cambiarlo el doc
 
 ## Pendiente
 
+### Programa «docente conectado» (máxima prioridad, pedido por el docente)
+
+- [ ] **T1 · Seguimiento en tiempo real:** el estudiante se une a su curso con un código; su avance se sincroniza solo
+      (también sin conexión, con cola de envío). El docente ve ingresos, actividad reciente, avance por práctica y etapa,
+      puntajes por competencia, hipótesis, datos, ajustes, conclusiones y evolución en el tiempo; análisis de cada
+      pregunta (aciertos y opción errada más elegida) y alertas de estudiantes que necesitan apoyo; exportación a CSV.
+- [ ] **T2 · Publicación del servidor:** alojar el servidor en internet con copias de seguridad y HTTPS (requiere
+      la decisión del docente sobre el proveedor), política de privacidad y autorización de acudientes (Ley 1581).
+- [ ] **T3 · Retroalimentación del docente:** comentarios y calificación por práctica que el estudiante ve en su
+      laboratorio; asignación de prácticas con fecha y recordatorios.
+
 ### Programa «nivel universitario» (prioridad, pedido por el docente)
 
 - [x] **U1 · Motor de análisis de datos:** cursor con lectura de coordenadas, zoom, ajustes por mínimos cuadrados

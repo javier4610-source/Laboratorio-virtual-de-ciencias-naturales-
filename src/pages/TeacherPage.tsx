@@ -7,14 +7,15 @@ import { copyText, downloadText, toCSV, validateReport, type StudentReport } fro
 import { encodeAssignment, encodeList, uid, type Assignment, type PracticeList } from '../lib/codes';
 import { fmt, fmtDate } from '../lib/format';
 import { href } from '../lib/router';
-import { ConfirmButton, Notice, Select } from '../components/ui';
+import { ConfirmButton, Notice, Segmented, Select } from '../components/ui';
 import { ReportBody } from './ReportPage';
 import { progressPercent } from '../lib/progress';
+import { api, defaultServerUrl, loadTeacherSession, saveServerUrl, saveTeacherSession, type ServerCourse, type TeacherSession } from '../lib/api';
 
 const KEY = 'lvcn:docente';
 interface TeacherData { assignments: Assignment[]; lists: PracticeList[]; reports: StudentReport[]; }
 
-type Tab = 'catalogo' | 'asignaciones' | 'listas' | 'informes' | 'rubrica';
+type Tab = 'catalogo' | 'asignaciones' | 'listas' | 'informes' | 'servidor' | 'rubrica';
 
 function useTeacherData() {
   const [data, setData] = useState<TeacherData>(() => ({ assignments: [], lists: [], reports: [], ...loadJSON<Partial<TeacherData>>(KEY, {}) }));
@@ -73,11 +74,12 @@ function CatalogTab() {
 
 /* ------------------------------ Asignaciones ------------------------------ */
 function AssignmentsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
-  const [form, setForm] = useState({ course: '', practiceId: PRACTICES[0].id, objectives: '', activities: '', due: '' });
+  const [form, setForm] = useState({ course: '', practiceId: PRACTICES[0].id, objectives: '', activities: '', due: '', server: loadTeacherSession()?.server ?? '', joinCode: '' });
   const [shown, setShown] = useState<string | null>(null);
   const valid = form.course.trim().length > 0;
   const add = () => {
-    const a: Assignment = { id: uid(), ...form, createdAt: Date.now() };
+    const { server, joinCode, ...rest } = form;
+    const a: Assignment = { id: uid(), ...rest, createdAt: Date.now(), ...(server && joinCode.length === 6 ? { server, joinCode } : {}) };
     setData((d) => ({ ...d, assignments: [a, ...d.assignments] }));
     setShown(a.id);
     setForm({ ...form, objectives: '', activities: '' });
@@ -91,6 +93,14 @@ function AssignmentsTab({ data, setData }: { data: TeacherData; setData: (fn: (d
           <Select label="Práctica" value={form.practiceId} onChange={(v) => setForm({ ...form, practiceId: v })} options={PRACTICES.map((p) => ({ value: p.id, label: `${p.grade}.º · ${p.title}` }))} />
           <div className="field"><label htmlFor="as-due">Fecha de entrega</label><input id="as-due" type="text" placeholder="AAAA-MM-DD" value={form.due} onChange={(e) => setForm({ ...form, due: e.target.value })} /></div>
         </div>
+        <details>
+          <summary>Envío por servidor (opcional)</summary>
+          <div className="grid-2">
+            <div className="field"><label htmlFor="as-srv">Servidor del colegio</label><input id="as-srv" type="url" value={form.server} onChange={(e) => setForm({ ...form, server: e.target.value })} placeholder="https://…" /></div>
+            <div className="field"><label htmlFor="as-code">Código del curso en el servidor</label><input id="as-code" type="text" maxLength={6} value={form.joinCode} onChange={(e) => setForm({ ...form, joinCode: e.target.value.toUpperCase() })} /></div>
+          </div>
+          <p className="small muted">Si los completas, el estudiante podrá enviar su informe directamente desde «Ver informe».</p>
+        </details>
         <div className="field"><label htmlFor="as-obj">Objetivos para el grupo</label><textarea id="as-obj" value={form.objectives} onChange={(e) => setForm({ ...form, objectives: e.target.value })} /></div>
         <div className="field"><label htmlFor="as-act">Actividades complementarias</label><textarea id="as-act" value={form.activities} onChange={(e) => setForm({ ...form, activities: e.target.value })} /></div>
         <div className="btn-row"><button type="button" className="btn primary" disabled={!valid} onClick={add}>Crear asignación y generar código</button>{!valid && <span className="small muted">Escribe el curso.</span>}</div>
@@ -311,6 +321,109 @@ function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Te
   );
 }
 
+
+/* ------------------------------- Servidor -------------------------------- */
+function ServerTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+  const [session, setSession] = useState<TeacherSession | null>(() => loadTeacherSession());
+  const [server, setServer] = useState(() => session?.server ?? defaultServerUrl());
+  const [mode, setMode] = useState<'login' | 'registro'>('login');
+  const [form, setForm] = useState({ email: '', password: '', name: '', registrationCode: '' });
+  const [courses, setCourses] = useState<ServerCourse[] | null>(null);
+  const [newCourse, setNewCourse] = useState('');
+  const [msg, setMsg] = useState<{ kind: 'ok' | 'bad' | 'info'; text: string } | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  const run = async (fn: () => Promise<void>) => {
+    setBusy(true); setMsg(null);
+    try { await fn(); } catch (e) {
+      const err = e as Error & { status?: number };
+      if (err.status === 401 && session) { saveTeacherSession(null); setSession(null); }
+      setMsg({ kind: 'bad', text: err.message });
+    } finally { setBusy(false); }
+  };
+  const refresh = (s: TeacherSession) => run(async () => setCourses((await api.courses(s)).courses));
+  useEffect(() => { if (session) refresh(session); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const enter = (r: { token: string; teacher: TeacherSession['teacher'] }) => {
+    const s = { ...r, server: server.trim().replace(/\/+$/, '') };
+    saveTeacherSession(s); saveServerUrl(s.server); setSession(s); setForm({ ...form, password: '' });
+    refresh(s);
+  };
+
+  if (!session) {
+    return (
+      <div className="stack">
+        <Notice>El servidor es opcional y lo instala la institución (instrucciones en <code>server/README.md</code>). Permite que los estudiantes envíen sus informes con un código de curso, sin crear cuentas.</Notice>
+        <section className="card stack">
+          <div className="field"><label htmlFor="sv-url">Dirección del servidor</label><input id="sv-url" type="url" value={server} onChange={(e) => setServer(e.target.value)} placeholder="https://laboratorio.micolegio.edu.co" /></div>
+          <div className="btn-row"><button type="button" className="btn" disabled={busy || !server} onClick={() => run(async () => { await api.health(server); setMsg({ kind: 'ok', text: 'Conexión correcta con el servidor.' }); })}>Probar conexión</button></div>
+          <Segmented label="Cuenta docente" value={mode} onChange={setMode} options={[{ value: 'login', label: 'Iniciar sesión' }, { value: 'registro', label: 'Crear cuenta' }]} />
+          <form className="stack-sm" onSubmit={(e) => { e.preventDefault(); run(async () => enter(mode === 'login' ? await api.login(server, form.email, form.password) : await api.register(server, form))); }}>
+            {mode === 'registro' && (
+              <>
+                <div className="field"><label htmlFor="sv-name">Nombre</label><input id="sv-name" type="text" autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
+                <div className="field"><label htmlFor="sv-reg">Código de registro institucional</label><input id="sv-reg" type="text" value={form.registrationCode} onChange={(e) => setForm({ ...form, registrationCode: e.target.value })} /><span className="hint">Lo entrega el administrador del servidor del colegio.</span></div>
+              </>
+            )}
+            <div className="field"><label htmlFor="sv-email">Correo</label><input id="sv-email" type="text" inputMode="email" autoComplete="username" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
+            <div className="field"><label htmlFor="sv-pass">Contraseña</label><input id="sv-pass" type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} style={{ font: 'inherit', minHeight: 42, padding: '8px 10px', border: '1px solid var(--line)', borderRadius: 8, background: 'var(--surface)', color: 'var(--ink)' }} />{mode === 'registro' && <span className="hint">Mínimo 10 caracteres.</span>}</div>
+            <div className="btn-row"><button type="submit" className="btn primary" disabled={busy || !server}>{mode === 'login' ? 'Entrar' : 'Crear cuenta'}</button></div>
+          </form>
+          {msg && <p className={`notice ${msg.kind}`} role="status">{msg.text}</p>}
+        </section>
+      </div>
+    );
+  }
+
+  return (
+    <div className="stack">
+      <div className="btn-row">
+        <span>Sesión iniciada como <strong>{session.teacher.name}</strong> ({session.teacher.email}) en <code>{session.server}</code></span>
+        <button type="button" className="btn small" onClick={() => run(async () => { try { await api.logout(session); } finally { saveTeacherSession(null); setSession(null); setCourses(null); } })}>Cerrar sesión</button>
+      </div>
+      <section className="card stack-sm">
+        <h3>Nuevo curso</h3>
+        <div className="btn-row">
+          <label htmlFor="sv-course" className="sr-only">Nombre del curso</label>
+          <input id="sv-course" type="text" value={newCourse} onChange={(e) => setNewCourse(e.target.value)} placeholder="p. ej. 10-2 Química" style={{ flex: '1 1 220px' }} />
+          <button type="button" className="btn primary" disabled={busy || !newCourse.trim()} onClick={() => run(async () => { await api.createCourse(session, newCourse.trim()); setNewCourse(''); setCourses((await api.courses(session)).courses); })}>Crear curso</button>
+        </div>
+        <p className="small muted">Comparte el código del curso con tus estudiantes (o inclúyelo en una asignación). Con él envían su informe desde «Ver informe».</p>
+      </section>
+      {msg && <p className={`notice ${msg.kind}`} role="status">{msg.text}</p>}
+      {courses && courses.length === 0 && <p className="muted">Aún no tienes cursos en el servidor.</p>}
+      {courses && courses.length > 0 && (
+        <div className="table-wrap">
+          <table>
+            <caption>Mis cursos en el servidor</caption>
+            <thead><tr><th>Curso</th><th>Código</th><th className="n">Informes</th><th>Estado</th><th><span className="sr-only">Acciones</span></th></tr></thead>
+            <tbody>
+              {courses.map((c) => (
+                <tr key={c.id}>
+                  <td>{c.name}</td><td className="mono" style={{ letterSpacing: '0.15em', fontWeight: 700 }}>{c.joinCode}</td><td className="n">{c.reportCount}</td>
+                  <td>{c.open ? <span className="chip ok">Recibe informes</span> : <span className="chip warn">Cerrado</span>}</td>
+                  <td>
+                    <div className="btn-row">
+                      <button type="button" className="btn small primary" disabled={busy} onClick={() => run(async () => {
+                        const { reports } = await api.reports(session, c.id);
+                        const fresh = reports.map((r) => r.report).filter((r) => practiceById(r.practice.id) && !data.reports.some((x) => x.student.name === r.student.name && x.practice.id === r.practice.id && x.generatedAt === r.generatedAt));
+                        setData((d) => ({ ...d, reports: [...d.reports, ...fresh] }));
+                        setMsg({ kind: 'ok', text: `Se descargaron ${reports.length} informes de «${c.name}» (${fresh.length} nuevos). Revísalos en la pestaña Informes.` });
+                      })}>Traer informes</button>
+                      <button type="button" className="btn small" disabled={busy} onClick={() => run(async () => { await api.setCourseOpen(session, c.id, !c.open); setCourses((await api.courses(session)).courses); })}>{c.open ? 'Cerrar' : 'Reabrir'}</button>
+                      <ConfirmButton label="Eliminar" confirmLabel={`¿Eliminar «${c.name}» y sus informes del servidor?`} onConfirm={() => run(async () => { await api.deleteCourse(session, c.id); setCourses((await api.courses(session)).courses); })} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* -------------------------------- Rúbrica -------------------------------- */
 export const RUBRIC: { criterion: string; levels: [string, string, string, string] }[] = [
   { criterion: 'Formulación de hipótesis', levels: [
@@ -361,7 +474,7 @@ export function TeacherPage() {
   useEffect(() => { document.title = 'Panel docente · Laboratorio Virtual'; }, []);
   const tabs: { id: Tab; label: string }[] = [
     { id: 'catalogo', label: 'Catálogo' }, { id: 'asignaciones', label: `Asignaciones (${data.assignments.length})` },
-    { id: 'listas', label: `Listas por unidad (${data.lists.length})` }, { id: 'informes', label: `Informes (${data.reports.length})` }, { id: 'rubrica', label: 'Rúbrica' },
+    { id: 'listas', label: `Listas por unidad (${data.lists.length})` }, { id: 'informes', label: `Informes (${data.reports.length})` }, { id: 'servidor', label: 'Servidor' }, { id: 'rubrica', label: 'Rúbrica' },
   ];
   return (
     <div className="stack">
@@ -376,6 +489,7 @@ export function TeacherPage() {
       {tab === 'asignaciones' && <AssignmentsTab data={data} setData={setData} />}
       {tab === 'listas' && <ListsTab data={data} setData={setData} />}
       {tab === 'informes' && <ReportsTab data={data} setData={setData} />}
+      {tab === 'servidor' && <ServerTab data={data} setData={setData} />}
       {tab === 'rubrica' && <RubricTab />}
     </div>
   );

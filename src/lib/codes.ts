@@ -10,6 +10,9 @@ export interface Assignment {
   activities: string;
   due: string; // AAAA-MM-DD
   createdAt: number;
+  /** Opcional: servidor institucional y código de curso para que el estudiante envíe su informe directamente. */
+  server?: string;
+  joinCode?: string;
 }
 
 export interface PracticeList { id: string; name: string; unit: string; practiceIds: string[]; notes: string; createdAt: number; }

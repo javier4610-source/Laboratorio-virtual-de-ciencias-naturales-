@@ -255,3 +255,42 @@ test('genética de poblaciones: escenario de malaria muestra equilibrio y se reg
   await save(page).click();
   expect(await tableRows(page)).toBe(1);
 });
+
+test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
+  // Docente
+  await page.goto('/#/docente');
+  await page.getByRole('tab', { name: 'Servidor' }).click();
+  await page.getByLabel('Dirección del servidor').fill('http://localhost:8787');
+  await page.getByRole('button', { name: 'Probar conexión' }).click();
+  await expect(page.getByText('Conexión correcta con el servidor.')).toBeVisible();
+  await page.getByRole('button', { name: 'Crear cuenta' }).first().click();
+  await page.getByLabel('Nombre', { exact: true }).fill('Docente de Prueba');
+  await page.getByLabel('Código de registro institucional').fill('PRUEBA-E2E');
+  await page.getByLabel('Correo').fill(`docente${Date.now()}@colegio.edu.co`);
+  await page.getByLabel('Contraseña').fill('clave-muy-segura');
+  await page.locator('form').getByRole('button', { name: 'Crear cuenta' }).click();
+  await expect(page.getByText('Sesión iniciada como')).toBeVisible();
+  await page.getByLabel('Nombre del curso').fill('11-1 Biología');
+  await page.getByRole('button', { name: 'Crear curso' }).click();
+  const code = (await page.locator('td.mono').first().textContent())!.trim();
+  expect(code).toMatch(/^[A-Z0-9]{6}$/);
+
+  // Estudiante
+  await openFree(page, 'popgen');
+  await save(page).click();
+  await page.goto('/#/practica/popgen/informe');
+  await page.getByLabel('Nombre del estudiante').fill('Valentina Mosquera');
+  await page.locator('summary', { hasText: 'Enviar a mi docente por internet' }).click();
+  await page.locator('#srv-url').fill('http://localhost:8787');
+  await page.getByLabel('Código del curso').fill(code);
+  await page.getByRole('button', { name: 'Enviar informe' }).click();
+  await expect(page.getByText('Informe recibido en el curso «11-1 Biología».')).toBeVisible();
+
+  // Docente recibe
+  await page.goto('/#/docente');
+  await page.getByRole('tab', { name: 'Servidor' }).click();
+  await page.getByRole('button', { name: 'Traer informes' }).click();
+  await expect(page.getByText(/Se descargaron 1 informes de «11-1 Biología» \(1 nuevos\)/)).toBeVisible();
+  await page.getByRole('tab', { name: /Informes/ }).click();
+  await expect(page.getByRole('cell', { name: 'Valentina Mosquera', exact: true })).toBeVisible();
+});

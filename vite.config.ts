@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: mode === 'single' ? { output: { inlineDynamicImports: true } } : undefined,
   },
   test: {
-    include: ['tests/unit/**/*.test.ts'],
+    include: ['tests/unit/**/*.test.ts', 'tests/server/**/*.test.ts'],
     environment: 'node',
   },
 }));

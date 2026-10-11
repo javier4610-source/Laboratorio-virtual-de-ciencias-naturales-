@@ -11,6 +11,8 @@ import { TREND_LABEL } from '../lib/trend';
 import { href } from '../lib/router';
 import { Notice } from '../components/ui';
 import { progressPercent } from '../lib/progress';
+import { api, defaultServerUrl, saveServerUrl } from '../lib/api';
+import type { Decoded } from '../lib/codes';
 
 const STUDENT_KEY = 'lvcn:estudiante';
 
@@ -72,6 +74,41 @@ export function ReportBody({ practice: p, session: s, report }: { practice: Prac
   );
 }
 
+
+/** Envío directo al servidor institucional (si el docente lo configuró). */
+function SubmitToServer({ report, practiceId }: { report: StudentReport; practiceId: string }) {
+  const fromAssignment = loadJSON<Decoded[]>('lvcn:codigos-recibidos', []).find((d) => d.kind === 'asignacion' && d.value.practiceId === practiceId && d.value.server && d.value.joinCode);
+  const [server, setServer] = useState(() => (fromAssignment?.kind === 'asignacion' ? fromAssignment.value.server! : defaultServerUrl()));
+  const [code, setCode] = useState(() => (fromAssignment?.kind === 'asignacion' ? fromAssignment.value.joinCode! : ''));
+  const [status, setStatus] = useState<{ kind: 'ok' | 'bad' | 'info'; text: string } | null>(null);
+  const [busy, setBusy] = useState(false);
+  const send = async () => {
+    if (!report.student.name.trim()) { setStatus({ kind: 'bad', text: 'Escribe tu nombre antes de enviar.' }); return; }
+    setBusy(true); setStatus({ kind: 'info', text: 'Enviando…' });
+    try {
+      const r = await api.submitReport(server, code, report);
+      saveServerUrl(server);
+      setStatus({ kind: 'ok', text: r.duplicate ? `Este informe ya había sido recibido en «${r.course}».` : `Informe recibido en el curso «${r.course}».` });
+    } catch (e) {
+      setStatus({ kind: 'bad', text: (e as Error).message });
+    } finally { setBusy(false); }
+  };
+  return (
+    <details className="card no-print" open={!!fromAssignment}>
+      <summary>Enviar a mi docente por internet (si tu colegio tiene servidor)</summary>
+      <div className="stack-sm">
+        <div className="grid-2">
+          <div className="field"><label htmlFor="srv-url">Dirección del servidor</label><input id="srv-url" type="url" value={server} onChange={(e) => setServer(e.target.value)} placeholder="https://laboratorio.micolegio.edu.co" /></div>
+          <div className="field"><label htmlFor="srv-code">Código del curso</label><input id="srv-code" type="text" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} maxLength={6} placeholder="6 caracteres" style={{ fontFamily: 'var(--font-data)', letterSpacing: '0.15em' }} /></div>
+        </div>
+        <div className="btn-row"><button type="button" className="btn primary" disabled={busy || !server || code.length !== 6} onClick={send}>Enviar informe</button></div>
+        {status && <p className={`notice ${status.kind}`} role="status">{status.text}</p>}
+        <p className="small muted">Se envían tu nombre, curso y el contenido de este informe al servidor que administra tu colegio. No se crean cuentas para estudiantes.</p>
+      </div>
+    </details>
+  );
+}
+
 export function ReportPage({ practice: p }: { practice: PracticeDef }) {
   const [student, setStudent] = useState<StudentInfo>(() => loadJSON<StudentInfo>(STUDENT_KEY, { name: '', course: '' }));
   const [msg, setMsg] = useState('');
@@ -98,8 +135,9 @@ export function ReportPage({ practice: p }: { practice: PracticeDef }) {
         </div>
         <p className="small" aria-live="polite">{msg}</p>
         {json && <textarea readOnly value={json} aria-label="Informe en formato JSON" onFocus={(e) => e.currentTarget.select()} style={{ fontFamily: 'var(--font-data)', fontSize: '0.8rem' }} />}
-        <p className="small muted">El informe no se envía a ningún servidor. Se genera en tu navegador a partir de lo que guardaste en esta práctica.</p>
+        <p className="small muted">El informe se genera en tu navegador. Solo se envía a un servidor si usas la opción «Enviar a mi docente por internet».</p>
       </div>
+      <SubmitToServer report={report} practiceId={p.id} />
       <ReportBody practice={p} session={session} report={report} />
     </div>
   );

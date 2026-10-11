@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { PracticeDef } from '../core/types';
+import { balancePractice } from '../assessment/balance';
 
 /**
  * Carga bajo demanda del contenido completo de cada práctica (texto, preguntas,
@@ -36,7 +37,7 @@ export function loadPractice(id: string): Promise<PracticeDef> {
   if (!loader) return Promise.reject(new Error(`No existe la práctica «${id}».`));
   let p = cache.get(id);
   if (!p) {
-    p = loader();
+    p = loader().then(balancePractice);
     p.catch(() => cache.delete(id)); // permitir reintentar si falla la red
     cache.set(id, p);
   }

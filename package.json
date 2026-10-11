@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "server": "node server/index.mjs"
+    "server": "node server/index.mjs",
+    "guias": "node scripts/guias/exportar.mjs && python3 scripts/guias/generar_guias.py"
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "5.2.6",

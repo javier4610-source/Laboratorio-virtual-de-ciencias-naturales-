@@ -1,11 +1,12 @@
 import type { Question } from '../core/types';
+import { balanceQuestion } from './balance';
 
 /**
  * Banco de preguntas ORIGINALES de práctica, elaboradas para este laboratorio.
  * Se alinean con las competencias y componentes de la prueba de Ciencias Naturales
  * de Saber 11, pero NO son preguntas oficiales del ICFES ni reproducen ítems liberados.
  */
-export const SABER_BANK: Question[] = [
+const RAW_BANK: Question[] = [
   {
     id: 'saber-den-1', grade: 6, topic: 'Densidad y flotación', competency: 'explicacion', component: 'fisico', skill: 'Explicar un fenómeno cotidiano con la densidad', difficulty: 'media', practiceId: 'densidad',
     context: 'En un vaso se vierten con cuidado miel, agua y aceite de cocina. Después de unos minutos se forman tres capas: la miel abajo, el agua en el medio y el aceite arriba.',
@@ -433,6 +434,9 @@ export const SABER_BANK: Question[] = [
     review: 'Agrega fricción en la práctica de energía y observa la energía disipada.',
   },
 ];
+
+/** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */
+export const SABER_BANK: Question[] = RAW_BANK.map(balanceQuestion);
 
 export function questionById(id: string): Question | undefined {
   return SABER_BANK.find((q) => q.id === id);

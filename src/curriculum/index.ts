@@ -1,5 +1,6 @@
 import type { PracticeDef, Question } from '../core/types';
 import { SABER_BANK } from '../assessment/bank';
+import { balancePractice } from '../assessment/balance';
 import { densidad } from './practices/densidad';
 import { osmosis } from './practices/osmosis';
 import { mendel } from './practices/mendel';
@@ -21,7 +22,7 @@ import { ondas } from './practices/ondas';
 import { mitosis } from './practices/mitosis';
 
 /** Catálogo de prácticas implementadas. Para agregar una nueva: definirla aquí y registrar su componente en labs/registry.ts. */
-export const PRACTICES: PracticeDef[] = [densidad, mezclas, osmosis, mitosis, mendel, ondas, optica, adn, newton, soluciones, enzimas, fotosintesis, gases, energia, circuitos, estequiometria, ph, poblacion, popgen];
+export const PRACTICES: PracticeDef[] = ([densidad, mezclas, osmosis, mitosis, mendel, ondas, optica, adn, newton, soluciones, enzimas, fotosintesis, gases, energia, circuitos, estequiometria, ph, poblacion, popgen] as PracticeDef[]).map(balancePractice);
 
 export function practiceById(id: string): PracticeDef | undefined {
   return PRACTICES.find((p) => p.id === id);

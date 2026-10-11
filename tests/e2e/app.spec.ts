@@ -152,12 +152,12 @@ test('evaluación: retroalimentación, reintento y puntaje', async ({ page }) =>
   await page.getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Evaluación/ }).click();
   const first = page.locator('article.question').first();
-  await first.getByRole('button', { name: /Opción A/ }).click();
+  await first.getByRole('button', { name: /Se reduce a la mitad/ }).click();
   await first.getByRole('button', { name: 'Comprobar respuesta' }).click();
   await expect(first.getByText('✗ Respuesta incorrecta')).toBeVisible();
   await expect(first.getByText('Recomendación de repaso:')).toBeVisible();
   await first.getByRole('button', { name: 'Intentar de nuevo' }).click();
-  await first.getByRole('button', { name: /Opción B/ }).click();
+  await first.getByRole('button', { name: /Es la misma del bloque completo/ }).click();
   await first.getByRole('button', { name: 'Comprobar respuesta' }).click();
   await expect(first.getByText('✓ Respuesta correcta')).toBeVisible();
   await expect(page.locator('.kpi').nth(1)).toContainText('0 %'); // el primer intento cuenta

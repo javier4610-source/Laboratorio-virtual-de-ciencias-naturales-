@@ -40,8 +40,9 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
   await page.goto('/#/practica/densidad');
-  await expect(page.getByRole('tab', { name: /Experimento/ })).toBeDisabled();
-  await page.getByRole('button', { name: /Entendido/ }).click();
+  await page.getByRole('tab', { name: /Experimento/ }).click();
+  await expect(page.getByRole('heading', { name: 'Antes de experimentar, formula tu hipótesis' })).toBeVisible();
+  await page.getByRole('button', { name: 'Formular mi hipótesis' }).click();
   await page.getByLabel('Mi predicción', { exact: false }).selectOption('aumenta');
   await page.getByLabel('Hipótesis completa').fill('Si aumento el volumen, entonces la masa aumenta, porque hay más material.');
   await page.getByRole('button', { name: /Guardar hipótesis/ }).click();

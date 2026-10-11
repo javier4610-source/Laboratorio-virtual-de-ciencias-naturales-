@@ -339,7 +339,13 @@ main:focus { outline: none; }
 .stage-nav button { font: inherit; display: flex; align-items: center; gap: 8px; white-space: nowrap; padding: 10px 12px; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px; background: none; color: var(--ink-2); font-weight: 650; cursor: pointer; min-height: 46px; }
 .stage-nav button:hover:not(:disabled) { color: var(--ink); }
 .stage-nav button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
-.stage-nav button:disabled { opacity: 0.45; cursor: not-allowed; }
+.stage-nav button[data-locked] { color: var(--ink-2); }
+.stage-nav button[data-locked] .badge { background: var(--warn-soft); color: var(--warn); }
+.gate { max-width: 640px; margin: 24px auto; text-align: center; display: grid; justify-items: center; gap: 8px; padding: 32px 24px; }
+.gate h2 { margin: 0; }
+.gate p { color: var(--ink-2); max-width: 52ch; }
+.gate-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--warn-soft); color: var(--warn); }
+.gate-icon svg { width: 22px; height: 22px; }
 .stage-nav .badge { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-size: 0.75rem; background: var(--surface-2); color: var(--ink-2); font-family: var(--font-data); }
 .stage-nav button[aria-selected="true"] .badge { background: var(--accent); color: var(--accent-ink); }
 .stage-nav .badge.done, .stage-nav button[aria-selected="true"] .badge.done { background: var(--ok); color: var(--surface); }

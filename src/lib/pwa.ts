@@ -50,9 +50,22 @@ export function applyUpdate() {
 
 export function dismissOfflineReady() { set({ offlineReady: false }); }
 
+/**
+ * Una versión nueva se activa sola en el siguiente cambio de página: el trabajo guardado del
+ * estudiante está en localStorage, así que recargar no pierde nada, y nadie se queda con una
+ * versión vieja por no ver el aviso.
+ */
+let autoApplyArmed = false;
+function armAutoApply() {
+  if (autoApplyArmed) return;
+  autoApplyArmed = true;
+  const apply = () => { if (registration?.waiting) applyUpdate(); };
+  window.addEventListener('hashchange', apply, { once: true });
+}
+
 function watchInstalling(sw: ServiceWorker, firstInstall: boolean) {
   sw.addEventListener('statechange', () => {
-    if (sw.state === 'installed' && !firstInstall) set({ updateAvailable: true });
+    if (sw.state === 'installed' && !firstInstall) { set({ updateAvailable: true }); armAutoApply(); }
     if (sw.state === 'activated' && firstInstall) set({ offlineReady: true });
   });
 }
@@ -72,7 +85,7 @@ export function initPwa() {
       const firstInstall = !sw.controller;
       const reg = await sw.register('./sw.js');
       registration = reg;
-      if (reg.waiting && sw.controller) set({ updateAvailable: true });
+      if (reg.waiting && sw.controller) { set({ updateAvailable: true }); armAutoApply(); }
       if (reg.installing) watchInstalling(reg.installing, firstInstall);
       reg.addEventListener('updatefound', () => { if (reg.installing) watchInstalling(reg.installing, !sw.controller); });
       // Buscar versiones nuevas al volver a la pestaña (sin costo si no hay cambios).

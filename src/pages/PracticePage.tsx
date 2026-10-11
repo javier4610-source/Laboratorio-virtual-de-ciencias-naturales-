@@ -18,6 +18,25 @@ const MODE_HELP: Record<Mode, string> = {
   evaluacion: 'Modo evaluación: las preguntas cuentan solo el primer intento. Puedes reintentar para aprender.',
 };
 
+function LockIcon() {
+  return <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="6" rx="1.2" fill="currentColor" /><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" strokeWidth="1.4" /></svg>;
+}
+
+/** Etapa que requiere un paso previo: explica por qué y ofrece cómo continuar (nunca un botón muerto). */
+function StageGate({ title, text, primary, secondary }: { title: string; text: string; primary: { label: string; onClick: () => void }; secondary?: { label: string; onClick: () => void } }) {
+  return (
+    <section className="gate card" aria-labelledby="gate-title">
+      <div className="gate-icon" aria-hidden="true"><LockIcon /></div>
+      <h2 id="gate-title">{title}</h2>
+      <p>{text}</p>
+      <div className="btn-row">
+        <button type="button" className="btn primary" onClick={primary.onClick}>{primary.label}</button>
+        {secondary && <button type="button" className="btn" onClick={secondary.onClick}>{secondary.label}</button>}
+      </div>
+    </section>
+  );
+}
+
 export function PracticePage({ practice: p }: { practice: PracticeDef }) {
   const api = usePracticeSession(p.id);
   const s = api.session;
@@ -39,7 +58,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
     if (id === 'analisis' && s.trials.length === 0) return 'Primero guarda al menos un ensayo.';
     return null;
   };
-  const go = (id: StageId) => { if (!locked(id)) { setStage(id); window.scrollTo({ top: 0 }); } };
+  const go = (id: StageId) => { setStage(id); window.scrollTo({ top: 0 }); };
 
   const fs = useFullscreen<HTMLDivElement>();
   const compact = stage !== 'preparacion';
@@ -85,9 +104,9 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
             const lock = locked(st.id);
             return (
               <button key={st.id} type="button" role="tab" id={`tab-${st.id}`} aria-controls={`panel-${st.id}`} aria-selected={stage === st.id} tabIndex={stage === st.id ? 0 : -1}
-                disabled={!!lock} title={lock ?? undefined} onClick={() => go(st.id)}>
-                <span className={`badge${done[st.id] ? ' done' : ''}`} aria-hidden="true">{done[st.id] ? '✓' : i + 1}</span>
-                {st.label}{lock && <span className="sr-only"> (bloqueada: {lock})</span>}
+                data-locked={lock ? 'true' : undefined} title={lock ?? undefined} onClick={() => go(st.id)}>
+                <span className={`badge${done[st.id] ? ' done' : ''}`} aria-hidden="true">{done[st.id] ? '✓' : lock ? <LockIcon /> : i + 1}</span>
+                {st.label}{lock && <span className="sr-only"> (requiere un paso previo: {lock})</span>}
               </button>
             );
           })}
@@ -101,7 +120,22 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
       <div role="tabpanel" id={`panel-${stage}`} aria-labelledby={`tab-${stage}`}>
         {stage === 'preparacion' && <PreparationSection practice={p} api={api} onNext={() => go('hipotesis')} />}
         {stage === 'hipotesis' && <HypothesisSection practice={p} api={api} onNext={() => { setStage('experimento'); window.scrollTo({ top: 0 }); }} />}
-        {stage === 'experimento' && (
+        {stage === 'experimento' && locked('experimento') && (
+          <StageGate
+            title="Antes de experimentar, formula tu hipótesis"
+            text="En la práctica guiada, el experimento se abre cuando guardas tu predicción: así podrás comparar lo que esperabas con lo que mides. Toma un minuto."
+            primary={{ label: 'Formular mi hipótesis', onClick: () => go('hipotesis') }}
+            secondary={{ label: 'Explorar sin hipótesis', onClick: () => api.update((x) => ({ ...x, mode: 'libre' })) }}
+          />
+        )}
+        {stage === 'analisis' && locked('analisis') && (
+          <StageGate
+            title="Primero guarda al menos un ensayo"
+            text="El análisis usa los datos de tu cuaderno de laboratorio. Realiza una medición en el experimento y guárdala en la tabla."
+            primary={{ label: 'Ir al experimento', onClick: () => go('experimento') }}
+          />
+        )}
+        {stage === 'experimento' && !locked('experimento') && (
           <div className="stack">
             <div ref={fs.ref} className={`workspace stack${fs.active ? ' is-fullscreen' : ''}`}>
               <ProcedureCoach
@@ -115,13 +149,13 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
             </div>
             <DataPanel practiceId={p.id} datasets={DATASETS[p.id]} api={api} />
             <div className="btn-row">
-              <button type="button" className="btn primary" disabled={!!locked('analisis')} onClick={() => go('analisis')}>Ir al análisis</button>
+              <button type="button" className="btn primary" onClick={() => go('analisis')}>Ir al análisis</button>
               {s.trials.length < MIN_TRIALS && <span className="small muted">Se recomiendan al menos {MIN_TRIALS} ensayos para identificar una tendencia.</span>}
             </div>
             <SavedToast count={s.trials.length} onShow={showNotebook} />
           </div>
         )}
-        {stage === 'analisis' && <AnalysisSection practice={p} api={api} />}
+        {stage === 'analisis' && !locked('analisis') && <AnalysisSection practice={p} api={api} />}
         {stage === 'evaluacion' && <EvaluationSection practice={p} api={api} mode={s.mode} />}
         {stage === 'modelo' && <ModelSection practice={p} />}
       </div>

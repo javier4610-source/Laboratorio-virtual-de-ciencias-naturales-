@@ -56,11 +56,27 @@ npm run server       # servidor institucional opcional (ver server/README.md)
 
 Si Chromium ya está instalado en otra ruta: `PW_CHROMIUM_PATH=/ruta/a/chrome npm run test:e2e`.
 
-No requiere servicios de pago, cuentas ni base de datos. Las fuentes tipográficas se cargan desde Google Fonts si hay internet; sin conexión se usan las fuentes del sistema.
+No requiere servicios de pago, cuentas ni base de datos. Las fuentes tipográficas vienen incluidas en la aplicación (no se consulta a Google ni a otros terceros).
+
+## Sin conexión e instalable
+
+Después de la primera visita con internet, la aplicación completa queda guardada en el navegador (service worker generado en la compilación por `scripts/build-sw.mjs`) y todas las prácticas abren sin conexión. Se puede instalar como aplicación en Windows, Android, iPhone y Chromebook (botón «Instalar la aplicación» en el inicio y en Ayuda). Cuando se publica una versión nueva aparece un aviso para actualizar; el trabajo guardado se conserva. Enviar informes al servidor sí requiere conexión.
+
+## Guías de trabajo en PDF
+
+```bash
+npm run guias        # requiere Python 3 con reportlab y la fuente DejaVu Sans
+```
+
+Genera en `guias-pdf/` (carpeta no versionada), para cada práctica, la **guía del estudiante** (`estudiante/guia-<grado>-<id>.pdf`) con el formato institucional de la I.E. Campo Alegre: encabezado, identificación, código QR que abre la práctica, objetivos y DBA (propuesta), introducción, hipótesis y variables, procedimiento, tabla de datos, cuadrícula para graficar, análisis y conclusión, evaluación por competencias, aplicación, rúbrica por niveles y observaciones; y la **clave del docente** (`docente/clave-<grado>-<id>.pdf`) con respuestas justificadas, errores frecuentes, ecuaciones, supuestos y límites del modelo. El logo institucional se toma de `scripts/guias/assets/LOGO_COLEGIOS.png`.
+
+## Evaluación
+
+En las preguntas de selección múltiple, la posición de la respuesta correcta se reparte entre A, B, C y D de forma estable (`src/assessment/balance.ts`), para que marcar siempre la misma letra no dé ventaja.
 
 ## Publicación en línea
 
-- **GitHub Pages:** el flujo `.github/workflows/deploy.yml` compila, ejecuta las pruebas unitarias y publica `dist/` en GitHub Pages. En el repositorio debe estar activado *Settings → Pages → Source: GitHub Actions*.
+- **GitHub Pages:** el flujo `.github/workflows/deploy.yml` compila, ejecuta las pruebas unitarias y de interfaz, y publica `dist/` en GitHub Pages. En el repositorio debe estar activado *Settings → Pages → Source: GitHub Actions*.
 - **Archivo único:** `dist-single/laboratorio.html` puede subirse a cualquier hosting estático o abrirse localmente.
 
 ## Estructura
@@ -87,10 +103,10 @@ Módulos del enunciado → código: A navegación (`App.tsx`, `lib/router.ts`), 
 ## Cómo agregar una práctica
 
 1. Escribe el modelo en `src/models/mi-modelo.ts` (funciones puras con validación de rangos) y su `ModelSpec`.
-2. Agrega pruebas en `tests/unit/models.test.ts`.
+2. Agrega pruebas en `tests/unit/mi-modelo.test.ts`.
 3. Define las columnas de la tabla en `src/labs/datasets.ts` (marca con `input: true` las variables que controla el estudiante).
 4. Crea el componente `src/labs/MiLab.tsx` (recibe `api` y llama `api.addTrial(datasetId, valores)`), y regístralo en `src/labs/registry.ts`.
-5. Escribe el contenido en `src/curriculum/practices/mi-practica.ts` (estructura `PracticeDef`) y agrégalo a `PRACTICES` en `src/curriculum/index.ts`.
+5. Escribe el contenido en `src/curriculum/practices/mi-practica.ts` (estructura `PracticeDef`), agrégalo a `PRACTICES` en `src/curriculum/index.ts` y a `LOADERS` en `src/curriculum/loader.ts`, y regenera el catálogo liviano con `node scripts/gen-catalog.mjs`.
 6. Las pruebas de `tests/unit/curriculum.test.ts` comprobarán que la práctica tiene todas las secciones y que sus hipótesis apuntan a columnas existentes.
 
 ## Almacenamiento, panel docente y servidor opcional

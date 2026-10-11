@@ -86,6 +86,7 @@ def estilos():
         'blanco': ParagraphStyle('blanco', **{**base, 'textColor': colors.white, 'alignment': TA_CENTER, 'fontSize': 8.5, 'leading': 11}),
         'banner': ParagraphStyle('banner', **{**base, 'textColor': colors.white, 'alignment': TA_CENTER, 'fontSize': 8.5, 'leading': 14.5}),
         'cabecera': ParagraphStyle('cabecera', **{**base, 'fontName': 'Guia-B', 'fontSize': 7.6, 'leading': 9.6, 'textColor': colors.white}),
+        'cabecera-peq': ParagraphStyle('cabecera-peq', **{**base, 'fontName': 'Guia-B', 'fontSize': 6.1, 'leading': 7.6, 'textColor': colors.white}),
     }
 
 
@@ -202,11 +203,11 @@ def encabezado(est, subtitulo):
     return [banner, marca, Spacer(1, 8)]
 
 
-def tabla_simple(filas, anchos, est, cabecera=True, color=VERDE, fuente='tabla'):
+def tabla_simple(filas, anchos, est, cabecera=True, color=VERDE, fuente='tabla', cab='cabecera'):
     def celda(c, i):
         if isinstance(c, Flowable):
             return c
-        estilo = est['cabecera'] if cabecera and i == 0 else est[fuente]
+        estilo = est[cab] if cabecera and i == 0 else est[fuente]
         return Paragraph(t(c) if not str(c).startswith('<') else str(c), estilo)
     datos = [[celda(c, i) for c in fila] for i, fila in enumerate(filas)]
     tabla = Table(datos, colWidths=anchos, repeatRows=1 if cabecera else 0)
@@ -372,7 +373,7 @@ def guia_estudiante(p, est, ruta):
         cab = [f'{c["label"]}' + (f' ({c["unit"]})' if c.get('unit') else '') for c in cols]
         n = len(cab)
         filas = [cab] + [[''] * n for _ in range(6)]
-        tabla = tabla_simple(filas, [17.8 * cm / n] * n, est)
+        tabla = tabla_simple(filas, [17.8 * cm / n] * n, est, cab='cabecera-peq' if n > 8 else 'cabecera')
         tabla.setStyle(TableStyle([('TOPPADDING', (0, 1), (-1, -1), 8), ('BOTTOMPADDING', (0, 1), (-1, -1), 8)]))
         lab = {c['key']: c['label'] + (f' ({c["unit"]})' if c.get('unit') else '') for c in cols}
         h += [CondPageBreak(9 * cm), barra_seccion('ACTIVIDAD 3 · REGISTRO DE DATOS Y GRÁFICA', est), Spacer(1, 4),

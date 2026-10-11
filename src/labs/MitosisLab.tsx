@@ -7,48 +7,84 @@ import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 
-/** Dibujo esquemático de una célula vegetal en cada fase (vista de microscopio). */
-export function CellGlyph({ phase, x, y, size = 44, angle = 0 }: { phase: Phase; x: number; y: number; size?: number; angle?: number }) {
-  const s = size, cx = x + s / 2, cy = y + s / 2;
-  const chrom = '#6b2a7a';
+/* Colores de una preparación de ápice de raíz teñida con orceína acética (cromatina magenta). */
+const STAIN = { chrom: '#6d1650', nucleus: '#c77fa6', nucleusRim: '#8a2f66', nucleolus: '#4f0d39', cyto: '#f4e3e8', cytoEdge: '#ecd2db', wall: '#a7836a', spindle: '#b98aa6' };
+
+/** Cromosoma metafásico en forma de X (dos cromátidas unidas por el centrómero), en unidades de 44 px. */
+function Xchrom({ x, y, r = 0 }: { x: number; y: number; r?: number }) {
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${r})`}>
+      <path d="M-2.6 -2.2 L2.6 2.2 M-2.6 2.2 L2.6 -2.2" stroke={STAIN.chrom} strokeWidth="1.7" strokeLinecap="round" />
+    </g>
+  );
+}
+
+/** Célula vegetal (ápice de raíz) en cada fase, vista al microscopio. Se dibuja en un sistema de 44 × 44 y se escala a `size`. */
+export function CellGlyph({ phase, x, y, size = 44, angle = 0, seed }: { phase: Phase; x: number; y: number; size?: number; angle?: number; seed?: number }) {
+  // Variación natural pequeña entre células (posición del núcleo y tono del citoplasma).
+  const jx = seed === undefined ? 0 : (((seed * 37) % 7) - 3) * 0.55;
+  const jy = seed === undefined ? 0 : (((seed * 53) % 7) - 3) * 0.55;
+  const tone = seed === undefined ? 0 : ((seed * 29) % 5) / 40;
+  const c = 22;
   let inner;
   switch (phase) {
     case 'interfase':
-      inner = <><circle cx={cx} cy={cy} r={s * 0.2} fill="#d9b8e3" stroke={chrom} strokeWidth="1.2" /><circle cx={cx + 2} cy={cy - 1} r={s * 0.05} fill={chrom} /></>;
+      inner = (
+        <>
+          <circle cx={c} cy={c} r={9.2} fill={STAIN.nucleus} stroke={STAIN.nucleusRim} strokeWidth="1" />
+          <circle cx={c - 2.5} cy={c - 2.5} r={5} fill="#fff" opacity="0.18" />
+          {[[-4, 3], [4, -4], [3, 5], [-5, -3], [6, 1], [-1, 7]].map(([dx, dy], i) => <circle key={i} cx={c + dx} cy={c + dy} r={0.9} fill={STAIN.chrom} opacity="0.55" />)}
+          <circle cx={c + 1.5} cy={c - 0.5} r={2.4} fill={STAIN.nucleolus} />
+        </>
+      );
       break;
     case 'profase':
       inner = (
         <>
-          <circle cx={cx} cy={cy} r={s * 0.22} fill="#ecdcf1" stroke={chrom} strokeWidth="1" strokeDasharray="2 2" />
-          {[-6, -2, 2, 6].map((d, i) => <path key={i} d={`M${cx + d - 3} ${cy - 6 + (i % 2) * 3} q3 4 0 8 q-3 4 1 7`} fill="none" stroke={chrom} strokeWidth="2" strokeLinecap="round" />)}
+          <circle cx={c} cy={c} r={10.5} fill="#ead0dd" stroke={STAIN.nucleusRim} strokeWidth="0.9" strokeDasharray="2.2 1.6" />
+          {[-6, -2, 2, 6].map((d, i) => (
+            <path key={i} d={`M${c + d - 2.5} ${c - 7 + (i % 2) * 3} q3.5 3.5 0 7.5 q-3 3.5 1.5 7`} fill="none" stroke={STAIN.chrom} strokeWidth="1.8" strokeLinecap="round" />
+          ))}
         </>
       );
       break;
     case 'metafase':
-      inner = <g transform={`rotate(${angle} ${cx} ${cy})`}>{[-9, -5, -1, 3, 7].map((d) => <rect key={d} x={cx - 1.8} y={cy + d} width={3.6} height={3} rx="1" fill={chrom} />)}<line x1={cx - s * 0.32} y1={cy} x2={cx + s * 0.32} y2={cy} stroke="#c7a5d3" strokeWidth="0.6" /></g>;
+      inner = (
+        <g transform={`rotate(${angle} ${c} ${c})`}>
+          {[-10, -5, 0, 5, 10].map((d) => <path key={d} d={`M${c - 14} ${c} L${c} ${c + d} L${c + 14} ${c}`} fill="none" stroke={STAIN.spindle} strokeWidth="0.5" opacity="0.8" />)}
+          {[-10, -5, 0, 5, 10].map((d, i) => <Xchrom key={d} x={c + (i % 2 ? 0.8 : -0.8)} y={c + d} r={90 + (i % 2 ? 12 : -12)} />)}
+        </g>
+      );
       break;
     case 'anafase':
       inner = (
-        <g transform={`rotate(${angle} ${cx} ${cy})`}>
-          {[-6, -2, 2, 6].map((d) => <path key={`l${d}`} d={`M${cx - 4} ${cy + d} l-6 -2 M${cx - 4} ${cy + d} l-6 2`} stroke={chrom} strokeWidth="1.8" strokeLinecap="round" />)}
-          {[-6, -2, 2, 6].map((d) => <path key={`r${d}`} d={`M${cx + 4} ${cy + d} l6 -2 M${cx + 4} ${cy + d} l6 2`} stroke={chrom} strokeWidth="1.8" strokeLinecap="round" />)}
+        <g transform={`rotate(${angle} ${c} ${c})`}>
+          {[-7, -2.5, 2.5, 7].map((d) => <path key={`s${d}`} d={`M${c - 16} ${c} L${c - 6} ${c + d} M${c + 16} ${c} L${c + 6} ${c + d}`} stroke={STAIN.spindle} strokeWidth="0.5" opacity="0.8" />)}
+          {[-7, -2.5, 2.5, 7].map((d) => <path key={`l${d}`} d={`M${c - 6} ${c + d} l-5 -2.2 M${c - 6} ${c + d} l-5 2.2`} stroke={STAIN.chrom} strokeWidth="1.7" strokeLinecap="round" />)}
+          {[-7, -2.5, 2.5, 7].map((d) => <path key={`r${d}`} d={`M${c + 6} ${c + d} l5 -2.2 M${c + 6} ${c + d} l5 2.2`} stroke={STAIN.chrom} strokeWidth="1.7" strokeLinecap="round" />)}
         </g>
       );
       break;
     case 'telofase':
       inner = (
-        <g transform={`rotate(${angle} ${cx} ${cy})`}>
-          <ellipse cx={cx - s * 0.24} cy={cy} rx={s * 0.1} ry={s * 0.14} fill="#cfa8dc" stroke={chrom} />
-          <ellipse cx={cx + s * 0.24} cy={cy} rx={s * 0.1} ry={s * 0.14} fill="#cfa8dc" stroke={chrom} />
-          <line x1={cx} y1={y + 4} x2={cx} y2={y + s - 4} stroke="#8a6d3b" strokeWidth="1.5" strokeDasharray="3 2" />
+        <g transform={`rotate(${angle} ${c} ${c})`}>
+          {[-1, 1].map((sgn) => (
+            <g key={sgn}>
+              <ellipse cx={c + sgn * 10.5} cy={c} rx={5} ry={7.5} fill={STAIN.nucleus} stroke={STAIN.nucleusRim} strokeWidth="0.9" />
+              <path d={`M${c + sgn * 10.5 - 2} ${c - 4} q3 2 0 4 q-3 2 1 4`} fill="none" stroke={STAIN.chrom} strokeWidth="1.2" strokeLinecap="round" />
+            </g>
+          ))}
+          <line x1={c} y1={4} x2={c} y2={40} stroke={STAIN.wall} strokeWidth="1.6" strokeDasharray="3 1.6" />
         </g>
       );
       break;
   }
   return (
-    <g>
-      <rect x={x + 2} y={y + 2} width={s - 4} height={s - 4} rx="6" fill="#f6efe2" stroke="#b49a6b" strokeWidth="1.5" />
-      {inner}
+    <g transform={`translate(${x} ${y}) scale(${size / 44})`}>
+      <rect x="0.6" y="0.6" width="42.8" height="42.8" rx="3" fill={STAIN.cyto} stroke={STAIN.wall} strokeWidth="1.2" />
+      {tone > 0 && <rect x="1.2" y="1.2" width="41.6" height="41.6" rx="2.6" fill="#d9a5bd" opacity={tone} />}
+      <rect x="2.4" y="2.4" width="39.2" height="39.2" rx="2.4" fill="none" stroke={STAIN.cytoEdge} strokeWidth="2.2" />
+      <g transform={`translate(${jx} ${jy})`}>{inner}</g>
     </g>
   );
 }
@@ -132,8 +168,14 @@ function MicroscopePart({ api }: LabProps) {
   return (
     <div className="lab-layout">
       <div className="stack">
-        <div className="bench" style={{ background: '#2b2620' }}>
+        <div className="bench" style={{ background: '#151311', borderColor: '#2b2620' }}>
           <svg viewBox={`0 0 ${cols * S} ${rows * S}`} role="group" aria-label={`Campo del microscopio con ${n} células. Selecciona una célula y clasifícala con los botones de fase.`} style={{ minWidth: Math.min(cols * S, 520) }}>
+            <defs>
+              <radialGradient id="mit-vignette" cx="0.5" cy="0.5" r="0.72">
+                <stop offset="0.62" stopColor="#1a0d14" stopOpacity="0" /><stop offset="0.9" stopColor="#1a0d14" stopOpacity="0.22" /><stop offset="1" stopColor="#1a0d14" stopOpacity="0.45" />
+              </radialGradient>
+            </defs>
+            <rect x="0" y="0" width={cols * S} height={rows * S} rx="10" fill="#efe0e6" />
             {cells.map((c) => {
               const isSel = selected === c.id;
               const lab = labels[c.id];
@@ -143,11 +185,12 @@ function MicroscopePart({ api }: LabProps) {
                 <g key={c.id} role="button" tabIndex={0} aria-pressed={isSel}
                   aria-label={`Célula ${c.id + 1}${lab ? `, clasificada como ${lab}` : ', sin clasificar'}${checked && lab ? (lab === c.phase ? ', correcta' : `, incorrecta: es ${c.phase}`) : ''}`}
                   onClick={() => setSelected(c.id)} onKeyDown={(e) => onKey(e, c.id)} style={{ cursor: 'pointer' }}>
-                  <CellGlyph phase={c.phase} x={c.x * S} y={c.y * S} size={S} angle={c.angle} />
-                  {(isSel || lab) && <rect x={c.x * S + 1} y={c.y * S + 1} width={S - 2} height={S - 2} rx="7" fill="none" stroke={isSel ? '#fb923c' : wrong ? '#ff6b6b' : right ? '#5bd389' : '#7fb2f0'} strokeWidth={isSel ? 3 : 2} />}
+                  <CellGlyph phase={c.phase} x={c.x * S} y={c.y * S} size={S} angle={c.angle} seed={c.id} />
+                  {(isSel || lab) && <rect x={c.x * S + 1} y={c.y * S + 1} width={S - 2} height={S - 2} rx="7" fill="none" stroke={isSel ? '#e8590c' : wrong ? '#d62828' : right ? '#1f9d55' : '#2f6fc0'} strokeWidth={isSel ? 3 : 2.2} />}
                 </g>
               );
             })}
+            <rect x="0" y="0" width={cols * S} height={rows * S} rx="10" fill="url(#mit-vignette)" pointerEvents="none" />
           </svg>
         </div>
         <div className="card stack-sm">

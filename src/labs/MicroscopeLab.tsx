@@ -10,7 +10,7 @@ import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../com
 import type { LabProps } from './registry';
 
 /* Geometría de la ilustración (px) */
-const W = 600, H = 420, CX = 210, CY = 210, R = 180;
+const W = 660, H = 420, CX = 210, CY = 210, R = 180;
 const COUNT_MS = 1400;
 
 /** Colores reales de la preparación: luz del microscopio y colorantes (hex con buen contraste entre sí). */
@@ -58,10 +58,16 @@ function tileFor({ obs, s }: TileProps): { w: number; h: number; rowY: number; b
       body: brick.map((c, i) => (
         <g key={i}>
           <rect x={c.x + sw / 2} y={c.y + sw / 2} width={L - sw} height={Wd - sw} fill={isElodea ? ELODEA_CELL : look.cell} stroke={look.edge} strokeOpacity={edgeOpacity} strokeWidth={sw} />
-          {!isElodea && show('nucleo') && <ellipse cx={c.x + 0.38 * L} cy={c.y + Wd / 2} rx={10} ry={8} fill={look.nucleus} opacity={0.85} />}
+          <rect x={c.x + sw + Wd * 0.08} y={c.y + sw + Wd * 0.08} width={Math.max(0, L - 2 * sw - Wd * 0.16)} height={Math.max(0, Wd - 2 * sw - Wd * 0.16)} rx={Wd * 0.12} fill="#fff" opacity={isElodea ? 0.22 : 0.3} />
+          {!isElodea && show('nucleo') && (
+            <g>
+              <ellipse cx={c.x + 0.38 * L} cy={c.y + Wd / 2} rx={10} ry={8} fill={look.nucleus} opacity={0.85} />
+              <circle cx={c.x + 0.38 * L + 2} cy={c.y + Wd / 2 - 1} r={2.4} fill={look.edge} opacity={0.9} />
+            </g>
+          )}
           {isElodea && show('cloroplastos') && [5, 13.5, 22, 30.5, 39, 47.5, 55].flatMap((dx, k) => [
-            <circle key={`t${k}`} cx={c.x + dx} cy={c.y + 4.5} r={2.4} fill={CHLOROPLAST} />,
-            <circle key={`b${k}`} cx={c.x + dx + 3} cy={c.y + Wd - 4.5} r={2.4} fill={CHLOROPLAST} />,
+            <circle key={`t${k}`} cx={c.x + dx} cy={c.y + 4.5} r={2.4} fill={CHLOROPLAST} stroke="#1b5e20" strokeWidth={0.4} />,
+            <circle key={`b${k}`} cx={c.x + dx + 3} cy={c.y + Wd - 4.5} r={2.4} fill={CHLOROPLAST} stroke="#1b5e20" strokeWidth={0.4} />,
           ])}
         </g>
       )),
@@ -74,6 +80,7 @@ function tileFor({ obs, s }: TileProps): { w: number; h: number; rowY: number; b
         <g key={i}>
           <polygon points={c.pts} fill={look.cell} fillOpacity={outline.contrast ? 0.9 : 0.25} stroke={look.edge} strokeOpacity={edgeOpacity} strokeWidth={sw} />
           {show('nucleo') && <circle cx={c.nx} cy={c.ny} r={4} fill={look.nucleus} />}
+          {outline.contrast && [[-9, 6], [7, 9], [10, -8], [-6, -10], [2, 14]].map(([dx, dy], k) => <circle key={k} cx={c.nx + dx} cy={c.ny + dy} r={0.9} fill={look.edge} opacity={0.35} />)}
         </g>
       )),
     };
@@ -85,10 +92,58 @@ function tileFor({ obs, s }: TileProps): { w: number; h: number; rowY: number; b
       <g>
         <ellipse cx={L / 2} cy={Wd / 2} rx={L / 2 - sw} ry={Wd / 2 - sw} fill={YEAST_CELL} stroke={look.edge} strokeOpacity={edgeOpacity} strokeWidth={sw} />
         <ellipse cx={1.5 * L} cy={1.5 * Wd} rx={L / 2 - sw} ry={Wd / 2 - sw} fill={YEAST_CELL} stroke={look.edge} strokeOpacity={edgeOpacity} strokeWidth={sw} />
+        <circle cx={L / 2 + 0.6} cy={Wd / 2 - 0.4} r={Wd * 0.17} fill="#fff" opacity={0.5} />
+        <circle cx={1.5 * L - 0.6} cy={1.5 * Wd + 0.3} r={Wd * 0.15} fill="#fff" opacity={0.5} />
         {show('yemas') && <circle cx={L + 0.3} cy={1.6} r={0.9} fill={YEAST_CELL} stroke={look.edge} strokeWidth={sw} />}
       </g>
     ),
   };
+}
+
+const OBJ_COLOR: Record<number, string> = { 4: '#d32f2f', 10: '#f2c230', 40: '#1e88e5' };
+
+/** Microscopio óptico compuesto dibujado de perfil; el objetivo activo apunta a la platina. */
+function MicroscopeDrawing({ x, y, objective, stainTint }: { x: number; y: number; objective: Objective; stainTint: string }) {
+  const others = OBJECTIVES.filter((o) => o !== objective);
+  const objLen: Record<number, number> = { 4: 20, 10: 25, 40: 31 };
+  const Obj = ({ o, rot }: { o: number; rot: number }) => (
+    <g transform={`rotate(${rot} 66 82)`}>
+      <rect x="61" y="84" width="10" height={objLen[o]} rx="2" fill="url(#kit-metal-h)" stroke="#7d878b" strokeWidth="0.6" />
+      <rect x="61" y={84 + objLen[o] * 0.45} width="10" height="3" fill={OBJ_COLOR[o]} />
+      <rect x="63" y={84 + objLen[o]} width="6" height="3" rx="1" fill="#2a3234" />
+    </g>
+  );
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <g filter="url(#kit-shadow)">
+        {/* brazo */}
+        <path d="M118 190 C140 150 142 92 104 40" fill="none" stroke="#2c3537" strokeWidth="20" strokeLinecap="round" />
+        <path d="M118 190 C140 150 142 92 104 40" fill="none" stroke="#4a5659" strokeWidth="6" strokeLinecap="round" opacity="0.6" />
+        {/* base con lámpara */}
+        <path d="M14 206 L22 186 L146 186 L154 206 Z" fill="url(#kit-body-dark)" />
+        <ellipse cx="66" cy="184" rx="11" ry="3.5" fill="#ffe9a8" />
+        <ellipse cx="66" cy="184" rx="17" ry="6" fill="#ffe9a8" opacity="0.35" />
+        {/* platina, preparación y condensador */}
+        <rect x="58" y="136" width="16" height="16" rx="2" fill="url(#kit-metal-h)" />
+        <rect x="18" y="128" width="104" height="8" rx="2" fill="url(#kit-body-dark)" />
+        <rect x="34" y="124" width="64" height="4" fill="#dfeef2" stroke="#8fa9b3" strokeWidth="0.6" />
+        <rect x="58" y="124.6" width="16" height="2.8" fill={stainTint} />
+        <path d="M30 124 l10 -3 h12" fill="none" stroke="#9aa5a9" strokeWidth="1.4" />
+        {/* tornillos macro y micrométrico */}
+        <circle cx="124" cy="120" r="11" fill="url(#kit-metal)" stroke="#6f7a7c" />
+        <circle cx="124" cy="120" r="6" fill="url(#kit-body-dark)" />
+        {/* tubo, cabezal y ocular */}
+        <rect x="56" y="44" width="20" height="34" rx="3" fill="url(#kit-body-dark)" />
+        <g transform="rotate(-28 66 46)">
+          <rect x="59" y="10" width="14" height="38" rx="2" fill="url(#kit-metal-h)" stroke="#6f7a7c" strokeWidth="0.6" />
+          <rect x="57" y="4" width="18" height="9" rx="2" fill="#1d2325" />
+        </g>
+        <path d="M50 78 L82 78 L78 88 L54 88 Z" fill="url(#kit-metal)" stroke="#7d878b" strokeWidth="0.6" />
+      </g>
+      {others.map((o, i) => <Obj key={o} o={o} rot={i === 0 ? 34 : -34} />)}
+      <Obj o={objective} rot={0} />
+    </g>
+  );
 }
 
 const CLASS_OPTIONS = [
@@ -168,36 +223,49 @@ export default function MicroscopeLab({ api }: LabProps) {
               <pattern id="cel-pat" patternUnits="userSpaceOnUse" x={CX - R} y={CY - tile.rowY * s} width={tile.w * s} height={tile.h * s}>
                 <g transform={`scale(${s})`}>{tile.body}</g>
               </pattern>
+              <radialGradient id="cel-vignette" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0.7" stopColor="#000" stopOpacity="0" /><stop offset="0.9" stopColor="#000" stopOpacity="0.25" /><stop offset="1" stopColor="#000" stopOpacity="0.65" />
+              </radialGradient>
+              <radialGradient id="cel-light" cx="0.42" cy="0.4" r="0.6">
+                <stop offset="0" stopColor="#fff" stopOpacity="0.22" /><stop offset="1" stopColor="#fff" stopOpacity="0" />
+              </radialGradient>
               <filter id="cel-blur" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation={obs.focus.blurPx} /></filter>
             </defs>
             {/* ocular: lo que rodea el campo se ve oscuro */}
             <rect x="0" y="0" width={2 * CX} height={H} rx="18" fill="#0d0f0e" />
+            <circle cx={CX} cy={CY} r={R + 8} fill="#1b201e" stroke="#343b38" strokeWidth="1.5" />
             <g clipPath="url(#cel-field)">
               <g filter={obs.focus.blurPx > 0.05 ? 'url(#cel-blur)' : undefined}>
                 <rect x={CX - R - 10} y={CY - R - 10} width={2 * R + 20} height={2 * R + 20} fill={look.bg} />
                 <rect x={CX - R - 10} y={CY - R - 10} width={2 * R + 20} height={2 * R + 20} fill="url(#cel-pat)" />
               </g>
+              <circle cx={CX} cy={CY} r={R} fill="url(#cel-light)" />
               <line x1={CX - R} x2={CX + R} y1={CY} y2={CY} stroke="var(--data)" strokeWidth="1.5" strokeDasharray="6 5" opacity="0.8" />
               {Array.from({ length: ticks }, (_, i) => {
                 const x = CX - R + (i + 1) * step;
                 return <path key={i} d={`M${x} ${CY - 3} l-4 -8 h8 z`} fill="var(--data)" />;
               })}
+              <circle cx={CX} cy={CY} r={R} fill="url(#cel-vignette)" />
             </g>
-            <circle cx={CX} cy={CY} r={R} fill="none" stroke="#3a3f3c" strokeWidth="3" />
+            <circle cx={CX} cy={CY} r={R} fill="none" stroke="#000" strokeOpacity="0.7" strokeWidth="2" />
+            {/* microscopio y ficha de observación */}
+            <MicroscopeDrawing x={452} y={6} objective={objective} stainTint={look.edge} />
+            <text x="540" y="226" textAnchor="middle" style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>Microscopio</text>
+            <rect x="438" y="236" width="214" height="176" rx="12" fill="var(--surface-2)" stroke="var(--line)" />
             <g style={{ fontSize: 13, fill: 'var(--ink)' }}>
-              <text x="440" y="40" style={{ fontWeight: 700 }}>Microscopio</text>
-              <text x="440" y="66">Ocular: {OCULAR}×</text>
-              <text x="440" y="88">Objetivo: {objective}×</text>
-              <text x="440" y="110">Aumento: {obs.magnification}×</text>
-              <text x="440" y="142" style={{ fill: 'var(--ink-2)', fontSize: 12 }}>Diámetro del campo</text>
-              <text x="440" y="162" style={{ fontFamily: 'var(--font-data)' }}>{fmt(obs.fieldUm, 0)} µm</text>
-              <text x="440" y="194" style={{ fill: 'var(--ink-2)', fontSize: 12 }}>Tinción</text>
-              <text x="440" y="214">{obs.stain.name}</text>
-              <text x="440" y="246" style={{ fill: 'var(--ink-2)', fontSize: 12 }}>Imagen</text>
-              <text x="440" y="266" style={{ fill: obs.focus.inFocus ? 'var(--ok)' : 'var(--bad)', fontWeight: 700 }}>{obs.focus.inFocus ? 'nítida' : 'borrosa'}</text>
-              <line x1="440" x2="470" y1="300" y2="300" stroke="var(--data)" strokeWidth="1.5" strokeDasharray="6 5" />
-              <text x="476" y="304" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>diámetro</text>
-              {measured && obs.count.ok && <text x="440" y="330" style={{ fill: 'var(--data)', fontWeight: 700 }}>{fmt(obs.count.count, 1)} células</text>}
+              <text x="452" y="258">Ocular: {OCULAR}×</text>
+              <text x="556" y="258">Objetivo: {objective}×</text>
+              <circle cx="548" cy="254" r="3" fill={OBJ_COLOR[objective]} stroke="var(--ink-2)" strokeWidth="0.6" />
+              <text x="452" y="280" style={{ fontWeight: 700 }}>Aumento: {obs.magnification}×</text>
+              <text x="452" y="304" style={{ fill: 'var(--ink-2)', fontSize: 11 }}>Diámetro del campo</text>
+              <text x="452" y="321" style={{ fontFamily: 'var(--font-data)' }}>{fmt(obs.fieldUm, 0)} µm</text>
+              <text x="452" y="345" style={{ fill: 'var(--ink-2)', fontSize: 11 }}>Tinción</text>
+              <text x="452" y="362">{obs.stain.name}</text>
+              <text x="580" y="304" style={{ fill: 'var(--ink-2)', fontSize: 11 }}>Imagen</text>
+              <text x="580" y="321" style={{ fill: obs.focus.inFocus ? 'var(--ok)' : 'var(--bad)', fontWeight: 700 }}>{obs.focus.inFocus ? 'nítida' : 'borrosa'}</text>
+              <line x1="452" x2="482" y1="390" y2="390" stroke="var(--data)" strokeWidth="1.5" strokeDasharray="6 5" />
+              <text x="488" y="394" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>diámetro</text>
+              {measured && obs.count.ok && <text x="638" y="394" textAnchor="end" style={{ fill: 'var(--data)', fontWeight: 700 }}>{fmt(obs.count.count, 1)} células</text>}
             </g>
           </svg>
         </div>

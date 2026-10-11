@@ -35,7 +35,7 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(1);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(5);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(6);
 });
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
@@ -314,6 +314,77 @@ test('energía: desde 1 m llega al valle a 4,43 m/s; una colina más alta no se 
   await expect(page.locator('.readout').getByText('no', { exact: true })).toBeVisible({ timeout: 8000 });
 });
 
+test('microscopio: contar células de cebolla a 4× y a 40× (con enfoque fino)', async ({ page }) => {
+  await openFree(page, 'celulas');
+  await expect(save(page)).toBeDisabled();
+  await expect(page.locator('.readout').getByText('4.500 µm')).toBeVisible();
+  const count = page.getByRole('button', { name: 'Contar células a lo largo del diámetro' });
+  await count.click();
+  await expect(page.locator('.readout').getByText('250,0 µm')).toBeVisible();
+  await page.getByRole('group', { name: 'Objetivo' }).getByRole('button', { name: '40×' }).click();
+  await count.click();
+  await expect(page.getByText('La imagen está borrosa: enfoca con el tornillo micrométrico antes de contar.')).toBeVisible();
+  const focus = page.getByLabel('Tornillo micrométrico (enfoque) (valor exacto)');
+  await focus.fill('42'); await focus.press('Enter');
+  await count.click();
+  await expect(page.locator('.readout').getByText('225,0 µm')).toBeVisible();
+  await page.getByLabel('Clasificación de la célula').selectOption({ label: 'Célula vegetal' });
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('redes alimentarias: la caza de gavilanes aumenta los ratones (+21,4 %)', async ({ page }) => {
+  await openFree(page, 'redes');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Simular', exact: true }).click();
+  await expect(page.locator('.readout').getByText('0,300 kg/ha')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  const caza = page.getByLabel('Caza de gavilanes (% por año) (valor exacto en %/año)');
+  await caza.fill('100'); await caza.press('Enter');
+  await page.getByRole('button', { name: 'Simular', exact: true }).click();
+  await expect(page.locator('.readout').getByText('+21,4 %')).toBeVisible();
+});
+
+test('selección natural: 10 generaciones sobre suelo volcánico oscurecen la población', async ({ page }) => {
+  await openFree(page, 'seleccion');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Avanzar 10 generaciones' }).click();
+  await expect(page.locator('.readout').getByText('0,457')).toBeVisible();
+  await expect(page.locator('.readout').getByText('0,157')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('cinemática: 2 m/s y 1 m/s² durante 5 s recorren 22,50 m; reto de MRU superado', async ({ page }) => {
+  await openFree(page, 'cinematica');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('group', { name: 'Velocidad de la animación' }).getByRole('button', { name: 'Acelerada ×4' }).click();
+  await page.getByRole('button', { name: 'Iniciar recorrido' }).click();
+  await expect(page.locator('.readout').getByText('22,50 m')).toBeVisible();
+  await expect(page.locator('.readout').getByText('4,50 m/s')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByLabel('Reto', { exact: true }).selectOption({ label: 'Velocidad constante de 4 m/s durante 6 s' });
+  for (const [label, v] of [['Velocidad inicial (valor exacto en m/s)', '4'], ['Aceleración (valor exacto en m/s²)', '0'], ['Duración del recorrido (valor exacto en s)', '6']]) {
+    const input = page.getByLabel(label); await input.fill(v); await input.press('Enter');
+  }
+  await page.getByRole('button', { name: 'Iniciar recorrido' }).click();
+  await expect(page.getByText('¡Coincide!')).toBeVisible({ timeout: 10_000 });
+});
+
+test('velocidad de reacción: el mármol en polvo reacciona más rápido que granulado', async ({ page }) => {
+  await openFree(page, 'cinetica');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Iniciar reacción y cronómetro' }).click();
+  await expect(page.locator('.readout').getByText('0,40 mL/s')).toBeVisible({ timeout: 15_000 });
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByRole('group', { name: 'Partícula' }).getByRole('button', { name: 'Polvo' }).click();
+  await page.getByRole('button', { name: 'Iniciar reacción y cronómetro' }).click();
+  await expect(page.locator('.readout').getByText('1,43 mL/s')).toBeVisible({ timeout: 15_000 });
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -374,7 +445,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/19');
+  await expect(page.locator('.kpi').first()).toContainText('1/24');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

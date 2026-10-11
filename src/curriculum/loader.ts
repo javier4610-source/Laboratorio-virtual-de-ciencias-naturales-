@@ -26,6 +26,11 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   newton: () => import('./practices/newton').then((m) => m.newton),
   gases: () => import('./practices/gases').then((m) => m.gases),
   energia: () => import('./practices/energia').then((m) => m.energia),
+  seleccion: () => import('./practices/seleccion').then((m) => m.seleccion),
+  redes: () => import('./practices/redes').then((m) => m.redes),
+  cinetica: () => import('./practices/cinetica').then((m) => m.cinetica),
+  cinematica: () => import('./practices/cinematica').then((m) => m.cinematica),
+  celulas: () => import('./practices/celulas').then((m) => m.celulas),
 };
 
 export const LOADER_IDS = Object.keys(LOADERS);

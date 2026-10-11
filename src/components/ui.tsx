@@ -60,10 +60,12 @@ export function Slider({ label, value, min, max, step, unit, decimals = 1, onCha
 interface SegProps<T extends string> { label: string; value: T; options: { value: T; label: string }[]; onChange: (v: T) => void; }
 
 export function Segmented<T extends string>({ label, value, options, onChange }: SegProps<T>) {
+  // Id generado: una etiqueta con espacios no sirve como id para aria-labelledby.
+  const labelId = useId();
   return (
     <div className="field">
-      <span className="small" style={{ fontWeight: 600 }} id={`seg-${label}`}>{label}</span>
-      <div className="seg" role="group" aria-labelledby={`seg-${label}`}>
+      <span className="small" style={{ fontWeight: 600 }} id={labelId}>{label}</span>
+      <div className="seg" role="group" aria-labelledby={labelId}>
         {options.map((o) => (
           <button key={o.value} type="button" aria-pressed={o.value === value} onClick={() => onChange(o.value)}>{o.label}</button>
         ))}

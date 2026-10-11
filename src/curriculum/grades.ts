@@ -71,8 +71,6 @@ export function gradeInfo(id: GradeId): GradeInfo {
 
 /** Prácticas de la malla propuesta que todavía no están implementadas. */
 export const PLANNED: PlannedPractice[] = [
-  { title: 'Microscopio virtual: células animales y vegetales', grade: 6, area: 'biologia', status: 'planificada' },
-  { title: 'Cadenas y redes alimentarias', grade: 6, area: 'ambiental', status: 'planificada' },
   { title: 'Ecosistema: agua, luz y alimento', grade: 6, area: 'ambiental', status: 'planificada' },
   { title: 'Movimiento y distancia recorrida', grade: 6, area: 'fisica', status: 'planificada' },
   { title: 'Circuitos simples con baterías, interruptores y bombillas', grade: 7, area: 'fisica', status: 'planificada' },
@@ -82,11 +80,8 @@ export const PLANNED: PlannedPractice[] = [
   { title: 'Modelo interactivo de ADN y complementariedad', grade: 8, area: 'biologia', status: 'planificada' },
   { title: 'Conservación de la masa', grade: 8, area: 'quimica', status: 'planificada' },
   { title: 'Balanceo visual de ecuaciones químicas', grade: 8, area: 'quimica', status: 'planificada' },
-  { title: 'Selección natural con cambios ambientales', grade: 9, area: 'biologia', status: 'planificada' },
-  { title: 'Velocidad, aceleración y movimiento', grade: 9, area: 'fisica', status: 'planificada' },
   { title: 'Cálculos estequiométricos básicos', grade: 9, area: 'quimica', status: 'planificada' },
   { title: 'Respiración celular y balance energético', grade: 10, area: 'biologia', status: 'planificada' },
-  { title: 'Factores que afectan la velocidad de reacción', grade: 10, area: 'quimica', status: 'planificada' },
   { title: 'Expresión génica y efecto de mutaciones', grade: 11, area: 'biologia', status: 'planificada' },
   { title: 'Equilibrio químico con cambios controlados', grade: 11, area: 'quimica', status: 'planificada' },
   { title: 'Contaminación del agua e indicadores', grade: 11, area: 'ambiental', status: 'planificada' },

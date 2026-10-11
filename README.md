@@ -6,11 +6,13 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (19)
+## Prácticas implementadas (24)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
 | 6.º | Medición de masa, volumen y densidad | Física | ρ = m/V; volumen geométrico y por desplazamiento; flotación (Arquímedes); resolución de instrumentos |
+| 6.º | Microscopio virtual: células animales y vegetales | Biología | Aumento total, diámetro del campo (número de campo 18 mm), estimación del tamaño celular, umbral de visibilidad (tamaño aparente, contraste por tinción, profundidad de campo) |
+| 6.º | Cadenas y redes alimentarias | Ambiental | Lotka-Volterra generalizado con respuesta funcional tipo II, regla del 10 %, cascadas tróficas, pirámide de biomasa (RK4) |
 | 6.º | Separación de mezclas | Química | Propiedades de cada componente (magnetismo, solubilidad, densidad); pérdidas en filtro y embudo; energía de evaporación (c·ΔT + L) |
 | 7.º | Difusión y ósmosis a través de la membrana | Biología | Boyle-van 't Hoff, van 't Hoff (π = CRT), turgencia elástica, lisis; difusión de Fick con D ∝ T/η |
 | 7.º | Mitosis al microscopio: fases e índice mitótico | Biología | Fracción de células por fase ∝ duración; índice mitótico; ADN 2C→4C; efecto de la colchicina |
@@ -19,10 +21,13 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 8.º | Laboratorio de ondas | Física | v = λ·f, v = √(T/μ), onda armónica, energía ∝ A²f², sonido en el aire según la temperatura |
 | 9.º | Del ADN a la proteína | Biología | Complementariedad, replicación semiconservativa, código genético, clasificación de mutaciones (HBB Glu6Val) |
 | 9.º | Leyes de Newton | Física | F_neta = m·a, fricción estática y cinética, cinemática con fotopuertas (a = 2d/t²) |
+| 9.º | Velocidad, aceleración y movimiento | Física | MRU y MRUA, fotografía estroboscópica, gráficas x–t y v–t (pendiente y área), frenado, reto de igualar gráficas |
+| 9.º | Selección natural con cambios ambientales | Biología | Rasgo cuantitativo heredable, depredación por contraste, diferencial de selección y ecuación del criador R = h²·S |
 | 10.º | Soluciones, molaridad y colorimetría | Química | n = m/M, M = n/V, C₁V₁ = C₂V₂, Beer-Lambert, solubilidad |
 | 10.º | Actividad enzimática | Biología | Michaelis-Menten × Arrhenius × desnaturalización × pH (dos pKa) |
 | 10.º | Fotosíntesis: luz, CO₂ y temperatura | Biología | Inverso del cuadrado, colimitación luz/CO₂ (hipérbola no rectangular), respiración Q₁₀, punto de compensación |
 | 10.º | Leyes de los gases | Química | Gas ideal PV = nRT: Boyle, Charles (cero absoluto por extrapolación), Gay-Lussac; resolución de instrumentos |
+| 10.º | Factores que afectan la velocidad de reacción | Química | Mármol + HCl (concentración, temperatura de Arrhenius, superficie que se encoge) y H₂O₂ con catalizadores (MnO₂, catalasa); gas recogido en jeringa |
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
 | 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |
@@ -30,7 +35,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Crecimiento poblacional y capacidad de carga | Ambiental | Exponencial y logístico con cosecha |
 | 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 
-Otras 20 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 15 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

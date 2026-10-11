@@ -89,3 +89,23 @@ Alcance: separación de mezclas (6.º), reflexión y refracción (8.º), leyes d
 | Accesibilidad (axe-core) | Las 5 prácticas nuevas, en tema claro y oscuro | 0 infracciones | — | — | Correcto |
 
 **No verificado en esta fase:** igual que en la fase 2 (sin lectores de pantalla reales, sin pruebas con estudiantes, sin Firefox ni Safari). Los DBA de las 5 prácticas nuevas son propuestas que deben validarse con el área.
+
+# Fase 4: aplicación sin conexión, reparto de respuestas, guías en PDF y cinco prácticas más
+
+Alcance: aplicación instalable y sin conexión; posición de la respuesta correcta; guías de trabajo en PDF; microscopio virtual (6.º), redes alimentarias (6.º), cinemática (9.º), selección natural (9.º) y velocidad de reacción (10.º). Quedan 24 prácticas implementadas y 15 planificadas.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Sin conexión | E2E: primera visita, recarga sin red, práctica nunca abierta (Newton) funcionando sin red, fuentes propias cargadas; manifiesto e iconos | Funciona | Las fuentes venían de Google Fonts: sin conexión se perdían y el navegador del estudiante consultaba a un tercero | Fuentes incluidas en la aplicación (Fontsource); en la versión de un solo archivo, incrustadas | Corregido |
+| Aviso «listo sin conexión» | Revisión de las pruebas E2E | — | El aviso fijo podía tapar botones | Se oculta solo a los 12 s; en las demás pruebas E2E el service worker se bloquea para que sean deterministas | Corregido |
+| Evaluación | Conteo de la letra correcta en las 101 preguntas | — | **75 de 101 respuestas correctas eran B y ninguna D**: marcar siempre B daba 74 % | Reordenamiento estable por pregunta sin cambiar textos (balance.ts); prueba de que cada letra queda entre 15 % y 35 % | Corregido |
+| Accesibilidad de grupos de botones | Revisión de código (reporte de un subagente) | — | El grupo «Segmented» usaba la etiqueta como id: con espacios, `aria-labelledby` apuntaba a ids inexistentes y el grupo quedaba sin nombre | Id generado con `useId` | Corregido |
+| Guías en PDF | Generación de las 24 guías y claves; revisión visual de páginas | Funciona | Encabezados de tabla oscuros sobre verde; texto del banner superpuesto; encabezados partidos en tablas de más de 8 columnas | Estilo de encabezado blanco, interlineado del banner, fuente menor en tablas anchas | Corregido |
+| Microscopio – modelo | 15 pruebas: aumento, campo, conteo y tamaño, visibilidad por tamaño/tinción/foco, profundidad de campo, clasificación | Correcto | — | — | Correcto |
+| Redes alimentarias – modelo | 12 pruebas: equilibrio estable, cascada por caza, pesticida, sequía, pirámide de biomasa, sin productor, regla del 10 % | Correcto | — | Parámetros ilustrativos afinados numéricamente (declarado en el modelo) | Correcto |
+| Selección natural – modelo | 14 pruebas: h² = 0 sin evolución, sin depredación sin cambio, estabilización en B, R = h²·S a mano y analítico, simetría | Correcto | Con ancho de contraste w = 0,15 la selección casi desaparecía lejos del fondo (en clase parecería «la selección no funciona») | w = 0,30 (declarado como valor ilustrativo); el suelo volcánico produce un cambio visible en 10 generaciones | Corregido |
+| Cinemática – modelo | 12 pruebas: MRU, MRUA, pendiente x–t = v, área v–t = desplazamiento, frenado, fin de pista, resoluciones, reto | Correcto | — | — | Correcto |
+| Velocidad de reacción – modelo | 11 pruebas: concentración, temperatura, área, catalizadores, catalasa desnaturalizada, volumen final por estequiometría | Correcto | A 50 °C el CO₂ no cabría en la jeringa de 100 mL | El gas se lee a 25 °C (declarado en los supuestos) | Corregido |
+| Laboratorios nuevos – interfaz | Revisión visual a 1280 px y 380 px (tema claro y oscuro), E2E de cada práctica, axe en las 5 | Funciona; 0 infracciones | — | — | Correcto |
+
+**Limitaciones de esta fase:** los parámetros de las redes alimentarias, de la selección y de la cinética son ilustrativos (no medidos); los DBA de las prácticas nuevas son propuestas por validar; las guías usan un logo provisional hasta recibir el oficial.

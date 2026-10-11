@@ -5,6 +5,35 @@ import { fmt, fmtSig, parseLocaleNumber } from '../lib/format';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { BenchTop, Burette, Erlenmeyer, Lcd } from './kit';
+
+/** Contorno del líquido dentro del Erlenmeyer del kit (misma geometría), para teñirlo con el indicador. */
+function erlLiquid(x: number, y: number, w: number, h: number, fill: number) {
+  const neckW = w * 0.28, neckH = h * 0.3, cx = x + w / 2;
+  const f = Math.max(0, Math.min(1, fill));
+  const ly = y + h - 3 - (h - neckH - 6) * f;
+  const half = neckW / 2 + ((w / 2 - 4 - neckW / 2) * (ly - (y + neckH))) / (h - 10 - neckH);
+  return `M${cx - half} ${ly} L${cx + half} ${ly} L${x + w - 5} ${y + h - 9} Q${x + w - 2} ${y + h - 2} ${x + w - 10} ${y + h - 2} L${x + 10} ${y + h - 2} Q${x + 2} ${y + h - 2} ${x + 5} ${y + h - 9} Z`;
+}
+
+/** Frasco lavador de polietileno con agua destilada. */
+function WashBottle({ x, y }: { x: number; y: number }) {
+  const w = 46, base = 326;
+  return (
+    <g aria-hidden="true">
+      <path d={`M${x + w / 2 + 2} ${y + 6} L${x + w / 2 + 2} ${y - 12} Q${x + w / 2 + 2} ${y - 20} ${x + w / 2 + 12} ${y - 22} L${x + w + 18} ${y - 26}`} fill="none" stroke="#c8d2d4" strokeWidth="3.2" strokeLinecap="round" />
+      <path d={`M${x + w / 2 + 2} ${y + 6} L${x + w / 2 + 2} ${y - 12} Q${x + w / 2 + 2} ${y - 20} ${x + w / 2 + 12} ${y - 22} L${x + w + 18} ${y - 26}`} fill="none" stroke="#8f9a9e" strokeWidth="0.8" strokeLinecap="round" />
+      <g filter="url(#kit-shadow-soft)">
+        <path d={`M${x + 10} ${y + 18} Q${x + 10} ${y + 10} ${x + 16} ${y + 10} L${x + w - 16} ${y + 10} Q${x + w - 10} ${y + 10} ${x + w - 10} ${y + 18} L${x + w} ${y + 34} L${x + w} ${base - 4} Q${x + w} ${base} ${x + w - 4} ${base} L${x + 4} ${base} Q${x} ${base} ${x} ${base - 4} L${x} ${y + 34} Z`} fill="#eef4f6" opacity="0.92" stroke="#a9b4b6" />
+      </g>
+      <rect x={x + 2} y={y + 46} width={w - 4} height={base - y - 48} rx={3} fill="#bcdcf0" opacity="0.55" />
+      <rect x={x + 13} y={y + 2} width={w - 26} height={10} rx={2} fill="#e04a3a" />
+      <rect x={x + 7} y={y + 58} width={w - 14} height={18} rx={2} fill="#ffffff" stroke="#c8d2d4" strokeWidth="0.6" />
+      <text x={x + w / 2} y={y + 71} textAnchor="middle" style={{ fontSize: 9, fill: '#24454a', fontWeight: 700 }}>H₂O</text>
+      <rect x={x + 4} y={y + 36} width={3} height={base - y - 44} rx={1.5} fill="#fff" opacity="0.6" />
+    </g>
+  );
+}
 
 const CONCS = [0.01, 0.05, 0.1, 0.2];
 /** Reto: vinagre diluido 10 veces con concentración oculta para el estudiante. */
@@ -39,6 +68,8 @@ function TitrationPart({ api }: LabProps) {
   };
   const ph0 = useMemo(() => titrate({ acidId: realAcid, acidConc: realCa, acidVolume: va, baseConc: cb, baseVolume: 0 }).pH, [realAcid, realCa, va, cb]);
   const historyPts = [{ x: 0, y: ph0 }, ...history.filter((pt) => pt.x > 0)];
+  /** Nivel del líquido en el erlenmeyer (dibujo): ácido + base añadida, de 5 a 150 mL. */
+  const flaskFill = 0.16 + 0.7 * Math.min(1, (va + vb) / 150);
 
   const record = () => api.addTrial('titulacion', {
     acido: challenge ? 'Vinagre diluido (reto)' : prettyFormula(findAcid(acidId).formula), cacido: challenge ? null : ca, vacido: va, cbase: cb, vbase: vb,
@@ -58,25 +89,62 @@ function TitrationPart({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
-          <svg viewBox="0 0 640 280" role="img" aria-labelledby="tit-t tit-d">
+          <svg viewBox="0 0 640 352" role="img" aria-labelledby="tit-t tit-d">
             <title id="tit-t">Montaje de titulación con bureta, erlenmeyer y pH-metro</title>
             <desc id="tit-d">{`Se han añadido ${fmt(vb, 2)} mL de NaOH. pH ${fmt(res.pH, 2)}. Indicador ${ind.name}: ${col.label}.`}</desc>
-            <rect x="200" y="10" width="24" height="170" fill="var(--surface)" stroke="var(--ink-2)" />
-            <rect x="201" y={10 + (vb / 100) * 168} width="22" height={168 - (vb / 100) * 168} fill="rgba(70,150,220,0.3)" />
-            {Array.from({ length: 11 }, (_, i) => <g key={i}><line x1="224" x2="232" y1={10 + i * 16.8} y2={10 + i * 16.8} stroke="var(--ink-2)" /><text x="236" y={14 + i * 16.8} style={{ fontSize: 9, fill: 'var(--ink-2)' }}>{i * 10}</text></g>)}
-            <path d="M206 180 L218 180 L214 196 L210 196 Z" fill="var(--ink-2)" />
-            <path d="M180 270 L244 270 L232 222 L222 205 L222 200 L202 200 L202 205 L192 222 Z" fill="var(--surface)" stroke="var(--ink-2)" strokeWidth="2" />
-            <path d="M186 262 L238 262 L231 232 L193 232 Z" fill={col.color} />
-            <text x="212" y="279" textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>erlenmeyer</text>
-            <g transform="translate(330 70)">
-              <rect width="150" height="80" rx="10" fill="var(--surface-2)" stroke="var(--ink-2)" />
-              <rect x="14" y="14" width="122" height="36" rx="4" fill="#0d1f1d" />
-              <text x="75" y="40" textAnchor="middle" fill="#7CFFB2" style={{ fontFamily: 'var(--font-data)', fontSize: 20 }}>pH {fmt(res.pH, 2)}</text>
-              <text x="75" y="68" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>pH-metro</text>
-              <line x1="0" y1="60" x2="-100" y2="175" stroke="var(--ink-2)" strokeWidth="2" />
+            <BenchTop y={326} width={640} />
+            {/* soporte universal */}
+            <g filter="url(#kit-shadow-soft)">
+              <rect x={96} y={316} width={84} height={10} rx={2} fill="url(#kit-body-dark)" />
+              <rect x={136} y={14} width={8} height={304} rx={3} fill="url(#kit-metal-h)" stroke="#8f9a9e" strokeWidth="0.6" />
             </g>
-            <text x="410" y="190" style={{ fontSize: 12, fill: 'var(--ink)' }}>NaOH añadido: {fmt(vb, 2)} mL</text>
-            <text x="410" y="210" style={{ fontSize: 12, fill: 'var(--ink-2)' }}>{ind.name}: {col.label}</text>
+            {[58, 150].map((cy) => (
+              <g key={cy}>
+                <rect x={142} y={cy - 3} width={64} height={6} fill="url(#kit-metal)" stroke="#8f9a9e" strokeWidth="0.6" />
+                <rect x={131} y={cy - 8} width={18} height={16} rx={2} fill="url(#kit-body-dark)" />
+                <circle cx={140} cy={cy + 12} r={3.5} fill="url(#kit-metal)" stroke="#8f9a9e" strokeWidth="0.6" />
+              </g>
+            ))}
+            {/* bureta con NaOH */}
+            <Burette x={203} y={10} h={192} capacity={100} level={vb} liquid="#a9cdea" liquidOpacity={0.85} major={5} />
+            {[58, 150].map((cy) => <rect key={cy} x={199} y={cy - 6} width={26} height={12} rx={3} fill="#2b3335" opacity="0.92" />)}
+            <text x="252" y="22" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>Bureta · NaOH {fmt(cb, 2)} M</text>
+            {/* agitador magnético */}
+            <g filter="url(#kit-shadow)">
+              <path d="M170 292 L262 292 Q270 292 270 300 L272 326 L160 326 L162 300 Q162 292 170 292 Z" fill="url(#kit-body)" stroke="#a9b4b6" />
+              <rect x={164} y={287} width={104} height={7} rx={2} fill="#eef2f2" stroke="#b9c3c5" />
+            </g>
+            <circle cx={184} cy={310} r={7} fill="url(#kit-metal)" stroke="#8f9a9e" />
+            <line x1={184} x2={184} y1={304} y2={309} stroke="#55605f" strokeWidth="1.5" />
+            <circle cx={250} cy={310} r={2.6} fill="#3ddc84" stroke="#2b3335" strokeWidth="0.5" />
+            {/* erlenmeyer con el ácido y el indicador; electrodo sumergido */}
+            <Erlenmeyer x={160} y={192} w={112} h={95} fill={flaskFill} liquid="#cfe3ee" liquidOpacity={0.4}>
+              <path d={erlLiquid(160, 192, 112, 95, flaskFill)} fill={col.color} opacity="0.88" />
+              <rect x={202} y={281} width={16} height={4} rx={2} fill="#f5f5f5" stroke="#9aa5a9" strokeWidth="0.6" />
+              <rect x={223} y={194} width={6} height={86} rx={3} fill="url(#kit-glass-fill)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="1" />
+              <line x1={226} x2={226} y1={198} y2={278} stroke="#9aa5a9" strokeWidth="0.8" />
+              <circle cx={226} cy={281} r={4} fill="url(#kit-glass-fill)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="1" />
+              <rect x={221} y={182} width={10} height={14} rx={2} fill="#2b3335" />
+            </Erlenmeyer>
+            <path d="M226 182 C236 176 262 180 282 204 S304 234 314 237" fill="none" stroke="#56636a" strokeWidth="2.6" strokeLinecap="round" />
+            <text x="216" y="344" textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>erlenmeyer · agitador magnético</text>
+            {/* pH-metro de mesa */}
+            <g filter="url(#kit-shadow)">
+              <path d="M318 232 L436 232 Q446 232 446 242 L450 326 L304 326 L308 242 Q308 232 318 232 Z" fill="url(#kit-body)" stroke="#a9b4b6" />
+            </g>
+            <rect x={316} y={242} width={122} height={46} rx={6} fill="url(#kit-body-dark)" />
+            <Lcd x={322} y={248} w={110} h={34} text={`pH ${fmt(res.pH, 2)}`} />
+            {['CAL', 'MED'].map((label, i) => (
+              <g key={label}>
+                <rect x={330 + i * 36} y={296} width={24} height={11} rx={3} fill="url(#kit-body-dark)" />
+                <text x={342 + i * 36} y={317} textAnchor="middle" style={{ fontSize: 7, fill: '#55605f', fontWeight: 700 }}>{label}</text>
+              </g>
+            ))}
+            <circle cx={314} cy={238} r={4} fill="#2b3335" />
+            <text x="377" y="344" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>pH-metro</text>
+            <WashBottle x={548} y={244} />
+            <text x="464" y="150" style={{ fontSize: 12, fill: 'var(--ink)' }}>NaOH añadido: {fmt(vb, 2)} mL</text>
+            <text x="464" y="170" style={{ fontSize: 12, fill: 'var(--ink-2)' }}>{ind.name}: {col.label}</text>
           </svg>
         </div>
         <div className="card">

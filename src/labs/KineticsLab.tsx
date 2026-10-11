@@ -9,17 +9,38 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { BenchTop, GasSyringe, Stopwatch, Thermometer } from './kit';
 
-const W = 640, H = 300;
+/** Frasco reactivo de vidrio ámbar con rótulo. */
+function ReagentBottle({ x, label, conc }: { x: number; label: string; conc: string }) {
+  const base = 292, w = 46, top = 196;
+  const body = `M${x + 14} ${top + 12} L${x + 14} ${top + 22} Q${x} ${top + 26} ${x} ${top + 40} L${x} ${base - 4} Q${x} ${base} ${x + 4} ${base} L${x + w - 4} ${base} Q${x + w} ${base} ${x + w} ${base - 4} L${x + w} ${top + 40} Q${x + w} ${top + 26} ${x + w - 14} ${top + 22} L${x + w - 14} ${top + 12} Z`;
+  return (
+    <g>
+      <path d={body} fill="#9a5a1c" opacity="0.88" filter="url(#kit-shadow-soft)" />
+      <rect x={x + 2} y={top + 52} width={w - 4} height={base - top - 54} fill="#5b2f0b" opacity="0.45" />
+      <path d={body} fill="url(#kit-glass)" stroke="#6b3a10" strokeWidth="1" />
+      <rect x={x + 11} y={top} width={w - 22} height={14} rx={2} fill="#2b3335" />
+      <rect x={x + 5} y={top + 50} width={w - 10} height={30} rx={2} fill="#fbfaf5" stroke="#d9d3c4" strokeWidth="0.6" />
+      <text x={x + w / 2} y={top + 63} textAnchor="middle" style={{ fontSize: 9, fill: '#24312f', fontWeight: 700 }}>{label}</text>
+      <text x={x + w / 2} y={top + 74} textAnchor="middle" style={{ fontSize: 7.5, fill: '#24312f', fontFamily: 'var(--font-data)' }}>{conc}</text>
+      <rect x={x + 4} y={top + 34} width={3} height={base - top - 44} rx={1.5} fill="#fff" opacity="0.3" />
+    </g>
+  );
+}
+
+const W = 640, H = 316, BENCH_Y = 292;
 /** Segundos simulados por segundo real (180 s en 6 s). */
 const SPEED = 30;
 /** Una burbuja dibujada por cada mL de gas; sube durante 18 s simulados. */
 const RISE = 18;
 const MAX_BUBBLES = 45;
-const SY_X0 = 340, SY_PX = 240; // jeringa: 0 mL en x = 340, 100 mL en x = 580
+const SY_X0 = 320, SY_PX = 240; // jeringa: 0 mL en x = 320, 100 mL en x = 560
 const SURFACE_Y = 205, BASE_Y = 270;
 const wallLeft = (y: number) => 120 - ((y - 150) * 50) / 120;
 const wallRight = (y: number) => 150 + ((y - 150) * 50) / 120;
+/** Contorno del erlenmeyer de 250 mL (cuello de 120 a 150, base redondeada). */
+const flaskOutline = `M120 95 L120 150 L${wallLeft(BASE_Y - 6)} ${BASE_Y - 6} Q${wallLeft(BASE_Y) - 1} ${BASE_Y} ${wallLeft(BASE_Y) + 8} ${BASE_Y} L${wallRight(BASE_Y) - 8} ${BASE_Y} Q${wallRight(BASE_Y) + 1} ${BASE_Y} ${wallRight(BASE_Y - 6)} ${BASE_Y - 6} L150 150 L150 95`;
 /** Número pseudoaleatorio estable en [0, 1) para la posición de cada burbuja. */
 const hash = (j: number) => { const s = Math.sin(j * 12.9898) * 43758.5453; return s - Math.floor(s); };
 
@@ -83,6 +104,8 @@ export default function KineticsLab({ api }: LabProps) {
   const reading = roundToResolution(vNow, SYRINGE_RES);
   const plungerX = SY_X0 + (Math.min(SETUP.syringeMax, vNow) / SETUP.syringeMax) * SY_PX;
   const remaining = marble ? Math.max(0, 1 - vNow / res.totalVolume) : 1;
+  const tb = Math.max(0, Math.min(1, temp / 60));
+  const bathColor = `rgba(${Math.round(90 + 150 * tb)},${Math.round(165 - 45 * tb)},${Math.round(230 - 150 * tb)},${(0.2 + 0.12 * tb).toFixed(2)})`;
 
   const bubbles = useMemo(() => {
     if (!running) return [];
@@ -113,9 +136,9 @@ export default function KineticsLab({ api }: LabProps) {
     if (marble) {
       const grow = Math.cbrt(remaining);
       if (remaining <= 0.002) return null;
-      if (particle === 'trozos') return [95, 135, 172].map((x, i) => <rect key={i} x={x - 10 * grow} y={BASE_Y - 16 * grow - 1} width={20 * grow} height={16 * grow} rx={4 * grow} fill="#ece8df" stroke="var(--ink-2)" />);
-      if (particle === 'granulado') return Array.from({ length: 10 }, (_, i) => <circle key={i} cx={88 + i * 10 + (i % 2) * 3} cy={BASE_Y - 4 - (i % 3) * 3} r={4.5 * grow} fill="#ece8df" stroke="var(--ink-2)" strokeWidth="0.8" />);
-      return <rect x="80" y={BASE_Y - 4 * remaining - 1} width="110" height={4 * remaining + 1} fill="#ece8df" stroke="var(--ink-2)" strokeWidth="0.6" />;
+      if (particle === 'trozos') return [95, 135, 172].map((x, i) => <rect key={i} x={x - 10 * grow} y={BASE_Y - 16 * grow - 1} width={20 * grow} height={16 * grow} rx={4 * grow} fill="#ece8df" stroke="#9d978a" />);
+      if (particle === 'granulado') return Array.from({ length: 10 }, (_, i) => <circle key={i} cx={88 + i * 10 + (i % 2) * 3} cy={BASE_Y - 4 - (i % 3) * 3} r={4.5 * grow} fill="#ece8df" stroke="#9d978a" strokeWidth="0.8" />);
+      return <rect x="80" y={BASE_Y - 4 * remaining - 1} width="110" height={4 * remaining + 1} fill="#ece8df" stroke="#9d978a" strokeWidth="0.6" />;
     }
     if (catalyst === 'mno2') return Array.from({ length: 24 }, (_, i) => <circle key={i} cx={84 + i * 4.3} cy={BASE_Y - 2 - (i % 2) * 2} r="2" fill="#3b3430" />);
     if (catalyst === 'catalasa') return [92, 116, 140, 166].map((x, i) => <rect key={i} x={x} y={BASE_Y - 9 - (i % 2) * 3} width="16" height="8" rx="3" fill="#e2cd8c" stroke="#8a7440" />);
@@ -133,45 +156,57 @@ export default function KineticsLab({ api }: LabProps) {
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="vel-t vel-d">
             <title id="vel-t">{marble ? 'Mármol con ácido clorhídrico en un erlenmeyer conectado a una jeringa de 100 mL' : 'Agua oxigenada con catalizador en un erlenmeyer conectado a una jeringa de 100 mL'}</title>
             <desc id="vel-d">{`Baño a ${fmt(temp, 0)} °C. ${marble ? `HCl ${fmt(concHCl, 1)} mol/L y mármol en ${findParticle(particle).name.toLowerCase()}.` : `Agua oxigenada al ${fmt(concH2O2, 1)} % con catalizador: ${catalystName.toLowerCase()}.`} ${status}`}</desc>
+            <BenchTop y={BENCH_Y} width={W} />
+            {/* soporte universal que sujeta la jeringa */}
+            <g filter="url(#kit-shadow-soft)">
+              <rect x={492} y={BENCH_Y - 9} width={70} height={9} rx={2} fill="url(#kit-body-dark)" />
+              <rect x={519} y={18} width={7} height={BENCH_Y - 26} rx={3} fill="url(#kit-metal-h)" stroke="#8f9a9e" strokeWidth="0.6" />
+            </g>
             {/* baño de agua */}
-            <rect x="30" y="170" width="220" height="120" rx="6" fill="rgba(70,150,220,0.16)" stroke="var(--line)" />
-            <text x="40" y="188" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>baño</text>
-            <rect x="222" y="120" width="8" height="150" rx="4" fill="var(--surface)" stroke="var(--ink-2)" />
-            <rect x="224" y={270 - 120 * ((temp - 0) / 60)} width="4" height={120 * (temp / 60)} fill="var(--bad)" />
-            <text x="226" y="112" textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink)', fontFamily: 'var(--font-data)' }}>{fmt(temp, 0)} °C</text>
-            {/* erlenmeyer */}
-            <path d={`M${wallLeft(SURFACE_Y)} ${SURFACE_Y} L${wallLeft(BASE_Y)} ${BASE_Y} L${wallRight(BASE_Y)} ${BASE_Y} L${wallRight(SURFACE_Y)} ${SURFACE_Y} Z`} fill={marble ? 'rgba(150,190,230,0.35)' : 'rgba(170,210,235,0.35)'} />
+            <rect x={30} y={166} width={222} height={BENCH_Y - 166} rx={4} fill="url(#kit-glass-fill)" filter="url(#kit-shadow-soft)" />
+            <rect x={33} y={182} width={216} height={BENCH_Y - 185} fill={bathColor} />
+            <rect x={33} y={182} width={216} height={2.5} fill="#fff" opacity="0.4" />
+            {/* erlenmeyer: líquido, sólido, burbujas y vidrio */}
+            <path d={flaskOutline + ' Z'} fill="url(#kit-glass-fill)" />
+            <path d={`M${wallLeft(SURFACE_Y) + 1.5} ${SURFACE_Y} L${wallLeft(BASE_Y - 6) + 1.5} ${BASE_Y - 6} Q${wallLeft(BASE_Y) + 1} ${BASE_Y - 1.5} ${wallLeft(BASE_Y) + 9} ${BASE_Y - 1.5} L${wallRight(BASE_Y) - 9} ${BASE_Y - 1.5} Q${wallRight(BASE_Y) - 1} ${BASE_Y - 1.5} ${wallRight(BASE_Y - 6) - 1.5} ${BASE_Y - 6} L${wallRight(SURFACE_Y) - 1.5} ${SURFACE_Y} Z`} fill={marble ? 'rgba(150,190,230,0.45)' : 'rgba(170,210,235,0.45)'} />
+            <line x1={wallLeft(SURFACE_Y) + 1.5} x2={wallRight(SURFACE_Y) - 1.5} y1={SURFACE_Y} y2={SURFACE_Y} stroke="#6d93aa" strokeWidth="1.2" opacity="0.8" />
             {solid()}
             {bubbles.map(({ j, age }) => {
               const p = age / RISE;
               const y = BASE_Y - 8 - p * (BASE_Y - 8 - SURFACE_Y - 3);
               const l = wallLeft(y) + 6, r = wallRight(y) - 6;
-              return <circle key={j} cx={l + hash(j) * (r - l)} cy={y} r={1.6 + 1.6 * hash(j + 7)} fill="none" stroke="var(--ink-2)" strokeWidth="1" opacity={0.9 - 0.5 * p} />;
+              return <circle key={j} cx={l + hash(j) * (r - l)} cy={y} r={1.6 + 1.6 * hash(j + 7)} fill="rgba(255,255,255,0.35)" stroke="#5f8aa3" strokeWidth="0.9" opacity={0.95 - 0.5 * p} />;
             })}
-            <path d={`M120 95 L120 150 L${wallLeft(BASE_Y)} ${BASE_Y} L${wallRight(BASE_Y)} ${BASE_Y} L150 150 L150 95`} fill="none" stroke="var(--ink)" strokeWidth="2" />
-            <rect x="115" y="82" width="40" height="16" rx="3" fill="#8d6e63" />
-            {/* manguera */}
-            <path d={`M135 82 L135 50 L${SY_X0 - 10} 50`} fill="none" stroke="var(--ink-2)" strokeWidth="4" strokeLinejoin="round" />
-            {/* jeringa */}
-            <rect x={SY_X0 - 12} y="44" width="12" height="12" fill="var(--surface-2)" stroke="var(--ink-2)" />
-            <rect x={SY_X0} y="35" width={SY_PX + 10} height="30" fill="var(--surface)" stroke="var(--ink)" strokeWidth="1.5" />
-            <rect x={SY_X0} y="36" width={Math.max(0, plungerX - SY_X0)} height="28" fill="var(--qui)" opacity="0.25" />
-            {Array.from({ length: 11 }, (_, i) => i * 10).map((v) => (
-              <g key={v}>
-                <line x1={SY_X0 + (v / 100) * SY_PX} x2={SY_X0 + (v / 100) * SY_PX} y1="65" y2={v % 20 === 0 ? 72 : 69} stroke="var(--ink-2)" />
-                {v % 20 === 0 && <text x={SY_X0 + (v / 100) * SY_PX} y="84" textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>{v}</text>}
-              </g>
-            ))}
-            <text x={SY_X0 + SY_PX + 14} y="84" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>mL</text>
-            <rect x={plungerX} y="37" width="6" height="26" fill="var(--ink-2)" />
-            <line x1={plungerX + 6} x2={plungerX + 60} y1="50" y2="50" stroke="var(--ink-2)" strokeWidth="4" />
-            <rect x={plungerX + 60} y="36" width="5" height="28" fill="var(--ink-2)" />
+            {/* tubo de desprendimiento de vidrio */}
+            <rect x={132.5} y={52} width={5} height={78} fill="url(#kit-glass-fill)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="0.8" />
+            <path d={flaskOutline} fill="url(#kit-glass)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="1.6" />
+            <path d="M117 95 L153 95" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="3" strokeLinecap="round" />
+            <path d={`M${wallLeft(165) + 7} 165 L${wallLeft(255) + 8} 255`} stroke="#fff" strokeWidth="3" opacity="0.4" strokeLinecap="round" />
+            {/* tapón de goma */}
+            <path d="M113 80 L157 80 L153 102 L117 102 Z" fill="#6d3b30" />
+            <path d="M113 80 L157 80 L156 85 L114 85 Z" fill="#8d5446" />
+            <rect x={117} y={86} width={3} height={14} fill="#fff" opacity="0.18" />
+            {/* tapa del baño (vidrio frontal) */}
+            <rect x={30} y={166} width={222} height={BENCH_Y - 166} rx={4} fill="url(#kit-glass)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="1.6" />
+            <Thermometer x={232} y={100} h={180} min={0} max={60} value={temp} />
+            <text x="232" y="92" textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink)', fontFamily: 'var(--font-data)' }}>{fmt(temp, 0)} °C</text>
+            <text x="40" y="200" style={{ fontSize: 11, fill: 'var(--ink)', fontWeight: 600 }}>baño</text>
+            {/* manguera de goma hasta la jeringa */}
+            <path d={`M135 54 L135 44 Q135 34 145 34 L${SY_X0 - 44} 34 Q${SY_X0 - 32} 34 ${SY_X0 - 32} 46 Q${SY_X0 - 32} 58 ${SY_X0 - 20} 58 L${SY_X0 - 12} 58`} fill="none" stroke="#c98a4b" strokeWidth="6" strokeLinejoin="round" opacity="0.85" />
+            <path d={`M135 54 L135 44 Q135 34 145 34 L${SY_X0 - 44} 34`} fill="none" stroke="#fff" strokeWidth="1.3" opacity="0.35" />
+            {/* jeringa de gas sobre el soporte */}
+            <GasSyringe x={SY_X0} y={40} length={SY_PX} height={36} fraction={(plungerX - SY_X0) / SY_PX} capacity={SETUP.syringeMax} major={20} gas="rgba(140,120,200,0.18)">
+              {Array.from({ length: 11 }, (_, i) => i * 10).filter((v) => v % 20 !== 0).map((v) => (
+                <line key={v} x1={SY_X0 + (v / 100) * SY_PX} x2={SY_X0 + (v / 100) * SY_PX} y1={76} y2={71} stroke="var(--glass-print, #24454a)" strokeWidth="0.8" />
+              ))}
+            </GasSyringe>
+            <rect x={514} y={34} width={17} height={8} rx={2} fill="#2b3335" />
+            <rect x={514} y={74} width={17} height={8} rx={2} fill="#2b3335" />
             {/* cronómetro */}
-            <rect x="470" y="140" width="130" height="58" rx="10" fill="var(--surface-2)" stroke="var(--line)" />
-            <text x="535" y="174" textAnchor="middle" style={{ fontSize: 20, fontFamily: 'var(--font-data)', fill: 'var(--ink)' }}>{fmt(Math.floor(simT), 0)} s</text>
-            <text x="535" y="191" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>cronómetro</text>
-            <text x="330" y="120" style={{ fontSize: 12, fill: 'var(--ink)' }}>Gas en la jeringa: {fmt(reading, 0)} mL</text>
-            <text x="330" y="138" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{marble ? 'CO₂' : 'O₂'} a 25 °C y 101,3 kPa</text>
+            <Stopwatch x={352} y={176} text={`${fmt(Math.floor(simT), 0)} s`} />
+            <text x="330" y="116" style={{ fontSize: 12, fill: 'var(--ink)' }}>Gas en la jeringa: {fmt(reading, 0)} mL</text>
+            <text x="330" y="134" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{marble ? 'CO₂' : 'O₂'} a 25 °C y 101,3 kPa</text>
+            <ReagentBottle x={578} label={marble ? 'HCl' : 'H₂O₂'} conc={marble ? `${fmt(concHCl, 1)} M` : `${fmt(concH2O2, 1)} %`} />
           </svg>
         </div>
         <Readout items={[

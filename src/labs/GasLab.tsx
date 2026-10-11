@@ -5,6 +5,51 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { BenchTop, GasSyringe, Lcd, Thermometer } from './kit';
+
+/** Ángulo (rad) de la aguja del manómetro: 0–300 kPa recorren 270°. */
+const gaugeAngle = (p: number) => Math.PI * (0.75 + (Math.max(0, Math.min(300, p)) / 300) * 1.5);
+
+/** Manómetro de carátula (tubo de Bourdon) con sensor digital en la base. */
+function PressureGauge({ cx, cy, pressure, reading }: { cx: number; cy: number; pressure: number; reading: string }) {
+  const ticks = useMemo(() => Array.from({ length: 31 }, (_, i) => {
+    const a = gaugeAngle(i * 10), major = i % 5 === 0;
+    const r1 = major ? 28 : 31, r2 = 35;
+    return { i, major, x1: cx + r1 * Math.cos(a), y1: cy + r1 * Math.sin(a), x2: cx + r2 * Math.cos(a), y2: cy + r2 * Math.sin(a), lx: cx + 21 * Math.cos(a), ly: cy + 21 * Math.sin(a) + 2.6 };
+  }), [cx, cy]);
+  const a = gaugeAngle(pressure);
+  const tip = { x: cx + 31 * Math.cos(a), y: cy + 31 * Math.sin(a) };
+  const tail = { x: cx - 8 * Math.cos(a), y: cy - 8 * Math.sin(a) };
+  const nx = -Math.sin(a) * 2.2, ny = Math.cos(a) * 2.2;
+  const arc = (p0: number, p1: number, r: number) => {
+    const a0 = gaugeAngle(p0), a1 = gaugeAngle(p1);
+    return `M${cx + r * Math.cos(a0)} ${cy + r * Math.sin(a0)} A${r} ${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${cx + r * Math.cos(a1)} ${cy + r * Math.sin(a1)}`;
+  };
+  return (
+    <g>
+      {/* base con sensor digital */}
+      <g filter="url(#kit-shadow)">
+        <rect x={cx - 8} y={cy + 40} width={16} height={18} fill="url(#kit-metal-h)" />
+        <path d={`M${cx - 40} ${cy + 56} L${cx + 40} ${cy + 56} Q${cx + 46} ${cy + 56} ${cx + 46} ${cy + 62} L${cx + 48} 228 L${cx - 48} 228 L${cx - 46} ${cy + 62} Q${cx - 46} ${cy + 56} ${cx - 40} ${cy + 56} Z`} fill="url(#kit-body)" stroke="#a9b4b6" />
+        <circle cx={cx} cy={cy} r={44} fill="url(#kit-metal)" stroke="#8f9a9e" />
+      </g>
+      <Lcd x={cx - 44} y={cy + 67} w={88} h={22} text={`${reading} kPa`} />
+      <circle cx={cx} cy={cy} r={39} fill="#fbfbf7" stroke="#6f7a7e" strokeWidth="0.8" />
+      <path d={arc(250, 300, 33)} fill="none" stroke="#d64541" strokeWidth="4" />
+      <path d={arc(0, 101.3, 33)} fill="none" stroke="#3a9d6a" strokeWidth="2" opacity="0.6" />
+      {ticks.map((t) => (
+        <g key={t.i}>
+          <line x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} stroke="#1f2a2c" strokeWidth={t.major ? 1.3 : 0.6} />
+          {t.major && <text x={t.lx} y={t.ly} textAnchor="middle" style={{ fontSize: 6.5, fill: '#1f2a2c', fontFamily: 'var(--font-data)' }}>{t.i * 10}</text>}
+        </g>
+      ))}
+      <text x={cx} y={cy + 26} textAnchor="middle" style={{ fontSize: 7, fill: '#1f2a2c', fontWeight: 700 }}>kPa</text>
+      <path d={`M${tail.x + nx} ${tail.y + ny} L${tip.x} ${tip.y} L${tail.x - nx} ${tail.y - ny} Z`} fill="#c62828" />
+      <circle cx={cx} cy={cy} r={4.2} fill="url(#kit-metal)" stroke="#6f7a7e" strokeWidth="0.6" />
+      <path d={`M${cx - 30} ${cy - 18} A36 36 0 0 1 ${cx + 12} ${cy - 34}`} fill="none" stroke="#fff" strokeWidth="5" opacity="0.35" strokeLinecap="round" />
+    </g>
+  );
+}
 
 const LAW_NAME: Record<GasLaw, string> = { boyle: 'Temperatura constante (Boyle)', charles: 'Presión constante (Charles)', 'gay-lussac': 'Volumen constante (Gay-Lussac)' };
 
@@ -26,6 +71,8 @@ export default function GasLab({ api }: LabProps) {
   const particles = useMemo(() => { const r = seededRandom(3); return Array.from({ length: 40 }, () => ({ x: r(), y: r(), vx: r() - 0.5, vy: r() - 0.5 })); }, []);
   const speed = Math.sqrt(res.temperatureK / 298) * 0.004;
   const cylLen = (res.volume / 200) * 380; // px de gas dentro de la jeringa
+  const warm = res.temperatureC > 25;
+  const bathColor = `rgba(${warm ? 230 : 80},${warm ? 120 : 140},${warm ? 80 : 230},${Math.min(0.35, Math.abs(res.temperatureC - 25) / 200 + 0.08)})`;
   const pos = (p: { x: number; vx: number }, len: number) => { const raw = (p.x + p.vx * speed * tick) % 2; const u = raw < 0 ? raw + 2 : raw; return (u > 1 ? 2 - u : u) * len; };
 
   const record = () => api.addTrial('mediciones', {
@@ -38,21 +85,33 @@ export default function GasLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
-          <svg viewBox="0 0 640 220" role="img" aria-labelledby="gas-t gas-d">
+          <svg viewBox="0 0 640 256" role="img" aria-labelledby="gas-t gas-d">
             <title id="gas-t">Jeringa con aire, manómetro y termómetro</title>
             <desc id="gas-d">{`${LAW_NAME[law]}. Volumen ${fmt(res.volumeReading, 0)} mL, presión ${fmt(res.pressureReading, 1)} kPa, temperatura ${fmt(res.temperatureC, 1)} °C.`}</desc>
-            {law !== 'boyle' && <rect x="20" y="40" width="470" height="140" rx="12" fill={`rgba(${res.temperatureC > 25 ? 230 : 80},${res.temperatureC > 25 ? 120 : 140},${res.temperatureC > 25 ? 80 : 230},${Math.min(0.35, Math.abs(res.temperatureC - 25) / 200 + 0.08)})`} />}
-            <rect x="60" y="80" width="400" height="60" fill="var(--surface)" stroke="var(--ink-2)" strokeWidth="2" />
-            {Array.from({ length: 11 }, (_, i) => <g key={i}><line x1={60 + i * 38} x2={60 + i * 38} y1="140" y2="150" stroke="var(--ink-2)" /><text x={60 + i * 38} y="162" textAnchor="middle" style={{ fontSize: 9, fill: 'var(--ink-2)' }}>{i * 20}</text></g>)}
-            <rect x="61" y="81" width={cylLen} height="58" fill="rgba(120,180,230,0.18)" />
-            {particles.map((p, i) => <circle key={i} cx={61 + 4 + pos(p, Math.max(8, cylLen - 8))} cy={85 + pos({ x: p.y, vx: p.vy }, 50)} r="3" fill="var(--fis)" />)}
-            <rect x={60 + cylLen} y="76" width="10" height="68" fill="var(--ink-2)" />
-            <rect x={70 + cylLen} y="104" width={Math.max(0, 470 - cylLen)} height="12" fill="var(--line)" />
-            <circle cx="560" cy="80" r="44" fill="var(--surface)" stroke="var(--ink-2)" strokeWidth="2" />
-            <line x1="560" y1="80" x2={560 + 34 * Math.cos(Math.PI * (0.75 + (res.pressure / 300) * 1.5))} y2={80 + 34 * Math.sin(Math.PI * (0.75 + (res.pressure / 300) * 1.5))} stroke="var(--bad)" strokeWidth="3" />
-            <text x="560" y="140" textAnchor="middle" style={{ fontSize: 13, fontFamily: 'var(--font-data)', fill: 'var(--ink)' }}>{fmt(res.pressureReading, 1)} kPa</text>
-            <line x1="516" y1="80" x2="60" y2="80" stroke="var(--ink-2)" strokeDasharray="3 3" opacity="0.4" />
-            <text x="40" y="30" style={{ fontSize: 12, fill: 'var(--ink-2)' }}>{law === 'boyle' ? `T = ${fmt(INITIAL.temperature, 1)} °C (constante)` : `Baño a ${fmt(res.temperatureC, 1)} °C`}</text>
+            <BenchTop y={228} width={640} />
+            {/* baño de agua termostatizado (solo si cambia la temperatura) */}
+            {law !== 'boyle' && <rect x={118} y={58} width={478} height={170} rx={4} fill="url(#kit-glass-fill)" filter="url(#kit-shadow-soft)" />}
+            {/* soportes en V */}
+            {[233, 499].map((cx) => (
+              <g key={cx}>
+                <rect x={cx - 7} y={150} width={14} height={law !== 'boyle' ? 74 : 78} fill="url(#kit-body-dark)" />
+                <path d={`M${cx - 13} 143 L${cx + 13} 143 L${cx + 9} 152 L${cx - 9} 152 Z`} fill="url(#kit-body-dark)" />
+              </g>
+            ))}
+            {law !== 'boyle' && <rect x={121} y={74} width={472} height={151} fill="rgba(110,170,220,0.2)" />}
+            {law !== 'boyle' && <rect x={121} y={74} width={472} height={151} fill={bathColor} />}
+            {law !== 'boyle' && <rect x={121} y={74} width={472} height={3} fill="#fff" opacity="0.35" />}
+            {law === 'boyle' && <path d="M124 228 L148 228 L144 219 L128 219 Z" fill="url(#kit-body-dark)" />}
+            <Thermometer x={136} y={36} h={186} min={-20} max={100} value={res.temperatureC} />
+            <GasSyringe x={176} y={98} length={380} height={46} fraction={res.volume / 200} capacity={200} major={20} gas="rgba(120,180,230,0.2)">
+              {particles.map((p, i) => <circle key={i} cx={177 + 4 + pos(p, Math.max(8, cylLen - 10))} cy={103 + pos({ x: p.y, vx: p.vy }, 36)} r="2.8" fill="var(--fis)" opacity="0.9" />)}
+            </GasSyringe>
+            {law !== 'boyle' && <rect x={118} y={58} width={478} height={170} rx={4} fill="url(#kit-glass)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="1.6" />}
+            {/* manguera al manómetro */}
+            <path d="M100 121 L162 121" stroke="#56636a" strokeWidth="6" strokeLinecap="round" />
+            <path d="M100 119.5 L162 119.5" stroke="#fff" strokeWidth="1.2" opacity="0.25" />
+            <PressureGauge cx={60} cy={110} pressure={res.pressure} reading={fmt(res.pressureReading, 1)} />
+            <text x="200" y="30" style={{ fontSize: 12, fill: 'var(--ink-2)' }}>{law === 'boyle' ? `T = ${fmt(INITIAL.temperature, 1)} °C (constante)` : `Baño a ${fmt(res.temperatureC, 1)} °C`}</text>
           </svg>
         </div>
         <Readout items={[

@@ -8,6 +8,8 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:4173',
     locale: 'es-CO',
+    // El service worker solo se activa en la prueba sin conexión (offline.spec.ts).
+    serviceWorkers: 'block',
     launchOptions: process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : undefined,
   },
   webServer: [

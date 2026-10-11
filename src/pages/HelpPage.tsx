@@ -5,6 +5,7 @@ import { href } from '../lib/router';
 import type { Prefs } from '../lib/prefs';
 import { Segmented } from '../components/ui';
 import { storageAvailable } from '../lib/storage';
+import { InstallButton } from '../components/PwaUi';
 
 export function AccessibilityPanel({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Prefs) => void }) {
   return (
@@ -21,6 +22,7 @@ const IMPLEMENTED = [
   'Navegación por grados (6.º a 11.º), asignaturas, catálogo con buscador y filtros.',
   `${PRACTICES.length} prácticas completas con modelos científicos calculados, controles, tabla de datos, gráficas configurables, hipótesis, análisis, conclusión y evaluación.`,
   'Modos de práctica guiada, exploración libre y evaluación.',
+  'Funciona sin conexión después de la primera visita e instalable como aplicación (escritorio, Android e iPhone).',
   'Detección de tendencias en los datos y advertencias de control de variables al comparar con la hipótesis.',
   'Preguntas de selección múltiple con retroalimentación por opción, explicación, repaso y transferencia; reintentos.',
   'Banco de preguntas originales tipo Saber 11 con filtros por grado, competencia, componente y dificultad.',
@@ -71,8 +73,15 @@ export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Pref
         </section>
       </div>
       <section className="card stack-sm">
+        <h2>Usar sin conexión e instalar</h2>
+        <p>Después de abrir el laboratorio una vez con internet, queda guardado en este navegador y las prácticas funcionan sin conexión. Cuando hay una versión nueva, aparece un aviso para actualizar; tu trabajo se conserva.</p>
+        <p>También puedes instalarlo como aplicación para abrirlo desde el escritorio o la pantalla de inicio. En Chrome o Edge usa el botón de abajo o el ícono de instalar en la barra de direcciones; en Android, el menú ⋮ → «Instalar aplicación»; en iPhone o iPad, Compartir → «Agregar a la pantalla de inicio».</p>
+        <div className="btn-row"><InstallButton className="btn primary" /></div>
+        <p className="small muted">Enviar informes al docente por internet sí necesita conexión; sin ella, descarga el informe y entrégalo después.</p>
+      </section>
+      <section className="card stack-sm">
         <h2>Dónde se guarda mi trabajo</h2>
-        <p>Todo se guarda en el almacenamiento local de este navegador; no se envía a ningún servidor. {storageAvailable() ? 'El almacenamiento local está disponible.' : 'En este momento el almacenamiento local no está disponible (por ejemplo, en modo privado): tu trabajo se perderá al cerrar la pestaña.'} Si cambias de computador o borras los datos del navegador, el trabajo no se conserva. Para entregarlo, genera el informe.</p>
+        <p>Todo se guarda en el almacenamiento local de este navegador. Solo sale del equipo si tú envías el informe a tu docente con un código de curso. {storageAvailable() ? 'El almacenamiento local está disponible.' : 'En este momento el almacenamiento local no está disponible (por ejemplo, en modo privado): tu trabajo se perderá al cerrar la pestaña.'} Si cambias de computador o borras los datos del navegador, el trabajo no se conserva. Para entregarlo, genera el informe.</p>
       </section>
       <section className="grid-2">
         <div className="card stack-sm">

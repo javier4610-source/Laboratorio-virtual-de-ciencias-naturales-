@@ -1,0 +1,18 @@
+{
+  "name": "Laboratorio Virtual de Ciencias Naturales",
+  "short_name": "Lab Ciencias",
+  "description": "Prácticas interactivas de Ciencias Naturales para grados 6.º a 11.º, con modelos científicos, datos, gráficas y evaluación por competencias. Funciona sin conexión.",
+  "lang": "es-CO",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3f6f5",
+  "theme_color": "#0b6762",
+  "categories": ["education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

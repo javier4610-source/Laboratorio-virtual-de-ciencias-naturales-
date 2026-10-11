@@ -8,6 +8,7 @@ import { decodeCode, type Decoded } from '../lib/codes';
 import { loadJSON, saveJSON } from '../lib/storage';
 import { PracticeCard } from '../components/PracticeCard';
 import { Notice } from '../components/ui';
+import { InstallButton } from '../components/PwaUi';
 
 const AREA_COLOR: Record<Area, string> = { biologia: 'var(--bio)', quimica: 'var(--qui)', fisica: 'var(--fis)', ambiental: 'var(--amb)' };
 const CODES_KEY = 'lvcn:codigos-recibidos';
@@ -90,6 +91,7 @@ export function HomePage() {
             <button type="button" className="btn primary" onClick={() => { const el = document.getElementById('grados'); el?.scrollIntoView({ behavior: 'smooth' }); el?.focus({ preventScroll: true }); }}>Elegir mi grado</button>
             <a className="btn" href={href('catalogo')}>Ver todas las prácticas</a>
             <a className="btn ghost" href={href('docente')}>Soy docente</a>
+            <InstallButton className="btn ghost" />
           </div>
         </div>
         <div className="hero-figure"><HeroFigure /></div>

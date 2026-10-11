@@ -8,6 +8,7 @@ import type { GradeId } from './core/types';
 import { HomePage } from './pages/HomePage';
 import { CatalogPage, GradePage } from './pages/CatalogPages';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { PwaNotices } from './components/PwaUi';
 
 // Páginas pesadas cargadas bajo demanda: el inicio y el catálogo abren rápido en equipos modestos.
 const PracticePage = lazy(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
@@ -112,6 +113,7 @@ export default function App() {
           <span>Las simulaciones son modelos simplificados con supuestos declarados; no reemplazan el laboratorio real. Las preguntas tipo Saber 11 son originales y no oficiales del ICFES.</span>
         </div>
       </footer>
+      <PwaNotices />
     </>
   );
 }

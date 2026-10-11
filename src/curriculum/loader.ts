@@ -20,6 +20,11 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   fotosintesis: () => import('./practices/fotosintesis').then((m) => m.fotosintesis),
   ph: () => import('./practices/ph').then((m) => m.ph),
   popgen: () => import('./practices/popgen').then((m) => m.popgen),
+  mezclas: () => import('./practices/mezclas').then((m) => m.mezclas),
+  optica: () => import('./practices/optica').then((m) => m.optica),
+  newton: () => import('./practices/newton').then((m) => m.newton),
+  gases: () => import('./practices/gases').then((m) => m.gases),
+  energia: () => import('./practices/energia').then((m) => m.energia),
 };
 
 export const LOADER_IDS = Object.keys(LOADERS);

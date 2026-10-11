@@ -1,0 +1,127 @@
+import type { PracticeDef } from '../../core/types';
+import { energyModelSpec } from '../../models/energy';
+
+export const energia: PracticeDef = {
+  id: 'energia',
+  title: 'Conservación de la energía mecánica',
+  grade: 10,
+  area: 'fisica',
+  topic: 'Trabajo y energía: energía potencial, cinética y su conservación',
+  durationMin: 60,
+  status: 'disponible',
+  summary: 'Suelta una esfera desde distintas alturas en una pista con una colina, observa cómo se transforma la energía y descubre cuándo logra superar la colina.',
+  problemQuestion: 'En una montaña rusa, ¿por qué la segunda colina siempre es más baja que la primera, y de qué depende la rapidez del carro en el punto más bajo?',
+  objectives: [
+    'Calcular la energía potencial gravitacional y la energía cinética.',
+    'Comprobar que sin fricción la energía mecánica se conserva.',
+    'Relacionar la rapidez en el punto más bajo con la altura de salida.',
+    'Reconocer la energía disipada por la fricción.',
+  ],
+  competencies: ['uso', 'explicacion', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 10.º–11.º, entorno físico: establecer relaciones entre la conservación de la energía mecánica y las transformaciones de energía (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 10.º relacionado con la energía mecánica y su conservación. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'La opción de rodadura (energía de rotación) es una extensión para 11.º.',
+  },
+  materials: ['Pista con rampa inicial y una colina de altura ajustable', 'Esferas de 0,05 a 2 kg', 'Fotopuerta en el valle (medidor de rapidez)', 'Medidor de energía (barras de Ep, Ec y energía disipada)'],
+  background: [
+    'La energía potencial gravitacional depende de la altura: Ep = m·g·h. La energía cinética depende de la rapidez: Ec = ½·m·v².',
+    'Si no hay fricción, la energía mecánica (Ep + Ec) se conserva: lo que se pierde en Ep se gana en Ec. Por eso, en el punto más bajo, v = √(2·g·h₀), sin importar la masa.',
+    'Con fricción, parte de la energía mecánica se transforma en energía térmica: la energía total se conserva, pero la mecánica disminuye.',
+    'Una esfera que rueda reparte su energía cinética entre traslación y rotación; por eso baja más despacio que un objeto que se desliza sin fricción.',
+  ],
+  hypothesis: {
+    prompt: 'Predice cómo cambia la rapidez en el valle al aumentar la altura de salida, y si una esfera más pesada llega más rápido.',
+    pairs: [
+      { x: 'altura', y: 'vValle', xLabel: 'la altura de salida', yLabel: 'la rapidez en el valle', datasetId: 'recorridos' },
+      { x: 'masa', y: 'vValle', xLabel: 'la masa de la esfera', yLabel: 'la rapidez en el valle', datasetId: 'recorridos' },
+      { x: 'mu', y: 'disipada', xLabel: 'la fricción', yLabel: 'la energía disipada', datasetId: 'recorridos' },
+    ],
+  },
+  variables: {
+    independent: ['Altura de salida', 'Masa', 'Altura de la colina', 'Fricción', 'Rodadura'],
+    dependent: ['Rapidez en el valle', 'Si supera la colina', 'Energía disipada'],
+    controlled: ['Forma de la pista', 'Salida desde el reposo', 'g = 9,8 m/s²'],
+  },
+  procedure: [
+    'Sin fricción, suelta una esfera de 0,5 kg desde 0,4; 0,8; 1,2; 1,6 y 2,0 m. Guarda la rapidez en el valle.',
+    'Grafica v contra h₀ y v² contra h₀.',
+    'Repite con otras masas desde la misma altura. ¿Cambia la rapidez?',
+    'Sube la colina hasta que la esfera no logre superarla. Compara con la altura de salida.',
+    'Agrega fricción y observa la barra de energía disipada.',
+    'Activa la rodadura y compara la rapidez en el valle.',
+  ],
+  interpretation: [
+    '¿Qué forma tiene la gráfica de v² contra h₀? ¿Qué representa la pendiente?',
+    '¿Por qué la masa no cambia la rapidez en el valle?',
+    'Con fricción, ¿a dónde va la energía que pierde la esfera?',
+  ],
+  assessment: [
+    {
+      id: 'ene-1', grade: 10, topic: 'Energía mecánica', competency: 'uso', component: 'fisico', skill: 'Aplicar la conservación de la energía', difficulty: 'media',
+      stem: 'Una esfera se suelta desde 1,8 m de altura en una pista sin fricción. ¿Cuál es su rapidez en el punto más bajo? (g = 9,8 m/s²)',
+      options: [
+        { id: 'a', text: '17,6 m/s', feedback: 'Ese es 2gh; falta la raíz cuadrada.' },
+        { id: 'b', text: '5,9 m/s', feedback: 'Correcto: v = √(2 × 9,8 × 1,8) ≈ 5,94 m/s.' },
+        { id: 'c', text: '4,2 m/s', feedback: 'Ese es √(g·h): falta el factor 2.' },
+        { id: 'd', text: 'Depende de la masa.', feedback: 'La masa se cancela: m·g·h = ½·m·v².' },
+      ],
+      correct: 'b',
+      explanation: 'm·g·h = ½·m·v² → v = √(2gh) = √(35,28) ≈ 5,94 m/s.',
+      review: 'Comprueba la rapidez en el valle con h₀ = 1,8 m.',
+    },
+    {
+      id: 'ene-2', grade: 10, topic: 'Energía mecánica', competency: 'explicacion', component: 'fisico', skill: 'Explicar por qué un objeto no supera una colina', difficulty: 'media',
+      stem: 'Sin fricción, una esfera soltada desde 1,0 m no logra subir una colina de 1,2 m. ¿Por qué?',
+      options: [
+        { id: 'a', text: 'Porque su energía mecánica (m·g·1,0) es menor que la energía potencial necesaria en la cima (m·g·1,2).', feedback: 'Correcto.' },
+        { id: 'b', text: 'Porque es muy liviana.', feedback: 'La masa se cancela: ninguna esfera soltada desde 1,0 m sube a 1,2 m sin otra fuente de energía.' },
+        { id: 'c', text: 'Porque la fricción la frena.', feedback: 'La situación es sin fricción.' },
+        { id: 'd', text: 'Porque pierde energía al bajar la rampa.', feedback: 'Sin fricción no pierde energía: la transforma en cinética.' },
+      ],
+      correct: 'a',
+      explanation: 'La energía mecánica se conserva: la esfera solo puede alcanzar la altura de la que partió.',
+      review: 'Sube la colina por encima de la altura de salida en el simulador.',
+    },
+    {
+      id: 'ene-3', grade: 10, topic: 'Energía mecánica', competency: 'indagacion', component: 'fisico', skill: 'Linealizar datos', difficulty: 'alta',
+      table: { caption: 'Rapidez en el valle (sin fricción)', headers: ['h₀ (m)', '0,4', '0,8', '1,2', '1,6'], rows: [['v (m/s)', 2.80, 3.96, 4.85, 5.60], ['v² (m²/s²)', 7.84, 15.7, 23.5, 31.4]] },
+      stem: '¿Qué conclusión se apoya en los datos?',
+      options: [
+        { id: 'a', text: 'v es proporcional a h₀.', feedback: 'Al duplicar h₀ (0,4 → 0,8), v no se duplica (2,80 → 3,96).' },
+        { id: 'b', text: 'v² es proporcional a h₀, con pendiente ≈ 19,6 m/s² = 2g.', feedback: 'Correcto.' },
+        { id: 'c', text: 'v no depende de h₀.', feedback: 'v aumenta con h₀.' },
+        { id: 'd', text: 'v² es proporcional a la masa.', feedback: 'La tabla no incluye la masa; además, v no depende de ella.' },
+      ],
+      correct: 'b',
+      explanation: 'v² = 2g·h₀: la gráfica de v² contra h₀ es una recta por el origen con pendiente 2g ≈ 19,6 m/s².',
+      review: 'Grafica v² contra h₀ con tus datos.',
+    },
+    {
+      id: 'ene-4', grade: 10, topic: 'Energía', competency: 'explicacion', component: 'fisico', skill: 'Explicar la disipación de energía', difficulty: 'baja',
+      stem: 'En una montaña rusa real, cada colina es más baja que la anterior. ¿Por qué?',
+      options: [
+        { id: 'a', text: 'Porque la energía se destruye.', feedback: 'La energía no se destruye; se transforma.' },
+        { id: 'b', text: 'Porque la fricción y el aire transforman parte de la energía mecánica en energía térmica y sonido.', feedback: 'Correcto.' },
+        { id: 'c', text: 'Porque los pasajeros pierden masa.', feedback: 'La masa no cambia de forma apreciable.' },
+        { id: 'd', text: 'Por diseño estético; no hay razón física.', feedback: 'Hay una razón física: la energía mecánica disponible disminuye.' },
+      ],
+      correct: 'b',
+      explanation: 'La energía total se conserva, pero la mecánica disminuye por la fricción y la resistencia del aire. Con menos energía mecánica, el carro alcanza alturas menores.',
+      review: 'Agrega fricción en el simulador y observa la energía disipada.',
+    },
+  ],
+  application: {
+    situation: 'En Colombia hay centrales hidroeléctricas que aprovechan la caída del agua de los embalses para generar electricidad.',
+    question: 'Explica la cadena de transformaciones de energía desde el agua del embalse hasta la electricidad. ¿Por qué importa la altura de la caída?',
+    guidance: 'La energía potencial del agua (m·g·h) se transforma en cinética al caer, luego en energía de rotación de la turbina y en energía eléctrica en el generador. A mayor altura, más energía por cada kilogramo de agua.',
+  },
+  transferQuestionIds: ['saber-ene-1'],
+  conclusionGuide: 'Responde la pregunta problema con tu gráfica de v² contra h₀ y el experimento con fricción.',
+  model: energyModelSpec,
+  references: [
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Ciencias Naturales.',
+    'Textos de física general: trabajo, energía y rodadura de cuerpos rígidos (esfera maciza, I = 2/5·m·r²).',
+  ],
+  keywords: ['energía', 'potencial', 'cinética', 'conservación', 'fricción', 'trabajo', 'montaña rusa', 'mecánica'],
+};

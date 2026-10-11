@@ -35,7 +35,7 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(1);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(3);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(5);
 });
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
@@ -256,6 +256,64 @@ test('genética de poblaciones: escenario de malaria muestra equilibrio y se reg
   expect(await tableRows(page)).toBe(1);
 });
 
+test('mezclas: imán → agua → filtración → evaporación recupera la sal; el registro exige un paso', async ({ page }) => {
+  await openFree(page, 'mezclas');
+  await expect(save(page)).toBeDisabled();
+  for (const m of ['Imantación', 'Agregar agua y agitar', 'Filtración', 'Evaporación']) await page.getByRole('button', { name: m, exact: true }).click();
+  await expect(page.getByRole('row', { name: /Sal de cocina/ })).toContainText('97,0 %');
+  await expect(page.getByRole('row', { name: /Limaduras de hierro/ })).toContainText('100,0 %');
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('óptica: aire→agua refracta 28,8° y vidrio→aire a 45° da reflexión total', async ({ page }) => {
+  await openFree(page, 'optica');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Medir con el transportador' }).click();
+  await expect(page.locator('.readout').getByText('28,8°')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByLabel('Medio 1 (de donde viene la luz)').selectOption('vidrio');
+  await page.getByLabel('Medio 2', { exact: true }).selectOption('aire');
+  const a = page.getByLabel('Ángulo de incidencia (valor exacto en °)');
+  await a.fill('45'); await a.press('Enter');
+  await page.getByRole('button', { name: 'Medir con el transportador' }).click();
+  await expect(page.locator('.readout').getByText('no hay (reflexión total)')).toBeVisible();
+});
+
+test('Newton: 2 N sobre 0,5 kg recorre 1 m en 0,707 s; en lija la fricción estática lo frena', async ({ page }) => {
+  await openFree(page, 'newton');
+  await page.getByRole('button', { name: 'Soltar el carrito' }).click();
+  await expect(page.locator('.readout').getByText('0,707 s')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByLabel('Superficie').selectOption('lija');
+  await page.getByRole('button', { name: 'Soltar el carrito' }).click();
+  await expect(page.locator('.readout').getByText('no se movió')).toBeVisible();
+});
+
+test('gases: a temperatura constante, la mitad del volumen duplica la presión', async ({ page }) => {
+  await openFree(page, 'gases');
+  const v = page.getByLabel('Volumen de la jeringa (valor exacto en mL)');
+  await v.fill('50'); await v.press('Enter');
+  await expect(page.locator('.readout').getByText('202,6 kPa')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('energía: desde 1 m llega al valle a 4,43 m/s; una colina más alta no se supera', async ({ page }) => {
+  await openFree(page, 'energia');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Soltar la esfera' }).click();
+  await expect(page.locator('.readout').getByText('4,43 m/s').first()).toBeVisible({ timeout: 8000 });
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  const h = page.getByLabel('Altura de la colina (valor exacto en m)');
+  await h.fill('1,2'); await h.press('Enter');
+  await page.getByRole('button', { name: 'Soltar la esfera' }).click();
+  await expect(page.locator('.readout').getByText('no', { exact: true })).toBeVisible({ timeout: 8000 });
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -316,7 +374,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/14');
+  await expect(page.locator('.kpi').first()).toContainText('1/19');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

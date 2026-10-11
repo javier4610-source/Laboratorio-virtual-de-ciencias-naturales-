@@ -329,6 +329,7 @@ caption { text-align: left; padding: 8px 10px; font-weight: 700; caption-side: t
 }
 .bench { overflow-x: auto; }
 .bench svg { display: block; width: 100%; height: auto; min-width: 520px; }
+.bench svg.beaker { min-width: 0; max-width: 260px; justify-self: center; }
 .controls { display: grid; gap: 14px; }
 .controls .card { padding: 14px; }
 .readout { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); }

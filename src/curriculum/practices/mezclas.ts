@@ -1,0 +1,125 @@
+import type { PracticeDef } from '../../core/types';
+import { mixturesModelSpec } from '../../models/mixtures';
+
+export const mezclas: PracticeDef = {
+  id: 'mezclas',
+  title: 'Separación de mezclas: filtración, decantación, imantación y evaporación',
+  grade: 6,
+  area: 'quimica',
+  topic: 'Materia: mezclas y métodos de separación',
+  durationMin: 45,
+  status: 'disponible',
+  summary: 'Recibe una mezcla de hierro, arena, sal, aserrín y aceite, y diseña el orden de los métodos para recuperar cada componente lo más puro posible.',
+  problemQuestion: '¿En qué orden hay que aplicar los métodos de separación para recuperar cada componente de una mezcla, y por qué importa ese orden?',
+  objectives: [
+    'Relacionar cada método de separación con la propiedad física en la que se basa.',
+    'Diseñar y poner a prueba una secuencia de separación.',
+    'Evaluar el resultado con datos de recuperación y pureza.',
+    'Reconocer que en todo procedimiento real hay pérdidas.',
+  ],
+  competencies: ['indagacion', 'uso'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 6.º–7.º, entorno físico: clasificar materiales en sustancias puras o mezclas y verificar diferentes métodos de separación (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 6.º relacionado con las mezclas y sus métodos de separación. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'Se puede complementar con una práctica real de bajo costo (arena, sal, agua y un colador de tela).',
+  },
+  materials: ['Mezcla de limaduras de hierro, arena, sal, aserrín y aceite', 'Imán', 'Vaso de precipitados y agua', 'Embudo de decantación', 'Embudo y papel filtro', 'Cápsula de porcelana y mechero de potencia ajustable', 'Balanza'],
+  background: [
+    'Una mezcla está formada por dos o más sustancias que conservan sus propiedades. Por eso pueden separarse con métodos físicos, sin reacciones químicas.',
+    'Cada método aprovecha una propiedad: la imantación, el magnetismo; la filtración, el tamaño de las partículas y la solubilidad; la decantación, la diferencia de densidad entre líquidos que no se mezclan; la evaporación, la diferencia en el punto de ebullición.',
+    'La sal se disuelve en el agua y atraviesa el papel filtro; la arena no se disuelve y queda retenida. El aceite no se mezcla con el agua y flota porque es menos denso.',
+    'Para evaporar el agua hay que darle energía: calentarla hasta 100 °C y luego vaporizarla. A mayor potencia del mechero, menos tiempo.',
+  ],
+  hypothesis: {
+    prompt: 'Predice qué ocurre con el tiempo de evaporación si usas un mechero más potente, y qué pasará si evaporas antes de filtrar.',
+    pairs: [
+      { x: 'potencia', y: 'minutos', xLabel: 'la potencia del mechero', yLabel: 'el tiempo total del procedimiento', datasetId: 'separaciones' },
+      { x: 'agua', y: 'minutos', xLabel: 'el agua agregada', yLabel: 'el tiempo total del procedimiento', datasetId: 'separaciones' },
+    ],
+  },
+  variables: {
+    independent: ['Orden de los métodos', 'Cantidad de agua agregada', 'Potencia del mechero'],
+    dependent: ['Masa recuperada de cada componente', 'Pureza de cada fracción', 'Tiempo total'],
+    controlled: ['Composición inicial de la mezcla', 'Instrumentos utilizados'],
+  },
+  procedure: [
+    'Elige las masas de los componentes de la mezcla.',
+    'Antes de empezar, escribe en tu cuaderno el orden en que aplicarás los métodos.',
+    'Aplica los métodos uno por uno y observa qué se separa en cada paso.',
+    'Revisa la tabla de recuperación y pureza. Guarda el procedimiento.',
+    'Reinicia y prueba otro orden (por ejemplo, evaporar antes de filtrar). Compara la pureza de la sal.',
+    'Cambia la potencia del mechero y la cantidad de agua; registra el tiempo total.',
+  ],
+  interpretation: [
+    '¿Qué orden de métodos te dio mayor pureza para la sal y la arena? ¿Por qué?',
+    '¿Por qué la filtración no separa la sal del agua, ni el aceite del agua?',
+    '¿Dónde se pierde una parte de la sal? ¿Cómo podrías reducir esa pérdida?',
+  ],
+  assessment: [
+    {
+      id: 'mez-1', grade: 6, topic: 'Separación de mezclas', competency: 'uso', component: 'quimico', skill: 'Relacionar método y propiedad', difficulty: 'baja',
+      stem: '¿Qué método permite separar las limaduras de hierro de la arena?',
+      options: [
+        { id: 'a', text: 'Filtración, porque el hierro es más pequeño.', feedback: 'Ni el hierro ni la arena se disuelven: ambos quedarían en el papel filtro.' },
+        { id: 'b', text: 'Imantación, porque el hierro es atraído por el imán y la arena no.', feedback: 'Correcto.' },
+        { id: 'c', text: 'Evaporación, porque el hierro se evapora.', feedback: 'El hierro no se evapora a la temperatura de un mechero.' },
+        { id: 'd', text: 'Decantación, porque el hierro flota.', feedback: 'El hierro es más denso que el agua: se hunde.' },
+      ],
+      correct: 'b',
+      explanation: 'La imantación aprovecha una propiedad que tiene el hierro y no tiene la arena: ser atraído por un imán.',
+      review: 'Aplica el imán al comienzo del procedimiento en el simulador.',
+    },
+    {
+      id: 'mez-2', grade: 6, topic: 'Separación de mezclas', competency: 'indagacion', component: 'quimico', skill: 'Evaluar el orden de un procedimiento', difficulty: 'media',
+      stem: 'Un grupo tiene agua con arena y sal. Primero evaporó el agua y después intentó separar la sal. ¿Qué problema tuvo?',
+      options: [
+        { id: 'a', text: 'Ninguno: el orden no importa.', feedback: 'Sí importa: después de evaporar, la sal y la arena quedan juntas y secas.' },
+        { id: 'b', text: 'La sal y la arena quedaron mezcladas; debían filtrar antes de evaporar.', feedback: 'Correcto.' },
+        { id: 'c', text: 'La sal se evaporó junto con el agua.', feedback: 'La sal no se evapora a 100 °C: queda en la cápsula.' },
+        { id: 'd', text: 'La arena se disolvió en el agua.', feedback: 'La arena es insoluble en agua.' },
+      ],
+      correct: 'b',
+      explanation: 'Mientras la sal está disuelta, la filtración separa la arena. Si se evapora primero, ambas quedan juntas como sólidos.',
+      review: 'Compara en el simulador las dos secuencias y su pureza de sal.',
+    },
+    {
+      id: 'mez-3', grade: 6, topic: 'Energía en la evaporación', competency: 'explicacion', component: 'fisico', skill: 'Explicar un resultado con la energía', difficulty: 'media',
+      stem: '¿Por qué evaporar 200 g de agua tarda el doble que evaporar 100 g con el mismo mechero?',
+      options: [
+        { id: 'a', text: 'Porque se necesita el doble de energía y el mechero entrega la misma energía por segundo.', feedback: 'Correcto.' },
+        { id: 'b', text: 'Porque el agua se calienta más rápido cuando hay más.', feedback: 'Con más agua, se calienta más lentamente.' },
+        { id: 'c', text: 'Porque la sal impide la evaporación.', feedback: 'El tiempo depende sobre todo de la cantidad de agua y la potencia.' },
+        { id: 'd', text: 'Porque el punto de ebullición cambia con la cantidad de agua.', feedback: 'El punto de ebullición no depende de la cantidad de agua.' },
+      ],
+      correct: 'a',
+      explanation: 'La energía necesaria es proporcional a la masa de agua (calentar y vaporizar). Tiempo = energía / potencia útil.',
+      review: 'Cambia el agua agregada y compara el tiempo de evaporación.',
+    },
+    {
+      id: 'mez-4', grade: 6, topic: 'Mezclas', competency: 'uso', component: 'quimico', skill: 'Seleccionar el método adecuado', difficulty: 'baja',
+      stem: 'Para separar el aceite del agua en una mezcla, ¿qué método es el más adecuado?',
+      options: [
+        { id: 'a', text: 'Filtración', feedback: 'El aceite atraviesa el papel filtro igual que el agua.' },
+        { id: 'b', text: 'Imantación', feedback: 'Ni el aceite ni el agua son magnéticos.' },
+        { id: 'c', text: 'Decantación con embudo', feedback: 'Correcto: son líquidos que no se mezclan y forman dos capas.' },
+        { id: 'd', text: 'Evaporación', feedback: 'Al evaporar se perdería el agua y quedaría el aceite contaminado con lo disuelto.' },
+      ],
+      correct: 'c',
+      explanation: 'El aceite y el agua son inmiscibles y tienen distinta densidad. En el embudo de decantación se deja salir la capa inferior (agua) y se conserva la superior (aceite).',
+      review: 'Agrega aceite a la mezcla y prueba la decantación.',
+    },
+  ],
+  application: {
+    situation: 'En muchas veredas se usan filtros caseros de arena y carbón para clarificar el agua lluvia antes de hervirla.',
+    question: '¿Qué separa el filtro y qué no puede separar? ¿Por qué después de filtrar hay que hervir el agua?',
+    guidance: 'El filtro retiene partículas que no se disuelven (tierra, arena), pero no las sustancias disueltas ni todos los microorganismos. Hervir elimina microorganismos. Este ejercicio no reemplaza las recomendaciones sanitarias oficiales.',
+  },
+  transferQuestionIds: ['saber-mez-1'],
+  conclusionGuide: 'Responde la pregunta problema comparando la pureza obtenida con dos órdenes distintos.',
+  model: mixturesModelSpec,
+  references: [
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Ciencias Naturales.',
+    'Calor específico y calor latente del agua: valores de tablas de física general (4,18 J/g·°C; 2257 J/g).',
+  ],
+  keywords: ['mezclas', 'separación', 'filtración', 'decantación', 'evaporación', 'imantación', 'pureza', 'solubilidad'],
+};

@@ -23,4 +23,9 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   fotosintesis: lazy(() => import('./PhotoLab')),
   ph: lazy(() => import('./AcidBaseLab')),
   popgen: lazy(() => import('./PopGenLab')),
+  mezclas: lazy(() => import('./MixturesLab')),
+  optica: lazy(() => import('./OpticsLab')),
+  newton: lazy(() => import('./NewtonLab')),
+  gases: lazy(() => import('./GasLab')),
+  energia: lazy(() => import('./EnergyLab')),
 };

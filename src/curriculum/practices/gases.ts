@@ -1,0 +1,127 @@
+import type { PracticeDef } from '../../core/types';
+import { gasesModelSpec } from '../../models/gases';
+
+export const gases: PracticeDef = {
+  id: 'gases',
+  title: 'Leyes de los gases: presión, volumen y temperatura',
+  grade: 10,
+  area: 'quimica',
+  topic: 'Gases: leyes de Boyle, Charles y Gay-Lussac; gas ideal',
+  durationMin: 60,
+  status: 'disponible',
+  summary: 'Comprime una jeringa con aire, sumérgela en baños a distintas temperaturas y descubre las leyes de los gases, incluido el cero absoluto.',
+  problemQuestion: '¿Por qué una llanta se infla más al mediodía, y existe una temperatura en la que un gas no ocuparía volumen?',
+  objectives: [
+    'Relacionar presión, volumen y temperatura de un gas manteniendo una variable constante.',
+    'Comprobar las leyes de Boyle, Charles y Gay-Lussac con datos.',
+    'Estimar el cero absoluto por extrapolación de una gráfica.',
+    'Explicar las leyes con el modelo de partículas (teoría cinética).',
+  ],
+  competencies: ['uso', 'explicacion', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 10.º–11.º, entorno físico: explicar el comportamiento de los gases a partir de las relaciones entre presión, volumen y temperatura (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 10.º relacionado con el comportamiento de los gases. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'Puede complementarse con la teoría cinética en física de 10.º.',
+  },
+  materials: ['Jeringa de 200 mL cerrada con 100 mL de aire', 'Manómetro (0,1 kPa)', 'Termómetro (0,5 °C)', 'Baños de agua de −20 °C (salmuera con hielo) a 100 °C', 'Soporte para fijar el émbolo'],
+  background: [
+    'Un gas está formado por partículas en movimiento. La presión es el resultado de sus choques contra las paredes del recipiente; la temperatura absoluta es proporcional a su energía cinética media.',
+    'Ley de Boyle: a temperatura constante, P·V es constante. Si el volumen se reduce a la mitad, la presión se duplica.',
+    'Ley de Charles: a presión constante, V/T es constante (T en kelvin). Ley de Gay-Lussac: a volumen constante, P/T es constante.',
+    'Las tres leyes se resumen en la ecuación del gas ideal: P·V = n·R·T. La escala kelvin parte del cero absoluto (−273,15 °C), la temperatura a la que un gas ideal tendría volumen cero.',
+  ],
+  hypothesis: {
+    prompt: 'Predice qué ocurre con la presión al comprimir la jeringa, y con el volumen al calentar el gas a presión constante.',
+    pairs: [
+      { x: 'volumen', y: 'presion', xLabel: 'el volumen (temperatura constante)', yLabel: 'la presión', datasetId: 'mediciones' },
+      { x: 'temperatura', y: 'volumen', xLabel: 'la temperatura (presión constante)', yLabel: 'el volumen', datasetId: 'mediciones', allowVary: ['volumen'] },
+      { x: 'temperatura', y: 'presion', xLabel: 'la temperatura (volumen constante)', yLabel: 'la presión', datasetId: 'mediciones', allowVary: [] },
+    ],
+  },
+  variables: {
+    independent: ['Volumen (Boyle)', 'Temperatura (Charles y Gay-Lussac)'],
+    dependent: ['Presión', 'Volumen'],
+    controlled: ['Cantidad de gas (jeringa cerrada)', 'La variable fija de cada ley'],
+  },
+  procedure: [
+    'Boyle: a 25 °C, cambia el volumen de 200 a 40 mL en pasos de 20 mL y anota la presión. Guarda cada medición.',
+    'Grafica P contra V y luego P contra 1/V. Calcula P·V en cada caso.',
+    'Charles: libera el émbolo (presión constante) y pasa la jeringa por baños de −20, 0, 25, 50, 75 y 100 °C.',
+    'Grafica V contra T(°C) y prolonga la recta hasta V = 0. ¿A qué temperatura llega?',
+    'Gay-Lussac: fija el émbolo y repite el barrido de temperatura midiendo la presión.',
+    'Explica cada resultado con el modelo de partículas.',
+  ],
+  interpretation: [
+    '¿Qué forma tiene la gráfica de P contra V? ¿Y la de P contra 1/V?',
+    '¿A qué temperatura se anula el volumen al prolongar tu recta de Charles? ¿Qué significa?',
+    '¿Por qué al calentar el gas a volumen constante aumenta la presión? Usa la idea de choques de partículas.',
+  ],
+  assessment: [
+    {
+      id: 'gas-1', grade: 10, topic: 'Ley de Boyle', competency: 'uso', component: 'quimico', skill: 'Aplicar P₁V₁ = P₂V₂', difficulty: 'baja',
+      stem: 'Un gas ocupa 120 mL a 100 kPa. Si se comprime a temperatura constante hasta 40 mL, ¿cuál será su presión?',
+      options: [
+        { id: 'a', text: '33 kPa', feedback: 'Al comprimir, la presión aumenta, no disminuye.' },
+        { id: 'b', text: '300 kPa', feedback: 'Correcto: 100 × 120 / 40.' },
+        { id: 'c', text: '200 kPa', feedback: 'El volumen se redujo a la tercera parte, no a la mitad.' },
+        { id: 'd', text: '4800 kPa', feedback: 'Se multiplicaron los volúmenes en lugar de usar su razón.' },
+      ],
+      correct: 'b',
+      explanation: 'P₂ = P₁·V₁/V₂ = 100 kPa × 120 mL / 40 mL = 300 kPa.',
+      review: 'Comprime la jeringa a la tercera parte en el simulador.',
+    },
+    {
+      id: 'gas-2', grade: 10, topic: 'Ley de Charles', competency: 'indagacion', component: 'quimico', skill: 'Extrapolar una gráfica para estimar un valor', difficulty: 'alta',
+      table: { caption: 'Volumen de un gas a presión constante', headers: ['T (°C)', '0', '25', '50', '100'], rows: [['V (mL)', 91.6, 100.0, 108.4, 125.2]] },
+      stem: 'Si se prolonga la recta de V contra T hasta V = 0, ¿qué temperatura se obtiene aproximadamente?',
+      options: [
+        { id: 'a', text: '0 °C', feedback: 'A 0 °C el volumen es 91,6 mL, no cero.' },
+        { id: 'b', text: '−100 °C', feedback: 'La recta pierde 0,336 mL/°C; para perder 91,6 mL hacen falta unos 273 °C.' },
+        { id: 'c', text: '−273 °C', feedback: 'Correcto: es el cero absoluto.' },
+        { id: 'd', text: 'No se puede saber sin enfriar el gas hasta allí.', feedback: 'Se puede estimar por extrapolación de la relación lineal.' },
+      ],
+      correct: 'c',
+      explanation: 'La pendiente es ≈ 0,336 mL/°C. Desde 0 °C, el volumen llega a cero tras 91,6/0,336 ≈ 273 °C: −273 °C, el cero absoluto.',
+      review: 'Usa el modo Charles del simulador y la recta de ajuste.',
+    },
+    {
+      id: 'gas-3', grade: 10, topic: 'Teoría cinética', competency: 'explicacion', component: 'quimico', skill: 'Explicar con el modelo de partículas', difficulty: 'media',
+      stem: '¿Por qué aumenta la presión de un gas encerrado en un recipiente rígido al calentarlo?',
+      options: [
+        { id: 'a', text: 'Porque las partículas se hacen más grandes.', feedback: 'El tamaño de las partículas no cambia con la temperatura.' },
+        { id: 'b', text: 'Porque aumenta el número de partículas.', feedback: 'El recipiente está cerrado: el número de partículas es el mismo.' },
+        { id: 'c', text: 'Porque las partículas se mueven más rápido y chocan con más frecuencia y más fuerza contra las paredes.', feedback: 'Correcto.' },
+        { id: 'd', text: 'Porque el gas se convierte en líquido.', feedback: 'Al calentar, un gas no se condensa.' },
+      ],
+      correct: 'c',
+      explanation: 'La temperatura absoluta es proporcional a la energía cinética media de las partículas. Más energía significa choques más frecuentes y más intensos: mayor presión.',
+      review: 'Usa el modo Gay-Lussac y observa la animación de partículas.',
+    },
+    {
+      id: 'gas-4', grade: 10, topic: 'Gas ideal', competency: 'uso', component: 'quimico', skill: 'Usar la escala kelvin', difficulty: 'media',
+      stem: 'Un estudiante dice: «Si caliento un gas de 10 °C a 20 °C a presión constante, su volumen se duplica». ¿Es correcto?',
+      options: [
+        { id: 'a', text: 'Sí, porque la temperatura se duplicó.', feedback: 'En la escala Celsius sí, pero las leyes de los gases usan temperatura absoluta.' },
+        { id: 'b', text: 'No: la temperatura absoluta pasa de 283 K a 293 K, así que el volumen aumenta solo ≈ 3,5 %.', feedback: 'Correcto.' },
+        { id: 'c', text: 'No, porque el volumen disminuye al calentar.', feedback: 'A presión constante, el volumen aumenta al calentar.' },
+        { id: 'd', text: 'Sí, si la cantidad de gas es la misma.', feedback: 'La proporcionalidad es con T en kelvin, no en grados Celsius.' },
+      ],
+      correct: 'b',
+      explanation: 'V₂/V₁ = T₂/T₁ = 293,15/283,15 ≈ 1,035. Las leyes de los gases exigen temperatura absoluta.',
+      review: 'Compara en el simulador los volúmenes a 10 °C y a 20 °C.',
+    },
+  ],
+  application: {
+    situation: 'Un mototaxista de Apartadó calibra las llantas a 200 kPa por la mañana (24 °C). Al mediodía, después de andar al sol, el aire de la llanta está a 50 °C.',
+    question: 'Si el volumen de la llanta casi no cambia, ¿qué presión aproximada tendrá? ¿Por qué se recomienda medir la presión con las llantas frías?',
+    guidance: 'Usa Gay-Lussac con presiones absolutas: el manómetro de llantas mide presión manométrica (sobre la atmosférica, ≈ 101 kPa). P_abs ≈ 301 kPa → 301 × 323/297 ≈ 327 kPa → manométrica ≈ 226 kPa.',
+  },
+  transferQuestionIds: ['saber-gas-1'],
+  conclusionGuide: 'Responde la pregunta problema con tu valor extrapolado del cero absoluto y con tus datos de Gay-Lussac.',
+  model: gasesModelSpec,
+  references: [
+    'Boyle, R. (1662). A Defence of the Doctrine Touching the Spring and Weight of the Air.',
+    'Textos de química general: ecuación del gas ideal y teoría cinética (R = 8,314 J/(mol·K)).',
+  ],
+  keywords: ['gases', 'presión', 'volumen', 'temperatura', 'Boyle', 'Charles', 'Gay-Lussac', 'cero absoluto', 'gas ideal', 'kelvin'],
+};

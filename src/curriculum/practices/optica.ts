@@ -1,0 +1,127 @@
+import type { PracticeDef } from '../../core/types';
+import { opticsModelSpec } from '../../models/optics';
+
+export const optica: PracticeDef = {
+  id: 'optica',
+  title: 'Reflexión y refracción de la luz',
+  grade: 8,
+  area: 'fisica',
+  topic: 'Óptica: reflexión, refracción y reflexión total interna',
+  durationMin: 60,
+  status: 'disponible',
+  summary: 'Dirige un rayo láser hacia agua, vidrio o diamante, mide los ángulos con un transportador virtual y descubre la ley de Snell y la reflexión total interna.',
+  problemQuestion: '¿Por qué una cuchara parece quebrada dentro de un vaso con agua, y cómo puede la luz quedar atrapada dentro de una fibra óptica?',
+  objectives: [
+    'Comprobar que el ángulo de reflexión es igual al de incidencia.',
+    'Relacionar el cambio de dirección de la luz con el índice de refracción de cada medio.',
+    'Obtener el índice de refracción de un material desconocido a partir de datos.',
+    'Explicar la reflexión total interna y sus aplicaciones.',
+  ],
+  competencies: ['uso', 'explicacion', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 8.º–9.º, entorno físico: reconocer y diferenciar modelos para explicar la naturaleza y el comportamiento de la luz (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 8.º relacionado con la luz y las ondas. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'El uso de la función seno puede reemplazarse en 8.º por la lectura de la gráfica; el cálculo de n es una extensión.',
+  },
+  materials: ['Puntero láser virtual de ángulo ajustable', 'Transportador', 'Bloques de agua, aceite, vidrio, diamante y un material misterioso', 'Medidor de intensidad de la luz reflejada'],
+  background: [
+    'Cuando la luz llega a una superficie, una parte se refleja y otra parte pasa al otro medio. Los ángulos se miden desde la normal (línea perpendicular a la superficie).',
+    'Reflexión: el ángulo reflejado es igual al ángulo de incidencia.',
+    'Refracción: la luz cambia de dirección al pasar a un medio donde viaja con distinta rapidez. El índice de refracción es n = c/v. Ley de Snell: n₁·sen θ₁ = n₂·sen θ₂. Al pasar a un medio de mayor n, el rayo se acerca a la normal.',
+    'Si la luz va de un medio de mayor n a uno de menor n y el ángulo supera el ángulo crítico, toda la luz se refleja: es la reflexión total interna, que permite que la luz viaje por las fibras ópticas.',
+  ],
+  hypothesis: {
+    prompt: 'Predice cómo cambia el ángulo de refracción al aumentar el ángulo de incidencia cuando la luz pasa del aire al agua.',
+    pairs: [
+      { x: 'incidencia', y: 'refraccion', xLabel: 'el ángulo de incidencia', yLabel: 'el ángulo de refracción', datasetId: 'rayos' },
+      { x: 'senoI', y: 'senoT', xLabel: 'el seno del ángulo de incidencia', yLabel: 'el seno del ángulo de refracción', datasetId: 'rayos', allowVary: ['incidencia'] },
+      { x: 'incidencia', y: 'reflejada', xLabel: 'el ángulo de incidencia', yLabel: 'el porcentaje de luz reflejada', datasetId: 'rayos' },
+    ],
+  },
+  variables: {
+    independent: ['Ángulo de incidencia', 'Medio de llegada', 'Medio de salida'],
+    dependent: ['Ángulo de reflexión', 'Ángulo de refracción', 'Porcentaje de luz reflejada'],
+    controlled: ['Color de la luz', 'Superficie lisa entre los medios'],
+  },
+  procedure: [
+    'Coloca el láser en el aire apuntando al agua con 0°. Observa si el rayo se desvía.',
+    'Aumenta el ángulo de 10° en 10° hasta 80°. Mide los ángulos y guarda cada ensayo.',
+    'Grafica θ refracción contra θ incidencia, y luego sen θ₂ contra sen θ₁.',
+    'Repite con vidrio y diamante. ¿En cuál se desvía más la luz?',
+    'Cambia al material misterioso y usa la pendiente de tu gráfica para calcular su índice de refracción.',
+    'Invierte los medios (agua → aire) y busca el ángulo a partir del cual ya no sale luz.',
+  ],
+  interpretation: [
+    '¿Qué forma tiene la gráfica de sen θ₂ contra sen θ₁? ¿Qué representa su pendiente?',
+    '¿Cuál es el índice de refracción del material misterioso según tus datos?',
+    '¿Por qué la reflexión total solo ocurre cuando la luz va del medio más denso ópticamente al menos denso?',
+  ],
+  assessment: [
+    {
+      id: 'opt-1', grade: 8, topic: 'Reflexión', competency: 'uso', component: 'fisico', skill: 'Aplicar la ley de la reflexión', difficulty: 'baja',
+      stem: 'Un rayo llega a un espejo formando 35° con la normal. ¿Con qué ángulo respecto a la normal se refleja?',
+      options: [
+        { id: 'a', text: '55°', feedback: '55° es el ángulo con la superficie del espejo, no con la normal.' },
+        { id: 'b', text: '35°', feedback: 'Correcto: el ángulo de reflexión es igual al de incidencia.' },
+        { id: 'c', text: '70°', feedback: '70° es el ángulo entre el rayo incidente y el reflejado.' },
+        { id: 'd', text: '90°', feedback: 'El rayo no se refleja perpendicular salvo que llegue a 0°.' },
+      ],
+      correct: 'b',
+      explanation: 'Ley de la reflexión: θ_r = θ_i, ambos medidos desde la normal.',
+      review: 'Observa el rayo reflejado en el simulador para distintos ángulos.',
+    },
+    {
+      id: 'opt-2', grade: 8, topic: 'Refracción', competency: 'explicacion', component: 'fisico', skill: 'Explicar el cambio de dirección de la luz', difficulty: 'media',
+      stem: '¿Por qué la luz se acerca a la normal al pasar del aire al vidrio?',
+      options: [
+        { id: 'a', text: 'Porque en el vidrio la luz viaja más despacio (mayor índice de refracción).', feedback: 'Correcto.' },
+        { id: 'b', text: 'Porque el vidrio refleja toda la luz.', feedback: 'El vidrio refleja solo una pequeña parte (≈ 4 % a incidencia normal).' },
+        { id: 'c', text: 'Porque en el vidrio la luz viaja más rápido.', feedback: 'En el vidrio la luz viaja más despacio: v = c/n.' },
+        { id: 'd', text: 'Porque el vidrio cambia el color de la luz.', feedback: 'El cambio de dirección se debe al cambio de rapidez, no de color.' },
+      ],
+      correct: 'a',
+      explanation: 'Según Snell, si n₂ > n₁ entonces sen θ₂ < sen θ₁: el rayo se acerca a la normal. Un n mayor significa menor rapidez de la luz en ese medio.',
+      review: 'Compara los ángulos de refracción en agua, vidrio y diamante con la misma incidencia.',
+    },
+    {
+      id: 'opt-3', grade: 8, topic: 'Refracción', competency: 'indagacion', component: 'fisico', skill: 'Obtener un parámetro a partir de una gráfica', difficulty: 'alta',
+      table: { caption: 'Luz que pasa del aire (n = 1,00) a un material', headers: ['sen θ₁', '0,17', '0,34', '0,50', '0,64', '0,77'], rows: [['sen θ₂', 0.11, 0.23, 0.33, 0.43, 0.51]] },
+      stem: '¿Cuál es aproximadamente el índice de refracción del material?',
+      options: [
+        { id: 'a', text: '0,67', feedback: 'Esa es la pendiente de sen θ₂ contra sen θ₁ (n₁/n₂), no n₂.' },
+        { id: 'b', text: '1,0', feedback: 'Con n₂ = 1 la luz no se desviaría.' },
+        { id: 'c', text: '1,5', feedback: 'Correcto: pendiente ≈ 0,67 = 1/n₂ → n₂ ≈ 1,5.' },
+        { id: 'd', text: '2,4', feedback: 'Con n = 2,4 los senos de θ₂ serían mucho menores.' },
+      ],
+      correct: 'c',
+      explanation: 'sen θ₂ = (n₁/n₂)·sen θ₁. La pendiente es ≈ 0,66, de modo que n₂ ≈ 1/0,66 ≈ 1,5 (similar al vidrio).',
+      review: 'Usa el material misterioso del simulador y calcula n con tu gráfica.',
+    },
+    {
+      id: 'opt-4', grade: 8, topic: 'Reflexión total interna', competency: 'explicacion', component: 'fisico', skill: 'Explicar una aplicación tecnológica', difficulty: 'media',
+      stem: '¿Por qué la luz puede viajar por una fibra óptica doblada sin salir de ella?',
+      options: [
+        { id: 'a', text: 'Porque la fibra está pintada por dentro como un espejo.', feedback: 'No se necesita pintura: el fenómeno se debe a la diferencia de índices.' },
+        { id: 'b', text: 'Porque la luz llega a las paredes con un ángulo mayor que el crítico y se refleja totalmente.', feedback: 'Correcto.' },
+        { id: 'c', text: 'Porque la luz se mueve en curva por sí sola.', feedback: 'La luz viaja en línea recta en un medio homogéneo; cambia de dirección al reflejarse.' },
+        { id: 'd', text: 'Porque el núcleo tiene menor índice que el recubrimiento.', feedback: 'Es al revés: el núcleo tiene mayor índice, condición necesaria para la reflexión total.' },
+      ],
+      correct: 'b',
+      explanation: 'El núcleo de la fibra tiene mayor índice que el recubrimiento. Si el ángulo de incidencia supera el crítico, toda la luz se refleja y continúa por la fibra.',
+      review: 'Invierte los medios (vidrio → aire) y busca el ángulo crítico.',
+    },
+  ],
+  application: {
+    situation: 'Al mirar un pez en un río desde la orilla, los pescadores saben que el pez no está exactamente donde se ve.',
+    question: '¿Está el pez más arriba o más abajo de donde parece? Explícalo con un dibujo de los rayos y la ley de Snell.',
+    guidance: 'La luz que sale del agua se aleja de la normal; tu ojo prolonga el rayo en línea recta y ve el pez más arriba (más cerca de la superficie) de donde está.',
+  },
+  transferQuestionIds: ['saber-opt-1'],
+  conclusionGuide: 'Responde la pregunta problema usando tu gráfica de senos y el ángulo crítico que encontraste.',
+  model: opticsModelSpec,
+  references: [
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Ciencias Naturales.',
+    'Índices de refracción aproximados para 589 nm (tablas de óptica); ecuaciones de Fresnel (textos de física general).',
+  ],
+  keywords: ['luz', 'reflexión', 'refracción', 'Snell', 'índice de refracción', 'ángulo crítico', 'fibra óptica', 'óptica'],
+};

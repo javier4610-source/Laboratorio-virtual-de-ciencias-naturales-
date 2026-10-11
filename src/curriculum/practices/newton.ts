@@ -1,0 +1,128 @@
+import type { PracticeDef } from '../../core/types';
+import { newtonModelSpec } from '../../models/newton';
+
+export const newton: PracticeDef = {
+  id: 'newton',
+  title: 'Leyes de Newton: fuerza, masa y aceleración',
+  grade: 9,
+  area: 'fisica',
+  topic: 'Dinámica: leyes de Newton y fricción',
+  durationMin: 60,
+  status: 'disponible',
+  summary: 'Tira de un carrito con un dinamómetro sobre distintas superficies, mide el tiempo con fotopuertas y descubre cómo se relacionan fuerza, masa y aceleración.',
+  problemQuestion: '¿Por qué cuesta más poner en movimiento un carro cargado que uno vacío, y qué papel juega la fricción?',
+  objectives: [
+    'Medir la aceleración de un objeto a partir de distancia y tiempo.',
+    'Comprobar que la aceleración es proporcional a la fuerza neta e inversamente proporcional a la masa.',
+    'Identificar las fuerzas que actúan (peso, normal, aplicada y fricción) en un diagrama de cuerpo libre.',
+    'Diferenciar la fricción estática de la cinética.',
+  ],
+  competencies: ['uso', 'explicacion', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 8.º–9.º, entorno físico: establecer relaciones entre las fuerzas que actúan sobre los cuerpos y su movimiento (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 9.º relacionado con las fuerzas y el movimiento. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'En 10.º puede ampliarse con planos inclinados y sistemas de varios cuerpos.',
+  },
+  materials: ['Carrito con pesas (0,1 a 2 kg)', 'Dinamómetro que aplica fuerza constante (0 a 10 N)', 'Pista de 1,00 m con dos fotopuertas', 'Superficies: riel de colchón de aire, madera, lija', 'Cronómetro digital (1 ms)'],
+  background: [
+    'Primera ley (inercia): si la fuerza neta sobre un cuerpo es cero, mantiene su estado de reposo o de movimiento uniforme.',
+    'Segunda ley: la aceleración es proporcional a la fuerza neta e inversamente proporcional a la masa: ΣF = m·a. La fuerza se mide en newtons (1 N = 1 kg·m/s²).',
+    'Tercera ley: cuando un cuerpo ejerce una fuerza sobre otro, este ejerce sobre el primero una fuerza igual y opuesta. Por ejemplo, el piso empuja al carrito hacia arriba (normal) mientras el carrito presiona el piso.',
+    'La fricción se opone al deslizamiento. La fricción estática impide que un objeto empiece a moverse hasta un valor máximo μs·N; en movimiento actúa la fricción cinética μk·N, que suele ser menor.',
+    'Si el carrito parte del reposo con aceleración constante, la distancia es d = ½·a·t², de modo que a = 2d/t².',
+  ],
+  hypothesis: {
+    prompt: 'Predice cómo cambia la aceleración al aumentar la fuerza (con la misma masa) y al aumentar la masa (con la misma fuerza).',
+    pairs: [
+      { x: 'fuerza', y: 'aMedida', xLabel: 'la fuerza aplicada', yLabel: 'la aceleración', datasetId: 'carrito' },
+      { x: 'masa', y: 'aMedida', xLabel: 'la masa del carrito', yLabel: 'la aceleración', datasetId: 'carrito', allowVary: [] },
+      { x: 'inversoMasa', y: 'aMedida', xLabel: 'el inverso de la masa (1/m)', yLabel: 'la aceleración', datasetId: 'carrito', allowVary: ['masa'] },
+    ],
+  },
+  variables: {
+    independent: ['Fuerza aplicada', 'Masa del carrito', 'Superficie'],
+    dependent: ['Tiempo en recorrer 1,00 m', 'Aceleración medida'],
+    controlled: ['Distancia entre fotopuertas', 'Salida desde el reposo', 'Superficie (al estudiar F o m)'],
+  },
+  procedure: [
+    'En el riel de colchón de aire, con 0,5 kg, aplica 0,5 N y mide el tiempo. Guarda el ensayo.',
+    'Repite con 1, 2, 3 y 4 N sin cambiar la masa. Grafica a contra F.',
+    'Fija la fuerza en 2 N y cambia la masa (0,25; 0,5; 1; 1,5; 2 kg). Grafica a contra m y a contra 1/m.',
+    'Cambia a la superficie de madera: busca la fuerza mínima que pone en movimiento el carrito de 1 kg.',
+    'Compara la aceleración en madera y en lija con la misma fuerza y masa.',
+    'Dibuja el diagrama de cuerpo libre del carrito en movimiento sobre la madera.',
+  ],
+  interpretation: [
+    '¿Qué representa la pendiente de la gráfica a contra F en el riel sin fricción?',
+    '¿Por qué en la gráfica de a contra 1/m los puntos quedan en una línea recta?',
+    '¿Por qué en la madera una fuerza pequeña no mueve el carrito? ¿Qué fuerza la equilibra?',
+  ],
+  assessment: [
+    {
+      id: 'nwt-1', grade: 9, topic: 'Segunda ley', competency: 'uso', component: 'fisico', skill: 'Aplicar ΣF = m·a', difficulty: 'baja',
+      stem: 'Sobre un carrito de 2 kg, sin fricción, actúa una fuerza neta de 6 N. ¿Cuál es su aceleración?',
+      options: [
+        { id: 'a', text: '12 m/s²', feedback: 'Se multiplicó F·m; la aceleración es F/m.' },
+        { id: 'b', text: '3 m/s²', feedback: 'Correcto: 6 N / 2 kg.' },
+        { id: 'c', text: '0,33 m/s²', feedback: 'Se dividió m/F.' },
+        { id: 'd', text: '8 m/s²', feedback: 'Fuerza y masa no se suman.' },
+      ],
+      correct: 'b',
+      explanation: 'a = ΣF/m = 6 N / 2 kg = 3 m/s².',
+      review: 'Compruébalo en el riel de colchón de aire.',
+    },
+    {
+      id: 'nwt-2', grade: 9, topic: 'Fricción', competency: 'explicacion', component: 'fisico', skill: 'Explicar el equilibrio de fuerzas', difficulty: 'media',
+      stem: 'Un estudiante tira con 1 N de una caja sobre la madera y la caja no se mueve. ¿Cuál es la explicación?',
+      options: [
+        { id: 'a', text: 'No hay ninguna fuerza sobre la caja.', feedback: 'Sí hay fuerzas: el tirón, la fricción, el peso y la normal.' },
+        { id: 'b', text: 'La fricción estática ejerce 1 N en sentido contrario y la fuerza neta es cero.', feedback: 'Correcto.' },
+        { id: 'c', text: 'La fricción es mayor que 1 N y empuja la caja hacia atrás.', feedback: 'La fricción estática solo iguala la fuerza aplicada hasta su valor máximo; no la supera.' },
+        { id: 'd', text: 'El peso de la caja es mayor que 1 N.', feedback: 'El peso es vertical; no se opone directamente a un tirón horizontal.' },
+      ],
+      correct: 'b',
+      explanation: 'La fricción estática se ajusta para igualar la fuerza aplicada hasta μs·N. Mientras no se supere ese valor, la fuerza neta es cero y la caja sigue en reposo (primera ley).',
+      review: 'Busca en el simulador la fuerza mínima que mueve el carrito sobre la madera.',
+    },
+    {
+      id: 'nwt-3', grade: 9, topic: 'Segunda ley', competency: 'indagacion', component: 'fisico', skill: 'Interpretar datos y detectar una proporcionalidad inversa', difficulty: 'alta',
+      table: { caption: 'Fuerza constante de 2 N, sin fricción', headers: ['m (kg)', '0,25', '0,5', '1,0', '2,0'], rows: [['a (m/s²)', 8.0, 4.0, 2.0, 1.0]] },
+      stem: '¿Qué gráfica permite comprobar más fácilmente la relación entre a y m?',
+      options: [
+        { id: 'a', text: 'a contra m, porque es una línea recta creciente.', feedback: 'a disminuye cuando m aumenta, y la curva no es recta.' },
+        { id: 'b', text: 'a contra 1/m, porque da una línea recta que pasa por el origen con pendiente igual a la fuerza.', feedback: 'Correcto.' },
+        { id: 'c', text: 'm contra el tiempo.', feedback: 'El tiempo no aparece en los datos.' },
+        { id: 'd', text: 'Ninguna, porque no hay relación.', feedback: 'a·m = 2 N en todos los casos: hay una relación inversa clara.' },
+      ],
+      correct: 'b',
+      explanation: 'a = F·(1/m). Al graficar a contra 1/m se obtiene una recta con pendiente F = 2 N.',
+      review: 'Usa la columna 1/m en la gráfica del simulador.',
+    },
+    {
+      id: 'nwt-4', grade: 9, topic: 'Tercera ley', competency: 'explicacion', component: 'fisico', skill: 'Identificar pares de acción y reacción', difficulty: 'media',
+      stem: 'Un carrito está en reposo sobre una mesa. ¿Cuál es la fuerza de reacción al peso del carrito (fuerza que la Tierra ejerce sobre él)?',
+      options: [
+        { id: 'a', text: 'La fuerza normal que la mesa ejerce sobre el carrito.', feedback: 'La normal actúa sobre el mismo cuerpo que el peso; no forman un par acción-reacción.' },
+        { id: 'b', text: 'La fuerza con que el carrito atrae a la Tierra.', feedback: 'Correcto: actúa sobre otro cuerpo (la Tierra), con igual magnitud y sentido opuesto.' },
+        { id: 'c', text: 'La fricción de la mesa.', feedback: 'La fricción es horizontal y no tiene relación con el peso como par.' },
+        { id: 'd', text: 'No tiene reacción porque el carrito está quieto.', feedback: 'Toda fuerza tiene su reacción, haya o no movimiento.' },
+      ],
+      correct: 'b',
+      explanation: 'Los pares acción-reacción actúan sobre cuerpos distintos. El peso (Tierra → carrito) se empareja con la atracción carrito → Tierra. La normal equilibra el peso, pero es otro par (mesa ↔ carrito).',
+      review: 'Dibuja el diagrama de cuerpo libre del carrito y el de la mesa.',
+    },
+  ],
+  application: {
+    situation: 'Los buses intermunicipales que bajan de las montañas hacia Urabá van cargados y deben frenar en curvas.',
+    question: 'Usando la segunda ley de Newton, explica por qué un vehículo cargado necesita más distancia para frenar con la misma fuerza de frenado.',
+    guidance: 'Con mayor masa y la misma fuerza, la desaceleración es menor (a = F/m), así que tarda más y recorre más distancia hasta detenerse.',
+  },
+  transferQuestionIds: ['saber-nwt-1'],
+  conclusionGuide: 'Responde la pregunta problema con tus gráficas de a contra F y de a contra 1/m.',
+  model: newtonModelSpec,
+  references: [
+    'Newton, I. (1687). Philosophiæ Naturalis Principia Mathematica.',
+    'Coeficientes de fricción típicos aproximados (textos de física general).',
+  ],
+  keywords: ['Newton', 'fuerza', 'masa', 'aceleración', 'fricción', 'inercia', 'acción y reacción', 'dinámica'],
+};

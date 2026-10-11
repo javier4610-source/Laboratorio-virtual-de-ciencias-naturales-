@@ -69,3 +69,23 @@ Alcance: carga bajo demanda, 5 prácticas nuevas, servidor institucional, accesi
 | Encuesta de opinión | E2E: la respuesta aparece en el informe | Funciona | — | — | Correcto |
 
 **No verificado en esta fase:** el servidor no se ha desplegado en un hosting real (solo se probó localmente); no se hicieron pruebas con lectores de pantalla reales ni con estudiantes; Firefox y Safari no se probaron.
+
+# Fase 3: cinco prácticas más de la malla
+
+Alcance: separación de mezclas (6.º), reflexión y refracción (8.º), leyes de Newton (9.º), leyes de los gases (10.º) y conservación de la energía mecánica (10.º). Con ellas hay 19 prácticas implementadas y 20 planificadas.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Mezclas – modelo | Orden de los métodos (el imán antes del agua; filtrar antes de evaporar), pureza y recuperación, conservación de la masa, mezcla seca no filtrable, tiempo de evaporación | Correcto | — | — | Correcto |
+| Mezclas – interfaz | Revisión visual y E2E: imán → agua → filtración → evaporación da 97,0 % de la sal | Funciona | El vaso quedaba debajo del panel de fracciones (ancho mínimo de 520 px de las ilustraciones); la bitácora usaba punto decimal y decía «la arena y el hierro se van al fondo» aunque el hierro ya se había retirado | Ancho propio para el vaso; coma decimal (es-CO) y texto según lo que queda en el vaso | Corregido |
+| Óptica – modelo | Ley de reflexión, Snell en ambos sentidos, ángulo crítico vidrio→aire (41,15°), reflexión total interna, Fresnel en incidencia normal (4 % en vidrio), índice desconocido por la pendiente sen θ₂ contra sen θ₁ | Correcto | La prueba y la ficha usaban un valor redondeado del ángulo crítico que no coincidía con n = 1,52 y n_aire = 1,0003 | Valor exacto 41,15° en la prueba y ≈ 41,2° en la ficha | Corregido |
+| Óptica – interfaz | Revisión visual y E2E: 28,8° de aire a agua a 40°; reflexión total de vidrio a aire a 45° | Funciona | El transportador mostraba marcas solo en la mitad derecha | Marcas en toda la circunferencia | Corregido |
+| Newton – modelo | a ∝ F con m fija, a ∝ 1/m con F fija, fricción estática que impide el movimiento, a = (F − μk·m·g)/m, a medida = 2d/t² | Correcto | — | — | Correcto |
+| Newton – interfaz | E2E: 2 N sobre 0,5 kg recorre 1 m en 0,707 s; en lija el carrito no se mueve | Funciona | Faltaba la unidad en la flecha F del diagrama de cuerpo libre | Etiqueta «F = 2,0 N» | Corregido |
+| Gases – modelo | Boyle (PV constante), Charles con intersección en −273,15 °C, Gay-Lussac, cantidad de gas constante, resolución de los instrumentos | Correcto | — | — | Correcto |
+| Gases – interfaz | E2E: 50 mL a temperatura constante dan 202,6 kPa | Funciona | — | — | Correcto |
+| Energía – modelo | Conservación sin fricción, independencia de la masa, colina no superada, energía disipada igual a la pérdida mecánica, rodadura v = √(10gh/7) | Correcto | **La rampa de salida empezaba horizontal**: con cualquier fricción la esfera nunca arrancaba | Rampa con pendiente inicial, h(x) = h₀·(1 − sen(πx/3)) | Corregido |
+| Energía – interfaz | Revisión de código y E2E: 4,43 m/s en el valle desde 1 m; una colina de 1,2 m no se supera | Funciona | El trazado de la pista recalculaba la simulación completa 201 veces por cuadro de animación | Trazado calculado directamente con la función de la pista y memorizado | Corregido |
+| Accesibilidad (axe-core) | Las 5 prácticas nuevas, en tema claro y oscuro | 0 infracciones | — | — | Correcto |
+
+**No verificado en esta fase:** igual que en la fase 2 (sin lectores de pantalla reales, sin pruebas con estudiantes, sin Firefox ni Safari). Los DBA de las 5 prácticas nuevas son propuestas que deben validarse con el área.

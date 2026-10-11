@@ -92,7 +92,15 @@ export function toCSV(rows: (string | number | null)[][]): string {
 /** Descarga un archivo generado en el navegador. Devuelve false si el entorno lo bloquea. */
 export function downloadText(filename: string, text: string, mime = 'text/plain'): boolean {
   try {
-    const blob = new Blob(['﻿' + text], { type: `${mime};charset=utf-8` });
+    return downloadBlob(filename, new Blob(['﻿' + text], { type: `${mime};charset=utf-8` }));
+  } catch {
+    return false;
+  }
+}
+
+/** Descarga un archivo binario (p. ej. una imagen PNG o SVG). Devuelve false si el entorno lo bloquea. */
+export function downloadBlob(filename: string, blob: Blob): boolean {
+  try {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;

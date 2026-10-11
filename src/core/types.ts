@@ -82,10 +82,19 @@ export interface GradeInfo {
 
 /* ---------- Registro de datos de un laboratorio ---------- */
 
-export interface Column { key: string; label: string; unit?: string; numeric: boolean; decimals?: number; /** Variable que el estudiante controla (entrada del experimento). */ input?: boolean; }
+export interface Column { key: string; label: string; unit?: string; numeric: boolean; decimals?: number; /** Variable que el estudiante controla (entrada del experimento). */ input?: boolean; /** Resolución del instrumento (en la unidad de la columna): se grafica como barra de ± media resolución. */ resolution?: number; }
 export interface Dataset { id: string; label: string; columns: Column[]; defaultX: string; defaultY: string; }
 export type TrialValue = number | string | null;
 export interface Trial { id: string; datasetId: string; createdAt: number; values: Record<string, TrialValue>; note?: string; }
+
+/** Elección del estudiante en el cuaderno para un conjunto de datos. */
+export interface DatasetAnalysis {
+  x: string; y: string; group: string;
+  /** Modelo de ajuste: 'none' | 'linear' | 'proportional' | 'quadratic' | 'exponential' | 'power' | 'logarithmic'. */
+  model?: string;
+  /** Linealización de cada eje: 'x' | 'x2' | 'inv' | 'sqrt' | 'ln'. */
+  xT?: string; yT?: string;
+}
 
 export type Mode = 'guiada' | 'libre' | 'evaluacion';
 
@@ -110,6 +119,8 @@ export interface PracticeSession {
   variablesCheck?: { correct: number; total: number };
   /** Encuesta breve de usabilidad (1 a 5) respondida por el estudiante. */
   feedback?: { easy: number; clear: number; learned: number; comment: string };
+  /** Configuración del análisis gráfico de cada conjunto de datos (ejes, linealización y modelo de ajuste). */
+  analysis?: Record<string, DatasetAnalysis>;
   startedAt: number;
   updatedAt: number;
 }

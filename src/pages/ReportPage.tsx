@@ -7,6 +7,8 @@ import { AREA_LABEL, COMPETENCY_LABEL } from '../curriculum/grades';
 import { DATASETS } from '../labs/datasets';
 import { DataPanel } from '../components/DataPanel';
 import { fmt, fmtDate } from '../lib/format';
+import { buildAnalysis } from '../lib/analysis';
+import { FIT_LABEL, FIT_MODELS, equationWithValues, formatWithUncertainty } from '../lib/fit';
 import { TREND_LABEL } from '../lib/trend';
 import { href } from '../lib/router';
 import { Notice } from '../components/ui';
@@ -15,6 +17,37 @@ import { api, defaultServerUrl, saveServerUrl } from '../lib/api';
 import type { Decoded } from '../lib/codes';
 
 const STUDENT_KEY = 'lvcn:estudiante';
+
+/** Modelos de ajuste elegidos por el estudiante en el cuaderno, con sus parámetros e incertidumbres. */
+function FitReport({ practice: p, session: s }: { practice: PracticeDef; session: PracticeSession }) {
+  const rows = DATASETS[p.id]
+    .filter((d) => s.analysis?.[d.id] && s.trials.some((t) => t.datasetId === d.id))
+    .map((d) => ({ d, a: buildAnalysis(d, s.trials, s.analysis![d.id]) }))
+    .filter(({ a }) => a.ax.model !== 'none');
+  if (rows.length === 0) return null;
+  return (
+    <section className="card stack-sm">
+      <h3>Modelo de ajuste</h3>
+      {rows.map(({ d, a }) => (
+        <div key={d.id} className="stack-sm">
+          <p style={{ margin: 0 }}><strong>{d.label}:</strong> {a.yAxis.text} en función de {a.xAxis.text} · modelo {FIT_LABEL[a.ax.model]} ({FIT_MODELS.find((m) => m.value === a.ax.model)!.equation})</p>
+          {!a.fit ? <p className="small muted">El ajuste no se calculó porque los datos estaban agrupados.</p>
+            : !a.fit.ok ? <p className="small muted">{a.fit.reason}</p>
+            : (
+              <>
+                <p className="num" style={{ margin: 0 }}>{equationWithValues(a.fit.fit)}</p>
+                <ul className="list small num">
+                  {a.fit.fit.params.map((q) => <li key={q.name}>{q.name} = {formatWithUncertainty(q.value, q.se)}{q.unit ? ` ${q.unit}` : ''}</li>)}
+                  <li>R² = {fmt(a.fit.fit.r2, 4)} · n = {a.fit.fit.n} puntos{a.fit.fit.linearized ? ' · calculado por linealización' : ''}</li>
+                </ul>
+              </>
+            )}
+        </div>
+      ))}
+      <p className="small muted">Incertidumbres: error estándar de cada parámetro obtenido por mínimos cuadrados.</p>
+    </section>
+  );
+}
 
 /** Contenido del informe; también lo usa el panel docente para revisar informes importados. */
 export function ReportBody({ practice: p, session: s, report }: { practice: PracticeDef; session: PracticeSession; report: StudentReport }) {
@@ -36,6 +69,7 @@ export function ReportBody({ practice: p, session: s, report }: { practice: Prac
       {DATASETS[p.id].filter((d) => s.trials.some((t) => t.datasetId === d.id)).length > 0
         ? <DataPanel practiceId={p.id} datasets={DATASETS[p.id].filter((d) => s.trials.some((t) => t.datasetId === d.id))} readOnly={s} />
         : <Notice kind="warn">No hay datos experimentales registrados.</Notice>}
+      <FitReport practice={p} session={s} />
       <section className="card stack-sm">
         <h3>Análisis</h3>
         <p><strong>Comparación con la hipótesis:</strong> {s.comparison.verdict ? `mis datos ${s.comparison.verdict === 'apoya' ? 'apoyan' : s.comparison.verdict === 'refuta' ? 'no apoyan' : 'no son suficientes para decidir sobre'} la hipótesis.` : '—'}</p>

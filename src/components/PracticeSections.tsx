@@ -73,7 +73,7 @@ function VariablesActivity({ practice: p, api }: { practice: PracticeDef; api: S
   return (
     <div className="stack-sm">
       <p className="small">Clasifica cada variable: <strong>independiente</strong> (la que tú cambias), <strong>dependiente</strong> (la que mides) o <strong>controlada</strong> (la que mantienes constante).</p>
-      <div className="table-wrap">
+      <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
         <table>
           <thead><tr><th>Variable</th><th>Tipo</th>{checked && <th>Revisión</th>}</tr></thead>
           <tbody>
@@ -351,7 +351,7 @@ export function ModelCard({ spec }: { spec: ModelSpec }) {
       <div className="grid-2">
         <section className="card">
           <h4>Variables de entrada</h4>
-          <div className="table-wrap">
+          <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
             <table>
               <thead><tr><th>Símbolo</th><th>Variable</th><th>Unidad</th><th>Rango</th><th>Inicial</th></tr></thead>
               <tbody>{spec.inputs.map((v) => <tr key={v.symbol + v.name}><td className="mono">{v.symbol}</td><td>{v.name}</td><td>{v.unit}</td><td className="n">{v.range ? `${fmt(v.range[0], v.range[0] < 1 ? 2 : 0)} – ${fmt(v.range[1], 0)}` : '—'}</td><td>{v.initial !== undefined ? String(v.initial).replace('.', ',') : '—'}</td></tr>)}</tbody>
@@ -360,7 +360,7 @@ export function ModelCard({ spec }: { spec: ModelSpec }) {
         </section>
         <section className="card">
           <h4>Variables de salida</h4>
-          <div className="table-wrap">
+          <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
             <table>
               <thead><tr><th>Símbolo</th><th>Variable</th><th>Unidad</th></tr></thead>
               <tbody>{spec.outputs.map((v) => <tr key={v.symbol + v.name}><td className="mono">{v.symbol}</td><td>{v.name}</td><td>{v.unit}</td></tr>)}</tbody>

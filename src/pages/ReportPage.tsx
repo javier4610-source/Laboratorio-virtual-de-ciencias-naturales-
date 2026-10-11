@@ -94,7 +94,7 @@ export function ReportBody({ practice: p, session: s, report }: { practice: Prac
         <ul className="list small">
           {(['uso', 'explicacion', 'indagacion'] as const).map((c) => <li key={c}>{COMPETENCY_LABEL[c]}: {report.score.byCompetency[c].correct} de {report.score.byCompetency[c].answered}</li>)}
         </ul>
-        <div className="table-wrap">
+        <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
           <table>
             <thead><tr><th>Pregunta</th><th>Competencia</th><th>Elegida</th><th>Correcta</th><th>1.er intento</th><th className="n">Intentos</th></tr></thead>
             <tbody>

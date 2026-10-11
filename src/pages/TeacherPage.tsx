@@ -52,7 +52,7 @@ function CatalogTab() {
         <Select label="Competencia" value={comp} onChange={setComp} options={[{ value: '', label: 'Todas' }, ...(['uso', 'explicacion', 'indagacion'] as const).map((c) => ({ value: c, label: COMPETENCY_LABEL[c] }))]} />
         <div className="field"><label htmlFor="t-q">Tema o palabra clave</label><input id="t-q" type="search" value={q} onChange={(e) => setQ(e.target.value)} /></div>
       </div>
-      <div className="table-wrap">
+      <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
         <table>
           <caption>Prácticas implementadas ({list.length})</caption>
           <thead><tr><th>Grado</th><th>Práctica</th><th>Área</th><th>Tema</th><th>Competencias</th><th className="n">Min</th><th>DBA (propuesta)</th></tr></thead>
@@ -111,7 +111,7 @@ function ValidationTab() {
           <div className="kpi" key={st}><div className="v">{PRACTICES.filter((p) => get(p.id).status === st).length}</div><div className="k">{st}</div></div>
         ))}
       </div>
-      <div className="table-wrap">
+      <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
         <table>
           <caption>Estado de la validación curricular</caption>
           <thead><tr><th>Grado</th><th>Práctica</th><th>Estado</th><th>DBA verificado</th><th>Validado por</th><th><span className="sr-only">Acciones</span></th></tr></thead>
@@ -375,7 +375,7 @@ function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Te
               return <div className="kpi" key={c}><div className="v">{v.answered ? `${fmt((v.correct / v.answered) * 100, 0)} %` : '—'}</div><div className="k">aciertos en {COMPETENCY_LABEL[c].toLowerCase()}</div></div>;
             })}
           </div>
-          <div className="table-wrap">
+          <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
             <table>
               <caption>Informes</caption>
               <thead><tr><th>Estudiante</th><th>Curso</th><th>Práctica</th><th className="n">Progreso</th><th className="n">Ensayos</th><th className="n">Aciertos</th><th>Fecha</th><th><span className="sr-only">Acciones</span></th></tr></thead>
@@ -421,7 +421,7 @@ function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Te
             return (
               <section className="card stack-sm">
                 <h3>Opinión de los estudiantes (promedio de 1 a 5)</h3>
-                <div className="table-wrap">
+                <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
                   <table>
                     <thead><tr><th>Práctica</th><th className="n">Respuestas</th><th className="n">Fácil de usar</th><th className="n">Entendió los pasos</th><th className="n">Le ayudó a aprender</th></tr></thead>
                     <tbody>{rows.map((r) => <tr key={r.p.id}><td>{r.p.title}</td><td className="n">{r.n}</td><td className="n">{r.easy === null ? '—' : fmt(r.easy, 1)}</td><td className="n">{r.clear === null ? '—' : fmt(r.clear, 1)}</td><td className="n">{r.learned === null ? '—' : fmt(r.learned, 1)}</td></tr>)}</tbody>
@@ -518,7 +518,7 @@ function ServerTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Tea
       {msg && <p className={`notice ${msg.kind}`} role="status">{msg.text}</p>}
       {courses && courses.length === 0 && <p className="muted">Aún no tienes cursos en el servidor.</p>}
       {courses && courses.length > 0 && (
-        <div className="table-wrap">
+        <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
           <table>
             <caption>Mis cursos en el servidor</caption>
             <thead><tr><th>Curso</th><th>Código</th><th className="n">Informes</th><th>Estado</th><th><span className="sr-only">Acciones</span></th></tr></thead>
@@ -582,7 +582,7 @@ function RubricTab() {
   return (
     <div className="stack">
       <p className="small">Niveles de desempeño según la escala nacional (Superior, Alto, Básico, Bajo; Decreto 1290 de 2009). Los descriptores son una propuesta que cada institución puede ajustar a su sistema de evaluación.</p>
-      <div className="table-wrap">
+      <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
         <table>
           <caption>Rúbrica para indagación, interpretación de datos y argumentación científica</caption>
           <thead><tr><th>Criterio</th><th>Superior</th><th>Alto</th><th>Básico</th><th>Bajo</th></tr></thead>

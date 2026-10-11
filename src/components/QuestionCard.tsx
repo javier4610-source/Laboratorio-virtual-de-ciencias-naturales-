@@ -45,7 +45,7 @@ export function QuestionCard({ question: q, record, onAnswer, number, saberLabel
       <h3 id={headingId} className="sr-only">Pregunta {number ?? ''}: {q.topic}</h3>
       {q.context && <p>{q.context}</p>}
       {q.table && (
-        <div className="table-wrap">
+        <div className="table-wrap" tabIndex={0} role="region" aria-label={`Tabla: ${q.table.caption}`}>
           <table>
             <caption>{q.table.caption}</caption>
             <thead><tr>{q.table.headers.map((h) => <th key={h} scope="col">{h}</th>)}</tr></thead>

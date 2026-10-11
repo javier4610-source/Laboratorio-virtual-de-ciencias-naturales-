@@ -21,11 +21,11 @@ se construye, se verifica y se marca como hecho. El orden puede cambiarlo el doc
 
 ### Programa «nivel universitario» (prioridad, pedido por el docente)
 
-- [ ] **U1 · Motor de análisis de datos:** cursor con lectura de coordenadas, zoom, ajustes por mínimos cuadrados
+- [x] **U1 · Motor de análisis de datos:** cursor con lectura de coordenadas, zoom, ajustes por mínimos cuadrados
       (lineal, proporcional, cuadrático, exponencial, potencia, logarítmico) con incertidumbre de los parámetros y R²,
       gráfica de residuos, barras de incertidumbre según la resolución del instrumento, linealización de ejes y
       exportación de la gráfica.
-- [ ] **U2 · Identidad visual profesional:** inicio con escena de laboratorio, catálogo con miniaturas ilustradas por
+- [x] **U2 · Identidad visual profesional:** inicio con escena de laboratorio, catálogo con miniaturas ilustradas por
       práctica, sistema de íconos propio, tipografía y espaciado refinados, estados vacíos y microinteracciones.
 - [ ] **U3 · Medición realista:** modo «instrumento real» con ruido e incertidumbre según la ficha de cada instrumento,
       repeticiones, promedio y desviación estándar, propagación de incertidumbre en los cálculos.

@@ -135,3 +135,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Equilibrio – modelo | 11 pruebas: Kc constante tras perturbar, Q frente a K a mano, precipitación con Ag⁺, efecto de la temperatura, compresión de NO₂/N₂O₄ | Correcto | — | — | Correcto; **por verificar:** la entalpía de formación de FeSCN²⁺ usada (−6 kJ/mol) es aproximada y hace sutil el efecto de la temperatura en el sistema A (el sistema B sí lo muestra claramente) |
 | Equilibrio – interfaz | E2E (absorbancia 0,427 → 0,781 al agregar Fe³⁺, Q < K) | Funciona | — | — | Correcto |
 | Ronda | Ejecución con agentes en paralelo | — | Los agentes se detuvieron al alcanzar el límite de uso | Se reanudaron en la ronda siguiente con su contexto | Resuelto |
+
+# Corrección de experimentos «no activos» y programa de nivel universitario (U1, U2)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Etapas de la práctica | Barrido automático de las 27 prácticas como estudiante nuevo | Todas las simulaciones responden | **En la práctica guiada (modo por defecto) la pestaña Experimento aparecía deshabilitada, sin explicación, hasta guardar la hipótesis: parecía que el experimento no funcionaba** | Las etapas nunca se deshabilitan; aviso con «Formular mi hipótesis» o «Explorar sin hipótesis»; igual para el análisis sin ensayos | Corregido |
+| Actualizaciones | Revisión del service worker | — | Una versión nueva solo se activaba al pulsar «Actualizar»: quien no lo hacía seguía viendo prácticas «Próximamente» ya publicadas | La versión nueva se activa sola en el siguiente cambio de página (el trabajo guardado se conserva) | Corregido |
+| U1 · Análisis de datos | 17 pruebas de ajustes (errores estándar contra fórmulas clásicas), axe del cuaderno e informe | Correcto | La recta de ajuste aparecía siempre, también en relaciones no lineales | Modelo de ajuste elegible (lineal, proporcional, cuadrático, exponencial, potencia, logarítmico) con incertidumbre, R², residuos, cursor, zoom, linealización y barras de incertidumbre | Corregido |
+| U2 · Identidad visual | Capturas a 1366 y 390 px en ambos temas, axe | 0 infracciones tras corregir | Faltaban variables de vidrio y mesa en el tema oscuro explícito; desborde de 62 px en las etapas a 390 px; tablas del banco no alcanzables con teclado en celular | Variables completas; sin desborde; todas las tablas con desplazamiento son regiones enfocables | Corregido |
+| Regresión | 248 pruebas unitarias y 43 de interfaz con axe | Todas pasan | — | — | Correcto |

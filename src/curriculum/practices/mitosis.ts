@@ -1,0 +1,128 @@
+import type { PracticeDef } from '../../core/types';
+import { mitosisModelSpec } from '../../models/mitosis';
+
+export const mitosis: PracticeDef = {
+  id: 'mitosis',
+  title: 'Mitosis al microscopio: fases e índice mitótico',
+  grade: 7,
+  area: 'biologia',
+  topic: 'Reproducción celular: ciclo celular y mitosis',
+  durationMin: 60,
+  status: 'disponible',
+  summary: 'Observa un campo de células de raíz de cebolla, clasifica cada célula según su fase, calcula el índice mitótico y estima cuánto dura cada fase. Prueba el efecto de la colchicina.',
+  problemQuestion: '¿Por qué las raíces crecen por la punta, y cómo podemos saber cuánto dura cada fase de la mitosis observando células detenidas en una preparación?',
+  objectives: [
+    'Reconocer las fases de la mitosis por la forma y posición de los cromosomas.',
+    'Calcular el índice mitótico y relacionarlo con la zona de crecimiento de la raíz.',
+    'Estimar la duración de las fases a partir de la proporción de células observadas.',
+    'Explicar cómo cambian el contenido de ADN y el número de cromosomas durante el ciclo.',
+  ],
+  competencies: ['uso', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 6.º–7.º, entorno vivo: explicar la estructura de la célula y sus funciones, incluida la reproducción celular (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 7.º relacionado con la reproducción celular (mitosis y meiosis). Validar número y enunciado con el documento oficial del MEN.',
+    note: 'El cálculo de duraciones es una extensión de indagación; en 7.º puede trabajarse solo la identificación de fases.',
+  },
+  materials: ['Microscopio virtual con preparación de punta de raíz de cebolla (Allium cepa)', 'Contador de células por fase', 'Preparación de la zona de elongación de la raíz', 'Tratamiento con colchicina (0 a 6 h)', 'Animación del ciclo celular'],
+  background: [
+    'El ciclo celular tiene dos grandes etapas: la interfase (G1, S y G2), en la que la célula crece y copia su ADN, y la mitosis, en la que reparte una copia completa de los cromosomas a cada célula hija.',
+    'La mitosis se divide en profase (los cromosomas se condensan), metafase (se alinean en el ecuador), anafase (las cromátidas hermanas se separan hacia los polos) y telofase (se forman dos núcleos). Después ocurre la citocinesis.',
+    'En la raíz, las células que se dividen están en el meristemo de la punta; más arriba, en la zona de elongación, las células crecen pero casi no se dividen.',
+    'Si las células se dividen de forma asincrónica, la fracción que vemos en cada fase es aproximadamente proporcional a lo que dura esa fase. El índice mitótico es el porcentaje de células en mitosis.',
+    'La colchicina impide que se forme el huso mitótico: las células no pueden pasar de metafase y se acumulan en ella.',
+  ],
+  hypothesis: {
+    prompt: 'Predice qué pasará con el porcentaje de células en metafase si las raíces se tratan durante más tiempo con colchicina.',
+    pairs: [
+      { x: 'colchicina', y: 'metafasePct', xLabel: 'el tiempo con colchicina', yLabel: 'el porcentaje de células en metafase', datasetId: 'conteos' },
+      { x: 'total', y: 'indice', xLabel: 'el número de células contadas', yLabel: 'el índice mitótico calculado', datasetId: 'conteos' },
+    ],
+  },
+  variables: {
+    independent: ['Tejido observado (meristemo o zona de elongación)', 'Tiempo de exposición a colchicina', 'Número de células contadas'],
+    dependent: ['Índice mitótico', 'Número de células en cada fase', 'Duración estimada de cada fase'],
+    controlled: ['Especie (cebolla)', 'Temperatura de crecimiento', 'Método de conteo'],
+  },
+  procedure: [
+    'Observa el ciclo celular animado y registra cómo cambia el ADN (2C → 4C) y el número de cromosomas.',
+    'Abre el campo del meristemo sin colchicina. Selecciona cada célula y clasifícala en la fase que observes.',
+    'Comprueba tus clasificaciones y corrige las que fallaste.',
+    'Guarda el conteo y calcula el índice mitótico.',
+    'Repite con otros campos (otra semilla) y con más células para comparar la variación.',
+    'Observa la zona de elongación y compara su índice mitótico.',
+    'Aplica colchicina durante 1, 2, 4 y 6 horas y registra el porcentaje de células en metafase.',
+  ],
+  interpretation: [
+    '¿Qué fase es la más frecuente y cuál la más rara? ¿Qué indica eso sobre su duración?',
+    '¿Por qué el índice mitótico es tan distinto entre el meristemo y la zona de elongación?',
+    '¿Cómo explica la acción de la colchicina el aumento de células en metafase?',
+  ],
+  assessment: [
+    {
+      id: 'mit-1', grade: 7, topic: 'Fases de la mitosis', competency: 'uso', component: 'biologico', skill: 'Identificar una fase por sus características', difficulty: 'baja',
+      stem: 'En una célula se observan los cromosomas alineados en el centro, formando una línea. ¿En qué fase está?',
+      options: [
+        { id: 'a', text: 'Profase', feedback: 'En profase los cromosomas se condensan, pero aún no se alinean.' },
+        { id: 'b', text: 'Metafase', feedback: 'Correcto: alineación en el plano ecuatorial.' },
+        { id: 'c', text: 'Anafase', feedback: 'En anafase los cromosomas ya se separan hacia los polos.' },
+        { id: 'd', text: 'Interfase', feedback: 'En interfase la cromatina no está condensada y no se ven cromosomas individuales.' },
+      ],
+      correct: 'b',
+      explanation: 'En metafase los cromosomas, unidos a las fibras del huso, se ubican en el plano ecuatorial antes de separarse.',
+      review: 'Revisa en el simulador las imágenes de referencia de cada fase.',
+    },
+    {
+      id: 'mit-2', grade: 7, topic: 'Índice mitótico', competency: 'indagacion', component: 'biologico', skill: 'Calcular e interpretar un índice a partir de un conteo', difficulty: 'media',
+      table: { caption: 'Conteo en una punta de raíz', headers: ['Interfase', 'Profase', 'Metafase', 'Anafase', 'Telofase'], rows: [[178, 11, 4, 2, 5]] },
+      stem: '¿Cuál es el índice mitótico y qué fase parece durar más dentro de la mitosis?',
+      options: [
+        { id: 'a', text: '11 %; la profase', feedback: 'Correcto: (11 + 4 + 2 + 5)/200 = 22/200 = 11 %, y la profase es la más frecuente.' },
+        { id: 'b', text: '89 %; la interfase', feedback: '89 % es el porcentaje de células en interfase, no en mitosis.' },
+        { id: 'c', text: '5,5 %; la anafase', feedback: 'Revisa la suma: hay 22 células en mitosis de 200. La anafase es la más rara.' },
+        { id: 'd', text: '11 %; la telofase', feedback: 'El índice es correcto, pero la profase tiene más células que la telofase.' },
+      ],
+      correct: 'a',
+      explanation: 'IM = células en mitosis / total × 100 = 22/200 × 100 = 11 %. La fracción de células en una fase es proporcional a su duración: la profase (11 células) es la más larga de la mitosis.',
+      review: 'Calcula el índice con tu propio conteo y compáralo con el del simulador.',
+    },
+    {
+      id: 'mit-3', grade: 7, topic: 'Ciclo celular', competency: 'explicacion', component: 'biologico', skill: 'Explicar la conservación del número de cromosomas', difficulty: 'media',
+      stem: 'Una célula de cebolla tiene 16 cromosomas. ¿Cuántos cromosomas tiene cada célula hija después de la mitosis y por qué?',
+      options: [
+        { id: 'a', text: '8, porque los cromosomas se reparten entre las dos células.', feedback: 'Eso ocurre en la meiosis. En la mitosis, cada cromosoma se copió antes de dividirse.' },
+        { id: 'b', text: '16, porque el ADN se duplicó en la fase S y cada hija recibe una cromátida de cada cromosoma.', feedback: 'Correcto.' },
+        { id: 'c', text: '32, porque el ADN se duplicó.', feedback: 'El ADN se duplica, pero luego se reparte entre dos células.' },
+        { id: 'd', text: 'Depende del tamaño de la célula hija.', feedback: 'El número de cromosomas es constante en las células somáticas de una especie.' },
+      ],
+      correct: 'b',
+      explanation: 'En la fase S cada cromosoma se replica y queda formado por dos cromátidas (4C). En anafase las cromátidas se separan: cada hija recibe 16 cromosomas y vuelve a 2C.',
+      review: 'Mira en la animación del ciclo cómo cambian el ADN y el número de cromosomas.',
+    },
+    {
+      id: 'mit-4', grade: 7, topic: 'Diseño experimental', competency: 'indagacion', component: 'biologico', skill: 'Evaluar la confiabilidad de una medición', difficulty: 'media',
+      stem: 'Dos estudiantes calcularon el índice mitótico del mismo meristemo: Ana contó 20 células (15 %) y Luis contó 300 (10,7 %). ¿Qué resultado es más confiable y por qué?',
+      options: [
+        { id: 'a', text: 'El de Ana, porque obtuvo un valor mayor.', feedback: 'Un valor mayor no es más confiable.' },
+        { id: 'b', text: 'El de Luis, porque con más células el efecto del azar de cada campo es menor.', feedback: 'Correcto.' },
+        { id: 'c', text: 'Ambos son igual de confiables porque usaron el mismo tejido.', feedback: 'Con 20 células, una sola célula cambia el índice en 5 puntos.' },
+        { id: 'd', text: 'Ninguno, porque el índice mitótico no se puede medir.', feedback: 'Sí se puede medir contando células.' },
+      ],
+      correct: 'b',
+      explanation: 'El índice observado varía de un campo a otro. Al contar más células, la estimación se acerca al valor real del tejido.',
+      review: 'Compara en tu tabla los índices con 40 y con 300 células.',
+    },
+  ],
+  application: {
+    situation: 'Algunos medicamentos contra el cáncer actúan de forma parecida a la colchicina: impiden que las células terminen la mitosis.',
+    question: '¿Por qué afectarían más a los tejidos que se dividen mucho? Menciona dos tejidos del cuerpo humano que podrían verse afectados y explica por qué.',
+    guidance: 'Piensa en el índice mitótico: médula ósea, folículos del cabello y revestimiento intestinal se dividen constantemente. Relaciónalo con algunos efectos secundarios conocidos.',
+  },
+  transferQuestionIds: ['saber-mit-1'],
+  conclusionGuide: 'Responde la pregunta problema usando los índices mitóticos del meristemo y de la zona de elongación como evidencia.',
+  model: mitosisModelSpec,
+  references: [
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Ciencias Naturales.',
+    'Textos de biología celular sobre ciclo celular e índice mitótico en meristemos de Allium cepa (duraciones aproximadas).',
+  ],
+  keywords: ['mitosis', 'ciclo celular', 'cromosomas', 'meristemo', 'cebolla', 'índice mitótico', 'colchicina', 'interfase'],
+};

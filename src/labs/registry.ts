@@ -18,4 +18,9 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   circuitos: lazy(() => import('./CircuitLab')),
   estequiometria: lazy(() => import('./StoichLab')),
   poblacion: lazy(() => import('./PopulationLab')),
+  mitosis: lazy(() => import('./MitosisLab')),
+  ondas: lazy(() => import('./WavesLab')),
+  fotosintesis: lazy(() => import('./PhotoLab')),
+  ph: lazy(() => import('./AcidBaseLab')),
+  popgen: lazy(() => import('./PopGenLab')),
 };

@@ -1,0 +1,128 @@
+import type { PracticeDef } from '../../core/types';
+import { popGenModelSpec } from '../../models/popgen';
+
+export const popgen: PracticeDef = {
+  id: 'popgen',
+  title: 'Genética de poblaciones y frecuencias alélicas',
+  grade: 11,
+  area: 'biologia',
+  topic: 'Evolución y genética de poblaciones: Hardy-Weinberg, selección y deriva',
+  durationMin: 75,
+  status: 'disponible',
+  summary: 'Sigue la frecuencia de un alelo durante cientos de generaciones y descubre cómo la selección natural, la deriva génica, la mutación y la migración cambian una población.',
+  problemQuestion: 'Si el alelo de la anemia falciforme causa una enfermedad grave, ¿por qué no ha desaparecido de las poblaciones humanas?',
+  objectives: [
+    'Calcular frecuencias alélicas y genotípicas con el principio de Hardy-Weinberg.',
+    'Explicar cómo la selección natural cambia las frecuencias alélicas, incluida la ventaja del heterocigoto.',
+    'Comparar el efecto de la deriva génica en poblaciones pequeñas y grandes.',
+    'Interpretar varias réplicas simuladas como evidencia del papel del azar en la evolución.',
+  ],
+  competencies: ['uso', 'explicacion', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 10.º–11.º, entorno vivo: explicar la evolución y la variabilidad de las poblaciones (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 11.º relacionado con la evolución y la genética de poblaciones. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'Se articula con las prácticas de herencia mendeliana (8.º) y del ADN (9.º), que presentan la mutación de la β-globina.',
+  },
+  materials: ['Simulador de poblaciones (hasta 8 réplicas)', 'Controles de eficacia biológica por genotipo', 'Tasa de mutación y migración', 'Gráfica de frecuencia alélica por generación', 'Escenario: anemia falciforme y malaria'],
+  background: [
+    'La frecuencia alélica es la proporción de copias de un alelo en la población: p para A y q = 1 − p para a.',
+    'Principio de Hardy-Weinberg: si no hay selección, mutación, migración ni deriva, y el apareamiento es al azar, las frecuencias alélicas no cambian y los genotipos aparecen en proporciones p², 2pq y q².',
+    'La selección natural cambia las frecuencias cuando los genotipos tienen distinta eficacia biológica (supervivencia y reproducción). Un alelo recesivo dañino disminuye cada vez más lentamente, porque se "esconde" en los heterocigotos.',
+    'Si el heterocigoto tiene más eficacia que ambos homocigotos, se mantiene un equilibrio con los dos alelos. Así ocurre con el alelo de la hemoglobina S en zonas con malaria: los heterocigotos resisten mejor la malaria.',
+    'La deriva génica es el cambio aleatorio de las frecuencias por el muestreo de gametos de una generación a otra; es más fuerte en poblaciones pequeñas y puede fijar o eliminar alelos.',
+  ],
+  hypothesis: {
+    prompt: 'Predice: sin selección, ¿qué ocurre con la variación genética (heterocigosidad) en poblaciones pequeñas comparadas con grandes?',
+    pairs: [
+      { x: 'n', y: 'heterocigosidad', xLabel: 'el tamaño de la población', yLabel: 'la heterocigosidad final', datasetId: 'simulaciones' },
+      { x: 'waa', y: 'pFinal', xLabel: 'la eficacia del genotipo aa', yLabel: 'la frecuencia final del alelo A', datasetId: 'simulaciones' },
+    ],
+  },
+  variables: {
+    independent: ['Tamaño de la población (N)', 'Eficacia de cada genotipo', 'Mutación', 'Migración', 'Frecuencia inicial'],
+    dependent: ['Frecuencia del alelo A en el tiempo', 'Heterocigosidad', 'Número de réplicas con un alelo fijado o perdido'],
+    controlled: ['Número de generaciones', 'Número de réplicas', 'Las fuerzas que no se estudian en cada ensayo'],
+  },
+  procedure: [
+    'Escenario neutral sin deriva: comprueba que p no cambia y que los genotipos siguen p², 2pq, q².',
+    'Activa la deriva con N = 10, 50, 200 y 1000 (8 réplicas, 100 generaciones). Guarda cada simulación.',
+    'Grafica la heterocigosidad final contra N.',
+    'Desactiva la deriva y aplica selección contra el genotipo aa (w_aa = 0,5 y luego 0). Observa la velocidad de cambio.',
+    'Carga el escenario de anemia falciforme con malaria (ventaja del heterocigoto) y observa el equilibrio.',
+    'Cambia a un escenario sin malaria (w_Aa = w_AA) y compara.',
+    'Explora la mutación y la migración.',
+  ],
+  interpretation: [
+    '¿Por qué las réplicas con N pequeño terminan tan distintas entre sí, aunque empiecen igual?',
+    '¿Por qué la selección contra un alelo recesivo no lo elimina rápidamente?',
+    '¿Qué datos de la simulación explican que el alelo S persista en zonas con malaria?',
+  ],
+  assessment: [
+    {
+      id: 'pg-1', grade: 11, topic: 'Hardy-Weinberg', competency: 'uso', component: 'biologico', skill: 'Calcular frecuencias genotípicas', difficulty: 'media',
+      stem: 'En una población en equilibrio de Hardy-Weinberg, el 16 % de los individuos es homocigoto recesivo (aa). ¿Qué porcentaje es heterocigoto?',
+      options: [
+        { id: 'a', text: '16 %', feedback: 'Ese es el porcentaje de aa (q²).' },
+        { id: 'b', text: '48 %', feedback: 'Correcto: q = 0,4; p = 0,6; 2pq = 0,48.' },
+        { id: 'c', text: '36 %', feedback: 'Ese es p² (AA).' },
+        { id: 'd', text: '84 %', feedback: 'Ese es el porcentaje de individuos con fenotipo dominante (p² + 2pq).' },
+      ],
+      correct: 'b',
+      explanation: 'q² = 0,16 → q = 0,4 → p = 0,6. Heterocigotos: 2pq = 2 × 0,6 × 0,4 = 0,48.',
+      review: 'Usa el escenario neutral y observa las frecuencias genotípicas.',
+    },
+    {
+      id: 'pg-2', grade: 11, topic: 'Deriva génica', competency: 'indagacion', component: 'biologico', skill: 'Interpretar réplicas de un experimento', difficulty: 'alta',
+      table: { caption: 'Réplicas con p₀ = 0,5 tras 100 generaciones, sin selección', headers: ['N', 'Réplicas con A fijado o perdido (de 8)', 'Heterocigosidad final media'], rows: [[10, 8, 0.0], [100, 3, 0.21], [1000, 0, 0.47]] },
+      stem: '¿Qué conclusión apoyan estos datos?',
+      options: [
+        { id: 'a', text: 'Las poblaciones pequeñas evolucionan por selección natural más rápido.', feedback: 'No hay selección en este experimento: los cambios se deben al azar.' },
+        { id: 'b', text: 'La deriva génica reduce la variación genética más rápido cuanto menor es la población.', feedback: 'Correcto.' },
+        { id: 'c', text: 'El tamaño de la población no influye en la evolución.', feedback: 'Los datos muestran un efecto claro de N.' },
+        { id: 'd', text: 'En poblaciones grandes no hay evolución.', feedback: 'Hay deriva en todas, pero es más débil en las grandes.' },
+      ],
+      correct: 'b',
+      explanation: 'El muestreo aleatorio de gametos produce fluctuaciones mayores con N pequeño. Los alelos se fijan o se pierden y la heterocigosidad cae.',
+      review: 'Repite el paso 2 del procedimiento con distintas semillas.',
+    },
+    {
+      id: 'pg-3', grade: 11, topic: 'Selección natural', competency: 'explicacion', component: 'biologico', skill: 'Explicar la persistencia de un alelo dañino', difficulty: 'alta',
+      stem: '¿Por qué el alelo de la hemoglobina S se mantiene con frecuencia relativamente alta en regiones con malaria?',
+      options: [
+        { id: 'a', text: 'Porque la mutación ocurre con mucha frecuencia en esas regiones.', feedback: 'La tasa de mutación es muy baja; no explica frecuencias altas.' },
+        { id: 'b', text: 'Porque los heterocigotos tienen mayor eficacia: resisten mejor la malaria y no sufren la anemia grave.', feedback: 'Correcto: ventaja del heterocigoto.' },
+        { id: 'c', text: 'Porque los homocigotos SS sobreviven mejor a la malaria.', feedback: 'Los homocigotos SS sufren anemia falciforme grave.' },
+        { id: 'd', text: 'Porque la selección natural no actúa sobre los seres humanos.', feedback: 'La selección natural actúa sobre todas las poblaciones.' },
+      ],
+      correct: 'b',
+      explanation: 'Con ventaja del heterocigoto, la selección elimina alelos S en los homocigotos SS y alelos A en los homocigotos AA (por la malaria): ambos alelos persisten en un equilibrio.',
+      review: 'Carga el escenario de anemia falciforme y malaria.',
+    },
+    {
+      id: 'pg-4', grade: 11, topic: 'Hardy-Weinberg', competency: 'indagacion', component: 'biologico', skill: 'Evaluar si se cumplen los supuestos de un modelo', difficulty: 'media',
+      stem: 'Una población aislada de 30 individuos de rana muestra frecuencias que cambian mucho de una generación a otra. ¿Qué supuesto de Hardy-Weinberg es más probable que no se cumpla?',
+      options: [
+        { id: 'a', text: 'Población muy grande (ausencia de deriva).', feedback: 'Correcto: con 30 individuos la deriva es fuerte.' },
+        { id: 'b', text: 'Ausencia de migración.', feedback: 'La población está aislada: no hay migración.' },
+        { id: 'c', text: 'Organismos diploides.', feedback: 'Las ranas son diploides; ese supuesto se cumple.' },
+        { id: 'd', text: 'Existencia de dos alelos.', feedback: 'El número de alelos no explica las fluctuaciones.' },
+      ],
+      correct: 'a',
+      explanation: 'Hardy-Weinberg supone una población infinitamente grande. Con N pequeño, el azar del muestreo de gametos cambia las frecuencias.',
+      review: 'Compara las réplicas con N = 30 y N = 1000.',
+    },
+  ],
+  application: {
+    situation: 'Muchas especies amenazadas de Colombia, como algunas ranas de los Andes o el oso de anteojos, viven en poblaciones pequeñas y fragmentadas.',
+    question: 'Usando tus resultados sobre deriva génica, explica por qué los corredores biológicos que conectan fragmentos de bosque ayudan a conservar la variación genética.',
+    guidance: 'Los corredores permiten migración (flujo génico), que contrarresta la pérdida de alelos por deriva. Prueba la migración en el simulador.',
+  },
+  transferQuestionIds: ['saber-pg-1'],
+  conclusionGuide: 'Responde la pregunta problema con los resultados del escenario de anemia falciforme y malaria, comparándolo con el escenario sin malaria.',
+  model: popGenModelSpec,
+  references: [
+    'Hardy, G. H. (1908). Mendelian proportions in a mixed population. Science, 28(706), 49–50.',
+    'Allison, A. C. (1954). Protection afforded by sickle-cell trait against subtertian malarial infection. British Medical Journal, 1(4857), 290–294.',
+  ],
+  keywords: ['genética de poblaciones', 'Hardy-Weinberg', 'evolución', 'selección natural', 'deriva génica', 'alelo', 'anemia falciforme', 'malaria'],
+};

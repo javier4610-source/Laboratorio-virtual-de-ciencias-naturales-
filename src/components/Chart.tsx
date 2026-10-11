@@ -129,7 +129,7 @@ export function Chart({ series, xLabel, yLabel, title, xDomain, yDomain, fit, he
             <line x1={sx(x0)} y1={sy(regression.slope * x0 + regression.intercept)} x2={sx(x1)} y2={sy(regression.slope * x1 + regression.intercept)} stroke="var(--ink-2)" strokeWidth={1.5} strokeDasharray="6 4" />
           )}
           {series.map((s, si) => {
-            const color = s.color ?? `var(--series-${(si % 4) + 1})`;
+            const color = s.color ?? `var(--series-${(si % 8) + 1})`;
             const pts = s.points.filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y));
             const kind = s.kind ?? 'scatter';
             const sorted = kind === 'scatter' ? pts : pts;
@@ -152,7 +152,7 @@ export function Chart({ series, xLabel, yLabel, title, xDomain, yDomain, fit, he
       <figcaption className="stack-sm" style={{ marginTop: 6 }}>
         {series.length > 1 && (
           <div className="legend">
-            {series.map((s, si) => <span key={s.label}><i style={{ background: s.color ?? `var(--series-${(si % 4) + 1})` }} />{s.label}</span>)}
+            {series.map((s, si) => <span key={s.label}><i style={{ background: s.color ?? `var(--series-${(si % 8) + 1})` }} />{s.label}</span>)}
           </div>
         )}
         {regression && (

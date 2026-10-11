@@ -36,7 +36,8 @@ function OsmosisPart({ api }: LabProps) {
   const raf = useRef<number | null>(null);
   const res = useMemo(() => simulateOsmosis({ cellType, naclPercent: nacl, temperature, duration }), [cellType, nacl, temperature, duration]);
   const series = res.series;
-  const idx = Math.min(playhead, series.length - 1);
+  // Índice siempre dentro de la serie (las marcas de tiempo de requestAnimationFrame pueden ser anteriores al inicio).
+  const idx = Math.max(0, Math.min(Number.isFinite(playhead) ? playhead : 0, series.length - 1));
   const point = series[idx];
   const finished = idx >= series.length - 1;
 
@@ -47,7 +48,7 @@ function OsmosisPart({ api }: LabProps) {
     if (prefersReducedMotion()) { setPlayhead(series.length - 1); setRunning(false); return; }
     const start = performance.now() - (playhead / series.length) * 4000;
     const tick = (now: number) => {
-      const i = Math.min(series.length - 1, Math.floor(((now - start) / 4000) * series.length));
+      const i = Math.max(0, Math.min(series.length - 1, Math.floor(((now - start) / 4000) * series.length)));
       setPlayhead(i);
       if (i < series.length - 1) raf.current = requestAnimationFrame(tick);
       else setRunning(false);
@@ -86,7 +87,7 @@ function OsmosisPart({ api }: LabProps) {
         <div className="bench">
           <svg viewBox="0 0 460 320" role="img" aria-labelledby="osm-t osm-d">
             <title id="osm-t">Vista al microscopio de la célula en la solución</title>
-            <desc id="osm-d">{`Célula ${cellType} en NaCl al ${fmt(nacl, 2)} % (${res.tonicity}). Tiempo ${fmt(point.t, 0)} s. Volumen ${fmt(V * 100, 1)} % del inicial. Estado: ${lysedNow ? 'lisis' : STATE_TEXT[res.state]}.`}</desc>
+            <desc id="osm-d">{`Célula ${cellType} en NaCl al ${fmt(nacl, 2)} % (${res.tonicity}). Tiempo ${fmt(point.t, 0)} s. Volumen ${fmt(V * 100, 1)} % del inicial. Estado: ${lysedNow ? 'lisis' : finished ? STATE_TEXT[res.state] : 'en observación'}.`}</desc>
             <circle cx={cx} cy={cy} r="150" fill="rgba(120,180,220,0.10)" stroke="var(--line)" strokeWidth="2" />
             {outsideDots.map((d, i) => {
               const a = d.x * Math.PI * 2, rr = 100 + d.y * 45;

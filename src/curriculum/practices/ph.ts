@@ -1,0 +1,128 @@
+import type { PracticeDef } from '../../core/types';
+import { acidBaseModelSpec } from '../../models/acidbase';
+
+export const ph: PracticeDef = {
+  id: 'ph',
+  title: 'pH, dilución y neutralización ácido-base',
+  grade: 11,
+  area: 'quimica',
+  topic: 'Ácidos, bases y pH; neutralización y titulación',
+  durationMin: 75,
+  status: 'disponible',
+  summary: 'Diluye ácidos y observa cómo cambia el pH; luego titula ácido clorhídrico o vinagre con hidróxido de sodio usando bureta, pH-metro e indicadores.',
+  problemQuestion: '¿Qué tanto vinagre (ácido acético) hay realmente en una muestra, y por qué no basta con mirar el pH para saberlo?',
+  objectives: [
+    'Calcular e interpretar el pH de ácidos fuertes y débiles.',
+    'Explicar por qué diluir un ácido acerca su pH a 7 sin volverlo básico.',
+    'Construir una curva de titulación e identificar el punto de equivalencia.',
+    'Seleccionar el indicador adecuado para una titulación y determinar una concentración desconocida.',
+  ],
+  competencies: ['uso', 'explicacion', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 10.º–11.º, entorno físico (procesos químicos): explicar el comportamiento de ácidos y bases y realizar cálculos cuantitativos en cambios químicos (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 11.º relacionado con ácidos, bases y pH. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'Se articula con la práctica de soluciones de 10.º (molaridad y dilución).',
+  },
+  materials: ['Bureta de 50 mL con NaOH', 'Erlenmeyer con HCl o ácido acético', 'pH-metro', 'Indicadores: fenolftaleína, azul de bromotimol y rojo de metilo', 'Balones aforados para diluciones'],
+  background: [
+    'El pH mide la acidez: pH = −log[H⁺]. A 25 °C el agua pura tiene pH 7; menos de 7 es ácido y más de 7, básico. Cada unidad de pH equivale a un factor de 10 en [H⁺].',
+    'Un ácido fuerte como el HCl se disocia completamente. Un ácido débil como el acético solo se disocia en parte (Ka = 1,8 × 10⁻⁵), por eso una solución 0,1 M tiene pH ≈ 2,9 y no 1.',
+    'Al diluir un ácido 10 veces, su pH sube aproximadamente una unidad, pero nunca pasa de 7: con mucha dilución domina la ionización del agua.',
+    'En una neutralización, H⁺ + OH⁻ → H₂O. En el punto de equivalencia los moles de base añadidos igualan los moles de ácido: C_A·V_A = C_B·V_eq. Para un ácido fuerte el pH ahí es 7; para uno débil es mayor que 7.',
+    'Un indicador cambia de color en un intervalo de pH; debe elegirse uno que vire cerca del pH de equivalencia.',
+  ],
+  hypothesis: {
+    prompt: 'Predice cómo cambia el pH al ir agregando base, y qué pasa con el pH de un ácido cuando lo diluyes muchas veces.',
+    pairs: [
+      { x: 'vbase', y: 'ph', xLabel: 'el volumen de NaOH añadido', yLabel: 'el pH', datasetId: 'titulacion' },
+      { x: 'logFactor', y: 'ph', xLabel: 'la dilución del ácido', yLabel: 'el pH', datasetId: 'dilucion' },
+    ],
+  },
+  variables: {
+    independent: ['Volumen de NaOH añadido', 'Tipo de ácido', 'Factor de dilución', 'Indicador'],
+    dependent: ['pH', 'Color del indicador', 'Volumen de equivalencia'],
+    controlled: ['Volumen y concentración inicial del ácido', 'Concentración de NaOH', 'Temperatura (25 °C)'],
+  },
+  procedure: [
+    'Dilución: con HCl 0,1 M, mide el pH sin diluir y diluido 10, 100, 1000, 10⁴, 10⁶ y 10⁸ veces. Guarda cada medición.',
+    'Repite con ácido acético 0,1 M y compara.',
+    'Titulación: coloca 25 mL de HCl 0,1 M y NaOH 0,1 M en la bureta. Agrega base de 5 en 5 mL hasta 20 mL y guarda el pH.',
+    'Cerca de la equivalencia agrega de 0,5 en 0,5 mL. Observa el salto de pH.',
+    'Continúa hasta 40 mL. Construye la curva de titulación.',
+    'Repite con ácido acético. Ubica el punto de semiequivalencia (pH = pKa).',
+    'Prueba los tres indicadores y decide cuál sirve para cada titulación. Resuelve el reto del vinagre.',
+  ],
+  interpretation: [
+    '¿Por qué el pH cambia muy poco al principio de la titulación y muy rápido cerca de la equivalencia?',
+    '¿Por qué el pH en la equivalencia es 7 con HCl pero mayor que 7 con ácido acético?',
+    '¿Por qué una dilución enorme de HCl no llega a pH básico?',
+  ],
+  assessment: [
+    {
+      id: 'ph-1', grade: 11, topic: 'pH', competency: 'uso', component: 'quimico', skill: 'Relacionar dilución y pH', difficulty: 'media',
+      stem: 'Una solución de HCl tiene pH 2. Si se diluye 100 veces con agua pura, ¿cuál será su pH aproximado?',
+      options: [
+        { id: 'a', text: '200', feedback: 'El pH no se multiplica por el factor de dilución; es una escala logarítmica.' },
+        { id: 'b', text: '4', feedback: 'Correcto: [H⁺] baja 100 veces, el pH sube 2 unidades.' },
+        { id: 'c', text: '0,02', feedback: 'Al diluir, la acidez disminuye y el pH aumenta.' },
+        { id: 'd', text: '9', feedback: 'Diluir un ácido nunca lo vuelve básico.' },
+      ],
+      correct: 'b',
+      explanation: '[H⁺] = 10⁻² → 10⁻⁴ mol/L al diluir 100 veces. pH = −log(10⁻⁴) = 4.',
+      review: 'Revisa tu tabla de diluciones de HCl.',
+    },
+    {
+      id: 'ph-2', grade: 11, topic: 'Neutralización', competency: 'uso', component: 'quimico', skill: 'Calcular una concentración por titulación', difficulty: 'media',
+      stem: 'Se necesitan 18,0 mL de NaOH 0,100 M para neutralizar 20,0 mL de una solución de HCl. ¿Cuál es la concentración del HCl?',
+      options: [
+        { id: 'a', text: '0,111 M', feedback: 'Se invirtió la relación de volúmenes.' },
+        { id: 'b', text: '0,0900 M', feedback: 'Correcto: 0,100 × 18,0 / 20,0.' },
+        { id: 'c', text: '0,100 M', feedback: 'Solo sería igual si los volúmenes fueran iguales.' },
+        { id: 'd', text: '1,80 M', feedback: 'Revisa las unidades: no se multiplican los volúmenes.' },
+      ],
+      correct: 'b',
+      explanation: 'En la equivalencia, n(ácido) = n(base): C_A × 20,0 = 0,100 × 18,0 → C_A = 0,0900 M.',
+      review: 'Usa el reto del vinagre del simulador.',
+    },
+    {
+      id: 'ph-3', grade: 11, topic: 'Titulación', competency: 'indagacion', component: 'quimico', skill: 'Seleccionar un indicador con base en datos', difficulty: 'alta',
+      table: { caption: 'Titulación de ácido acético 0,1 M con NaOH 0,1 M', headers: ['V NaOH (mL)', '10', '20', '24', '25', '26', '30'], rows: [['pH', 4.56, 5.34, 6.12, 8.72, 11.29, 11.96]] },
+      stem: '¿Qué indicador es más adecuado para detectar el punto de equivalencia?',
+      options: [
+        { id: 'a', text: 'Rojo de metilo (vira entre pH 4,4 y 6,2).', feedback: 'Cambiaría de color antes de llegar a la equivalencia (pH 8,7).' },
+        { id: 'b', text: 'Fenolftaleína (vira entre pH 8,2 y 10).', feedback: 'Correcto: su intervalo incluye el pH de equivalencia y el salto de pH.' },
+        { id: 'c', text: 'Cualquiera, porque todos cambian de color.', feedback: 'Un indicador mal elegido marca un punto final distinto del de equivalencia.' },
+        { id: 'd', text: 'Ninguno, porque el pH en la equivalencia no es 7.', feedback: 'Se elige el que vire cerca del pH real de equivalencia.' },
+      ],
+      correct: 'b',
+      explanation: 'Con un ácido débil, en la equivalencia hay acetato (una base débil) y el pH es ≈ 8,7. La fenolftaleína vira justo en el salto de pH.',
+      review: 'Compara los indicadores en la titulación de ácido acético.',
+    },
+    {
+      id: 'ph-4', grade: 11, topic: 'Ácidos fuertes y débiles', competency: 'explicacion', component: 'quimico', skill: 'Explicar la diferencia entre fuerza y concentración', difficulty: 'media',
+      stem: 'Dos soluciones 0,1 M, una de HCl y otra de ácido acético, tienen pH 1,0 y 2,9. Sin embargo, neutralizar 25 mL de cada una requiere el mismo volumen de NaOH. ¿Por qué?',
+      options: [
+        { id: 'a', text: 'Porque el pH no se relaciona con los H⁺ libres.', feedback: 'El pH sí mide los H⁺ libres en el equilibrio.' },
+        { id: 'b', text: 'Porque ambas tienen la misma cantidad total de ácido; el acético solo libera parte de sus H⁺ a la vez, pero al agregar base se siguen disociando.', feedback: 'Correcto.' },
+        { id: 'c', text: 'Porque el ácido acético es más fuerte.', feedback: 'El acético es débil: por eso su pH es mayor.' },
+        { id: 'd', text: 'Porque la base reacciona solo con el agua.', feedback: 'La base reacciona con el ácido.' },
+      ],
+      correct: 'b',
+      explanation: 'La fuerza (Ka) determina cuántos H⁺ hay libres y por tanto el pH; la cantidad de ácido (concentración × volumen) determina cuánta base se necesita para neutralizarlo.',
+      review: 'Titula HCl y ácido acético con la misma concentración y compara V_eq.',
+    },
+  ],
+  application: {
+    situation: 'La etiqueta de un vinagre comercial declara una acidez de 5 % (m/v) de ácido acético, es decir, unos 0,83 mol/L.',
+    question: 'Describe cómo verificarías esa afirmación con una titulación: qué diluirías, qué indicador usarías y cómo calcularías la concentración.',
+    guidance: 'Diluir el vinagre (por ejemplo 10 veces) para gastar un volumen razonable de NaOH 0,1 M, usar fenolftaleína y aplicar C_A·V_A = C_B·V_eq, corrigiendo por el factor de dilución.',
+  },
+  transferQuestionIds: ['saber-ph-1'],
+  conclusionGuide: 'Responde la pregunta problema con el volumen de equivalencia que mediste y el cálculo de la concentración del vinagre del reto.',
+  model: acidBaseModelSpec,
+  references: [
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Ciencias Naturales.',
+    'Textos de química analítica: equilibrio ácido-base, balance de cargas y curvas de titulación (Ka del ácido acético ≈ 1,8 × 10⁻⁵ a 25 °C).',
+  ],
+  keywords: ['pH', 'ácido', 'base', 'neutralización', 'titulación', 'indicador', 'dilución', 'vinagre', 'equivalencia'],
+};

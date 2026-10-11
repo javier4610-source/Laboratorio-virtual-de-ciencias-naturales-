@@ -9,9 +9,14 @@ import { enzimas } from './practices/enzimas';
 import { circuitos } from './practices/circuitos';
 import { estequiometria } from './practices/estequiometria';
 import { poblacion } from './practices/poblacion';
+import { popgen } from './practices/popgen';
+import { ph } from './practices/ph';
+import { fotosintesis } from './practices/fotosintesis';
+import { ondas } from './practices/ondas';
+import { mitosis } from './practices/mitosis';
 
 /** Catálogo de prácticas implementadas. Para agregar una nueva: definirla aquí y registrar su componente en labs/registry.ts. */
-export const PRACTICES: PracticeDef[] = [densidad, osmosis, mendel, adn, soluciones, enzimas, circuitos, estequiometria, poblacion];
+export const PRACTICES: PracticeDef[] = [densidad, osmosis, mitosis, mendel, ondas, adn, soluciones, enzimas, fotosintesis, circuitos, estequiometria, ph, poblacion, popgen];
 
 export function practiceById(id: string): PracticeDef | undefined {
   return PRACTICES.find((p) => p.id === id);

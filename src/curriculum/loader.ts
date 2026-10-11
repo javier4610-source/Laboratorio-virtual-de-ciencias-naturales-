@@ -15,6 +15,11 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   circuitos: () => import('./practices/circuitos').then((m) => m.circuitos),
   estequiometria: () => import('./practices/estequiometria').then((m) => m.estequiometria),
   poblacion: () => import('./practices/poblacion').then((m) => m.poblacion),
+  mitosis: () => import('./practices/mitosis').then((m) => m.mitosis),
+  ondas: () => import('./practices/ondas').then((m) => m.ondas),
+  fotosintesis: () => import('./practices/fotosintesis').then((m) => m.fotosintesis),
+  ph: () => import('./practices/ph').then((m) => m.ph),
+  popgen: () => import('./practices/popgen').then((m) => m.popgen),
 };
 
 export const LOADER_IDS = Object.keys(LOADERS);

@@ -35,7 +35,7 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(1);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(2);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(3);
 });
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
@@ -201,4 +201,57 @@ test('móvil: sin desplazamiento horizontal en una práctica', async ({ page }) 
   await openFree(page, 'circuitos');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(1);
+});
+
+test('mitosis: clasificar células, comprobar y registrar el conteo', async ({ page }) => {
+  await openFree(page, 'mitosis');
+  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Interfase', exact: true }).click();
+  await expect(page.getByText('3 de 100 clasificadas')).toBeVisible();
+  await page.getByRole('button', { name: 'Comprobar mis clasificaciones' }).click();
+  await expect(page.getByText(/Acertaste \d de 3/)).toBeVisible();
+  await expect(page.getByText('Índice mitótico del campo')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByRole('button', { name: 'Ciclo celular y ADN' }).click();
+  await page.getByRole('button', { name: 'G2', exact: true }).click();
+  await expect(page.locator('.readout').getByText('4,00 C')).toBeVisible();
+});
+
+test('ondas: medir λ con la regla y comprobar v = λ·f', async ({ page }) => {
+  await openFree(page, 'ondas');
+  await page.getByRole('button', { name: 'Pausar' }).click();
+  const b = page.getByLabel('Marcador B (valor exacto en m)');
+  await b.fill('6'); await b.press('Enter');
+  await page.getByRole('button', { name: 'Usar distancia A–B' }).click();
+  await expect(page.getByText('¡Buena medición!')).toBeVisible(); // λ = 10 m/s ÷ 2 Hz = 5 m
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('fotosíntesis: contar burbujas habilita el registro; en oscuridad no hay burbujas', async ({ page }) => {
+  await openFree(page, 'fotosintesis');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Contar burbujas durante 1 minuto' }).click();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByLabel('Lámpara encendida', { exact: true }).uncheck();
+  await page.getByRole('button', { name: 'Contar burbujas durante 1 minuto' }).click();
+  await expect(page.locator('.readout').getByText('0', { exact: true })).toBeVisible();
+});
+
+test('pH: titulación fuerte-fuerte alcanza pH 7 en 25 mL', async ({ page }) => {
+  await openFree(page, 'ph');
+  for (let i = 0; i < 5; i++) await page.getByRole('button', { name: '+5 mL' }).click();
+  await expect(page.locator('.readout').getByText('punto de equivalencia')).toBeVisible();
+  await expect(page.locator('.readout .v.data').first()).toHaveText('7,00');
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('genética de poblaciones: escenario de malaria muestra equilibrio y se registra', async ({ page }) => {
+  await openFree(page, 'popgen');
+  await page.getByLabel('Escenario', { exact: true }).selectOption('malaria');
+  await expect(page.getByText(/equilibrio p\* = 0,84/)).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
 });

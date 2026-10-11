@@ -17,7 +17,7 @@ const NEW_STRAND = 'var(--data)';
 
 function Strand({ seq, highlight, label }: { seq: string; highlight?: Set<number>; label: string }) {
   return (
-    <div className="dna-strand" aria-label={`${label}: ${seq}`}>
+    <div className="dna-strand" role="group" tabIndex={0} aria-label={`${label}: ${seq}`}>
       <span className="sr-only">{label}: {seq}</span>
       <span aria-hidden="true" style={{ display: 'inline-flex', gap: 2 }}>
         {[...seq].map((b, i) => (

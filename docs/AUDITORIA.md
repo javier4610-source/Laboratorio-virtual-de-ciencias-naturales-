@@ -109,3 +109,17 @@ Alcance: aplicación instalable y sin conexión; posición de la respuesta corre
 | Laboratorios nuevos – interfaz | Revisión visual a 1280 px y 380 px (tema claro y oscuro), E2E de cada práctica, axe en las 5 | Funciona; 0 infracciones | — | — | Correcto |
 
 **Limitaciones de esta fase:** los parámetros de las redes alimentarias, de la selección y de la cinética son ilustrativos (no medidos); los DBA de las prácticas nuevas son propuestas por validar; las guías usan un logo provisional hasta recibir el oficial.
+
+# Fase 5: experiencia de uso e instrumentos de nivel profesional
+
+Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laboratorios.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Espacio de trabajo | Capturas a 1366×768 (portátil escolar) y 390 px | El laboratorio empieza a 384 px del borde superior | **El área experimental empezaba a 730 px: en un portátil escolar no se veía sin desplazarse** | Encabezado compacto durante el experimento, etapas fijas con progreso, acompañamiento paso a paso, controles fijos, pantalla completa | Corregido |
+| Navegación | Revisión visual | — | Contorno naranja alrededor de todo el contenido al cambiar de página (foco programático en `main`) | Sin contorno en `main` (el foco sigue llegando para lectores de pantalla) | Corregido |
+| Registro de datos | Revisión de flujo | — | Al guardar un ensayo no había confirmación visible cerca del trabajo; la tabla y la gráfica quedaban lejos | Aviso «Ensayo N guardado» con acceso al cuaderno, fila nueva resaltada, tabla y gráfica lado a lado | Corregido |
+| Diseño adaptable | Medición automática del desborde horizontal en las 24 prácticas a 390 px | 0 desbordes | El nuevo contenedor en cuadrícula se ensanchaba con el contenido; el mensaje vacío de las gráficas no cabía en celulares | Columna `minmax(0, 1fr)`; mensaje en varias líneas | Corregido |
+| Instrumentos | Revisión de capturas de los 24 laboratorios en tema claro y oscuro | Calidad de producto | Dibujos esquemáticos (rectángulos planos, emojis que cambian según el sistema operativo) | Kit de instrumentos con vidrio, menisco, metal y pantallas; rediseño de los 24 laboratorios sin cambiar cálculos ni textos | Corregido |
+| Accesibilidad tras el rediseño | axe WCAG 2.1 A/AA en todas las páginas y prácticas, temas claro y oscuro | 0 infracciones | Las hebras de ADN con desplazamiento horizontal no eran alcanzables con teclado | Región enfocable con nombre accesible | Corregido |
+| Regresión | 198 pruebas unitarias y 40 de interfaz | Todas pasan | — | — | Correcto |

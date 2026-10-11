@@ -19,6 +19,25 @@ se construye, se verifica y se marca como hecho. El orden puede cambiarlo el doc
 
 ## Pendiente
 
+### Programa «nivel universitario» (prioridad, pedido por el docente)
+
+- [ ] **U1 · Motor de análisis de datos:** cursor con lectura de coordenadas, zoom, ajustes por mínimos cuadrados
+      (lineal, proporcional, cuadrático, exponencial, potencia, logarítmico) con incertidumbre de los parámetros y R²,
+      gráfica de residuos, barras de incertidumbre según la resolución del instrumento, linealización de ejes y
+      exportación de la gráfica.
+- [ ] **U2 · Identidad visual profesional:** inicio con escena de laboratorio, catálogo con miniaturas ilustradas por
+      práctica, sistema de íconos propio, tipografía y espaciado refinados, estados vacíos y microinteracciones.
+- [ ] **U3 · Medición realista:** modo «instrumento real» con ruido e incertidumbre según la ficha de cada instrumento,
+      repeticiones, promedio y desviación estándar, propagación de incertidumbre en los cálculos.
+- [ ] **U4 · Adquisición de datos en tiempo real:** sensores virtuales con frecuencia de muestreo, registro continuo
+      tipo osciloscopio y disparo, para las prácticas que evolucionan en el tiempo.
+- [ ] **U5 · Manipulación directa:** arrastrar muestras e instrumentos, perillas y émbolos que se giran o empujan,
+      con alternativa por teclado.
+- [ ] **U6 · Modo avanzado:** ecuaciones del modelo en vivo, parámetros del modelo editables y comparación
+      modelo–datos, para docentes y grados superiores.
+
+### Prácticas que faltan
+
 - [x] **Lote 6:** materiales conductores y aislantes (7.º, física, `conductores`) · factores de la descomposición
       de la materia orgánica (7.º, ambiental, `descomposicion`) · equilibrio químico y principio de Le Châtelier
       (11.º, química, `equilibrio`).

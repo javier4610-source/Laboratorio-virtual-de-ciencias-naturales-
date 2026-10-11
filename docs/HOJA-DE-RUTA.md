@@ -19,7 +19,7 @@ se construye, se verifica y se marca como hecho. El orden puede cambiarlo el doc
 
 ## Pendiente
 
-- [ ] **Lote 6:** materiales conductores y aislantes (7.º, física, `conductores`) · factores de la descomposición
+- [x] **Lote 6:** materiales conductores y aislantes (7.º, física, `conductores`) · factores de la descomposición
       de la materia orgánica (7.º, ambiental, `descomposicion`) · equilibrio químico y principio de Le Châtelier
       (11.º, química, `equilibrio`).
 - [ ] **Lote 7:** conservación de la masa en sistema abierto y cerrado (8.º, química, `conservacion`) ·

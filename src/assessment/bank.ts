@@ -521,6 +521,59 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica de selección natural, cambia una sola variable por ensayo y compara el cambio del color medio.',
     transfer: 'Si un insecticida mata más a los insectos con poca cutícula, ¿qué información necesitarías para predecir si la población se volverá resistente?',
   },
+  {
+    id: 'saber-con-1', grade: 7, topic: 'Conductividad eléctrica', competency: 'indagacion', component: 'fisico', skill: 'Identificar la variable que explica un resultado y el control de variables', difficulty: 'media', practiceId: 'conductores',
+    context: 'En Chigorodó, un grupo de estudiantes montó un circuito con dos pilas (3,0 V), un bombillo y un amperímetro. Llenaron la misma celda (10 cm entre electrodos de 4 cm²) con distintas muestras de agua a la misma temperatura y midieron la corriente.',
+    table: {
+      caption: 'Corriente medida con 3,0 V',
+      headers: ['Muestra de agua', 'Corriente (mA)', '¿Se ve encendido el bombillo?'],
+      rows: [['Destilada', 0.0, 'No'], ['De la llave', 0.2, 'No'], ['Con una pizca de sal', 12.0, 'No'], ['Con una cucharada de sal', 49.5, 'Sí, débilmente']],
+    },
+    stem: '¿Qué conclusión está mejor apoyada por estos datos?',
+    options: [
+      { id: 'a', text: 'Cuanta más sal disuelta tiene el agua, mayor es la corriente, porque hay más iones que transportan la carga.', feedback: 'Correcto: con el mismo voltaje, la misma celda y la misma temperatura, la corriente crece con la cantidad de sal disuelta.' },
+      { id: 'b', text: 'El agua de la llave es aislante porque el bombillo no enciende.', feedback: 'El bombillo no enciende, pero el amperímetro sí detecta 0,2 mA: el agua de la llave es un conductor débil. Que el bombillo no brille no significa que la corriente sea cero.' },
+      { id: 'c', text: 'La corriente aumenta porque la sal hace que la celda sea más grande.', feedback: 'La celda es la misma en todos los ensayos (variable controlada); lo que cambia es la cantidad de sal disuelta.' },
+      { id: 'd', text: 'No se puede concluir nada, porque se cambiaron el voltaje y la muestra al mismo tiempo.', feedback: 'El voltaje fue el mismo (3,0 V) en todos los ensayos; solo cambió la muestra de agua, así que la comparación es válida.' },
+    ],
+    correct: 'a',
+    explanation: 'Se mantuvieron constantes el voltaje, la celda y la temperatura; solo cambió la cantidad de sal. Al disolverse, la sal forma iones Na⁺ y Cl⁻ que se mueven entre los electrodos: más iones, menor resistencia y mayor corriente. El bombillo solo se ve cuando la corriente es suficiente para darle cerca del 1 % de su potencia nominal o más.',
+    review: 'En la práctica de conductores y aislantes, compara las tres muestras de agua con una y con dos pilas.',
+  },
+  {
+    id: 'saber-des-1', grade: 7, topic: 'Descomposición', competency: 'indagacion', component: 'biologico', skill: 'Interpretar datos para identificar un óptimo y sus límites', difficulty: 'alta', practiceId: 'descomposicion',
+    context: 'Un grupo de estudiantes de Apartadó enterró bolsas con 50 g de cáscara de banano en composteras mantenidas a distintas temperaturas, todas con la misma humedad y volteo semanal. A las 4 semanas obtuvieron estos resultados.',
+    table: { caption: 'Pérdida de masa de la cáscara de banano a las 4 semanas', headers: ['Temperatura (°C)', '15', '25', '35', '40', '45'], rows: [['Masa perdida (%)', 26.0, 45.2, 69.8, 81.6, 69.8]] },
+    stem: '¿Qué conclusión se apoya mejor en estos datos?',
+    options: [
+      { id: 'a', text: 'Entre más alta la temperatura, más rápida es siempre la descomposición.', feedback: 'A 45 °C la pérdida es menor que a 40 °C: la tendencia creciente no se mantiene en todo el rango.' },
+      { id: 'b', text: 'La descomposición aumenta con la temperatura hasta cerca de 40 °C y luego disminuye, posiblemente porque el calor excesivo inhibe a los microorganismos.', feedback: 'Correcto: los datos muestran un máximo cerca de 40 °C y una caída a 45 °C.' },
+      { id: 'c', text: 'La temperatura no influye, porque a 35 °C y a 45 °C se perdió la misma masa.', feedback: 'Que dos valores coincidan no significa que no haya efecto: entre 15 y 40 °C la pérdida cambia mucho.' },
+      { id: 'd', text: 'A 15 °C no hay descomponedores, por eso la pérdida es la menor.', feedback: 'A 15 °C sí hubo descomposición (26 %); los descomponedores trabajan más despacio, no están ausentes.' },
+    ],
+    correct: 'b',
+    explanation: 'Entre 15 y 40 °C la pérdida aumenta (la actividad microbiana casi se duplica por cada 10 °C), pero a 45 °C disminuye: por encima de unos 40 °C muchos hongos y bacterias se inhiben. La relación tiene un óptimo, no es creciente sin límite.',
+    review: 'En la práctica de descomposición, mide la cáscara de banano en la semana 4 a 15, 25, 35, 40 y 45 °C.',
+  },
+  {
+    id: 'saber-eqb-1', grade: 11, topic: 'Equilibrio químico', competency: 'indagacion', component: 'quimico', skill: 'Interpretar datos para inferir el carácter exotérmico o endotérmico de una reacción', difficulty: 'alta', practiceId: 'equilibrio',
+    context: 'En la vitrina de extracción de un laboratorio de Carepa, una docente sumergió una jeringa sellada con NO₂ (gas marrón) y N₂O₄ (gas incoloro) en baños a distintas temperaturas, sin mover el émbolo. En la jeringa ocurre 2 NO₂(g) ⇌ N₂O₄(g). Un comparador de color asignó 100 a la intensidad del marrón a 25 °C.',
+    table: {
+      caption: 'Intensidad del color marrón en la jeringa (volumen constante)',
+      headers: ['Temperatura (°C)', '10', '25', '50', '80'],
+      rows: [['Intensidad del color', 59, 100, 193, 302]],
+    },
+    stem: '¿Qué conclusión es coherente con estos datos?',
+    options: [
+      { id: 'a', text: 'Al calentar se forma más NO₂, así que la formación de N₂O₄ es exotérmica y su constante de equilibrio disminuye con la temperatura.', feedback: 'Correcto: el calor favorece la reacción inversa (descomposición del N₂O₄), lo que indica que la dimerización libera calor.' },
+      { id: 'b', text: 'Al calentar se forma más N₂O₄, porque las moléculas chocan con más energía y se unen.', feedback: 'Si se formara más N₂O₄ (incoloro) el color se aclararía; los datos muestran que se oscurece.' },
+      { id: 'c', text: 'El color aumenta solo porque el gas se expande con el calor; el equilibrio no cambia.', feedback: 'El émbolo no se movió: el volumen es constante. El aumento de color se debe a que hay más moles de NO₂.' },
+      { id: 'd', text: 'La formación de N₂O₄ es endotérmica, porque al calentar el sistema cambia.', feedback: 'En una reacción endotérmica calentar favorecería la formación de N₂O₄ y el color se aclararía; ocurre lo contrario.' },
+    ],
+    correct: 'a',
+    explanation: 'A volumen constante, más intensidad significa más moléculas de NO₂. Calentar desplaza el equilibrio hacia el NO₂, es decir, hacia los reactivos de 2 NO₂ ⇌ N₂O₄: la reacción directa es exotérmica (ΔH ≈ −57 kJ/mol) y su K disminuye al aumentar la temperatura, como predice el principio de Le Châtelier.',
+    review: 'En la práctica de equilibrio químico, usa el sistema B y cambia solo la temperatura del baño de la jeringa.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

@@ -101,13 +101,18 @@ export function BenchTop({ y, x = 0, width }: { y: number; x?: number; width: nu
   );
 }
 
+/** Tamaño de letra que cabe en la pantalla (dígitos monoespaciados ≈ 0,62 em + 1 px de espaciado). */
+function lcdFont(text: string, available: number, h: number) {
+  return Math.max(9, Math.min(18, h * 0.58, available / Math.max(1, text.length * 0.62 + text.length / 18)));
+}
+
 /** Pantalla de cristal líquido con dígitos verdes. */
 export function Lcd({ x, y, w, h, text, unit }: { x: number; y: number; w: number; h: number; text: string; unit?: string }) {
   return (
     <g>
       <rect x={x} y={y} width={w} height={h} rx={4} fill="url(#kit-lcd)" stroke="#05100d" strokeWidth="1" />
       <rect x={x + 2} y={y + 2} width={w - 4} height={h * 0.35} rx={3} fill="#ffffff" opacity="0.04" />
-      <text x={x + w - (unit ? 26 : 8)} y={y + h / 2 + 6} textAnchor="end" fill="#7CFFB2" style={{ fontFamily: 'var(--font-data)', fontSize: Math.min(18, h * 0.58), letterSpacing: 1 }}>{text}</text>
+      <text x={x + w - (unit ? 26 : 8)} y={y + h / 2 + 6} textAnchor="end" fill="#7CFFB2" style={{ fontFamily: 'var(--font-data)', fontSize: lcdFont(text, w - (unit ? 34 : 16), h), letterSpacing: 1 }}>{text}</text>
       {unit && <text x={x + w - 8} y={y + h / 2 + 6} textAnchor="end" fill="#7CFFB2" opacity="0.8" style={{ fontFamily: 'var(--font-data)', fontSize: 11 }}>{unit}</text>}
     </g>
   );

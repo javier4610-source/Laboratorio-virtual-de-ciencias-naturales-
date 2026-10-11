@@ -123,3 +123,15 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Instrumentos | Revisión de capturas de los 24 laboratorios en tema claro y oscuro | Calidad de producto | Dibujos esquemáticos (rectángulos planos, emojis que cambian según el sistema operativo) | Kit de instrumentos con vidrio, menisco, metal y pantallas; rediseño de los 24 laboratorios sin cambiar cálculos ni textos | Corregido |
 | Accesibilidad tras el rediseño | axe WCAG 2.1 A/AA en todas las páginas y prácticas, temas claro y oscuro | 0 infracciones | Las hebras de ADN con desplazamiento horizontal no eran alcanzables con teclado | Región enfocable con nombre accesible | Corregido |
 | Regresión | 198 pruebas unitarias y 40 de interfaz | Todas pasan | — | — | Correcto |
+
+# Ronda de desarrollo continuo: lote 6
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Conductores – modelo | 12 pruebas: R = ρL/A a mano, metales frente a aislantes, agua salada frente a destilada, grafito, voltaje doble, umbral de brillo, suma de caídas de voltaje | Correcto | — | — | Correcto |
+| Conductores – interfaz | Captura y E2E (cobre: 145,6 mA) | Funciona | El valor del amperímetro se salía de la pantalla | Tamaño de letra de las pantallas del kit ajustado al ancho disponible (beneficia a todos los laboratorios) | Corregido |
+| Descomposición – modelo | 10 pruebas: decaimiento exponencial, plástico sin cambio, Q₁₀ = 2, óptimo de humedad, aireación, tamaño, vida media | Correcto | — | Parámetros k declarados como ilustrativos; sin fracción resistente (declarado) | Correcto |
+| Descomposición – interfaz | Captura en tema oscuro y E2E (banano: 45,2 % en 4 semanas; plástico: 50,0 g) | Funciona | — | — | Correcto |
+| Equilibrio – modelo | 11 pruebas: Kc constante tras perturbar, Q frente a K a mano, precipitación con Ag⁺, efecto de la temperatura, compresión de NO₂/N₂O₄ | Correcto | — | — | Correcto; **por verificar:** la entalpía de formación de FeSCN²⁺ usada (−6 kJ/mol) es aproximada y hace sutil el efecto de la temperatura en el sistema A (el sistema B sí lo muestra claramente) |
+| Equilibrio – interfaz | E2E (absorbancia 0,427 → 0,781 al agregar Fe³⁺, Q < K) | Funciona | — | — | Correcto |
+| Ronda | Ejecución con agentes en paralelo | — | Los agentes se detuvieron al alcanzar el límite de uso | Se reanudaron en la ronda siguiente con su contexto | Resuelto |

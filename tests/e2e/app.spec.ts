@@ -35,7 +35,7 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(1);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(6);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(7);
 });
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
@@ -385,6 +385,45 @@ test('velocidad de reacción: el mármol en polvo reacciona más rápido que gra
   await expect(page.locator('.readout').getByText('1,43 mL/s')).toBeVisible({ timeout: 15_000 });
 });
 
+test('conductores: el cobre conduce (145,6 mA) y se clasifica con la predicción', async ({ page }) => {
+  await openFree(page, 'conductores');
+  await expect(save(page)).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Cerrar el circuito y medir' })).toBeDisabled();
+  await page.getByLabel('Tu predicción antes de medir').selectOption({ label: 'Conductor' });
+  await page.getByRole('button', { name: 'Cerrar el circuito y medir' }).click();
+  await expect(page.locator('.readout').getByText('145,6 mA')).toBeVisible();
+  await expect(page.getByText(/coincide con la medición/)).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('descomposición: la cáscara de banano pierde 45,2 % en 4 semanas; el plástico no cambia', async ({ page }) => {
+  await openFree(page, 'descomposicion');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Pesar las bolsas' }).click();
+  await expect(page.locator('.readout').getByText('45,2 %')).toBeVisible();
+  await expect(page.locator('.readout').getByText('27,4 g')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByLabel('Material de la bolsa').selectOption({ label: 'Plástico (control)' });
+  await page.getByRole('button', { name: 'Pesar las bolsas' }).click();
+  await expect(page.locator('.readout').getByText('50,0 g')).toBeVisible();
+});
+
+test('equilibrio: agregar Fe³⁺ da Q < K y aumenta la absorbancia de 0,427 a 0,781', async ({ page }) => {
+  await openFree(page, 'equilibrio');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Medir absorbancia' }).click();
+  await expect(page.locator('.readout').getByText('0,427')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByRole('button', { name: 'Agregar 1 gota de Fe³⁺' }).click();
+  await expect(page.getByText('Q < K: se desplaza hacia los productos.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Medir absorbancia' })).toBeEnabled({ timeout: 8000 });
+  await page.getByRole('button', { name: 'Medir absorbancia' }).click();
+  await expect(page.locator('.readout').getByText('0,781')).toBeVisible();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -445,7 +484,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/24');
+  await expect(page.locator('.kpi').first()).toContainText('1/27');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

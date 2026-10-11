@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (24)
+## Prácticas implementadas (27)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -15,6 +15,8 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 6.º | Cadenas y redes alimentarias | Ambiental | Lotka-Volterra generalizado con respuesta funcional tipo II, regla del 10 %, cascadas tróficas, pirámide de biomasa (RK4) |
 | 6.º | Separación de mezclas | Química | Propiedades de cada componente (magnetismo, solubilidad, densidad); pérdidas en filtro y embudo; energía de evaporación (c·ΔT + L) |
 | 7.º | Difusión y ósmosis a través de la membrana | Biología | Boyle-van 't Hoff, van 't Hoff (π = CRT), turgencia elástica, lisis; difusión de Fick con D ∝ T/η |
+| 7.º | Materiales conductores y aislantes | Física | R = ρL/A con resistividades reales, circuito en serie con resistencia interna, brillo ∝ I²R, clasificación por corriente |
+| 7.º | Factores de la descomposición de la materia orgánica | Ambiental | Modelo de Olson M = M₀e^(−kt) con k según material, Q₁₀ de temperatura, humedad, aireación y tamaño |
 | 7.º | Mitosis al microscopio: fases e índice mitótico | Biología | Fracción de células por fase ∝ duración; índice mitótico; ADN 2C→4C; efecto de la colchicina |
 | 8.º | Herencia mendeliana y cuadros de Punnett | Biología | Segregación y transmisión independiente, dominancia completa/incompleta, muestreo con semilla, χ² |
 | 8.º | Reflexión y refracción de la luz | Física | Ley de reflexión, Snell, ángulo crítico y reflexión total interna, reflectancia de Fresnel, índice desconocido por pendiente |
@@ -31,11 +33,12 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
 | 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |
+| 11.º | Equilibrio químico y principio de Le Châtelier | Química | Fe³⁺/SCN⁻ resuelto exactamente con Beer-Lambert; NO₂/N₂O₄ con Kp y Van 't Hoff; cociente Q frente a K |
 | 11.º | pH, dilución y neutralización | Química | Balance de cargas exacto (ácidos fuertes y débiles), dilución, curva de titulación, indicadores |
 | 11.º | Crecimiento poblacional y capacidad de carga | Ambiental | Exponencial y logístico con cosecha |
 | 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 
-Otras 15 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 12 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

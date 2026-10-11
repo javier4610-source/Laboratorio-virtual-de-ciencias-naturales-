@@ -74,8 +74,6 @@ export const PLANNED: PlannedPractice[] = [
   { title: 'Ecosistema: agua, luz y alimento', grade: 6, area: 'ambiental', status: 'planificada' },
   { title: 'Movimiento y distancia recorrida', grade: 6, area: 'fisica', status: 'planificada' },
   { title: 'Circuitos simples con baterías, interruptores y bombillas', grade: 7, area: 'fisica', status: 'planificada' },
-  { title: 'Materiales conductores y aislantes', grade: 7, area: 'fisica', status: 'planificada' },
-  { title: 'Factores de la descomposición de materia orgánica', grade: 7, area: 'ambiental', status: 'planificada' },
   { title: 'Densidad y flotación', grade: 7, area: 'fisica', status: 'planificada' },
   { title: 'Modelo interactivo de ADN y complementariedad', grade: 8, area: 'biologia', status: 'planificada' },
   { title: 'Conservación de la masa', grade: 8, area: 'quimica', status: 'planificada' },
@@ -83,7 +81,6 @@ export const PLANNED: PlannedPractice[] = [
   { title: 'Cálculos estequiométricos básicos', grade: 9, area: 'quimica', status: 'planificada' },
   { title: 'Respiración celular y balance energético', grade: 10, area: 'biologia', status: 'planificada' },
   { title: 'Expresión génica y efecto de mutaciones', grade: 11, area: 'biologia', status: 'planificada' },
-  { title: 'Equilibrio químico con cambios controlados', grade: 11, area: 'quimica', status: 'planificada' },
   { title: 'Contaminación del agua e indicadores', grade: 11, area: 'ambiental', status: 'planificada' },
   { title: 'Reto de indagación con interpretación de datos', grade: 11, area: 'ambiental', status: 'planificada' },
 ];

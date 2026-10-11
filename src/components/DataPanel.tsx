@@ -33,7 +33,7 @@ export function TrialTable({ dataset, trials, onDelete, onNote, caption }: {
         </thead>
         <tbody>
           {trials.map((t, i) => (
-            <tr key={t.id}>
+            <tr key={t.id} className={Date.now() - t.createdAt < 4000 ? 'fresh' : undefined}>
               <td className="n">{i + 1}</td>
               {dataset.columns.map((c) => <td key={c.key} className={c.numeric ? 'n' : undefined}>{cellText(t.values[c.key], c.decimals)}</td>)}
               {onNote && (
@@ -85,9 +85,9 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
   const csv = () => trialsToCSV(practiceId, ds.id, session);
 
   return (
-    <section className="card stack" aria-labelledby={`datos-${ds.id}`}>
+    <section className="card stack notebook" id="cuaderno" tabIndex={-1} aria-labelledby={`datos-${ds.id}`}>
       <div className="panel-title">
-        <h3 id={`datos-${ds.id}`}>Datos y gráficas</h3>
+        <h3 id={`datos-${ds.id}`}>Cuaderno de laboratorio: datos y gráficas</h3>
         {datasets.length > 1 && (
           <div className="seg" role="tablist" aria-label="Conjunto de datos" onKeyDown={onTabListKeyDown}>
             {datasets.map((d) => (
@@ -98,11 +98,15 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
           </div>
         )}
       </div>
+      <div className="notebook-grid">
+      <div className="notebook-table">
       <TrialTable
         dataset={ds} trials={trials}
         onDelete={api ? (id) => api.update((s) => ({ ...s, trials: s.trials.filter((t) => t.id !== id) })) : undefined}
         onNote={api ? (id, note) => api.update((s) => ({ ...s, trials: s.trials.map((t) => (t.id === id ? { ...t, note } : t)) })) : undefined}
       />
+      </div>
+      <div className="notebook-chart stack-sm">
       <div className="filters">
         <Select label="Eje horizontal (x)" value={ax.x} onChange={(v) => setAx({ x: v })} options={numeric.map((c) => ({ value: c.key, label: axisLabel(c) }))} />
         <Select label="Eje vertical (y)" value={ax.y} onChange={(v) => setAx({ y: v })} options={numeric.map((c) => ({ value: c.key, label: axisLabel(c) }))} />
@@ -116,6 +120,8 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
         emptyText="Guarda ensayos para ver la gráfica."
       />
       {series.length > 1 && <p className="small muted">La recta de ajuste solo se calcula cuando los datos no están agrupados.</p>}
+      </div>
+      </div>
       {trials.length > 0 && (
         <div className="btn-row no-print">
           <button type="button" className="btn small" onClick={() => { const ok = downloadText(`${practiceId}-${ds.id}.csv`, csv(), 'text/csv'); setMsg(ok ? 'Archivo CSV descargado.' : 'Este entorno no permite descargas: usa «Copiar datos».'); }}>Descargar CSV</button>

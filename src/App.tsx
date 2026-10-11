@@ -9,6 +9,7 @@ import { HomePage } from './pages/HomePage';
 import { CatalogPage, GradePage } from './pages/CatalogPages';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { PwaNotices } from './components/PwaUi';
+import { KitDefs } from './labs/kit';
 
 // Páginas pesadas cargadas bajo demanda: el inicio y el catálogo abren rápido en equipos modestos.
 const PracticePage = lazy(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
@@ -114,6 +115,7 @@ export default function App() {
         </div>
       </footer>
       <PwaNotices />
+      <KitDefs />
     </>
   );
 }

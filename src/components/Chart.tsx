@@ -147,7 +147,17 @@ export function Chart({ series, xLabel, yLabel, title, xDomain, yDomain, fit, he
             );
           })}
         </g>
-        {all.length === 0 && <text x={(m.l + W - m.r) / 2} y={(m.t + H - m.b) / 2} textAnchor="middle" style={{ fontSize: 14 }}>{emptyText}</text>}
+        {all.length === 0 && (() => {
+          // Ajusta el mensaje al ancho disponible (en celulares no cabe en una línea).
+          const maxChars = Math.max(14, Math.floor((W - m.l - m.r) / 7.6));
+          const lines = emptyText.split(' ').reduce<string[]>((acc, word) => {
+            const last = acc[acc.length - 1];
+            if (last !== undefined && (last + ' ' + word).length <= maxChars) acc[acc.length - 1] = last + ' ' + word; else acc.push(word);
+            return acc;
+          }, []);
+          const cy = (m.t + H - m.b) / 2 - ((lines.length - 1) * 18) / 2;
+          return <text x={(m.l + W - m.r) / 2} y={cy} textAnchor="middle" style={{ fontSize: 14 }}>{lines.map((l, i) => <tspan key={i} x={(m.l + W - m.r) / 2} dy={i === 0 ? 0 : 18}>{l}</tspan>)}</text>;
+        })()}
       </svg>
       <figcaption className="stack-sm" style={{ marginTop: 6 }}>
         {series.length > 1 && (

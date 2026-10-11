@@ -3,6 +3,7 @@ import { ALL_SAMPLES, closestMaterial, LIMITS, MATERIALS, simulateDensity, WATER
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { Readout, RecordButton, Select, Slider, Warnings, Notice } from '../components/ui';
 import type { LabProps } from './registry';
+import { BenchTop, Cube, DigitalBalance, GraduatedCylinder, Ruler } from './kit';
 
 export default function DensityLab({ api }: LabProps) {
   const [materialId, setMaterialId] = useState('aluminio');
@@ -20,11 +21,11 @@ export default function DensityLab({ api }: LabProps) {
   const sizePx = side * 20;
 
   // Geometría de la probeta (100 mL en 260 px)
-  const cylX = 410, cylW = 92, cylBottom = 316, mlPx = 2.6;
+  const cylX = 400, cylW = 104, cylBottom = 316, mlPx = 2.6;
   const level = submerged && result.finalWaterReading !== null ? result.finalWaterReading : submerged ? 100 : initialWater;
   const waterY = cylBottom - level * mlPx;
   const cubeTopInCyl = submerged
-    ? (result.floats && !pushUnder ? waterY - sizePx * (1 - result.submergedFraction) : cylBottom - sizePx - 2)
+    ? (result.floats && !pushUnder ? waterY - sizePx * (1 - result.submergedFraction) : cylBottom + 6 - sizePx)
     : 0;
 
   const checkGuess = () => {
@@ -49,60 +50,47 @@ export default function DensityLab({ api }: LabProps) {
   };
 
   const cubeColor = m.color;
+  const finish = (['aluminio', 'hierro', 'cobre', 'plomo'].includes(m.id) ? 'metal' : ['vidrio', 'hielo'].includes(m.id) ? 'vidrio' : ['pino', 'corcho'].includes(m.id) ? 'madera' : 'mate') as 'metal' | 'vidrio' | 'madera' | 'mate';
   return (
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
-          <svg viewBox="0 0 640 340" role="img" aria-labelledby="dens-t dens-d">
+          <svg viewBox="0 0 640 364" role="img" aria-labelledby="dens-t dens-d">
             <title id="dens-t">Mesa de laboratorio con balanza y probeta</title>
             <desc id="dens-d">{`Muestra: ${m.name}, cubo de ${fmt(side, 1)} cm de arista. ` +
               (weighed ? `La balanza marca ${result.massReading === null ? 'error de sobrecarga' : fmt(result.massReading, 1) + ' g'}. ` : 'La muestra aún no se ha pesado. ') +
               (submerged ? `La probeta marca ${result.finalWaterReading === null ? 'desbordamiento' : fmt(result.finalWaterReading, 1) + ' mL'}, partiendo de ${fmt(initialWater, 1)} mL.` : `La probeta contiene ${fmt(initialWater, 1)} mL de agua.`)}</desc>
+            <BenchTop y={334} width={640} />
             {/* Balanza */}
-            <rect x="40" y="250" width="230" height="60" rx="10" fill="var(--surface-2)" stroke="var(--ink-2)" />
-            <rect x="70" y="240" width="170" height="10" rx="3" fill="var(--line)" stroke="var(--ink-2)" />
-            <rect x="110" y="268" width="90" height="28" rx="4" fill="#0d1f1d" />
-            <text x="155" y="288" textAnchor="middle" fill="#7CFFB2" style={{ fontFamily: 'var(--font-data)', fontSize: 16 }}>
-              {weighed ? (result.massReading === null ? 'Err' : `${fmt(result.massReading, 1)} g`) : '0,0 g'}
-            </text>
-            <text x="155" y="328" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>Balanza · resolución 0,1 g</text>
-            {weighed && !submerged && (
-              <rect x={155 - sizePx / 2} y={240 - sizePx} width={sizePx} height={sizePx} fill={cubeColor} stroke="var(--ink)" strokeWidth="1.2" />
-            )}
+            <DigitalBalance x={40} y={258} w={230} reading={weighed ? (result.massReading === null ? 'Err' : fmt(result.massReading, 1)) : '0,0'}>
+              {weighed && !submerged && <Cube x={155 - sizePx / 2 - sizePx * 0.14} y={256} size={sizePx} color={cubeColor} finish={finish} />}
+            </DigitalBalance>
+            <text x="155" y="360" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>Balanza · resolución 0,1 g</text>
             {!weighed && !submerged && (
               <g>
-                <rect x={300 - sizePx / 2} y={318 - sizePx} width={sizePx} height={sizePx} fill={cubeColor} stroke="var(--ink)" strokeWidth="1.2" />
-                <text x="300" y="334" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>muestra</text>
+                <Cube x={322 - sizePx / 2} y={334} size={sizePx} color={cubeColor} finish={finish} />
+                <text x="326" y="360" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>muestra</text>
               </g>
             )}
             {/* Regla */}
-            <g transform="translate(40 30)">
-              <rect width="250" height="34" fill="var(--warn-soft)" stroke="var(--ink-2)" />
-              {Array.from({ length: 51 }, (_, i) => (
-                <line key={i} x1={10 + i * 4.6} x2={10 + i * 4.6} y1="0" y2={i % 10 === 0 ? 14 : i % 5 === 0 ? 10 : 6} stroke="var(--ink-2)" />
-              ))}
-              {[0, 1, 2, 3, 4, 5].map((c) => <text key={c} x={10 + c * 46} y="28" textAnchor="middle" style={{ fontSize: 10 }}>{c}</text>)}
-              <rect x="10" y="38" width={side * 46} height="8" fill={cubeColor} stroke="var(--ink)" />
-              <text x="0" y="62" style={{ fontSize: 12, fill: 'var(--ink)' }}>Arista medida con la regla: {fmt(result.sideReading, 1)} cm</text>
+            <Ruler x={40} y={30} cm={5} pxPerCm={46} />
+            <g>
+              <rect x={50} y={68} width={side * 46} height={9} rx={1.5} fill={cubeColor} stroke="rgba(0,0,0,0.35)" />
+              {finish === 'metal' && <rect x={50} y={68} width={side * 46} height={9} rx={1.5} fill="url(#kit-metal-h)" opacity="0.35" />}
+              <line x1={50} x2={50} y1={62} y2={80} stroke="var(--data)" strokeWidth="1.5" />
+              <line x1={50 + side * 46} x2={50 + side * 46} y1={62} y2={80} stroke="var(--data)" strokeWidth="1.5" />
+              <text x="40" y="96" style={{ fontSize: 12, fill: 'var(--ink)' }}>Arista medida con la regla: {fmt(result.sideReading, 1)} cm</text>
             </g>
             {/* Probeta */}
-            <path d={`M${cylX} 40 L${cylX} ${cylBottom} Q${cylX} ${cylBottom + 8} ${cylX + 8} ${cylBottom + 8} L${cylX + cylW - 8} ${cylBottom + 8} Q${cylX + cylW} ${cylBottom + 8} ${cylX + cylW} ${cylBottom} L${cylX + cylW} 40`} fill="none" stroke="var(--ink-2)" strokeWidth="2" />
-            <rect x={cylX + 1} y={Math.max(40, waterY)} width={cylW - 2} height={cylBottom + 7 - Math.max(40, waterY)} fill="rgba(70,150,220,0.28)" />
-            <line x1={cylX + 1} x2={cylX + cylW - 1} y1={Math.max(40, waterY)} y2={Math.max(40, waterY)} stroke="rgba(30,95,174,0.9)" strokeWidth="2" />
-            {Array.from({ length: 21 }, (_, i) => i * 5).map((v) => (
-              <g key={v}>
-                <line x1={cylX + cylW} x2={cylX + cylW + (v % 10 === 0 ? 14 : 8)} y1={cylBottom - v * mlPx} y2={cylBottom - v * mlPx} stroke="var(--ink-2)" />
-                {v % 10 === 0 && <text x={cylX + cylW + 18} y={cylBottom - v * mlPx + 4} style={{ fontSize: 10 }}>{v}</text>}
-              </g>
-            ))}
-            <text x={cylX + cylW / 2} y="30" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>Probeta 100 mL</text>
-            {submerged && (
-              <g>
-                <rect x={cylX + cylW / 2 - sizePx / 2} y={cubeTopInCyl} width={sizePx} height={sizePx} fill={cubeColor} stroke="var(--ink)" strokeWidth="1.2" opacity="0.92" />
-                {pushUnder && result.floats && <line x1={cylX + cylW / 2} x2={cylX + cylW / 2} y1={20} y2={cubeTopInCyl} stroke="var(--ink)" strokeWidth="1.5" />}
-              </g>
-            )}
-            {submerged && result.finalWaterReading === null && <text x={cylX + cylW / 2} y="56" textAnchor="middle" style={{ fontSize: 12, fill: 'var(--bad)', fontWeight: 700 }}>¡Se desborda!</text>}
+            <GraduatedCylinder x={cylX} y={42} w={cylW} h={292} capacity={100} level={level} major={10} minor={2} label="Probeta" unit="100 mL">
+              {submerged && (
+                <g>
+                  <Cube x={cylX + cylW / 2 - sizePx / 2 - sizePx * 0.14} y={cubeTopInCyl + sizePx} size={sizePx} color={cubeColor} finish={finish} opacity={0.94} />
+                  {pushUnder && result.floats && <line x1={cylX + cylW / 2} x2={cylX + cylW / 2} y1={8} y2={cubeTopInCyl - sizePx * 0.28} stroke="var(--ink)" strokeWidth="1.5" />}
+                </g>
+              )}
+            </GraduatedCylinder>
+            {submerged && result.finalWaterReading === null && <text x={cylX + cylW / 2} y="70" textAnchor="middle" style={{ fontSize: 12, fill: 'var(--bad)', fontWeight: 700 }}>¡Se desborda!</text>}
           </svg>
         </div>
         <Readout items={[

@@ -7,7 +7,8 @@ import { LAB_COMPONENTS } from '../labs/registry';
 import { DATASETS } from '../labs/datasets';
 import { DataPanel } from '../components/DataPanel';
 import { AnalysisSection, EvaluationSection, HypothesisSection, ModelSection, PreparationSection } from '../components/PracticeSections';
-import { ConfirmButton, Notice, Segmented } from '../components/ui';
+import { ConfirmButton, Segmented } from '../components/ui';
+import { ProcedureCoach, SavedToast, useFullscreen } from '../components/Workspace';
 import { href } from '../lib/router';
 import { onTabListKeyDown } from '../lib/a11y';
 
@@ -40,46 +41,61 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
   };
   const go = (id: StageId) => { if (!locked(id)) { setStage(id); window.scrollTo({ top: 0 }); } };
 
+  const fs = useFullscreen<HTMLDivElement>();
+  const compact = stage !== 'preparacion';
+  const showNotebook = () => {
+    const el = document.getElementById('cuaderno');
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el?.focus({ preventScroll: true });
+  };
+
   return (
-    <div className="stack">
-      <nav aria-label="Ruta de navegación" className="small muted">
-        <a href={href()}>Inicio</a> / <a href={href('grado', p.grade)}>{grade.name}</a> / <span>{p.title}</span>
-      </nav>
-      <header className="practice-head">
-        <div className="chips">
-          <span className={`chip area-${p.area}`}>{AREA_LABEL[p.area]}</span>
-          <span className="chip">Grado {p.grade}.º</span>
-          <span className="chip">{p.durationMin} min</span>
-          {p.competencies.map((c) => <span key={c} className="chip">{COMPETENCY_SHORT[c]}</span>)}
-        </div>
-        <h1>{p.title}</h1>
-        <p className="muted" style={{ margin: 0 }}><strong>Tema curricular:</strong> {p.topic}</p>
-        <p className="problem"><span className="sr-only">Pregunta problema: </span>{p.problemQuestion}</p>
-        <div className="row">
-          <Segmented<Mode> label="Modo de trabajo" value={s.mode} onChange={(m) => api.update((x) => ({ ...x, mode: m }))}
-            options={[{ value: 'guiada', label: 'Práctica guiada' }, { value: 'libre', label: 'Exploración libre' }, { value: 'evaluacion', label: 'Evaluación' }]} />
-          <div className="btn-row no-print">
-            <a className="btn" href={href('practica', p.id, 'informe')}>Ver informe</a>
-            <ConfirmButton label="Reiniciar práctica" confirmLabel="¿Borrar hipótesis, datos y respuestas de esta práctica?" onConfirm={() => { api.reset(); setStage('preparacion'); }} />
+    <div className="practice">
+      <header className={`practice-head${compact ? ' compact' : ''}`}>
+        <nav aria-label="Ruta de navegación" className="small muted crumbs">
+          <a href={href()}>Inicio</a> / <a href={href('grado', p.grade)}>{grade.name}</a> / <span>{p.title}</span>
+        </nav>
+        <div className="title-row">
+          <div className="title-block">
+            <div className="chips" hidden={compact}>
+              <span className={`chip area-${p.area}`}>{AREA_LABEL[p.area]}</span>
+              <span className="chip">Grado {p.grade}.º</span>
+              <span className="chip">{p.durationMin} min</span>
+              {p.competencies.map((c) => <span key={c} className="chip">{COMPETENCY_SHORT[c]}</span>)}
+            </div>
+            <h1 title={compact ? p.title : undefined}>{p.title}</h1>
+          </div>
+          <div className="head-actions no-print">
+            <Segmented<Mode> label="Modo de trabajo" value={s.mode} onChange={(m) => api.update((x) => ({ ...x, mode: m }))}
+              options={[{ value: 'guiada', label: 'Práctica guiada' }, { value: 'libre', label: 'Exploración libre' }, { value: 'evaluacion', label: 'Evaluación' }]} />
+            <div className="btn-row">
+              <a className="btn" href={href('practica', p.id, 'informe')}>Ver informe</a>
+              <ConfirmButton label="Reiniciar práctica" confirmLabel="¿Borrar hipótesis, datos y respuestas de esta práctica?" onConfirm={() => { api.reset(); setStage('preparacion'); }} />
+            </div>
           </div>
         </div>
-        <p className="small muted" style={{ margin: 0 }}>{MODE_HELP[s.mode]}</p>
-        <div className="progressbar" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-label="Progreso de la práctica">
-          <span>Progreso</span><span className="bar"><span style={{ width: `${progress}%` }} /></span><span className="num">{progress} %</span>
-        </div>
+        {!compact && <p className="muted topic"><strong>Tema curricular:</strong> {p.topic}</p>}
+        <p className="problem"><span className="problem-label">Pregunta problema</span>{p.problemQuestion}</p>
+        {!compact && <p className="small muted mode-help">{MODE_HELP[s.mode]}</p>}
       </header>
 
-      <div className="stage-nav" role="tablist" aria-label="Etapas de la práctica" onKeyDown={onTabListKeyDown}>
-        {STAGES.map((st, i) => {
-          const lock = locked(st.id);
-          return (
-            <button key={st.id} type="button" role="tab" id={`tab-${st.id}`} aria-controls={`panel-${st.id}`} aria-selected={stage === st.id} tabIndex={stage === st.id ? 0 : -1}
-              disabled={!!lock} title={lock ?? undefined} onClick={() => go(st.id)}>
-              <span className={`badge${done[st.id] ? ' done' : ''}`} aria-hidden="true">{done[st.id] ? '✓' : i + 1}</span>
-              {st.label}{lock && <span className="sr-only"> (bloqueada: {lock})</span>}
-            </button>
-          );
-        })}
+      <div className="stage-bar">
+        <div className="stage-nav" role="tablist" aria-label="Etapas de la práctica" onKeyDown={onTabListKeyDown}>
+          {STAGES.map((st, i) => {
+            const lock = locked(st.id);
+            return (
+              <button key={st.id} type="button" role="tab" id={`tab-${st.id}`} aria-controls={`panel-${st.id}`} aria-selected={stage === st.id} tabIndex={stage === st.id ? 0 : -1}
+                disabled={!!lock} title={lock ?? undefined} onClick={() => go(st.id)}>
+                <span className={`badge${done[st.id] ? ' done' : ''}`} aria-hidden="true">{done[st.id] ? '✓' : i + 1}</span>
+                {st.label}{lock && <span className="sr-only"> (bloqueada: {lock})</span>}
+              </button>
+            );
+          })}
+        </div>
+        <div className="stage-progress" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-label="Progreso de la práctica">
+          <span className="track"><span style={{ width: `${progress}%` }} /></span>
+          <span className="num">{progress} %</span>
+        </div>
       </div>
 
       <div role="tabpanel" id={`panel-${stage}`} aria-labelledby={`tab-${stage}`}>
@@ -87,30 +103,22 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
         {stage === 'hipotesis' && <HypothesisSection practice={p} api={api} onNext={() => { setStage('experimento'); window.scrollTo({ top: 0 }); }} />}
         {stage === 'experimento' && (
           <div className="stack">
-            {s.mode === 'libre' && !s.hypothesis.savedAt && <Notice>Exploración libre: puedes experimentar sin hipótesis. Si después quieres analizar, formula una en la etapa 2.</Notice>}
-            <details className="no-print" open={s.mode === 'guiada'}>
-              <summary>Procedimiento paso a paso ({s.stepsDone.length}/{p.procedure.length})</summary>
-              <ol className="steps">
-                {p.procedure.map((step, i) => {
-                  const isDone = s.stepsDone.includes(i);
-                  const current = !isDone && p.procedure.findIndex((_, j) => !s.stepsDone.includes(j)) === i;
-                  return (
-                    <li key={i} className={isDone ? 'done' : current ? 'current' : undefined}>
-                      <input type="checkbox" id={`step-${i}`} checked={isDone} onChange={(e) => api.update((x) => ({ ...x, stepsDone: e.target.checked ? [...x.stepsDone, i] : x.stepsDone.filter((k) => k !== i) }))} />
-                      <label htmlFor={`step-${i}`} style={{ fontWeight: current ? 700 : 400 }}>{i + 1}. {step}</label>
-                    </li>
-                  );
-                })}
-              </ol>
-            </details>
-            <Suspense fallback={<p role="status">Cargando el laboratorio…</p>}>
-              <Lab api={api} practice={p} />
-            </Suspense>
+            <div ref={fs.ref} className={`workspace stack${fs.active ? ' is-fullscreen' : ''}`}>
+              <ProcedureCoach
+                steps={p.procedure} done={s.stepsDone}
+                onToggle={(i, checked) => api.update((x) => ({ ...x, stepsDone: checked ? [...new Set([...x.stepsDone, i])] : x.stepsDone.filter((k) => k !== i) }))}
+                extra={fs.supported && <button type="button" className="btn small ghost" onClick={fs.toggle} aria-pressed={fs.active}>{fs.active ? 'Salir de pantalla completa' : 'Pantalla completa'}</button>}
+              />
+              <Suspense fallback={<p role="status">Cargando el laboratorio…</p>}>
+                <Lab api={api} practice={p} />
+              </Suspense>
+            </div>
             <DataPanel practiceId={p.id} datasets={DATASETS[p.id]} api={api} />
             <div className="btn-row">
               <button type="button" className="btn primary" disabled={!!locked('analisis')} onClick={() => go('analisis')}>Ir al análisis</button>
               {s.trials.length < MIN_TRIALS && <span className="small muted">Se recomiendan al menos {MIN_TRIALS} ensayos para identificar una tendencia.</span>}
             </div>
+            <SavedToast count={s.trials.length} onShow={showNotebook} />
           </div>
         )}
         {stage === 'analisis' && <AnalysisSection practice={p} api={api} />}

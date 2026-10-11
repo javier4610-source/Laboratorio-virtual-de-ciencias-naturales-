@@ -4,6 +4,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { BenchTop, Lcd } from './kit';
 
 function Arrow({ x1, y1, x2, y2, color, label }: { x1: number; y1: number; x2: number; y2: number; color: string; label: string }) {
   if (Math.hypot(x2 - x1, y2 - y1) < 2) return null;
@@ -18,6 +19,161 @@ function Arrow({ x1, y1, x2, y2, color, label }: { x1: number; y1: number; x2: n
   );
 }
 
+/* ------------------------------------------------------------------ dibujo del banco */
+
+const TOP = 158; // cara superior de la pista: allí se apoyan las ruedas del carrito
+const RAIL_X0 = 24, RAIL_X1 = 548;
+
+function NewtonDefs() {
+  return (
+    <defs>
+      <linearGradient id="nw-cart" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stopColor="#4f93e6" />
+        <stop offset="0.45" stopColor="#2563b8" />
+        <stop offset="1" stopColor="#163f78" />
+      </linearGradient>
+      <linearGradient id="nw-brass" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stopColor="#9c7417" />
+        <stop offset="0.3" stopColor="#f1d27a" />
+        <stop offset="0.6" stopColor="#c99a2e" />
+        <stop offset="1" stopColor="#8a6512" />
+      </linearGradient>
+      <radialGradient id="nw-led" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stopColor="#ff8a80" stopOpacity="0.9" />
+        <stop offset="1" stopColor="#ff5252" stopOpacity="0" />
+      </radialGradient>
+      <pattern id="nw-holes" width="14" height="5" patternUnits="userSpaceOnUse">
+        <rect width="14" height="5" fill="#d7dfe2" />
+        <circle cx="7" cy="2.5" r="1.1" fill="#5d6d74" />
+      </pattern>
+      <pattern id="nw-grit" width="9" height="5" patternUnits="userSpaceOnUse">
+        <rect width="9" height="5" fill="#a07d4f" />
+        <circle cx="2" cy="1.5" r="0.7" fill="#6b4f2a" />
+        <circle cx="6.5" cy="3.2" r="0.6" fill="#d9bf92" />
+        <circle cx="4.2" cy="4.2" r="0.5" fill="#5a4223" />
+      </pattern>
+    </defs>
+  );
+}
+
+/** Pista de aluminio sobre dos patas, con la superficie elegida encima y escala grabada entre las fotopuertas. */
+function Track({ surface, gateA, gateB }: { surface: string; gateA: number; gateB: number }) {
+  const fill = surface === 'lija' ? 'url(#nw-grit)' : surface === 'madera' ? 'url(#kit-wood)' : 'url(#nw-holes)';
+  const ticks = useMemo(() => Array.from({ length: 11 }, (_, i) => gateA + ((gateB - gateA) * i) / 10), [gateA, gateB]);
+  return (
+    <g>
+      {/* patas regulables */}
+      {[44, 528].map((lx) => (
+        <g key={lx} filter="url(#kit-shadow-soft)">
+          <path d={`M${lx - 9} ${TOP + 19} L${lx + 9} ${TOP + 19} L${lx + 20} 220 L${lx - 20} 220 Z`} fill="url(#kit-body-dark)" />
+          <rect x={lx - 3} y={218} width={6} height={6} fill="url(#kit-metal-h)" />
+          <rect x={lx - 12} y={223} width={24} height={4} rx={2} fill="#263033" />
+        </g>
+      ))}
+      {/* perfil de aluminio */}
+      <g filter="url(#kit-shadow)">
+        <rect x={RAIL_X0} y={TOP + 5} width={RAIL_X1 - RAIL_X0} height={14} rx={2} fill="url(#kit-metal)" stroke="#8c979b" />
+      </g>
+      <line x1={RAIL_X0 + 2} x2={RAIL_X1 - 2} y1={TOP + 13} y2={TOP + 13} stroke="#97a3a7" strokeWidth="1.2" />
+      {ticks.map((tx, i) => (
+        <line key={i} x1={tx} x2={tx} y1={TOP + 5} y2={TOP + (i % 5 === 0 ? 12 : 9)} stroke="#37474f" strokeWidth={i % 5 === 0 ? 1.2 : 0.8} />
+      ))}
+      {/* superficie de rodadura */}
+      <rect x={RAIL_X0} y={TOP} width={RAIL_X1 - RAIL_X0} height={5} fill={fill} stroke={surface === 'madera' ? '#b8975a' : '#7d8a8f'} strokeWidth="0.6" />
+      {/* topes de los extremos */}
+      {[RAIL_X0 - 2, RAIL_X1 - 8].map((sx) => (
+        <g key={sx}>
+          <rect x={sx} y={TOP - 16} width={10} height={21} rx={2} fill="url(#kit-body-dark)" />
+          <rect x={sx === RAIL_X0 - 2 ? sx + 10 : sx - 3} y={TOP - 12} width={3} height={10} rx={1} fill="#c62828" />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+/** Fotopuerta: cabezal con emisor infrarrojo montado sobre una varilla. */
+function Photogate({ x, label, blocked }: { x: number; label: string; blocked: boolean }) {
+  return (
+    <g>
+      <rect x={x - 2.5} y={116} width={5} height={TOP + 18 - 116} fill="url(#kit-metal-h)" />
+      <g filter="url(#kit-shadow-soft)">
+        <path d={`M${x - 11} 84 h22 a3 3 0 0 1 3 3 v28 a3 3 0 0 1 -3 3 h-22 a3 3 0 0 1 -3 -3 v-28 a3 3 0 0 1 3 -3 Z`} fill="url(#kit-body-dark)" />
+      </g>
+      <rect x={x - 4} y={98} width={8} height={18} rx={1.5} fill="#0d1416" />
+      {blocked ? <circle cx={x} cy={106} r={2.4} fill="#ffd54a" /> : <><circle cx={x} cy={106} r={7} fill="url(#nw-led)" /><circle cx={x} cy={106} r={2.2} fill="#ff5252" /></>}
+      <circle cx={x + 7} cy={89} r={1.6} fill={blocked ? '#ffd54a' : '#66bb6a'} />
+      <text x={x} y={76} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{label}</text>
+    </g>
+  );
+}
+
+/** Cronómetro de fotopuertas (caja de control con pantalla LCD). */
+function GateTimer({ x, y, text }: { x: number; y: number; text: string }) {
+  return (
+    <g>
+      <g filter="url(#kit-shadow)">
+        <rect x={x} y={y} width={96} height={72} rx={8} fill="url(#kit-body)" stroke="#a9b4b6" />
+      </g>
+      <Lcd x={x + 8} y={y + 9} w={80} h={28} text={text} unit="s" />
+      <text x={x + 48} y={y + 52} textAnchor="middle" style={{ fontSize: 11, fill: '#3a4644', fontWeight: 700 }}>cronómetro</text>
+      {[48, 60].map((dy) => (
+        <g key={dy}>
+          <rect x={x - 5} y={y + dy - 3} width={7} height={6} rx={1.5} fill="#263033" />
+          <rect x={x - 1} y={y + dy - 1.5} width={3} height={3} fill="#c9d2d5" />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+/** Carrito dinámico con pesas ranuradas, bandera opaca y dinamómetro que tira de él. */
+function Cart({ mass, force }: { mass: number; force: number }) {
+  const discs = Math.max(1, Math.min(8, Math.round(mass / 0.25)));
+  const arrowLen = force > 0 ? 10 + force * 4.5 : 0;
+  return (
+    <g>
+      <ellipse cx={30} cy={TOP + 1} rx={30} ry={2.5} fill="#000" opacity="0.18" />
+      {/* bandera que interrumpe el haz de las fotopuertas */}
+      <rect x={28} y={98} width={4} height={28} rx={1} fill="#1f2a2d" />
+      {/* pesas ranuradas en dos columnas */}
+      {[6, 36].map((px, col) => {
+        const n = Math.ceil((discs - col) / 2);
+        return (
+          <g key={px}>
+            <rect x={px + 8.5} y={124 - n * 4.5 - 4} width={3} height={n * 4.5 + 6} fill="url(#kit-metal-h)" />
+            {Array.from({ length: n }, (_, i) => (
+              <rect key={i} x={px} y={124 - (i + 1) * 4.5} width={20} height={4.1} rx={1.2} fill="url(#nw-brass)" stroke="#7a5a12" strokeWidth="0.5" />
+            ))}
+          </g>
+        );
+      })}
+      {/* cuerpo */}
+      <path d="M3 124 H57 Q60 124 60 127 V146 Q60 149 57 149 H3 Q0 149 0 146 V127 Q0 124 3 124 Z" fill="url(#nw-cart)" stroke="#123d73" />
+      <rect x={3} y={125.5} width={54} height={3} rx={1.5} fill="#fff" opacity="0.25" />
+      <text x={30} y={141} textAnchor="middle" style={{ fontSize: 11, fill: '#fff', fontWeight: 700 }}>{fmt(mass, 2)} kg</text>
+      {/* ruedas */}
+      {[13, 47].map((wx) => (
+        <g key={wx}>
+          <circle cx={wx} cy={TOP - 7} r={7} fill="#20292c" />
+          <circle cx={wx} cy={TOP - 7} r={3.4} fill="url(#kit-metal)" stroke="#7d8a8f" strokeWidth="0.6" />
+        </g>
+      ))}
+      {/* dinamómetro */}
+      <line x1={60} x2={66} y1={136} y2={136} stroke="#5d6b70" strokeWidth="1.6" />
+      <rect x={66} y={130.5} width={36} height={11} rx={3} fill="url(#kit-glass-fill)" stroke="var(--glass-edge)" />
+      <path d="M68 136 l3 -3.5 l3 7 l3 -7 l3 7 l3 -7 l3 7 l3 -7 l3 7 l3 -3.5" fill="none" stroke="#6d7b80" strokeWidth="1" />
+      <rect x={66} y={130.5} width={36} height={11} rx={3} fill="url(#kit-glass)" />
+      <circle cx={107} cy={136} r={4.5} fill="none" stroke="#5d6b70" strokeWidth="1.8" />
+      {arrowLen > 0 && (
+        <g>
+          <line x1={66} x2={66 + arrowLen - 7} y1={119} y2={119} stroke="var(--fis)" strokeWidth="3" />
+          <path d={`M${66 + arrowLen} 119 l-8 -5 v10 Z`} fill="var(--fis)" />
+        </g>
+      )}
+      <text x={66} y={112} style={{ fontSize: 11, fill: 'var(--fis)', fontWeight: 700 }}>{fmt(force, 1)} N</text>
+    </g>
+  );
+}
 export default function NewtonLab({ api }: LabProps) {
   const [mass, setMass] = useState(0.5);
   const [force, setForce] = useState(2);
@@ -59,24 +215,30 @@ export default function NewtonLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
-          <svg viewBox="0 0 640 230" role="img" aria-labelledby="nw-t nw-d">
+          <svg viewBox="0 0 640 250" role="img" aria-labelledby="nw-t nw-d">
             <title id="nw-t">Carrito sobre una pista con dos fotopuertas separadas 1,00 m</title>
             <desc id="nw-d">{done ? (res.moves ? `El carrito recorrió 1,00 m en ${fmt(res.time!, 3)} s.` : 'El carrito no se movió: la fricción estática equilibra la fuerza aplicada.') : 'El carrito está en reposo en la primera fotopuerta.'}</desc>
-            <rect x="30" y="150" width="500" height="10" fill={surface === 'lija' ? '#a8865a' : surface === 'madera' ? '#c79a62' : 'var(--line)'} />
+            <NewtonDefs />
+            <BenchTop y={226} width={640} />
+            {/* cables de las fotopuertas al cronómetro */}
+            <path d={`M${trackX0 + 14} 96 C${trackX0 + 60} 96, ${trackX0 + 70} 40, 300 40 S 500 62, 535 62`} fill="none" stroke="var(--ink-2)" strokeWidth="2" strokeLinecap="round" opacity="0.75" />
+            <path d={`M${trackX0 + trackPx + 14} 96 C${trackX0 + trackPx + 40} 96, 515 74, 535 74`} fill="none" stroke="var(--ink-2)" strokeWidth="2" strokeLinecap="round" opacity="0.75" />
             {[trackX0, trackX0 + trackPx].map((gx, i) => (
-              <g key={i}><rect x={gx - 3} y="80" width="6" height="70" fill="var(--ink-2)" /><text x={gx} y="74" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>fotopuerta {i + 1}</text></g>
+              <Photogate key={i} x={gx} label={`fotopuerta ${i + 1}`} blocked={Math.abs(cartX - gx) < 4} />
             ))}
+            <Track surface={surface} gateA={trackX0} gateB={trackX0 + trackPx} />
             <g transform={`translate(${cartX - 30} 0)`}>
-              <rect x="0" y="112" width="60" height="30" rx="5" fill="var(--fis)" />
-              <circle cx="14" cy="146" r="6" fill="var(--ink)" /><circle cx="46" cy="146" r="6" fill="var(--ink)" />
-              <text x="30" y="132" textAnchor="middle" style={{ fontSize: 11, fill: '#fff', fontWeight: 700 }}>{fmt(mass, 2)} kg</text>
-              <line x1="60" y1="125" x2="80" y2="125" stroke="var(--ink-2)" strokeWidth="2" />
-              <text x="82" y="120" style={{ fontSize: 11, fill: 'var(--ink)' }}>{fmt(force, 1)} N</text>
+              <Cart mass={mass} force={force} />
             </g>
-            <text x="560" y="40" textAnchor="middle" style={{ fontSize: 13, fontFamily: 'var(--font-data)', fill: 'var(--ink)' }}>{fmt(t, 3)} s</text>
-            <text x="560" y="58" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>cronómetro</text>
-            <text x="300" y="200" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>1,00 m</text>
-            <line x1={trackX0} x2={trackX0 + trackPx} y1="185" y2="185" stroke="var(--ink-2)" />
+            <GateTimer x={540} y={14} text={fmt(t, 3)} />
+            {/* cota entre fotopuertas */}
+            <g>
+              <line x1={trackX0} x2={trackX0 + trackPx} y1="200" y2="200" stroke="var(--ink-2)" />
+              <line x1={trackX0} x2={trackX0} y1="193" y2="207" stroke="var(--ink-2)" />
+              <line x1={trackX0 + trackPx} x2={trackX0 + trackPx} y1="193" y2="207" stroke="var(--ink-2)" />
+              <rect x={trackX0 + trackPx / 2 - 26} y="191" width="52" height="18" rx="4" fill="var(--surface)" />
+              <text x={trackX0 + trackPx / 2} y="204" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>1,00 m</text>
+            </g>
           </svg>
         </div>
         <div className="grid-2">

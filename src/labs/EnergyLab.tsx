@@ -5,8 +5,10 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { BenchTop } from './kit';
 
-const W = 640, H = 260;
+const W = 640, H = 260, X0 = 72;
+const rulerTicks = Array.from({ length: 21 }, (_, i) => i / 10);
 
 export default function EnergyLab({ api }: LabProps) {
   const [mass, setMass] = useState(0.5);
@@ -36,12 +38,17 @@ export default function EnergyLab({ api }: LabProps) {
   }, [running, res]);
 
   const p = res.points[Math.min(idx, res.points.length - 1)];
-  const sx = (x: number) => 30 + (x / TRACK_X) * (W - 60), sy = (h: number) => 230 - h * 95;
+  const sx = (x: number) => X0 + (x / TRACK_X) * (W - X0 - 30), sy = (h: number) => 230 - h * 95;
   // dibuja la pista completa aunque la esfera no la recorra
   const path = useMemo(() => Array.from({ length: 201 }, (_, i) => {
     const x = (TRACK_X * i) / 200;
-    return `${30 + (x / TRACK_X) * (W - 60)},${230 - trackHeight(x, h0, hc) * 95}`;
+    return `${X0 + (x / TRACK_X) * (W - X0 - 30)},${230 - trackHeight(x, h0, hc) * 95}`;
   }).join(' '), [h0, hc]);
+  // soportes verticales cada 0,25 m
+  const posts = useMemo(() => Array.from({ length: 17 }, (_, i) => {
+    const x = (TRACK_X * i) / 16;
+    return { x: X0 + (x / TRACK_X) * (W - X0 - 30), y: 230 - trackHeight(x, h0, hc) * 95 };
+  }), [h0, hc]);
   const E = res.totalEnergy;
   const bar = (v: number) => (Math.max(0, v) / E) * 150;
   const last = res.points[res.points.length - 1];
@@ -58,13 +65,63 @@ export default function EnergyLab({ api }: LabProps) {
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="en-t en-d">
             <title id="en-t">Esfera en una pista con una colina</title>
             <desc id="en-d">{`Altura de salida ${fmt(h0, 2)} m; colina de ${fmt(hc, 2)} m. ${done ? (res.passesHill ? `Supera la colina; rapidez en el valle ${fmt(res.speedBottom, 2)} m/s.` : 'No supera la colina.') : ''}`}</desc>
-            <polyline points={path} fill="none" stroke="var(--ink-2)" strokeWidth="4" strokeLinejoin="round" />
-            <line x1="30" x2={W - 30} y1={sy(0)} y2={sy(0)} stroke="var(--line)" strokeDasharray="4 4" />
-            <line x1="22" x2="22" y1={sy(0)} y2={sy(h0)} stroke="var(--ink-2)" />
-            <text x="14" y={sy(h0) - 4} style={{ fontSize: 11, fill: 'var(--ink-2)' }}>h₀ = {fmt(h0, 2)} m</text>
-            <circle cx={sx(p.x)} cy={sy(p.h) - 9} r="9" fill="var(--data)" stroke="var(--surface)" strokeWidth="2" />
-            <text x={sx(p.x)} y={sy(p.h) - 24} textAnchor="middle" style={{ fontSize: 11, fontFamily: 'var(--font-data)', fill: 'var(--ink)' }}>{fmt(p.v, 2)} m/s</text>
-            {!res.passesHill && done && <text x={sx(res.stopX!)} y={sy(hc) - 30} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--bad)', fontWeight: 700 }}>no alcanza la cima</text>}
+            <defs>
+              <radialGradient id="en-ball" cx="0.36" cy="0.3" r="0.75">
+                <stop offset="0" stopColor="#ffffff" />
+                <stop offset="0.25" stopColor="#d9e0e3" />
+                <stop offset="0.7" stopColor="#7d898e" />
+                <stop offset="1" stopColor="#3a4448" />
+              </radialGradient>
+            </defs>
+            <BenchTop y={238} width={W} />
+            {/* regla vertical para la altura de salida */}
+            <g filter="url(#kit-shadow-soft)">
+              <rect x={28} y={sy(2) - 8} width={22} height={sy(0) - sy(2) + 16} rx={2} fill="url(#kit-wood)" stroke="#b8975a" />
+            </g>
+            {rulerTicks.map((h) => {
+              const major = Math.abs(h * 2 - Math.round(h * 2)) < 1e-6;
+              return (
+                <g key={h}>
+                  <line x1={28} x2={28 + (major ? 6 : 3.5)} y1={sy(h)} y2={sy(h)} stroke="#4d3b1c" strokeWidth={major ? 1.1 : 0.7} />
+                  {major && <text x={48} y={sy(h) + 3} textAnchor="end" style={{ fontSize: 8, fill: '#4d3b1c', fontFamily: 'var(--font-data)' }}>{fmt(h, h % 1 === 0 ? 0 : 1)}</text>}
+                </g>
+              );
+            })}
+            <line x1={22} x2={22} y1={sy(0)} y2={sy(h0)} stroke="var(--ink-2)" />
+            <line x1={18} x2={26} y1={sy(h0)} y2={sy(h0)} stroke="var(--ink-2)" />
+            <line x1={18} x2={26} y1={sy(0)} y2={sy(0)} stroke="var(--ink-2)" />
+            <text transform={`translate(15 ${(sy(0) + sy(h0)) / 2}) rotate(-90)`} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>h₀ = {fmt(h0, 2)} m</text>
+            <line x1={50} x2={sx(0) - 10} y1={sy(h0)} y2={sy(h0)} stroke="var(--bad)" strokeDasharray="3 3" />
+            <path d={`M50 ${sy(h0)} l6 -4 v8 Z`} fill="var(--bad)" />
+            {/* nivel de referencia */}
+            <line x1={sx(0)} x2={sx(TRACK_X)} y1={sy(0) + 4} y2={sy(0) + 4} stroke="var(--line)" strokeDasharray="4 4" />
+            {/* soportes de la pista */}
+            {posts.map((q) => (
+              <g key={q.x}>
+                <rect x={q.x - 1.8} y={q.y + 3} width={3.6} height={Math.max(0, 236 - q.y - 3)} fill="url(#kit-metal-h)" />
+                <rect x={q.x - 4} y={q.y + 1} width={8} height={5} rx={1.5} fill="#2f393c" />
+                <rect x={q.x - 9} y={233} width={18} height={5} rx={2} fill="url(#kit-body-dark)" />
+              </g>
+            ))}
+            {/* riel metálico */}
+            <polyline points={path} fill="none" stroke="#000" strokeOpacity="0.14" strokeWidth="8" strokeLinejoin="round" transform="translate(0 4)" />
+            <polyline points={path} fill="none" stroke="#66737a" strokeWidth="7" strokeLinejoin="round" strokeLinecap="round" />
+            <polyline points={path} fill="none" stroke="#dbe3e6" strokeWidth="3.4" strokeLinejoin="round" strokeLinecap="round" />
+            <polyline points={path} fill="none" stroke="#ffffff" strokeOpacity="0.85" strokeWidth="1" strokeLinejoin="round" transform="translate(0 -1.2)" />
+            {/* topes de salida y de llegada */}
+            <rect x={sx(0) - 16} y={sy(h0) - 22} width={7} height={24} rx={2} fill="url(#kit-body-dark)" />
+            <rect x={sx(TRACK_X) + 4} y={sy(0) - 20} width={9} height={24} rx={2} fill="url(#kit-body-dark)" />
+            <rect x={sx(TRACK_X) + 1} y={sy(0) - 16} width={3} height={14} rx={1} fill="#c62828" />
+            {/* esfera metálica */}
+            <ellipse cx={sx(p.x)} cy={sy(p.h) + 1} rx={8} ry={2} fill="#000" opacity="0.18" />
+            <g transform={`translate(${sx(p.x)} ${sy(p.h) - 10})`}>
+              <circle r="9.5" fill="url(#en-ball)" stroke="#2f383b" strokeWidth="0.8" />
+              {rolling && <path d="M-9 0 A9 3.2 0 0 0 9 0" fill="none" stroke="#2f383b" strokeWidth="0.9" opacity="0.55" transform={`rotate(${((sx(p.x) / 9.5) * 180) / Math.PI})`} />}
+              <ellipse cx={-3} cy={-3.6} rx={2.6} ry={1.7} fill="#fff" opacity="0.85" />
+            </g>
+            <rect x={sx(p.x) - 32} y={sy(p.h) - 44} width={64} height={18} rx={9} fill="var(--surface)" stroke="var(--line)" />
+            <text x={sx(p.x)} y={sy(p.h) - 31} textAnchor="middle" style={{ fontSize: 11, fontFamily: 'var(--font-data)', fill: 'var(--ink)' }}>{fmt(p.v, 2)} m/s</text>
+            {!res.passesHill && done && <text x={sx(res.stopX!)} y={Math.max(14, Math.min(sy(hc), sy(p.h) - 44) - 8)} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--bad)', fontWeight: 700 }}>no alcanza la cima</text>}
           </svg>
         </div>
         <div className="grid-2">

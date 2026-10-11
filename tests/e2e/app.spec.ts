@@ -287,7 +287,7 @@ test('Newton: 2 N sobre 0,5 kg recorre 1 m en 0,707 s; en lija la fricción est�
   await expect(page.locator('.readout').getByText('0,707 s')).toBeVisible();
   await save(page).click();
   expect(await tableRows(page)).toBe(1);
-  await page.getByLabel('Superficie').selectOption('lija');
+  await page.getByLabel('Superficie', { exact: true }).selectOption('lija');
   await page.getByRole('button', { name: 'Soltar el carrito' }).click();
   await expect(page.locator('.readout').getByText('no se movió')).toBeVisible();
 });

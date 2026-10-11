@@ -3,6 +3,8 @@ import { LIGHT_COLORS, PHOTO_LIMITS, simulatePhotosynthesis, type LightColor } f
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Select, Slider, Warnings } from '../components/ui';
+import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
+import { rangeStats, type LoggerChannel, type LoggerRun } from '../lib/logger';
 import type { LabProps } from './registry';
 import { BenchTop, TestTube, shade } from './kit';
 
@@ -30,6 +32,13 @@ const ELODEA = (() => {
     </g>
   );
 })();
+
+/** Montaje del sensor de oxígeno disuelto: 1 g de elodea en 100 mL de agua; corrida de 10 min. */
+const PLANT_G = 1, WATER_L = 0.1, O2_MG_PER_UMOL = 0.032, SENSOR_DURATION = 600;
+/** Oxígeno disuelto de saturación en agua dulce (mg/L) según la temperatura (ajuste empírico, 0–40 °C). */
+const doSaturation = (T: number) => 14.62 - 0.3898 * T + 0.006969 * T * T - 0.00005897 * T * T * T;
+/** Cambio de oxígeno disuelto por segundo (mg/L·s) para una fotosíntesis neta en µmol O₂/g·h. */
+const doRate = (net: number) => (net * PLANT_G * O2_MG_PER_UMOL) / WATER_L / 3600;
 
 export default function PhotoLab({ api }: LabProps) {
   const [distance, setDistance] = useState(20);
@@ -64,6 +73,18 @@ export default function PhotoLab({ api }: LabProps) {
     bicarbonato: bicarbonate, temperatura: temperature, burbujas: counted ?? Number(res.bubblesPerMin.toFixed(1)),
     neta: Number(res.net.toFixed(2)), limitante: lampOn ? res.limiting : 'sin luz',
   });
+
+  /* Sensores en tiempo real: oxígeno disuelto y luz junto a la planta. */
+  const [sensorRun, setSensorRun] = useState<LoggerRun | null>(null);
+  const sensorChannels = useMemo<LoggerChannel[]>(() => {
+    const do0 = doSaturation(temperature), k = doRate(res.net);
+    return [
+      { id: 'oxigeno', name: 'Oxígeno disuelto', unit: 'mg/L', resolution: 0.01, noise: 0.012, min: 0, color: 'var(--series-3)', sample: (t) => do0 + k * t },
+      { id: 'luz', name: 'Luz (PAR)', unit: 'µmol/m²·s', resolution: 1, noise: 0.6, min: 0, color: 'var(--series-6)', sample: () => res.effectiveLight },
+    ];
+  }, [temperature, res]);
+  const conditions = `Luz ${LIGHT_COLORS.find((c) => c.id === color)!.name.toLowerCase()} ${lampOn ? `a ${distance} cm` : 'apagada'}, ${fmt(bicarbonate, 2)} g/L de bicarbonato, ${temperature} °C`;
+  const sensorSlope = sensorRun ? rangeStats(sensorRun.samples, 0)?.slope ?? null : null;
 
   const warnings: string[] = [];
   if (temperature >= 40) warnings.push('A esta temperatura las enzimas de la fotosíntesis empiezan a desnaturalizarse.');
@@ -131,6 +152,22 @@ export default function PhotoLab({ api }: LabProps) {
           ]),
         ]} />
         <Warnings list={warnings} />
+        <SensorCard intro={`Sonda de oxígeno disuelto y sensor de luz junto a la planta (${fmt(PLANT_G, 0)} g de elodea en ${fmt(WATER_L * 1000, 0)} mL de agua, partiendo de la saturación). El registrador simula ${fmt(SENSOR_DURATION / 60, 0)} min con las condiciones actuales; la pendiente del oxígeno disuelto mide la fotosíntesis neta.`}>
+          <DataLogger title="Interfaz de sensores · fotosíntesis" channels={sensorChannels} duration={SENSOR_DURATION} speed={30} rates={[1, 2, 5, 10]} defaultRate={1}
+            resetKey={conditions} runLabel={conditions} onUseRun={setSensorRun} />
+          {sensorRun && (
+            <div className="stack-sm">
+              <h3>Corrida en uso</h3>
+              <p className="small muted" style={{ margin: 0 }}>{sensorRun.label} · {sensorRun.samples.length} muestras a {fmt(sensorRun.rate, 0)} muestras/s.</p>
+              {sensorSlope !== null && (
+                <Notice kind="info">
+                  Pendiente del oxígeno disuelto: <strong>{fmt(sensorSlope * 60, 3)} mg/L por minuto</strong>. Con {fmt(PLANT_G, 0)} g de planta en {fmt(WATER_L * 1000, 0)} mL equivale a una fotosíntesis neta de <strong>{fmt((sensorSlope * WATER_L * 3600) / (O2_MG_PER_UMOL * PLANT_G), 1)} µmol O₂/g·h</strong>.
+                </Notice>
+              )}
+              <LoggerRunCharts run={sensorRun} channels={[0]} fits={{ oxigeno: 'linear' }} />
+            </div>
+          )}
+        </SensorCard>
       </div>
       <div className="controls">
         <div className="card stack">

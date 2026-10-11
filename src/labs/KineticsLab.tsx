@@ -7,6 +7,8 @@ import { roundToResolution } from '../models/math';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Chart } from '../components/Chart';
+import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
+import type { LoggerChannel, LoggerRun } from '../lib/logger';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, GasSyringe, Stopwatch, Thermometer } from './kit';
@@ -35,6 +37,8 @@ const SPEED = 30;
 /** Una burbuja dibujada por cada mL de gas; sube durante 18 s simulados. */
 const RISE = 18;
 const MAX_BUBBLES = 45;
+/** Capacidad del erlenmeyer (mL), para el sensor de presión en matraz cerrado. */
+const FLASK_VOLUME = 250;
 const SY_X0 = 320, SY_PX = 240; // jeringa: 0 mL en x = 320, 100 mL en x = 560
 const SURFACE_Y = 205, BASE_Y = 270;
 const wallLeft = (y: number) => 120 - ((y - 150) * 50) / 120;
@@ -120,6 +124,17 @@ export default function KineticsLab({ api }: LabProps) {
   }, [running, simT, emissions]);
 
   const catalystName = findCatalyst(catalyst).name;
+
+  /* Sensores en tiempo real: muestrean el mismo modelo con las condiciones actuales. */
+  const [sensorRun, setSensorRun] = useState<LoggerRun | null>(null);
+  const headspace = FLASK_VOLUME - (marble ? SETUP.acidVolume * 1000 : SETUP.peroxideVolume);
+  const sensorChannels = useMemo<LoggerChannel[]>(() => [
+    { id: 'volumen', name: 'Volumen de gas', unit: 'mL', resolution: 0.1, noise: 0.12, min: 0, max: SETUP.syringeMax, color: 'var(--series-1)', sample: (t) => volumeAt(res.series, t) },
+    { id: 'presion', name: 'Presión (matraz cerrado)', unit: 'kPa', resolution: 0.1, noise: 0.08, min: 0, color: 'var(--series-2)', sample: (t) => SETUP.pressure * (1 + volumeAt(res.series, t) / headspace) },
+  ], [res, headspace]);
+  const conditions = marble
+    ? `Mármol (${findParticle(particle).name.toLowerCase()}) + HCl ${fmt(concHCl, 1)} mol/L a ${fmt(temp, 0)} °C`
+    : `Agua oxigenada al ${fmt(concH2O2, 1)} % con ${catalystName.toLowerCase()} a ${fmt(temp, 0)} °C`;
   const record = () => api.addTrial('ensayos', {
     reaccion: marble ? 'Mármol + HCl' : 'Agua oxigenada',
     concentracion: concentration,
@@ -222,6 +237,17 @@ export default function KineticsLab({ api }: LabProps) {
           xDomain={[0, DURATION]} yDomain={[0, SETUP.syringeMax]} hLines={done ? [{ y: TARGET_VOLUME, label: '20 mL' }] : undefined}
           series={done ? [{ label: 'Lecturas de la jeringa (cada 10 s)', kind: 'both', points: res.readings.map((p) => ({ x: p.t, y: p.v })) }] : []}
           emptyText="Inicia la reacción para ver la curva volumen–tiempo." />
+        <SensorCard intro={`Interfaz con dos sensores sobre el mismo montaje: volumen de gas (jeringa con sensor de desplazamiento) y presión del gas en el matraz si se tapara sin jeringa (${fmt(headspace, 0)} mL de espacio libre, temperatura constante). El registrador simula la reacción desde t = 0 con las condiciones actuales.`}>
+          <DataLogger title="Interfaz de sensores · cinética" channels={sensorChannels} duration={DURATION} speed={SPEED} rates={[1, 2, 5, 10, 20]} defaultRate={2}
+            ranges={[[0, SETUP.syringeMax], undefined]} resetKey={conditions} runLabel={conditions} onUseRun={setSensorRun} />
+          {sensorRun && (
+            <div className="stack-sm">
+              <h3>Corrida en uso</h3>
+              <p className="small muted" style={{ margin: 0 }}>{sensorRun.label} · {sensorRun.samples.length} muestras a {fmt(sensorRun.rate, 0)} muestras/s. La pendiente de la curva volumen–tiempo es la velocidad de la reacción (mL/s).</p>
+              <LoggerRunCharts run={sensorRun} />
+            </div>
+          )}
+        </SensorCard>
       </div>
       <div className="controls">
         <div className="card stack">

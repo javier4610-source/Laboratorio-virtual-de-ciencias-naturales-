@@ -6,6 +6,8 @@ import {
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Chart, type Series } from '../components/Chart';
+import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
+import type { LoggerChannel, LoggerRun } from '../lib/logger';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { Stopwatch } from './kit';
@@ -171,6 +173,14 @@ export default function KinematicsLab({ api }: LabProps) {
     { label: 'Instantes de las fotos', color: 'var(--data)', kind: 'scatter', points: res.strobe.map((p) => ({ x: p.t, y: p.v, label: `t = ${fmt(p.t, 1)} s` })) },
   ] : [];
 
+  /* Sensor de movimiento (ultrasonido) que sigue al ciclista: muestrea el mismo modelo. */
+  const [sensorRun, setSensorRun] = useState<LoggerRun | null>(null);
+  const sensorChannels = useMemo<LoggerChannel[]>(() => [
+    { id: 'posicion', name: 'Posición', unit: 'm', resolution: 0.01, noise: 0.015, min: 0, max: TRACK_LENGTH, color: 'var(--series-1)', sample: (tt) => stateAt(v0, acc, tt).x },
+    { id: 'velocidad', name: 'Velocidad', unit: 'm/s', resolution: 0.01, noise: 0.03, min: 0, color: 'var(--series-2)', sample: (tt) => stateAt(v0, acc, tt).v },
+  ], [v0, acc]);
+  const conditions = `v₀ = ${fmt(v0, 1)} m/s, a = ${fmt(acc, 1)} m/s², ${fmt(tObs, 2)} s de recorrido`;
+
   const record = () => api.addTrial('recorridos', {
     v0, aceleracion: acc, tiempo: res.time, distancia: res.distance,
     vFinal: Number(res.finalSpeed.toFixed(2)), vMedia: Number(res.meanSpeed.toFixed(3)),
@@ -237,6 +247,17 @@ export default function KinematicsLab({ api }: LabProps) {
             xDomain={[0, tMax]} series={vtSeries}
             emptyText="Inicia el recorrido para ver la gráfica." />
         </div>
+        <SensorCard intro="Un sensor de movimiento por ultrasonido, fijo en la salida, mide la posición del ciclista y calcula su velocidad. El registrador simula el recorrido con las condiciones actuales, en tiempo real.">
+          <DataLogger title="Interfaz de sensores · cinemática" channels={sensorChannels} duration={tObs} speed={1} rates={[5, 10, 20, 50]} defaultRate={20}
+            ranges={[[0, Math.max(5, Math.ceil(stateAt(v0, acc, tObs).x / 5) * 5)], undefined]} resetKey={conditions} runLabel={conditions} onUseRun={setSensorRun} />
+          {sensorRun && (
+            <div className="stack-sm">
+              <h3>Corrida en uso</h3>
+              <p className="small muted" style={{ margin: 0 }}>{sensorRun.label} · {sensorRun.samples.length} muestras a {fmt(sensorRun.rate, 0)} muestras/s. Ajuste cuadrático de x(t) y lineal de v(t): compara los coeficientes con v₀ y a.</p>
+              <LoggerRunCharts run={sensorRun} fits={{ posicion: 'quadratic', velocidad: 'linear' }} />
+            </div>
+          )}
+        </SensorCard>
       </div>
       <div className="controls">
         <div className="card stack">

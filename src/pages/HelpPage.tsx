@@ -24,18 +24,20 @@ const IMPLEMENTED = [
   'Detección de tendencias en los datos y advertencias de control de variables al comparar con la hipótesis.',
   'Preguntas de selección múltiple con retroalimentación por opción, explicación, repaso y transferencia; reintentos.',
   'Banco de preguntas originales tipo Saber 11 con filtros por grado, competencia, componente y dificultad.',
-  'Informe de práctica imprimible, descargable (JSON y CSV) y copiable.',
-  'Panel docente local: catálogo, asignaciones y listas compartibles por código, importación de informes, resultados agregados, preguntas con mayor error, exportación CSV y rúbrica.',
-  'Accesibilidad: navegación por teclado, enlace para saltar al contenido, textos alternativos y tablas equivalentes para las gráficas, tema claro/oscuro, alto contraste, tamaño de texto y reducción de animaciones.',
-  'Pruebas automatizadas de las fórmulas, del currículo y de los flujos principales de la interfaz.',
+  'Informe de práctica imprimible, descargable (JSON y CSV), copiable y, si el colegio instala el servidor, enviable por internet con un código de curso.',
+  'Panel docente: catálogo, validación curricular de los DBA, asignaciones y listas por código, importación de informes, resultados agregados, preguntas con mayor error, opinión de los estudiantes, exportación CSV, rúbrica y conexión opcional al servidor institucional.',
+  'Servidor institucional opcional (carpeta server/) con cuentas docentes, cursos y recepción de informes, sin cuentas de estudiantes.',
+  'Accesibilidad: navegación por teclado (incluidas flechas en las pestañas), enlace para saltar al contenido, textos alternativos y tablas equivalentes para las gráficas, tema claro/oscuro, alto contraste, tamaño de texto y reducción de animaciones. Auditoría automática WCAG 2.1 AA con axe-core.',
+  'Carga bajo demanda: cada práctica se descarga solo al abrirla.',
+  'Pruebas automatizadas de las fórmulas, del currículo, del servidor y de los flujos principales de la interfaz.',
 ];
 
 const NOT_IMPLEMENTED = [
-  'Cuentas de usuario, base de datos y sincronización entre dispositivos (requieren un servidor).',
-  'Envío automático de informes al docente: hoy se entregan como archivo o texto.',
+  'Sincronización del progreso del estudiante entre dispositivos (el servidor recibe informes, no sesiones en curso).',
+  'Recuperación de contraseña de docentes por correo y panel de administración del servidor.',
   `${PLANNED.length} prácticas de la malla curricular planificadas que aún no están construidas (se muestran como «Próximamente»).`,
-  'Validación curricular oficial: la correspondencia con los DBA es una propuesta que el docente debe validar.',
-  'Pruebas de usabilidad con estudiantes reales y revisión externa por docentes de cada área.',
+  'La validación de los DBA la debe hacer el equipo docente con los documentos oficiales; la plataforma solo la registra.',
+  'Pruebas de usabilidad con estudiantes reales: hay un protocolo listo (docs/PROTOCOLO-USABILIDAD.md), pero deben aplicarse en el colegio.',
 ];
 
 export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Prefs) => void }) {

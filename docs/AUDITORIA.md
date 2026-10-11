@@ -43,3 +43,29 @@ Fecha: octubre de 2026. Alcance: las 9 prácticas implementadas, la navegación,
 ## Funciones implementadas frente a representadas
 
 Todo lo que aparece en la interfaz como disponible está implementado. Las 30 prácticas restantes de la malla se muestran explícitamente como «Próximamente», sin botón de acceso. No existen cuentas, base de datos, sincronización ni envío automático; la interfaz lo dice en el panel docente y en la ayuda.
+
+---
+
+# Fase 2: ampliación y verificación
+
+Alcance: carga bajo demanda, 5 prácticas nuevas, servidor institucional, accesibilidad y validación curricular.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Carga bajo demanda | Compilación de producción; prueba de que el catálogo liviano coincide con cada definición completa | Paquete inicial de ~156 KB a ~84 KB comprimidos | — | — | Correcto |
+| Mitosis – modelo | Fracciones por fase, índice esperado 2/18, zona de elongación, colchicina, ADN y cromosomas en el ciclo, reproducibilidad | Correcto | — | — | Correcto |
+| Ondas – modelo | v = λf, v = √(T/μ), energía ∝ A², sonido a 20 °C (343 m/s), periodicidad de la función de onda | Correcto | — | — | Correcto |
+| Fotosíntesis – modelo | Inverso del cuadrado, saturación lumínica, factor limitante, óptimo térmico, compensación, luz verde | Correcto | — | — | Correcto |
+| Fotosíntesis – interfaz | Revisión visual | — | Los valores del modelo (fotosíntesis neta, factor limitante) se mostraban antes de contar las burbujas | Se muestran después de medir | Corregido |
+| pH – modelo | HCl 0,1 M → 1; dilución; HCl 10⁻⁸ M → 6,98; acético 0,1 M → 2,88; equivalencias fuerte (7) y débil (≈ 8,7); pKa en la semiequivalencia; curva creciente | Correcto | — | — | Correcto |
+| pH – interfaz | E2E: 25 mL de NaOH → pH 7,00 y «punto de equivalencia» | Funciona | El volumen de equivalencia se mostraba antes de titular | Se muestra solo con «Mostrar la curva del modelo» | Corregido |
+| Genética de poblaciones – modelo | Hardy-Weinberg, recesivo letal (1/q_t = 1/q₀ + t), ventaja del heterocigoto (p* = t/(s+t)) desde ambos lados, deriva (estadística sobre 80 poblaciones), mutación, migración, semilla | Correcto | — | — | Correcto |
+| Ósmosis – interfaz | Repetición de las pruebas E2E (×5) | Funciona | **Caída intermitente de la página**: la marca de tiempo de requestAnimationFrame podía ser anterior al inicio y producir un índice negativo | Índice acotado entre 0 y el final de la serie | Corregido; prueba repetida 5/5 |
+| Servidor | 12 pruebas: contraseñas scrypt, código de registro, duplicados, informes inválidos, aislamiento entre docentes, curso cerrado, límite de envíos, cierre y expiración de sesión, CORS | Correcto | El límite de 30 envíos cada 10 minutos por IP bloquearía a un salón completo detrás de la misma red | Límite por defecto subido a 120 | Corregido |
+| Servidor + interfaz | E2E con servidor real: registro, curso, envío del estudiante, descarga del docente | Funciona | — | — | Correcto |
+| Accesibilidad (axe-core, WCAG 2.1 A/AA) | 6 páginas, 6 pestañas del panel docente, 14 prácticas × 3 etapas e informe, en tema claro y oscuro | 0 infracciones tras las correcciones | Contraste insuficiente: etiquetas de Biología y Ambiente (4,44 y 4,66:1 sobre fondo gris, en el límite) y botón «Guardar ensayo» en tema oscuro (texto blanco sobre naranja, 2,26:1); atributo `aria-pressed` no permitido en pestañas | Colores ajustados (≥ 4,5:1), texto oscuro sobre naranja en tema oscuro, atributo eliminado | Corregido |
+| Teclado en pestañas | E2E: flechas, Inicio y Fin en las etapas de la práctica | Funciona | Faltaba (señalado en la fase 1) | Patrón WAI-ARIA de pestañas con foco itinerante | Corregido |
+| Validación curricular | Pruebas unitarias de importación/fusión; E2E de registro y persistencia | Funciona | — | — | Correcto |
+| Encuesta de opinión | E2E: la respuesta aparece en el informe | Funciona | — | — | Correcto |
+
+**No verificado en esta fase:** el servidor no se ha desplegado en un hosting real (solo se probó localmente); no se hicieron pruebas con lectores de pantalla reales ni con estudiantes; Firefox y Safari no se probaron.

@@ -11,6 +11,7 @@ import { cellText } from './DataPanel';
 import { Notice } from './ui';
 import { scoreSession } from '../lib/report';
 import type { ModelSpec } from '../models/types';
+import { loadValidations } from '../lib/validation';
 
 const TRENDS: Exclude<Trend, ''>[] = ['aumenta', 'disminuye', 'no cambia', 'máximo', 'se estabiliza'];
 
@@ -304,7 +305,37 @@ export function EvaluationSection({ practice: p, api, mode }: { practice: Practi
       </section>
       <h3>Preguntas de transferencia tipo Saber 11</h3>
       {transfer.map((q, i) => <QuestionCard key={q.id} question={q} number={p.assessment.length + i + 1} record={s.answers[q.id]} onAnswer={save(q.id)} saberLabel />)}
+      <FeedbackSurvey api={api} />
     </div>
+  );
+}
+
+const FEEDBACK_ITEMS = [
+  { key: 'easy', text: 'El laboratorio fue fácil de usar.' },
+  { key: 'clear', text: 'Entendí qué tenía que hacer en cada paso.' },
+  { key: 'learned', text: 'La práctica me ayudó a entender el tema.' },
+] as const;
+
+/** Encuesta breve de usabilidad: viaja en el informe y el docente ve los promedios. */
+function FeedbackSurvey({ api }: { api: SessionApi }) {
+  const fb = api.session.feedback ?? { easy: 0, clear: 0, learned: 0, comment: '' };
+  const set = (patch: Partial<typeof fb>) => api.update((x) => ({ ...x, feedback: { ...fb, ...patch } }));
+  return (
+    <section className="card stack-sm" aria-labelledby="fb-h">
+      <h3 id="fb-h">Tu opinión sobre esta práctica (opcional)</h3>
+      <p className="small muted">1 = totalmente en desacuerdo · 5 = totalmente de acuerdo. Ayuda a mejorar el laboratorio; no afecta tu nota.</p>
+      {FEEDBACK_ITEMS.map((it) => (
+        <fieldset key={it.key} className="stack-sm" style={{ border: 0, padding: 0, margin: 0 }}>
+          <legend className="small" style={{ fontWeight: 600 }}>{it.text}</legend>
+          <div className="seg" role="radiogroup" aria-label={it.text}>
+            {[1, 2, 3, 4, 5].map((n) => (
+              <button key={n} type="button" role="radio" aria-checked={fb[it.key] === n} onClick={() => set({ [it.key]: n })}>{n}</button>
+            ))}
+          </div>
+        </fieldset>
+      ))}
+      <div className="field"><label htmlFor="fb-comment">¿Qué cambiarías o qué te confundió?</label><textarea id="fb-comment" value={fb.comment} onChange={(e) => set({ comment: e.target.value })} /></div>
+    </section>
   );
 }
 
@@ -360,6 +391,19 @@ export function ModelSection({ practice: p }: { practice: PracticeDef }) {
         <p><strong>Estándares:</strong> {p.curricularLink.standards}</p>
         <p><strong>DBA:</strong> {p.curricularLink.dba}</p>
         <p className="small muted">{p.curricularLink.note}</p>
+        {(() => {
+          const v = loadValidations()[p.id];
+          if (!v || v.status === 'pendiente') return <p className="small"><span className="chip warn">Validación institucional pendiente</span></p>;
+          return (
+            <div className="notice ok stack-sm">
+              <strong>Validación institucional ({v.status}){v.validatedBy ? ` · ${v.validatedBy}` : ''}</strong>
+              {v.dbaNumber && <span className="small"><strong>DBA:</strong> {v.dbaNumber}{v.dbaText ? ` — ${v.dbaText}` : ''}</span>}
+              {v.standards && <span className="small"><strong>Estándar:</strong> {v.standards}</span>}
+              {v.institutionalGrade && <span className="small"><strong>Grado en el plan de área:</strong> {v.institutionalGrade}</span>}
+              <span className="small muted">Registrada en el panel docente de este navegador.</span>
+            </div>
+          );
+        })()}
       </section>
       <section className="card stack-sm">
         <h3>Referencias</h3>

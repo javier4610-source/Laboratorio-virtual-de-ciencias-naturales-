@@ -7,15 +7,17 @@ import { copyText, downloadText, toCSV, validateReport, type StudentReport } fro
 import { encodeAssignment, encodeList, uid, type Assignment, type PracticeList } from '../lib/codes';
 import { fmt, fmtDate } from '../lib/format';
 import { href } from '../lib/router';
+import { onTabListKeyDown } from '../lib/a11y';
 import { ConfirmButton, Notice, Segmented, Select } from '../components/ui';
 import { ReportBody } from './ReportPage';
 import { progressPercent } from '../lib/progress';
+import { emptyValidation, exportValidations, loadValidations, mergeValidations, saveValidations, type CurricularValidation, type ValidationStatus } from '../lib/validation';
 import { api, defaultServerUrl, loadTeacherSession, saveServerUrl, saveTeacherSession, type ServerCourse, type TeacherSession } from '../lib/api';
 
 const KEY = 'lvcn:docente';
 interface TeacherData { assignments: Assignment[]; lists: PracticeList[]; reports: StudentReport[]; }
 
-type Tab = 'catalogo' | 'asignaciones' | 'listas' | 'informes' | 'servidor' | 'rubrica';
+type Tab = 'catalogo' | 'validacion' | 'asignaciones' | 'listas' | 'informes' | 'servidor' | 'rubrica';
 
 function useTeacherData() {
   const [data, setData] = useState<TeacherData>(() => ({ assignments: [], lists: [], reports: [], ...loadJSON<Partial<TeacherData>>(KEY, {}) }));
@@ -68,6 +70,105 @@ function CatalogTab() {
         <summary>Prácticas planificadas, aún no implementadas ({PLANNED.length})</summary>
         <ul className="list small">{PLANNED.map((p) => <li key={p.title}>{p.grade}.º · {AREA_LABEL[p.area]} · {p.title}</li>)}</ul>
       </details>
+    </div>
+  );
+}
+
+
+/* -------------------------- Validación curricular ------------------------- */
+const STATUS_CHIP: Record<ValidationStatus, string> = { pendiente: 'warn', validado: 'ok', ajustado: 'ok', 'no corresponde': 'bad' };
+
+function ValidationTab() {
+  const [vals, setVals] = useState<Record<string, CurricularValidation>>(() => loadValidations());
+  const [open, setOpen] = useState<string | null>(null);
+  const [msg, setMsg] = useState('');
+  const [paste, setPaste] = useState('');
+  useEffect(() => { saveValidations(vals); }, [vals]);
+  const get = (id: string) => vals[id] ?? emptyValidation(id);
+  const set = (id: string, patch: Partial<CurricularValidation>) => setVals((v) => ({ ...v, [id]: { ...get(id), ...patch, updatedAt: Date.now() } }));
+  const done = PRACTICES.filter((p) => ['validado', 'ajustado', 'no corresponde'].includes(get(p.id).status)).length;
+
+  const importText = (text: string, name: string) => {
+    try {
+      const { merged, updated } = mergeValidations(vals, JSON.parse(text));
+      setVals(merged);
+      setMsg(`${name}: ${updated} validaciones actualizadas.`);
+    } catch (e) { setMsg(`${name}: ${(e as Error).message}`); }
+  };
+  const csv = () => toCSV([
+    ['Grado', 'Práctica', 'Propuesta de estándar', 'Propuesta de DBA', 'Estado', 'DBA verificado (número)', 'Enunciado oficial', 'Estándar verificado', 'Grado en el plan institucional', 'Observaciones', 'Validado por', 'Fecha'],
+    ...PRACTICES.map((p) => { const v = get(p.id); return [p.grade, p.title, p.curricularLink.standards, p.curricularLink.dba, v.status, v.dbaNumber, v.dbaText, v.standards, v.institutionalGrade, v.notes, v.validatedBy, v.updatedAt ? fmtDate(v.updatedAt) : '']; }),
+  ]);
+
+  return (
+    <div className="stack">
+      <Notice>
+        Las correspondencias con Estándares y DBA de cada práctica son <strong>propuestas</strong>. Compáralas con los documentos oficiales del MEN (Estándares Básicos de Competencias, 2006; DBA de Ciencias Naturales) y con el plan de área. Registra aquí el DBA verificado, copiando el enunciado del documento oficial. La validación se guarda en este navegador; expórtala para compartirla con el equipo de área o importar la de otros docentes.
+      </Notice>
+      <div className="kpis">
+        <div className="kpi"><div className="v">{done}/{PRACTICES.length}</div><div className="k">prácticas revisadas</div></div>
+        {(['validado', 'ajustado', 'no corresponde', 'pendiente'] as ValidationStatus[]).map((st) => (
+          <div className="kpi" key={st}><div className="v">{PRACTICES.filter((p) => get(p.id).status === st).length}</div><div className="k">{st}</div></div>
+        ))}
+      </div>
+      <div className="table-wrap">
+        <table>
+          <caption>Estado de la validación curricular</caption>
+          <thead><tr><th>Grado</th><th>Práctica</th><th>Estado</th><th>DBA verificado</th><th>Validado por</th><th><span className="sr-only">Acciones</span></th></tr></thead>
+          <tbody>
+            {PRACTICES.map((p) => {
+              const v = get(p.id);
+              return (
+                <tr key={p.id}>
+                  <td className="n">{p.grade}.º</td><td>{p.title}</td>
+                  <td><span className={`chip ${STATUS_CHIP[v.status]}`}>{v.status}</span></td>
+                  <td className="small">{v.dbaNumber || '—'}</td><td className="small">{v.validatedBy || '—'}</td>
+                  <td><button type="button" className="btn small" aria-expanded={open === p.id} onClick={() => setOpen(open === p.id ? null : p.id)}>{open === p.id ? 'Cerrar' : 'Revisar'}</button></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      {open && (() => {
+        const p = PRACTICES.find((x) => x.id === open)!;
+        const v = get(p.id);
+        const fid = (k: string) => `val-${p.id}-${k}`;
+        return (
+          <section className="card stack" aria-label={`Validación de ${p.title}`}>
+            <h3>{p.grade}.º · {p.title}</h3>
+            <div className="grid-2">
+              <div className="notice"><strong>Propuesta de estándar:</strong> {p.curricularLink.standards}</div>
+              <div className="notice"><strong>Propuesta de DBA:</strong> {p.curricularLink.dba}</div>
+            </div>
+            <div className="grid-2">
+              <Select label="Estado de la validación" id={fid('status')} value={v.status} onChange={(x) => set(p.id, { status: x as ValidationStatus })} options={(['pendiente', 'validado', 'ajustado', 'no corresponde'] as ValidationStatus[]).map((x) => ({ value: x, label: x }))} />
+              <div className="field"><label htmlFor={fid('num')}>DBA verificado (número y grado)</label><input id={fid('num')} type="text" value={v.dbaNumber} placeholder="p. ej. DBA 3, grado 8.º" onChange={(e) => set(p.id, { dbaNumber: e.target.value })} /></div>
+            </div>
+            <div className="field"><label htmlFor={fid('text')}>Enunciado oficial del DBA (copiado del documento del MEN)</label><textarea id={fid('text')} value={v.dbaText} onChange={(e) => set(p.id, { dbaText: e.target.value })} /></div>
+            <div className="field"><label htmlFor={fid('std')}>Estándar(es) verificado(s)</label><textarea id={fid('std')} value={v.standards} onChange={(e) => set(p.id, { standards: e.target.value })} /></div>
+            <div className="grid-2">
+              <div className="field"><label htmlFor={fid('grade')}>Grado en el plan de área institucional</label><input id={fid('grade')} type="text" value={v.institutionalGrade} onChange={(e) => set(p.id, { institutionalGrade: e.target.value })} /></div>
+              <div className="field"><label htmlFor={fid('by')}>Validado por</label><input id={fid('by')} type="text" value={v.validatedBy} onChange={(e) => set(p.id, { validatedBy: e.target.value })} /></div>
+            </div>
+            <div className="field"><label htmlFor={fid('notes')}>Observaciones y ajustes sugeridos a la práctica</label><textarea id={fid('notes')} value={v.notes} onChange={(e) => set(p.id, { notes: e.target.value })} /></div>
+            {v.updatedAt > 0 && <p className="small muted">Guardado en este navegador · {fmtDate(v.updatedAt)}</p>}
+          </section>
+        );
+      })()}
+      <section className="card stack-sm">
+        <h3>Compartir con el equipo de área</h3>
+        <div className="btn-row">
+          <button type="button" className="btn" onClick={() => setMsg(downloadText('validacion-curricular.csv', csv(), 'text/csv') ? 'Tabla exportada (CSV).' : 'Este entorno no permite descargas: usa «Copiar validación».')}>Exportar tabla (CSV)</button>
+          <button type="button" className="btn" onClick={() => setMsg(downloadText('validacion-curricular.json', JSON.stringify(exportValidations(vals), null, 2), 'application/json') ? 'Validación exportada (JSON). Otro docente puede importarla.' : 'Este entorno no permite descargas: usa «Copiar validación».')}>Exportar validación (JSON)</button>
+          <button type="button" className="btn" onClick={async () => setMsg((await copyText(JSON.stringify(exportValidations(vals)))) ? 'Validación copiada.' : 'No se pudo copiar automáticamente.')}>Copiar validación</button>
+        </div>
+        <div className="field"><label htmlFor="val-file">Importar validación de otro docente (.json)</label><input id="val-file" type="file" accept=".json,application/json" onChange={async (e) => { const f = e.target.files?.[0]; if (f) importText(await f.text(), f.name); e.target.value = ''; }} /></div>
+        <div className="field"><label htmlFor="val-paste">…o pega el texto copiado</label><textarea id="val-paste" value={paste} onChange={(e) => setPaste(e.target.value)} /></div>
+        <div className="btn-row"><button type="button" className="btn" disabled={!paste.trim()} onClick={() => { importText(paste, 'Texto pegado'); setPaste(''); }}>Importar texto</button></div>
+        {msg && <p className="small" role="status">{msg}</p>}
+        <p className="small muted">Al importar se conserva, para cada práctica, la validación más reciente.</p>
+      </section>
     </div>
   );
 }
@@ -310,6 +411,30 @@ function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Te
               </div>
             )}
           </section>
+          {(() => {
+            const rows = PRACTICES.map((p) => {
+              const fbs = reports.filter((r) => r.practice.id === p.id && r.session.feedback).map((r) => r.session.feedback!);
+              const avg = (k: 'easy' | 'clear' | 'learned') => { const v = fbs.map((f) => f[k]).filter((x) => x > 0); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+              return { p, n: fbs.length, easy: avg('easy'), clear: avg('clear'), learned: avg('learned'), comments: fbs.map((f) => f.comment).filter(Boolean) };
+            }).filter((r) => r.n > 0);
+            if (rows.length === 0) return null;
+            return (
+              <section className="card stack-sm">
+                <h3>Opinión de los estudiantes (promedio de 1 a 5)</h3>
+                <div className="table-wrap">
+                  <table>
+                    <thead><tr><th>Práctica</th><th className="n">Respuestas</th><th className="n">Fácil de usar</th><th className="n">Entendió los pasos</th><th className="n">Le ayudó a aprender</th></tr></thead>
+                    <tbody>{rows.map((r) => <tr key={r.p.id}><td>{r.p.title}</td><td className="n">{r.n}</td><td className="n">{r.easy === null ? '—' : fmt(r.easy, 1)}</td><td className="n">{r.clear === null ? '—' : fmt(r.clear, 1)}</td><td className="n">{r.learned === null ? '—' : fmt(r.learned, 1)}</td></tr>)}</tbody>
+                  </table>
+                </div>
+                {rows.some((r) => r.comments.length) && (
+                  <details><summary>Comentarios ({rows.reduce((a, r) => a + r.comments.length, 0)})</summary>
+                    <ul className="list small">{rows.flatMap((r) => r.comments.map((c, i) => <li key={r.p.id + i}><strong>{r.p.title}:</strong> {c}</li>))}</ul>
+                  </details>
+                )}
+              </section>
+            );
+          })()}
           <div className="btn-row">
             <button type="button" className="btn" onClick={exportSummary}>Exportar resumen (CSV)</button>
             <button type="button" className="btn" onClick={exportQuestions}>Exportar errores por pregunta (CSV)</button>
@@ -473,7 +598,7 @@ export function TeacherPage() {
   const [tab, setTab] = useState<Tab>('catalogo');
   useEffect(() => { document.title = 'Panel docente · Laboratorio Virtual'; }, []);
   const tabs: { id: Tab; label: string }[] = [
-    { id: 'catalogo', label: 'Catálogo' }, { id: 'asignaciones', label: `Asignaciones (${data.assignments.length})` },
+    { id: 'catalogo', label: 'Catálogo' }, { id: 'validacion', label: 'Validación curricular' }, { id: 'asignaciones', label: `Asignaciones (${data.assignments.length})` },
     { id: 'listas', label: `Listas por unidad (${data.lists.length})` }, { id: 'informes', label: `Informes (${data.reports.length})` }, { id: 'servidor', label: 'Servidor' }, { id: 'rubrica', label: 'Rúbrica' },
   ];
   return (
@@ -482,10 +607,11 @@ export function TeacherPage() {
       <Notice kind="warn">
         <strong>Funcionamiento sin servidor.</strong> Esta versión no tiene cuentas ni base de datos. Las asignaciones, listas e informes se guardan solo en este navegador{storageAvailable() ? '' : ' (y el almacenamiento local no está disponible: se perderán al cerrar la pestaña)'}. Los estudiantes entregan sus informes como archivo o texto, y las asignaciones se comparten con códigos.
       </Notice>
-      <div className="stage-nav" role="tablist" aria-label="Secciones del panel docente">
-        {tabs.map((t) => <button key={t.id} type="button" role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)}>{t.label}</button>)}
+      <div className="stage-nav" role="tablist" aria-label="Secciones del panel docente" onKeyDown={onTabListKeyDown}>
+        {tabs.map((t) => <button key={t.id} type="button" role="tab" aria-selected={tab === t.id} tabIndex={tab === t.id ? 0 : -1} onClick={() => setTab(t.id)}>{t.label}</button>)}
       </div>
       {tab === 'catalogo' && <CatalogTab />}
+      {tab === 'validacion' && <ValidationTab />}
       {tab === 'asignaciones' && <AssignmentsTab data={data} setData={setData} />}
       {tab === 'listas' && <ListsTab data={data} setData={setData} />}
       {tab === 'informes' && <ReportsTab data={data} setData={setData} />}

@@ -108,6 +108,8 @@ export interface PracticeSession {
   /** Etapas visitadas (p. ej. 'preparacion') y resultado de la actividad de clasificación de variables. */
   visited: string[];
   variablesCheck?: { correct: number; total: number };
+  /** Encuesta breve de usabilidad (1 a 5) respondida por el estudiante. */
+  feedback?: { easy: number; clear: number; learned: number; comment: string };
   startedAt: number;
   updatedAt: number;
 }

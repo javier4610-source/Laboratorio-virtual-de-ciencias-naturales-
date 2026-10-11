@@ -50,6 +50,9 @@ export function ReportBody({ practice: p, session: s, report }: { practice: Prac
         <p><strong>Evidencia:</strong> {s.conclusion.evidence || '—'}</p>
         <p><strong>Razonamiento:</strong> {s.conclusion.reasoning || '—'}</p>
         <p><strong>Aplicación cotidiana:</strong> {s.application || '—'}</p>
+        {s.feedback && (s.feedback.easy || s.feedback.clear || s.feedback.learned) ? (
+          <p className="small"><strong>Opinión del estudiante (1–5):</strong> fácil de usar {s.feedback.easy || '—'} · entendió los pasos {s.feedback.clear || '—'} · aprendió {s.feedback.learned || '—'}{s.feedback.comment ? ` · «${s.feedback.comment}»` : ''}</p>
+        ) : null}
       </section>
       <section className="card stack-sm">
         <h3>Evaluación por competencias</h3>

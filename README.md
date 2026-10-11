@@ -6,27 +6,32 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas
+## Prácticas implementadas (14)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
 | 6.º | Medición de masa, volumen y densidad | Física | ρ = m/V; volumen geométrico y por desplazamiento; flotación (Arquímedes); resolución de instrumentos |
-| 7.º | Difusión y ósmosis a través de la membrana | Biología | Boyle-van 't Hoff, van 't Hoff (π = CRT), turgencia elástica, lisis; difusión de Fick en dos compartimentos con D ∝ T/η |
+| 7.º | Difusión y ósmosis a través de la membrana | Biología | Boyle-van 't Hoff, van 't Hoff (π = CRT), turgencia elástica, lisis; difusión de Fick con D ∝ T/η |
+| 7.º | Mitosis al microscopio: fases e índice mitótico | Biología | Fracción de células por fase ∝ duración; índice mitótico; ADN 2C→4C; efecto de la colchicina |
 | 8.º | Herencia mendeliana y cuadros de Punnett | Biología | Segregación y transmisión independiente, dominancia completa/incompleta, muestreo con semilla, χ² |
-| 9.º | Del ADN a la proteína | Biología | Complementariedad, replicación semiconservativa, transcripción, código genético estándar, clasificación de mutaciones (incluye HBB Glu6Val) |
-| 10.º | Preparación de soluciones, molaridad y colorimetría | Química | n = m/M, M = n/V, C₁V₁ = C₂V₂, Beer-Lambert, solubilidad |
+| 8.º | Laboratorio de ondas | Física | v = λ·f, v = √(T/μ), onda armónica, energía ∝ A²f², sonido en el aire según la temperatura |
+| 9.º | Del ADN a la proteína | Biología | Complementariedad, replicación semiconservativa, código genético, clasificación de mutaciones (HBB Glu6Val) |
+| 10.º | Soluciones, molaridad y colorimetría | Química | n = m/M, M = n/V, C₁V₁ = C₂V₂, Beer-Lambert, solubilidad |
 | 10.º | Actividad enzimática | Biología | Michaelis-Menten × Arrhenius × desnaturalización × pH (dos pKa) |
+| 10.º | Fotosíntesis: luz, CO₂ y temperatura | Biología | Inverso del cuadrado, colimitación luz/CO₂ (hipérbola no rectangular), respiración Q₁₀, punto de compensación |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
-| 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, verificador de balanceo |
-| 11.º | Crecimiento poblacional y capacidad de carga | Ambiental | Exponencial y logístico con cosecha (solución analítica) |
+| 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |
+| 11.º | pH, dilución y neutralización | Química | Balance de cargas exacto (ácidos fuertes y débiles), dilución, curva de titulación, indicadores |
+| 11.º | Crecimiento poblacional y capacidad de carga | Ambiental | Exponencial y logístico con cosecha |
+| 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 
-Otras 30 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 25 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 
 ## Ejecutar
 
-Requisitos: Node.js 20 o superior.
+Requisitos: Node.js 22.13 o superior.
 
 ```bash
 npm install
@@ -40,7 +45,8 @@ Pruebas:
 
 ```bash
 npm test             # pruebas unitarias (Vitest): fórmulas, currículo, utilidades
-npm run test:e2e     # pruebas de interfaz (Playwright + Chromium) sobre la versión compilada
+npm run test:e2e     # interfaz, servidor real y auditoría de accesibilidad WCAG 2.1 AA (Playwright + axe-core)
+npm run server       # servidor institucional opcional (ver server/README.md)
 ```
 
 Si Chromium ya está instalado en otra ruta: `PW_CHROMIUM_PATH=/ruta/a/chrome npm run test:e2e`.
@@ -63,9 +69,11 @@ src/
   labs/                    Componentes interactivos por práctica, registro y estructura de tablas
   components/              Gráficas SVG, tablas de datos, preguntas, etapas de la práctica, controles
   pages/                   Inicio, grado, catálogo, práctica, informe, banco, panel docente, ayuda
-  lib/                     Sesión y progreso, almacenamiento local, tendencias, informes, códigos, formato
+  lib/                     Sesión y progreso, almacenamiento local, tendencias, informes, códigos, API del servidor, validación curricular
+server/                    Servidor institucional opcional (Node.js sin dependencias)
 tests/unit/                Pruebas de modelos, currículo y utilidades
-tests/e2e/                 Pruebas de interfaz de extremo a extremo
+tests/server/              Pruebas del servidor
+tests/e2e/                 Pruebas de interfaz de extremo a extremo y de accesibilidad
 docs/                      Auditoría técnica, científica y pedagógica
 ```
 
@@ -80,16 +88,17 @@ Módulos del enunciado → código: A navegación (`App.tsx`, `lib/router.ts`), 
 5. Escribe el contenido en `src/curriculum/practices/mi-practica.ts` (estructura `PracticeDef`) y agrégalo a `PRACTICES` en `src/curriculum/index.ts`.
 6. Las pruebas de `tests/unit/curriculum.test.ts` comprobarán que la práctica tiene todas las secciones y que sus hipótesis apuntan a columnas existentes.
 
-## Almacenamiento y panel docente (sin servidor)
+## Almacenamiento, panel docente y servidor opcional
 
 - El trabajo de cada estudiante se guarda en el almacenamiento local de su navegador.
-- El estudiante entrega su **informe** como archivo `.json` o texto copiado; el docente lo **importa** en el panel docente, donde ve resultados agregados, preguntas con mayor tasa de error y exporta CSV.
-- Las **asignaciones** y **listas por unidad** se comparten con un código (`LVCN-A:` / `LVCN-L:`) que el estudiante pega en la página de inicio.
-- Limitación: no hay cuentas, sincronización entre dispositivos ni envío automático. Requeriría un servidor con base de datos y autenticación.
+- **Sin servidor:** el estudiante entrega su informe como archivo `.json` o texto copiado y el docente lo importa en el panel docente. Asignaciones y listas se comparten con códigos (`LVCN-A:` / `LVCN-L:`).
+- **Con servidor** (opcional, `server/`): el docente crea su cuenta y sus cursos; el estudiante envía su informe con el código de 6 caracteres del curso, sin crear cuenta; el docente lo descarga en la pestaña **Servidor**. Instalación, seguridad y protección de datos en [server/README.md](server/README.md).
+- **Validación curricular:** pestaña del panel docente para registrar, por práctica, el DBA y el estándar verificados en los documentos oficiales, exportable para el equipo de área.
+- **Usabilidad:** cada práctica incluye una encuesta breve de opinión que viaja en el informe; el protocolo para pruebas con estudiantes está en [docs/PROTOCOLO-USABILIDAD.md](docs/PROTOCOLO-USABILIDAD.md).
 
 ## Accesibilidad
 
-Navegación completa por teclado, enlace «Saltar al contenido», foco visible, etiquetas en todos los controles, regiones `aria-live` para resultados, descripciones textuales y tabla equivalente para cada gráfica, tema claro/oscuro, alto contraste, tamaño de texto ajustable, reducción de animaciones, diseño adaptable desde 360 px y fuente Atkinson Hyperlegible.
+Navegación completa por teclado (incluidas flechas en las pestañas), enlace «Saltar al contenido», foco visible, etiquetas en todos los controles, regiones `aria-live` para resultados, descripciones textuales y tabla equivalente para cada gráfica, tema claro/oscuro, alto contraste, tamaño de texto ajustable, reducción de animaciones, diseño adaptable desde 360 px y fuente Atkinson Hyperlegible. Una auditoría automática con axe-core (WCAG 2.1 A/AA) recorre todas las páginas y prácticas en tema claro y oscuro.
 
 ## Referentes
 

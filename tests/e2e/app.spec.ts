@@ -294,3 +294,35 @@ test('servidor: el docente crea un curso, el estudiante envía su informe y el d
   await page.getByRole('tab', { name: /Informes/ }).click();
   await expect(page.getByRole('cell', { name: 'Valentina Mosquera', exact: true })).toBeVisible();
 });
+
+test('teclado: las pestañas de etapas se recorren con flechas', async ({ page }) => {
+  await page.goto('/#/practica/densidad');
+  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByRole('tab', { name: /Preparación/ }).focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(page.getByRole('tab', { name: /Hipótesis/ })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: /Hipótesis/ })).toBeFocused();
+  await page.keyboard.press('End');
+  await expect(page.getByRole('tab', { name: /Modelo y referencias/ })).toHaveAttribute('aria-selected', 'true');
+});
+
+test('validación curricular: registrar un DBA verificado y verlo en el resumen', async ({ page }) => {
+  await page.goto('/#/docente');
+  await page.getByRole('tab', { name: 'Validación curricular' }).click();
+  await page.getByRole('row', { name: /Genética de poblaciones/ }).getByRole('button', { name: 'Revisar' }).click();
+  await page.getByLabel('Estado de la validación').selectOption('validado');
+  await page.getByLabel('DBA verificado (número y grado)').fill('DBA 4, grado 11.º');
+  await page.getByLabel('Validado por').fill('Área de Ciencias');
+  await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
+  await page.reload();
+  await page.getByRole('tab', { name: 'Validación curricular' }).click();
+  await expect(page.locator('.kpi').first()).toContainText('1/14');
+});
+
+test('encuesta de opinión viaja en el informe', async ({ page }) => {
+  await openFree(page, 'ondas');
+  await page.getByRole('tab', { name: /Evaluación/ }).click();
+  await page.getByRole('radiogroup', { name: 'El laboratorio fue fácil de usar.' }).getByRole('radio', { name: '4' }).click();
+  await page.goto('/#/practica/ondas/informe');
+  await expect(page.getByText(/fácil de usar 4/)).toBeVisible();
+});

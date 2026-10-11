@@ -74,3 +74,24 @@ describe('informes', () => {
     expect(validateReport({ format: 'otro' })).toMatch(/formato/);
   });
 });
+
+import { emptyValidation, exportValidations, mergeValidations } from '../../src/lib/validation';
+
+describe('validación curricular', () => {
+  it('importa y conserva la validación más reciente por práctica', () => {
+    const mine = { ph: { ...emptyValidation('ph'), status: 'validado' as const, dbaNumber: 'DBA 2', updatedAt: 200 } };
+    const theirs = exportValidations({
+      ph: { ...emptyValidation('ph'), status: 'ajustado', dbaNumber: 'DBA 3', updatedAt: 100 },
+      ondas: { ...emptyValidation('ondas'), status: 'validado', updatedAt: 150 },
+    });
+    const { merged, updated } = mergeValidations(mine, JSON.parse(JSON.stringify(theirs)));
+    expect(updated).toBe(1);
+    expect(merged.ph.dbaNumber).toBe('DBA 2'); // la mía es más reciente
+    expect(merged.ondas.status).toBe('validado');
+  });
+  it('rechaza archivos que no son validaciones y descarta estados inválidos', () => {
+    expect(() => mergeValidations({}, { format: 'otro' })).toThrow(/no es una exportación/);
+    const { merged } = mergeValidations({}, { format: 'lvcn-validacion-v1', validations: [{ practiceId: 'x', status: 'inventado' }] });
+    expect(merged).toEqual({});
+  });
+});

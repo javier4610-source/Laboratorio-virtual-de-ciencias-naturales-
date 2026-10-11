@@ -5,6 +5,7 @@ import { fmt } from '../lib/format';
 import { downloadText, trialsToCSV, copyText } from '../lib/report';
 import { Chart } from './Chart';
 import { ConfirmButton, Select } from './ui';
+import { onTabListKeyDown } from '../lib/a11y';
 
 export function cellText(v: Trial['values'][string], decimals = 2): string {
   if (v === null || v === undefined) return '—';
@@ -88,9 +89,9 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
       <div className="panel-title">
         <h3 id={`datos-${ds.id}`}>Datos y gráficas</h3>
         {datasets.length > 1 && (
-          <div className="seg" role="tablist" aria-label="Conjunto de datos">
+          <div className="seg" role="tablist" aria-label="Conjunto de datos" onKeyDown={onTabListKeyDown}>
             {datasets.map((d) => (
-              <button key={d.id} type="button" role="tab" aria-selected={d.id === ds.id} aria-pressed={d.id === ds.id} onClick={() => setDsId(d.id)}>
+              <button key={d.id} type="button" role="tab" aria-selected={d.id === ds.id} tabIndex={d.id === ds.id ? 0 : -1} onClick={() => setDsId(d.id)}>
                 {d.label} ({session.trials.filter((t) => t.datasetId === d.id).length})
               </button>
             ))}

@@ -9,6 +9,7 @@ import { DataPanel } from '../components/DataPanel';
 import { AnalysisSection, EvaluationSection, HypothesisSection, ModelSection, PreparationSection } from '../components/PracticeSections';
 import { ConfirmButton, Notice, Segmented } from '../components/ui';
 import { href } from '../lib/router';
+import { onTabListKeyDown } from '../lib/a11y';
 
 const MODE_HELP: Record<Mode, string> = {
   guiada: 'Práctica guiada: avanzas por etapas. Debes formular una hipótesis antes de experimentar y guardar ensayos antes de analizar.',
@@ -68,11 +69,11 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
         </div>
       </header>
 
-      <div className="stage-nav" role="tablist" aria-label="Etapas de la práctica">
+      <div className="stage-nav" role="tablist" aria-label="Etapas de la práctica" onKeyDown={onTabListKeyDown}>
         {STAGES.map((st, i) => {
           const lock = locked(st.id);
           return (
-            <button key={st.id} type="button" role="tab" id={`tab-${st.id}`} aria-controls={`panel-${st.id}`} aria-selected={stage === st.id}
+            <button key={st.id} type="button" role="tab" id={`tab-${st.id}`} aria-controls={`panel-${st.id}`} aria-selected={stage === st.id} tabIndex={stage === st.id ? 0 : -1}
               disabled={!!lock} title={lock ?? undefined} onClick={() => go(st.id)}>
               <span className={`badge${done[st.id] ? ' done' : ''}`} aria-hidden="true">{done[st.id] ? '✓' : i + 1}</span>
               {st.label}{lock && <span className="sr-only"> (bloqueada: {lock})</span>}

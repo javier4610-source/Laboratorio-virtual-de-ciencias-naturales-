@@ -10,6 +10,7 @@ import { CatalogPage, GradePage } from './pages/CatalogPages';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { PwaNotices } from './components/PwaUi';
 import { KitDefs } from './labs/kit';
+import { Icon, Logo, type IconName } from './components/icons';
 
 // Páginas pesadas cargadas bajo demanda: el inicio y el catálogo abren rápido en equipos modestos.
 const PracticePage = lazy(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
@@ -35,17 +36,6 @@ function PracticeRoute({ id, report }: { id: string; report: boolean }) {
     );
   }
   return report ? <ReportPage practice={state.value} /> : <PracticePage key={state.value.id} practice={state.value} />;
-}
-
-function Logo() {
-  return (
-    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
-      <rect width="34" height="34" rx="8" fill="var(--accent)" />
-      <path d="M13 7h8M14.5 7v7.5L9 25.5Q8 28 11 28h12q3 0 2-2.5L19.5 14.5V7" fill="none" stroke="var(--accent-ink)" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M10.6 22h12.8" stroke="var(--accent-ink)" strokeWidth="2" />
-      <circle cx="15" cy="25" r="1.4" fill="var(--accent-ink)" /><circle cx="19.5" cy="24.4" r="1" fill="var(--accent-ink)" />
-    </svg>
-  );
 }
 
 function NotFound() {
@@ -77,13 +67,14 @@ export default function App() {
   else if (section === 'ayuda') page = <HelpPage prefs={prefs} setPrefs={setPrefs} />;
   else page = <NotFound />;
 
-  const nav = [
-    { to: '', label: 'Inicio' },
-    { to: 'catalogo', label: 'Prácticas' },
-    { to: 'banco', label: 'Banco Saber 11' },
-    { to: 'docente', label: 'Panel docente' },
-    { to: 'ayuda', label: 'Ayuda y accesibilidad' },
+  const nav: { to: string; label: string; icon: IconName }[] = [
+    { to: '', label: 'Inicio', icon: 'inicio' },
+    { to: 'catalogo', label: 'Prácticas', icon: 'experimento' },
+    { to: 'banco', label: 'Banco Saber 11', icon: 'banco' },
+    { to: 'docente', label: 'Panel docente', icon: 'docente' },
+    { to: 'ayuda', label: 'Ayuda y accesibilidad', icon: 'ayuda' },
   ];
+  const dark = prefs.theme === 'oscuro' || (prefs.theme === 'auto' && typeof matchMedia !== 'undefined' && matchMedia('(prefers-color-scheme: dark)').matches);
 
   return (
     <>
@@ -94,13 +85,13 @@ export default function App() {
             <Logo />
             <span>Laboratorio Virtual<small>de Ciencias Naturales · 6.º a 11.º</small></span>
           </a>
-          <button type="button" className="btn small menu-toggle" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen((v) => !v)}>Menú</button>
+          <button type="button" className="btn small ghost menu-toggle" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen((v) => !v)}><Icon name={menuOpen ? 'cerrar' : 'menu'} size={18} />Menú</button>
           <nav id="main-nav" className={`nav${menuOpen ? ' open' : ''}`} aria-label="Navegación principal">
             {nav.map((n) => (
-              <a key={n.to} href={n.to ? href(n.to) : href()} aria-current={current === n.to ? 'page' : undefined} onClick={() => setMenuOpen(false)}>{n.label}</a>
+              <a key={n.to} href={n.to ? href(n.to) : href()} aria-current={current === n.to ? 'page' : undefined} onClick={() => setMenuOpen(false)}><Icon name={n.icon} size={17} className="nav-icon" />{n.label}</a>
             ))}
-            <button type="button" className="btn small ghost" onClick={() => setPrefs({ ...prefs, theme: prefs.theme === 'oscuro' ? 'claro' : 'oscuro' })} aria-label={`Cambiar a tema ${prefs.theme === 'oscuro' ? 'claro' : 'oscuro'}`}>
-              {prefs.theme === 'oscuro' ? '☀' : '☾'}
+            <button type="button" className="btn small ghost theme-toggle" onClick={() => setPrefs({ ...prefs, theme: dark ? 'claro' : 'oscuro' })} aria-label={`Cambiar a tema ${dark ? 'claro' : 'oscuro'}`}>
+              <Icon name={dark ? 'sol' : 'luna'} size={18} />
             </button>
           </nav>
         </div>
@@ -110,8 +101,24 @@ export default function App() {
       </main>
       <footer className="site-footer">
         <div className="wrap">
-          <span>Laboratorio Virtual de Ciencias Naturales · prototipo educativo de código abierto.</span>
-          <span>Las simulaciones son modelos simplificados con supuestos declarados; no reemplazan el laboratorio real. Las preguntas tipo Saber 11 son originales y no oficiales del ICFES.</span>
+          <div className="footer-grid">
+            <div className="footer-brand stack-sm">
+              <span className="brand"><Logo size={30} /><span>Laboratorio Virtual<small>de Ciencias Naturales</small></span></span>
+              <p className="small">Prototipo educativo de código abierto para la educación básica secundaria y media en Colombia.</p>
+            </div>
+            <nav aria-label="Grados" className="footer-col">
+              <span className="footer-title">Grados</span>
+              <ul>{GRADES.map((g) => <li key={g.id}><a href={href('grado', g.id)}>{g.id}.º · {g.name}</a></li>)}</ul>
+            </nav>
+            <nav aria-label="Recursos" className="footer-col">
+              <span className="footer-title">Recursos</span>
+              <ul>{nav.slice(1).map((n) => <li key={n.to}><a href={href(n.to)}>{n.label}</a></li>)}</ul>
+            </nav>
+          </div>
+          <div className="footer-legal small">
+            <span>Laboratorio Virtual de Ciencias Naturales · prototipo educativo de código abierto.</span>
+            <span>Las simulaciones son modelos simplificados con supuestos declarados; no reemplazan el laboratorio real. Las preguntas tipo Saber 11 son originales y no oficiales del ICFES.</span>
+          </div>
         </div>
       </footer>
       <PwaNotices />

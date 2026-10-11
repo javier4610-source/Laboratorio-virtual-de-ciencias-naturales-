@@ -9,29 +9,72 @@ import { loadJSON, saveJSON } from '../lib/storage';
 import { PracticeCard } from '../components/PracticeCard';
 import { Notice } from '../components/ui';
 import { InstallButton } from '../components/PwaUi';
+import { AREA_ICON, Icon, type IconName } from '../components/icons';
+import { BenchTop, Beaker, Burette, Cube, DigitalBalance, Erlenmeyer, GraduatedCylinder, TestTube, Thermometer } from '../labs/kit';
 
-const AREA_COLOR: Record<Area, string> = { biologia: 'var(--bio)', quimica: 'var(--qui)', fisica: 'var(--fis)', ambiental: 'var(--amb)' };
+const AREAS = Object.keys(AREA_LABEL) as Area[];
 const CODES_KEY = 'lvcn:codigos-recibidos';
 
-function HeroFigure() {
+const AREA_BLURB: Record<Area, string> = {
+  biologia: 'Células, herencia, evolución y metabolismo',
+  quimica: 'Mezclas, soluciones, reacciones y equilibrio',
+  fisica: 'Medición, ondas, fuerzas, energía y circuitos',
+  ambiental: 'Ecosistemas, ciclos de la materia y poblaciones',
+};
+
+/** Escena de laboratorio de la portada: instrumentos del kit con burbujas y una gota en movimiento suave. */
+function HeroScene() {
+  const bubbles: [number, number, number][] = [[266, 0, 3.2], [280, 1.1, 2.4], [294, 2.2, 2.8], [272, 3.1, 2], [300, 0.6, 1.8], [286, 2.7, 2.2]];
   return (
-    <svg viewBox="0 0 420 260" role="img" aria-label="Ilustración: probeta, matraz con solución, molécula de ADN y gráfica de datos sobre papel milimetrado">
-      <path d="M40 40 L40 220 Q40 230 50 230 L80 230 Q90 230 90 220 L90 40" fill="rgba(70,150,220,0.22)" stroke="var(--ink-2)" strokeWidth="2" />
-      <rect x="41" y="120" width="48" height="109" fill="rgba(70,150,220,0.35)" />
-      {[60, 80, 100, 120, 140, 160, 180, 200].map((y) => <line key={y} x1="90" x2="100" y1={y} y2={y} stroke="var(--ink-2)" />)}
-      <path d="M150 90 L150 140 L118 220 Q114 232 128 232 L202 232 Q216 232 212 220 L180 140 L180 90" fill="none" stroke="var(--ink-2)" strokeWidth="2" />
-      <path d="M128 200 L202 200 L212 222 Q214 232 202 232 L128 232 Q116 232 118 222 Z" fill="rgba(140,20,120,0.45)" />
-      <g transform="translate(240 30)" fill="none" strokeWidth="3">
-        {Array.from({ length: 9 }, (_, i) => {
-          const y = i * 14; const x = Math.sin(i * 0.8) * 22;
-          return <g key={i}><line x1={30 + x} y1={y} x2={30 - x} y2={y} stroke="var(--line)" strokeWidth="2" /><circle cx={30 + x} cy={y} r="4" fill="var(--bio)" stroke="none" /><circle cx={30 - x} cy={y} r="4" fill="var(--fis)" stroke="none" /></g>;
-        })}
-      </g>
-      <g transform="translate(300 150)">
-        <line x1="0" y1="80" x2="100" y2="80" stroke="var(--ink-2)" /><line x1="0" y1="0" x2="0" y2="80" stroke="var(--ink-2)" />
-        <path d="M0 78 Q30 75 45 45 T100 8" fill="none" stroke="var(--data)" strokeWidth="3" />
-        {[[10, 76], [30, 64], [45, 45], [62, 26], [84, 14]].map(([x, y]) => <circle key={x} cx={x} cy={y} r="4" fill="var(--data)" />)}
-      </g>
+    <svg viewBox="0 0 614 340" className="hero-scene" role="img" aria-label="Ilustración: mesa de laboratorio con probeta graduada, bureta sobre un matraz Erlenmeyer, vaso de precipitados con burbujas, termómetro, balanza digital, gradilla con tubos de ensayo y una gráfica de datos.">
+      <defs>
+        <linearGradient id="hero-screen" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="var(--surface)" /><stop offset="1" stopColor="var(--surface-2)" /></linearGradient>
+        <linearGradient id="hero-plot-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="var(--accent)" stopOpacity="0.28" /><stop offset="1" stopColor="var(--accent)" stopOpacity="0" /></linearGradient>
+      </defs>
+
+      {/* Tarjeta de datos flotante */}
+      <g transform="translate(392 22)"><g className="hero-float">
+        <rect width="206" height="128" rx="12" fill="url(#hero-screen)" stroke="var(--line)" filter="url(#kit-shadow)" />
+        <circle cx="16" cy="16" r="3.5" fill="var(--bad)" /><circle cx="28" cy="16" r="3.5" fill="var(--warn)" /><circle cx="40" cy="16" r="3.5" fill="var(--ok)" />
+        <rect x="132" y="10" width="62" height="13" rx="6.5" fill="var(--accent-soft)" />
+        <g transform="translate(18 34)">
+          {[0, 1, 2, 3].map((i) => <line key={i} x1="0" x2="170" y1={i * 22} y2={i * 22} stroke="var(--line)" />)}
+          <path d="M0 0V66H170" fill="none" stroke="var(--ink-2)" strokeWidth="1.2" />
+          <path d="M0 62 C30 60 50 52 70 38 S120 8 170 4 V66 H0Z" fill="url(#hero-plot-fill)" />
+          <path className="hero-trace" d="M0 62 C30 60 50 52 70 38 S120 8 170 4" fill="none" stroke="var(--accent)" strokeWidth="2.4" strokeLinecap="round" />
+          {[[14, 60], [42, 54], [70, 38], [100, 22], [134, 11], [164, 5]].map(([x, y]) => <circle key={x} cx={x} cy={y} r="3.2" fill="var(--data)" stroke="var(--surface)" strokeWidth="1.2" />)}
+        </g>
+      </g></g>
+
+      {/* Soporte universal con bureta sobre el matraz */}
+      <rect x="140" y="58" width="7" height="262" rx="2" fill="url(#kit-metal-h)" />
+      <rect x="118" y="314" width="76" height="10" rx="3" fill="url(#kit-body-dark)" />
+      <rect x="143" y="112" width="52" height="7" rx="2.5" fill="#78909c" />
+      <Burette x={182} y={78} h={162} capacity={50} level={14} major={10} />
+      <circle className="hero-drop" cx="191" cy="246" r="2.6" fill="#f48fb1" />
+      <Erlenmeyer x={150} y={242} w={84} h={82} fill={0.42} liquid="#ec407a" liquidOpacity={0.5} />
+
+      {/* Probeta graduada */}
+      <GraduatedCylinder x={46} y={134} w={38} h={190} capacity={100} level={62} major={20} minor={10} liquid="#4f9fe0" />
+
+      {/* Vaso con burbujas y termómetro */}
+      <Beaker x={252} y={214} w={76} h={110} fill={0.62} liquid="#7fc7a8" liquidOpacity={0.55}>
+        <g className="hero-bubbles">{bubbles.map(([x, d, r]) => <circle key={`${x}-${d}`} cx={x} cy={312} r={r} fill="#ffffff" fillOpacity="0.7" stroke="#2e7d5b" strokeOpacity="0.4" style={{ animationDelay: `${d}s` }} />)}</g>
+      </Beaker>
+      <g transform="rotate(8 312 260)"><Thermometer x={312} y={178} h={130} min={0} max={100} value={37} /></g>
+
+      {/* Gradilla con tubos de ensayo */}
+      <rect x="346" y="258" width="6" height="64" rx="1.5" fill="#c9a76a" />
+      <rect x="430" y="258" width="6" height="64" rx="1.5" fill="#c9a76a" />
+      {[['#fbc02d', 0.6], ['#7e57c2', 0.45], ['#26a69a', 0.7]].map(([c, f], i) => <TestTube key={i} x={358 + i * 26} y={232} w={16} h={82} fill={f as number} liquid={c as string} liquidOpacity={0.6} />)}
+      <rect x="340" y="256" width="102" height="9" rx="2.5" fill="url(#kit-wood)" stroke="#b8975a" />
+      <rect x="340" y="312" width="102" height="9" rx="2.5" fill="url(#kit-wood)" stroke="#b8975a" />
+
+      {/* Balanza con muestra */}
+      <DigitalBalance x={454} y={248} w={150} reading="21.60" />
+      <Cube x={517} y={248} size={24} color="#b9c3c9" finish="metal" />
+
+      <BenchTop y={324} width={614} />
     </svg>
   );
 }
@@ -49,13 +92,26 @@ function CodeEntry() {
     } catch (e) { setError((e as Error).message); }
   };
   return (
-    <section className="card stack-sm" aria-labelledby="code-h">
-      <h2 id="code-h" style={{ fontSize: '1.2rem' }}>Tengo un código de mi docente</h2>
+    <section className="card feature-card stack-sm" aria-labelledby="code-h">
+      <div className="feature-head">
+        <span className="feature-icon"><Icon name="codigo" size={22} /></span>
+        <div>
+          <h2 id="code-h">Tengo un código de mi docente</h2>
+          <p className="small muted">Pega el código de asignación o de lista que te compartió tu docente.</p>
+        </div>
+      </div>
       <div className="btn-row">
         <label htmlFor="code-in" className="sr-only">Código de asignación o lista</label>
-        <input id="code-in" type="text" value={code} onChange={(e) => setCode(e.target.value)} placeholder="LVCN-A:…" style={{ flex: '1 1 240px', fontFamily: 'var(--font-data)' }} aria-invalid={error ? true : undefined} aria-describedby={error ? 'code-err' : undefined} />
+        <input id="code-in" type="text" value={code} onChange={(e) => setCode(e.target.value)} placeholder="LVCN-A:…" style={{ flex: '1 1 220px', fontFamily: 'var(--font-data)' }} aria-invalid={error ? true : undefined} aria-describedby={error ? 'code-err' : undefined} />
         <button type="button" className="btn primary" onClick={submit} disabled={!code.trim()}>Abrir</button>
       </div>
+      {received.length === 0 && (
+        <ul className="code-hints small muted">
+          <li><Icon name="informe" size={16} />Una <strong>asignación</strong> abre la práctica con los objetivos y la fecha de entrega.</li>
+          <li><Icon name="preparacion" size={16} />Una <strong>lista</strong> reúne varias prácticas de una unidad.</li>
+          <li><Icon name="escudo" size={16} />Lo que abras queda guardado solo en este equipo.</li>
+        </ul>
+      )}
       {error && <p id="code-err" className="small" style={{ color: 'var(--bad)' }} role="alert">{error}</p>}
       {received.map((d) => d.kind === 'asignacion' ? (
         <div key={d.value.id} className="notice info stack-sm">
@@ -77,73 +133,129 @@ function CodeEntry() {
   );
 }
 
+const STAGES: { icon: IconName; name: string; text: string }[] = [
+  { icon: 'preparacion', name: 'Preparación', text: 'Pregunta problema, objetivos, fundamento y variables.' },
+  { icon: 'hipotesis', name: 'Hipótesis', text: 'Predices antes de experimentar.' },
+  { icon: 'experimento', name: 'Experimento', text: 'Cambias variables y guardas ensayos en la tabla.' },
+  { icon: 'analisis', name: 'Análisis', text: 'Gráficas, comparación con tu hipótesis y conclusión con evidencia.' },
+  { icon: 'evaluacion', name: 'Evaluación', text: 'Preguntas por competencias con retroalimentación y reintentos.' },
+];
+
+const MODES: { icon: IconName; name: string; text: string }[] = [
+  { icon: 'guiada', name: 'Práctica guiada', text: 'Paso a paso, con la hipótesis obligatoria antes de medir.' },
+  { icon: 'libre', name: 'Exploración libre', text: 'Todos los controles abiertos para indagar a tu ritmo.' },
+  { icon: 'evaluacion', name: 'Evaluación', text: 'Preguntas tipo Saber 11 con retroalimentación por opción.' },
+];
+
 export function HomePage() {
   const progress = storedProgress();
   useEffect(() => { document.title = 'Laboratorio Virtual de Ciencias Naturales'; }, []);
+  const started = Object.keys(progress).length;
+  const stats: [string | number, string][] = [
+    [PRACTICES.length, 'prácticas interactivas'],
+    [GRADES.length, 'grados, de 6.º a 11.º'],
+    [3, 'competencias Saber 11'],
+    [AREAS.length, 'áreas de las ciencias'],
+  ];
   return (
-    <div className="stack" style={{ gap: 36 }}>
-      <section className="hero">
-        <div className="stack-sm">
-          <span className="eyebrow">Grados 6.º a 11.º · Biología · Química · Física · Ambiente</span>
-          <h1>Laboratorio Virtual de Ciencias Naturales</h1>
+    <div className="home">
+      <section className="hero" aria-labelledby="hero-h">
+        <div className="hero-copy">
+          <span className="eyebrow hero-eyebrow"><span className="pulse" aria-hidden="true" />Grados 6.º a 11.º · Biología · Química · Física · Ambiente</span>
+          <h1 id="hero-h">Laboratorio Virtual de Ciencias Naturales</h1>
           <p className="lead">Formula hipótesis, cambia variables, mide, grafica y concluye. Cada práctica calcula sus resultados con un modelo científico declarado, con sus supuestos y sus límites.</p>
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { const el = document.getElementById('grados'); el?.scrollIntoView({ behavior: 'smooth' }); el?.focus({ preventScroll: true }); }}>Elegir mi grado</button>
-            <a className="btn" href={href('catalogo')}>Ver todas las prácticas</a>
-            <a className="btn ghost" href={href('docente')}>Soy docente</a>
-            <InstallButton className="btn ghost" />
+          <div className="btn-row hero-actions">
+            <button type="button" className="btn primary large" onClick={() => { const el = document.getElementById('grados'); el?.scrollIntoView({ behavior: 'smooth' }); el?.focus({ preventScroll: true }); }}>Elegir mi grado</button>
+            <a className="btn large" href={href('catalogo')}>Ver todas las prácticas</a>
+            <a className="btn ghost large" href={href('docente')}><Icon name="docente" size={18} />Soy docente</a>
+            <InstallButton className="btn ghost large" />
           </div>
+          <dl className="stats">
+            {stats.map(([v, k]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+          </dl>
         </div>
-        <div className="hero-figure"><HeroFigure /></div>
+        <div className="hero-figure"><HeroScene /></div>
       </section>
 
-      <section aria-labelledby="grados" className="stack-sm">
-        <h2 id="grados" tabIndex={-1}>Elige tu grado</h2>
+      <section aria-labelledby="grados" className="home-section">
+        <div className="section-head">
+          <h2 id="grados" tabIndex={-1}>Elige tu grado</h2>
+          <p className="muted">Cada grado reúne las prácticas de su malla curricular, alineadas con los estándares y los DBA.</p>
+        </div>
         <div className="grade-grid">
           {GRADES.map((g) => {
-            const n = PRACTICES.filter((p) => p.grade === g.id).length;
+            const list = PRACTICES.filter((p) => p.grade === g.id);
+            const n = list.length;
             return (
               <a key={g.id} className="grade-tile" href={href('grado', g.id)}>
                 <span className="g">{g.id}.º</span>
                 <span className="t">{g.name}</span>
                 <span className="d">{g.title}</span>
-                <span className="d">{n} {n === 1 ? 'práctica disponible' : 'prácticas disponibles'}</span>
+                <span className="grade-mix" aria-hidden="true">
+                  {AREAS.map((a) => { const k = list.filter((p) => p.area === a).length; return k ? <i key={a} className={`area-${a}`} style={{ flexGrow: k }} /> : null; })}
+                </span>
+                <span className="d count">{n} {n === 1 ? 'práctica disponible' : 'prácticas disponibles'}<Icon name="flecha" size={16} /></span>
               </a>
             );
           })}
         </div>
       </section>
 
-      <section aria-labelledby="areas" className="stack-sm">
-        <h2 id="areas">Explora por asignatura</h2>
+      <section aria-labelledby="areas" className="home-section">
+        <div className="section-head">
+          <h2 id="areas">Explora por asignatura</h2>
+        </div>
         <div className="area-grid">
-          {(Object.keys(AREA_LABEL) as Area[]).map((a) => (
-            <a key={a} className="area-tile" href={`${href('catalogo')}?area=${a}`}>
-              <span className="dot" style={{ background: AREA_COLOR[a] }} aria-hidden="true" />
-              {AREA_LABEL[a]}
-              <span className="small muted" style={{ marginLeft: 'auto', fontWeight: 400 }}>{PRACTICES.filter((p) => p.area === a).length}</span>
-            </a>
-          ))}
+          {AREAS.map((a) => {
+            const n = PRACTICES.filter((p) => p.area === a).length;
+            return (
+              <a key={a} className={`area-tile area-${a}`} href={`${href('catalogo')}?area=${a}`}>
+                <span className="area-icon"><Icon name={AREA_ICON[a]} size={24} /></span>
+                <span className="area-text"><span className="area-name">{AREA_LABEL[a]}</span><span className="small muted">{AREA_BLURB[a]}</span></span>
+                <span className="area-count">{n}<span className="sr-only"> prácticas</span></span>
+              </a>
+            );
+          })}
         </div>
       </section>
 
-      <div className="grid-2">
-        <section className="card stack-sm" aria-labelledby="ciclo">
-          <h2 id="ciclo" style={{ fontSize: '1.2rem' }}>Así trabajas en cada práctica</h2>
-          <ol className="list">
-            <li><strong>Preparación:</strong> pregunta problema, objetivos, fundamento y variables.</li>
-            <li><strong>Hipótesis:</strong> predices antes de experimentar.</li>
-            <li><strong>Experimento:</strong> cambias variables y guardas ensayos en la tabla.</li>
-            <li><strong>Análisis:</strong> gráficas, comparación con tu hipótesis y conclusión con evidencia.</li>
-            <li><strong>Evaluación:</strong> preguntas por competencias con retroalimentación y reintentos.</li>
-          </ol>
-          <p className="small muted">Modos: práctica guiada, exploración libre y evaluación.</p>
-        </section>
-        <CodeEntry />
-      </div>
+      <section aria-labelledby="ciclo" className="home-section">
+        <div className="section-head">
+          <h2 id="ciclo">Así trabajas en cada práctica</h2>
+          <p className="muted">El mismo ciclo de indagación en todas las prácticas, como en un laboratorio de verdad.</p>
+        </div>
+        <ol className="cycle">
+          {STAGES.map((s, i) => (
+            <li key={s.name}>
+              <span className="cycle-icon"><Icon name={s.icon} size={22} /></span>
+              <span className="cycle-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <strong>{s.name}</strong>
+              <span className="small muted">{s.text}</span>
+            </li>
+          ))}
+        </ol>
+        <div className="grid-2">
+          <section className="card feature-card stack-sm" aria-labelledby="modos-h">
+            <div className="feature-head">
+              <span className="feature-icon"><Icon name="competencia" size={22} /></span>
+              <div><h2 id="modos-h">Tres modos de trabajo</h2><p className="small muted">Elige el modo al abrir cualquier práctica.</p></div>
+            </div>
+            <ul className="mode-list">
+              {MODES.map((m) => <li key={m.name}><Icon name={m.icon} size={20} /><span><strong>{m.name}.</strong> <span className="muted">{m.text}</span></span></li>)}
+            </ul>
+          </section>
+          <CodeEntry />
+        </div>
+      </section>
 
-      <section aria-labelledby="destacadas" className="stack-sm">
-        <h2 id="destacadas">Prácticas disponibles</h2>
+      <section aria-labelledby="destacadas" className="home-section">
+        <div className="section-head row">
+          <div>
+            <h2 id="destacadas">Prácticas disponibles</h2>
+            <p className="muted">{started ? `Llevas ${started} ${started === 1 ? 'práctica iniciada' : 'prácticas iniciadas'} en este equipo.` : 'Tu progreso se guarda en este navegador.'}</p>
+          </div>
+          <a className="btn" href={href('catalogo')}><Icon name="buscar" size={18} />Buscar y filtrar</a>
+        </div>
         <div className="practice-grid">
           {PRACTICES.map((p) => <PracticeCard key={p.id} p={p} progress={progress[p.id]} />)}
         </div>

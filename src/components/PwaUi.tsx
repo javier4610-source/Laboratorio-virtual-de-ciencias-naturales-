@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Icon } from './icons';
 import { applyUpdate, dismissOfflineReady, promptInstall, usePwa } from '../lib/pwa';
 
 /** Avisos de la aplicación instalable: lista sin conexión y versión nueva disponible. */
@@ -32,5 +33,5 @@ export function PwaNotices() {
 export function InstallButton({ className = 'btn' }: { className?: string }) {
   const pwa = usePwa();
   if (!pwa.canInstall || pwa.installed) return null;
-  return <button type="button" className={className} onClick={() => { void promptInstall(); }}>Instalar la aplicación</button>;
+  return <button type="button" className={className} onClick={() => { void promptInstall(); }}><Icon name="instalar" size={18} />Instalar la aplicación</button>;
 }

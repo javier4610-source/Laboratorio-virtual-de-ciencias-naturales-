@@ -1,10 +1,58 @@
-import { useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { MEDIA, refract } from '../models/optics';
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 
 const MEDIUM_FILL: Record<string, string> = { aire: 'rgba(200,225,240,0.10)', agua: 'rgba(70,150,220,0.28)', aceite: 'rgba(232,195,58,0.30)', vidrio: 'rgba(150,210,200,0.35)', diamante: 'rgba(210,220,240,0.55)', misterio: 'rgba(170,140,210,0.32)' };
+
+/** Disco transportador de acrílico: graduado cada 2°, números cada 30° medidos desde la normal. Estático. */
+const Protractor = memo(function Protractor({ cx, cy }: { cx: number; cy: number }) {
+  const R = 138;
+  const ticks = Array.from({ length: 180 }, (_, i) => i * 2);
+  const fromNormal = (d: number) => (d <= 90 ? d : d <= 180 ? 180 - d : d <= 270 ? d - 180 : 360 - d);
+  return (
+    <g aria-hidden="true">
+      <circle cx={cx} cy={cy} r={R} fill="var(--surface)" fillOpacity="0.35" stroke="var(--ink-2)" strokeOpacity="0.55" strokeWidth="1.2" />
+      <circle cx={cx} cy={cy} r={R - 24} fill="none" stroke="var(--ink-2)" strokeOpacity="0.25" />
+      {ticks.map((d) => {
+        const a = ((d - 90) * Math.PI) / 180;
+        const len = d % 10 === 0 ? 11 : d % 5 === 0 ? 7 : 4;
+        return <line key={d} x1={cx + R * Math.cos(a)} y1={cy + R * Math.sin(a)} x2={cx + (R - len) * Math.cos(a)} y2={cy + (R - len) * Math.sin(a)} stroke="var(--ink-2)" strokeOpacity={d % 10 === 0 ? 0.8 : 0.5} strokeWidth={d % 10 === 0 ? 1.1 : 0.7} />;
+      })}
+      {ticks.filter((d) => d % 30 === 0).map((d) => {
+        const a = ((d - 90) * Math.PI) / 180;
+        return <text key={d} x={cx + (R + 11) * Math.cos(a)} y={cy + (R + 11) * Math.sin(a) + (d % 180 === 90 ? -5 : 3)} textAnchor="middle" style={{ fontSize: 9, fill: 'var(--ink-2)', fontFamily: 'var(--font-data)' }}>{fromNormal(d)}</text>;
+      })}
+    </g>
+  );
+});
+
+/** Haz láser: halo ancho y tenue, núcleo rojo y línea central clara. k = fracción de la luz (0–1). */
+function Beam({ x1, y1, x2, y2, k }: { x1: number; y1: number; x2: number; y2: number; k: number }) {
+  if (k < 0.002) return null;
+  const core = Math.max(1, 3 * k + 0.4);
+  return (
+    <g strokeLinecap="round">
+      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#ff5252" strokeWidth={core + 6} strokeOpacity={0.08 + 0.17 * k} />
+      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#e53935" strokeWidth={core} strokeOpacity={0.35 + 0.65 * k} />
+      {k > 0.15 && <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#ffe0dc" strokeWidth={Math.max(0.6, core * 0.3)} strokeOpacity={0.9 * k} />}
+    </g>
+  );
+}
+
+/** Puntero láser cilíndrico; (x, y) es la abertura y `angle` (grados) la dirección del haz. */
+function Laser({ x, y, angle }: { x: number; y: number; angle: number }) {
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${angle})`} filter="url(#kit-shadow-soft)">
+      <rect x={-50} y={-7} width={46} height={14} rx={3} fill="url(#kit-metal)" stroke="#6d7b80" strokeWidth="0.8" />
+      <rect x={-52} y={-6} width={6} height={12} rx={2} fill="url(#kit-body-dark)" />
+      <rect x={-30} y={-9} width={10} height={3} rx={1} fill="#c62828" />
+      <rect x={-5} y={-5} width={5} height={10} rx={1} fill="#20292c" />
+      <circle cx={-1} cy={0} r={1.8} fill="#ff8a80" />
+    </g>
+  );
+}
 
 export default function OpticsLab({ api }: LabProps) {
   const [m1, setM1] = useState('aire');
@@ -15,7 +63,8 @@ export default function OpticsLab({ api }: LabProps) {
   const W = 520, H = 400, cx = 260, cy = 200, L = 180;
   const rad = (d: number) => (d * Math.PI) / 180;
   // Rayo incidente desde arriba a la izquierda
-  const ix = cx - L * Math.sin(rad(angle)), iy = cy - L * Math.cos(rad(angle));
+  const LS = 150; // distancia de la abertura del láser al punto de incidencia
+  const ix = cx - LS * Math.sin(rad(angle)), iy = cy - LS * Math.cos(rad(angle));
   const rx = cx + L * Math.sin(rad(angle)), ry = cy - L * Math.cos(rad(angle));
   const tx = r.refraction === null ? null : cx + L * Math.sin(rad(r.refraction));
   const ty = r.refraction === null ? null : cy + L * Math.cos(rad(r.refraction));
@@ -44,29 +93,36 @@ export default function OpticsLab({ api }: LabProps) {
             <desc id="opt-d">{`Luz de ${name(m1).toLowerCase()} a ${name(m2).toLowerCase()} con ${fmt(angle, 1)}° de incidencia. ${measured ? (r.totalInternalReflection ? 'Reflexión total interna: no sale luz al segundo medio.' : `Ángulo de refracción ${fmt(r.refraction!, 1)}°.`) : 'Ángulos aún no medidos.'}`}</desc>
             <rect x="0" y="0" width={W} height={cy} fill={MEDIUM_FILL[m1]} />
             <rect x="0" y={cy} width={W} height={H - cy} fill={MEDIUM_FILL[m2]} />
+            <defs>
+              <linearGradient id="opt-sheen" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stopColor="#fff" stopOpacity="0.16" />
+                <stop offset="1" stopColor="#fff" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            {m2 !== 'aire' && <rect x="0" y={cy} width={W} height={22} fill="url(#opt-sheen)" />}
+            <Protractor cx={cx} cy={cy} />
             <line x1="0" x2={W} y1={cy} y2={cy} stroke="var(--ink-2)" strokeWidth="2" />
+            <line x1="0" x2={W} y1={cy + 1.5} y2={cy + 1.5} stroke="#fff" strokeOpacity="0.5" strokeWidth="1" />
             <line x1={cx} x2={cx} y1="10" y2={H - 10} stroke="var(--ink-2)" strokeDasharray="6 5" />
-            <text x={cx + 6} y="22" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>normal</text>
+            <text x={cx + 6} y={H - 30} style={{ fontSize: 11, fill: 'var(--ink-2)' }}>normal</text>
             <text x="10" y="22" style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>{name(m1)}{m1 === 'misterio' ? '' : ` (n = ${fmt(r.n1, 3)})`}</text>
             <text x="10" y={H - 12} style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>{name(m2)}{m2 === 'misterio' ? '' : ` (n = ${fmt(r.n2, 3)})`}</text>
-            {/* transportador */}
-            {Array.from({ length: 36 }, (_, i) => i * 10).map((d) => {
-              const a = rad(d - 90);
-              return <line key={d} x1={cx + 150 * Math.cos(a)} y1={cy + 150 * Math.sin(a)} x2={cx + 160 * Math.cos(a)} y2={cy + 160 * Math.sin(a)} stroke="var(--ink-2)" opacity="0.5" />;
-            })}
-            <line x1={ix} y1={iy} x2={cx} y2={cy} stroke="#e53935" strokeWidth="3" />
-            <line x1={cx} y1={cy} x2={rx} y2={ry} stroke="#e53935" strokeWidth={Math.max(1, 3 * r.reflectance + 0.8)} opacity={0.35 + 0.65 * r.reflectance} />
-            {tx !== null && ty !== null && <line x1={cx} y1={cy} x2={tx} y2={ty} stroke="#e53935" strokeWidth={Math.max(1, 3 * r.transmittance)} opacity={0.3 + 0.7 * r.transmittance} />}
-            <circle cx={ix} cy={iy} r="7" fill="#333" />
+            {/* haces: halo suave y núcleo brillante; el grosor y la opacidad siguen las fracciones de Fresnel */}
+            <Beam x1={ix} y1={iy} x2={cx} y2={cy} k={1} />
+            <Beam x1={cx} y1={cy} x2={rx} y2={ry} k={r.reflectance} />
+            {tx !== null && ty !== null && <Beam x1={cx} y1={cy} x2={tx} y2={ty} k={r.transmittance} />}
+            <circle cx={cx} cy={cy} r={7} fill="#ff8a80" opacity="0.45" />
+            <circle cx={cx} cy={cy} r={2.6} fill="#fff3f0" />
+            <Laser x={ix} y={iy} angle={(Math.atan2(cy - iy, cx - ix) * 180) / Math.PI} />
             {measured && (
               <g style={{ fontSize: 12, fontFamily: 'var(--font-data)' }}>
-                <path d={arc(0, angle, 50, false)} fill="none" stroke="var(--fis)" />
-                <text x={cx - 60} y={cy - 60} textAnchor="end" style={{ fill: 'var(--fis)' }}>θ₁ = {fmt(angle, 1)}°</text>
-                <text x={cx + 60} y={cy - 60} style={{ fill: 'var(--fis)' }}>θᵣ = {fmt(r.reflection, 1)}°</text>
-                {r.refraction !== null && <><path d={arc(0, r.refraction, 50, true)} fill="none" stroke="var(--data)" /><text x={cx + 60} y={cy + 72} style={{ fill: 'var(--data)' }}>θ₂ = {fmt(r.refraction, 1)}°</text></>}
+                <path d={arc(0, angle, 50, false)} fill="none" stroke="var(--fis)" strokeWidth="1.5" />
+                <text x={cx - 60} y={cy - 60} textAnchor="end" style={{ fill: 'var(--fis)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>θ₁ = {fmt(angle, 1)}°</text>
+                <text x={cx + 60} y={cy - 60} style={{ fill: 'var(--fis)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>θᵣ = {fmt(r.reflection, 1)}°</text>
+                {r.refraction !== null && <><path d={arc(0, r.refraction, 50, true)} fill="none" stroke="var(--data)" strokeWidth="1.5" /><text x={cx + 60} y={cy + 72} style={{ fill: 'var(--data)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>θ₂ = {fmt(r.refraction, 1)}°</text></>}
               </g>
             )}
-            {r.totalInternalReflection && <text x={cx + 20} y={cy + 40} style={{ fontSize: 13, fill: 'var(--bad)', fontWeight: 700 }}>Reflexión total interna</text>}
+            {r.totalInternalReflection && <text x={cx + 20} y={cy + 40} style={{ fontSize: 13, fill: 'var(--bad)', fontWeight: 700, paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>Reflexión total interna</text>}
           </svg>
         </div>
         <Readout items={[

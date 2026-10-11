@@ -1,11 +1,38 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { displacement, findRope, ropeWave, ROPES, soundWave, WAVE_LIMITS } from '../models/waves';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { BenchTop } from './kit';
 
 const VIEW_M = 12; // metros de cuerda visibles
+const WX0 = 74, WX1 = 590;
+const WPX = (WX1 - WX0) / VIEW_M;
+const ROPE_LOOK: Record<string, { core: string; edge: string; w: number; links?: boolean }> = {
+  liviana: { core: '#f2f4f5', edge: '#7d8a8f', w: 2.2 },
+  media: { core: '#d9b77e', edge: '#7c5b2c', w: 3.6 },
+  pesada: { core: '#b7c1c5', edge: '#4f5a5e', w: 5, links: true },
+};
+
+/** Regla de madera de 12 m (escala reducida) con divisiones cada 10 cm. Estática: se memoriza. */
+const WaveRuler = memo(function WaveRuler() {
+  const x = (m: number) => WX0 + m * WPX;
+  return (
+    <g>
+      <g filter="url(#kit-shadow-soft)">
+        <rect x={WX0 - 10} y={200} width={WX1 - WX0 + 20} height={24} rx={3} fill="url(#kit-wood)" stroke="#b8975a" />
+      </g>
+      {Array.from({ length: VIEW_M * 10 + 1 }, (_, k) => (
+        <g key={k}>
+          <line x1={x(k / 10)} x2={x(k / 10)} y1={200} y2={200 + (k % 10 === 0 ? 10 : k % 5 === 0 ? 7 : 3.5)} stroke="#4d3b1c" strokeWidth={k % 10 === 0 ? 1.1 : 0.6} />
+          {k % 10 === 0 && <text x={x(k / 10)} y={220} textAnchor="middle" style={{ fontSize: 10, fill: '#4d3b1c', fontFamily: 'var(--font-data)' }}>{k / 10}</text>}
+        </g>
+      ))}
+      <text x={WX1 + 6} y={220} style={{ fontSize: 8, fill: '#7a6334' }}>m</text>
+    </g>
+  );
+});
 
 function RopePart({ api }: LabProps) {
   const [ropeId, setRopeId] = useState('media');
@@ -33,12 +60,16 @@ function RopePart({ api }: LabProps) {
     return () => { if (raf.current) cancelAnimationFrame(raf.current); };
   }, [running, slow]);
 
-  const W = 640, H = 220, mid = 110, pxPerM = (W - 40) / VIEW_M, pxPerCm = 7;
+  const W = 640, H = 246, mid = 110, X0 = WX0, X1 = WX1, pxPerM = WPX, pxPerCm = 7;
   const pts = Array.from({ length: 401 }, (_, i) => {
     const x = (VIEW_M * i) / 400;
-    return `${20 + x * pxPerM},${mid - displacement(x, t, A, res.wavelength, f) * pxPerCm}`;
+    return `${X0 + x * pxPerM},${mid - displacement(x, t, A, res.wavelength, f) * pxPerCm}`;
   }).join(' ');
-  const markerX = (m: number) => 20 + m * pxPerM;
+  const markerX = (m: number) => X0 + m * pxPerM;
+  const yStart = mid - displacement(0, t, A, res.wavelength, f) * pxPerCm;
+  const yEnd = mid - displacement(VIEW_M, t, A, res.wavelength, f) * pxPerCm;
+  const rope = ROPE_LOOK[ropeId] ?? ROPE_LOOK.media;
+  const hangDiscs = Math.max(1, Math.min(8, Math.round(tension / 10)));
   const distance = Math.abs(markB - markA);
   const measuredValue = parseLocaleNumber(measured);
 
@@ -55,24 +86,56 @@ function RopePart({ api }: LabProps) {
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="wave-t wave-d">
             <title id="wave-t">Onda en una cuerda con regla de medición</title>
             <desc id="wave-d">{`Onda de ${fmt(f, 2)} Hz y amplitud ${fmt(A, 1)} cm en la ${findRope(ropeId).name.toLowerCase()} con ${tension} N. Longitud de onda del modelo ${fmt(res.wavelength, 2)} m. Marcadores de la regla en ${fmt(markA, 2)} m y ${fmt(markB, 2)} m.`}</desc>
-            <line x1="20" x2={W - 20} y1={mid} y2={mid} stroke="var(--line)" strokeDasharray="4 4" />
-            <rect x="4" y={mid - A * pxPerCm - 6} width="14" height={2 * A * pxPerCm + 12} rx="3" fill="var(--surface-2)" stroke="var(--ink-2)" />
-            <polyline points={pts} fill="none" stroke="var(--data)" strokeWidth="3" strokeLinejoin="round" />
-            <circle cx={20 + 3 * pxPerM} cy={mid - displacement(3, t, A, res.wavelength, f) * pxPerCm} r="6" fill="var(--fis)" stroke="var(--surface)" strokeWidth="2">
+            <BenchTop y={226} width={W} />
+            {/* generador de vibraciones */}
+            <g filter="url(#kit-shadow)">
+              <rect x={6} y={52} width={48} height={174} rx={7} fill="url(#kit-body-dark)" />
+            </g>
+            <rect x={11} y={62} width={38} height={22} rx={3} fill="url(#kit-lcd)" stroke="#05100d" />
+            <text x={45} y={77} textAnchor="end" style={{ fontSize: 10, fill: '#7CFFB2', fontFamily: 'var(--font-data)' }}>{fmt(f, 2)}</text>
+            <text x={30} y={96} textAnchor="middle" style={{ fontSize: 8, fill: '#c9d2d5', fontWeight: 700 }}>Hz</text>
+            <circle cx={30} cy={118} r={10} fill="url(#kit-metal)" stroke="#5d6b70" />
+            <line x1={30} x2={30} y1={110} y2={116} stroke="#3a4448" strokeWidth="2" strokeLinecap="round" />
+            <circle cx={30} cy={146} r={2.4} fill={running ? '#66bb6a' : '#ffb300'} />
+            <text transform="translate(33 196) rotate(-90)" textAnchor="middle" style={{ fontSize: 8, fill: '#c9d2d5', letterSpacing: 1 }}>GENERADOR</text>
+            {/* guía y pinza que vibra */}
+            <rect x={58} y={mid - 80} width={5} height={160} rx={2} fill="url(#kit-metal-h)" />
+            <rect x={56} y={mid + 80} width={9} height={226 - mid - 80} fill="url(#kit-body-dark)" />
+            <rect x={60} y={yStart - 6} width={14} height={12} rx={2} fill="#2f393c" stroke="#11171a" />
+            <circle cx={67} cy={yStart} r={1.8} fill="url(#kit-metal)" />
+            {/* polea y pesas que dan la tensión */}
+            <rect x={603} y={mid} width={5} height={218 - mid} fill="url(#kit-metal-h)" />
+            <rect x={594} y={216} width={24} height={10} rx={2} fill="url(#kit-body-dark)" />
+            <line x1={619} x2={619} y1={mid} y2={mid + 44} stroke={rope.edge} strokeWidth={Math.max(2, rope.w - 1)} />
+            <path d={`M612 ${mid + 44} q7 -6 14 0`} fill="none" stroke="#5d6b70" strokeWidth="1.6" />
+            <rect x={617.5} y={mid + 44} width={3} height={hangDiscs * 5 + 6} fill="url(#kit-metal-h)" />
+            {Array.from({ length: hangDiscs }, (_, k) => (
+              <rect key={k} x={607} y={mid + 50 + k * 5} width={24} height={4.4} rx={1.2} fill="url(#kit-metal)" stroke="#6d7b80" strokeWidth="0.6" />
+            ))}
+            <text x={619} y={mid + 66 + hangDiscs * 5} textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>{tension} N</text>
+            <circle cx={606} cy={mid} r={13} fill="url(#kit-metal)" stroke="#6d7b80" strokeWidth="1.2" filter="url(#kit-shadow-soft)" />
+            <circle cx={606} cy={mid} r={8} fill="none" stroke="#9aa5a9" />
+            <circle cx={606} cy={mid} r={2.5} fill="#3a4448" />
+            {/* posición de equilibrio */}
+            <line x1={X0} x2={X1} y1={mid} y2={mid} stroke="var(--line)" strokeDasharray="4 4" />
+            {/* cuerda */}
+            <line x1={X1} x2={606} y1={yEnd} y2={mid - 13} stroke={rope.edge} strokeWidth={rope.w + 1.6} strokeLinecap="round" />
+            <line x1={X1} x2={606} y1={yEnd} y2={mid - 13} stroke={rope.core} strokeWidth={rope.w} strokeLinecap="round" />
+            <path d={`M606 ${mid - 13} A13 13 0 0 1 619 ${mid}`} fill="none" stroke={rope.core} strokeWidth={rope.w} />
+            <polyline points={pts} fill="none" stroke={rope.edge} strokeWidth={rope.w + 1.6} strokeLinejoin="round" strokeLinecap="round" />
+            <polyline points={pts} fill="none" stroke={rope.core} strokeWidth={rope.w} strokeLinejoin="round" strokeLinecap="round" />
+            {rope.links
+              ? <polyline points={pts} fill="none" stroke={rope.edge} strokeWidth={rope.w - 2.4} strokeDasharray="3.5 2.5" strokeLinejoin="round" />
+              : <polyline points={pts} fill="none" stroke="#fff" strokeOpacity="0.45" strokeWidth="0.9" strokeLinejoin="round" transform="translate(0 -0.8)" />}
+            <circle cx={X0 + 3 * pxPerM} cy={mid - displacement(3, t, A, res.wavelength, f) * pxPerCm} r="6" fill="var(--fis)" stroke="var(--surface)" strokeWidth="2">
               <title>Punto marcado a 3 m: sube y baja, pero no avanza</title>
             </circle>
-            {/* Regla */}
-            <line x1="20" x2={W - 20} y1={H - 30} y2={H - 30} stroke="var(--ink-2)" />
-            {Array.from({ length: VIEW_M * 2 + 1 }, (_, i) => i / 2).map((m) => (
-              <g key={m}>
-                <line x1={markerX(m)} x2={markerX(m)} y1={H - 30} y2={H - 30 + (m % 1 === 0 ? 10 : 5)} stroke="var(--ink-2)" />
-                {m % 1 === 0 && <text x={markerX(m)} y={H - 8} textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>{m}</text>}
-              </g>
-            ))}
+            <WaveRuler />
             {[markA, markB].map((m, i) => (
               <g key={i}>
-                <line x1={markerX(m)} x2={markerX(m)} y1="10" y2={H - 30} stroke="var(--accent)" strokeWidth="2" strokeDasharray="5 3" />
-                <text x={markerX(m)} y="10" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--accent)', fontWeight: 700 }}>{i === 0 ? 'A' : 'B'}</text>
+                <line x1={markerX(m)} x2={markerX(m)} y1="16" y2={200} stroke="var(--accent)" strokeWidth="2" strokeDasharray="5 3" />
+                <path d={`M${markerX(m)} 200 l-5 -8 h10 Z`} fill="var(--accent)" />
+                <text x={markerX(m)} y="12" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--accent)', fontWeight: 700 }}>{i === 0 ? 'A' : 'B'}</text>
               </g>
             ))}
             <text x={W - 20} y="24" textAnchor="end" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>t = {fmt(t, 2)} s {running && slow > 1 ? `(cámara lenta ×${slow})` : ''}</text>

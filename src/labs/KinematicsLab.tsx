@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CHALLENGES, KIN_LIMITS, MATCH_TOLERANCE, STROBE_INTERVAL, TRACK_LENGTH,
   challengeError, observationTime, sampleCurve, simulateRun, stateAt,
@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { Chart, type Series } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { Stopwatch } from './kit';
 
 type AnimSpeed = 'real' | 'x4';
 
@@ -15,18 +16,105 @@ const TRACK_X0 = 40;
 const TRACK_PX = 600;
 const toPx = (x: number) => TRACK_X0 + (x / TRACK_LENGTH) * TRACK_PX;
 
+const G = 142; // línea de contacto de las ruedas con la ciclorruta
+const WHEEL_R = 13;
+
+/** Ciclista con casco sobre una bicicleta; las ruedas y los pedales giran según la distancia recorrida. */
 function Bicycle({ x }: { x: number }) {
+  const turn = (x - TRACK_X0) / WHEEL_R; // radianes girados por las ruedas
+  const crank = turn * 0.45;
+  const bb: [number, number] = [-1, -13];
+  const pedal = (k: number): [number, number] => [bb[0] + 7 * Math.cos(crank + k * Math.PI), bb[1] + 7 * Math.sin(crank + k * Math.PI)];
+  const hip: [number, number] = [-6, -40];
+  const knee = (p: [number, number]): [number, number] => {
+    const mx = (hip[0] + p[0]) / 2, my = (hip[1] + p[1]) / 2;
+    const dx = p[0] - hip[0], dy = p[1] - hip[1];
+    const len = Math.hypot(dx, dy) || 1;
+    const bend = Math.sqrt(Math.max(0, 22 * 22 - (len / 2) ** 2)) * 0.9;
+    return [mx + (-dy / len) * -bend, my + (dx / len) * -bend];
+  };
+  const leg = (k: number) => { const p = pedal(k); const kn = knee(p); return `M${hip[0]} ${hip[1]} L${kn[0]} ${kn[1]} L${p[0]} ${p[1]}`; };
+  const wheel = (cx: number) => (
+    <g transform={`translate(${cx} ${-WHEEL_R})`}>
+      <circle r={WHEEL_R} fill="none" stroke="#1d2426" strokeWidth="3" />
+      <circle r={WHEEL_R - 2.6} fill="none" stroke="#b0bcc0" strokeWidth="1" />
+      <g transform={`rotate(${(turn * 180) / Math.PI})`} stroke="#9aa5a9" strokeWidth="0.6">
+        {[0, 30, 60, 90, 120, 150].map((a) => <line key={a} x1={-10 * Math.cos((a * Math.PI) / 180)} y1={-10 * Math.sin((a * Math.PI) / 180)} x2={10 * Math.cos((a * Math.PI) / 180)} y2={10 * Math.sin((a * Math.PI) / 180)} />)}
+      </g>
+      <circle r={1.9} fill="#5d6b70" />
+    </g>
+  );
   return (
-    <g transform={`translate(${x} 0)`}>
-      <circle cx="-15" cy="108" r="12" fill="none" stroke="var(--ink)" strokeWidth="2.5" />
-      <circle cx="15" cy="108" r="12" fill="none" stroke="var(--ink)" strokeWidth="2.5" />
-      <path d="M-15 108 L-4 92 L12 92 L15 108 M-4 92 L0 108 L-15 108 M12 92 L10 84" fill="none" stroke="var(--fis)" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M-4 92 L-2 72 L8 84" fill="none" stroke="var(--ink-2)" strokeWidth="3" strokeLinecap="round" />
-      <circle cx="-1" cy="64" r="6" fill="var(--ink-2)" />
-      <circle cx="0" cy="120" r="2" fill="var(--bad)" />
+    <g transform={`translate(${x} ${G})`}>
+      <ellipse cx={0} cy={1} rx={30} ry={2.6} fill="#000" opacity="0.22" />
+      {/* pierna del fondo */}
+      <path d={leg(1)} fill="none" stroke="#1b2326" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
+      {wheel(-17)}
+      {wheel(17)}
+      {/* cuadro */}
+      <path d={`M-17 -13 L${bb[0]} ${bb[1]} L-7 -33 Z M${bb[0]} ${bb[1]} L13 -31 L-7 -33 M13 -31 L17 -13`} fill="none" stroke="#d84315" strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round" />
+      <path d="M13 -31 L14 -36 L9 -38" fill="none" stroke="#263033" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x={-12} y={-37} width={9} height={3} rx={1.5} fill="#263033" />
+      <circle cx={bb[0]} cy={bb[1]} r={3} fill="url(#kit-metal)" stroke="#5d6b70" strokeWidth="0.6" />
+      {/* ciclista */}
+      <path d="M-6 -40 L6 -58" stroke="#f9a825" strokeWidth="7" strokeLinecap="round" />
+      <path d="M6 -57 L11 -46 L10 -38" fill="none" stroke="#c68642" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={leg(0)} fill="none" stroke="#263238" strokeWidth="4.2" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx={10} cy={-64} r={5.2} fill="#c68642" />
+      <path d="M4.5 -64.5 A6 6 0 0 1 16 -66 L16.5 -64 Z" fill="#1565c0" />
+      {[pedal(0)].map(([px, py], k) => <rect key={k} x={px - 2.5} y={py - 1} width={5} height={2} rx={0.8} fill="#1d2426" />)}
+      <circle cx="0" cy="0" r="2" fill="var(--bad)" />
     </g>
   );
 }
+
+/** Fondo de la ciclorruta: andén, árboles, carril pintado, pasto y cinta métrica. Estático. */
+const Roadside = memo(function Roadside() {
+  const trees = [175, 255, 345, 430, 520, 600];
+  return (
+    <g aria-hidden="true">
+      {trees.map((tx, i) => (
+        <g key={tx} opacity="0.8">
+          <rect x={tx - 2} y={98} width={4} height={18} fill="#6d4c33" />
+          <circle cx={tx} cy={88 - (i % 2) * 4} r={15 + (i % 3) * 2} fill="#4f8f5f" />
+          <circle cx={tx + 8} cy={95 - (i % 2) * 4} r={10} fill="#3f7a50" />
+          <circle cx={tx - 6} cy={82 - (i % 2) * 4} r={6} fill="#6fae7c" opacity="0.7" />
+        </g>
+      ))}
+      <rect x={0} y={114} width={680} height={7} fill="var(--bench-top)" />
+      <rect x={0} y={120} width={680} height={2} fill="var(--bench-edge)" />
+      {/* carril de la ciclorruta */}
+      <rect x={TRACK_X0 - 22} y={122} width={TRACK_PX + 44} height={28} fill="#2f8a62" />
+      <rect x={TRACK_X0 - 22} y={122} width={TRACK_PX + 44} height={28} fill="url(#kit-liquid-shade)" opacity="0.25" />
+      <line x1={TRACK_X0 - 22} x2={TRACK_X0 + TRACK_PX + 22} y1={124} y2={124} stroke="#fff" strokeWidth="1.4" opacity="0.9" />
+      <line x1={TRACK_X0 - 22} x2={TRACK_X0 + TRACK_PX + 22} y1={148} y2={148} stroke="#fff" strokeWidth="1.4" opacity="0.9" />
+      <line x1={TRACK_X0 - 22} x2={TRACK_X0 + TRACK_PX + 22} y1={133} y2={133} stroke="#fff" strokeWidth="1.2" strokeDasharray="10 8" opacity="0.75" />
+      {/* línea de llegada a cuadros */}
+      {Array.from({ length: 6 }, (_, k) => (
+        <g key={k}>
+          <rect x={toPx(TRACK_LENGTH) - 4} y={122 + k * 4.66} width={4} height={4.66} fill={k % 2 ? '#fff' : '#1d2426'} />
+          <rect x={toPx(TRACK_LENGTH)} y={122 + k * 4.66} width={4} height={4.66} fill={k % 2 ? '#1d2426' : '#fff'} />
+        </g>
+      ))}
+      <rect x={0} y={150} width={680} height={26} fill="#7cb342" opacity="0.32" />
+      {/* cinta métrica */}
+      <circle cx={TRACK_X0 - 12} cy={162} r={10} fill="#f6c945" stroke="#9c7a12" />
+      <circle cx={TRACK_X0 - 12} cy={162} r={4} fill="#3a2f05" opacity="0.8" />
+      <rect x={TRACK_X0} y={157} width={TRACK_PX} height={10} fill="#f6c945" stroke="#b8901f" strokeWidth="0.8" />
+      {Array.from({ length: TRACK_LENGTH + 1 }, (_, m) => (
+        <line key={m} x1={toPx(m)} x2={toPx(m)} y1={157} y2={157 + (m % 5 === 0 ? 7 : 3.5)} stroke="#2b2304" strokeWidth={m % 5 === 0 ? 1.1 : 0.7} />
+      ))}
+      {Array.from({ length: 11 }, (_, i) => i * 5).map((m) => (
+        m % 10 === 0 && <text key={m} x={toPx(m)} y={190} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{m} m</text>
+      ))}
+      {/* meta */}
+      <rect x={toPx(TRACK_LENGTH) + 8} y={70} width={4} height={80} fill="url(#kit-metal-h)" />
+      {Array.from({ length: 12 }, (_, k) => (
+        <rect key={k} x={toPx(TRACK_LENGTH) + 12 + (k % 4) * 5} y={70 + Math.floor(k / 4) * 5} width={5} height={5} fill={(k + Math.floor(k / 4)) % 2 ? '#fff' : '#1d2426'} />
+      ))}
+    </g>
+  );
+});
 
 export default function KinematicsLab({ api }: LabProps) {
   const [v0, setV0] = useState(2);
@@ -110,28 +198,17 @@ export default function KinematicsLab({ api }: LabProps) {
           <svg viewBox="0 0 680 200" role="img" aria-labelledby="cin-t cin-d">
             <title id="cin-t">Ciclista en una ciclorruta recta de 50 m con cinta métrica y fotos estroboscópicas</title>
             <desc id="cin-d">{descText}</desc>
-            <rect x={TRACK_X0 - 10} y="122" width={TRACK_PX + 20} height="14" rx="3" fill="#2e7d5b" opacity="0.85" />
-            <line x1={TRACK_X0 - 10} x2={TRACK_X0 + TRACK_PX + 10} y1="129" y2="129" stroke="#fff" strokeWidth="1.5" strokeDasharray="10 8" />
-            {/* Cinta métrica */}
-            <line x1={TRACK_X0} x2={TRACK_X0 + TRACK_PX} y1="150" y2="150" stroke="var(--ink-2)" />
-            {Array.from({ length: 11 }, (_, i) => i * 5).map((m) => (
-              <g key={m}>
-                <line x1={toPx(m)} x2={toPx(m)} y1="146" y2={m % 10 === 0 ? 158 : 154} stroke="var(--ink-2)" />
-                {m % 10 === 0 && <text x={toPx(m)} y="172" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{m} m</text>}
-              </g>
-            ))}
-            <line x1={toPx(TRACK_LENGTH)} x2={toPx(TRACK_LENGTH)} y1="60" y2="136" stroke="var(--bad)" strokeWidth="2" strokeDasharray="4 3" />
-            <text x={toPx(TRACK_LENGTH)} y="54" textAnchor="end" style={{ fontSize: 11, fill: 'var(--bad)' }}>fin de la pista</text>
+            <Roadside />
+            <text x={toPx(TRACK_LENGTH) + 6} y="62" textAnchor="end" style={{ fontSize: 11, fill: 'var(--bad)' }}>fin de la pista</text>
             {/* Fotos estroboscópicas */}
             {visibleStrobe.map((p) => (
               <g key={p.t}>
-                <circle cx={toPx(p.x)} cy="120" r="3.5" fill="var(--data)" stroke="var(--surface)" strokeWidth="1" />
-                <line x1={toPx(p.x)} x2={toPx(p.x)} y1="124" y2="146" stroke="var(--data)" strokeWidth="1" opacity="0.6" />
+                <line x1={toPx(p.x)} x2={toPx(p.x)} y1={G} y2="157" stroke="var(--data)" strokeWidth="1.2" opacity="0.8" />
+                <circle cx={toPx(p.x)} cy={G} r="3.5" fill="var(--data)" stroke="#fff" strokeWidth="1" />
               </g>
             ))}
             <Bicycle x={toPx(pos)} />
-            <text x="40" y="26" style={{ fontSize: 13, fontFamily: 'var(--font-data)', fill: 'var(--ink)' }}>{fmt(tShown, 2)} s</text>
-            <text x="40" y="42" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>cronómetro</text>
+            <Stopwatch x={40} y={10} text={`${fmt(tShown, 2)} s`} />
             <text x="640" y="26" textAnchor="end" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>fotos cada {fmt(STROBE_INTERVAL, 1)} s</text>
           </svg>
         </div>

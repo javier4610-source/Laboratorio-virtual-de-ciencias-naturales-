@@ -4,14 +4,73 @@ import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 
-function Bulb({ x, y, power, label, on }: { x: number; y: number; power: number; label: string; on: boolean }) {
-  const b = on ? brightness(power) : 0;
+function CircuitDefs() {
+  return (
+    <defs>
+      <radialGradient id="cir-halo" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stopColor="#fff3b0" stopOpacity="0.95" />
+        <stop offset="0.45" stopColor="#ffd54a" stopOpacity="0.45" />
+        <stop offset="1" stopColor="#ffd54a" stopOpacity="0" />
+      </radialGradient>
+      <linearGradient id="cir-cell" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stopColor="#151b1d" />
+        <stop offset="0.35" stopColor="#4a5458" />
+        <stop offset="0.6" stopColor="#262e31" />
+        <stop offset="1" stopColor="#0e1314" />
+      </linearGradient>
+      <linearGradient id="cir-copper" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stopColor="#8a4b12" />
+        <stop offset="0.35" stopColor="#f0a85a" />
+        <stop offset="0.65" stopColor="#c46f22" />
+        <stop offset="1" stopColor="#6f3a0c" />
+      </linearGradient>
+      <linearGradient id="cir-case" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stopColor="#ffd34d" />
+        <stop offset="1" stopColor="#e0a800" />
+      </linearGradient>
+    </defs>
+  );
+}
+
+/** Cable aislado: trazo grueso con un brillo fino encima. */
+function Wire({ d, active }: { d: string; active: boolean }) {
   return (
     <g>
-      <circle cx={x} cy={y} r={34} fill="#ffd54a" opacity={b * 0.45} />
-      <circle cx={x} cy={y} r={18} fill={b > 0.02 ? `rgba(255, 213, 74, ${0.35 + b * 0.65})` : 'var(--surface)'} stroke="var(--ink)" strokeWidth="2" />
-      <path d={`M${x - 8} ${y + 4} q4 -12 8 0 q4 12 8 0`} fill="none" stroke="var(--ink)" strokeWidth="1.5" />
-      <text x={x} y={y + 36} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink)', fontWeight: 700 }}>{label}</text>
+      <path d={d} fill="none" stroke={active ? 'var(--accent)' : 'var(--ink-2)'} strokeWidth="5" strokeLinejoin="round" strokeLinecap="round" />
+      <path d={d} fill="none" stroke="#fff" strokeOpacity="0.3" strokeWidth="1.4" strokeLinejoin="round" transform="translate(0 -1)" />
+    </g>
+  );
+}
+
+/** Color del filamento: de rojo apagado a blanco amarillento según el brillo. */
+function filamentColor(b: number) {
+  if (b <= 0.02) return '#6d5a4a';
+  const mix = (a: number, c: number) => Math.round(a + (c - a) * b);
+  return `rgb(${mix(255, 255)}, ${mix(120, 248)}, ${mix(40, 200)})`;
+}
+
+/** Bombillo incandescente en su portabombillo. El portabombillo queda sobre el cable en (x, y). */
+function Bulb({ x, y, power, label, on, vertical }: { x: number; y: number; power: number; label: string; on: boolean; vertical?: boolean }) {
+  const b = on ? brightness(power) : 0;
+  const glass = `M${x - 6} ${y - 15} C${x - 6} ${y - 19} ${x - 13} ${y - 22} ${x - 13} ${y - 30} A13 13 0 1 1 ${x + 13} ${y - 30} C${x + 13} ${y - 22} ${x + 6} ${y - 19} ${x + 6} ${y - 15} Z`;
+  return (
+    <g>
+      <g transform={vertical ? `rotate(90 ${x} ${y})` : undefined}>
+        {b > 0.02 && <circle cx={x} cy={y - 31} r={20 + 30 * b} fill="url(#cir-halo)" opacity={0.25 + 0.75 * b} />}
+        {/* portabombillo con bornes de tornillo */}
+        <rect x={x - 18} y={y - 6} width={36} height={13} rx={3} fill="url(#kit-body-dark)" filter="url(#kit-shadow-soft)" />
+        {[-12, 12].map((dx) => <circle key={dx} cx={x + dx} cy={y + 0.5} r={2.8} fill="url(#kit-metal)" stroke="#5d6b70" strokeWidth="0.6" />)}
+        {/* casquillo roscado */}
+        <rect x={x - 6.5} y={y - 16} width={13} height={10} rx={1.5} fill="url(#kit-metal-h)" stroke="#7d8a8f" strokeWidth="0.5" />
+        {[-13, -10, -7.5].map((dy) => <line key={dy} x1={x - 6.5} x2={x + 6.5} y1={y + dy} y2={y + dy + 1} stroke="#7d8a8f" strokeWidth="0.7" />)}
+        {/* ampolla de vidrio */}
+        <path d={glass} fill={b > 0.02 ? `rgba(255, 236, 160, ${0.3 + 0.6 * b})` : 'url(#kit-glass-fill)'} />
+        <path d={`M${x - 2} ${y - 16} L${x - 4} ${y - 29} M${x + 2} ${y - 16} L${x + 4} ${y - 29}`} stroke="#8d9a9f" strokeWidth="0.8" />
+        <path d={`M${x - 4} ${y - 29} l1.6 -2.4 l1.6 2.4 l1.6 -2.4 l1.6 2.4 l1.6 -2.4`} fill="none" stroke={filamentColor(b)} strokeWidth={b > 0.02 ? 1.5 : 1} strokeLinejoin="round" />
+        <path d={glass} fill="url(#kit-glass)" stroke="var(--glass-edge)" strokeWidth="1.2" />
+        <path d={`M${x - 8} ${y - 34} A9 9 0 0 1 ${x - 2} ${y - 40}`} fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+      </g>
+      <text x={vertical ? x + 8 : x} y={y + (vertical ? 34 : 28)} textAnchor={vertical ? 'start' : 'middle'} style={{ fontSize: 12, fill: 'var(--ink)', fontWeight: 700, paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 4, strokeLinejoin: 'round' }}>{label}</text>
     </g>
   );
 }
@@ -23,23 +82,78 @@ function Switch({ x, y, closed, onToggle, label, vertical }: { x: number; y: num
     <g role="button" tabIndex={0} aria-pressed={closed} aria-label={`${label}: ${closed ? 'cerrado' : 'abierto'}. Pulsa para ${closed ? 'abrir' : 'cerrar'}.`} onClick={onToggle} onKeyDown={onKey} style={{ cursor: 'pointer' }}>
       <rect x={x - 22} y={y - 22} width={44} height={44} fill="transparent" />
       <g transform={rot}>
-        <rect x={x - 16} y={y - 6} width={32} height={12} fill="var(--bg)" />
-        <circle cx={x - 14} cy={y} r={3.5} fill="var(--ink)" />
-        <circle cx={x + 14} cy={y} r={3.5} fill="var(--ink)" />
-        <line x1={x - 14} y1={y} x2={closed ? x + 14 : x + 10} y2={closed ? y : y - 14} stroke={closed ? 'var(--ok)' : 'var(--bad)'} strokeWidth="3" strokeLinecap="round" />
+        {/* base de porcelana */}
+        <rect x={x - 21} y={y - 5} width={42} height={12} rx={3} fill="url(#kit-body)" stroke="#a9b4b6" filter="url(#kit-shadow-soft)" />
+        {/* pinza fija y pivote */}
+        <rect x={x + 11} y={y - 6} width={6} height={9} rx={1} fill="url(#kit-metal-h)" stroke="#6d7b80" strokeWidth="0.6" />
+        <circle cx={x - 14} cy={y} r={3.6} fill="url(#kit-metal)" stroke="#6d7b80" strokeWidth="0.8" />
+        {/* cuchilla */}
+        <g transform={`rotate(${closed ? 0 : -38} ${x - 14} ${y})`}>
+          <rect x={x - 14} y={y - 1.8} width={31} height={3.6} rx={1.2} fill="url(#kit-metal)" stroke="#6d7b80" strokeWidth="0.6" />
+          <rect x={x + 15} y={y - 4} width={7} height={8} rx={2} fill={closed ? 'var(--ok)' : 'var(--bad)'} />
+        </g>
+        <circle cx={x - 14} cy={y} r={1.4} fill="#3a4448" />
       </g>
     </g>
   );
 }
 
+/** Pila cilíndrica vertical: polo positivo arriba. */
 function Battery({ x, y, emf }: { x: number; y: number; emf: number }) {
   return (
     <g>
-      <rect x={x - 22} y={y - 16} width={44} height={32} fill="var(--bg)" />
-      <line x1={x - 18} y1={y - 6} x2={x + 18} y2={y - 6} stroke="var(--ink)" strokeWidth="3" />
-      <line x1={x - 10} y1={y + 6} x2={x + 10} y2={y + 6} stroke="var(--ink)" strokeWidth="5" />
-      <text x={x - 30} y={y + 4} textAnchor="end" style={{ fontSize: 12, fill: 'var(--ink)', fontWeight: 700 }}>{fmt(emf, 1)} V</text>
-      <text x={x + 24} y={y - 10} style={{ fontSize: 12, fill: 'var(--ink-2)' }}>+</text>
+      <g filter="url(#kit-shadow-soft)">
+        <rect x={x - 5} y={y - 36} width={10} height={5} rx={1.5} fill="url(#kit-metal-h)" />
+        <rect x={x - 15} y={y - 32} width={30} height={64} rx={4} fill="url(#cir-cell)" />
+        <rect x={x - 15} y={y - 32} width={30} height={18} rx={4} fill="url(#cir-copper)" />
+        <rect x={x - 15} y={y + 28} width={30} height={5} rx={2} fill="url(#kit-metal-h)" />
+      </g>
+      <text x={x - 24} y={y + 4} textAnchor="end" style={{ fontSize: 12, fill: 'var(--ink)', fontWeight: 700 }}>{fmt(emf, 1)} V</text>
+      <text x={x + 20} y={y - 20} style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>+</text>
+      <text x={x + 20} y={y + 30} style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>−</text>
+    </g>
+  );
+}
+
+type Pt = [number, number];
+
+const meterJacks = (x: number, y: number): [Pt, Pt] => [[x + 30, y + 104], [x + 66, y + 104]];
+
+/** Puntas del multímetro (se dibujan debajo del circuito para no tapar las etiquetas). */
+function MeterLeads({ x, y, probes }: { x: number; y: number; probes: [Pt, Pt] }) {
+  const jacks = meterJacks(x, y);
+  const lead = (from: Pt, to: Pt) => `M${from[0]} ${from[1]} C${from[0] + Math.sign(to[0] - from[0]) * 50} ${from[1] + 34}, ${to[0]} ${to[1] + (to[1] < from[1] ? 80 : -40)}, ${to[0]} ${to[1]}`;
+  return (
+    <g>
+      <path d={lead(jacks[0], probes[0])} fill="none" stroke="#c62828" strokeWidth="2.2" strokeLinecap="round" opacity="0.85" />
+      <path d={lead(jacks[1], probes[1])} fill="none" stroke="#8c979b" strokeWidth="3.8" strokeLinecap="round" opacity="0.7" />
+      <path d={lead(jacks[1], probes[1])} fill="none" stroke="#1f2628" strokeWidth="2.2" strokeLinecap="round" />
+    </g>
+  );
+}
+
+/** Multímetro digital: pantalla con voltaje y corriente del elemento elegido. */
+function Multimeter({ x, y, v, i, probes }: { x: number; y: number; v: number; i: number; probes: [Pt, Pt] }) {
+  const w = 96, h = 116;
+  const jacks = meterJacks(x, y);
+  return (
+    <g>
+      <g filter="url(#kit-shadow)">
+        <rect x={x} y={y} width={w} height={h} rx={12} fill="url(#cir-case)" stroke="#b58800" />
+        <rect x={x + 6} y={y + 6} width={w - 12} height={h - 12} rx={8} fill="#2b3336" />
+      </g>
+      <rect x={x + 11} y={y + 11} width={w - 22} height={36} rx={3} fill="#c9d6b8" stroke="#1a2022" />
+      <text x={x + w - 15} y={y + 26} textAnchor="end" style={{ fontSize: 12, fill: '#1c2618', fontFamily: 'var(--font-data)', fontWeight: 700 }}>{fmt(v, 2)} V</text>
+      <text x={x + w - 15} y={y + 42} textAnchor="end" style={{ fontSize: 12, fill: '#1c2618', fontFamily: 'var(--font-data)', fontWeight: 700 }}>{fmt(i, 3)} A</text>
+      <circle cx={x + w / 2} cy={y + 70} r={14} fill="url(#kit-body-dark)" stroke="#11171a" />
+      <rect x={x + w / 2 - 2} y={y + 57} width={4} height={13} rx={2} fill="#e6eaeb" />
+      {Array.from({ length: 9 }, (_, k) => {
+        const a = (-150 + k * 37.5) * (Math.PI / 180);
+        return <line key={k} x1={x + w / 2 + 17 * Math.sin(a)} y1={y + 70 - 17 * Math.cos(a)} x2={x + w / 2 + 20 * Math.sin(a)} y2={y + 70 - 20 * Math.cos(a)} stroke="#c9d2d5" strokeWidth="1" />;
+      })}
+      <circle cx={jacks[0][0]} cy={jacks[0][1]} r={4.2} fill="#c62828" stroke="#11171a" />
+      <circle cx={jacks[1][0]} cy={jacks[1][1]} r={4.2} fill="#11171a" stroke="#5d6b70" />
+      {probes.map(([px, py], k) => <circle key={k} cx={px} cy={py} r={3.4} fill={k === 0 ? '#c62828' : '#1f2628'} stroke="#fff" strokeWidth="1" />)}
     </g>
   );
 }
@@ -57,7 +171,6 @@ export default function CircuitLab({ api }: LabProps) {
   const setRi = (i: number, v: number) => setRs((rs) => rs.map((x, j) => (j === i ? v : x)) as [number, number, number]);
   const els = res.elements;
   const flowing = !res.open && res.totalCurrent > 0;
-  const wire = flowing ? 'var(--accent)' : 'var(--ink-2)';
 
   const record = () => api.addTrial('medidas', {
     config: topology, emf, r1: R[0], r2: R[1], r3: R[2],
@@ -70,16 +183,24 @@ export default function CircuitLab({ api }: LabProps) {
     ? { v: res.terminalVoltage, i: res.totalCurrent, label: 'Bornes de la batería' }
     : { v: els[Number(meter) - 1].voltage, i: els[Number(meter) - 1].current, label: `R${meter}` };
 
+  const pos: [number, number, boolean][] = topology === 'serie'
+    ? [[150, 60, false], [300, 60, false], [450, 60, false]]
+    : topology === 'paralelo' ? [[240, 190, true], [380, 190, true], [520, 190, true]] : [[230, 60, false], [380, 190, true], [520, 190, true]];
+  const probes: [Pt, Pt] = meter === 'fuente'
+    ? [[80, 124], [80, 194]]
+    : (() => { const [px, py, vert] = pos[Number(meter) - 1]; return vert ? [[px - 0.5, py - 12], [px - 0.5, py + 12]] : [[px - 12, py + 0.5], [px + 12, py + 0.5]]; })();
+  const meterAt: Pt = topology === 'serie' ? [282, 116] : [110, 92];
+
   let schematic;
   if (topology === 'serie') {
     schematic = (
       <g>
-        <path d="M80 60 H560 V260 H80 Z" fill="none" stroke={wire} strokeWidth="3" />
+        <Wire d="M80 60 H560 V260 H80 Z" active={flowing} />
         <Battery x={80} y={160} emf={emf} />
         {[150, 300, 450].map((x, i) => (
           <g key={i}><Bulb x={x} y={60} power={els[i].power} label={`R${i + 1} = ${R[i]} Ω`} on={els[i].active} /><Switch x={x + 70} y={60} closed={closed[i]} onToggle={() => toggle(i)} label={`Interruptor de R${i + 1}`} /></g>
         ))}
-        <text x={330} y={170} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>En serie hay un solo camino: todos los elementos e interruptores están en él.</text>
+        <text x={330} y={110} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 4, strokeLinejoin: 'round' }}>En serie hay un solo camino: todos los elementos e interruptores están en él.</text>
         <Switch x={330} y={260} closed={main} onToggle={() => setMain((m) => !m)} label="Interruptor general" />
         <text x={330} y={300} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>Interruptor general</text>
       </g>
@@ -87,26 +208,26 @@ export default function CircuitLab({ api }: LabProps) {
   } else if (topology === 'paralelo') {
     schematic = (
       <g>
-        <path d="M80 60 H520 M80 260 H520 M80 60 V260" fill="none" stroke={wire} strokeWidth="3" />
-        {[240, 380, 520].map((x, i) => <line key={i} x1={x} y1={60} x2={x} y2={260} stroke={els[i].active ? 'var(--accent)' : 'var(--ink-2)'} strokeWidth="3" />)}
+        <Wire d="M80 60 H520 M80 260 H520 M80 60 V260" active={flowing} />
+        {[240, 380, 520].map((x, i) => <Wire key={i} d={`M${x} 60 V260`} active={els[i].active} />)}
         <Battery x={80} y={160} emf={emf} />
         <Switch x={150} y={60} closed={main} onToggle={() => setMain((m) => !m)} label="Interruptor general" />
         {[240, 380, 520].map((x, i) => (
-          <g key={i}><Switch x={x} y={110} closed={closed[i]} onToggle={() => toggle(i)} label={`Interruptor de R${i + 1}`} vertical /><Bulb x={x} y={190} power={els[i].power} label={`R${i + 1} = ${R[i]} Ω`} on={els[i].active} /></g>
+          <g key={i}><Switch x={x} y={110} closed={closed[i]} onToggle={() => toggle(i)} label={`Interruptor de R${i + 1}`} vertical /><Bulb x={x} y={190} power={els[i].power} label={`R${i + 1} = ${R[i]} Ω`} on={els[i].active} vertical /></g>
         ))}
       </g>
     );
   } else {
     schematic = (
       <g>
-        <path d="M80 60 H520 M300 260 H520 M80 260 H300 M80 60 V260" fill="none" stroke={wire} strokeWidth="3" />
-        {[380, 520].map((x, k) => <line key={k} x1={x} y1={60} x2={x} y2={260} stroke={els[k + 1].active ? 'var(--accent)' : 'var(--ink-2)'} strokeWidth="3" />)}
+        <Wire d="M80 60 H520 M300 260 H520 M80 260 H300 M80 60 V260" active={flowing} />
+        {[380, 520].map((x, k) => <Wire key={k} d={`M${x} 60 V260`} active={els[k + 1].active} />)}
         <Battery x={80} y={160} emf={emf} />
         <Bulb x={230} y={60} power={els[0].power} label={`R1 = ${R[0]} Ω`} on={els[0].active} />
         <Switch x={160} y={260} closed={closed[0]} onToggle={() => toggle(0)} label="Interruptor de R1" />
         <Switch x={240} y={260} closed={main} onToggle={() => setMain((m) => !m)} label="Interruptor general" />
         {[380, 520].map((x, k) => (
-          <g key={k}><Switch x={x} y={110} closed={closed[k + 1]} onToggle={() => toggle(k + 1)} label={`Interruptor de R${k + 2}`} vertical /><Bulb x={x} y={190} power={els[k + 1].power} label={`R${k + 2} = ${R[k + 1]} Ω`} on={els[k + 1].active} /></g>
+          <g key={k}><Switch x={x} y={110} closed={closed[k + 1]} onToggle={() => toggle(k + 1)} label={`Interruptor de R${k + 2}`} vertical /><Bulb x={x} y={190} power={els[k + 1].power} label={`R${k + 2} = ${R[k + 1]} Ω`} on={els[k + 1].active} vertical /></g>
         ))}
         <circle cx={380} cy={60} r={5} fill="var(--ink)" /><circle cx={380} cy={260} r={5} fill="var(--ink)" />
         <text x={450} y={300} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>R2 y R3 en paralelo; ese grupo, en serie con R1</text>
@@ -121,7 +242,11 @@ export default function CircuitLab({ api }: LabProps) {
           <svg viewBox="0 0 640 310" role="group" aria-labelledby="cir-t">
             <title id="cir-t">Esquema del circuito {topology}. Los interruptores se pueden accionar con clic o con la tecla Enter.</title>
             <desc>{`Corriente total ${fmt(res.totalCurrent, 3)} A. ${els.map((e) => `R${e.id}: ${fmt(e.voltage, 2)} V, ${fmt(e.current, 3)} A`).join('; ')}.`}</desc>
+            <CircuitDefs />
+            <rect x={22} y={14} width={596} height={272} rx={12} fill="var(--surface-2)" opacity="0.7" stroke="var(--line)" />
+            <MeterLeads x={meterAt[0]} y={meterAt[1]} probes={probes} />
             {schematic}
+            <Multimeter x={meterAt[0]} y={meterAt[1]} v={meterReading.v} i={meterReading.i} probes={probes} />
           </svg>
         </div>
         <Readout items={[

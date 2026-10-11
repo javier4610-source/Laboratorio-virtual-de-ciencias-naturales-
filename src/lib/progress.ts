@@ -1,6 +1,5 @@
 import type { PracticeDef, PracticeSession } from '../core/types';
-import { loadSession } from './session';
-import { keysWithPrefix } from './storage';
+import { keysWithPrefix, loadJSON, saveJSON } from './storage';
 import { SESSION_PREFIX } from './session';
 
 export type StageId = 'preparacion' | 'hipotesis' | 'experimento' | 'analisis' | 'evaluacion' | 'modelo';
@@ -35,13 +34,19 @@ export function progressPercent(p: PracticeDef, s: PracticeSession): number {
   return Math.round((main.filter((k) => d[k]).length / main.length) * 100);
 }
 
+const PROGRESS_KEY = 'lvcn:progreso';
+
+/** Guarda el porcentaje de avance (lo usa el catálogo sin cargar el contenido completo). */
+export function saveProgress(id: string, percent: number): void {
+  const all = loadJSON<Record<string, number>>(PROGRESS_KEY, {});
+  if (all[id] === percent) return;
+  saveJSON(PROGRESS_KEY, { ...all, [id]: percent });
+}
+
 /** Progreso guardado en este navegador para cada práctica (sin servidor). */
-export function storedProgress(practices: PracticeDef[]): Record<string, number> {
+export function storedProgress(): Record<string, number> {
+  const all = loadJSON<Record<string, number>>(PROGRESS_KEY, {});
+  // Solo prácticas con sesión guardada (si se reinició, no se muestra progreso).
   const keys = new Set(keysWithPrefix(SESSION_PREFIX));
-  const out: Record<string, number> = {};
-  for (const p of practices) {
-    if (!keys.has(SESSION_PREFIX + p.id)) continue;
-    out[p.id] = progressPercent(p, loadSession(p.id));
-  }
-  return out;
+  return Object.fromEntries(Object.entries(all).filter(([id]) => keys.has(SESSION_PREFIX + id)));
 }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { PRACTICES } from '../curriculum';
+import { CATALOG as PRACTICES } from '../curriculum/catalog';
 import { PLANNED } from '../curriculum/grades';
 import { href } from '../lib/router';
 import type { Prefs } from '../lib/prefs';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Area, Competency, GradeId } from '../core/types';
-import { PRACTICES } from '../curriculum';
+import { CATALOG as PRACTICES } from '../curriculum/catalog';
 import { AREA_LABEL, COMPETENCY_LABEL, GRADES, gradeInfo, PLANNED } from '../curriculum/grades';
 import { href } from '../lib/router';
 import { storedProgress } from '../lib/progress';
@@ -15,7 +15,7 @@ export function GradePage({ grade }: { grade: GradeId }) {
   const g = gradeInfo(grade);
   const list = PRACTICES.filter((p) => p.grade === grade);
   const planned = PLANNED.filter((p) => p.grade === grade);
-  const progress = storedProgress(list);
+  const progress = storedProgress();
   useEffect(() => { document.title = `Grado ${grade}.º · Laboratorio Virtual`; }, [grade]);
   return (
     <div className="stack">
@@ -58,7 +58,7 @@ export function CatalogPage({ initialArea }: { initialArea?: string }) {
     (!grade || String(p.grade) === grade) && (!area || p.area === area) && (!comp || p.competencies.includes(comp as Competency)) &&
     (!nq || normalize([p.title, p.topic, p.summary, ...p.keywords].join(' ')).includes(nq)));
   const planned = showPlanned && !comp ? PLANNED.filter((p) => (!grade || String(p.grade) === grade) && (!area || p.area === area) && (!nq || normalize(p.title).includes(nq))) : [];
-  const progress = storedProgress(list);
+  const progress = storedProgress();
   return (
     <div className="stack">
       <h1>Catálogo de prácticas</h1>

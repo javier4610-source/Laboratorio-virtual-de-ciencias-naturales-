@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PRACTICES, practiceById } from '../curriculum';
+import { CATALOG as PRACTICES, metaById as practiceById } from '../curriculum/catalog';
 import { AREA_LABEL, GRADES } from '../curriculum/grades';
 import type { Area } from '../core/types';
 import { href } from '../lib/router';
@@ -77,7 +77,7 @@ function CodeEntry() {
 }
 
 export function HomePage() {
-  const progress = storedProgress(PRACTICES);
+  const progress = storedProgress();
   useEffect(() => { document.title = 'Laboratorio Virtual de Ciencias Naturales'; }, []);
   return (
     <div className="stack" style={{ gap: 36 }}>

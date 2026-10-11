@@ -1,8 +1,8 @@
-import type { PlannedPractice, PracticeDef } from '../core/types';
+import type { PlannedPractice, PracticeMeta } from '../core/types';
 import { AREA_LABEL, COMPETENCY_SHORT } from '../curriculum/grades';
 import { href } from '../lib/router';
 
-export function PracticeCard({ p, progress }: { p: PracticeDef; progress?: number }) {
+export function PracticeCard({ p, progress }: { p: PracticeMeta; progress?: number }) {
   return (
     <article className={`pcard area-${p.area}`}>
       <div className="meta">

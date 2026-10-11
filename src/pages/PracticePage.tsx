@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import type { Mode, PracticeDef } from '../core/types';
 import { usePracticeSession } from '../lib/session';
-import { progressPercent, stageDone, STAGES, MIN_TRIALS, type StageId } from '../lib/progress';
+import { progressPercent, saveProgress, stageDone, STAGES, MIN_TRIALS, type StageId } from '../lib/progress';
 import { AREA_LABEL, COMPETENCY_SHORT, gradeInfo } from '../curriculum/grades';
 import { LAB_COMPONENTS } from '../labs/registry';
 import { DATASETS } from '../labs/datasets';
@@ -26,6 +26,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
   const grade = gradeInfo(p.grade);
 
   useEffect(() => { document.title = `${p.title} · Laboratorio Virtual`; }, [p.title]);
+  useEffect(() => { saveProgress(p.id, progress); }, [p.id, progress]);
   useEffect(() => {
     if (stage === 'modelo' && !s.visited.includes('modelo')) api.update((x) => ({ ...x, visited: [...x.visited, 'modelo'] }));
   }, [stage]); // eslint-disable-line react-hooks/exhaustive-deps

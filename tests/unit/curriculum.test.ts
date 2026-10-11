@@ -2,8 +2,20 @@ import { describe, expect, it } from 'vitest';
 import { ALL_QUESTIONS, PRACTICES, questionById } from '../../src/curriculum';
 import { GRADES } from '../../src/curriculum/grades';
 import { DATASETS } from '../../src/labs/datasets';
+import { CATALOG } from '../../src/curriculum/catalog';
+import { LOADER_IDS, loadPractice } from '../../src/curriculum/loader';
 
 describe('integridad del currículo', () => {
+  it('el catálogo liviano coincide con las definiciones completas y cada práctica tiene cargador', async () => {
+    expect(CATALOG.map((c) => c.id)).toEqual(PRACTICES.map((p) => p.id));
+    expect([...LOADER_IDS].sort()).toEqual(PRACTICES.map((p) => p.id).sort());
+    for (const meta of CATALOG) {
+      const full = await loadPractice(meta.id);
+      const picked = { id: full.id, title: full.title, grade: full.grade, area: full.area, topic: full.topic, durationMin: full.durationMin, summary: full.summary, competencies: full.competencies, keywords: full.keywords };
+      expect(meta, meta.id).toEqual(picked);
+    }
+  });
+
   it('hay al menos una práctica completa por grado (6.º a 11.º)', () => {
     for (const g of GRADES) expect(PRACTICES.some((p) => p.grade === g.id), `grado ${g.id}`).toBe(true);
   });

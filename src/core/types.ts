@@ -111,3 +111,6 @@ export interface PracticeSession {
   startedAt: number;
   updatedAt: number;
 }
+
+/** Datos mínimos de una práctica para catálogos y tarjetas (se cargan siempre; el resto bajo demanda). */
+export type PracticeMeta = Pick<PracticeDef, 'id' | 'title' | 'grade' | 'area' | 'topic' | 'durationMin' | 'summary' | 'competencies' | 'keywords'>;

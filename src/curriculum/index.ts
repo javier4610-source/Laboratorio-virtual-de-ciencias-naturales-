@@ -1,0 +1,28 @@
+import type { PracticeDef, Question } from '../core/types';
+import { SABER_BANK } from '../assessment/bank';
+import { densidad } from './practices/densidad';
+import { osmosis } from './practices/osmosis';
+import { mendel } from './practices/mendel';
+import { adn } from './practices/adn';
+import { soluciones } from './practices/soluciones';
+import { enzimas } from './practices/enzimas';
+import { circuitos } from './practices/circuitos';
+import { estequiometria } from './practices/estequiometria';
+import { poblacion } from './practices/poblacion';
+
+/** Catálogo de prácticas implementadas. Para agregar una nueva: definirla aquí y registrar su componente en labs/registry.ts. */
+export const PRACTICES: PracticeDef[] = [densidad, osmosis, mendel, adn, soluciones, enzimas, circuitos, estequiometria, poblacion];
+
+export function practiceById(id: string): PracticeDef | undefined {
+  return PRACTICES.find((p) => p.id === id);
+}
+
+/** Todas las preguntas: banco tipo Saber + evaluaciones de cada práctica. */
+export const ALL_QUESTIONS: Question[] = [
+  ...SABER_BANK,
+  ...PRACTICES.flatMap((p) => p.assessment.map((q) => ({ ...q, practiceId: p.id }))),
+];
+
+export function questionById(id: string): Question | undefined {
+  return ALL_QUESTIONS.find((q) => q.id === id);
+}

@@ -1,0 +1,45 @@
+# Auditoría técnica, científica y pedagógica
+
+Fecha: octubre de 2026. Alcance: las 9 prácticas implementadas, la navegación, el panel docente, los informes, el banco de preguntas y la accesibilidad.
+
+**Cómo se verificó:** 70 pruebas unitarias (Vitest) sobre modelos, currículo y utilidades, y 15 pruebas de interfaz de extremo a extremo (Playwright con Chromium) sobre la versión compilada. Además, revisión visual con capturas a 1280 px (tema claro) y 380 px (tema oscuro) de todas las prácticas, buscando errores de consola y desplazamiento horizontal. Todas las pruebas se ejecutaron y pasaron; no se reporta como exitoso nada que no se haya ejecutado.
+
+**No verificado:** lectores de pantalla reales (NVDA, VoiceOver), navegadores distintos de Chromium (Firefox, Safari), equipos escolares de bajo rendimiento reales, usabilidad con estudiantes y docentes. La correspondencia con DBA no se pudo contrastar con el documento oficial (sin acceso de red a los sitios del MEN/ICFES durante el desarrollo).
+
+## Tabla de auditoría
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Densidad – modelo | Aluminio 2 cm (21,6 g; 8 cm³; 2,70 g/cm³); 4 tamaños de hierro; corcho con y sin alfiler; plomo 3,4 cm con 70 mL; arista fuera de rango | Valores esperados; desbordamiento y rango detectados | Con el agua inicial máxima (60 mL) nunca podía ocurrir desbordamiento, aunque el modelo lo contemplaba | Rango de agua inicial ampliado a 20–70 mL | Correcto (prueba unitaria) |
+| Densidad – error de resolución | Comparar error relativo con cubos pequeños y grandes | Muestras pequeñas con mayor error | La prueba original usaba 1 cm (volumen exacto) y no mostraba el efecto | Caso de prueba cambiado a 1,3 cm y 3,1 cm | Correcto |
+| Densidad – interfaz | E2E: hipótesis obligatoria en modo guiado, pesar, sumergir, guardar 4 ensayos, comprobar cálculo, análisis de tendencia | Funciona; la tendencia detectada coincide con la predicha | — | — | Correcto |
+| Ósmosis – modelo | 0,9 % NaCl ≈ 0,308 Osm/L; agua destilada (lisis / turgencia); 3 % (crenación / plasmólisis); equilibrio analítico; efecto de la temperatura | Valores coherentes | **Incoherencia científica:** con 0,9 % la interfaz decía «medio isotónico» y a la vez «sale agua / crenada», por tolerancias distintas (5 % vs 1 %) | Tolerancia única de 2 % de volumen; tonicidad basada en el volumen de equilibrio; la dirección del agua se deriva del gradiente | Corregido + prueba de regresión que recorre 0–3 % para ambos tipos de célula |
+| Difusión – modelo | Conservación de la masa en cada punto; t½ de glucosa entre 5 y 15 min; efecto de temperatura (Stokes-Einstein con viscosidad de Vogel) y área | Correcto | El espesor efectivo inicial daba t½ ≈ 47 min (poco práctico en clase) | Espesor efectivo recalibrado (3,2 × 10⁻⁵ m); declarado como parámetro aproximado | Correcto |
+| Ósmosis – interfaz | E2E: agua destilada → lisis visible, guardar ensayo, pestaña de difusión | Funciona | — | — | Correcto |
+| Mendel – modelo | 3:1, 1:2:1, 9:3:3:1, 1:1, dominancia incompleta, ley de los grandes números, reproducibilidad por semilla, χ² de los datos históricos (5474:1850) y valores críticos | Correcto | — | — | Correcto |
+| Mendel – interfaz | E2E: cuadro de Punnett mono/dihíbrido, siembra, χ², registro | Funciona | — | — | Correcto |
+| ADN – modelo | 64 codones, AUG/stop, traducción del gen de práctica, HBB → MVHLTPEEK…; GAG→GTG = sentido erróneo en el codón 7; silenciosa, sin sentido, corrimiento, codón de inicio | Correcto | — | Nota aclaratoria: la mutación se nombra Glu6Val porque la Met inicial se retira | Correcto |
+| ADN – interfaz | E2E: completar hebra complementaria, traducción, mutación falciforme y registro | Funciona | — | — | Correcto |
+| Soluciones – modelo | 5,844 g NaCl/100 mL = 1,000 M; dilución 10→100 mL; A ∝ c; saturación; masa molar del pentahidrato | Correcto | — | — | Correcto |
+| Soluciones – interfaz | E2E: entrada inválida («abc») muestra error; NaCl 1,000 mol/L; medir absorbancia; registrar | Funciona | — | — | Correcto |
+| Enzimas – modelo | v(Km) = Vmax/2; óptimo de la amilasa entre 35 y 45 °C; actividad casi nula a 70 °C; pepsina vs amilasa según pH; v ∝ [E]; producto ≤ sustrato | Correcto | La curva de referencia del modelo se mostraba siempre y revelaba el resultado antes de experimentar | La curva queda en un panel plegable que se abre después de recolectar datos | Corregido |
+| Circuitos – modelo | Serie, paralelo, mixto; mallas, nodos y conservación de la energía con r ≠ 0; interruptores; I ∝ V | Correcto | — | — | Correcto |
+| Circuitos – interfaz | E2E: 0,200 A en serie, apertura de R2 → circuito abierto, paralelo con rama abierta → 1,200 A | Funciona | En el esquema en serie los interruptores de cada bombilla estaban dibujados fuera del conductor (representación físicamente engañosa); la fila «Suma» sumaba corrientes en serie (sin significado físico) | Interruptores dibujados sobre el cable; la suma de corrientes se omite en serie y se indica qué comparar en cada configuración | Corregido |
+| Estequiometría – modelo | Todas las ecuaciones balanceadas; detección de no balanceadas; conservación de la masa en 5 reacciones; 4,032 g H₂ + 32 g O₂ → 36,03 g H₂O; reactivo en exceso no cambia el producto | Correcto | — | — | Correcto |
+| Población – modelo | Logístico → K; con cosecha → K(1 − h/r); colapso si h > r; duplicación ln2/r; solución analítica vs integración numérica | Correcto | — | — | Correcto |
+| Tendencias (análisis de hipótesis) | Lineal creciente/decreciente, constante, máximo (enzima simulada), estabilización (reactivo limitante), menos de 3 puntos | Correcto | — | Advertencia de control de variables cuando cambian otras entradas | Correcto |
+| Preguntas y retroalimentación | Integridad: id único, una correcta, retroalimentación por opción, «Correcto» solo en la opción correcta, transferencia existente, 3 competencias cubiertas; E2E: incorrecta → repaso → reintento → correcta; el puntaje cuenta el primer intento | Correcto | Una opción incorrecta de la pregunta saber-est-1 tenía retroalimentación que empezaba con «Correcto» | Texto corregido; prueba automática que impide que se repita | Corregido |
+| Pertinencia por grado | Revisión de contenidos y matemática exigida | Adecuada | El χ² puede exceder el nivel de 8.º | Presentado como extensión opcional | Aceptado con nota |
+| Navegación | E2E: inicio → 6 grados; catálogo con búsqueda y filtros; ruta inexistente | Funciona | El botón «Elegir mi grado» usaba un ancla `#grados` que el enrutador por hash interpretaba como ruta desconocida | Reemplazado por un botón que desplaza y enfoca la sección | Corregido |
+| Botones de reinicio y borrado | Revisión de código y E2E | Funcionan | `window.confirm` está bloqueado en algunos entornos incrustados y el borrado no se ejecutaba | Confirmación en la propia página (componente `ConfirmButton`) | Corregido |
+| Informes | E2E: descarga del informe JSON e importación en el panel docente | Funciona | — | Alternativas «Copiar informe» cuando el entorno bloquea descargas o impresión | Correcto |
+| Panel docente | E2E: asignación → código → apertura por el estudiante; importación de informes; validación de formato (prueba unitaria) | Funciona | — | Limitaciones de almacenamiento local explicadas en la interfaz | Correcto (sin servidor) |
+| Diseño adaptable | Capturas a 380 px de las 9 prácticas; E2E sin desplazamiento horizontal a 375 px | Sin desbordamiento | El texto de las gráficas quedaba ilegible en móvil (SVG escalado) y había espacio vacío en tarjetas de la portada | Gráficas que miden su contenedor y conservan el tamaño real del texto; esquemas con desplazamiento interno y ancho mínimo; alineación de rejillas | Corregido |
+| Encabezado | Captura en escritorio | — | El botón «Menú» aparecía también en escritorio (conflicto de especificidad CSS) | Selector corregido | Corregido |
+| Accesibilidad | Revisión de código: etiquetas, `aria-live`, descripciones de gráficas y tabla equivalente, foco visible, teclado en interruptores SVG | Implementado | Las pestañas no admiten navegación con flechas (sí con Tab) | Pendiente | Parcial |
+| Rendimiento | Compilación de producción | JS principal ≈ 156 KB comprimido; laboratorios cargados bajo demanda | Aviso de tamaño > 500 KB sin comprimir (texto curricular + React) | Pendiente dividir el contenido curricular por práctica | Aceptable |
+| Errores en tiempo de ejecución | Consola del navegador en todas las capturas y pruebas E2E | Sin errores | — | Límite de errores (`ErrorBoundary`) para que un fallo no deje la página en blanco | Correcto |
+
+## Funciones implementadas frente a representadas
+
+Todo lo que aparece en la interfaz como disponible está implementado. Las 30 prácticas restantes de la malla se muestran explícitamente como «Próximamente», sin botón de acceso. No existen cuentas, base de datos, sincronización ni envío automático; la interfaz lo dice en el panel docente y en la ayuda.

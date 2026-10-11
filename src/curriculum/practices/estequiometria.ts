@@ -1,0 +1,126 @@
+import type { PracticeDef } from '../../core/types';
+import { stoichModelSpec } from '../../models/stoichiometry';
+
+export const estequiometria: PracticeDef = {
+  id: 'estequiometria',
+  title: 'Estequiometría y reactivo limitante',
+  grade: 11,
+  area: 'quimica',
+  topic: 'Estequiometría avanzada: reactivo limitante, exceso y rendimiento',
+  durationMin: 60,
+  status: 'disponible',
+  summary: 'Balancea ecuaciones, mezcla cantidades de reactivos y descubre cuál se agota primero, cuánto producto se forma y cuánto sobra.',
+  problemQuestion: 'Si agregamos cada vez más vinagre al bicarbonato, ¿se produce siempre más gas? ¿De qué depende la cantidad máxima de producto?',
+  objectives: [
+    'Verificar la conservación de los átomos al balancear ecuaciones químicas.',
+    'Convertir masas a moles y usar los coeficientes estequiométricos para predecir cantidades.',
+    'Identificar el reactivo limitante y el reactivo en exceso.',
+    'Diferenciar rendimiento teórico y rendimiento real.',
+  ],
+  competencies: ['uso', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 10.º–11.º, entorno físico (procesos químicos): realizar cálculos cuantitativos en cambios químicos (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 10.º u 11.º relacionado con las reacciones químicas y sus relaciones cuantitativas. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'El verificador de balanceo puede usarse desde 8.º (conservación de la masa).',
+  },
+  materials: ['Verificador de balanceo de ecuaciones', 'Balanza virtual', 'Reactivos: bicarbonato de sodio, ácido acético, zinc, ácido clorhídrico, metano, oxígeno, nitrógeno, hidrógeno', 'Tabla de masas molares calculadas automáticamente'],
+  background: [
+    'En una reacción química los átomos se reorganizan, pero no se crean ni se destruyen. Por eso las ecuaciones se balancean y la masa total se conserva (Lavoisier).',
+    'Los coeficientes de una ecuación balanceada indican proporciones en moles. Para usarlos con masas se convierte con la masa molar: n = m/M.',
+    'El reactivo limitante es el que se agota primero y determina la cantidad máxima de producto (rendimiento teórico). El otro reactivo queda en exceso.',
+    'En la práctica se obtiene menos producto que el teórico por reacciones incompletas, pérdidas y reacciones secundarias. El rendimiento porcentual es (real / teórico) × 100.',
+  ],
+  hypothesis: {
+    prompt: 'Predice qué ocurre con la masa de producto si aumentas solo la masa de uno de los reactivos y mantienes el otro constante.',
+    pairs: [
+      { x: 'masaA', y: 'producto', xLabel: 'la masa del reactivo A (con B constante)', yLabel: 'la masa de producto', datasetId: 'ensayos' },
+      { x: 'masaA', y: 'exceso', xLabel: 'la masa del reactivo A (con B constante)', yLabel: 'la masa de reactivo sobrante', datasetId: 'ensayos' },
+    ],
+  },
+  variables: {
+    independent: ['Reacción química', 'Masa del reactivo A', 'Masa del reactivo B', 'Rendimiento porcentual'],
+    dependent: ['Reactivo limitante', 'Masa de producto', 'Masa de reactivo sobrante'],
+    controlled: ['Ecuación balanceada', 'Pureza de los reactivos (100 %)'],
+  },
+  procedure: [
+    'En el verificador, escribe los coeficientes que creas correctos para cada ecuación y comprueba el conteo de átomos.',
+    'Elige la reacción del bicarbonato con ácido acético.',
+    'Fija 10 g de ácido acético y cambia la masa de bicarbonato de 2 a 30 g. Guarda cada ensayo.',
+    'Observa en la gráfica cómo cambia la masa de CO₂ y en qué punto cambia el reactivo limitante.',
+    'Calcula a mano las proporciones exactas (masas estequiométricas) y compruébalas.',
+    'Repite con otra reacción y con un rendimiento del 80 %.',
+  ],
+  interpretation: [
+    '¿Por qué la gráfica de masa de producto contra masa de A aumenta y luego se vuelve horizontal? ¿Qué ocurre en el punto de quiebre?',
+    '¿Se conserva la masa total en todos tus ensayos con 100 % de rendimiento? Muéstralo con un ejemplo.',
+    '¿Qué reactivo conviene poner en exceso en un proceso industrial y por qué?',
+  ],
+  assessment: [
+    {
+      id: 'est-1', grade: 11, topic: 'Reactivo limitante', competency: 'uso', component: 'quimico', skill: 'Identificar el reactivo limitante', difficulty: 'media',
+      stem: 'En la reacción 2 H₂ + O₂ → 2 H₂O se mezclan 4 mol de H₂ y 3 mol de O₂. ¿Cuál es el reactivo limitante y cuánta agua se forma?',
+      options: [
+        { id: 'a', text: 'O₂, porque hay menos moles; se forman 3 mol de H₂O.', feedback: 'Hay que comparar n/coeficiente: H₂ 4/2 = 2; O₂ 3/1 = 3.' },
+        { id: 'b', text: 'H₂; se forman 4 mol de H₂O y sobra 1 mol de O₂.', feedback: 'Correcto.' },
+        { id: 'c', text: 'H₂; se forman 2 mol de H₂O.', feedback: 'La relación H₂ : H₂O es 2 : 2, así que 4 mol de H₂ forman 4 mol de agua.' },
+        { id: 'd', text: 'Ninguno; se forman 7 mol de H₂O.', feedback: 'Los moles no se suman directamente; se usan las proporciones de la ecuación.' },
+      ],
+      correct: 'b',
+      explanation: 'H₂ necesita 4/2 = 2 mol de O₂ y hay 3: sobra 1 mol de O₂. El H₂ se agota primero y forma 4 mol de agua.',
+      review: 'Usa la reacción de formación de agua y compara los valores de n/ν.',
+    },
+    {
+      id: 'est-2', grade: 11, topic: 'Conservación de la masa', competency: 'explicacion', component: 'quimico', skill: 'Explicar la conservación de la masa', difficulty: 'baja',
+      stem: 'Al mezclar bicarbonato y vinagre en un vaso abierto, la masa del vaso disminuye. ¿Contradice esto la ley de conservación de la masa?',
+      options: [
+        { id: 'a', text: 'Sí, porque parte de la materia se destruye en la reacción.', feedback: 'Los átomos no se destruyen; cambian de sustancia.' },
+        { id: 'b', text: 'No, porque se forma CO₂ gaseoso que escapa del vaso; en un sistema cerrado la masa se conservaría.', feedback: 'Correcto.' },
+        { id: 'c', text: 'Sí, porque la energía liberada se lleva masa.', feedback: 'En reacciones químicas la variación de masa por energía es imperceptible.' },
+        { id: 'd', text: 'No, porque el vinagre se evapora.', feedback: 'Algo de evaporación es posible, pero la principal pérdida es el CO₂ producido.' },
+      ],
+      correct: 'b',
+      explanation: 'La masa se conserva en sistemas cerrados. En un vaso abierto el CO₂ (un producto) sale al aire, por eso la balanza marca menos.',
+      review: 'Comprueba en el simulador que masa inicial = productos + exceso.',
+    },
+    {
+      id: 'est-3', grade: 11, topic: 'Estequiometría', competency: 'indagacion', component: 'quimico', skill: 'Interpretar una gráfica con punto de quiebre', difficulty: 'alta',
+      table: { caption: 'CO₂ producido con 6,0 g de ácido acético y masas crecientes de bicarbonato', headers: ['NaHCO₃ (g)', '2,1', '4,2', '6,3', '8,4', '10,5', '12,6'], rows: [['CO₂ (g)', 1.1, 2.2, 3.3, 4.4, 4.4, 4.4]] },
+      stem: '¿Qué se puede concluir de estos datos?',
+      options: [
+        { id: 'a', text: 'Hasta 8,4 g el bicarbonato es limitante; a partir de allí el ácido acético se agota y el CO₂ ya no aumenta.', feedback: 'Correcto.' },
+        { id: 'b', text: 'El bicarbonato siempre es limitante.', feedback: 'Si siempre fuera limitante, el CO₂ seguiría aumentando.' },
+        { id: 'c', text: 'La reacción se detiene porque se acaba el CO₂.', feedback: 'El CO₂ es un producto, no un reactivo.' },
+        { id: 'd', text: 'El error experimental impide formar más de 4,4 g.', feedback: 'Los datos muestran un patrón regular, explicado por el reactivo limitante.' },
+      ],
+      correct: 'a',
+      explanation: '6,0 g de ácido acético = 0,10 mol, que reaccionan con 0,10 mol (8,4 g) de bicarbonato y producen 0,10 mol (4,4 g) de CO₂. Con más bicarbonato, el ácido es el limitante.',
+      review: 'Reproduce el experimento en el simulador con 6 g de ácido acético.',
+    },
+    {
+      id: 'est-4', grade: 11, topic: 'Balanceo', competency: 'uso', component: 'quimico', skill: 'Balancear ecuaciones', difficulty: 'baja',
+      stem: '¿Cuáles coeficientes balancean la ecuación __ CH₄ + __ O₂ → __ CO₂ + __ H₂O?',
+      options: [
+        { id: 'a', text: '1, 1, 1, 1', feedback: 'A la izquierda hay 4 H y a la derecha 2; los O tampoco coinciden.' },
+        { id: 'b', text: '1, 2, 1, 2', feedback: 'Correcto: C 1 = 1; H 4 = 4; O 4 = 4.' },
+        { id: 'c', text: '2, 3, 2, 2', feedback: 'Hay 8 H a la izquierda y 4 a la derecha.' },
+        { id: 'd', text: '1, 4, 1, 2', feedback: 'Hay 8 O a la izquierda y 4 a la derecha.' },
+      ],
+      correct: 'b',
+      explanation: 'CH₄ + 2 O₂ → CO₂ + 2 H₂O: 1 C, 4 H y 4 O a cada lado.',
+      review: 'Usa el verificador de balanceo con la combustión del metano.',
+    },
+  ],
+  application: {
+    situation: 'Una estufa de gas natural produce una llama amarilla y hollín cuando las entradas de aire están obstruidas.',
+    question: '¿Qué reactivo actúa como limitante en ese caso y qué riesgos tiene para la salud? Relaciónalo con la combustión incompleta.',
+    guidance: 'Con poco oxígeno, el O₂ es el limitante; la combustión incompleta produce monóxido de carbono (CO), un gas tóxico. Este modelo solo representa la combustión completa.',
+  },
+  transferQuestionIds: ['saber-est-1', 'saber-est-2'],
+  conclusionGuide: 'Responde la pregunta problema con tu gráfica de producto contra masa de reactivo y el concepto de reactivo limitante.',
+  model: stoichModelSpec,
+  references: [
+    'Lavoisier, A.-L. (1789). Traité élémentaire de chimie.',
+    'Masas atómicas estándar abreviadas (IUPAC).',
+  ],
+  keywords: ['estequiometría', 'reactivo limitante', 'mol', 'masa molar', 'balanceo', 'rendimiento', 'conservación de la masa', 'reacción'],
+};

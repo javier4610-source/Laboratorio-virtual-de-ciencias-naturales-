@@ -1,0 +1,127 @@
+import type { PracticeDef } from '../../core/types';
+import { mendelModelSpec } from '../../models/mendel';
+
+export const mendel: PracticeDef = {
+  id: 'mendel',
+  title: 'Herencia mendeliana y cuadros de Punnett',
+  grade: 8,
+  area: 'biologia',
+  topic: 'Leyes de Mendel: cruces monohíbridos y dihíbridos',
+  durationMin: 60,
+  status: 'disponible',
+  summary: 'Elige los genotipos de dos plantas, construye el cuadro de Punnett y siembra cientos de semillas virtuales para comparar lo observado con lo esperado.',
+  problemQuestion: 'Si dos plantas de semillas amarillas tienen descendientes con semillas verdes, ¿cómo se explica? ¿Qué tan cerca están los resultados reales de las proporciones que predice Mendel?',
+  objectives: [
+    'Predecir genotipos y fenotipos de la descendencia con cuadros de Punnett.',
+    'Relacionar las proporciones 3:1, 1:2:1, 1:1 y 9:3:3:1 con las leyes de Mendel.',
+    'Comprender que las proporciones son probabilidades: con pocos descendientes los resultados se alejan más de lo esperado.',
+    'Usar la prueba de chi-cuadrado (extensión opcional) para evaluar si unos datos son compatibles con una hipótesis.',
+  ],
+  competencies: ['uso', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 8.º–9.º, entorno vivo: reconocer la importancia del modelo de la doble hélice y explicar la transmisión de características hereditarias (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 8.º relacionado con la herencia y la reproducción. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'La prueba de chi-cuadrado es una extensión opcional para grupos con mayor avance matemático.',
+  },
+  materials: ['Plantas de guisante (Pisum sativum) con genotipos seleccionables', 'Plantas de boca de dragón (Antirrhinum majus) para dominancia incompleta', 'Cuadro de Punnett interactivo', 'Parcela virtual de siembra (hasta 10 000 descendientes)'],
+  background: [
+    'Gregor Mendel (1866) estudió características del guisante con dos variantes, como semilla amarilla o verde. Propuso que cada individuo tiene dos "factores" (hoy, alelos) para cada característica y que cada gameto recibe solo uno (ley de la segregación).',
+    'Un alelo dominante (Y) se expresa aunque esté en una sola copia; el recesivo (y) solo se expresa en homocigosis (yy). Así, Yy × Yy produce genotipos YY : Yy : yy en proporción 1:2:1 y fenotipos amarillo : verde en proporción 3:1.',
+    'Cuando se estudian dos genes ubicados en cromosomas distintos, sus alelos se reparten de forma independiente (ley de la transmisión independiente) y el cruce dihíbrido YyRr × YyRr da 9:3:3:1.',
+    'En la dominancia incompleta, el heterocigoto tiene un fenotipo intermedio: en la boca de dragón, RR es roja, Rr rosada y rr blanca.',
+    'Las proporciones son probabilidades. En sus datos reales, Mendel obtuvo 5474 semillas lisas y 1850 rugosas (2,96 : 1), muy cerca de 3:1 porque contó miles de semillas.',
+  ],
+  hypothesis: {
+    prompt: '¿Qué crees que pasará con la diferencia entre lo observado y lo esperado si siembras más semillas? Escribe tu hipótesis.',
+    pairs: [
+      { x: 'n', y: 'desviacion', xLabel: 'el número de descendientes', yLabel: 'la diferencia entre el porcentaje observado y el esperado', datasetId: 'cruces' },
+    ],
+  },
+  variables: {
+    independent: ['Genotipos de los progenitores', 'Número de descendientes (N)'],
+    dependent: ['Frecuencia de cada fenotipo', 'Desviación respecto a lo esperado', 'χ² y valor p'],
+    controlled: ['Especie y características estudiadas', 'Supuesto de supervivencia igual para todos los descendientes'],
+  },
+  procedure: [
+    'Elige el organismo y una o dos características.',
+    'Selecciona el genotipo de cada progenitor (por ejemplo, Yy × Yy).',
+    'Completa mentalmente el cuadro de Punnett y luego compáralo con el que muestra el simulador.',
+    'Escribe la proporción fenotípica esperada.',
+    'Siembra 10 descendientes y guarda el resultado. Repite con 50, 100, 500 y 2000.',
+    'Observa en la gráfica cómo cambia la desviación con N.',
+    'Haz un cruce de prueba (Yy × yy) y un cruce dihíbrido (YyRr × YyRr) y compara sus proporciones.',
+  ],
+  interpretation: [
+    '¿Por qué dos plantas amarillas pueden tener descendientes verdes? Usa los genotipos para explicarlo.',
+    '¿Cómo cambia la desviación entre lo observado y lo esperado al aumentar N? ¿Por qué Mendel necesitaba contar tantas semillas?',
+    'Si siembras dos veces 20 semillas con semillas aleatorias distintas, ¿obtienes lo mismo? ¿Qué significa eso para un experimento real?',
+  ],
+  assessment: [
+    {
+      id: 'men-1', grade: 8, topic: 'Cruce monohíbrido', competency: 'uso', component: 'biologico', skill: 'Predecir proporciones con el cuadro de Punnett', difficulty: 'baja',
+      stem: 'Se cruzan dos plantas de guisante heterocigotas para el color de la semilla (Yy × Yy). ¿Qué fracción de la descendencia se espera con semillas verdes?',
+      options: [
+        { id: 'a', text: '1/2', feedback: '1/2 es la fracción de heterocigotos (Yy), que son amarillos.' },
+        { id: 'b', text: '1/4', feedback: 'Correcto: solo yy (1 de 4 casillas) es verde.' },
+        { id: 'c', text: '3/4', feedback: '3/4 es la fracción de amarillos (YY + Yy).' },
+        { id: 'd', text: '0, porque ambos padres son amarillos.', feedback: 'Los padres son amarillos pero portan el alelo y; pueden transmitirlo.' },
+      ],
+      correct: 'b',
+      explanation: 'Cada padre produce gametos Y o y con probabilidad 1/2. P(yy) = 1/2 × 1/2 = 1/4.',
+      review: 'Observa el cuadro de Punnett de Yy × Yy en el simulador y cuenta las casillas yy.',
+    },
+    {
+      id: 'men-2', grade: 8, topic: 'Probabilidad en genética', competency: 'indagacion', component: 'biologico', skill: 'Interpretar resultados según el tamaño de la muestra', difficulty: 'media',
+      table: { caption: 'Resultados de dos grupos con el cruce Yy × Yy', headers: ['Grupo', 'Amarillas', 'Verdes'], rows: [['A', 7, 5], ['B', 742, 258]] },
+      stem: '¿Qué conclusión es la más adecuada a partir de la tabla?',
+      options: [
+        { id: 'a', text: 'El grupo A demuestra que la proporción 3:1 es falsa.', feedback: 'Con 12 descendientes, desviaciones grandes son esperables por azar; no refutan el modelo.' },
+        { id: 'b', text: 'Ambos grupos obtuvieron resultados compatibles con 3:1; el grupo B se acerca más porque analizó muchos más descendientes.', feedback: 'Correcto. Con más datos, la proporción observada se acerca a la probabilidad.' },
+        { id: 'c', text: 'El grupo B cometió un error porque no obtuvo exactamente 750:250.', feedback: 'Obtener exactamente lo esperado es poco probable; 742:258 es muy cercano.' },
+        { id: 'd', text: 'Las semillas verdes son dominantes en el grupo A.', feedback: 'La dominancia no cambia entre grupos; el resultado se explica por el azar en muestras pequeñas.' },
+      ],
+      correct: 'b',
+      explanation: 'Las proporciones mendelianas son probabilidades. La ley de los grandes números indica que la frecuencia observada se aproxima a la probabilidad cuando N crece.',
+      review: 'Compara en tu gráfica la desviación para N = 10 y para N = 2000.',
+    },
+    {
+      id: 'men-3', grade: 8, topic: 'Cruce de prueba', competency: 'indagacion', component: 'biologico', skill: 'Seleccionar un procedimiento para resolver una pregunta', difficulty: 'media',
+      stem: 'Un agricultor tiene una planta de semillas amarillas y quiere saber si es YY o Yy. ¿Qué cruce le recomendarías?',
+      options: [
+        { id: 'a', text: 'Cruzarla con una planta YY.', feedback: 'Toda la descendencia sería amarilla en ambos casos: no permite distinguir.' },
+        { id: 'b', text: 'Cruzarla con otra planta amarilla cualquiera.', feedback: 'No se conoce el genotipo de la otra planta: el resultado sería ambiguo.' },
+        { id: 'c', text: 'Cruzarla con una planta verde (yy) y observar si aparecen semillas verdes.', feedback: 'Correcto: es el cruce de prueba.' },
+        { id: 'd', text: 'Sembrar sus semillas sin cruzarla.', feedback: 'La autofecundación sí da información (si aparecen verdes es Yy), pero el cruce de prueba es más directo.' },
+      ],
+      correct: 'c',
+      explanation: 'YY × yy da 100 % amarillas; Yy × yy da 1:1 amarillas y verdes. Si aparece al menos una semilla verde, la planta es heterocigota.',
+      review: 'Prueba en el simulador los cruces YY × yy y Yy × yy.',
+    },
+    {
+      id: 'men-4', grade: 8, topic: 'Dominancia incompleta', competency: 'explicacion', component: 'biologico', skill: 'Explicar un patrón de herencia', difficulty: 'media',
+      stem: 'Al cruzar dos plantas de boca de dragón de flores rosadas se obtienen flores rojas, rosadas y blancas en proporción 1:2:1. ¿Qué explica este resultado?',
+      options: [
+        { id: 'a', text: 'El color rosado es dominante sobre el rojo y el blanco.', feedback: 'Si fuera dominante, la proporción sería 3:1.' },
+        { id: 'b', text: 'Hay dominancia incompleta: los heterocigotos (Rr) tienen un fenotipo intermedio.', feedback: 'Correcto. Cada genotipo tiene un fenotipo distinto.' },
+        { id: 'c', text: 'Los genes del color se mezclan y no se pueden separar de nuevo.', feedback: 'La reaparición de rojas y blancas muestra que los alelos se separan sin mezclarse.' },
+        { id: 'd', text: 'Las flores blancas se deben a una mutación.', feedback: 'Aparecen en una proporción predecible (1/4); no es una mutación.' },
+      ],
+      correct: 'b',
+      explanation: 'En la dominancia incompleta la proporción fenotípica coincide con la genotípica (1 RR : 2 Rr : 1 rr). La reaparición de los fenotipos parentales confirma la segregación de alelos.',
+      review: 'Elige boca de dragón con Rr × Rr y compara genotipos y fenotipos.',
+    },
+  ],
+  application: {
+    situation: 'En una finca de Urabá se quiere obtener plantas de una variedad con una característica recesiva deseable (por ejemplo, frutos sin cierta mancha).',
+    question: '¿Qué cruces planearías y cuántas plantas sembrarías para estar razonablemente seguro de obtener individuos homocigotos recesivos? Explica con probabilidades.',
+    guidance: 'Si ambos padres son heterocigotos, P(aa) = 1/4. Piensa cuántas plantas necesitas para que sea muy probable obtener al menos una.',
+  },
+  transferQuestionIds: ['saber-men-1', 'saber-men-2'],
+  conclusionGuide: 'Responde la pregunta problema y usa tu gráfica de desviación contra N como evidencia del carácter probabilístico de la herencia.',
+  model: mendelModelSpec,
+  references: [
+    'Mendel, G. (1866). Versuche über Pflanzen-Hybriden. Verhandlungen des naturforschenden Vereines in Brünn, 4, 3–47.',
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Ciencias Naturales.',
+  ],
+  keywords: ['Mendel', 'genética', 'herencia', 'Punnett', 'alelo', 'dominante', 'recesivo', 'probabilidad', 'chi cuadrado'],
+};

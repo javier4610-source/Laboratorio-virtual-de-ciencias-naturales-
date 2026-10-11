@@ -1,0 +1,128 @@
+import type { PracticeDef } from '../../core/types';
+import { circuitModelSpec } from '../../models/circuits';
+
+export const circuitos: PracticeDef = {
+  id: 'circuitos',
+  title: 'Circuitos eléctricos: voltaje, corriente y resistencia',
+  grade: 11,
+  area: 'fisica',
+  topic: 'Electricidad: ley de Ohm, circuitos en serie, paralelo y mixtos',
+  durationMin: 75,
+  status: 'disponible',
+  summary: 'Arma circuitos en serie, en paralelo y mixtos, mide con voltímetro y amperímetro virtuales y verifica la ley de Ohm y las leyes de Kirchhoff.',
+  problemQuestion: '¿Por qué en una casa, al apagar una bombilla, las demás siguen encendidas, pero en algunas instalaciones de luces navideñas se apagan todas?',
+  objectives: [
+    'Aplicar la ley de Ohm para relacionar voltaje, corriente y resistencia.',
+    'Comparar el comportamiento de circuitos en serie, en paralelo y mixtos.',
+    'Verificar las leyes de Kirchhoff de mallas y de nodos con mediciones.',
+    'Analizar la potencia disipada y la resistencia interna de una fuente.',
+  ],
+  competencies: ['uso', 'explicacion', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 10.º–11.º, entorno físico: relacionar voltaje y corriente con los elementos de un circuito eléctrico y con todo el sistema (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 11.º relacionado con la electricidad y los circuitos. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'Puede usarse en 7.º en modo libre, de forma cualitativa (encendido y brillo de bombillas).',
+  },
+  materials: ['Fuente/batería de 1,5 a 12 V con resistencia interna ajustable', 'Tres resistores o bombillas (1–100 Ω)', 'Interruptor general y un interruptor por elemento', 'Voltímetro y amperímetro ideales', 'Fusible de 3 A'],
+  background: [
+    'La corriente eléctrica (I) es la carga que pasa por un punto por unidad de tiempo; se mide en amperios (A). El voltaje o diferencia de potencial (V) es la energía por unidad de carga; se mide en voltios (V).',
+    'En un conductor óhmico, V = I·R: la corriente es proporcional al voltaje, y la constante de proporcionalidad es 1/R.',
+    'En serie, los elementos comparten la misma corriente y los voltajes se suman: R_eq = R₁ + R₂ + R₃. En paralelo, comparten el mismo voltaje y las corrientes se suman: 1/R_eq = 1/R₁ + 1/R₂ + 1/R₃.',
+    'Leyes de Kirchhoff: la suma de las caídas de voltaje en una malla cerrada es igual a la fem (conservación de la energía); la suma de corrientes que entran a un nodo es igual a la suma de las que salen (conservación de la carga).',
+    'Una batería real tiene resistencia interna r: el voltaje en sus bornes es V = ε − I·r, menor cuanto mayor sea la corriente.',
+  ],
+  hypothesis: {
+    prompt: 'Predice cómo cambia la corriente total al aumentar el voltaje de la fuente y al aumentar la resistencia equivalente.',
+    pairs: [
+      { x: 'emf', y: 'itotal', xLabel: 'el voltaje de la fuente (fem)', yLabel: 'la corriente total', datasetId: 'medidas' },
+      { x: 'req', y: 'itotal', xLabel: 'la resistencia equivalente', yLabel: 'la corriente total', datasetId: 'medidas', allowVary: ['r1', 'r2', 'r3', 'config'] },
+    ],
+  },
+  variables: {
+    independent: ['fem de la fuente', 'Valores de resistencia', 'Configuración (serie, paralelo, mixta)', 'Estado de los interruptores'],
+    dependent: ['Corriente total y por elemento', 'Voltaje en cada elemento', 'Potencia disipada (brillo)'],
+    controlled: ['Resistencia interna de la fuente', 'Tipo de elementos (óhmicos)', 'Instrumentos ideales'],
+  },
+  procedure: [
+    'Arma un circuito en serie con tres resistores de 10 Ω y una fuente de 6 V con r = 0 Ω.',
+    'Mide la corriente total y el voltaje en cada resistor. Comprueba que la suma de voltajes es igual a la fem.',
+    'Ley de Ohm: cambia la fem de 1,5 V a 12 V sin cambiar las resistencias y guarda cada ensayo. Observa la gráfica I contra ε.',
+    'Cambia a paralelo con las mismas resistencias y compara la corriente total y el brillo.',
+    'Abre el interruptor de una bombilla en serie y luego en paralelo. Describe qué pasa con las demás.',
+    'Arma el circuito mixto y verifica la ley de nodos en la unión de R₂ y R₃.',
+    'Aumenta la resistencia interna y observa el voltaje en los bornes.',
+  ],
+  interpretation: [
+    '¿Qué forma tiene la gráfica de corriente contra fem? ¿Qué representa su pendiente?',
+    '¿Por qué en paralelo la corriente total es mayor que en serie con los mismos resistores?',
+    '¿Cómo explican tus datos que en una casa las bombillas estén conectadas en paralelo?',
+  ],
+  assessment: [
+    {
+      id: 'cir-1', grade: 11, topic: 'Ley de Ohm', competency: 'uso', component: 'fisico', skill: 'Aplicar la ley de Ohm', difficulty: 'baja',
+      stem: 'Una resistencia de 20 Ω está conectada a una fuente ideal de 6 V. ¿Cuál es la corriente?',
+      options: [
+        { id: 'a', text: '120 A', feedback: 'Se multiplicó V·R; la ley de Ohm es I = V/R.' },
+        { id: 'b', text: '3,3 A', feedback: 'Se dividió R/V; la corriente es V/R.' },
+        { id: 'c', text: '0,3 A', feedback: 'Correcto: 6 V / 20 Ω = 0,3 A.' },
+        { id: 'd', text: '26 A', feedback: 'Voltaje y resistencia no se suman.' },
+      ],
+      correct: 'c',
+      explanation: 'I = V/R = 6 V / 20 Ω = 0,30 A.',
+      review: 'Comprueba en el simulador con un solo resistor activo en paralelo.',
+    },
+    {
+      id: 'cir-2', grade: 11, topic: 'Circuitos', competency: 'explicacion', component: 'fisico', skill: 'Explicar el comportamiento de circuitos en serie y paralelo', difficulty: 'media',
+      stem: 'Tres bombillas iguales se conectan primero en serie y luego en paralelo a la misma batería ideal. ¿En qué caso brilla más cada bombilla y por qué?',
+      options: [
+        { id: 'a', text: 'En serie, porque la corriente pasa por todas.', feedback: 'En serie cada bombilla recibe solo 1/3 del voltaje, y la corriente es menor.' },
+        { id: 'b', text: 'En paralelo, porque cada una recibe el voltaje completo de la batería y disipa más potencia.', feedback: 'Correcto: P = V²/R es 9 veces mayor que en serie.' },
+        { id: 'c', text: 'Igual en ambos casos, porque la batería es la misma.', feedback: 'La potencia por bombilla cambia con la configuración.' },
+        { id: 'd', text: 'En serie, porque la resistencia equivalente es mayor.', feedback: 'Mayor resistencia equivalente significa menor corriente y menos potencia.' },
+      ],
+      correct: 'b',
+      explanation: 'En paralelo, V = ε en cada bombilla: P = ε²/R. En serie, V = ε/3: P = ε²/(9R). Cada bombilla disipa 9 veces más potencia en paralelo.',
+      review: 'Compara la columna de potencia total y el brillo en ambas configuraciones.',
+    },
+    {
+      id: 'cir-3', grade: 11, topic: 'Leyes de Kirchhoff', competency: 'indagacion', component: 'fisico', skill: 'Usar datos para evaluar una afirmación', difficulty: 'alta',
+      table: { caption: 'Mediciones en un circuito mixto (ε = 12 V, r = 0)', headers: ['Elemento', 'R (Ω)', 'V (V)', 'I (A)'], rows: [['R₁', 4, 8.0, 2.0], ['R₂', 2, 4.0, 2.0], ['R₃', 2, 4.0, 0.0]] },
+      stem: 'Un estudiante afirma que R₂ y R₃ están en paralelo. ¿Qué indican sus datos?',
+      options: [
+        { id: 'a', text: 'Confirman la afirmación, porque R₂ y R₃ tienen el mismo voltaje.', feedback: 'El voltaje es igual, pero si estuvieran en paralelo y ambos conectados, por R₃ debería pasar 2 A.' },
+        { id: 'b', text: 'Son inconsistentes con un circuito completo: R₃ tiene 4 V y 2 Ω pero 0 A, lo cual viola la ley de Ohm. Probablemente su interruptor está abierto o la medición está mal.', feedback: 'Correcto: un dato no cumple V = IR.' },
+        { id: 'c', text: 'Demuestran que la ley de Ohm no se cumple en circuitos mixtos.', feedback: 'La ley de Ohm se cumple en cada resistor óhmico; un dato inconsistente indica un error.' },
+        { id: 'd', text: 'Indican que R₁ está en paralelo con R₂.', feedback: 'R₁ y R₂ tienen la misma corriente, lo que sugiere conexión en serie.' },
+      ],
+      correct: 'b',
+      explanation: 'Si R₃ tiene 4 V y 2 Ω, debería conducir 2 A (V/R). Si el interruptor de R₃ está abierto, los 4 V de esa rama aparecen en el interruptor y no en el resistor, por el que no circula corriente; el dato de 4 V se midió en la rama, no en R₃. Evaluar la coherencia interna de los datos es parte de la indagación.',
+      review: 'Arma el circuito mixto con R₁ = 4 Ω, R₂ = R₃ = 2 Ω y ε = 12 V. Compara con y sin el interruptor de R₃.',
+    },
+    {
+      id: 'cir-4', grade: 11, topic: 'Resistencia interna', competency: 'explicacion', component: 'fisico', skill: 'Explicar una observación con un modelo', difficulty: 'media',
+      stem: 'Al conectar más bombillas en paralelo a una batería vieja, el brillo de cada una disminuye. ¿Cuál es la mejor explicación?',
+      options: [
+        { id: 'a', text: 'La resistencia de las bombillas aumenta cuando se conectan más.', feedback: 'Cada bombilla mantiene su resistencia (en el modelo).' },
+        { id: 'b', text: 'La corriente total aumenta y cae más voltaje en la resistencia interna, así que el voltaje en los bornes disminuye.', feedback: 'Correcto: V_bornes = ε − I·r.' },
+        { id: 'c', text: 'La batería produce menos carga eléctrica.', feedback: 'La fem es constante; lo que cambia es la caída de voltaje interna.' },
+        { id: 'd', text: 'En paralelo el voltaje se reparte entre las bombillas.', feedback: 'En paralelo todas tienen el mismo voltaje; el reparto ocurre en serie.' },
+      ],
+      correct: 'b',
+      explanation: 'Más ramas en paralelo reducen R_eq y aumentan I. La caída I·r crece y el voltaje disponible para las bombillas disminuye.',
+      review: 'Usa r = 2 Ω y cierra una, dos y tres ramas en paralelo.',
+    },
+  ],
+  application: {
+    situation: 'En una vivienda se conectan al mismo tomacorriente una plancha, un ventilador y un televisor mediante una regleta.',
+    question: 'Explica cómo están conectados estos aparatos, qué ocurre con la corriente total en la regleta al encender todos y por qué existe riesgo de sobrecalentamiento.',
+    guidance: 'Usa la conexión en paralelo, la suma de corrientes (ley de nodos) y la función de un fusible o breaker.',
+  },
+  transferQuestionIds: ['saber-cir-1', 'saber-cir-2'],
+  conclusionGuide: 'Responde la pregunta problema comparando serie y paralelo con tus datos de corriente y voltaje.',
+  model: circuitModelSpec,
+  references: [
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Ciencias Naturales.',
+    'Textos de física general: ley de Ohm, leyes de Kirchhoff y potencia eléctrica.',
+  ],
+  keywords: ['circuito', 'Ohm', 'Kirchhoff', 'voltaje', 'corriente', 'resistencia', 'serie', 'paralelo', 'potencia', 'electricidad'],
+};

@@ -1,0 +1,128 @@
+import type { PracticeDef } from '../../core/types';
+import { solutionsModelSpec } from '../../models/solutions';
+
+export const soluciones: PracticeDef = {
+  id: 'soluciones',
+  title: 'Preparación de soluciones, molaridad y colorimetría',
+  grade: 10,
+  area: 'quimica',
+  topic: 'Soluciones: concentración, molaridad y dilución',
+  durationMin: 75,
+  status: 'disponible',
+  summary: 'Pesa solutos, afora balones, diluye con pipetas y mide la absorbancia para construir una curva de calibración y determinar la concentración de una muestra problema.',
+  problemQuestion: '¿Cómo podemos saber la concentración de una solución coloreada sin evaporarla ni pesarla?',
+  objectives: [
+    'Calcular la cantidad de sustancia (mol), la molaridad y el porcentaje masa/volumen de una solución.',
+    'Aplicar la relación de dilución C₁V₁ = C₂V₂.',
+    'Construir una curva de calibración con la ley de Beer-Lambert y usarla para determinar una concentración desconocida.',
+    'Reconocer el límite de solubilidad y el rango de validez de un instrumento.',
+  ],
+  competencies: ['uso', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 10.º–11.º, entorno físico (procesos químicos): realizar cálculos cuantitativos en cambios químicos y en la preparación de soluciones (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 10.º relacionado con las soluciones y sus unidades de concentración. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'La colorimetría se presenta como extensión de indagación; el docente puede limitarse a la preparación y dilución.',
+  },
+  materials: ['Balanza analítica (resolución 0,001 g)', 'Balones aforados de 50, 100, 250 y 500 mL', 'Pipetas aforadas de 1, 2, 5, 10 y 25 mL', 'Colorímetro con celda de 1 cm', 'NaCl, glucosa, CuSO₄·5H₂O y KMnO₄', 'Muestra problema de KMnO₄'],
+  background: [
+    'Una solución es una mezcla homogénea de un soluto disuelto en un solvente. Su concentración puede expresarse como molaridad (M = mol de soluto / L de solución), porcentaje masa/volumen (g de soluto / 100 mL) o partes por millón (mg/L).',
+    'Para calcular los moles se divide la masa entre la masa molar: n = m/M. La masa molar del CuSO₄·5H₂O incluye las cinco moléculas de agua de hidratación (≈ 249,7 g/mol).',
+    'Al diluir, la cantidad de soluto no cambia: C₁·V₁ = C₂·V₂. El factor de dilución es V₂/V₁.',
+    'Las soluciones coloreadas absorben luz. Según la ley de Beer-Lambert, la absorbancia es proporcional a la concentración: A = ε·l·c. Esta relación lineal permite construir una curva de calibración.',
+    'Cada soluto tiene un límite de solubilidad. Por encima de él, el soluto adicional queda sin disolver y la concentración no aumenta.',
+  ],
+  hypothesis: {
+    prompt: 'Predice cómo se relacionan la concentración y la absorbancia de una solución coloreada, y qué pasa con la molaridad si disuelves la misma masa en un balón más grande.',
+    pairs: [
+      { x: 'cfinal', y: 'absorbancia', xLabel: 'la concentración de la solución', yLabel: 'la absorbancia', datasetId: 'soluciones', allowVary: ['masa', 'volumen', 'factor'] },
+      { x: 'volumen', y: 'molaridad', xLabel: 'el volumen del balón (con la misma masa de soluto)', yLabel: 'la molaridad', datasetId: 'soluciones' },
+    ],
+  },
+  variables: {
+    independent: ['Masa de soluto', 'Volumen del balón', 'Volumen de la alícuota y del balón de dilución'],
+    dependent: ['Molaridad', '% m/v', 'Absorbancia'],
+    controlled: ['Soluto utilizado', 'Paso óptico (1 cm)', 'Longitud de onda del colorímetro', 'Temperatura'],
+  },
+  procedure: [
+    'Elige el soluto y calcula la masa necesaria para preparar la concentración que deseas (por ejemplo, 0,1 M de CuSO₄·5H₂O en 100 mL).',
+    'Pesa la masa en la balanza y transfiérela al balón aforado; completa con agua hasta el aforo.',
+    'Lee los resultados y compáralos con tu cálculo. Guarda el ensayo.',
+    'Prepara una solución madre de KMnO₄ (por ejemplo, 0,040 g en 250 mL) y diluciones con distintas pipetas para obtener al menos cuatro patrones.',
+    'Mide la absorbancia de cada patrón y guarda cada ensayo. Observa la gráfica de absorbancia contra concentración.',
+    'Mide la absorbancia de la muestra problema y usa la línea de tendencia para calcular su concentración.',
+    'Prueba qué ocurre si superas la solubilidad o si la absorbancia supera 2.',
+  ],
+  interpretation: [
+    '¿Qué forma tiene la gráfica de absorbancia contra concentración? ¿Qué representa la pendiente?',
+    '¿Cuál es la concentración de la muestra problema según tu curva? Explica cómo la calculaste.',
+    '¿Por qué no es confiable medir soluciones con absorbancia mayor que 2? ¿Qué harías para medirlas?',
+  ],
+  assessment: [
+    {
+      id: 'sol-1', grade: 10, topic: 'Molaridad', competency: 'uso', component: 'quimico', skill: 'Calcular la molaridad', difficulty: 'baja',
+      stem: 'Se disuelven 5,85 g de NaCl (M ≈ 58,5 g/mol) hasta completar 500 mL de solución. ¿Cuál es la molaridad?',
+      options: [
+        { id: 'a', text: '0,1 M', feedback: '0,1 mol en 1 L daría 0,1 M; aquí el volumen es 0,5 L.' },
+        { id: 'b', text: '0,2 M', feedback: 'Correcto: 0,1 mol / 0,5 L = 0,2 mol/L.' },
+        { id: 'c', text: '11,7 M', feedback: 'Se dividió la masa (no los moles) entre el volumen en litros.' },
+        { id: 'd', text: '0,0002 M', feedback: 'Se dividió entre 500 sin convertir mL a L.' },
+      ],
+      correct: 'b',
+      explanation: 'n = 5,85 g / 58,5 g/mol = 0,100 mol. M = 0,100 mol / 0,500 L = 0,200 mol/L.',
+      review: 'Prepara la solución en el simulador (5,850 g de NaCl en 500 mL) y compara.',
+    },
+    {
+      id: 'sol-2', grade: 10, topic: 'Dilución', competency: 'uso', component: 'quimico', skill: 'Aplicar C₁V₁ = C₂V₂', difficulty: 'media',
+      stem: 'Se toman 10 mL de una solución 0,50 M y se completan con agua hasta 250 mL. ¿Cuál es la concentración final?',
+      options: [
+        { id: 'a', text: '0,020 M', feedback: 'Correcto: 0,50 × 10 / 250 = 0,020 M.' },
+        { id: 'b', text: '12,5 M', feedback: 'Se invirtió la relación: diluir disminuye la concentración.' },
+        { id: 'c', text: '0,50 M', feedback: 'Al añadir agua, el mismo soluto ocupa más volumen: la concentración disminuye.' },
+        { id: 'd', text: '0,0020 M', feedback: 'Revisa el cálculo: 5/250 = 0,020.' },
+      ],
+      correct: 'a',
+      explanation: 'C₂ = C₁·V₁/V₂ = 0,50 M × 10 mL / 250 mL = 0,020 M (factor de dilución 25).',
+      review: 'Usa la sección de dilución del simulador con pipeta de 10 mL y balón de 250 mL.',
+    },
+    {
+      id: 'sol-3', grade: 10, topic: 'Ley de Beer', competency: 'indagacion', component: 'quimico', skill: 'Interpretar una curva de calibración', difficulty: 'media',
+      table: { caption: 'Patrones de una solución coloreada', headers: ['Concentración (mmol/L)', 'Absorbancia'], rows: [[0.1, 0.24], [0.2, 0.48], [0.3, 0.72], [0.4, 0.96]] },
+      stem: 'Una muestra desconocida de la misma sustancia tiene absorbancia 0,60. ¿Cuál es su concentración aproximada?',
+      options: [
+        { id: 'a', text: '0,15 mmol/L', feedback: 'Esa concentración daría A ≈ 0,36.' },
+        { id: 'b', text: '0,25 mmol/L', feedback: 'Correcto: la pendiente es 2,4 L/mmol, y 0,60 / 2,4 = 0,25 mmol/L.' },
+        { id: 'c', text: '0,60 mmol/L', feedback: 'La absorbancia no es igual a la concentración; hay que usar la pendiente.' },
+        { id: 'd', text: 'No se puede saber, porque 0,60 no está en la tabla.', feedback: 'La relación es lineal: se puede interpolar entre los patrones.' },
+      ],
+      correct: 'b',
+      explanation: 'La curva es lineal con pendiente ε·l = 2,4 L/mmol. c = A / pendiente = 0,60 / 2,4 = 0,25 mmol/L, entre los patrones de 0,2 y 0,3.',
+      review: 'Construye tu propia curva con KMnO₄ y ubica la muestra problema.',
+    },
+    {
+      id: 'sol-4', grade: 10, topic: 'Solubilidad', competency: 'explicacion', component: 'quimico', skill: 'Explicar la saturación', difficulty: 'media',
+      stem: 'Un estudiante agrega 10 g y luego 20 g de KMnO₄ a 100 mL de agua (solubilidad ≈ 6,4 g/100 mL). La molaridad calculada por el simulador es la misma en ambos casos. ¿Por qué?',
+      options: [
+        { id: 'a', text: 'Porque la balanza no detecta masas mayores de 10 g.', feedback: 'La balanza registra correctamente ambas masas.' },
+        { id: 'b', text: 'Porque en ambos casos la solución está saturada: solo se disuelven ≈ 6,4 g y el resto queda en el fondo.', feedback: 'Correcto.' },
+        { id: 'c', text: 'Porque la molaridad no depende de la masa de soluto.', feedback: 'La molaridad sí depende de la masa disuelta; aquí la masa disuelta es la misma.' },
+        { id: 'd', text: 'Porque el KMnO₄ reacciona con el agua.', feedback: 'En este modelo no hay reacción; el límite es la solubilidad.' },
+      ],
+      correct: 'b',
+      explanation: 'Por encima del límite de solubilidad, el exceso de soluto no se disuelve. La concentración de la solución saturada es constante a una temperatura dada.',
+      review: 'Repite el ensayo con 5, 10 y 20 g de KMnO₄ en 100 mL.',
+    },
+  ],
+  application: {
+    situation: 'Un suero oral casero se prepara disolviendo sal y azúcar en agua. Un error en la cantidad de sal puede ser peligroso para un niño deshidratado.',
+    question: 'Si una receta indica 2,6 g de NaCl por litro, calcula la molaridad de NaCl. ¿Qué pasaría con la concentración si alguien usa medio litro de agua con la misma cantidad de sal?',
+    guidance: 'Usa n = m/M y M = n/V. Compara las dos concentraciones y relaciona con la práctica de ósmosis de 7.º. Este ejercicio no reemplaza las indicaciones de un profesional de la salud.',
+  },
+  transferQuestionIds: ['saber-sol-1', 'saber-sol-2'],
+  conclusionGuide: 'Responde la pregunta problema: explica cómo la curva de calibración permite conocer una concentración y reporta el valor que obtuviste para la muestra problema con tus datos.',
+  model: solutionsModelSpec,
+  references: [
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Ciencias Naturales.',
+    'Masas atómicas estándar abreviadas (IUPAC). Solubilidades y absortividades molares aproximadas de manuales de química.',
+  ],
+  keywords: ['solución', 'molaridad', 'concentración', 'dilución', 'Beer', 'absorbancia', 'colorimetría', 'solubilidad', 'mol'],
+};

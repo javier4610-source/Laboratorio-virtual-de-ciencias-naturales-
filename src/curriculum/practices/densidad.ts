@@ -1,0 +1,128 @@
+import type { PracticeDef } from '../../core/types';
+import { densityModelSpec } from '../../models/density';
+
+export const densidad: PracticeDef = {
+  id: 'densidad',
+  title: 'Medición de masa, volumen y densidad',
+  grade: 6,
+  area: 'fisica',
+  topic: 'Materia y sus propiedades: medición, masa, volumen y densidad',
+  durationMin: 45,
+  status: 'disponible',
+  summary: 'Usa una balanza, una regla y una probeta para medir cubos de distintos materiales, calcular su densidad e identificar muestras misteriosas.',
+  problemQuestion: '¿La densidad de un material depende del tamaño de la muestra? ¿Cómo podemos usarla para identificar de qué está hecho un objeto?',
+  objectives: [
+    'Medir masa y volumen con instrumentos de laboratorio virtuales, reconociendo su resolución.',
+    'Calcular la densidad como la relación entre masa y volumen.',
+    'Comparar dos métodos para obtener el volumen: geométrico y por desplazamiento de agua.',
+    'Identificar materiales desconocidos a partir de su densidad.',
+  ],
+  competencies: ['indagacion', 'uso'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 6.º–7.º, entorno físico: relacionar la densidad con la masa y el volumen y usar instrumentos de medición (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 6.º relacionado con las propiedades de la materia y su medición. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'Correspondencia curricular propuesta por el equipo pedagógico; el docente debe ajustarla al plan de área institucional.',
+  },
+  materials: ['Balanza digital (resolución 0,1 g; capacidad 600 g)', 'Regla graduada (resolución 0,1 cm)', 'Probeta de 100 mL (divisiones de 1 mL)', 'Agua a 20 °C', 'Cubos de corcho, pino, hielo, PVC, vidrio, aluminio, hierro, cobre y plomo', 'Tres muestras misteriosas', 'Alfiler para hundir objetos que flotan'],
+  background: [
+    'La densidad (ρ) indica cuánta masa hay en cierto volumen de un material: ρ = m / V. En el laboratorio escolar se expresa en g/cm³ (1 cm³ = 1 mL).',
+    'Es una propiedad intensiva: no depende de la cantidad de material. Un clavo de hierro y una viga de hierro tienen la misma densidad, aunque su masa y su volumen sean muy distintos.',
+    'El volumen de un cuerpo regular se calcula con su forma (un cubo: V = a³). El de cualquier sólido se mide por desplazamiento: al sumergirlo, el nivel del agua sube un volumen igual al de la parte sumergida (principio de Arquímedes).',
+    'Un objeto menos denso que el agua flota. Para medir su volumen completo hay que hundirlo totalmente, por ejemplo con un alfiler.',
+  ],
+  hypothesis: {
+    prompt: 'Antes de medir, escribe qué crees que pasará. Usa la forma "Si…, entonces…, porque…".',
+    pairs: [
+      { x: 'vdesp', y: 'masa', xLabel: 'el volumen de la muestra (mismo material)', yLabel: 'la masa', datasetId: 'medidas', allowVary: ['lado'] },
+      { x: 'vdesp', y: 'densidad', xLabel: 'el volumen de la muestra (mismo material)', yLabel: 'la densidad', datasetId: 'medidas', allowVary: ['lado'] },
+    ],
+  },
+  variables: {
+    independent: ['Tamaño de la muestra (arista del cubo)', 'Material de la muestra'],
+    dependent: ['Masa', 'Volumen desplazado', 'Densidad calculada'],
+    controlled: ['Temperatura del agua (20 °C)', 'Instrumentos utilizados', 'Volumen inicial de agua en cada medición'],
+  },
+  procedure: [
+    'Elige un material y una arista para el cubo.',
+    'Pulsa "Pesar" para leer la masa en la balanza.',
+    'Mide la arista con la regla y calcula el volumen geométrico (a³).',
+    'Registra el volumen inicial de agua de la probeta y sumerge la muestra. Si flota, usa el alfiler.',
+    'Registra el volumen final y calcula el volumen desplazado y la densidad.',
+    'Guarda el ensayo en la tabla. Repite con al menos tres tamaños del mismo material.',
+    'Mide las muestras misteriosas y compáralas con la tabla de densidades para identificarlas.',
+  ],
+  interpretation: [
+    '¿Qué forma tiene la gráfica de masa contra volumen para un mismo material? ¿Qué representa su pendiente?',
+    '¿Por qué en las muestras pequeñas la densidad calculada se aleja más del valor de la tabla?',
+    '¿Qué ocurre con el volumen desplazado cuando el corcho flota sin alfiler? ¿Por qué ese dato no sirve para calcular su densidad?',
+  ],
+  assessment: [
+    {
+      id: 'den-1', grade: 6, topic: 'Densidad', competency: 'uso', component: 'fisico', skill: 'Reconocer la densidad como propiedad intensiva', difficulty: 'baja',
+      stem: 'Un estudiante corta un bloque de aluminio por la mitad. ¿Qué sucede con la densidad de cada mitad?',
+      options: [
+        { id: 'a', text: 'Se reduce a la mitad, porque la masa es la mitad.', feedback: 'La masa se reduce a la mitad, pero el volumen también. El cociente m/V no cambia.' },
+        { id: 'b', text: 'Es la misma del bloque completo, porque masa y volumen disminuyen en la misma proporción.', feedback: 'Correcto. La densidad es una propiedad intensiva del material.' },
+        { id: 'c', text: 'Se duplica, porque el volumen es más pequeño.', feedback: 'Si solo cambiara el volumen sería así, pero la masa también se reduce a la mitad.' },
+        { id: 'd', text: 'No se puede saber sin pesar las mitades.', feedback: 'No es necesario: el material es el mismo y es homogéneo.' },
+      ],
+      correct: 'b',
+      explanation: 'ρ = m/V. Si m y V se reducen a la mitad, (m/2)/(V/2) = m/V. Lo comprobaste al medir cubos de distinto tamaño de un mismo material.',
+      review: 'Repasa en tus datos: compara la densidad de dos cubos de un mismo material con aristas diferentes.',
+      transfer: '¿Por qué un barco de acero flota aunque el acero sea mucho más denso que el agua?',
+    },
+    {
+      id: 'den-2', grade: 6, topic: 'Densidad', competency: 'indagacion', component: 'fisico', skill: 'Interpretar datos para identificar un material', difficulty: 'media',
+      table: { caption: 'Mediciones de una muestra desconocida', headers: ['Masa (g)', 'V inicial (mL)', 'V final (mL)'], rows: [[54.0, 40.0, 60.0]] },
+      stem: 'Con los datos de la tabla y las densidades de referencia (aluminio 2,70; hierro 7,87; vidrio 2,50 g/cm³), ¿de qué material es probablemente la muestra?',
+      options: [
+        { id: 'a', text: 'Hierro, porque la masa es grande.', feedback: 'La masa sola no identifica un material: hay que dividirla entre el volumen.' },
+        { id: 'b', text: 'Vidrio, porque ρ = 54/60 = 0,90 g/cm³.', feedback: 'Ese cálculo usa el volumen final, no el volumen desplazado (60 − 40 = 20 mL).' },
+        { id: 'c', text: 'Aluminio, porque ρ = 54 g / 20 mL = 2,70 g/cm³.', feedback: 'Correcto: el volumen de la muestra es el volumen desplazado.' },
+        { id: 'd', text: 'Ninguno, porque la densidad sería 1,35 g/cm³.', feedback: 'Ese valor resulta de dividir entre 40 mL, que es el volumen inicial de agua.' },
+      ],
+      correct: 'c',
+      explanation: 'El volumen del sólido es V_final − V_inicial = 20 mL = 20 cm³. ρ = 54,0 g / 20 cm³ = 2,70 g/cm³, que coincide con el aluminio.',
+      review: 'Revisa el paso 5 del procedimiento: el volumen de la muestra es la diferencia de lecturas de la probeta.',
+    },
+    {
+      id: 'den-3', grade: 6, topic: 'Medición', competency: 'indagacion', component: 'fisico', skill: 'Reconocer fuentes de error experimental', difficulty: 'media',
+      stem: 'Al medir un cubo de vidrio de 1 cm de arista con la probeta, un grupo obtuvo una densidad de 2,0 g/cm³ y otro, con un cubo de 3 cm, obtuvo 2,48 g/cm³. ¿Cuál es la explicación más adecuada?',
+      options: [
+        { id: 'a', text: 'Los cubos son de vidrios distintos.', feedback: 'Es posible en la vida real, pero los datos se explican mejor por la resolución del instrumento.' },
+        { id: 'b', text: 'La densidad depende del tamaño del objeto.', feedback: 'La densidad es intensiva; el cambio se debe a la medición, no al material.' },
+        { id: 'c', text: 'Con volúmenes pequeños, el error de lectura de la probeta (±0,5 mL) es una fracción mayor del volumen medido.', feedback: 'Correcto. 0,5 mL de error en 1 mL es un 50 %; en 27 mL es menos del 2 %.' },
+        { id: 'd', text: 'La balanza mide mal las masas grandes.', feedback: 'La balanza tiene la misma resolución (0,1 g) para todas las masas dentro de su capacidad.' },
+      ],
+      correct: 'c',
+      explanation: 'El error relativo = incertidumbre / valor medido. Medir volúmenes pequeños con una probeta grande produce errores relativos altos. Por eso conviene usar muestras grandes o instrumentos con mejor resolución.',
+      review: 'Repite la medición con cubos de 1,2 cm y de 3 cm del mismo material y compara las densidades.',
+    },
+    {
+      id: 'den-4', grade: 6, topic: 'Flotación', competency: 'explicacion', component: 'fisico', skill: 'Explicar la flotación a partir de la densidad', difficulty: 'baja',
+      stem: '¿Por qué el cubo de pino flota en el agua y el de PVC se hunde?',
+      options: [
+        { id: 'a', text: 'Porque el pino es más liviano que el PVC en cualquier tamaño.', feedback: 'Un bloque grande de pino puede pesar más que uno pequeño de PVC y aun así flotar. Lo que importa es la densidad.' },
+        { id: 'b', text: 'Porque la densidad del pino (0,50 g/cm³) es menor que la del agua y la del PVC (1,38 g/cm³) es mayor.', feedback: 'Correcto.' },
+        { id: 'c', text: 'Porque la madera absorbe agua y el PVC no.', feedback: 'Absorber agua haría que la madera tendiera a hundirse, no a flotar.' },
+        { id: 'd', text: 'Porque el PVC tiene más volumen.', feedback: 'Con el mismo volumen, uno flota y el otro se hunde.' },
+      ],
+      correct: 'b',
+      explanation: 'Un cuerpo flota si su densidad media es menor que la del líquido. El pino flota sumergiendo cerca del 50 % de su volumen (0,50/0,998).',
+      review: 'Observa en el simulador qué fracción del cubo de pino queda sumergida.',
+    },
+  ],
+  application: {
+    situation: 'En una tienda de Apartadó, un cliente quiere comprobar si una cadena que le venden como "cobre puro" no es de otra aleación más barata.',
+    question: '¿Qué mediciones harías, con qué instrumentos, y cómo usarías la densidad para tomar una decisión? ¿Qué limitaciones tendría tu método?',
+    guidance: 'Menciona la masa, el volumen por desplazamiento, el cálculo y la comparación con 8,96 g/cm³. Considera la resolución de la probeta con un objeto pequeño.',
+  },
+  transferQuestionIds: ['saber-den-1', 'saber-den-2'],
+  conclusionGuide: 'Responde la pregunta problema con una afirmación, apóyala con al menos dos datos de tu tabla y explica el razonamiento usando ρ = m/V.',
+  model: densityModelSpec,
+  references: [
+    'Ministerio de Educación Nacional (2006). Estándares Básicos de Competencias en Lenguaje, Matemáticas, Ciencias y Ciudadanas. Bogotá: MEN.',
+    'Valores de densidad típicos a 20 °C tomados de tablas de propiedades de materiales de uso escolar (aproximados).',
+  ],
+  keywords: ['densidad', 'masa', 'volumen', 'probeta', 'balanza', 'flotación', 'Arquímedes', 'medición'],
+};

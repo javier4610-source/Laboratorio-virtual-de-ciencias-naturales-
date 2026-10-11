@@ -1,0 +1,97 @@
+import { useEffect } from 'react';
+import { PRACTICES } from '../curriculum';
+import { PLANNED } from '../curriculum/grades';
+import { href } from '../lib/router';
+import type { Prefs } from '../lib/prefs';
+import { Segmented } from '../components/ui';
+import { storageAvailable } from '../lib/storage';
+
+export function AccessibilityPanel({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Prefs) => void }) {
+  return (
+    <div className="stack">
+      <Segmented label="Tema de color" value={prefs.theme} onChange={(v) => setPrefs({ ...prefs, theme: v })} options={[{ value: 'auto', label: 'Automático' }, { value: 'claro', label: 'Claro' }, { value: 'oscuro', label: 'Oscuro' }]} />
+      <Segmented label="Tamaño del texto" value={String(prefs.fontScale) as '1' | '1.15' | '1.3'} onChange={(v) => setPrefs({ ...prefs, fontScale: Number(v) as Prefs['fontScale'] })} options={[{ value: '1', label: 'Normal' }, { value: '1.15', label: 'Grande' }, { value: '1.3', label: 'Muy grande' }]} />
+      <label className="check"><input type="checkbox" checked={prefs.contrast} onChange={(e) => setPrefs({ ...prefs, contrast: e.target.checked })} /> Alto contraste</label>
+      <label className="check"><input type="checkbox" checked={prefs.reduceMotion} onChange={(e) => setPrefs({ ...prefs, reduceMotion: e.target.checked })} /> Reducir animaciones</label>
+    </div>
+  );
+}
+
+const IMPLEMENTED = [
+  'Navegación por grados (6.º a 11.º), asignaturas, catálogo con buscador y filtros.',
+  `${PRACTICES.length} prácticas completas con modelos científicos calculados, controles, tabla de datos, gráficas configurables, hipótesis, análisis, conclusión y evaluación.`,
+  'Modos de práctica guiada, exploración libre y evaluación.',
+  'Detección de tendencias en los datos y advertencias de control de variables al comparar con la hipótesis.',
+  'Preguntas de selección múltiple con retroalimentación por opción, explicación, repaso y transferencia; reintentos.',
+  'Banco de preguntas originales tipo Saber 11 con filtros por grado, competencia, componente y dificultad.',
+  'Informe de práctica imprimible, descargable (JSON y CSV) y copiable.',
+  'Panel docente local: catálogo, asignaciones y listas compartibles por código, importación de informes, resultados agregados, preguntas con mayor error, exportación CSV y rúbrica.',
+  'Accesibilidad: navegación por teclado, enlace para saltar al contenido, textos alternativos y tablas equivalentes para las gráficas, tema claro/oscuro, alto contraste, tamaño de texto y reducción de animaciones.',
+  'Pruebas automatizadas de las fórmulas, del currículo y de los flujos principales de la interfaz.',
+];
+
+const NOT_IMPLEMENTED = [
+  'Cuentas de usuario, base de datos y sincronización entre dispositivos (requieren un servidor).',
+  'Envío automático de informes al docente: hoy se entregan como archivo o texto.',
+  `${PLANNED.length} prácticas de la malla curricular planificadas que aún no están construidas (se muestran como «Próximamente»).`,
+  'Validación curricular oficial: la correspondencia con los DBA es una propuesta que el docente debe validar.',
+  'Pruebas de usabilidad con estudiantes reales y revisión externa por docentes de cada área.',
+];
+
+export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Prefs) => void }) {
+  useEffect(() => { document.title = 'Ayuda y accesibilidad · Laboratorio Virtual'; }, []);
+  return (
+    <div className="stack">
+      <h1>Ayuda y accesibilidad</h1>
+      <div className="grid-2">
+        <section className="card stack-sm">
+          <h2>Cómo usar el laboratorio</h2>
+          <ol className="list">
+            <li>Elige tu grado en la página de inicio o busca una práctica en el catálogo.</li>
+            <li>Lee la preparación: pregunta problema, fundamento y variables.</li>
+            <li>Escribe tu hipótesis (en el modo guiado es obligatoria antes de experimentar).</li>
+            <li>Cambia las variables, ejecuta el experimento y pulsa «Guardar ensayo» para registrar cada resultado.</li>
+            <li>Elige los ejes de la gráfica, analiza la tendencia y escribe tu conclusión.</li>
+            <li>Responde las preguntas y lee la retroalimentación. Puedes reintentar.</li>
+            <li>Abre «Ver informe» para imprimirlo o enviarlo a tu docente.</li>
+          </ol>
+        </section>
+        <section className="card stack-sm">
+          <h2>Preferencias de visualización</h2>
+          <AccessibilityPanel prefs={prefs} setPrefs={setPrefs} />
+          <h3>Teclado</h3>
+          <ul className="list small">
+            <li><kbd>Tab</kbd> y <kbd>Mayús + Tab</kbd>: moverse entre controles.</li>
+            <li>Flechas: ajustar los controles deslizantes.</li>
+            <li><kbd>Enter</kbd> o <kbd>Espacio</kbd>: activar botones e interruptores del circuito.</li>
+            <li>Cada gráfica tiene un botón para ver sus datos como tabla.</li>
+          </ul>
+        </section>
+      </div>
+      <section className="card stack-sm">
+        <h2>Dónde se guarda mi trabajo</h2>
+        <p>Todo se guarda en el almacenamiento local de este navegador; no se envía a ningún servidor. {storageAvailable() ? 'El almacenamiento local está disponible.' : 'En este momento el almacenamiento local no está disponible (por ejemplo, en modo privado): tu trabajo se perderá al cerrar la pestaña.'} Si cambias de computador o borras los datos del navegador, el trabajo no se conserva. Para entregarlo, genera el informe.</p>
+      </section>
+      <section className="grid-2">
+        <div className="card stack-sm">
+          <h2>Funciones implementadas</h2>
+          <ul className="list small">{IMPLEMENTED.map((x) => <li key={x}>{x}</li>)}</ul>
+        </div>
+        <div className="card stack-sm">
+          <h2>Pendiente o con limitaciones</h2>
+          <ul className="list small">{NOT_IMPLEMENTED.map((x) => <li key={x}>{x}</li>)}</ul>
+        </div>
+      </section>
+      <section className="card stack-sm">
+        <h2>Referentes curriculares</h2>
+        <ul className="list small">
+          <li>Ministerio de Educación Nacional (2006). <em>Estándares Básicos de Competencias en Lenguaje, Matemáticas, Ciencias y Ciudadanas</em>.</li>
+          <li>Ministerio de Educación Nacional (2016). <em>Derechos Básicos de Aprendizaje: Ciencias Naturales</em>, versión 1.</li>
+          <li>ICFES. <em>Marco de referencia de la prueba de Ciencias Naturales Saber 11.°</em> y guías de orientación de Saber 11.</li>
+        </ul>
+        <p className="small muted">Las relaciones con estándares y DBA de cada práctica son paráfrasis y propuestas pedagógicas: no son citas textuales y deben validarse con los documentos oficiales vigentes.</p>
+        <p className="small"><a href={href('catalogo')}>Ir al catálogo</a> · <a href={href('docente')}>Ir al panel docente</a></p>
+      </section>
+    </div>
+  );
+}

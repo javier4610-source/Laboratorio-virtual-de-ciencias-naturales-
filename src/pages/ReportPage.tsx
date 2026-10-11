@@ -1,0 +1,106 @@
+import { useEffect, useState } from 'react';
+import type { PracticeDef, PracticeSession, Trend } from '../core/types';
+import { loadSession } from '../lib/session';
+import { loadJSON, saveJSON } from '../lib/storage';
+import { buildReport, copyText, downloadText, practiceQuestions, slug, type StudentInfo, type StudentReport } from '../lib/report';
+import { AREA_LABEL, COMPETENCY_LABEL } from '../curriculum/grades';
+import { DATASETS } from '../labs/datasets';
+import { DataPanel } from '../components/DataPanel';
+import { fmt, fmtDate } from '../lib/format';
+import { TREND_LABEL } from '../lib/trend';
+import { href } from '../lib/router';
+import { Notice } from '../components/ui';
+import { progressPercent } from '../lib/progress';
+
+const STUDENT_KEY = 'lvcn:estudiante';
+
+/** Contenido del informe; también lo usa el panel docente para revisar informes importados. */
+export function ReportBody({ practice: p, session: s, report }: { practice: PracticeDef; session: PracticeSession; report: StudentReport }) {
+  const qs = practiceQuestions(p);
+  return (
+    <div className="stack">
+      <section className="card stack-sm">
+        <div className="panel-title"><h2>{p.title}</h2><span className="chip">{AREA_LABEL[p.area]} · {p.grade}.º</span></div>
+        <p><strong>Estudiante:</strong> {report.student.name || '—'} · <strong>Curso:</strong> {report.student.course || '—'} · <strong>Fecha:</strong> {fmtDate(report.generatedAt)}</p>
+        <p><strong>Pregunta problema:</strong> {p.problemQuestion}</p>
+        <p><strong>Modo de trabajo:</strong> {s.mode} · <strong>Progreso:</strong> {progressPercent(p, s)} % · <strong>Ensayos:</strong> {s.trials.length}</p>
+      </section>
+      <section className="card stack-sm">
+        <h3>Hipótesis</h3>
+        <p>{s.hypothesis.text || <em className="muted">No registrada.</em>}</p>
+        {s.hypothesis.trend && <p className="small">Predicción: {p.hypothesis.pairs[s.hypothesis.pairIndex]?.yLabel} {TREND_LABEL[s.hypothesis.trend as Exclude<Trend, ''>]} cuando aumenta {p.hypothesis.pairs[s.hypothesis.pairIndex]?.xLabel}.</p>}
+        {s.variablesCheck && <p className="small">Clasificación de variables: {s.variablesCheck.correct} de {s.variablesCheck.total} correctas.</p>}
+      </section>
+      {DATASETS[p.id].filter((d) => s.trials.some((t) => t.datasetId === d.id)).length > 0
+        ? <DataPanel practiceId={p.id} datasets={DATASETS[p.id].filter((d) => s.trials.some((t) => t.datasetId === d.id))} readOnly={s} />
+        : <Notice kind="warn">No hay datos experimentales registrados.</Notice>}
+      <section className="card stack-sm">
+        <h3>Análisis</h3>
+        <p><strong>Comparación con la hipótesis:</strong> {s.comparison.verdict ? `mis datos ${s.comparison.verdict === 'apoya' ? 'apoyan' : s.comparison.verdict === 'refuta' ? 'no apoyan' : 'no son suficientes para decidir sobre'} la hipótesis.` : '—'}</p>
+        {s.comparison.justification && <p>{s.comparison.justification}</p>}
+        {p.interpretation.map((q, i) => (
+          <div key={q}><p className="small" style={{ fontWeight: 700, margin: 0 }}>{i + 1}. {q}</p><p>{s.interpretations[String(i)] || <em className="muted">Sin respuesta.</em>}</p></div>
+        ))}
+      </section>
+      <section className="card stack-sm">
+        <h3>Conclusión</h3>
+        <p><strong>Afirmación:</strong> {s.conclusion.claim || '—'}</p>
+        <p><strong>Evidencia:</strong> {s.conclusion.evidence || '—'}</p>
+        <p><strong>Razonamiento:</strong> {s.conclusion.reasoning || '—'}</p>
+        <p><strong>Aplicación cotidiana:</strong> {s.application || '—'}</p>
+      </section>
+      <section className="card stack-sm">
+        <h3>Evaluación por competencias</h3>
+        <p>Respondidas: {report.score.answered} de {report.score.total} · Aciertos al primer intento: {report.score.firstTryCorrect} ({report.score.answered ? fmt(report.score.percent, 0) : 0} %)</p>
+        <ul className="list small">
+          {(['uso', 'explicacion', 'indagacion'] as const).map((c) => <li key={c}>{COMPETENCY_LABEL[c]}: {report.score.byCompetency[c].correct} de {report.score.byCompetency[c].answered}</li>)}
+        </ul>
+        <div className="table-wrap">
+          <table>
+            <thead><tr><th>Pregunta</th><th>Competencia</th><th>Elegida</th><th>Correcta</th><th>1.er intento</th><th className="n">Intentos</th></tr></thead>
+            <tbody>
+              {qs.map((q) => {
+                const a = s.answers[q.id];
+                return <tr key={q.id}><td>{q.stem.slice(0, 70)}{q.stem.length > 70 ? '…' : ''}</td><td>{COMPETENCY_LABEL[q.competency]}</td><td>{a ? a.chosen.toUpperCase() : '—'}</td><td>{q.correct.toUpperCase()}</td><td>{a ? (a.firstTryCorrect ? '✓' : '✗') : '—'}</td><td className="n">{a?.attempts ?? 0}</td></tr>;
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <p className="small muted">Informe generado por el Laboratorio Virtual de Ciencias Naturales. Los resultados provienen de una simulación educativa con supuestos declarados en la práctica.</p>
+    </div>
+  );
+}
+
+export function ReportPage({ practice: p }: { practice: PracticeDef }) {
+  const [student, setStudent] = useState<StudentInfo>(() => loadJSON<StudentInfo>(STUDENT_KEY, { name: '', course: '' }));
+  const [msg, setMsg] = useState('');
+  const [json, setJson] = useState<string | null>(null);
+  useEffect(() => { saveJSON(STUDENT_KEY, student); }, [student]);
+  useEffect(() => { document.title = `Informe: ${p.title}`; }, [p.title]);
+  const session = loadSession(p.id);
+  const report = buildReport(p, session, student);
+  const filename = `informe-${slug(p.id)}-${slug(student.name || 'estudiante')}.json`;
+
+  return (
+    <div className="stack">
+      <nav aria-label="Ruta de navegación" className="small muted no-print"><a href={href()}>Inicio</a> / <a href={href('practica', p.id)}>{p.title}</a> / Informe</nav>
+      <h1>Informe de práctica</h1>
+      <div className="card stack no-print">
+        <div className="grid-2">
+          <div className="field"><label htmlFor="st-name">Nombre del estudiante</label><input id="st-name" type="text" value={student.name} onChange={(e) => setStudent({ ...student, name: e.target.value })} autoComplete="name" /></div>
+          <div className="field"><label htmlFor="st-course">Curso o grupo</label><input id="st-course" type="text" value={student.course} onChange={(e) => setStudent({ ...student, course: e.target.value })} placeholder="p. ej. 10-2" /></div>
+        </div>
+        <div className="btn-row">
+          <button type="button" className="btn primary" onClick={() => { window.print(); setMsg('Si no se abrió el diálogo de impresión, este entorno lo bloquea: usa «Copiar informe».'); }}>Imprimir o guardar en PDF</button>
+          <button type="button" className="btn" onClick={() => { const ok = downloadText(filename, JSON.stringify(report, null, 2), 'application/json'); setMsg(ok ? `Se descargó ${filename}. Entrégalo a tu docente para que lo importe en el panel docente.` : 'Este entorno no permite descargas: usa «Copiar informe».'); }}>Descargar archivo para el docente (.json)</button>
+          <button type="button" className="btn" onClick={async () => { const text = JSON.stringify(report); const ok = await copyText(text); setJson(ok ? null : text); setMsg(ok ? 'Informe copiado. Pégalo en un mensaje o documento para tu docente.' : 'No se pudo copiar automáticamente: selecciona el texto de abajo y cópialo.'); }}>Copiar informe</button>
+        </div>
+        <p className="small" aria-live="polite">{msg}</p>
+        {json && <textarea readOnly value={json} aria-label="Informe en formato JSON" onFocus={(e) => e.currentTarget.select()} style={{ fontFamily: 'var(--font-data)', fontSize: '0.8rem' }} />}
+        <p className="small muted">El informe no se envía a ningún servidor. Se genera en tu navegador a partir de lo que guardaste en esta práctica.</p>
+      </div>
+      <ReportBody practice={p} session={session} report={report} />
+    </div>
+  );
+}

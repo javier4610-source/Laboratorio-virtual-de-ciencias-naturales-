@@ -15,6 +15,75 @@ const SCENARIOS: { id: string; name: string; note: string; patch: Partial<PopGen
 
 const N_OPTIONS = [10, 30, 100, 300, 1000, 5000];
 
+/* ------------------------------------------------------------------ poza génica ilustrada */
+
+const COL_A = 'var(--series-2)';
+const COL_a = 'var(--series-1)';
+
+/** Cuenta de individuos AA, Aa y aa entre 100 según Hardy-Weinberg (mayores restos). */
+function hwCounts(p: number): [number, number, number] {
+  const hw = hardyWeinberg(Math.min(1, Math.max(0, p)));
+  const raw = [hw.AA * 100, hw.Aa * 100, hw.aa * 100];
+  const out = raw.map(Math.floor);
+  let left = 100 - out.reduce((a, b) => a + b, 0);
+  const order = raw.map((r, i) => [r - Math.floor(r), i]).sort((a, b) => b[0] - a[0]);
+  for (let k = 0; left > 0; k++, left--) out[order[k % 3][1]]++;
+  return [out[0], out[1], out[2]];
+}
+
+/** Individuo estilizado: la mitad izquierda lleva el primer alelo y la derecha el segundo. */
+function Person({ x, y, left, right }: { x: number; y: number; left: string; right: string }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(1.22)`}>
+      <path d="M-6.5 9 Q -6.5 0.5 0 0.5 V 9 Z" fill={left} />
+      <path d="M6.5 9 Q 6.5 0.5 0 0.5 V 9 Z" fill={right} />
+      <path d="M-4 -4.5 A 4 4 0 0 1 0 -8.5 V -0.5 A 4 4 0 0 1 -4 -4.5 Z" fill={left} />
+      <path d="M4 -4.5 A 4 4 0 0 0 0 -8.5 V -0.5 A 4 4 0 0 0 4 -4.5 Z" fill={right} />
+      <circle cx="0" cy="-4.5" r="4" fill="none" stroke="var(--surface)" strokeWidth="0.6" opacity="0.6" />
+      <circle cx="-1.3" cy="-5.6" r="1.2" fill="#fff" opacity="0.35" />
+    </g>
+  );
+}
+
+function GenePool({ x, title, p }: { x: number; title: string; p: number }) {
+  const counts = hwCounts(p);
+  const people: [string, string][] = [];
+  counts.forEach((c, g) => { for (let i = 0; i < c; i++) people.push(g === 0 ? [COL_A, COL_A] : g === 1 ? [COL_A, COL_a] : [COL_a, COL_a]); });
+  const cell = 22, gx = x + 14, gy = 46;
+  const pw = 250;
+  return (
+    <g>
+      <rect x={x} y="8" width={pw + 28} height="306" rx="14" fill="var(--surface)" stroke="var(--line)" filter="url(#kit-shadow-soft)" />
+      <text x={x + 14} y="31" style={{ fontSize: 13, fontWeight: 700, fill: 'var(--ink)' }}>{title}</text>
+      {people.map(([l, r], i) => (
+        <Person key={i} x={x + 40 + (i % 10) * cell} y={gy + 12 + Math.floor(i / 10) * cell} left={l} right={r} />
+      ))}
+      {/* barra de frecuencias alélicas */}
+      <rect x={gx} y="278" width={pw} height="12" rx="6" fill={COL_a} />
+      <rect x={gx} y="278" width={Math.max(0, Math.min(1, p)) * pw} height="12" rx="6" fill={COL_A} />
+      <text x={gx} y="306" style={{ fontSize: 11.5, fill: 'var(--ink)', fontFamily: 'var(--font-data)' }}>{`A: ${fmt(p, 2)}`}</text>
+      <text x={gx + pw} y="306" textAnchor="end" style={{ fontSize: 11.5, fill: 'var(--ink)', fontFamily: 'var(--font-data)' }}>{`a: ${fmt(1 - p, 2)}`}</text>
+      <text x={gx + pw / 2} y="306" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{`${counts[0]} AA · ${counts[1]} Aa · ${counts[2]} aa`}</text>
+    </g>
+  );
+}
+
+function GenePools({ p0, pEnd, generations }: { p0: number; pEnd: number; generations: number }) {
+  return (
+    <svg viewBox="0 0 640 336" role="img" aria-labelledby="pg-pool-t pg-pool-d">
+      <title id="pg-pool-t">Poza génica: 100 individuos al inicio y al final</title>
+      <desc id="pg-pool-d">{`Cada figura es un individuo; su mitad izquierda y derecha muestran sus dos alelos (azul: A, naranja: a). Proporciones de Hardy-Weinberg con p = ${fmt(p0, 2)} al inicio y p = ${fmt(pEnd, 2)} (promedio) tras ${generations} generaciones.`}</desc>
+      <GenePool x={8} title="Generación 0" p={p0} />
+      <g aria-hidden="true">
+        <path d="M300 160 H 334" stroke="var(--ink-2)" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M328 152 L 338 160 L 328 168" fill="none" stroke="var(--ink-2)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <GenePool x={354} title={`Generación ${generations} (promedio)`} p={pEnd} />
+      <text x="320" y="331" textAnchor="middle" style={{ fontSize: 11.5, fill: 'var(--ink-2)' }}>Cada figura es un individuo; cada mitad, uno de sus dos alelos (azul: A · naranja: a).</text>
+    </svg>
+  );
+}
+
 export default function PopGenLab({ api }: LabProps) {
   const [scenario, setScenario] = useState('neutral');
   const [input, setInput] = useState<PopGenInput>({
@@ -52,6 +121,7 @@ export default function PopGenLab({ api }: LabProps) {
             xDomain={[0, input.generations]} yDomain={[0, 1]} series={series}
             hLines={r?.equilibriumP != null ? [{ y: r.equilibriumP, label: `equilibrio p* = ${fmt(r.equilibriumP, 2)}` }] : []} />
         </div>
+        {r && <div className="bench"><GenePools p0={input.p0} pEnd={r.meanFinalP} generations={input.generations} /></div>}
         {'error' in res && <Notice kind="bad">{res.error}</Notice>}
         {r && hw && (
           <>

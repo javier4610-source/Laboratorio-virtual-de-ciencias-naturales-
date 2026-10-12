@@ -1,0 +1,22 @@
+# Plano de Render («Blueprint»): crea el servidor con disco persistente para la base de datos.
+# En Render: New → Blueprint → elegir este repositorio → Apply.
+services:
+  - type: web
+    name: laboratorio-virtual-servidor
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/salud
+    autoDeploy: true
+    disk:
+      name: datos
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: REGISTRATION_CODE
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: https://javier4610-source.github.io
+      - key: DB_PATH
+        value: /data/laboratorio.db

@@ -28,6 +28,9 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
+        env:
+          # Dirección del servidor de seguimiento (variable del repositorio API_URL); vacía = sin servidor.
+          VITE_API_URL: ${{ vars.API_URL }}
       - name: Pruebas de interfaz
         run: |
           npx playwright install --with-deps chromium

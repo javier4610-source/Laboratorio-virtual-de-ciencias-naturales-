@@ -26,6 +26,8 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   newton: () => import('./practices/newton').then((m) => m.newton),
   gases: () => import('./practices/gases').then((m) => m.gases),
   energia: () => import('./practices/energia').then((m) => m.energia),
+  pendulo: () => import('./practices/pendulo').then((m) => m.pendulo),
+  proyectiles: () => import('./practices/proyectiles').then((m) => m.proyectiles),
   equilibrio: () => import('./practices/equilibrio').then((m) => m.equilibrio),
   descomposicion: () => import('./practices/descomposicion').then((m) => m.descomposicion),
   conductores: () => import('./practices/conductores').then((m) => m.conductores),

@@ -411,4 +411,31 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'sentido', label: 'Sentido del desplazamiento', numeric: false },
     ],
   }],
+  proyectiles: [{
+    id: 'disparos', label: 'Disparos con el lanzador', defaultX: 'angulo', defaultY: 'alcance',
+    columns: [
+      { key: 'esfera', label: 'Esfera', numeric: false, input: true },
+      { key: 'aire', label: 'Aire', numeric: false, input: true },
+      { key: 'v0', label: 'v₀ (fotopuerta)', unit: 'm/s', numeric: true, decimals: 2, input: true, resolution: 0.01 },
+      { key: 'angulo', label: 'Ángulo', unit: '°', numeric: true, decimals: 1, input: true, resolution: 0.5 },
+      { key: 'altura', label: 'Altura de lanzamiento', unit: 'm', numeric: true, decimals: 2, input: true },
+      { key: 'alcance', label: 'Alcance', unit: 'm', numeric: true, decimals: 3, resolution: 0.001 },
+      { key: 'alturaMax', label: 'Altura máxima', unit: 'm', numeric: true, decimals: 2, resolution: 0.01 },
+      { key: 'tiempo', label: 'Tiempo de vuelo', unit: 's', numeric: true, decimals: 3, resolution: 0.001 },
+    ],
+  }],
+  pendulo: [{
+    id: 'oscilaciones', label: 'Oscilaciones del péndulo', defaultX: 'longitud', defaultY: 'periodo',
+    columns: [
+      { key: 'lenteja', label: 'Lenteja', numeric: false, input: true },
+      { key: 'lugar', label: 'Lugar', numeric: false, input: true },
+      { key: 'longitud', label: 'Longitud', unit: 'm', numeric: true, decimals: 2, input: true, resolution: 0.001 },
+      { key: 'masa', label: 'Masa de la lenteja', unit: 'g', numeric: true, decimals: 0, input: true },
+      { key: 'amplitud', label: 'Amplitud', unit: '°', numeric: true, decimals: 0, input: true },
+      { key: 't10', label: 'Tiempo de 10 oscilaciones (cronómetro)', unit: 's', numeric: true, decimals: 2, resolution: 0.01 },
+      { key: 'periodo', label: 'Período', unit: 's', numeric: true, decimals: 3 },
+      { key: 'periodo2', label: 'Período al cuadrado (T²)', unit: 's²', numeric: true, decimals: 3 },
+      { key: 'gCalculada', label: 'g calculada (4π²L/T²)', unit: 'm/s²', numeric: true, decimals: 2 },
+    ],
+  }],
 };

@@ -425,6 +425,27 @@ test('equilibrio: agregar Fe³⁺ da Q < K y aumenta la absorbancia de 0,427 a 0
   await expect(page.locator('.readout').getByText('0,781')).toBeVisible();
 });
 
+test('proyectiles: 4,5 m/s a 30° desde 1,00 m caen a 2,870 m', async ({ page }) => {
+  await openFree(page, 'proyectiles');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Disparar' }).click();
+  const medir = page.getByRole('button', { name: 'Medir el alcance con la cinta' });
+  await expect(medir).toBeEnabled({ timeout: 8000 });
+  await medir.click();
+  await expect(page.locator('.readout').getByText('2,870 m')).toBeVisible();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('péndulo: la fotopuerta mide T = 2,013 s con L = 1,00 m', async ({ page }) => {
+  await openFree(page, 'pendulo');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Medir con la fotopuerta' }).click();
+  await expect(page.locator('.readout').getByText('2,013 s')).toBeVisible({ timeout: 10_000 });
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -485,7 +506,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/27');
+  await expect(page.locator('.kpi').first()).toContainText('1/29');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

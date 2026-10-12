@@ -89,8 +89,6 @@ export const PLANNED: PlannedPractice[] = [
   { title: 'Transferencia de calor por conducción', grade: 7, area: 'fisica', status: 'planificada' },
   { title: 'Sonido y resonancia', grade: 8, area: 'fisica', status: 'planificada' },
   { title: 'Trabajo, potencia y plano inclinado', grade: 9, area: 'fisica', status: 'planificada' },
-  { title: 'Movimiento de proyectiles', grade: 10, area: 'fisica', status: 'planificada' },
-  { title: 'Péndulo simple y movimiento armónico', grade: 10, area: 'fisica', status: 'planificada' },
   { title: 'Choques y cantidad de movimiento', grade: 10, area: 'fisica', status: 'planificada' },
   { title: 'Magnetismo e inducción electromagnética', grade: 11, area: 'fisica', status: 'planificada' },
   { title: 'Interferencia y difracción de la luz', grade: 11, area: 'fisica', status: 'planificada' },

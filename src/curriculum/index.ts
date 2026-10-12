@@ -20,6 +20,8 @@ import { ph } from './practices/ph';
 import { fotosintesis } from './practices/fotosintesis';
 import { ondas } from './practices/ondas';
 import { mitosis } from './practices/mitosis';
+import { pendulo } from './practices/pendulo';
+import { proyectiles } from './practices/proyectiles';
 import { equilibrio } from './practices/equilibrio';
 import { descomposicion } from './practices/descomposicion';
 import { conductores } from './practices/conductores';
@@ -30,7 +32,7 @@ import { cinematica } from './practices/cinematica';
 import { celulas } from './practices/celulas';
 
 /** Catálogo de prácticas implementadas. Para agregar una nueva: definirla aquí y registrar su componente en labs/registry.ts. */
-export const PRACTICES: PracticeDef[] = ([densidad, mezclas, celulas, redes, osmosis, mitosis, conductores, descomposicion, mendel, ondas, optica, adn, newton, cinematica, seleccion, soluciones, enzimas, fotosintesis, gases, cinetica, energia, circuitos, estequiometria, equilibrio, ph, poblacion, popgen] as PracticeDef[]).map(balancePractice);
+export const PRACTICES: PracticeDef[] = ([densidad, mezclas, celulas, redes, osmosis, mitosis, conductores, descomposicion, mendel, ondas, optica, adn, newton, cinematica, seleccion, soluciones, enzimas, fotosintesis, gases, cinetica, energia, proyectiles, pendulo, circuitos, estequiometria, equilibrio, ph, poblacion, popgen] as PracticeDef[]).map(balancePractice);
 
 export function practiceById(id: string): PracticeDef | undefined {
   return PRACTICES.find((p) => p.id === id);

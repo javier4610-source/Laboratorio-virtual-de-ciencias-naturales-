@@ -574,6 +574,46 @@ const RAW_BANK: Question[] = [
     explanation: 'A volumen constante, más intensidad significa más moléculas de NO₂. Calentar desplaza el equilibrio hacia el NO₂, es decir, hacia los reactivos de 2 NO₂ ⇌ N₂O₄: la reacción directa es exotérmica (ΔH ≈ −57 kJ/mol) y su K disminuye al aumentar la temperatura, como predice el principio de Le Châtelier.',
     review: 'En la práctica de equilibrio químico, usa el sistema B y cambia solo la temperatura del baño de la jeringa.',
   },
+  {
+    id: 'saber-pry-1', grade: 10, topic: 'Movimiento de proyectiles', competency: 'indagacion', component: 'fisico', skill: 'Identificar la comparación controlada que responde una pregunta', difficulty: 'media', practiceId: 'proyectiles',
+    context: 'Un grupo de estudiantes de Turbo quiere saber si el ángulo de máximo alcance depende de la altura desde la que se lanza. Con un lanzador de resorte (v₀ = 4,50 m/s), sin considerar el aire, obtuvieron estos alcances.',
+    table: {
+      caption: 'Alcance (m) medido con cinta métrica',
+      headers: ['Ensayo', 'Altura (m)', 'Ángulo (°)', 'Esfera', 'Alcance (m)'],
+      rows: [
+        [1, 0, 30, 'acero', 1.789],
+        [2, 0, 45, 'acero', 2.066],
+        [3, 1.0, 35, 'acero', 2.898],
+        [4, 1.0, 45, 'acero', 2.803],
+        [5, 1.0, 45, 'plástico', 2.803],
+      ],
+    },
+    stem: '¿Qué conclusión se apoya en una comparación correcta de los datos?',
+    options: [
+      { id: 'a', text: 'Con la mesa a 1,0 m, 35° llega más lejos que 45° (ensayos 3 y 4), así que desde una altura el ángulo óptimo es menor que 45°.', feedback: 'Correcto: en los ensayos 3 y 4 solo cambia el ángulo, y 35° supera a 45°.' },
+      { id: 'b', text: 'El ensayo 3 llega más lejos que el 2, así que el ángulo de 35° es mejor que el de 45° a cualquier altura.', feedback: 'Entre los ensayos 2 y 3 cambian a la vez la altura y el ángulo: no se puede atribuir la diferencia solo al ángulo.' },
+      { id: 'c', text: 'La esfera de plástico llega igual que la de acero, así que la masa no influye nunca en el alcance.', feedback: 'Los datos son sin aire; con resistencia del aire la masa sí influye. Además, esa comparación no responde la pregunta sobre la altura.' },
+      { id: 'd', text: 'Como a 0 m 45° supera a 30°, el máximo alcance siempre ocurre a 45°.', feedback: 'Eso solo vale cuando h = 0; los ensayos 3 y 4 muestran que desde 1,0 m el máximo no está en 45°.' },
+    ],
+    correct: 'a',
+    explanation: 'Una conclusión válida compara ensayos en los que solo cambia la variable estudiada. Con h = 1,0 m y la misma v₀ y esfera, 35° supera a 45°: desde una altura el ángulo óptimo es menor que 45° (tanθ* = v₀/√(v₀² + 2gh) ≈ 35,5°).',
+    review: 'En la práctica de proyectiles, usa la actividad «Ángulo de máximo alcance» con la mesa a 0 m y a 1,00 m.',
+  },
+  {
+    id: 'saber-pen-1', grade: 10, topic: 'Movimiento oscilatorio', competency: 'indagacion', component: 'fisico', skill: 'Identificar la variable que determina el período a partir de datos controlados', difficulty: 'media', practiceId: 'pendulo',
+    context: 'En una feria de ciencias de Chigorodó, un grupo midió con una fotopuerta el período de varios péndulos, todos soltados desde 8° de amplitud.',
+    table: { caption: 'Péndulos medidos por el grupo', headers: ['Péndulo', 'L (m)', 'Masa (g)', 'T (s)'], rows: [['P', 0.50, 50, 1.42], ['Q', 0.50, 200, 1.42], ['R', 1.00, 50, 2.01], ['S', 2.00, 200, 2.84]] },
+    stem: '¿Qué conclusión se puede sacar de estos datos?',
+    options: [
+      { id: 'a', text: 'El período aumenta con la masa, porque S tiene más masa que R y un período mayor.', feedback: 'Entre R y S cambiaron a la vez la masa y la longitud; al comparar P y Q, que solo difieren en la masa, el período es el mismo.' },
+      { id: 'b', text: 'El período no depende de la masa (P y Q) y aumenta con la longitud: al cuadruplicar L con la misma masa (Q y S) el período se duplica.', feedback: 'Correcto: P y Q tienen igual T con distinta masa, y Q y S (misma masa) muestran que de 0,50 m a 2,00 m el período pasa de 1,42 s a 2,84 s, como predice T = 2π√(L/g).' },
+      { id: 'c', text: 'El período es directamente proporcional a la longitud, porque al duplicar L (P y R) el período se duplica.', feedback: 'De 0,50 m a 1,00 m el período pasa de 1,42 s a 2,01 s, es decir, se multiplica por √2 ≈ 1,41, no por 2.' },
+      { id: 'd', text: 'No se puede concluir nada, porque los péndulos tienen masas y longitudes diferentes.', feedback: 'Hay pares de péndulos en los que solo cambia una variable (P y Q; P y R), así que sí se pueden sacar conclusiones controladas.' },
+    ],
+    correct: 'b',
+    explanation: 'Para estudiar una variable hay que comparar ensayos en los que solo cambie esa variable. P y Q (misma L, distinta masa) tienen el mismo período. P y R, y también Q y S, muestran que T crece con √L: T² = (4π²/g)·L, así que cuadruplicar L duplica T.',
+    review: 'En la práctica del péndulo, mide con la fotopuerta el período para lentejas de distinta masa y para L = 0,50; 1,00 y 2,00 m.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

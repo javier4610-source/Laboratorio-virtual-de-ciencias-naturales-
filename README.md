@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (27)
+## Prácticas implementadas (29)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -30,6 +30,8 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 10.º | Fotosíntesis: luz, CO₂ y temperatura | Biología | Inverso del cuadrado, colimitación luz/CO₂ (hipérbola no rectangular), respiración Q₁₀, punto de compensación |
 | 10.º | Leyes de los gases | Química | Gas ideal PV = nRT: Boyle, Charles (cero absoluto por extrapolación), Gay-Lussac; resolución de instrumentos |
 | 10.º | Factores que afectan la velocidad de reacción | Química | Mármol + HCl (concentración, temperatura de Arrhenius, superficie que se encoge) y H₂O₂ con catalizadores (MnO₂, catalasa); gas recogido en jeringa |
+| 10.º | Movimiento de proyectiles | Física | Tiro parabólico analítico y con arrastre cuadrático (RK4), ángulo óptimo con altura inicial, fotopuerta y estroboscopía |
+| 10.º | Péndulo simple y movimiento armónico | Física | Ecuación no lineal con RK4 contrastada con el período exacto, amortiguamiento, cronómetro con tiempo de reacción y fotopuerta |
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
 | 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |

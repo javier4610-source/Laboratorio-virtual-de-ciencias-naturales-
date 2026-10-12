@@ -156,3 +156,12 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Registrador de datos (U4) | 10 pruebas de la lógica (muestreo, disparo, estadísticas, ruido con semilla), axe | Correcto | Pocas marcas en el eje, unidad encimada en la pantalla, marcadores tapaban el canal | Corregidos antes de integrar | Corregido |
 | Supuestos declarados | Revisión | — | El sensor de presión de cinética y el oxígeno disuelto de fotosíntesis no salen directamente de los modelos originales | Se calculan con supuestos explícitos (matraz tapado a T constante; 1 g de elodea en 100 mL) mostrados en la interfaz | Declarado |
 | Regresión | 281 pruebas unitarias y 46 de interfaz con axe | Todas pasan | Conflicto de estilos al integrar (bloques añadidos por ambos lados) | Se conservaron ambos bloques | Correcto |
+
+# Medición realista (U3) y física A (proyectiles, péndulo)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Medición realista | 21 pruebas (ruido reproducible, cuantización, estadística de repeticiones, propagación en cocientes y productos) y E2E (tres repeticiones en modo real difieren; en modo ideal coinciden) | Correcto | Con varios ensayos, la tabla ancha de densidad ensanchaba la página 178 px | `.table-wrap` con posición relativa | Corregido |
+| Proyectiles | 13 pruebas: alcance v₀²sen2θ/g, ángulos complementarios, ángulo óptimo con altura, conservación de la energía sin aire, arrastre | Correcto | — | — | Correcto |
+| Péndulo | 11 pruebas: período de pequeñas oscilaciones (0,1 %), período exacto, independencia de la masa, +7 % a 60°, T² ∝ L, energía, amortiguamiento, Luna | Correcto | — | — | Correcto |
+| Regresión | 324 pruebas unitarias y 50 de interfaz con axe | Todas pasan | — | — | Correcto |

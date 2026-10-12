@@ -22,11 +22,12 @@ se construye, se verifica y se marca como hecho. El orden puede cambiarlo el doc
 Orden de trabajo de las rondas (se toma el primer elemento sin marcar). Pedido del docente: medición realista,
 manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física según la malla.
 
-- [ ] **U3 · Medición realista:** modo «instrumento real» con ruido e incertidumbre según la ficha de cada instrumento;
+- [x] **U3 · Medición realista** (adoptada en densidad, Newton, óptica, gases, circuitos y conductores; el resto se adopta
+      progresivamente): modo «instrumento real» con ruido e incertidumbre según la ficha de cada instrumento;
       en el cuaderno, estadística de repeticiones (media, desviación estándar, error estándar) y propagación de
       incertidumbre en los cálculos; adopción progresiva en todos los laboratorios.
-- [ ] **Física A:** movimiento de proyectiles (10.º, `proyectiles`) · péndulo simple y movimiento armónico (10.º, `pendulo`) ·
-      choques y cantidad de movimiento (10.º, `choques`).
+- [ ] **Física A:** ~~movimiento de proyectiles~~ y ~~péndulo simple~~ (hechos) · choques y cantidad de movimiento
+      (10.º, `choques`).
 - [ ] **Lote 7:** conservación de la masa en sistema abierto y cerrado (8.º, química, `conservacion`) ·
       respiración celular y balance energético (10.º, biología, `respiracion`) · contaminación del agua e
       indicadores fisicoquímicos y biológicos (11.º, ambiental, `agua`).

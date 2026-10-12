@@ -8,9 +8,12 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
 
 /* Geometría de la ilustración (px) */
 const W = 660, H = 420, CX = 210, CY = 210, R = 180;
+/** Origen del dibujo del microscopio (perfil) en la escena. */
+const TURRET = { x: 452, y: 6 };
 const COUNT_MS = 1400;
 
 /** Colores reales de la preparación: luz del microscopio y colorantes (hex con buen contraste entre sí). */
@@ -215,6 +218,7 @@ export default function MicroscopeLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox={`0 0 ${W} ${H}`} label="Controles del microscopio" scene={
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="cel-t cel-d">
             <title id="cel-t">Campo visual del microscopio óptico</title>
             <desc id="cel-d">{desc}</desc>
@@ -249,7 +253,7 @@ export default function MicroscopeLab({ api }: LabProps) {
             </g>
             <circle cx={CX} cy={CY} r={R} fill="none" stroke="#000" strokeOpacity="0.7" strokeWidth="2" />
             {/* microscopio y ficha de observación */}
-            <MicroscopeDrawing x={452} y={6} objective={objective} stainTint={look.edge} />
+            <MicroscopeDrawing x={TURRET.x} y={TURRET.y} objective={objective} stainTint={look.edge} />
             <text x="540" y="226" textAnchor="middle" style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>Microscopio</text>
             <rect x="438" y="236" width="214" height="176" rx="12" fill="var(--surface-2)" stroke="var(--line)" />
             <g style={{ fontSize: 13, fill: 'var(--ink)' }}>
@@ -267,8 +271,16 @@ export default function MicroscopeLab({ api }: LabProps) {
               <text x="488" y="394" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>diámetro</text>
               {measured && obs.count.ok && <text x="638" y="394" textAnchor="end" style={{ fill: 'var(--data)', fontWeight: 700 }}>{fmt(obs.count.count, 1)} células</text>}
             </g>
-          </svg>
+          </svg>}>
+            <Knob label="Tornillo micrométrico del microscopio" cx={TURRET.x + 124} cy={TURRET.y + 120} r={11} value={focus} min={FOCUS_RANGE[0]} max={FOCUS_RANGE[1]} step={1} pageStep={5} decimals={0}
+              valueText={(v) => `${fmt(v, 0)} divisiones`} onChange={(v) => change(() => setFocus(v))} />
+            <DragHandle label="Revólver de objetivos" value={OBJECTIVES.indexOf(objective)} min={0} max={OBJECTIVES.length - 1} step={1} pageStep={1}
+              hit={{ cx: TURRET.x + 66, cy: TURRET.y + 94, r: 20 }} valueText={(v) => `Objetivo de ${OBJECTIVES[v]}× en posición`}
+              valueFromPoint={({ point, start, startValue }) => startValue + Math.round((point.x - start.x) / 26)}
+              onChange={(v) => change(() => setObjective(OBJECTIVES[v]))} />
+          </ManipScene>
         </div>
+        <ManipHint>Gira el tornillo micrométrico del microscopio para enfocar y arrastra el revólver hacia los lados para cambiar de objetivo, o enfócalos con Tab y usa las flechas.</ManipHint>
         <Readout items={[
           { k: 'Aumento total', v: `${obs.magnification}×` },
           { k: 'Diámetro del campo', v: `${fmt(obs.fieldUm, 0)} µm` },

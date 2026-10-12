@@ -5,7 +5,7 @@ import { expect, test, type APIRequestContext, type Page } from '@playwright/tes
  * Seguimiento del curso con datos de ejemplo: accesibilidad (axe) en ambos temas,
  * sin desborde horizontal a 390 px. Con SCREENSHOTS=carpeta guarda capturas.
  */
-const SERVER = 'http://localhost:8787';
+import { SERVER } from './env';
 const SHOTS = process.env.SCREENSHOTS;
 
 async function post(request: APIRequestContext, method: 'post' | 'put', path: string, data: unknown, token?: string) {

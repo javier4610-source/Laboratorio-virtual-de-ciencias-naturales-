@@ -11,56 +11,100 @@ export function KitDefs() {
   return (
     <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
       <defs>
+        {/* Vidrio: luz principal desde la izquierda (reflejo fuerte), banda de refracción a la derecha con un leve tinte verdoso. */}
         <linearGradient id="kit-glass" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#ffffff" stopOpacity="0.55" />
-          <stop offset="0.12" stopColor="#ffffff" stopOpacity="0.12" />
+          <stop offset="0" stopColor="#ffffff" stopOpacity="0.6" />
+          <stop offset="0.05" stopColor="#ffffff" stopOpacity="0.32" />
+          <stop offset="0.14" stopColor="#ffffff" stopOpacity="0.1" />
           <stop offset="0.55" stopColor="#ffffff" stopOpacity="0" />
-          <stop offset="0.86" stopColor="#ffffff" stopOpacity="0.22" />
-          <stop offset="1" stopColor="#ffffff" stopOpacity="0.05" />
+          <stop offset="0.8" stopColor="#d9f2ee" stopOpacity="0.1" />
+          <stop offset="0.9" stopColor="#ffffff" stopOpacity="0.26" />
+          <stop offset="0.96" stopColor="#7fa7a3" stopOpacity="0.12" />
+          <stop offset="1" stopColor="#ffffff" stopOpacity="0.08" />
         </linearGradient>
         <linearGradient id="kit-glass-fill" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#cfe6ef" stopOpacity="0.35" />
-          <stop offset="0.5" stopColor="#e8f4f8" stopOpacity="0.12" />
-          <stop offset="1" stopColor="#cfe6ef" stopOpacity="0.32" />
+          <stop offset="0" stopColor="#bcdbe4" stopOpacity="0.42" />
+          <stop offset="0.18" stopColor="#dcedf2" stopOpacity="0.16" />
+          <stop offset="0.5" stopColor="#e8f4f8" stopOpacity="0.1" />
+          <stop offset="0.82" stopColor="#d4e9ee" stopOpacity="0.18" />
+          <stop offset="1" stopColor="#b3d3dc" stopOpacity="0.4" />
         </linearGradient>
         <linearGradient id="kit-liquid-shade" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#000" stopOpacity="0.16" />
-          <stop offset="0.3" stopColor="#000" stopOpacity="0" />
-          <stop offset="0.75" stopColor="#fff" stopOpacity="0.1" />
-          <stop offset="1" stopColor="#000" stopOpacity="0.18" />
+          <stop offset="0" stopColor="#000" stopOpacity="0.2" />
+          <stop offset="0.12" stopColor="#000" stopOpacity="0.04" />
+          <stop offset="0.3" stopColor="#fff" stopOpacity="0.06" />
+          <stop offset="0.7" stopColor="#fff" stopOpacity="0.12" />
+          <stop offset="0.9" stopColor="#000" stopOpacity="0.06" />
+          <stop offset="1" stopColor="#000" stopOpacity="0.22" />
+        </linearGradient>
+        {/* Profundidad del líquido: más oscuro hacia el fondo, con una franja de luz bajo la superficie. */}
+        <linearGradient id="kit-liquid-depth" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.22" />
+          <stop offset="0.08" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.75" stopColor="#000" stopOpacity="0.04" />
+          <stop offset="1" stopColor="#000" stopOpacity="0.16" />
         </linearGradient>
         <linearGradient id="kit-metal" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#f3f6f7" />
-          <stop offset="0.45" stopColor="#c9d2d5" />
-          <stop offset="0.55" stopColor="#b8c2c6" />
-          <stop offset="1" stopColor="#e3e8ea" />
+          <stop offset="0" stopColor="#f7f9fa" />
+          <stop offset="0.22" stopColor="#dde4e7" />
+          <stop offset="0.48" stopColor="#c3cdd1" />
+          <stop offset="0.52" stopColor="#adb8bd" />
+          <stop offset="0.8" stopColor="#d4dcdf" />
+          <stop offset="1" stopColor="#eef2f3" />
         </linearGradient>
         <linearGradient id="kit-metal-h" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#aab4b8" />
-          <stop offset="0.35" stopColor="#eef2f3" />
-          <stop offset="0.65" stopColor="#cfd7da" />
-          <stop offset="1" stopColor="#9fa9ad" />
+          <stop offset="0" stopColor="#9da8ad" />
+          <stop offset="0.18" stopColor="#d8dfe2" />
+          <stop offset="0.35" stopColor="#f4f7f8" />
+          <stop offset="0.5" stopColor="#d2dadd" />
+          <stop offset="0.72" stopColor="#bcc6ca" />
+          <stop offset="1" stopColor="#8e999e" />
         </linearGradient>
         <linearGradient id="kit-body" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#fbfcfc" />
-          <stop offset="1" stopColor="#d5dcde" />
+          <stop offset="0" stopColor="#ffffff" />
+          <stop offset="0.12" stopColor="#f6f8f8" />
+          <stop offset="1" stopColor="#d0d8da" />
         </linearGradient>
         <linearGradient id="kit-body-dark" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#3b4648" />
-          <stop offset="1" stopColor="#222a2c" />
+          <stop offset="0" stopColor="#4a5659" />
+          <stop offset="0.08" stopColor="#3b4648" />
+          <stop offset="1" stopColor="#1f2729" />
         </linearGradient>
         <linearGradient id="kit-lcd" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#10241f" />
-          <stop offset="1" stopColor="#0a1714" />
+          <stop offset="0" stopColor="#132a24" />
+          <stop offset="0.5" stopColor="#0d1f1b" />
+          <stop offset="1" stopColor="#081310" />
         </linearGradient>
         <linearGradient id="kit-wood" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#f7e6b5" />
-          <stop offset="1" stopColor="#e5c47c" />
+          <stop offset="0" stopColor="#f8e8bb" />
+          <stop offset="0.5" stopColor="#efd595" />
+          <stop offset="1" stopColor="#e0bd74" />
         </linearGradient>
         <radialGradient id="kit-bulb" cx="0.35" cy="0.35" r="0.7">
-          <stop offset="0" stopColor="#ff8a80" />
-          <stop offset="1" stopColor="#c62828" />
+          <stop offset="0" stopColor="#ffa39b" />
+          <stop offset="0.5" stopColor="#e53935" />
+          <stop offset="1" stopColor="#b71c1c" />
         </radialGradient>
+        {/* Sombra de contacto bajo los instrumentos apoyados en la mesa. */}
+        <radialGradient id="kit-contact" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stopColor="#0b1f1c" stopOpacity="0.32" />
+          <stop offset="0.55" stopColor="#0b1f1c" stopOpacity="0.14" />
+          <stop offset="1" stopColor="#0b1f1c" stopOpacity="0" />
+        </radialGradient>
+        {/* Mesa: brillo frontal y veta muy sutil (laminado). */}
+        <linearGradient id="kit-bench-sheen" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.35" />
+          <stop offset="0.25" stopColor="#fff" stopOpacity="0.08" />
+          <stop offset="1" stopColor="#000" stopOpacity="0.1" />
+        </linearGradient>
+        <linearGradient id="kit-bench-drop" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#0b1f1c" stopOpacity="0.18" />
+          <stop offset="1" stopColor="#0b1f1c" stopOpacity="0" />
+        </linearGradient>
+        <pattern id="kit-bench-grain" patternUnits="userSpaceOnUse" width="46" height="10">
+          <path d="M0 2.5 Q12 1.6 23 2.8 T46 2.4 M0 6.5 Q15 7.4 27 6.2 T46 6.8" fill="none" stroke="#000" strokeOpacity="0.07" strokeWidth="0.6" />
+          <path d="M5 4.6 h9 M30 8.4 h7" stroke="#fff" strokeOpacity="0.12" strokeWidth="0.5" />
+        </pattern>
         <filter id="kit-shadow" x="-20%" y="-20%" width="140%" height="160%">
           <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#0b1f1c" floodOpacity="0.22" />
         </filter>
@@ -94,11 +138,20 @@ export function shade(hex: string, amount: number): string {
 /** Superficie de la mesa de trabajo sobre la que se apoyan los instrumentos. */
 export function BenchTop({ y, x = 0, width }: { y: number; x?: number; width: number }) {
   return (
-    <g aria-hidden="true">
+    <g aria-hidden="true" className="kit-bench">
       <rect x={x} y={y} width={width} height={10} rx={2} fill="var(--bench-top, #c9d3d1)" />
-      <rect x={x} y={y + 10} width={width} height={4} fill="var(--bench-edge, #9eaaa8)" opacity="0.7" />
+      <rect x={x} y={y} width={width} height={10} rx={2} fill="url(#kit-bench-grain)" />
+      <rect x={x} y={y} width={width} height={10} rx={2} fill="url(#kit-bench-sheen)" />
+      <line x1={x + 2} x2={x + width - 2} y1={y + 0.6} y2={y + 0.6} stroke="#fff" strokeOpacity="0.45" strokeWidth="1" />
+      <rect x={x} y={y + 10} width={width} height={4} fill="var(--bench-edge, #9eaaa8)" opacity="0.85" />
+      <rect x={x} y={y + 14} width={width} height={8} fill="url(#kit-bench-drop)" />
     </g>
   );
+}
+
+/** Sombra de contacto suave (elipse difusa) bajo un instrumento apoyado en la mesa; (x, y) es el borde izquierdo de la base. */
+export function ContactShadow({ x, y, w, h = 9, opacity = 1 }: { x: number; y: number; w: number; h?: number; opacity?: number }) {
+  return <ellipse aria-hidden="true" cx={x + w / 2} cy={y + 0.5} rx={w / 2 + 4} ry={h / 2} fill="url(#kit-contact)" opacity={opacity} />;
 }
 
 /** Tamaño de letra que cabe en la pantalla (dígitos monoespaciados ≈ 0,62 em + 1 px de espaciado). */
@@ -110,8 +163,10 @@ function lcdFont(text: string, available: number, h: number) {
 export function Lcd({ x, y, w, h, text, unit }: { x: number; y: number; w: number; h: number; text: string; unit?: string }) {
   return (
     <g>
+      <rect x={x - 1} y={y - 1} width={w + 2} height={h + 2} rx={5} fill="none" stroke="#fff" strokeOpacity="0.14" />
       <rect x={x} y={y} width={w} height={h} rx={4} fill="url(#kit-lcd)" stroke="#05100d" strokeWidth="1" />
-      <rect x={x + 2} y={y + 2} width={w - 4} height={h * 0.35} rx={3} fill="#ffffff" opacity="0.04" />
+      <rect x={x + 1.5} y={y + 1.5} width={w - 3} height={h - 3} rx={3} fill="none" stroke="#000" strokeOpacity="0.45" />
+      <path d={`M${x + 3} ${y + 2.5} H${x + w - 3} L${x + w * 0.62} ${y + h * 0.42} H${x + 3} Z`} fill="#ffffff" opacity="0.05" />
       <text x={x + w - (unit ? 26 : 8)} y={y + h / 2 + 6} textAnchor="end" fill="#7CFFB2" style={{ fontFamily: 'var(--font-data)', fontSize: lcdFont(text, w - (unit ? 34 : 16), h), letterSpacing: 1 }}>{text}</text>
       {unit && <text x={x + w - 8} y={y + h / 2 + 6} textAnchor="end" fill="#7CFFB2" opacity="0.8" style={{ fontFamily: 'var(--font-data)', fontSize: 11 }}>{unit}</text>}
     </g>
@@ -123,6 +178,7 @@ export function DigitalBalance({ x, y, w = 230, reading, unit = 'g', children }:
   const bodyTop = y + 14, bodyH = 62;
   return (
     <g>
+      <ContactShadow x={x - 6} y={bodyTop + bodyH} w={w + 12} h={10} />
       <g filter="url(#kit-shadow)">
         <path d={`M${x + 8} ${bodyTop} L${x + w - 8} ${bodyTop} Q${x + w} ${bodyTop} ${x + w} ${bodyTop + 10} L${x + w + 6} ${bodyTop + bodyH} L${x - 6} ${bodyTop + bodyH} L${x} ${bodyTop + 10} Q${x} ${bodyTop} ${x + 8} ${bodyTop} Z`} fill="url(#kit-body)" stroke="#a9b4b6" />
         <rect x={x + w / 2 - 14} y={y + 4} width={28} height={12} fill="url(#kit-metal-h)" />
@@ -163,11 +219,12 @@ export function GraduatedCylinder({ x, y, w, h, capacity, level, liquid = '#4f9f
   return (
     <g>
       {/* pie hexagonal */}
+      <ContactShadow x={x - 16} y={y + h} w={w + 32} h={8} />
       <path d={`M${x - 16} ${y + h} L${x + w + 16} ${y + h} L${x + w + 8} ${y + h - 8} L${x - 8} ${y + h - 8} Z`} fill="url(#kit-glass-fill)" stroke="var(--glass-edge, #8fa9b3)" filter="url(#kit-shadow-soft)" />
       {/* cuerpo */}
       <path d={`M${x} ${y} L${x} ${y + h - 10} Q${x} ${y + h - 8} ${x + 4} ${y + h - 8} L${x + w - 4} ${y + h - 8} Q${x + w} ${y + h - 8} ${x + w} ${y + h - 10} L${x + w} ${y}`} fill="url(#kit-glass-fill)" />
       {level > 0 && (
-        <g>
+        <g className="kit-liquid">
           <path d={`M${inner.l} ${ly + 3} Q${(inner.l + inner.r) / 2} ${ly + 8} ${inner.r} ${ly + 3} L${inner.r} ${y + h - 11} L${inner.l} ${y + h - 11} Z`} fill={liquid} opacity="0.55" />
           <path d={`M${inner.l} ${ly + 3} Q${(inner.l + inner.r) / 2} ${ly + 8} ${inner.r} ${ly + 3} L${inner.r} ${y + h - 11} L${inner.l} ${y + h - 11} Z`} fill="url(#kit-liquid-shade)" />
           <path d={`M${inner.l} ${ly} Q${inner.l + 2} ${ly + 3} ${inner.l + 6} ${ly + 4} Q${(inner.l + inner.r) / 2} ${ly + 9} ${inner.r - 6} ${ly + 4} Q${inner.r - 2} ${ly + 3} ${inner.r} ${ly}`} fill="none" stroke={shade(liquid, -0.35)} strokeWidth="1.6" />
@@ -202,17 +259,23 @@ export function Beaker({ x, y, w, h, fill = 0, liquid = '#4f9fe0', liquidOpacity
   const ly = y + h - 6 - (h - 16) * Math.max(0, Math.min(1, fill));
   return (
     <g>
-      <path d={`M${x} ${y} L${x} ${y + h - 8} Q${x} ${y + h} ${x + 8} ${y + h} L${x + w - 8} ${y + h} Q${x + w} ${y + h} ${x + w} ${y + h - 8} L${x + w} ${y}`} fill="url(#kit-glass-fill)" filter="url(#kit-shadow-soft)" />
+      <ContactShadow x={x} y={y + h} w={w} h={8} />
+      <path d={`M${x} ${y} L${x} ${y + h - 8} Q${x} ${y + h} ${x + 8} ${y + h} L${x + w - 8} ${y + h} Q${x + w} ${y + h} ${x + w} ${y + h - 8} L${x + w} ${y}`} fill="url(#kit-glass-fill)" />
       {fill > 0 && (
-        <g>
-          <path d={`M${x + 2} ${ly} L${x + w - 2} ${ly} L${x + w - 2} ${y + h - 8} Q${x + w - 2} ${y + h - 2} ${x + w - 8} ${y + h - 2} L${x + 8} ${y + h - 2} Q${x + 2} ${y + h - 2} ${x + 2} ${y + h - 8} Z`} fill={liquid} opacity={liquidOpacity} />
+        <g className="kit-liquid">
+          <path d={`M${x + 2} ${ly - 2.5} Q${x + 3} ${ly} ${x + 8} ${ly} L${x + w - 8} ${ly} Q${x + w - 3} ${ly} ${x + w - 2} ${ly - 2.5} L${x + w - 2} ${y + h - 8} Q${x + w - 2} ${y + h - 2} ${x + w - 8} ${y + h - 2} L${x + 8} ${y + h - 2} Q${x + 2} ${y + h - 2} ${x + 2} ${y + h - 8} Z`} fill={liquid} opacity={liquidOpacity} />
           <path d={`M${x + 2} ${ly} L${x + w - 2} ${ly} L${x + w - 2} ${y + h - 8} L${x + 2} ${y + h - 8} Z`} fill="url(#kit-liquid-shade)" />
-          <line x1={x + 2} x2={x + w - 2} y1={ly} y2={ly} stroke={shade(liquid, -0.3)} strokeWidth="1.4" opacity="0.8" />
+          <path d={`M${x + 2} ${ly} L${x + w - 2} ${ly} L${x + w - 2} ${y + h - 3} L${x + 2} ${y + h - 3} Z`} fill="url(#kit-liquid-depth)" />
+          {/* menisco cóncavo: el agua sube por la pared */}
+          <path d={`M${x + 2} ${ly - 2.5} Q${x + 3} ${ly} ${x + 8} ${ly} L${x + w - 8} ${ly} Q${x + w - 3} ${ly} ${x + w - 2} ${ly - 2.5}`} fill="none" stroke={shade(liquid, -0.3)} strokeWidth="1.4" opacity="0.85" />
+          <line x1={x + 10} x2={x + w - 10} y1={ly + 1.8} y2={ly + 1.8} stroke="#fff" strokeWidth="1" opacity="0.35" />
         </g>
       )}
       {children}
       <path d={`M${x - 4} ${y - 3} Q${x} ${y - 1} ${x} ${y + 4} L${x} ${y + h - 8} Q${x} ${y + h} ${x + 8} ${y + h} L${x + w - 8} ${y + h} Q${x + w} ${y + h} ${x + w} ${y + h - 8} L${x + w} ${y}`} fill="url(#kit-glass)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="1.6" />
       <rect x={x + 6} y={y + 8} width={3} height={h - 22} rx={1.5} fill="#fff" opacity="0.4" />
+      <rect x={x + w - 8} y={y + 14} width={1.6} height={h - 34} rx={0.8} fill="#fff" opacity="0.22" />
+      <path d={`M${x + 1} ${y + 0.8} L${x + w - 1} ${y + 0.8}`} stroke="#fff" strokeWidth="1" opacity="0.5" />
       {label && <text x={x + w / 2} y={y + h + 16} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{label}</text>}
     </g>
   );
@@ -258,14 +321,16 @@ export function Thermometer({ x, y, h, min, max, value, label = '°C' }: { x: nu
   return (
     <g>
       <rect x={x - 6} y={y} width={12} height={h - 10} rx={6} fill="url(#kit-glass-fill)" stroke="var(--glass-edge, #8fa9b3)" />
-      <rect x={x - 2} y={level} width={4} height={bottom - level + 4} fill="#d32f2f" />
+      <rect className="kit-column" x={x - 2} y={level} width={4} height={bottom - level + 4} fill="#d32f2f" />
+      <rect x={x - 4} y={y + 5} width={1.6} height={h - 26} rx={0.8} fill="#fff" opacity="0.55" />
       <circle cx={x} cy={y + h - 8} r={9} fill="url(#kit-bulb)" stroke="#9b1b1b" />
+      <ellipse cx={x - 3} cy={y + h - 11} rx={2.6} ry={1.8} fill="#fff" opacity="0.55" />
       {[0, 0.25, 0.5, 0.75, 1].map((f) => {
         const ty = bottom - f * (bottom - top);
         return <line key={f} x1={x + 6} x2={x + 11} y1={ty} y2={ty} stroke="var(--ink-2)" strokeWidth="0.8" />;
       })}
-      <text x={x + 14} y={top + 4} style={{ fontSize: 8, fill: 'var(--ink-2)' }}>{max}</text>
-      <text x={x + 14} y={bottom + 3} style={{ fontSize: 8, fill: 'var(--ink-2)' }}>{min} {label}</text>
+      <text x={x + 14} y={top + 4} style={{ fontSize: 8, fill: 'var(--ink-2)', fontFamily: 'var(--font-data)' }}>{max}</text>
+      <text x={x + 14} y={bottom + 3} style={{ fontSize: 8, fill: 'var(--ink-2)', fontFamily: 'var(--font-data)' }}>{min} {label}</text>
     </g>
   );
 }
@@ -281,11 +346,13 @@ export function Erlenmeyer({ x, y, w, h, fill = 0, liquid = '#4f9fe0', liquidOpa
   const halfAt = (yy: number) => (neckW / 2) + ((w / 2 - 4 - neckW / 2) * (yy - (y + neckH))) / (h - 10 - neckH);
   return (
     <g>
-      <path d={body} fill="url(#kit-glass-fill)" filter="url(#kit-shadow-soft)" />
+      <ContactShadow x={x} y={y + h} w={w} h={8} />
+      <path d={body} fill="url(#kit-glass-fill)" />
       {f > 0 && (
-        <g>
+        <g className="kit-liquid">
           <path d={`M${cx - halfAt(ly)} ${ly} L${cx + halfAt(ly)} ${ly} L${x + w - 5} ${y + h - 9} Q${x + w - 2} ${y + h - 2} ${x + w - 10} ${y + h - 2} L${x + 10} ${y + h - 2} Q${x + 2} ${y + h - 2} ${x + 5} ${y + h - 9} Z`} fill={liquid} opacity={liquidOpacity} />
-          <line x1={cx - halfAt(ly)} x2={cx + halfAt(ly)} y1={ly} y2={ly} stroke={shade(liquid, -0.3)} strokeWidth="1.3" opacity="0.8" />
+          <path d={`M${cx - halfAt(ly)} ${ly} L${cx + halfAt(ly)} ${ly} L${x + w - 5} ${y + h - 9} Q${x + w - 2} ${y + h - 2} ${x + w - 10} ${y + h - 2} L${x + 10} ${y + h - 2} Q${x + 2} ${y + h - 2} ${x + 5} ${y + h - 9} Z`} fill="url(#kit-liquid-depth)" />
+          <path d={`M${cx - halfAt(ly)} ${ly - 2} Q${cx - halfAt(ly) + 3} ${ly} ${cx - halfAt(ly) + 7} ${ly} L${cx + halfAt(ly) - 7} ${ly} Q${cx + halfAt(ly) - 3} ${ly} ${cx + halfAt(ly)} ${ly - 2}`} fill="none" stroke={shade(liquid, -0.3)} strokeWidth="1.3" opacity="0.85" />
         </g>
       )}
       {children}
@@ -360,9 +427,16 @@ export function TestTube({ x, y, w = 22, h, fill = 0, liquid = '#4f9fe0', liquid
   return (
     <g>
       <path d={path} fill="url(#kit-glass-fill)" />
-      {fill > 0 && <path d={`M${x + 1.5} ${ly} L${x + 1.5} ${y + h - r} A${r - 1.5} ${r - 1.5} 0 0 0 ${x + w - 1.5} ${y + h - r} L${x + w - 1.5} ${ly} Z`} fill={liquid} opacity={liquidOpacity} />}
+      {fill > 0 && (
+        <g className="kit-liquid">
+          <path d={`M${x + 1.5} ${ly - 1.5} Q${x + 2.5} ${ly} ${x + 5} ${ly} L${x + w - 5} ${ly} Q${x + w - 2.5} ${ly} ${x + w - 1.5} ${ly - 1.5} L${x + w - 1.5} ${y + h - r} A${r - 1.5} ${r - 1.5} 0 0 1 ${x + 1.5} ${y + h - r} Z`} fill={liquid} opacity={liquidOpacity} />
+          <path d={`M${x + 1.5} ${ly} L${x + w - 1.5} ${ly} L${x + w - 1.5} ${y + h - r} A${r - 1.5} ${r - 1.5} 0 0 1 ${x + 1.5} ${y + h - r} Z`} fill="url(#kit-liquid-shade)" />
+          <path d={`M${x + 1.5} ${ly - 1.5} Q${x + 2.5} ${ly} ${x + 5} ${ly} L${x + w - 5} ${ly} Q${x + w - 2.5} ${ly} ${x + w - 1.5} ${ly - 1.5}`} fill="none" stroke={shade(liquid.startsWith('#') ? liquid : '#6f8f9c', -0.35)} strokeWidth="1" opacity="0.7" />
+        </g>
+      )}
       {children}
       <path d={path} fill="url(#kit-glass)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="1.4" />
+      <rect x={x + Math.max(2, w * 0.14)} y={y + 6} width={Math.max(1.6, w * 0.09)} height={Math.max(0, h - r - 14)} rx={1} fill="#fff" opacity="0.42" />
       <line x1={x - 2} x2={x + w + 2} y1={y} y2={y} stroke="var(--glass-edge, #8fa9b3)" strokeWidth="2.4" strokeLinecap="round" />
     </g>
   );

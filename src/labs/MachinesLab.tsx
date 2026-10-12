@@ -10,6 +10,7 @@ import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop } from './kit';
+import { ManipHint, ManipScene, Plunger } from './manipulate';
 
 /* ------------------------------------------------------------------ instrumentos */
 
@@ -665,20 +666,47 @@ export default function MachinesLab({ api }: LabProps) {
       (measured ? (readings?.effort === null ? 'El dinamómetro se sale de la escala.' : `El dinamómetro marca ${effortText}; se jalaron ${fmt(readings!.sEffort, 1)} cm de cuerda y la carga subió ${fmt(readings!.sLoad, 1)} cm.`) : 'Aún no se ha medido.');
 
   const canMeasure = machine === 'poleas' || lever !== null;
+  // Manipulación directa de la palanca: el colgador y el dinamómetro se deslizan por la barra (posiciones de reposo).
+  // Los recorridos respetan el orden del género elegido (en 2.º la carga va entre el fulcro y la fuerza; en 3.º, al revés).
+  const leverHandles = (() => {
+    if (machine !== 'palanca' || !lever) return null;
+    const [lo, hi] = armRange(cls).map((m) => Math.round(m * 100));
+    const load: [number, number] = cls === 2 ? [lo, Math.max(lo, dF - 5)] : cls === 3 ? [Math.min(hi, dF + 5), hi] : [lo, hi];
+    const effort: [number, number] = cls === 2 ? [Math.min(hi, dR + 5), hi] : cls === 3 ? [lo, Math.max(lo, dR - 5)] : [lo, hi];
+    const yb = barRestY(cls), xf = barX(lever.xFulcrum * 100);
+    const sLoad = cls === 1 ? -1 : 1;
+    const yLoad = yb + 26, yEff = cls === 1 ? yb + 58 : yb - 58;
+    return {
+      load, effort,
+      loadFrom: { x: xf + sLoad * load[0] * PXC, y: yLoad }, loadTo: { x: xf + sLoad * load[1] * PXC, y: yLoad },
+      effortFrom: { x: xf + effort[0] * PXC, y: yEff }, effortTo: { x: xf + effort[1] * PXC, y: yEff },
+    };
+  })();
   const lr = readings;
 
   return (
     <div className="lab-layout">
       <div className="stack">
         <div className="bench" tabIndex={0} role="region" aria-label="Banco de trabajo de máquinas simples">
+          <ManipScene viewBox={`0 0 ${W} ${H}`} label="Controles de la palanca" scene={
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="maq-t maq-d">
             <title id="maq-t">{machine === 'palanca' ? 'Palanca con barra graduada, pesas, dinamómetro y reglas' : 'Sistema de poleas con pesas, dinamómetro y reglas'}</title>
             <desc id="maq-d">{desc}</desc>
             <MachineDefs />
             <BenchTop y={BENCH_Y} width={W} />
             {machine === 'palanca' ? leverScene() : pulleyScene()}
-          </svg>
+          </svg>}>
+            {leverHandles && (
+              <>
+                <Plunger label="Colgador de la carga: distancia al fulcro" value={dR} min={leverHandles.load[0]} max={leverHandles.load[1]} step={5} pageStep={10} unit="cm" decimals={0}
+                  from={leverHandles.loadFrom} to={leverHandles.loadTo} size={40} onChange={setDR} />
+                <Plunger label="Dinamómetro: distancia al fulcro" value={dF} min={leverHandles.effort[0]} max={leverHandles.effort[1]} step={5} pageStep={10} unit="cm" decimals={0}
+                  from={leverHandles.effortFrom} to={leverHandles.effortTo} size={40} onChange={setDF} />
+              </>
+            )}
+          </ManipScene>
         </div>
+        {machine === 'palanca' && <ManipHint>Arrastra el colgador de las pesas y el dinamómetro a lo largo de la barra para cambiar sus distancias al fulcro, o enfócalos con Tab y usa las flechas.</ManipHint>}
 
         <div className="grid-2">
           <div className="stack">

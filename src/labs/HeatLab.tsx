@@ -13,7 +13,8 @@ import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../com
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
-import { BenchTop, Beaker, DigitalBalance, Lcd, Stopwatch, Thermometer, shade } from './kit';
+import { BenchTop, Beaker, ContactShadow, DigitalBalance, Lcd, Stopwatch, Thermometer, shade } from './kit';
+import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -34,6 +35,8 @@ const PX_PER_ML = (CUP_H - 12) / 450;
 /** Baño de la parrilla. */
 const BATH = { x: 52, y: 252, w: 112, h: 108 };
 const PLATE_Y = BATH.y + BATH.h + 2;
+/** Al soltar la muestra a la derecha de este x, cae en el calorímetro. */
+const DROP_X = BAL.x - 10;
 /** Escala del dibujo del metal (px por cm). */
 const PX_PER_CM = 9;
 
@@ -121,6 +124,7 @@ function HotPlate({ on, reading }: { on: boolean; reading: string }) {
   const x = BATH.x - 18, w = BATH.w + 36, y = PLATE_Y;
   return (
     <g>
+      <ContactShadow x={x} y={BENCH_Y} w={w} h={9} />
       <g filter="url(#kit-shadow)">
         <rect x={x} y={y + 8} width={w} height={BENCH_Y - y - 9} rx={6} fill="url(#kit-body)" stroke="#a9b4b6" />
       </g>
@@ -176,6 +180,7 @@ export default function HeatLab({ api }: LabProps) {
   const [phase, setPhase] = useState<Phase>('listo');
   const [elapsed, setElapsed] = useState(0);
   const [sensorRun, setSensorRun] = useState<LoggerRun | null>(null);
+  const [draggingSample, setDraggingSample] = useState(false);
   const raf = useRef(0);
 
   const isMetal = experiment === 'metal';
@@ -317,6 +322,7 @@ export default function HeatLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench" tabIndex={0} role="region" aria-label="Banco de trabajo del calorímetro">
+          <ManipScene viewBox={`0 ${VIEW_Y} ${W} ${H - VIEW_Y}`} label="Controles de la parrilla y de la muestra" scene={
           <svg viewBox={`0 ${VIEW_Y} ${W} ${H - VIEW_Y}`} role="img" aria-labelledby="cal-t cal-d">
             <title id="cal-t">Calorímetro de mezclas sobre una balanza, con termómetro digital, parrilla y cronómetro</title>
             <desc id="cal-d">{desc}</desc>
@@ -416,8 +422,27 @@ export default function HeatLab({ api }: LabProps) {
             <text x={CX + 40} y={BENCH_Y + 30} textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>
               Balanza tarada con el vaso vacío: marca el agua{transfer >= 1 ? ' más la muestra' : ''}.
             </text>
-          </svg>
+          </svg>}>
+            <Knob label="Perilla de la parrilla: temperatura de la muestra" cx={160} cy={PLATE_Y + 26} r={9} value={sampleTemp} min={HEAT_LIMITS.sampleTemp[0]} max={HEAT_LIMITS.sampleTemp[1]} step={1} pageStep={5} unit="°C" decimals={0} onChange={setSampleTemp} />
+            <DragHandle label={`${isMetal ? 'Pieza de metal' : 'Vaso con el agua caliente'}: llevar de la parrilla al calorímetro`} value={phase === 'listo' ? 0 : 1} min={0} max={1} step={1} pageStep={1}
+              commit="end" affordance={!draggingSample}
+              hit={phase === 'listo' ? { x: BATH.x - 2, y: BATH.y - 6, w: BATH.w + 4, h: BATH.h + 4 } : { x: CX - 52, y: CUP_TOP - 14, w: 104, h: CUP_H + 10 }}
+              valueText={(v) => (v ? 'Agregado al calorímetro (mezcla en curso o medida)' : 'En la parrilla, listo para agregar')}
+              valueFromPoint={({ point }) => (point.x > DROP_X ? 1 : 0)}
+              onDragChange={setDraggingSample}
+              onChange={(v) => (v ? start() : reset())}>
+              {({ dragging, point }) => dragging && point && phase === 'listo' && (
+                <g aria-hidden="true" style={{ pointerEvents: 'none' }}>
+                  <rect x={CX - 70} y={CUP_TOP - 30} width={140} height={CUP_H + 30} rx={12} fill="var(--accent)" opacity={point.x > DROP_X ? 0.16 : 0.05} />
+                  {isMetal
+                    ? <MetalPiece x={point.x} y={point.y} d={metalD} color={metalInfo.color} />
+                    : <g opacity="0.85"><Beaker x={point.x - 30} y={point.y - 30} w={60} h={60} fill={0.6} liquid="#7fbfe0" liquidOpacity={0.45} /></g>}
+                </g>
+              )}
+            </DragHandle>
+          </ManipScene>
         </div>
+        <ManipHint>Arrastra {isMetal ? 'la pieza de metal' : 'el vaso de agua caliente'} de la parrilla al calorímetro para mezclar, y gira la perilla de la parrilla para fijar su temperatura; también puedes enfocarlos con Tab y usar las flechas.</ManipHint>
 
         <div className="grid-2">
           <div className="stack">

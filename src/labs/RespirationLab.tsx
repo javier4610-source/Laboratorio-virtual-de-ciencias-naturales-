@@ -11,7 +11,8 @@ import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../com
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
-import { BenchTop, Beaker, DigitalBalance, Lcd, Stopwatch, TestTube, Thermometer, shade } from './kit';
+import { BenchTop, Beaker, ContactShadow, DigitalBalance, Lcd, Stopwatch, TestTube, Thermometer, shade } from './kit';
+import { Knob, ManipHint, ManipScene } from './manipulate';
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -251,6 +252,7 @@ export default function RespirationLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench" tabIndex={0} role="region" aria-label="Banco de trabajo del respirómetro">
+          <ManipScene viewBox={`0 0 ${W} ${H}`} label="Controles del termostato" scene={
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="res-t res-d">
             <title id="res-t">Respirómetro de tres tubos en un baño termostatado, con capilares, balanza y cronómetro</title>
             <desc id="res-d">{desc}</desc>
@@ -279,13 +281,13 @@ export default function RespirationLab({ api }: LabProps) {
               </g>
             )}
 
-            {/* termostato del baño */}
+            {/* termostato del baño (la perilla está en la capa de controles) */}
+            <ContactShadow x={428} y={394} w={86} h={7} />
             <g filter="url(#kit-shadow)">
               <rect x={428} y={316} width={86} height={78} rx={8} fill="url(#kit-body)" stroke="#a9b4b6" />
             </g>
             <text x={471} y={331} textAnchor="middle" style={{ fontSize: 8.5, fill: '#3a4644', fontWeight: 700, letterSpacing: 0.5 }}>TERMOSTATO</text>
             <Lcd x={434} y={337} w={74} h={26} text={fmt(temperature, 1)} unit="°C" />
-            <circle cx={446} cy={379} r={5} fill="url(#kit-body-dark)" />
             <circle cx={500} cy={379} r={3} fill={phase === 'midiendo' ? '#66bb6a' : '#9aa5a9'} />
             <path d="M514 360 C 522 360, 526 372, 538 378" fill="none" stroke="#3b4648" strokeWidth="3" strokeLinecap="round" />
 
@@ -302,8 +304,11 @@ export default function RespirationLab({ api }: LabProps) {
             <ReagentBottle x={348} y={338} label="KOH" sub="15 %" liquid="#e9eef0" />
             <GasCylinder x={389} active={atmosphere === 'n2'} />
             <text x={621} y={423} textAnchor="middle" style={{ fontSize: 9.5, fill: 'var(--ink-2)' }}>C: {controlName.toLowerCase()} (termobarómetro)</text>
-          </svg>
+          </svg>}>
+            <Knob label="Perilla del termostato del baño" cx={452} cy={381} r={8} value={temperature} min={RESP_LIMITS.temperature[0]} max={RESP_LIMITS.temperature[1]} step={1} pageStep={5} unit="°C" decimals={0} onChange={setTemperature} />
+          </ManipScene>
         </div>
+        <ManipHint>Gira la perilla del termostato para fijar la temperatura del baño, o enfócala con Tab y usa las flechas.</ManipHint>
 
         <div className="grid-2">
           <div className="stack">

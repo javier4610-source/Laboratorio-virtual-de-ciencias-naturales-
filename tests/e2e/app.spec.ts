@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { SERVER } from './env';
 
 /** Abre una práctica en modo libre y va a la etapa de experimento. */
 async function openFree(page: Page, id: string) {
@@ -525,7 +526,7 @@ test('servidor: el docente crea un curso, el estudiante envía su informe y el d
   // Docente
   await page.goto('/#/docente');
   await page.getByRole('tab', { name: 'Servidor' }).click();
-  await page.getByLabel('Dirección del servidor').fill('http://localhost:8787');
+  await page.getByLabel('Dirección del servidor').fill(SERVER);
   await page.getByRole('button', { name: 'Probar conexión' }).click();
   await expect(page.getByText('Conexión correcta con el servidor.')).toBeVisible();
   await page.getByRole('button', { name: 'Crear cuenta' }).first().click();
@@ -546,7 +547,7 @@ test('servidor: el docente crea un curso, el estudiante envía su informe y el d
   await page.goto('/#/practica/popgen/informe');
   await page.getByLabel('Nombre del estudiante').fill('Valentina Mosquera');
   await page.locator('summary', { hasText: 'Enviar a mi docente por internet' }).click();
-  await page.locator('#srv-url').fill('http://localhost:8787');
+  await page.locator('#srv-url').fill(SERVER);
   await page.getByLabel('Código del curso').fill(code);
   await page.getByRole('button', { name: 'Enviar informe' }).click();
   await expect(page.getByText('Informe recibido en el curso «11-1 Biología».')).toBeVisible();
@@ -596,7 +597,7 @@ test('seguimiento: el estudiante se une con código y PIN, y el docente ve su av
   // Docente crea el curso.
   await page.goto('/#/docente');
   await page.getByRole('tab', { name: 'Servidor' }).click();
-  await page.getByLabel('Dirección del servidor').fill('http://localhost:8787');
+  await page.getByLabel('Dirección del servidor').fill(SERVER);
   await page.getByRole('button', { name: 'Crear cuenta' }).first().click();
   await page.getByLabel('Nombre', { exact: true }).fill('Docente Seguimiento');
   await page.getByLabel('Código de registro institucional').fill('PRUEBA-E2E');
@@ -611,7 +612,7 @@ test('seguimiento: el estudiante se une con código y PIN, y el docente ve su av
   await page.goto('/#/');
   await page.getByRole('button', { name: 'Unirme a mi curso' }).click();
   const dialog = page.getByRole('dialog', { name: 'Unirme a mi curso' });
-  await dialog.getByLabel('Servidor del colegio').fill('http://localhost:8787');
+  await dialog.getByLabel('Servidor del colegio').fill(SERVER);
   await dialog.getByLabel('Código de tu curso').fill(code);
   await dialog.getByLabel('Tu nombre y apellido').fill('Camila Restrepo');
   await dialog.getByLabel('PIN de 4 dígitos').fill('2468');

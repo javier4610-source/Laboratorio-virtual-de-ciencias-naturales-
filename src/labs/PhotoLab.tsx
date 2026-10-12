@@ -6,7 +6,11 @@ import { Notice, Readout, RecordButton, Select, Slider, Warnings } from '../comp
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import { rangeStats, type LoggerChannel, type LoggerRun } from '../lib/logger';
 import type { LabProps } from './registry';
-import { BenchTop, TestTube, shade } from './kit';
+import { BenchTop, ContactShadow, TestTube, shade } from './kit';
+import { ManipHint, ManipScene, Plunger } from './manipulate';
+
+/** Riel óptico: x de la lámpara para una distancia (5 cm junto al tubo, 100 cm en el extremo). */
+const railX = (d: number) => 470 - (d / 100) * 330;
 
 /** Rama de elodea: tallo con verticilos de tres hojas; el extremo cortado (arriba) libera las burbujas. */
 const ELODEA = (() => {
@@ -62,7 +66,7 @@ export default function PhotoLab({ api }: LabProps) {
 
   const lampColor = LIGHT_COLORS.find((c) => c.id === color)!.color;
   const waterColor = bicarbonate > 0 ? '#9fd3e6' : '#bfe3f0';
-  const lampX = 470 - (distance / 100) * 330; // riel: 5 cm cerca del tubo, 100 cm lejos
+  const lampX = railX(distance);
   const bubbles = Array.from({ length: 6 }, (_, i) => {
     const prog = (phase + i / 6) % 1;
     return res.bubblesPerMin > 0 ? { y: 128 - prog * 64, r: 2 + (i % 3) * 0.8 } : null;
@@ -94,6 +98,7 @@ export default function PhotoLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox="0 0 640 300" label="Controles del montaje de la lámpara" scene={
           <svg viewBox="0 0 640 300" role="img" aria-labelledby="ph-t ph-d">
             <title id="ph-t">Planta acuática Elodea iluminada por una lámpara sobre un riel</title>
             <desc id="ph-d">{`Lámpara ${lampOn ? `encendida, luz ${color}, a ${distance} cm` : 'apagada'}. ${fmt(res.bubblesPerMin, 1)} burbujas por minuto.`}</desc>
@@ -128,6 +133,7 @@ export default function PhotoLab({ api }: LabProps) {
               {lampOn && <ellipse cx="22" cy="134" rx="4" ry="22" fill="#fff" opacity="0.35" />}
             </g>
             {/* soporte universal con pinza */}
+            <ContactShadow x={572} y={274} w={58} h={7} />
             <rect x="572" y="264" width="58" height="10" rx="2" fill="url(#kit-body-dark)" />
             <rect x="597" y="26" width="7" height="240" fill="url(#kit-metal-h)" />
             <rect x="560" y="78" width="44" height="7" rx="2" fill="url(#kit-metal)" stroke="#8d989c" />
@@ -138,8 +144,12 @@ export default function PhotoLab({ api }: LabProps) {
             </TestTube>
             <rect x="500" y="76" width="70" height="10" rx="3" fill="url(#kit-body-dark)" />
             <text x="535" y="30" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{temperature} °C</text>
-          </svg>
+          </svg>}>
+            <Plunger label="Lámpara sobre el riel: distancia al tubo" value={distance} min={PHOTO_LIMITS.distance[0]} max={PHOTO_LIMITS.distance[1]} step={1} pageStep={5} unit="cm" decimals={0}
+              from={{ x: railX(PHOTO_LIMITS.distance[0]) + 2, y: 134 }} to={{ x: railX(PHOTO_LIMITS.distance[1]) + 2, y: 134 }} size={48} onChange={change(setDistance)} />
+          </ManipScene>
         </div>
+        <ManipHint>Arrastra la lámpara por el riel para acercarla o alejarla del tubo, o enfócala con Tab y usa las flechas (← la acerca, → la aleja).</ManipHint>
         <Readout items={[
           { k: 'Irradiancia', v: `${fmt(res.irradiance, 0)} µmol/m²·s` },
           { k: 'Burbujas por minuto', v: counted !== null ? fmt(counted, 0) : 'cuenta 1 minuto', data: true },

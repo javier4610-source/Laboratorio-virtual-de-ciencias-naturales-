@@ -5,6 +5,7 @@ import {
 } from '../models/pendulum';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd, shade, Stopwatch } from './kit';
@@ -287,6 +288,15 @@ export default function PendulumLab({ api }: LabProps) {
     return fmt(Math.max(0, Math.min(tNow, meas.stopAt) - meas.startAt), 3);
   })();
   const passagesSoFar = released ? run.passages.filter((p) => p <= tNow).length : 0;
+  // Sonido: tic de la fotopuerta en cada paso y clic del cronómetro al iniciar y detener.
+  const swPhase = meas?.kind === 'cronometro' && released ? (tNow >= meas.stopAt ? 2 : tNow >= meas.startAt ? 1 : 0) : 0;
+  const prevSound = useRef({ passages: 0, sw: 0 });
+  useEffect(() => {
+    const prev = prevSound.current;
+    if (running && mode === 'fotopuerta' && passagesSoFar > prev.passages) playSound(passagesSoFar >= 3 ? 'photogate' : 'tick');
+    if (running && swPhase > prev.sw) playSound('click', { intensity: 0.8 });
+    prevSound.current = { passages: passagesSoFar, sw: swPhase };
+  });
   const oscCount = mode === 'cronometro' && released ? Math.min(OSCILLATIONS_TIMED, Math.floor(Math.max(0, passagesSoFar - 1) / 2)) : null;
 
   const result = done && meas ? analyzePeriod(length, meas.period) : null;

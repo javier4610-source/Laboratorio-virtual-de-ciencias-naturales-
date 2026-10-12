@@ -6,6 +6,7 @@ import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Burette, Erlenmeyer, Lcd } from './kit';
+import { playSound } from '../lib/sound';
 
 /** Contorno del líquido dentro del Erlenmeyer del kit (misma geometría), para teñirlo con el indicador. */
 function erlLiquid(x: number, y: number, w: number, h: number, fill: number) {
@@ -59,10 +60,12 @@ function TitrationPart({ api }: LabProps) {
   const maxV = Math.min(100, Math.max(50, Math.ceil(res.equivalenceVolume * 2 / 10) * 10));
   const curve = useMemo(() => titrationCurve({ acidId: realAcid, acidConc: realCa, acidVolume: va, baseConc: cb }, maxV), [realAcid, realCa, va, cb, maxV]);
 
-  const restart = () => { setVb(0); setHistory([]); setGuessMsg(null); };
+  const restart = () => { setVb(0); setHistory([]); setGuessMsg(null); playSound('glassClink', { intensity: 0.5 }); };
   const add = (dv: number) => {
     const nv = Math.max(0, Math.min(100, Number((vb + dv).toFixed(2))));
     setVb(nv);
+    // Gota a gota (0,1 mL), chorrito (1 mL) o chorro (5 mL) desde la bureta, y se agita el erlenmeyer.
+    if (dv > 0) { playSound(dv >= 5 ? 'pour' : 'drips', { duration: dv >= 5 ? 0.8 : dv >= 1 ? 0.6 : 0.05, intensity: 0.5 }); playSound('swirl', { intensity: 0.35, delay: 0.5 }); }
     const p = titrate({ acidId: realAcid, acidConc: realCa, acidVolume: va, baseConc: cb, baseVolume: nv }).pH;
     setHistory((h) => [...h.filter((pt) => pt.x !== nv), { x: nv, y: p }].sort((a, b) => a.x - b.x));
   };

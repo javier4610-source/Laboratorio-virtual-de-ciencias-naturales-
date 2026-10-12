@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ENERGY_LIMITS, simulateTrack, trackHeight, TRACK_X } from '../models/energy';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Slider } from '../components/ui';
 import type { LabProps } from './registry';
@@ -38,6 +39,9 @@ export default function EnergyLab({ api }: LabProps) {
   }, [running, res]);
 
   const p = res.points[Math.min(idx, res.points.length - 1)];
+  // La esfera rueda por el riel: el sonido crece con su rapidez.
+  const vMax = Math.max(1e-6, ...res.points.map((q) => q.v));
+  useSoundLoop('rolling', running, 0.1 + 0.9 * Math.min(1, p.v / vMax));
   const sx = (x: number) => X0 + (x / TRACK_X) * (W - X0 - 30), sy = (h: number) => 230 - h * 95;
   // dibuja la pista completa aunque la esfera no la recorra
   const path = useMemo(() => Array.from({ length: 201 }, (_, i) => {
@@ -161,7 +165,7 @@ export default function EnergyLab({ api }: LabProps) {
           <Slider label="Fricción efectiva μ" value={mu} min={ENERGY_LIMITS.mu[0]} max={ENERGY_LIMITS.mu[1]} step={0.005} decimals={3} onChange={setMu} />
           <label className="check"><input type="checkbox" checked={rolling} onChange={(e) => setRolling(e.target.checked)} /> La esfera rueda (parte de la energía va a la rotación)</label>
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { setIdx(0); setDone(false); setRunning(true); }} disabled={running}>Soltar la esfera</button>
+            <button type="button" className="btn primary" onClick={() => { setIdx(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.7 }); }} disabled={running}>Soltar la esfera</button>
             <button type="button" className="btn" onClick={() => { setIdx(0); setDone(false); setRunning(false); }}>Reiniciar</button>
           </div>
           <RecordButton onRecord={record} disabled={!done} />

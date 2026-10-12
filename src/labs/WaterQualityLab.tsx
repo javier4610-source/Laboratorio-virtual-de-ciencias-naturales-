@@ -5,6 +5,7 @@ import {
 } from '../models/waterQuality';
 import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Select, Slider, Warnings } from '../components/ui';
 import { Chart } from '../components/Chart';
 import { useMeasure } from '../components/Measurement';
@@ -314,7 +315,7 @@ export default function WaterQualityLab({ api }: LabProps) {
     const start = performance.now();
     const tick = (now: number) => {
       const el = Math.max(0, (now - start) / 1000);
-      if (el >= DURATION) { setP(1); setPhase('medido'); return; }
+      if (el >= DURATION) { setP(1); setPhase('medido'); playSound('beep'); return; }
       setP(el / DURATION);
       raf.current = requestAnimationFrame(tick);
     };
@@ -322,7 +323,12 @@ export default function WaterQualityLab({ api }: LabProps) {
     return () => cancelAnimationFrame(raf.current);
   }, [phase]);
 
-  const start = () => { remeasure('temp', 'od', 'pH', 'ec', 'turb', 'no3', 'po4', 'dbo', 'cf'); setP(0); setPhase('midiendo'); };
+  const start = () => {
+    remeasure('temp', 'od', 'pH', 'ec', 'turb', 'no3', 'po4', 'dbo', 'cf'); setP(0); setPhase('midiendo');
+    // Sonido: se llena el frasco de muestra y luego la sonda multiparámetro entra al agua.
+    playSound('pour', { duration: DURATION * 0.4, intensity: 0.5 });
+    playSound('splash', { intensity: 0.3, delay: DURATION * 0.42 });
+  };
 
   const measured = phase === 'medido';
   const sampling = phase === 'midiendo';

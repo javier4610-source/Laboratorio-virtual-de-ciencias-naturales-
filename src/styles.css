@@ -218,6 +218,8 @@ kbd { font-family: var(--font-data); font-size: 0.82em; padding: 1px 6px; border
 .nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
 .nav a[aria-current="page"] .nav-icon { opacity: 1; }
 .theme-toggle { margin-left: 4px; min-width: 40px; border-color: var(--line) !important; }
+.header-tools { display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; }
+.header-tools .theme-toggle { margin-left: 0; }
 .btn.menu-toggle { display: none; }
 @media (min-width: 861px) and (max-width: 1120px) { .nav a .nav-icon { display: none; } }
 @media (max-width: 860px) {
@@ -226,6 +228,8 @@ kbd { font-family: var(--font-data); font-size: 0.82em; padding: 1px 6px; border
   .nav.open { display: flex; }
   .nav a { padding: 11px 12px; }
   .theme-toggle { align-self: flex-start; margin: 6px 0 0; }
+  .header-tools { align-self: flex-start; margin: 6px 0 0; }
+  .header-tools .theme-toggle { margin: 0; }
 }
 
 main { padding-block: 28px 72px; outline: none; }

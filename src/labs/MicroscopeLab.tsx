@@ -6,6 +6,7 @@ import {
 import { seededRandom } from '../models/math';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 
@@ -291,10 +292,10 @@ export default function MicroscopeLab({ api }: LabProps) {
       <div className="controls">
         <div className="card stack">
           <h3>Preparación y microscopio</h3>
-          <Select label="Muestra" value={sampleId} onChange={(v) => change(() => setSampleId(v as SampleId))} options={SAMPLES.map((m) => ({ value: m.id, label: m.name }))} />
+          <Select label="Muestra" value={sampleId} onChange={(v) => change(() => { setSampleId(v as SampleId); playSound('glassClink', { intensity: 0.35 }); })} options={SAMPLES.map((m) => ({ value: m.id, label: m.name }))} />
           <Select label="Tinción" value={stain} onChange={(v) => change(() => setStain(v as StainId))} options={STAINS.map((m) => ({ value: m.id, label: m.name }))} />
-          <Segmented label="Objetivo" value={String(objective)} onChange={(v) => change(() => setObjective(Number(v) as Objective))} options={OBJECTIVES.map((o) => ({ value: String(o), label: `${o}×` }))} />
-          <Slider label="Tornillo micrométrico (enfoque)" value={focus} min={FOCUS_RANGE[0]} max={FOCUS_RANGE[1]} step={1} decimals={0} onChange={(v) => change(() => setFocus(v))} hint="Con objetivos de mayor aumento, el margen de enfoque es mucho más estrecho." />
+          <Segmented label="Objetivo" value={String(objective)} onChange={(v) => change(() => { setObjective(Number(v) as Objective); playSound('click', { intensity: 1 }); })} options={OBJECTIVES.map((o) => ({ value: String(o), label: `${o}×` }))} />
+          <Slider label="Tornillo micrométrico (enfoque)" value={focus} min={FOCUS_RANGE[0]} max={FOCUS_RANGE[1]} step={1} decimals={0} onChange={(v) => change(() => { setFocus(v); playSound('knob'); })} hint="Con objetivos de mayor aumento, el margen de enfoque es mucho más estrecho." />
           <div className="btn-row">
             <button type="button" className="btn primary" onClick={startCount} disabled={phase === 'counting'}>Contar células a lo largo del diámetro</button>
           </div>

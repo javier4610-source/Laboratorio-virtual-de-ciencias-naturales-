@@ -5,6 +5,7 @@ import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, GasSyringe, Lcd, Thermometer } from './kit';
@@ -62,8 +63,11 @@ const LAW_NAME: Record<GasLaw, string> = { boyle: 'Temperatura constante (Boyle)
 
 export default function GasLab({ api }: LabProps) {
   const [law, setLaw] = useState<GasLaw>('boyle');
-  const [volume, setVolume] = useState(INITIAL.volume);
-  const [temperature, setTemperature] = useState(INITIAL.temperature);
+  const [volume, setVolumeState] = useState(INITIAL.volume);
+  const [temperature, setTemperatureState] = useState(INITIAL.temperature);
+  // Sonido: chirrido del émbolo de goma (más agudo cuanto más comprimido) y detentes de la perilla del termostato.
+  const setVolume = (v: number) => { setVolumeState(v); if (v !== volume) playSound('squeak', { intensity: Math.min(1, 40 / Math.max(10, v)) }); };
+  const setTemperature = (v: number) => { setTemperatureState(v); if (v !== temperature) playSound('knob'); };
   const [tick, setTick] = useState(0);
   const model = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure }), [law, volume, temperature]);
   // Lecturas de los instrumentos. En modo real: el émbolo queda un poco desalineado de la marca de la escala

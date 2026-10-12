@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AMMETER_RES_MA, CLASS_LABELS, SAMPLES, testSample, type ConductorClass, type Sample } from '../models/conductors';
 import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select } from '../components/ui';
 import type { LabProps } from './registry';
 import { useMeasure } from '../components/Measurement';
@@ -391,8 +392,8 @@ export default function ConductorsLab({ api }: LabProps) {
             hint="Elige si el material será conductor, conductor débil o aislante antes de cerrar el circuito."
           />
           <div className="btn-row">
-            <button type="button" className="btn primary" disabled={prediction === '' || phase !== 'abierto'} onClick={() => { remeasure('amperimetro'); setProgress(0); setPhase('midiendo'); }}>Cerrar el circuito y medir</button>
-            <button type="button" className="btn" disabled={phase === 'abierto'} onClick={() => { cancelAnimationFrame(raf.current); setPhase('abierto'); setProgress(0); }}>Abrir el circuito</button>
+            <button type="button" className="btn primary" disabled={prediction === '' || phase !== 'abierto'} onClick={() => { remeasure('amperimetro'); setProgress(0); setPhase('midiendo'); playSound('switch'); }}>Cerrar el circuito y medir</button>
+            <button type="button" className="btn" disabled={phase === 'abierto'} onClick={() => { cancelAnimationFrame(raf.current); setPhase('abierto'); setProgress(0); playSound('switch', { intensity: 0.6 }); }}>Abrir el circuito</button>
           </div>
           <RecordButton onRecord={record} disabled={!measured} />
         </div>

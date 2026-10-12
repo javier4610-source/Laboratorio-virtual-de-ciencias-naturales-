@@ -6,6 +6,7 @@ import type { Prefs } from '../lib/prefs';
 import { Segmented } from '../components/ui';
 import { storageAvailable } from '../lib/storage';
 import { InstallButton } from '../components/PwaUi';
+import { SoundSettingsPanel } from '../components/SoundUi';
 
 export function AccessibilityPanel({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Prefs) => void }) {
   return (
@@ -30,6 +31,7 @@ const IMPLEMENTED = [
   'Panel docente: catálogo, validación curricular de los DBA, asignaciones y listas por código, importación de informes, resultados agregados, preguntas con mayor error, opinión de los estudiantes, exportación CSV, rúbrica y conexión opcional al servidor institucional.',
   'Servidor institucional opcional (carpeta server/) con cuentas docentes, cursos y recepción de informes, sin cuentas de estudiantes.',
   'Accesibilidad: navegación por teclado (incluidas flechas en las pestañas), enlace para saltar al contenido, textos alternativos y tablas equivalentes para las gráficas, tema claro/oscuro, alto contraste, tamaño de texto y reducción de animaciones. Auditoría automática WCAG 2.1 AA con axe-core.',
+  'Sonidos realistas de laboratorio (vidrio, líquidos, efervescencia, balanza, fotopuertas, interruptores, soplador, choques…) sintetizados en el navegador, sin archivos de audio; se silencian con el botón «Sonido» y el volumen se ajusta en esta página.',
   'Carga bajo demanda: cada práctica se descarga solo al abrirla.',
   'Pruebas automatizadas de las fórmulas, del currículo, del servidor y de los flujos principales de la interfaz.',
 ];
@@ -63,6 +65,8 @@ export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Pref
         <section className="card stack-sm">
           <h2>Preferencias de visualización</h2>
           <AccessibilityPanel prefs={prefs} setPrefs={setPrefs} />
+          <h3>Sonido</h3>
+          <SoundSettingsPanel />
           <h3>Teclado</h3>
           <ul className="list small">
             <li><kbd>Tab</kbd> y <kbd>Mayús + Tab</kbd>: moverse entre controles.</li>

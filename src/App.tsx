@@ -13,6 +13,8 @@ import { KitDefs } from './labs/kit';
 import { Icon, Logo, type IconName } from './components/icons';
 import { CourseButton, JoinPage } from './components/ClassroomUi';
 import { startClassroomSync } from './lib/classroom';
+import { installSound } from './lib/sound';
+import { SoundToggle } from './components/SoundUi';
 
 // Páginas pesadas cargadas bajo demanda: el inicio y el catálogo abren rápido en equipos modestos.
 const PracticePage = lazy(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
@@ -55,7 +57,7 @@ export default function App() {
   const [prefs, setPrefs] = usePrefs();
   const [menuOpen, setMenuOpen] = useState(false);
   const [section, id, sub] = route.path;
-  useEffect(() => { startClassroomSync(); }, []);
+  useEffect(() => { startClassroomSync(); installSound(); }, []);
 
   let page;
   let current = section ?? '';
@@ -94,9 +96,12 @@ export default function App() {
             {nav.map((n) => (
               <a key={n.to} href={n.to ? href(n.to) : href()} aria-current={current === n.to ? 'page' : undefined} onClick={() => setMenuOpen(false)}><Icon name={n.icon} size={17} className="nav-icon" />{n.label}</a>
             ))}
-            <button type="button" className="btn small ghost theme-toggle" onClick={() => setPrefs({ ...prefs, theme: dark ? 'claro' : 'oscuro' })} aria-label={`Cambiar a tema ${dark ? 'claro' : 'oscuro'}`}>
-              <Icon name={dark ? 'sol' : 'luna'} size={18} />
-            </button>
+            <span className="header-tools">
+              <SoundToggle />
+              <button type="button" className="btn small ghost theme-toggle" onClick={() => setPrefs({ ...prefs, theme: dark ? 'claro' : 'oscuro' })} aria-label={`Cambiar a tema ${dark ? 'claro' : 'oscuro'}`}>
+                <Icon name={dark ? 'sol' : 'luna'} size={18} />
+              </button>
+            </span>
           </nav>
           <CourseButton />
         </div>

@@ -6,6 +6,7 @@ import type { LabProps } from './registry';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
+import { playSound } from '../lib/sound';
 
 const MEDIUM_FILL: Record<string, string> = { aire: 'rgba(200,225,240,0.10)', agua: 'rgba(70,150,220,0.28)', aceite: 'rgba(232,195,58,0.30)', vidrio: 'rgba(150,210,200,0.35)', diamante: 'rgba(210,220,240,0.55)', misterio: 'rgba(170,140,210,0.32)' };
 
@@ -142,7 +143,7 @@ export default function OpticsLab({ api }: LabProps) {
               hit={{ cx: cx - (LS + 26) * Math.sin(rad(angle)), cy: cy - (LS + 26) * Math.cos(rad(angle)), r: 16 }}
               valueText={(v) => `${fmt(v, 0)}° desde la normal`}
               valueFromPoint={({ point }) => (Math.atan2(cx - point.x, cy - point.y) * 180) / Math.PI}
-              onChange={(v) => change(() => setAngle(v))} />
+              onChange={(v) => change(() => { setAngle(v); playSound('knob', { intensity: 0.4 }); })} />
           </ManipScene>
         </div>
         <ManipHint>Arrastra el puntero láser alrededor del disco para cambiar el ángulo de incidencia, o enfócalo con Tab y usa las flechas.</ManipHint>
@@ -160,10 +161,10 @@ export default function OpticsLab({ api }: LabProps) {
           <h3>Montaje</h3>
           <Select label="Medio 1 (de donde viene la luz)" value={m1} onChange={(v) => change(() => setM1(v))} options={MEDIA.map((m) => ({ value: m.id, label: m.name }))} />
           <Select label="Medio 2" value={m2} onChange={(v) => change(() => setM2(v))} options={MEDIA.map((m) => ({ value: m.id, label: m.name }))} />
-          <Slider label="Ángulo de incidencia" value={angle} min={0} max={89} step={1} unit="°" decimals={0} onChange={(v) => change(() => setAngle(v))} />
+          <Slider label="Ángulo de incidencia" value={angle} min={0} max={89} step={1} unit="°" decimals={0} onChange={(v) => change(() => { setAngle(v); playSound('knob', { intensity: 0.4 }); })} />
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { remeasure('reflexion', 'refraccion'); setMeasured(true); }}>Medir con el transportador</button>
-            <button type="button" className="btn" onClick={() => change(() => { const a = m1; setM1(m2); setM2(a); })}>Invertir medios</button>
+            <button type="button" className="btn primary" onClick={() => { remeasure('reflexion', 'refraccion'); setMeasured(true); playSound('click', { intensity: 0.6 }); }}>Medir con el transportador</button>
+            <button type="button" className="btn" onClick={() => change(() => { const a = m1; setM1(m2); setM2(a); playSound('glassClink', { intensity: 0.4 }); })}>Invertir medios</button>
           </div>
           <RecordButton onRecord={record} disabled={!measured} />
         </div>

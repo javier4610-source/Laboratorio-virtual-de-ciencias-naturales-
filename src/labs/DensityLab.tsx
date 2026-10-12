@@ -8,6 +8,7 @@ import { Readout, RecordButton, Select, Slider, Warnings, Notice } from '../comp
 import type { LabProps } from './registry';
 import { BenchTop, Cube, DigitalBalance, GraduatedCylinder, Ruler } from './kit';
 import { DragHandle, ManipHint, ManipScene, zoneAt } from './manipulate';
+import { playSound } from '../lib/sound';
 
 /** Lugares donde puede estar la muestra: 0 mesa, 1 plato de la balanza, 2 dentro de la probeta. */
 const STATION_TEXT = ['La muestra está sobre la mesa', 'La muestra está en el plato de la balanza', 'La muestra está dentro de la probeta'];
@@ -53,8 +54,8 @@ export default function DensityLab({ api }: LabProps) {
     : 0;
 
   // Mover la muestra con la mano hace lo mismo que los botones «Pesar» y «Sumergir» (misma fuente de verdad).
-  const weigh = () => { remeasure('masa', 'regla'); setWeighed(true); };
-  const submerge = () => { remeasure('probeta'); setSubmerged(true); };
+  const weigh = () => { remeasure('masa', 'regla'); setWeighed(true); playSound('clank', { intensity: 0.25 + 0.1 * side }); };
+  const submerge = () => { remeasure('probeta'); setSubmerged(true); playSound(result.floats && !pushUnder ? 'drop' : 'splash', { intensity: 0.3 + 0.15 * side }); };
   const station = submerged ? 2 : weighed ? 1 : 0;
   const moveTo = (target: number) => {
     if (target === station) return;
@@ -183,8 +184,8 @@ export default function DensityLab({ api }: LabProps) {
           <Slider label="Agua inicial en la probeta" value={initialWater} min={LIMITS.initialWater[0]} max={LIMITS.initialWater[1]} step={1} unit="mL" decimals={0} onChange={(v) => { setInitialWater(v); setSubmerged(false); }} />
           <label className="check"><input type="checkbox" checked={pushUnder} onChange={(e) => setPushUnder(e.target.checked)} /> Hundir la muestra con un alfiler si flota</label>
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { remeasure('masa', 'regla'); setWeighed(true); }} disabled={weighed}>1. Pesar en la balanza</button>
-            <button type="button" className="btn primary" onClick={() => { remeasure('probeta'); setSubmerged(true); }} disabled={!weighed || submerged}>2. Sumergir en la probeta</button>
+            <button type="button" className="btn primary" onClick={weigh} disabled={weighed}>1. Pesar en la balanza</button>
+            <button type="button" className="btn primary" onClick={submerge} disabled={!weighed || submerged}>2. Sumergir en la probeta</button>
             <button type="button" className="btn" onClick={resetActions}>Reiniciar medición</button>
           </div>
           <RecordButton onRecord={record} disabled={!weighed || !submerged} />

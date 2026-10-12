@@ -1,5 +1,6 @@
 import { useId, useState, type ReactNode } from 'react';
 import { fmt, parseLocaleNumber } from '../lib/format';
+import { playSound } from '../lib/sound';
 
 interface SliderProps {
   label: string;
@@ -22,8 +23,8 @@ export function Slider({ label, value, min, max, step, unit, decimals = 1, onCha
   const [error, setError] = useState<string | null>(null);
   const commit = (text: string) => {
     const v = parseLocaleNumber(text);
-    if (Number.isNaN(v)) { setError('Escribe un número.'); return; }
-    if (v < min || v > max) { setError(`Usa un valor entre ${fmt(min, decimals)} y ${fmt(max, decimals)}.`); return; }
+    if (Number.isNaN(v)) { setError('Escribe un número.'); playSound('error'); return; }
+    if (v < min || v > max) { setError(`Usa un valor entre ${fmt(min, decimals)} y ${fmt(max, decimals)}.`); playSound('error'); return; }
     setError(null);
     setDraft(null);
     onChange(v);
@@ -122,7 +123,7 @@ export function RecordButton({ onRecord, disabled, label = 'Guardar ensayo en la
   const [saved, setSaved] = useState(0);
   return (
     <div className="btn-row">
-      <button type="button" className="btn data" disabled={disabled} onClick={() => { onRecord(); setSaved((n) => n + 1); }}>
+      <button type="button" className="btn data" disabled={disabled} onClick={() => { onRecord(); setSaved((n) => n + 1); playSound('confirm'); }}>
         <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h8l2 2v10H3z M5 2v4h6V2 M5 10h6" fill="none" stroke="currentColor" strokeWidth="1.6" /></svg>
         {label}
       </button>

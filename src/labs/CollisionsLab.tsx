@@ -5,6 +5,7 @@ import {
 } from '../models/collisions';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { impactIntensity, playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
@@ -280,6 +281,18 @@ export default function CollisionsLab({ api }: LabProps) {
   const xcmPx = px((res.m1 * st.x1 + res.m2 * st.x2) / (res.m1 + res.m2));
   const flagBlocks = (gx: number) => Math.abs(x1px - gx) < FLAG / 2 || Math.abs(x2px - gx) < FLAG / 2;
   const G1 = px(RAIL.gate1), G2 = px(RAIL.gate2);
+  // Sonido: soplador mientras corre el ensayo, choque según la rapidez relativa y pitido de las fotopuertas.
+  useSoundLoop('blower', running, 0.8);
+  const gateBlocked = flagBlocks(G1) || flagBlocks(G2);
+  const prevSound = useRef({ contact: pastContact, gate: gateBlocked });
+  useEffect(() => {
+    const prev = prevSound.current;
+    if (running && pastContact && !prev.contact && !isExplosion) {
+      playSound(bumper === 'velcro' ? 'thud' : 'clack', { intensity: impactIntensity(res.model.v1 - res.model.v2, 1.2) * (bumper === 'resorte' ? 0.8 : 1) });
+    }
+    if (running && gateBlocked && !prev.gate) playSound('photogate');
+    prevSound.current = { contact: pastContact, gate: gateBlocked };
+  });
   const cells: [string, string, string, string] = [
     pastContact || done ? msText(g.before1) : DASH, done ? msText(g.after1) : DASH,
     pastContact || done ? msText(g.before2) : DASH, done ? msText(g.after2) : DASH,
@@ -435,7 +448,7 @@ export default function CollisionsLab({ api }: LabProps) {
           {!res.collides && <Notice kind="warn">Los deslizadores no se alcanzan: para que choquen, el deslizador 1 debe ir hacia la derecha más rápido que el 2 (v₁ &gt; v₂).</Notice>}
           <div className="btn-row">
             <button type="button" className="btn primary" disabled={running || !res.collides}
-              onClick={() => { cancelAnimationFrame(raf.current); setT(0); setDone(false); setRunning(true); }}>Lanzar</button>
+              onClick={() => { cancelAnimationFrame(raf.current); setT(0); setDone(false); setRunning(true); if (isExplosion) playSound('thunk', { intensity: 0.5 }); }}>Lanzar</button>
             <button type="button" className="btn" onClick={reset}>Reiniciar</button>
           </div>
           <RecordButton onRecord={record} disabled={!done} />

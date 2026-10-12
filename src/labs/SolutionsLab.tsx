@@ -5,6 +5,7 @@ import { fmt, fmtSig, parseLocaleNumber } from '../lib/format';
 import { Notice, Readout, RecordButton, Select, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, DigitalBalance, Lcd, shade } from './kit';
+import { playSound } from '../lib/sound';
 
 /* ---------------------------------------------------------------- instrumentos locales */
 
@@ -261,7 +262,7 @@ export default function SolutionsLab({ api }: LabProps) {
             </div>
           )}
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => setMeasured(true)} disabled={!ok}>Medir absorbancia</button>
+            <button type="button" className="btn primary" onClick={() => { setMeasured(true); playSound('beep'); }} disabled={!ok}>Medir absorbancia</button>
           </div>
           <RecordButton onRecord={record} disabled={!ok || !measured} />
           {!measured && <p className="small muted">Mide la absorbancia antes de guardar el ensayo.</p>}
@@ -269,7 +270,7 @@ export default function SolutionsLab({ api }: LabProps) {
         <div className="card stack-sm">
           <h3>Muestra problema</h3>
           <p className="small">Solución de KMnO₄ de concentración desconocida. Mide su absorbancia y usa tu curva de calibración (absorbancia contra concentración final) para calcular su concentración.</p>
-          <button type="button" className="btn" onClick={() => { setUnknownShown(true); setMeasured(false); }}>Medir muestra problema</button>
+          <button type="button" className="btn" onClick={() => { setUnknownShown(true); setMeasured(false); playSound('glassClink', { intensity: 0.5 }); }}>Medir muestra problema</button>
           {unknownShown && <p className="small" role="status">Absorbancia de la muestra problema: <strong className="num">{fmt(unknownAbsorbance(), 3)}</strong></p>}
         </div>
         <Notice>Valores de solubilidad y absortividad molar aproximados. Paso óptico de 1 cm. La ley de Beer solo es lineal en soluciones diluidas.</Notice>

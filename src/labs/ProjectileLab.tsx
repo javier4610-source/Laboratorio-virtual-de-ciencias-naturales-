@@ -5,6 +5,7 @@ import {
 } from '../models/projectile';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { impactIntensity, playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import { Chart } from '../components/Chart';
 import type { LabProps } from './registry';
@@ -236,7 +237,7 @@ export default function ProjectileLab({ api }: LabProps) {
     const start = performance.now();
     const tick = (now: number) => {
       const el = Math.max(0, (now - start) / 1000);
-      if (el >= shot.flightTime) { setT(shot.flightTime); setPhase('cayo'); return; }
+      if (el >= shot.flightTime) { setT(shot.flightTime); setPhase('cayo'); playSound('thud', { intensity: 0.3 + 0.7 * impactIntensity(v0, 8) }); return; }
       setT(el);
       raf.current = requestAnimationFrame(tick);
     };
@@ -271,9 +272,10 @@ export default function ProjectileLab({ api }: LabProps) {
   const hasTable = tableTop <= Y_FLOOR - 14;
   const hit = measured && target !== null ? checkTarget(shot.rangeReading, target) : null;
 
-  const fire = () => { setT(0); setPhase('vuelo'); };
+  const fire = () => { setT(0); setPhase('vuelo'); playSound('thunk', { intensity: 0.4 + 0.6 * impactIntensity(v0, 8) }); };
   const measure = () => {
     setPhase('medido');
+    playSound('click', { intensity: 0.5 });
     if (activity === 'optimo') setScan((list) => [...list.filter((p) => p.angle !== angle), { angle, range: shot.rangeReading }].sort((p, q) => p.angle - q.angle));
   };
   const newTarget = (nextSeed: number) => {

@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (29)
+## Prácticas implementadas (31)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -21,6 +21,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 8.º | Herencia mendeliana y cuadros de Punnett | Biología | Segregación y transmisión independiente, dominancia completa/incompleta, muestreo con semilla, χ² |
 | 8.º | Reflexión y refracción de la luz | Física | Ley de reflexión, Snell, ángulo crítico y reflexión total interna, reflectancia de Fresnel, índice desconocido por pendiente |
 | 8.º | Laboratorio de ondas | Física | v = λ·f, v = √(T/μ), onda armónica, energía ∝ A²f², sonido en el aire según la temperatura |
+| 8.º | Conservación de la masa | Química | Balanza de 0,01 g; sistema abierto, cerrado con globo y frasco sellado; estequiometría, reactivo limitante y empuje del aire sobre el globo |
 | 9.º | Del ADN a la proteína | Biología | Complementariedad, replicación semiconservativa, código genético, clasificación de mutaciones (HBB Glu6Val) |
 | 9.º | Leyes de Newton | Física | F_neta = m·a, fricción estática y cinética, cinemática con fotopuertas (a = 2d/t²) |
 | 9.º | Velocidad, aceleración y movimiento | Física | MRU y MRUA, fotografía estroboscópica, gráficas x–t y v–t (pendiente y área), frenado, reto de igualar gráficas |
@@ -32,6 +33,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 10.º | Factores que afectan la velocidad de reacción | Química | Mármol + HCl (concentración, temperatura de Arrhenius, superficie que se encoge) y H₂O₂ con catalizadores (MnO₂, catalasa); gas recogido en jeringa |
 | 10.º | Movimiento de proyectiles | Física | Tiro parabólico analítico y con arrastre cuadrático (RK4), ángulo óptimo con altura inicial, fotopuerta y estroboscopía |
 | 10.º | Péndulo simple y movimiento armónico | Física | Ecuación no lineal con RK4 contrastada con el período exacto, amortiguamiento, cronómetro con tiempo de reacción y fotopuerta |
+| 10.º | Choques y cantidad de movimiento | Física | Riel de aire con fotopuertas y balanza; choques elástico, parcial e inelástico y explosión; p se conserva y Ec se transforma; coeficiente de restitución |
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
 | 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |
@@ -40,7 +42,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Crecimiento poblacional y capacidad de carga | Ambiental | Exponencial y logístico con cosecha |
 | 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 
-Otras 12 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 10 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

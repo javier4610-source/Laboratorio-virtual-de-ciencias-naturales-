@@ -76,7 +76,6 @@ export const PLANNED: PlannedPractice[] = [
   { title: 'Circuitos simples con baterías, interruptores y bombillas', grade: 7, area: 'fisica', status: 'planificada' },
   { title: 'Densidad y flotación', grade: 7, area: 'fisica', status: 'planificada' },
   { title: 'Modelo interactivo de ADN y complementariedad', grade: 8, area: 'biologia', status: 'planificada' },
-  { title: 'Conservación de la masa', grade: 8, area: 'quimica', status: 'planificada' },
   { title: 'Balanceo visual de ecuaciones químicas', grade: 8, area: 'quimica', status: 'planificada' },
   { title: 'Cálculos estequiométricos básicos', grade: 9, area: 'quimica', status: 'planificada' },
   { title: 'Respiración celular y balance energético', grade: 10, area: 'biologia', status: 'planificada' },
@@ -89,7 +88,6 @@ export const PLANNED: PlannedPractice[] = [
   { title: 'Transferencia de calor por conducción', grade: 7, area: 'fisica', status: 'planificada' },
   { title: 'Sonido y resonancia', grade: 8, area: 'fisica', status: 'planificada' },
   { title: 'Trabajo, potencia y plano inclinado', grade: 9, area: 'fisica', status: 'planificada' },
-  { title: 'Choques y cantidad de movimiento', grade: 10, area: 'fisica', status: 'planificada' },
   { title: 'Magnetismo e inducción electromagnética', grade: 11, area: 'fisica', status: 'planificada' },
   { title: 'Interferencia y difracción de la luz', grade: 11, area: 'fisica', status: 'planificada' },
 ];

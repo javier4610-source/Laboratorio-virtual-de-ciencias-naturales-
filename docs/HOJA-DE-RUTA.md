@@ -26,9 +26,8 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       progresivamente): modo «instrumento real» con ruido e incertidumbre según la ficha de cada instrumento;
       en el cuaderno, estadística de repeticiones (media, desviación estándar, error estándar) y propagación de
       incertidumbre en los cálculos; adopción progresiva en todos los laboratorios.
-- [ ] **Física A:** ~~movimiento de proyectiles~~ y ~~péndulo simple~~ (hechos) · choques y cantidad de movimiento
-      (10.º, `choques`).
-- [ ] **Lote 7:** conservación de la masa en sistema abierto y cerrado (8.º, química, `conservacion`) ·
+- [x] **Física A:** movimiento de proyectiles, péndulo simple y choques y cantidad de movimiento (10.º, `choques`).
+- [ ] **Lote 7:** ~~conservación de la masa en sistema abierto y cerrado (8.º, química, `conservacion`)~~ (hecha) ·
       respiración celular y balance energético (10.º, biología, `respiracion`) · contaminación del agua e
       indicadores fisicoquímicos y biológicos (11.º, ambiental, `agua`).
 - [ ] **U5 · Manipulación directa:** arrastrar muestras e instrumentos, perillas y émbolos que se giran o empujan,

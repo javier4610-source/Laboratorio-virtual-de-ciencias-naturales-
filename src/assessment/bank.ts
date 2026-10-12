@@ -614,6 +614,48 @@ const RAW_BANK: Question[] = [
     explanation: 'Para estudiar una variable hay que comparar ensayos en los que solo cambie esa variable. P y Q (misma L, distinta masa) tienen el mismo período. P y R, y también Q y S, muestran que T crece con √L: T² = (4π²/g)·L, así que cuadruplicar L duplica T.',
     review: 'En la práctica del péndulo, mide con la fotopuerta el período para lentejas de distinta masa y para L = 0,50; 1,00 y 2,00 m.',
   },
+  {
+    id: 'saber-cho-1', grade: 10, topic: 'Cantidad de movimiento', competency: 'indagacion', component: 'fisico', skill: 'Analizar datos para decidir qué magnitud se conserva', difficulty: 'media', practiceId: 'choques',
+    context: 'En un laboratorio de Apartadó, un grupo hizo chocar dos deslizadores en un riel de aire: el deslizador 1 (0,40 kg) se movía hacia el deslizador 2 (0,20 kg), que estaba en reposo. Con fotopuertas midieron las velocidades después del choque en tres ensayos con distintos parachoques.',
+    table: {
+      caption: 'Velocidades después del choque (v₁ = 0,60 m/s, v₂ = 0)',
+      headers: ['Ensayo', 'Parachoques', 'v₁′ (m/s)', 'v₂′ (m/s)'],
+      rows: [[1, 'Resorte', 0.2, 0.8], [2, 'Caucho blando', 0.3, 0.6], [3, 'Velcro', 0.4, 0.4]],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'La cantidad de movimiento total es 0,24 kg·m/s en los tres ensayos, pero la energía cinética total solo se conserva en el ensayo 1.', feedback: 'Correcto.' },
+      { id: 'b', text: 'La energía cinética se conserva en los tres ensayos, porque el riel no tiene fricción.', feedback: 'Sin fricción externa se conserva p, pero en los ensayos 2 y 3 la Ec final (0,054 J y 0,048 J) es menor que la inicial (0,072 J): parte se transforma en el choque.' },
+      { id: 'c', text: 'Con el velcro se pierde cantidad de movimiento porque los deslizadores quedan unidos.', feedback: 'Con el velcro p sigue siendo 0,60 kg · 0,40 m/s = 0,24 kg·m/s: lo que disminuye es la energía cinética.' },
+      { id: 'd', text: 'Como v₂′ cambia en cada ensayo, la cantidad de movimiento depende del tipo de parachoques.', feedback: 'Cada velocidad cambia, pero la suma m₁·v₁′ + m₂·v₂′ es igual en los tres ensayos.' },
+    ],
+    correct: 'a',
+    explanation: 'p antes = 0,40 · 0,60 = 0,24 kg·m/s. Después: 0,40·0,2 + 0,20·0,8 = 0,24; 0,40·0,3 + 0,20·0,6 = 0,24; 0,60·0,4 = 0,24. La Ec inicial es 0,072 J; después es 0,072 J (ensayo 1, elástico), 0,054 J (ensayo 2, e = 0,5) y 0,048 J (ensayo 3, e = 0). La cantidad de movimiento se conserva siempre; la energía cinética solo en el choque elástico.',
+    review: 'En la práctica de choques, compara p total y Ec total antes y después con los tres tipos de parachoques.',
+  },
+  {
+    id: 'saber-cms-1', grade: 8, topic: 'Conservación de la masa', competency: 'explicacion', component: 'quimico', skill: 'Explicar cambios de masa según el intercambio de materia con el entorno', difficulty: 'media', practiceId: 'conservacion',
+    context: 'En un colegio de Apartadó, un grupo realizó tres reacciones en recipientes abiertos sobre una balanza de 0,01 g y registró la masa de todo lo que estaba sobre el plato.',
+    table: {
+      caption: 'Masa del sistema antes y después de cada reacción (recipiente abierto)',
+      headers: ['Reacción', 'm inicial (g)', 'm final (g)'],
+      rows: [
+        ['Bicarbonato de sodio + vinagre', '218,50', '217,45'],
+        ['Cloruro de calcio + carbonato de sodio (precipitado)', '222,20', '222,20'],
+        ['Lana de acero que arde en una cápsula', '43,30', '43,68'],
+      ],
+    },
+    stem: '¿Cuál explicación es coherente con la ley de conservación de la masa?',
+    options: [
+      { id: 'a', text: 'Solo la segunda reacción cumple la ley; en las otras dos se destruyó o se creó materia.', feedback: 'La ley se cumple en las tres: lo que cambia es si un gas sale o entra del recipiente abierto.' },
+      { id: 'b', text: 'En la primera escapó un gas, en la segunda no hubo intercambio de gases y en la tercera el hierro se combinó con oxígeno del aire; en recipientes cerrados las tres masas no cambiarían.', feedback: 'Correcto: la masa total de un sistema cerrado se conserva; en uno abierto cambia lo que entra o sale.' },
+      { id: 'c', text: 'La masa aumentó en la tercera porque el calor del fuego tiene masa.', feedback: 'El calor es energía, no materia; el aumento (0,38 g) corresponde al oxígeno que se fijó en el óxido.' },
+      { id: 'd', text: 'La masa disminuyó en la primera porque los líquidos pierden masa cuando reaccionan.', feedback: 'Los líquidos no pierden masa por reaccionar; la disminución (1,05 g) es el CO₂ que salió al aire.' },
+    ],
+    correct: 'b',
+    explanation: 'En la primera reacción se forma CO₂ que sale al aire (−1,05 g); en la precipitación todos los productos quedan en el vaso (0,00 g); en la combustión del hierro entra O₂ del aire y queda en el óxido (+0,38 g). Si los tres sistemas estuvieran cerrados, la masa total no cambiaría: los átomos solo se reorganizan.',
+    review: 'En la práctica de conservación de la masa, repite las tres reacciones en el sistema abierto y en el frasco sellado.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

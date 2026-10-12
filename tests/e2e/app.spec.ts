@@ -35,7 +35,7 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(1);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(7);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(8);
 });
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
@@ -446,6 +446,31 @@ test('péndulo: la fotopuerta mide T = 2,013 s con L = 1,00 m', async ({ page })
   expect(await tableRows(page)).toBe(1);
 });
 
+test('choques: choque elástico conserva p = 0,0900 kg·m/s y Ec', async ({ page }) => {
+  await openFree(page, 'choques');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Lanzar' }).click();
+  await expect(page.locator('.readout').getByText('0,660 m/s')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('151,5 ms')).toBeVisible();
+  await expect(page.locator('.readout').getByText('0,0900 kg·m/s').first()).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('conservación: en sistema abierto la balanza pierde 1,05 g (el CO₂ que escapa)', async ({ page }) => {
+  await openFree(page, 'conservacion');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: '1. Pesar el sistema inicial' }).click();
+  await expect(page.locator('.readout').getByText('218,50 g')).toBeVisible();
+  await page.getByRole('button', { name: '2. Mezclar los reactivos' }).click();
+  await expect(page.locator('.readout').getByText('217,45 g')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('CO₂: 1,048 g')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -506,7 +531,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/29');
+  await expect(page.locator('.kpi').first()).toContainText('1/31');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

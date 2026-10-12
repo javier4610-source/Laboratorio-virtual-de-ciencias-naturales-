@@ -165,3 +165,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Proyectiles | 13 pruebas: alcance v₀²sen2θ/g, ángulos complementarios, ángulo óptimo con altura, conservación de la energía sin aire, arrastre | Correcto | — | — | Correcto |
 | Péndulo | 11 pruebas: período de pequeñas oscilaciones (0,1 %), período exacto, independencia de la masa, +7 % a 60°, T² ∝ L, energía, amortiguamiento, Luna | Correcto | — | — | Correcto |
 | Regresión | 324 pruebas unitarias y 50 de interfaz con axe | Todas pasan | — | — | Correcto |
+
+# Física A completa (choques) y lote 7 (conservación de la masa)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Choques | 13 pruebas: conservación de p en los cuatro tipos, Ec conservada solo en el elástico, e = 0 pega los deslizadores, explosión desde el reposo, valores calculados a mano, p conservado durante el contacto | Correcto | — | — | Correcto |
+| Conservación de la masa | 12 pruebas: estequiometría de las cuatro reacciones, reactivo limitante, masa constante en sistema cerrado, pérdida igual al CO₂ en sistema abierto, empuje del aire sobre el globo, O₂ limitante en el frasco sellado | Correcto | — | — | Correcto |
+| Interfaz | E2E de ambas prácticas, capturas en tema claro y oscuro, axe en todas las etapas | 0 infracciones | — | — | Correcto |
+| Supuestos declarados | Revisión | — | La lana de acero arde de forma incompleta en el aula; en el frasco sellado la presión supera 200 kPa | Se declaran en los límites del modelo, con aviso de seguridad | Declarado |
+| Regresión | 349 pruebas unitarias y 52 de interfaz con axe | Todas pasan (la prueba de seguimiento requiere el servidor en el puerto 8787 y se verifica con la suite completa) | — | — | Correcto |

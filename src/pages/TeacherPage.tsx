@@ -12,12 +12,13 @@ import { ConfirmButton, Notice, Segmented, Select } from '../components/ui';
 import { ReportBody } from './ReportPage';
 import { progressPercent } from '../lib/progress';
 import { emptyValidation, exportValidations, loadValidations, mergeValidations, saveValidations, type CurricularValidation, type ValidationStatus } from '../lib/validation';
+import { TrackingTab } from './TrackingTab';
 import { api, defaultServerUrl, loadTeacherSession, saveServerUrl, saveTeacherSession, type ServerCourse, type TeacherSession } from '../lib/api';
 
 const KEY = 'lvcn:docente';
 interface TeacherData { assignments: Assignment[]; lists: PracticeList[]; reports: StudentReport[]; }
 
-type Tab = 'catalogo' | 'validacion' | 'asignaciones' | 'listas' | 'informes' | 'servidor' | 'rubrica';
+type Tab = 'catalogo' | 'validacion' | 'asignaciones' | 'listas' | 'informes' | 'seguimiento' | 'servidor' | 'rubrica';
 
 function useTeacherData() {
   const [data, setData] = useState<TeacherData>(() => ({ assignments: [], lists: [], reports: [], ...loadJSON<Partial<TeacherData>>(KEY, {}) }));
@@ -448,7 +449,7 @@ function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Te
 
 
 /* ------------------------------- Servidor -------------------------------- */
-function ServerTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+function ServerTab({ data, setData, onTrack }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void; onTrack: (courseId: number) => void }) {
   const [session, setSession] = useState<TeacherSession | null>(() => loadTeacherSession());
   const [server, setServer] = useState(() => session?.server ?? defaultServerUrl());
   const [mode, setMode] = useState<'login' | 'registro'>('login');
@@ -513,7 +514,7 @@ function ServerTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Tea
           <input id="sv-course" type="text" value={newCourse} onChange={(e) => setNewCourse(e.target.value)} placeholder="p. ej. 10-2 Química" style={{ flex: '1 1 220px' }} />
           <button type="button" className="btn primary" disabled={busy || !newCourse.trim()} onClick={() => run(async () => { await api.createCourse(session, newCourse.trim()); setNewCourse(''); setCourses((await api.courses(session)).courses); })}>Crear curso</button>
         </div>
-        <p className="small muted">Comparte el código del curso con tus estudiantes (o inclúyelo en una asignación). Con él envían su informe desde «Ver informe».</p>
+        <p className="small muted">Comparte el código del curso con tus estudiantes. Con él se unen al curso («Unirme a mi curso», con su nombre y un PIN) para que veas su avance en «Seguimiento del curso», y también pueden enviar su informe desde «Ver informe».</p>
       </section>
       {msg && <p className={`notice ${msg.kind}`} role="status">{msg.text}</p>}
       {courses && courses.length === 0 && <p className="muted">Aún no tienes cursos en el servidor.</p>}
@@ -521,14 +522,15 @@ function ServerTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Tea
         <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla con desplazamiento horizontal">
           <table>
             <caption>Mis cursos en el servidor</caption>
-            <thead><tr><th>Curso</th><th>Código</th><th className="n">Informes</th><th>Estado</th><th><span className="sr-only">Acciones</span></th></tr></thead>
+            <thead><tr><th>Curso</th><th>Código</th><th className="n">Estudiantes</th><th className="n">Informes</th><th>Estado</th><th><span className="sr-only">Acciones</span></th></tr></thead>
             <tbody>
               {courses.map((c) => (
                 <tr key={c.id}>
-                  <td>{c.name}</td><td className="mono" style={{ letterSpacing: '0.15em', fontWeight: 700 }}>{c.joinCode}</td><td className="n">{c.reportCount}</td>
+                  <td>{c.name}</td><td className="mono" style={{ letterSpacing: '0.15em', fontWeight: 700 }}>{c.joinCode}</td><td className="n">{c.studentCount ?? 0}</td><td className="n">{c.reportCount}</td>
                   <td>{c.open ? <span className="chip ok">Recibe informes</span> : <span className="chip warn">Cerrado</span>}</td>
                   <td>
                     <div className="btn-row">
+                      <button type="button" className="btn small" onClick={() => onTrack(c.id)}>Ver seguimiento</button>
                       <button type="button" className="btn small primary" disabled={busy} onClick={() => run(async () => {
                         const { reports } = await api.reports(session, c.id);
                         const fresh = reports.map((r) => r.report).filter((r) => practiceById(r.practice.id) && !data.reports.some((x) => x.student.name === r.student.name && x.practice.id === r.practice.id && x.generatedAt === r.generatedAt));
@@ -596,16 +598,17 @@ function RubricTab() {
 export function TeacherPage() {
   const [data, setData] = useTeacherData();
   const [tab, setTab] = useState<Tab>('catalogo');
+  const [trackCourse, setTrackCourse] = useState<number | null>(null);
   useEffect(() => { document.title = 'Panel docente · Laboratorio Virtual'; }, []);
   const tabs: { id: Tab; label: string }[] = [
     { id: 'catalogo', label: 'Catálogo' }, { id: 'validacion', label: 'Validación curricular' }, { id: 'asignaciones', label: `Asignaciones (${data.assignments.length})` },
-    { id: 'listas', label: `Listas por unidad (${data.lists.length})` }, { id: 'informes', label: `Informes (${data.reports.length})` }, { id: 'servidor', label: 'Servidor' }, { id: 'rubrica', label: 'Rúbrica' },
+    { id: 'listas', label: `Listas por unidad (${data.lists.length})` }, { id: 'informes', label: `Informes (${data.reports.length})` }, { id: 'seguimiento', label: 'Seguimiento del curso' }, { id: 'servidor', label: 'Servidor' }, { id: 'rubrica', label: 'Rúbrica' },
   ];
   return (
     <div className="stack">
       <h1>Panel docente</h1>
       <Notice kind="warn">
-        <strong>Funcionamiento sin servidor.</strong> Esta versión no tiene cuentas ni base de datos. Las asignaciones, listas e informes se guardan solo en este navegador{storageAvailable() ? '' : ' (y el almacenamiento local no está disponible: se perderán al cerrar la pestaña)'}. Los estudiantes entregan sus informes como archivo o texto, y las asignaciones se comparten con códigos.
+        <strong>Funcionamiento sin servidor.</strong> Sin el servidor del colegio no hay cuentas ni base de datos: las asignaciones, listas e informes se guardan solo en este navegador{storageAvailable() ? '' : ' (y el almacenamiento local no está disponible: se perderán al cerrar la pestaña)'}. Los estudiantes entregan sus informes como archivo o texto, y las asignaciones se comparten con códigos. Con el servidor, «Seguimiento del curso» muestra el avance de cada estudiante en tiempo real.
       </Notice>
       <div className="stage-nav" role="tablist" aria-label="Secciones del panel docente" onKeyDown={onTabListKeyDown}>
         {tabs.map((t) => <button key={t.id} type="button" role="tab" aria-selected={tab === t.id} tabIndex={tab === t.id ? 0 : -1} onClick={() => setTab(t.id)}>{t.label}</button>)}
@@ -615,7 +618,8 @@ export function TeacherPage() {
       {tab === 'asignaciones' && <AssignmentsTab data={data} setData={setData} />}
       {tab === 'listas' && <ListsTab data={data} setData={setData} />}
       {tab === 'informes' && <ReportsTab data={data} setData={setData} />}
-      {tab === 'servidor' && <ServerTab data={data} setData={setData} />}
+      {tab === 'seguimiento' && <TrackingTab key={trackCourse ?? 'ultimo'} initialCourseId={trackCourse} onGoServer={() => setTab('servidor')} />}
+      {tab === 'servidor' && <ServerTab data={data} setData={setData} onTrack={(id) => { setTrackCourse(id); setTab('seguimiento'); }} />}
       {tab === 'rubrica' && <RubricTab />}
     </div>
   );

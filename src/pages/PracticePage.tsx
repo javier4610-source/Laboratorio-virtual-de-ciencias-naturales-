@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import type { Mode, PracticeDef } from '../core/types';
 import { usePracticeSession } from '../lib/session';
 import { progressPercent, saveProgress, stageDone, STAGES, MIN_TRIALS, type StageId } from '../lib/progress';
@@ -11,6 +11,9 @@ import { ConfirmButton, Segmented } from '../components/ui';
 import { ProcedureCoach, SavedToast, useFullscreen } from '../components/Workspace';
 import { href } from '../lib/router';
 import { onTabListKeyDown } from '../lib/a11y';
+import { queuePracticeOpen, queueProgress, getEnrollment, useClassroom } from '../lib/classroom';
+import { buildSyncSummary, useActiveTime } from '../lib/syncSummary';
+import { CourseNote, SyncChip } from '../components/ClassroomUi';
 
 const MODE_HELP: Record<Mode, string> = {
   guiada: 'Práctica guiada: avanzas por etapas. Debes formular una hipótesis antes de experimentar y guardar ensayos antes de analizar.',
@@ -48,6 +51,18 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
 
   useEffect(() => { document.title = `${p.title} · Laboratorio Virtual`; }, [p.title]);
   useEffect(() => { saveProgress(p.id, progress); }, [p.id, progress]);
+
+  // Seguimiento del curso: si el estudiante se unió a un curso, se envía un resumen del avance.
+  const activeMs = useActiveTime(p.id);
+  const { enrollment } = useClassroom();
+  const joined = !!enrollment;
+  useEffect(() => { if (joined) queuePracticeOpen(p.id); }, [p.id, joined]);
+  const lastSent = useRef(s.updatedAt);
+  useEffect(() => {
+    if (s.updatedAt === lastSent.current || !getEnrollment()) return;
+    lastSent.current = s.updatedAt;
+    try { queueProgress(p.id, buildSyncSummary(p, s, activeMs())); } catch { /* el laboratorio nunca se bloquea por la sincronización */ }
+  }, [s, p, activeMs]);
   useEffect(() => {
     if (stage === 'modelo' && !s.visited.includes('modelo')) api.update((x) => ({ ...x, visited: [...x.visited, 'modelo'] }));
   }, [stage]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -88,6 +103,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
             <Segmented<Mode> label="Modo de trabajo" value={s.mode} onChange={(m) => api.update((x) => ({ ...x, mode: m }))}
               options={[{ value: 'guiada', label: 'Práctica guiada' }, { value: 'libre', label: 'Exploración libre' }, { value: 'evaluacion', label: 'Evaluación' }]} />
             <div className="btn-row">
+              <SyncChip />
               <a className="btn" href={href('practica', p.id, 'informe')}>Ver informe</a>
               <ConfirmButton label="Reiniciar práctica" confirmLabel="¿Borrar hipótesis, datos y respuestas de esta práctica?" onConfirm={() => { api.reset(); setStage('preparacion'); }} />
             </div>
@@ -160,6 +176,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
         {stage === 'modelo' && <ModelSection practice={p} />}
       </div>
       <p className="small muted no-print">Tu trabajo se guarda automáticamente en este navegador. Para entregarlo, abre «Ver informe» y descarga o copia el archivo para tu docente.</p>
+      <CourseNote />
     </div>
   );
 }

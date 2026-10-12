@@ -279,7 +279,9 @@ export function EvaluationSection({ practice: p, api, mode }: { practice: Practi
   const score = scoreSession(p, s);
   const [showGuide, setShowGuide] = useState(false);
   const save = (id: string) => (rec: Parameters<NonNullable<Parameters<typeof QuestionCard>[0]['onAnswer']>>[0]) =>
-    api.update((x) => ({ ...x, answers: { ...x.answers, [id]: x.answers[id] ? { ...rec, firstTryCorrect: x.answers[id].firstTryCorrect } : rec } }));
+    api.update((x) => ({ ...x, answers: { ...x.answers, [id]: x.answers[id]
+      ? { ...rec, firstTryCorrect: x.answers[id].firstTryCorrect, ...(x.answers[id].firstChosen ? { firstChosen: x.answers[id].firstChosen } : {}), ...(x.answers[id].at ? { at: x.answers[id].at } : {}) }
+      : { ...rec, firstChosen: rec.chosen, at: Date.now() } } }));
   const transfer = p.transferQuestionIds.map((id) => questionById(id)).filter((q): q is NonNullable<typeof q> => !!q);
   return (
     <div className="stack">

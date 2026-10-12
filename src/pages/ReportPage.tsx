@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getEnrollment } from '../lib/classroom';
 import type { PracticeDef, PracticeSession, Trend } from '../core/types';
 import { loadSession } from '../lib/session';
 import { loadJSON, saveJSON } from '../lib/storage';
@@ -115,8 +116,9 @@ export function ReportBody({ practice: p, session: s, report }: { practice: Prac
 /** Envío directo al servidor institucional (si el docente lo configuró). */
 function SubmitToServer({ report, practiceId }: { report: StudentReport; practiceId: string }) {
   const fromAssignment = loadJSON<Decoded[]>('lvcn:codigos-recibidos', []).find((d) => d.kind === 'asignacion' && d.value.practiceId === practiceId && d.value.server && d.value.joinCode);
-  const [server, setServer] = useState(() => (fromAssignment?.kind === 'asignacion' ? fromAssignment.value.server! : defaultServerUrl()));
-  const [code, setCode] = useState(() => (fromAssignment?.kind === 'asignacion' ? fromAssignment.value.joinCode! : ''));
+  const enrolled = getEnrollment();
+  const [server, setServer] = useState(() => (fromAssignment?.kind === 'asignacion' ? fromAssignment.value.server! : enrolled?.server ?? defaultServerUrl()));
+  const [code, setCode] = useState(() => (fromAssignment?.kind === 'asignacion' ? fromAssignment.value.joinCode! : enrolled?.course.joinCode ?? ''));
   const [status, setStatus] = useState<{ kind: 'ok' | 'bad' | 'info'; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const send = async () => {
@@ -140,7 +142,7 @@ function SubmitToServer({ report, practiceId }: { report: StudentReport; practic
         </div>
         <div className="btn-row"><button type="button" className="btn primary" disabled={busy || !server || code.length !== 6} onClick={send}>Enviar informe</button></div>
         {status && <p className={`notice ${status.kind}`} role="status">{status.text}</p>}
-        <p className="small muted">Se envían tu nombre, curso y el contenido de este informe al servidor que administra tu colegio. No se crean cuentas para estudiantes.</p>
+        <p className="small muted">Se envían tu nombre, curso y el contenido de este informe al servidor que administra tu colegio. Si te uniste a tu curso con «Unirme a mi curso», tu docente ya ve tu avance de forma automática; el informe completo sigue siendo la entrega formal.</p>
       </div>
     </details>
   );

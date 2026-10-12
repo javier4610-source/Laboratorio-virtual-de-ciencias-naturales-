@@ -122,6 +122,14 @@ Módulos del enunciado → código: A navegación (`App.tsx`, `lib/router.ts`), 
 - El trabajo de cada estudiante se guarda en el almacenamiento local de su navegador.
 - **Sin servidor:** el estudiante entrega su informe como archivo `.json` o texto copiado y el docente lo importa en el panel docente. Asignaciones y listas se comparten con códigos (`LVCN-A:` / `LVCN-L:`).
 - **Con servidor** (opcional, `server/`): el docente crea su cuenta y sus cursos; el estudiante envía su informe con el código de 6 caracteres del curso, sin crear cuenta; el docente lo descarga en la pestaña **Servidor**. Instalación, seguridad y protección de datos en [server/README.md](server/README.md).
+- **Seguimiento del curso** (con servidor): el estudiante se une con «Unirme a mi curso» (código + nombre + PIN de 4 dígitos) y su avance se sincroniza solo; el docente lo ve en la pestaña **Seguimiento del curso**.
+
+| Modo | Dónde quedan los datos | Qué ve el docente | Cómo llega |
+|---|---|---|---|
+| Sin servidor | Navegador del estudiante (`localStorage`) | Informes que importa en **Informes** | Archivo `.json` o texto copiado |
+| Servidor · informe | Servidor del colegio (SQLite) | Informes en **Servidor → Traer informes** | El estudiante pulsa «Enviar informe» con el código del curso |
+| Servidor · seguimiento | Servidor del colegio (SQLite) + cola local sin conexión | Inscritos, activos hoy y en 7 días, ingresos por día, mapa de calor estudiantes × prácticas, detalle por estudiante (etapas, datos, hipótesis, conclusión, respuestas, línea de tiempo), análisis por pregunta y competencia, alertas y CSV | Automático: resumen de cada práctica con antirrebote; si no hay red, se envía al volver |
+
 - **Validación curricular:** pestaña del panel docente para registrar, por práctica, el DBA y el estándar verificados en los documentos oficiales, exportable para el equipo de área.
 - **Usabilidad:** cada práctica incluye una encuesta breve de opinión que viaja en el informe; el protocolo para pruebas con estudiantes está en [docs/PROTOCOLO-USABILIDAD.md](docs/PROTOCOLO-USABILIDAD.md).
 

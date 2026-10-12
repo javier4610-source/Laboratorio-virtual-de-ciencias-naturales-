@@ -5,6 +5,7 @@ import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui'
 import type { LabProps } from './registry';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
+import { DragHandle, ManipHint, ManipScene } from './manipulate';
 
 const MEDIUM_FILL: Record<string, string> = { aire: 'rgba(200,225,240,0.10)', agua: 'rgba(70,150,220,0.28)', aceite: 'rgba(232,195,58,0.30)', vidrio: 'rgba(150,210,200,0.35)', diamante: 'rgba(210,220,240,0.55)', misterio: 'rgba(170,140,210,0.32)' };
 
@@ -99,6 +100,7 @@ export default function OpticsLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox={`0 0 ${W} ${H}`} label="Control del puntero láser" scene={
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="opt-t opt-d">
             <title id="opt-t">Rayo de luz que llega a la superficie entre dos medios</title>
             <desc id="opt-d">{`Luz de ${name(m1).toLowerCase()} a ${name(m2).toLowerCase()} con ${fmt(angle, 1)}° de incidencia. ${measured ? (r.totalInternalReflection ? 'Reflexión total interna: no sale luz al segundo medio.' : `Ángulo de refracción ${fmt(read.refraction!, 1)}°.`) : 'Ángulos aún no medidos.'}`}</desc>
@@ -134,8 +136,16 @@ export default function OpticsLab({ api }: LabProps) {
               </g>
             )}
             {r.totalInternalReflection && <text x={cx + 20} y={cy + 40} style={{ fontSize: 13, fill: 'var(--bad)', fontWeight: 700, paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>Reflexión total interna</text>}
-          </svg>
+          </svg>}>
+            {/* el láser se desliza por el borde del disco: el ángulo se mide desde la normal */}
+            <DragHandle label="Puntero láser: ángulo de incidencia" value={angle} min={0} max={89} step={1} unit="°" decimals={0}
+              hit={{ cx: cx - (LS + 26) * Math.sin(rad(angle)), cy: cy - (LS + 26) * Math.cos(rad(angle)), r: 16 }}
+              valueText={(v) => `${fmt(v, 0)}° desde la normal`}
+              valueFromPoint={({ point }) => (Math.atan2(cx - point.x, cy - point.y) * 180) / Math.PI}
+              onChange={(v) => change(() => setAngle(v))} />
+          </ManipScene>
         </div>
+        <ManipHint>Arrastra el puntero láser alrededor del disco para cambiar el ángulo de incidencia, o enfócalo con Tab y usa las flechas.</ManipHint>
         <Readout items={[
           { k: 'θ incidencia', v: `${fmt(angle, 1)}°` },
           { k: 'θ reflexión', v: measured ? `${fmt(read.reflection, 1)}°` : 'mide', data: true },

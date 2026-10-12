@@ -29,7 +29,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 - [x] **Física A:** movimiento de proyectiles, péndulo simple y choques y cantidad de movimiento (10.º, `choques`).
 - [x] **Lote 7:** conservación de la masa (8.º, química, `conservacion`) · respiración celular y balance energético
       (10.º, biología, `respiracion`) · contaminación del agua e indicadores (11.º, ambiental, `agua`).
-- [ ] **U5 · Manipulación directa:** arrastrar muestras e instrumentos, perillas y émbolos que se giran o empujan,
+- [x] **U5 · Manipulación directa:** arrastrar muestras e instrumentos, perillas y émbolos que se giran o empujan,
       con alternativa por teclado.
 - [ ] **Física B:** máquinas simples: palancas y poleas (6.º, `maquinas`) · calor, temperatura y equilibrio térmico
       (6.º, `calor`) · presión en líquidos y presión atmosférica (7.º, `presion`).

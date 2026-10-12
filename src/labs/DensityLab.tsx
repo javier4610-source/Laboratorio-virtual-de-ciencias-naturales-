@@ -7,6 +7,13 @@ import { fmt, parseLocaleNumber } from '../lib/format';
 import { Readout, RecordButton, Select, Slider, Warnings, Notice } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Cube, DigitalBalance, GraduatedCylinder, Ruler } from './kit';
+import { DragHandle, ManipHint, ManipScene, zoneAt } from './manipulate';
+
+/** Lugares donde puede estar la muestra: 0 mesa, 1 plato de la balanza, 2 dentro de la probeta. */
+const STATION_TEXT = ['La muestra está sobre la mesa', 'La muestra está en el plato de la balanza', 'La muestra está dentro de la probeta'];
+/** Bordes (x en el viewBox) entre zonas al soltar la muestra: balanza | mesa | probeta. */
+const DROP_EDGES = [285, 385];
+const DROP_STATION = [1, 0, 2];
 
 export default function DensityLab({ api }: LabProps) {
   const [materialId, setMaterialId] = useState('aluminio');
@@ -17,6 +24,7 @@ export default function DensityLab({ api }: LabProps) {
   const [submerged, setSubmerged] = useState(false);
   const [guess, setGuess] = useState('');
   const [guessFeedback, setGuessFeedback] = useState<string | null>(null);
+  const [dragging, setDragging] = useState(false);
 
   const model = useMemo(() => simulateDensity({ materialId, side, initialWater, pushUnder }), [materialId, side, initialWater, pushUnder]);
   // Lecturas de los instrumentos: en modo ideal coinciden con el modelo; en modo real llevan el error aleatorio de la ficha.
@@ -43,6 +51,19 @@ export default function DensityLab({ api }: LabProps) {
   const cubeTopInCyl = submerged
     ? (result.floats && !pushUnder ? waterY - sizePx * (1 - result.submergedFraction) : cylBottom + 6 - sizePx)
     : 0;
+
+  // Mover la muestra con la mano hace lo mismo que los botones «Pesar» y «Sumergir» (misma fuente de verdad).
+  const weigh = () => { remeasure('masa', 'regla'); setWeighed(true); };
+  const submerge = () => { remeasure('probeta'); setSubmerged(true); };
+  const station = submerged ? 2 : weighed ? 1 : 0;
+  const moveTo = (target: number) => {
+    if (target === station) return;
+    if (target === 0) { resetActions(); return; }
+    if (target === 1) { if (!weighed) weigh(); setSubmerged(false); return; }
+    if (!weighed) weigh();
+    submerge();
+  };
+  const cubeCenter = station === 2 ? { x: cylX + cylW / 2, y: cubeTopInCyl + sizePx / 2 } : station === 1 ? { x: 155, y: 256 - sizePx / 2 } : { x: 322, y: 334 - sizePx / 2 };
 
   const checkGuess = () => {
     const v = parseLocaleNumber(guess);
@@ -72,6 +93,7 @@ export default function DensityLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox="0 0 640 364" label="Muestra que se puede mover" scene={
           <svg viewBox="0 0 640 364" role="img" aria-labelledby="dens-t dens-d">
             <title id="dens-t">Mesa de laboratorio con balanza y probeta</title>
             <desc id="dens-d">{`Muestra: ${m.name}, cubo de ${fmt(side, 1)} cm de arista. ` +
@@ -80,12 +102,12 @@ export default function DensityLab({ api }: LabProps) {
             <BenchTop y={334} width={640} />
             {/* Balanza */}
             <DigitalBalance x={40} y={258} w={230} reading={weighed ? (result.massReading === null ? 'Err' : fmt(result.massReading, 1)) : '0,0'}>
-              {weighed && !submerged && <Cube x={155 - sizePx / 2 - sizePx * 0.14} y={256} size={sizePx} color={cubeColor} finish={finish} />}
+              {weighed && !submerged && !dragging && <Cube x={155 - sizePx / 2 - sizePx * 0.14} y={256} size={sizePx} color={cubeColor} finish={finish} />}
             </DigitalBalance>
             <text x="155" y="360" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>Balanza · resolución 0,1 g</text>
             {!weighed && !submerged && (
               <g>
-                <Cube x={322 - sizePx / 2} y={334} size={sizePx} color={cubeColor} finish={finish} />
+                {!dragging && <Cube x={322 - sizePx / 2} y={334} size={sizePx} color={cubeColor} finish={finish} />}
                 <text x="326" y="360" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>muestra</text>
               </g>
             )}
@@ -100,7 +122,7 @@ export default function DensityLab({ api }: LabProps) {
             </g>
             {/* Probeta */}
             <GraduatedCylinder x={cylX} y={42} w={cylW} h={292} capacity={100} level={level} major={10} minor={2} label="Probeta" unit="100 mL">
-              {submerged && (
+              {submerged && !dragging && (
                 <g>
                   <Cube x={cylX + cylW / 2 - sizePx / 2 - sizePx * 0.14} y={cubeTopInCyl + sizePx} size={sizePx} color={cubeColor} finish={finish} opacity={0.94} />
                   {pushUnder && result.floats && <line x1={cylX + cylW / 2} x2={cylX + cylW / 2} y1={8} y2={cubeTopInCyl - sizePx * 0.28} stroke="var(--ink)" strokeWidth="1.5" />}
@@ -108,8 +130,26 @@ export default function DensityLab({ api }: LabProps) {
               )}
             </GraduatedCylinder>
             {submerged && result.finalWaterReading === null && <text x={cylX + cylW / 2} y="70" textAnchor="middle" style={{ fontSize: 12, fill: 'var(--bad)', fontWeight: 700 }}>¡Se desborda!</text>}
-          </svg>
+          </svg>}>
+            <DragHandle label="Muestra (cubo): mover entre la mesa, la balanza y la probeta" value={station} min={0} max={2} step={1} pageStep={1}
+              commit="end" affordance={!dragging}
+              hit={{ x: cubeCenter.x - sizePx * 0.64, y: cubeCenter.y - sizePx * 0.78, w: sizePx * 1.42, h: sizePx * 1.28 }}
+              valueText={(v) => STATION_TEXT[v] ?? ''}
+              valueFromPoint={({ point }) => DROP_STATION[zoneAt(point.x, DROP_EDGES)]}
+              onDragChange={setDragging} onChange={moveTo}>
+              {({ dragging: d, point }) => d && point && (
+                <g aria-hidden="true" style={{ pointerEvents: 'none' }}>
+                  {[[40, DROP_EDGES[0]], [DROP_EDGES[0], DROP_EDGES[1]], [DROP_EDGES[1], 600]].map(([x0, x1], i) => (
+                    <rect key={i} x={x0 + 4} y={36} width={x1 - x0 - 8} height={300} rx={10} fill="var(--accent)"
+                      opacity={zoneAt(point.x, DROP_EDGES) === i ? 0.12 : 0.04} />
+                  ))}
+                  <Cube x={point.x - sizePx / 2} y={point.y + sizePx / 2} size={sizePx} color={cubeColor} finish={finish} opacity={0.92} />
+                </g>
+              )}
+            </DragHandle>
+          </ManipScene>
         </div>
+        <ManipHint>Arrastra el cubo a la balanza y luego a la probeta, o enfócalo con Tab y usa las flechas (→ avanza al siguiente instrumento).</ManipHint>
         <Readout items={[
           { k: 'Arista (regla)', v: `${fmt(result.sideReading, 1)} cm` },
           { k: 'Volumen geométrico a³', v: `${fmt(result.geometricVolume, 2)} cm³` },

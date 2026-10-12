@@ -8,6 +8,11 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, GasSyringe, Lcd, Thermometer } from './kit';
+import { Knob, ManipHint, ManipScene, Plunger } from './manipulate';
+
+/* Geometría de la jeringa (200 mL en 380 px). */
+const SYR = { x: 176, y: 98, len: 380, h: 46, cap: 200 };
+const syrX = (v: number) => SYR.x + (v / SYR.cap) * SYR.len;
 
 /** Ángulo (rad) de la aguja del manómetro: 0–300 kPa recorren 270°. */
 const gaugeAngle = (p: number) => Math.PI * (0.75 + (Math.max(0, Math.min(300, p)) / 300) * 1.5);
@@ -103,6 +108,7 @@ export default function GasLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox="0 0 640 256" label="Controles de la jeringa y del baño" scene={
           <svg viewBox="0 0 640 256" role="img" aria-labelledby="gas-t gas-d">
             <title id="gas-t">Jeringa con aire, manómetro y termómetro</title>
             <desc id="gas-d">{`${LAW_NAME[law]}. Volumen ${fmt(res.volumeReading, 0)} mL, presión ${fmt(res.pressureReading, 1)} kPa, temperatura ${fmt(res.temperatureC, 1)} °C.`}</desc>
@@ -121,7 +127,7 @@ export default function GasLab({ api }: LabProps) {
             {law !== 'boyle' && <rect x={121} y={74} width={472} height={3} fill="#fff" opacity="0.35" />}
             {law === 'boyle' && <path d="M124 228 L148 228 L144 219 L128 219 Z" fill="url(#kit-body-dark)" />}
             <Thermometer x={136} y={36} h={186} min={-20} max={100} value={res.temperatureC} />
-            <GasSyringe x={176} y={98} length={380} height={46} fraction={res.volume / 200} capacity={200} major={20} gas="rgba(120,180,230,0.2)">
+            <GasSyringe x={SYR.x} y={SYR.y} length={SYR.len} height={SYR.h} fraction={res.volume / SYR.cap} capacity={SYR.cap} major={20} gas="rgba(120,180,230,0.2)">
               {particles.map((p, i) => <circle key={i} cx={177 + 4 + pos(p, Math.max(8, cylLen - 10))} cy={103 + pos({ x: p.y, vx: p.vy }, 36)} r="2.8" fill="var(--fis)" opacity="0.9" />)}
             </GasSyringe>
             {law !== 'boyle' && <rect x={118} y={58} width={478} height={170} rx={4} fill="url(#kit-glass)" stroke="var(--glass-edge, #8fa9b3)" strokeWidth="1.6" />}
@@ -130,8 +136,18 @@ export default function GasLab({ api }: LabProps) {
             <path d="M100 119.5 L162 119.5" stroke="#fff" strokeWidth="1.2" opacity="0.25" />
             <PressureGauge cx={60} cy={110} pressure={res.pressure} reading={fmt(res.pressureReading, 1)} />
             <text x="200" y="30" style={{ fontSize: 12, fill: 'var(--ink-2)' }}>{law === 'boyle' ? `T = ${fmt(INITIAL.temperature, 1)} °C (constante)` : `Baño a ${fmt(res.temperatureC, 1)} °C`}</text>
-          </svg>
+          </svg>}>
+            {law === 'boyle' ? (
+              <Plunger label="Émbolo de la jeringa" value={volume} min={GAS_LIMITS.volume[0]} max={GAS_LIMITS.volume[1]} step={10} unit="mL" decimals={0}
+                from={{ x: syrX(GAS_LIMITS.volume[0]), y: SYR.y + SYR.h / 2 }} to={{ x: syrX(GAS_LIMITS.volume[1]), y: SYR.y + SYR.h / 2 }} size={SYR.h} onChange={setVolume} />
+            ) : (
+              <Knob label="Perilla del termostato del baño" cx={614} cy={30} r={13} value={temperature} min={GAS_LIMITS.temperature[0]} max={GAS_LIMITS.temperature[1]} step={5} unit="°C" decimals={0} caption="termostato" onChange={setTemperature} />
+            )}
+          </ManipScene>
         </div>
+        <ManipHint>{law === 'boyle'
+          ? 'Arrastra el émbolo de la jeringa para cambiar el volumen, o enfócalo con Tab y usa las flechas.'
+          : 'Gira la perilla del termostato (arriba a la derecha) para cambiar la temperatura del baño, o enfócala con Tab y usa las flechas.'}</ManipHint>
         <Readout items={[
           { k: 'Presión (manómetro)', v: `${fmt(res.pressureReading, 1)} kPa`, data: true },
           { k: 'Volumen (escala)', v: `${fmt(res.volumeReading, 0)} mL`, data: true },

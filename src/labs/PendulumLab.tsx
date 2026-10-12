@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd, shade, Stopwatch } from './kit';
+import { clockAngle, DragHandle, ManipHint, ManipScene } from './manipulate';
 
 type AnimSpeed = 'real' | 'x4';
 type RunMode = 'libre' | 'cronometro' | 'fotopuerta';
@@ -249,6 +250,8 @@ export default function PendulumLab({ api }: LabProps) {
   const bx = PX + Lpx * Math.sin(theta);
   const by = PY + Lpx * Math.cos(theta);
   const yb = PY + Lpx; // punto más bajo
+  // Posición de reposo antes de soltar (θ₀): allí se agarra la lenteja para cambiar el ángulo.
+  const restX = PX + Lpx * Math.sin(toRad(amplitude)), restY = PY + Lpx * Math.cos(toRad(amplitude));
   const blocked = Math.abs(bx - PX) < rPx && Math.abs(by - yb) < rPx;
   const trail = useMemo(() => {
     if (!running) return [];
@@ -307,6 +310,7 @@ export default function PendulumLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox="0 0 760 370" label="Controles del péndulo" scene={
           <svg viewBox="0 0 760 370" role="img" aria-labelledby="pen-t pen-d">
             <title id="pen-t">Péndulo simple en un soporte universal con transportador, regla vertical, fotopuerta y cronómetro</title>
             <desc id="pen-d">{descText}</desc>
@@ -361,8 +365,15 @@ export default function PendulumLab({ api }: LabProps) {
               {!released && <text x={GRAPH.x + GRAPH.w / 2} y={GRAPH.y + GRAPH.h / 2 - 6} textAnchor="middle" style={{ fontSize: 9.5, fill: 'var(--ink-2)' }}>suelta el péndulo</text>}
             </g>
             <text x={PX + 6} y={PY - 28} style={{ fontSize: 10, fill: 'var(--ink-2)' }}>g = {fmt(place.g, 2)} m/s² · {place.name.split(' (')[0]}</text>
-          </svg>
+          </svg>}>
+            <DragHandle label="Lenteja del péndulo: ángulo de liberación" value={amplitude} min={PEN_LIMITS.amplitude[0]} max={PEN_LIMITS.amplitude[1]} step={1} unit="°" decimals={0}
+              disabled={running} hit={{ cx: restX, cy: restY, r: rPx + 6 }}
+              valueText={(v) => `${fmt(v, 0)}° desde la vertical`}
+              valueFromPoint={({ point }) => 180 - Math.abs(clockAngle({ x: PX, y: PY }, point))}
+              onChange={setAmplitude} />
+          </ManipScene>
         </div>
+        <ManipHint>Arrastra la lenteja hacia la derecha para elegir el ángulo de liberación, o enfócala con Tab y usa las flechas.</ManipHint>
         <Readout items={[
           { k: 'Tiempo de 10 oscilaciones (cronómetro)', v: result && meas?.t10 != null ? `${fmt(meas.t10, 2)} s` : '—', data: true },
           { k: 'Período T', v: result ? `${fmt(result.period, 3)} s` : '—', data: true },

@@ -5,6 +5,7 @@ import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../c
 import type { LabProps } from './registry';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
+import { Knob, ManipHint } from './manipulate';
 
 function CircuitDefs() {
   return (
@@ -258,8 +259,11 @@ export default function CircuitLab({ api }: LabProps) {
             <MeterLeads x={meterAt[0]} y={meterAt[1]} probes={probes} />
             {schematic}
             <Multimeter x={meterAt[0]} y={meterAt[1]} v={meterReading.v} i={meterReading.i} probes={probes} />
+            {/* perilla de la fuente regulable: fija la fem de la batería */}
+            <Knob label="Perilla de la fuente: fem" cx={46} cy={220} r={13} value={emf} min={CIRCUIT_LIMITS.emf[0]} max={CIRCUIT_LIMITS.emf[1]} step={0.5} unit="V" decimals={1} caption="fem" onChange={setEmf} />
           </svg>
         </div>
+        <ManipHint>Gira la perilla de la fuente (abajo a la izquierda) para cambiar la fem, o enfócala con Tab y usa las flechas.</ManipHint>
         <Readout items={[
           { k: 'Resistencia equivalente', v: res.equivalentResistance === null ? 'circuito abierto' : `${fmt(res.equivalentResistance, 2)} Ω` },
           { k: 'Corriente total', v: `${fmt(totalCurrent, 3)} A`, data: true },

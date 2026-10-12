@@ -9,6 +9,7 @@ import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../com
 import { Chart } from '../components/Chart';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd, shade } from './kit';
+import { DragHandle, ManipHint, ManipScene } from './manipulate';
 
 /* ------------------------------------------------------------------ geometría del banco */
 
@@ -301,6 +302,7 @@ export default function ProjectileLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox={`0 0 ${VB_W} ${VB_H}`} label="Controles del lanzador" scene={
           <svg viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-labelledby="pry-t pry-d">
             <title id="pry-t">Lanzador de proyectiles sobre una mesa, con fotopuerta, fotografía estroboscópica y cinta métrica en el piso</title>
             <desc id="pry-d">{descText}{target !== null ? ` El recipiente del reto está a ${fmt(target, 2)} m.` : ''}</desc>
@@ -382,8 +384,16 @@ export default function ProjectileLab({ api }: LabProps) {
             {!fired && <Ball x={mx - 8 * Math.cos((angle * Math.PI) / 180)} y={my + 8 * Math.sin((angle * Math.PI) / 180)} sphereId={sphereId} />}
             <circle cx={mx} cy={my} r={2.2} fill="#263033" />
             <text x={mx + 22} y={my - 22} style={{ fontSize: 11, fill: 'var(--fis)', fontWeight: 700 }}>{fmt(angle, 1)}°</text>
-          </svg>
+          </svg>}>
+            {/* el tubo gira alrededor de la boca: se agarra por la culata y se inclina */}
+            <DragHandle label="Tubo del lanzador: ángulo de lanzamiento" value={angle} min={PROJECTILE_LIMITS.angle[0]} max={PROJECTILE_LIMITS.angle[1]} step={0.5} unit="°" decimals={1}
+              disabled={flying} hit={{ cx: mx - 40 * Math.cos((angle * Math.PI) / 180), cy: my + 40 * Math.sin((angle * Math.PI) / 180), r: 14 }}
+              valueText={(v) => `${fmt(v, 1)}° sobre la horizontal`}
+              valueFromPoint={({ point }) => (Math.atan2(point.y - my, mx - point.x) * 180) / Math.PI}
+              onChange={setAngle} />
+          </ManipScene>
         </div>
+        <ManipHint>Inclina el tubo del lanzador arrastrando su culata, o enfócalo con Tab y usa las flechas para cambiar el ángulo.</ManipHint>
 
         <Readout items={[
           { k: 'v₀ (fotopuerta)', v: fired ? `${fmt(shot.v0Reading, 2)} m/s` : '—', data: true },

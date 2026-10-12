@@ -5,6 +5,10 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd } from './kit';
+import { ManipHint, ManipScene, Plunger } from './manipulate';
+
+/** Alargamiento del dinamómetro (px por newton): el anillo se aleja del carrito al tirar más fuerte. */
+const PX_PER_N = 5;
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
 
@@ -165,7 +169,9 @@ function Cart({ mass, force }: { mass: number; force: number }) {
       <rect x={66} y={130.5} width={36} height={11} rx={3} fill="url(#kit-glass-fill)" stroke="var(--glass-edge)" />
       <path d="M68 136 l3 -3.5 l3 7 l3 -7 l3 7 l3 -7 l3 7 l3 -7 l3 7 l3 -3.5" fill="none" stroke="#6d7b80" strokeWidth="1" />
       <rect x={66} y={130.5} width={36} height={11} rx={3} fill="url(#kit-glass)" />
-      <circle cx={107} cy={136} r={4.5} fill="none" stroke="#5d6b70" strokeWidth="1.8" />
+      {/* vástago que sale del tubo al tirar y anillo del que se tira */}
+      <rect x={100} y={134.8} width={3 + force * PX_PER_N} height={2.4} rx={1} fill="url(#kit-metal-h)" stroke="#6d7b80" strokeWidth="0.4" />
+      <circle cx={107 + force * PX_PER_N} cy={136} r={4.5} fill="none" stroke="#5d6b70" strokeWidth="1.8" />
       {arrowLen > 0 && (
         <g>
           <line x1={66} x2={66 + arrowLen - 7} y1={119} y2={119} stroke="var(--fis)" strokeWidth="3" />
@@ -224,6 +230,7 @@ export default function NewtonLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox="0 0 640 250" label="Control del dinamómetro" scene={
           <svg viewBox="0 0 640 250" role="img" aria-labelledby="nw-t nw-d">
             <title id="nw-t">Carrito sobre una pista con dos fotopuertas separadas 1,00 m</title>
             <desc id="nw-d">{done ? (res.moves ? `El carrito recorrió 1,00 m en ${fmt(res.time!, 3)} s.` : 'El carrito no se movió: la fricción estática equilibra la fuerza aplicada.') : 'El carrito está en reposo en la primera fotopuerta.'}</desc>
@@ -248,8 +255,13 @@ export default function NewtonLab({ api }: LabProps) {
               <rect x={trackX0 + trackPx / 2 - 26} y="191" width="52" height="18" rx="4" fill="var(--surface)" />
               <text x={trackX0 + trackPx / 2} y="204" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>1,00 m</text>
             </g>
-          </svg>
+          </svg>}>
+            <Plunger label="Anillo del dinamómetro: fuerza aplicada" value={force} min={NEWTON_LIMITS.force[0]} max={NEWTON_LIMITS.force[1]} step={0.1} unit="N" decimals={1}
+              from={{ x: cartX - 30 + 107 + NEWTON_LIMITS.force[0] * PX_PER_N, y: 136 }} to={{ x: cartX - 30 + 107 + NEWTON_LIMITS.force[1] * PX_PER_N, y: 136 }} size={20}
+              disabled={running} onChange={setForce} />
+          </ManipScene>
         </div>
+        <ManipHint>Tira del anillo del dinamómetro hacia la derecha para aplicar más fuerza, o enfócalo con Tab y usa las flechas.</ManipHint>
         <div className="grid-2">
           <div className="card">
             <h3>Diagrama de cuerpo libre</h3>

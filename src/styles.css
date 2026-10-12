@@ -1210,3 +1210,21 @@ details.nb-panel > summary:has(.nb-pill)::after { margin-left: 4px; }
   .sheet thead th { position: static; }
   .tip::after { display: none; }
 }
+
+/* ---------------------------------------------------------------- manipulación directa (U5) */
+.manip-scene { position: relative; min-width: 520px; }
+.bench .manip-scene > svg.manip-layer { position: absolute; inset: 0; width: 100%; height: 100%; min-width: 0; overflow: visible; pointer-events: none; }
+.manip { pointer-events: auto; cursor: grab; touch-action: none; outline: none; -webkit-tap-highlight-color: transparent; }
+.manip:focus, .manip:focus-visible { outline: none; }
+.manip.dragging { cursor: grabbing; }
+.manip.disabled { cursor: not-allowed; }
+.manip-hit { fill: transparent; stroke: none; pointer-events: all; }
+.manip-affordance { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3; stroke-opacity: 0.55; pointer-events: none; }
+.manip:hover .manip-affordance, .manip.dragging .manip-affordance { stroke-opacity: 1; stroke-width: 2; }
+.manip-ring { fill: none; stroke: var(--focus); stroke-width: 3; opacity: 0; pointer-events: none; }
+.manip:focus-visible .manip-ring { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) { .manip-ring, .manip-affordance { transition: opacity 0.12s ease, stroke-opacity 0.12s ease; } }
+[data-reduce-motion] .manip-ring, [data-reduce-motion] .manip-affordance { transition: none !important; }
+.manip-hint { display: flex; gap: 8px; align-items: center; margin: 0; padding: 6px 12px; font-size: 0.88rem; }
+.manip-hint svg { flex: none; color: var(--accent); }
+@media print { .manip-layer { display: none; } }

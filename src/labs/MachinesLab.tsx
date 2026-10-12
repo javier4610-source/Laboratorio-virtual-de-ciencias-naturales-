@@ -5,6 +5,7 @@ import {
 } from '../models/simpleMachines';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { useMeasure } from '../components/Measurement';
 import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/ui';
 import type { LabProps } from './registry';
@@ -393,6 +394,9 @@ export default function MachinesLab({ api }: LabProps) {
     cancelAnimationFrame(raf.current);
     setP(0);
     setPhase('midiendo');
+    // El dinamómetro se tensa (crujido del resorte) y luego la carga se mueve (la cuerda roza la polea).
+    playSound('creak', { intensity: 0.6 });
+    if (machine === 'poleas') playSound('ropeCreak', { intensity: 0.7, delay: (DUR / 1000) * 0.45 });
   };
 
   const changeClass = (v: string) => {
@@ -750,7 +754,7 @@ export default function MachinesLab({ api }: LabProps) {
           <h3>Montaje</h3>
           <Segmented<Machine> label="Máquina simple" value={machine} onChange={setMachine}
             options={[{ value: 'palanca', label: 'Palanca' }, { value: 'poleas', label: 'Poleas' }]} />
-          <Slider label="Masa de la carga" value={massG} min={MACHINE_LIMITS.loadMass[0] * 1000} max={MACHINE_LIMITS.loadMass[1] * 1000} step={50} unit="g" decimals={0} onChange={setMassG} />
+          <Slider label="Masa de la carga" value={massG} min={MACHINE_LIMITS.loadMass[0] * 1000} max={MACHINE_LIMITS.loadMass[1] * 1000} step={50} unit="g" decimals={0} onChange={(v) => { setMassG(v); playSound('clank', { intensity: 0.3 + v / 4000 }); }} />
           {machine === 'palanca' ? (
             <>
               <Segmented<(typeof CLASS_KEYS)[number]> label="Género de la palanca" value={String(cls) as (typeof CLASS_KEYS)[number]} onChange={changeClass}

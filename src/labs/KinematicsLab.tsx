@@ -5,6 +5,7 @@ import {
 } from '../models/kinematics';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { Chart, type Series } from '../components/Chart';
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
@@ -155,7 +156,7 @@ export default function KinematicsLab({ api }: LabProps) {
     return () => cancelAnimationFrame(raf.current);
   }, [running, tObs, speed]);
 
-  const start = () => { setT(0); setDone(false); setRunning(true); };
+  const start = () => { setT(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.8 }); };
   const tShown = Math.min(Math.max(0, t), tObs);
   const pos = done && res.endReason === 'pista' ? TRACK_LENGTH : stateAt(v0, acc, tShown).x;
   const nStrobe = Math.min(res.strobe.length, Math.floor(tShown / STROBE_INTERVAL + 1e-9) + 1);

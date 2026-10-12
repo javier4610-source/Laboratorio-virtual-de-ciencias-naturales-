@@ -6,6 +6,7 @@ import {
 } from '../models/heat';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
@@ -184,6 +185,8 @@ export default function HeatLab({ api }: LabProps) {
   const raf = useRef(0);
 
   const isMetal = experiment === 'metal';
+  // La parrilla encendida (visible en la escena) sisea; el agua hirviendo del metal burbujea suavemente.
+  useSoundLoop(isMetal ? 'bubbling' : 'hotplate', phase === 'listo', 0.25);
   const metalInfo = findMetal(metal);
   const vessel = findContainer(container);
   const vesselC = containerHeatCapacity(container);
@@ -231,6 +234,9 @@ export default function HeatLab({ api }: LabProps) {
     remeasure('masaMuestra', 'masaAgua', 'tMuestra', 'tAgua', 'te', 't10', 'serie');
     setElapsed(0);
     setPhase('midiendo');
+    // La muestra llega al calorímetro al final del traslado: el metal cae al agua, el agua caliente se vierte.
+    if (experiment === 'metal') playSound('splash', { intensity: 0.4 + sampleMass / 400, delay: (TRANSFER_MS / 1000) * 0.85 });
+    else playSound('pour', { duration: TRANSFER_MS / 1000, delay: 0.2 });
   };
 
   const chooseExperiment = (v: ExperimentId) => {

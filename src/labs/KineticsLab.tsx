@@ -6,6 +6,7 @@ import {
 import { roundToResolution } from '../models/math';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
@@ -107,6 +108,10 @@ export default function KineticsLab({ api }: LabProps) {
 
   const vNow = volumeAt(res.series, Math.min(DURATION, Math.max(0, simT)));
   const reading = roundToResolution(vNow, SYRINGE_RES);
+  // Efervescencia mientras se desprende gas, más intensa cuanto mayor es la velocidad de reacción.
+  const rateNow = volumeAt(res.series, Math.min(DURATION, simT + 2)) - vNow;
+  const rate0 = Math.max(1e-6, volumeAt(res.series, 2));
+  useSoundLoop('fizzing', running, 0.2 + 0.8 * Math.min(1, rateNow / rate0));
   const plungerX = SY_X0 + (Math.min(SETUP.syringeMax, vNow) / SETUP.syringeMax) * SY_PX;
   const remaining = marble ? Math.max(0, 1 - vNow / res.totalVolume) : 1;
   const tb = Math.max(0, Math.min(1, temp / 60));
@@ -281,7 +286,7 @@ export default function KineticsLab({ api }: LabProps) {
           )}
           <Slider label="Temperatura del baño" value={Math.min(temp, tLimits[1])} min={tLimits[0]} max={tLimits[1]} step={1} unit="°C" decimals={0} onChange={setTemp} />
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { setSimT(0); setDone(false); setRunning(true); }} disabled={running}>Iniciar reacción y cronómetro</button>
+            <button type="button" className="btn primary" onClick={() => { setSimT(0); setDone(false); setRunning(true); playSound('pour', { duration: 0.5, intensity: 0.5 }); playSound('click', { intensity: 0.8 }); }} disabled={running}>Iniciar reacción y cronómetro</button>
             <button type="button" className="btn" onClick={reset}>Reiniciar</button>
           </div>
           <RecordButton onRecord={record} disabled={!done} />

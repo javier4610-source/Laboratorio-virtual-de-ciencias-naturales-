@@ -6,6 +6,7 @@ import {
 } from '../models/respiration';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import { useMeasure } from '../components/Measurement';
@@ -200,14 +201,15 @@ export default function RespirationLab({ api }: LabProps) {
     const tick = (now: number) => {
       const p = Math.min(1, Math.max(0, now - start) / ANIM_MS);
       setProgress(p);
-      if (p >= 1) { setPhase('medido'); return; }
+      if (p >= 1) { setPhase('medido'); playSound('beep'); return; }
       raf.current = requestAnimationFrame(tick);
     };
     raf.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf.current);
   }, [phase]);
 
-  const start = () => { cancelAnimationFrame(raf.current); remeasure('gotaA', 'gotaB', 'gotaC'); setProgress(0); setPhase('midiendo'); };
+  // Sonido: gota indicadora en el capilar y clic del cronómetro; pitido del temporizador al terminar.
+  const start = () => { cancelAnimationFrame(raf.current); remeasure('gotaA', 'gotaB', 'gotaC'); setProgress(0); setPhase('midiendo'); playSound('drop', { intensity: 0.5 }); playSound('click', { delay: 0.25 }); };
 
   const done = phase === 'medido';
   const s = findSample(sample);

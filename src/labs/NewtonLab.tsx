@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { NEWTON_LIMITS, positionAt, simulateCart, SURFACES, TRACK_LENGTH } from '../models/newton';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound, useSoundLoop } from '../lib/sound';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd } from './kit';
@@ -208,7 +209,7 @@ export default function NewtonLab({ api }: LabProps) {
     const start = performance.now();
     const tick = (now: number) => {
       const el = Math.max(0, (now - start) / 1000);
-      if (el >= res.time!) { setT(res.time!); setRunning(false); setDone(true); return; }
+      if (el >= res.time!) { setT(res.time!); setRunning(false); setDone(true); playSound('photogate'); return; }
       setT(el);
       raf.current = requestAnimationFrame(tick);
     };
@@ -217,6 +218,8 @@ export default function NewtonLab({ api }: LabProps) {
   }, [running, res]);
 
   const x = res.moves ? positionAt(res.acceleration, t) : 0;
+  // Rodadura del carrito mientras se mueve, más fuerte a medida que gana rapidez.
+  useSoundLoop('rolling', running && res.moves, res.moves && res.time ? 0.15 + 0.85 * Math.min(1, t / res.time) : 0);
   const trackX0 = 60, trackPx = 420;
   const cartX = trackX0 + (x / TRACK_LENGTH) * trackPx;
   const scaleF = 9; // px por newton en el diagrama
@@ -290,7 +293,7 @@ export default function NewtonLab({ api }: LabProps) {
           <Slider label="Masa del carrito" value={mass} min={NEWTON_LIMITS.mass[0]} max={NEWTON_LIMITS.mass[1]} step={0.05} unit="kg" decimals={2} onChange={setMass} />
           <Slider label="Fuerza aplicada" value={force} min={NEWTON_LIMITS.force[0]} max={NEWTON_LIMITS.force[1]} step={0.1} unit="N" decimals={1} onChange={setForce} />
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { remeasure('cronometro'); setT(0); setDone(false); setRunning(true); }} disabled={running}>Soltar el carrito</button>
+            <button type="button" className="btn primary" onClick={() => { remeasure('cronometro'); setT(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.8 }); }} disabled={running}>Soltar el carrito</button>
             <button type="button" className="btn" onClick={reset}>Reiniciar</button>
           </div>
           <RecordButton onRecord={record} disabled={!done} />

@@ -4,6 +4,10 @@ import { fmt } from '../lib/format';
 import { Notice, RecordButton, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, shade } from './kit';
+import { playSound, type SoundName } from '../lib/sound';
+
+/** Sonido de cada técnica: agitar con agua, imán que atrae limaduras, vertido, goteo del filtro, ebullición. */
+const METHOD_SOUND: Record<MethodId, SoundName> = { agua: 'swirl', iman: 'clank', decantacion: 'pour', filtracion: 'drips', evaporacion: 'fizz' };
 
 const DEFAULT: Masses = { hierro: 5, arena: 5, sal: 5, aserrin: 0, aceite: 0 };
 
@@ -135,7 +139,7 @@ export default function MixturesLab({ api }: LabProps) {
 
   const reset = (m = masses) => { setState(initialState(m)); setSteps([]); };
   const setMass = (k: ComponentId, val: number) => { const m = { ...masses, [k]: val }; setMasses(m); reset(m); };
-  const apply = (m: MethodId) => { setState((s) => applyMethod(s, m, { water, power })); setSteps((st) => [...st, m]); };
+  const apply = (m: MethodId) => { setState((s) => applyMethod(s, m, { water, power })); setSteps((st) => [...st, m]); playSound(METHOD_SOUND[m], { duration: 0.9, intensity: 0.5 }); };
   const name = (m: MethodId) => METHODS.find((x) => x.id === m)!.name;
   const get = (id: ComponentId) => ev.find((e) => e.component.id === id);
 

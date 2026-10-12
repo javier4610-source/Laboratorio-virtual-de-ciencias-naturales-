@@ -6,6 +6,7 @@ import type { LabProps } from './registry';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
 import { Knob, ManipHint } from './manipulate';
+import { playSound, useSoundLoop } from '../lib/sound';
 
 function CircuitDefs() {
   return (
@@ -170,10 +171,13 @@ export default function CircuitLab({ api }: LabProps) {
   const [main, setMain] = useState(true);
   const [meter, setMeter] = useState<'1' | '2' | '3' | 'fuente'>('1');
   const res = useMemo(() => solveCircuit({ topology, emf, internalResistance: r, resistances: R, closed, mainSwitch: main }), [topology, emf, r, R, closed, main]);
-  const toggle = (i: number) => setClosed((c) => c.map((v, j) => (j === i ? !v : v)) as [boolean, boolean, boolean]);
+  const toggle = (i: number) => { setClosed((c) => c.map((v, j) => (j === i ? !v : v)) as [boolean, boolean, boolean]); playSound('switch'); };
+  const toggleMain = () => { setMain((m) => !m); playSound('switch'); };
   const setRi = (i: number, v: number) => setRs((rs) => rs.map((x, j) => (j === i ? v : x)) as [number, number, number]);
   const els = res.elements;
   const flowing = !res.open && res.totalCurrent > 0;
+  // Zumbido suave de 60 Hz solo mientras circula corriente (los bombillos encendidos lo muestran).
+  useSoundLoop('hum', flowing, Math.min(1, 0.25 + res.totalCurrent / 2));
 
   // Lecturas del multímetro (en modo real, con la dispersión típica de la ficha; la tabla por elemento muestra los valores ideales).
   const { measure, remeasure, real } = useMeasure();
@@ -213,7 +217,7 @@ export default function CircuitLab({ api }: LabProps) {
           <g key={i}><Bulb x={x} y={60} power={els[i].power} label={`R${i + 1} = ${R[i]} Ω`} on={els[i].active} /><Switch x={x + 70} y={60} closed={closed[i]} onToggle={() => toggle(i)} label={`Interruptor de R${i + 1}`} /></g>
         ))}
         <text x={330} y={110} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 4, strokeLinejoin: 'round' }}>En serie hay un solo camino: todos los elementos e interruptores están en él.</text>
-        <Switch x={330} y={260} closed={main} onToggle={() => setMain((m) => !m)} label="Interruptor general" />
+        <Switch x={330} y={260} closed={main} onToggle={toggleMain} label="Interruptor general" />
         <text x={330} y={300} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>Interruptor general</text>
       </g>
     );
@@ -223,7 +227,7 @@ export default function CircuitLab({ api }: LabProps) {
         <Wire d="M80 60 H520 M80 260 H520 M80 60 V260" active={flowing} />
         {[240, 380, 520].map((x, i) => <Wire key={i} d={`M${x} 60 V260`} active={els[i].active} />)}
         <Battery x={80} y={160} emf={emf} />
-        <Switch x={150} y={60} closed={main} onToggle={() => setMain((m) => !m)} label="Interruptor general" />
+        <Switch x={150} y={60} closed={main} onToggle={toggleMain} label="Interruptor general" />
         {[240, 380, 520].map((x, i) => (
           <g key={i}><Switch x={x} y={110} closed={closed[i]} onToggle={() => toggle(i)} label={`Interruptor de R${i + 1}`} vertical /><Bulb x={x} y={190} power={els[i].power} label={`R${i + 1} = ${R[i]} Ω`} on={els[i].active} vertical /></g>
         ))}
@@ -237,7 +241,7 @@ export default function CircuitLab({ api }: LabProps) {
         <Battery x={80} y={160} emf={emf} />
         <Bulb x={230} y={60} power={els[0].power} label={`R1 = ${R[0]} Ω`} on={els[0].active} />
         <Switch x={160} y={260} closed={closed[0]} onToggle={() => toggle(0)} label="Interruptor de R1" />
-        <Switch x={240} y={260} closed={main} onToggle={() => setMain((m) => !m)} label="Interruptor general" />
+        <Switch x={240} y={260} closed={main} onToggle={toggleMain} label="Interruptor general" />
         {[380, 520].map((x, k) => (
           <g key={k}><Switch x={x} y={110} closed={closed[k + 1]} onToggle={() => toggle(k + 1)} label={`Interruptor de R${k + 2}`} vertical /><Bulb x={x} y={190} power={els[k + 1].power} label={`R${k + 2} = ${R[k + 1]} Ω`} on={els[k + 1].active} vertical /></g>
         ))}
@@ -296,7 +300,7 @@ export default function CircuitLab({ api }: LabProps) {
           ))}
           <div className="btn-row">
             {[0, 1, 2].map((i) => <button key={i} type="button" className="btn small" aria-pressed={closed[i]} onClick={() => toggle(i)}>R{i + 1}: {closed[i] ? 'cerrado' : 'abierto'}</button>)}
-            <button type="button" className="btn small" aria-pressed={main} onClick={() => setMain((m) => !m)}>General: {main ? 'cerrado' : 'abierto'}</button>
+            <button type="button" className="btn small" aria-pressed={main} onClick={toggleMain}>General: {main ? 'cerrado' : 'abierto'}</button>
           </div>
         </div>
         <div className="card stack-sm">

@@ -5,6 +5,7 @@ import {
 } from '../lib/logger';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { copyText, downloadText, slug } from '../lib/report';
 import { Lcd } from '../labs/kit';
 import type { FitModel } from '../lib/fit';
@@ -110,6 +111,7 @@ export function DataLogger({
 
   const finish = (a: Acquisition, how: 'completo' | 'detenido') => {
     cancelAnimationFrame(raf.current);
+    playSound('beep', { freq: 2050 });
     setStatus(how);
     setFrame((f) => f + 1);
     const n = a.samples.length;
@@ -121,6 +123,7 @@ export function DataLogger({
   const start = () => {
     if (trigInvalid) return;
     cancelAnimationFrame(raf.current);
+    playSound('beep');
     const trigger = trigOn ? { channel: trigCh, level: trigLevel, edge: trigEdge } : null;
     const a = startAcquisition(rate, duration, trigger);
     const sampler = createSampler(chRef.current, seed + runIndex * 7919, ideal);

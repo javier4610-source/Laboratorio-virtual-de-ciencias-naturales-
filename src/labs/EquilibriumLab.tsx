@@ -7,6 +7,7 @@ import {
 import { seededRandom } from '../models/math';
 import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { Beaker, BenchTop, GasSyringe, Lcd, TestTube, Thermometer } from './kit';
@@ -192,8 +193,12 @@ function FePart({ api }: LabProps) {
       const next = applyFePerturbation(st, pt);
       setPrev(st); setSt(next); setLast(pt.kind); setMeasured(false); setError(null);
       trigger();
+      // Gota del gotero (o chorro de agua) y agitación suave del tubo.
+      playSound(pt.kind === 'agua' ? 'pour' : 'drop', { duration: 0.5, intensity: 0.5 });
+      playSound('swirl', { intensity: 0.4, delay: 0.25 });
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
+      playSound('error');
     }
   };
   const newTube = () => { reset(); setSt(FE_INITIAL); setPrev(null); setLast(null); setMeasured(false); setError(null); };
@@ -298,7 +303,7 @@ function FePart({ api }: LabProps) {
             onChange={(v) => { if (v !== st.temperatura) perturb({ kind: 'temperatura', value: v }); }} />
           <div className="btn-row">
             <button type="button" className="btn primary" disabled={!settled} onClick={() => setMeasured(true)}>Medir absorbancia</button>
-            <button type="button" className="btn" onClick={newTube}>Preparar tubo nuevo</button>
+            <button type="button" className="btn" onClick={() => { newTube(); playSound('glassClink'); }}>Preparar tubo nuevo</button>
           </div>
           {!settled && <p className="small muted" aria-live="polite">Espera a que el sistema alcance el nuevo equilibrio para medir.</p>}
           {error && <p className="small" role="alert" style={{ color: 'var(--bad)' }}>{error}</p>}
@@ -324,6 +329,7 @@ function No2Part({ api }: LabProps) {
   const change = (next: No2State, label: string) => {
     if (next.volumen === st.volumen && next.temperatura === st.temperatura) return;
     setPrev(st); setSt(next); setLast(label); setMeasured(false); trigger();
+    if (next.volumen !== st.volumen) playSound('squeak', { intensity: next.volumen < st.volumen ? 0.9 : 0.4 });
   };
   const restore = () => { reset(); setSt(NO2_INITIAL); setPrev(null); setLast('Estado inicial'); setMeasured(false); };
 

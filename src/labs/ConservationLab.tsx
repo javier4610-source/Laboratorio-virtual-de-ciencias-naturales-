@@ -6,6 +6,7 @@ import {
 import { seededRandom } from '../models/math';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
+import { playSound, useSoundLoop } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Beaker, DigitalBalance, Erlenmeyer, shade, TestTube } from './kit';
@@ -288,6 +289,8 @@ export default function ConservationLab({ api }: LabProps) {
   const lcdText = weighed ? fmt(current, 2) : '- - - -';
   const isOx = reaction === 'oxidacion';
   const sys = res.container.id;
+  // Mientras la reacción avanza en pantalla: efervescencia (gas) o chisporroteo de la lana de acero.
+  useSoundLoop(isOx ? 'hotplate' : 'fizzing', phase === 'reaccionando' && reaction !== 'precipitacion', 0.4 + 0.6 * rate);
 
   const record = () => api.addTrial('pesadas', {
     reaccion: rx.name,
@@ -492,8 +495,8 @@ export default function ConservationLab({ api }: LabProps) {
               onChange={(v) => { setVolume(v); reset(); }} hint={rx.liquid} />
           )}
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => setPhase('pesado')} disabled={weighed}>1. Pesar el sistema inicial</button>
-            <button type="button" className="btn primary" onClick={() => { setT(0); setPhase('reaccionando'); }} disabled={phase !== 'pesado'}>{isOx ? '2. Encender la lana de acero' : '2. Mezclar los reactivos'}</button>
+            <button type="button" className="btn primary" onClick={() => { setPhase('pesado'); playSound('tare'); }} disabled={weighed}>1. Pesar el sistema inicial</button>
+            <button type="button" className="btn primary" onClick={() => { setT(0); setPhase('reaccionando'); playSound(isOx ? 'switch' : 'pour', { duration: 0.8 }); }} disabled={phase !== 'pesado'}>{isOx ? '2. Encender la lana de acero' : '2. Mezclar los reactivos'}</button>
             <button type="button" className="btn" onClick={reset}>Reiniciar medición</button>
           </div>
           <RecordButton onRecord={record} disabled={!done} />

@@ -145,3 +145,14 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | U1 · Análisis de datos | 17 pruebas de ajustes (errores estándar contra fórmulas clásicas), axe del cuaderno e informe | Correcto | La recta de ajuste aparecía siempre, también en relaciones no lineales | Modelo de ajuste elegible (lineal, proporcional, cuadrático, exponencial, potencia, logarítmico) con incertidumbre, R², residuos, cursor, zoom, linealización y barras de incertidumbre | Corregido |
 | U2 · Identidad visual | Capturas a 1366 y 390 px en ambos temas, axe | 0 infracciones tras corregir | Faltaban variables de vidrio y mesa en el tema oscuro explícito; desborde de 62 px en las etapas a 390 px; tablas del banco no alcanzables con teclado en celular | Variables completas; sin desborde; todas las tablas con desplazamiento son regiones enfocables | Corregido |
 | Regresión | 248 pruebas unitarias y 43 de interfaz con axe | Todas pasan | — | — | Correcto |
+
+# Docente conectado (T1) y sensores en tiempo real (U4)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Servidor de seguimiento | 23 pruebas nuevas: aislamiento entre docentes, cursos y estudiantes; PIN con scrypt y bloqueo tras 5 intentos; validación y tamaño máximo; idempotencia y versiones; CSV sin fórmulas; límites | Correcto | — | — | Correcto |
+| Seguimiento del curso | E2E de punta a punta (el docente crea el curso, el estudiante se une con código y PIN, mide y responde, el docente ve su avance y puntaje) y axe en ambos temas a 1280 y 390 px | Funciona; 0 infracciones | — | — | Correcto |
+| Sincronización del estudiante | Revisión de código y E2E | Funciona sin bloquear el laboratorio si el servidor falla; cola sin conexión | — | — | Correcto |
+| Registrador de datos (U4) | 10 pruebas de la lógica (muestreo, disparo, estadísticas, ruido con semilla), axe | Correcto | Pocas marcas en el eje, unidad encimada en la pantalla, marcadores tapaban el canal | Corregidos antes de integrar | Corregido |
+| Supuestos declarados | Revisión | — | El sensor de presión de cinética y el oxígeno disuelto de fotosíntesis no salen directamente de los modelos originales | Se calculan con supuestos explícitos (matraz tapado a T constante; 1 g de elodea en 100 mL) mostrados en la interfaz | Declarado |
+| Regresión | 281 pruebas unitarias y 46 de interfaz con axe | Todas pasan | Conflicto de estilos al integrar (bloques añadidos por ambos lados) | Se conservaron ambos bloques | Correcto |

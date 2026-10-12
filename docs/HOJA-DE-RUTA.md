@@ -21,12 +21,13 @@ se construye, se verifica y se marca como hecho. El orden puede cambiarlo el doc
 
 ### Programa «docente conectado» (máxima prioridad, pedido por el docente)
 
-- [ ] **T1 · Seguimiento en tiempo real:** el estudiante se une a su curso con un código; su avance se sincroniza solo
+- [x] **T1 · Seguimiento en tiempo real:** el estudiante se une a su curso con un código; su avance se sincroniza solo
       (también sin conexión, con cola de envío). El docente ve ingresos, actividad reciente, avance por práctica y etapa,
       puntajes por competencia, hipótesis, datos, ajustes, conclusiones y evolución en el tiempo; análisis de cada
       pregunta (aciertos y opción errada más elegida) y alertas de estudiantes que necesitan apoyo; exportación a CSV.
-- [ ] **T2 · Publicación del servidor:** alojar el servidor en internet con copias de seguridad y HTTPS (requiere
-      la decisión del docente sobre el proveedor), política de privacidad y autorización de acudientes (Ley 1581).
+- [ ] **T2 · Publicación del servidor:** el docente eligió Render; `Dockerfile`, `render.yaml` y la guía
+      `docs/DESPLIEGUE-SERVIDOR.md` están listos. Falta que el docente cree la cuenta y entregue la dirección para
+      configurar la variable `API_URL`; política de privacidad y autorización de acudientes (Ley 1581).
 - [ ] **T3 · Retroalimentación del docente:** comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.
 
@@ -40,7 +41,7 @@ se construye, se verifica y se marca como hecho. El orden puede cambiarlo el doc
       práctica, sistema de íconos propio, tipografía y espaciado refinados, estados vacíos y microinteracciones.
 - [ ] **U3 · Medición realista:** modo «instrumento real» con ruido e incertidumbre según la ficha de cada instrumento,
       repeticiones, promedio y desviación estándar, propagación de incertidumbre en los cálculos.
-- [ ] **U4 · Adquisición de datos en tiempo real:** sensores virtuales con frecuencia de muestreo, registro continuo
+- [x] **U4 · Adquisición de datos en tiempo real:** sensores virtuales con frecuencia de muestreo, registro continuo
       tipo osciloscopio y disparo, para las prácticas que evolucionan en el tiempo.
 - [ ] **U5 · Manipulación directa:** arrastrar muestras e instrumentos, perillas y émbolos que se giran o empujan,
       con alternativa por teclado.

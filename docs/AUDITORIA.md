@@ -176,3 +176,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Supuestos declarados | Revisión | — | La lana de acero arde de forma incompleta en el aula; en el frasco sellado la presión supera 200 kPa | Se declaran en los límites del modelo, con aviso de seguridad | Declarado |
 | Regresión | 349 pruebas unitarias y 52 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |
 | Cuaderno de laboratorio | Rediseño como software científico: tabla tipo hoja de cálculo con encabezado fijo, panel de configuración, gráfica con leyenda, residuos y cuadro de ajuste con parámetros ± incertidumbre; axe del cuaderno lleno en ambos temas a 1366 y 390 px | 0 infracciones, sin desborde horizontal | Tabla apretada con texto en 5 líneas, columnas cortadas, botones de la gráfica como texto | Rediseño completo conservando nombres accesibles y lógica de análisis | Corregido |
+
+# Lote 7 completo (respiración celular y contaminación del agua)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Respiración celular | 11 pruebas: Q10 = 2 y óptimo, CR de glucosa (1,00) y trioleína (57/80), ATP 32/30/38/36 y 2, corrección con termobarómetro, fermentación en anoxia | Correcto | — | — | Correcto |
+| Contaminación del agua | 15 pruebas: saturación de O₂ (Benson–Krause), mezcla completa, punto crítico de Streeter–Phelps calculado a mano, clases BMWP/Col e ICA, normas | Correcto | — | — | Correcto |
+| Medición realista | Fichas de instrumento de ambas prácticas en `instruments.ts` | El selector ideal/real aparece | — | — | Correcto |
+| Supuestos declarados | Revisión | — | Umbrales de presencia de macroinvertebrados didácticos; ríos ilustrativos; normas por validar; levadura excluida por efecto Crabtree | Declarados en la interfaz y en los límites del modelo | Declarado |
+| Regresión | 375 pruebas unitarias y 54 de interfaz con axe (suite completa) | Todas pasan | Prueba E2E con texto repetido en dos lecturas | Selector más preciso | Corregido |

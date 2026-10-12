@@ -81,6 +81,9 @@ export const CATALOG: PracticeMeta[] = [
   { id: 'choques', title: 'Choques y cantidad de movimiento', grade: 10, area: 'fisica', topic: 'Cantidad de movimiento, impulso y choques en una dimensión', durationMin: 60,
     summary: 'Haz chocar dos deslizadores en un riel de aire con parachoques de resorte o velcro, mide sus velocidades con fotopuertas y comprueba qué se conserva siempre y qué solo a veces.',
     competencies: ['uso', 'explicacion', 'indagacion'], keywords: ['cantidad de movimiento', 'momento lineal', 'impulso', 'choque', 'colisión', 'elástico', 'inelástico', 'coeficiente de restitución', 'energía cinética', 'conservación', 'centro de masa', 'explosión'] },
+  { id: 'respiracion', title: 'Respiración celular y balance energético', grade: 10, area: 'biologia', topic: 'Respiración aerobia, fermentación, cociente respiratorio y rendimiento de ATP', durationMin: 75,
+    summary: 'Mide el consumo de O₂ de semillas en germinación con un respirómetro de capilar, calcula el cociente respiratorio para saber qué reserva queman y compara el ATP que se obtiene con oxígeno y sin él.',
+    competencies: ['uso', 'explicacion', 'indagacion'], keywords: ['respiración celular', 'fermentación', 'ATP', 'cociente respiratorio', 'respirómetro', 'KOH', 'Q10', 'temperatura', 'desnaturalización', 'glucólisis', 'ciclo de Krebs', 'fosforilación oxidativa', 'semillas', 'germinación', 'azul de bromotimol', 'efecto Pasteur'] },
   { id: 'circuitos', title: 'Circuitos eléctricos: voltaje, corriente y resistencia', grade: 11, area: 'fisica', topic: 'Electricidad: ley de Ohm, circuitos en serie, paralelo y mixtos', durationMin: 75,
     summary: 'Arma circuitos en serie, en paralelo y mixtos, mide con voltímetro y amperímetro virtuales y verifica la ley de Ohm y las leyes de Kirchhoff.',
     competencies: ['uso', 'explicacion', 'indagacion'], keywords: ['circuito', 'Ohm', 'Kirchhoff', 'voltaje', 'corriente', 'resistencia', 'serie', 'paralelo', 'potencia', 'electricidad'] },
@@ -99,6 +102,9 @@ export const CATALOG: PracticeMeta[] = [
   { id: 'popgen', title: 'Genética de poblaciones y frecuencias alélicas', grade: 11, area: 'biologia', topic: 'Evolución y genética de poblaciones: Hardy-Weinberg, selección y deriva', durationMin: 75,
     summary: 'Sigue la frecuencia de un alelo durante cientos de generaciones y descubre cómo la selección natural, la deriva génica, la mutación y la migración cambian una población.',
     competencies: ['uso', 'explicacion', 'indagacion'], keywords: ['genética de poblaciones', 'Hardy-Weinberg', 'evolución', 'selección natural', 'deriva génica', 'alelo', 'anemia falciforme', 'malaria'] },
+  { id: 'agua', title: 'Contaminación del agua e indicadores fisicoquímicos y biológicos', grade: 11, area: 'ambiental', topic: 'Calidad del agua: oxígeno disuelto, DBO₅, curva de Streeter–Phelps, bioindicadores (BMWP/Col) e índice de calidad', durationMin: 90,
+    summary: 'Toma muestras aguas arriba y aguas abajo de un vertimiento en un río de Urabá, mide con una sonda multiparamétrica, analiza DBO₅ y coliformes, cuenta macroinvertebrados con el índice BMWP/Col y descubre la curva de oxígeno de Streeter–Phelps y su punto crítico.',
+    competencies: ['uso', 'explicacion', 'indagacion'], keywords: ['calidad del agua', 'contaminación', 'oxígeno disuelto', 'DBO', 'Streeter-Phelps', 'autodepuración', 'coliformes', 'macroinvertebrados', 'BMWP/Col', 'bioindicadores', 'índice de calidad', 'Urabá', 'río Apartadó', 'río León', 'vertimientos', 'normativa ambiental'] },
 ];
 
 export function metaById(id: string): PracticeMeta | undefined {

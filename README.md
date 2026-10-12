@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (31)
+## Prácticas implementadas (33)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -34,7 +34,9 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 10.º | Movimiento de proyectiles | Física | Tiro parabólico analítico y con arrastre cuadrático (RK4), ángulo óptimo con altura inicial, fotopuerta y estroboscopía |
 | 10.º | Péndulo simple y movimiento armónico | Física | Ecuación no lineal con RK4 contrastada con el período exacto, amortiguamiento, cronómetro con tiempo de reacción y fotopuerta |
 | 10.º | Choques y cantidad de movimiento | Física | Riel de aire con fotopuertas y balanza; choques elástico, parcial e inelástico y explosión; p se conserva y Ec se transforma; coeficiente de restitución |
+| 10.º | Respiración celular y balance energético | Biología | Respirómetro de tres tubos con KOH y termobarómetro; Q10 y desnaturalización; cociente respiratorio; fermentación en anoxia; contabilidad del ATP (32 frente a 38) |
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |
+| 11.º | Contaminación del agua e indicadores | Ambiental | Ríos de Urabá simulados; sonda multiparamétrica, DBO₅ y coliformes; curva de Streeter–Phelps; BMWP/Col (Roldán); índice de calidad tipo NSF; comparación con normas colombianas |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
 | 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |
 | 11.º | Equilibrio químico y principio de Le Châtelier | Química | Fe³⁺/SCN⁻ resuelto exactamente con Beer-Lambert; NO₂/N₂O₄ con Kp y Van 't Hoff; cociente Q frente a K |
@@ -42,7 +44,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Crecimiento poblacional y capacidad de carga | Ambiental | Exponencial y logístico con cosecha |
 | 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 
-Otras 10 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 8 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

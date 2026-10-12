@@ -44,6 +44,20 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
   conductores: [
     { id: 'amperimetro', name: 'Amperímetro (rango 0 a 2 A)', quantity: 'Corriente', unit: 'mA', resolution: 0.1, sigma: 0.1, relSigma: 0.005, nonNegative: true, note: 'Contacto de los caimanes con la muestra y exactitud del rango (± 0,5 % de la lectura).' },
   ],
+  respiracion: [
+    { id: 'capilar', name: 'Manómetro capilar con escala milimétrica (Ø 2,0 mm)', quantity: 'Desplazamiento de la gota', unit: 'mm', resolution: 0.5, sigma: 0.4, note: 'Paralaje al leer el borde de la gota, adherencia de la gota al vidrio y pequeñas fugas en los tapones.' },
+  ],
+  agua: [
+    { id: 'temp', name: 'Sonda multiparamétrica: termistor', quantity: 'Temperatura', unit: '°C', resolution: 0.1, sigma: 0.1, note: 'Tiempo de estabilización del sensor en la corriente.' },
+    { id: 'pH', name: 'Sonda multiparamétrica: electrodo de pH', quantity: 'pH', unit: '—', resolution: 0.01, sigma: 0.02, note: 'Calibración con soluciones tampón 4, 7 y 10 y deriva del electrodo.' },
+    { id: 'od', name: 'Sonda multiparamétrica: sensor óptico de oxígeno', quantity: 'Oxígeno disuelto', unit: 'mg/L', resolution: 0.01, sigma: 0.05, relSigma: 0.01, nonNegative: true, note: 'Calibración en aire saturado y velocidad del agua sobre el sensor.' },
+    { id: 'ec', name: 'Sonda multiparamétrica: celda de conductividad', quantity: 'Conductividad (25 °C)', unit: 'µS/cm', resolution: 1, sigma: 2, relSigma: 0.01, nonNegative: true, note: 'Compensación de temperatura a 25 °C y burbujas en la celda.' },
+    { id: 'turb', name: 'Turbidímetro nefelométrico', quantity: 'Turbidez', unit: 'UNT', resolution: 0.1, sigma: 0.3, relSigma: 0.03, nonNegative: true, note: 'Sedimentación de partículas y rayas o huellas en la celda.' },
+    { id: 'no3', name: 'Fotómetro: nitratos (reducción con cadmio)', quantity: 'Nitratos', unit: 'mg/L NO₃⁻', resolution: 0.1, sigma: 0.2, relSigma: 0.05, nonNegative: true, note: 'Tiempo de reacción del reactivo y turbidez de la muestra.' },
+    { id: 'po4', name: 'Fotómetro: fosfatos (ácido ascórbico)', quantity: 'Fosfatos', unit: 'mg/L PO₄³⁻', resolution: 0.01, sigma: 0.02, relSigma: 0.05, nonNegative: true, note: 'Contaminación con detergentes del material y tiempo de desarrollo del color.' },
+    { id: 'dbo', name: 'Botellas Winkler: DBO₅ (5 días a 20 °C)', quantity: 'DBO₅', unit: 'mg/L', resolution: 0.1, sigma: 0.3, relSigma: 0.1, nonNegative: true, note: 'Dilución de la muestra, semilla bacteriana e incubación de 5 días.' },
+    { id: 'cf', name: 'Tubos múltiples: coliformes fecales (NMP)', quantity: 'Coliformes fecales', unit: 'NMP/100 mL', resolution: 1, relSigma: 0.3, nonNegative: true, note: 'El NMP es una estimación estadística con un intervalo de confianza amplio.' },
+  ],
 };
 
 /** Especificación de un instrumento de una práctica (lanza un error si no existe: error de programación). */

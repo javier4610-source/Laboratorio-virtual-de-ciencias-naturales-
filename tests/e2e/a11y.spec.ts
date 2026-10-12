@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
-const PRACTICES = ['densidad', 'osmosis', 'mitosis', 'mendel', 'ondas', 'adn', 'soluciones', 'enzimas', 'fotosintesis', 'circuitos', 'estequiometria', 'ph', 'poblacion', 'popgen', 'mezclas', 'optica', 'newton', 'gases', 'energia', 'celulas', 'redes', 'seleccion', 'cinematica', 'cinetica', 'conductores', 'descomposicion', 'equilibrio', 'proyectiles', 'pendulo', 'choques', 'conservacion'];
+const PRACTICES = ['densidad', 'osmosis', 'mitosis', 'mendel', 'ondas', 'adn', 'soluciones', 'enzimas', 'fotosintesis', 'circuitos', 'estequiometria', 'ph', 'poblacion', 'popgen', 'mezclas', 'optica', 'newton', 'gases', 'energia', 'celulas', 'redes', 'seleccion', 'cinematica', 'cinetica', 'conductores', 'descomposicion', 'equilibrio', 'proyectiles', 'pendulo', 'choques', 'conservacion', 'respiracion', 'agua'];
 
 async function audit(page: Page, label: string) {
   const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();

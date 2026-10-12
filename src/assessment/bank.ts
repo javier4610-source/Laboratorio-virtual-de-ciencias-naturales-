@@ -656,6 +656,48 @@ const RAW_BANK: Question[] = [
     explanation: 'En la primera reacción se forma CO₂ que sale al aire (−1,05 g); en la precipitación todos los productos quedan en el vaso (0,00 g); en la combustión del hierro entra O₂ del aire y queda en el óxido (+0,38 g). Si los tres sistemas estuvieran cerrados, la masa total no cambiaría: los átomos solo se reorganizan.',
     review: 'En la práctica de conservación de la masa, repite las tres reacciones en el sistema abierto y en el frasco sellado.',
   },
+  {
+    id: 'saber-res-1', grade: 10, topic: 'Respiración celular', competency: 'indagacion', component: 'biologico', skill: 'Usar el cociente respiratorio para inferir el sustrato oxidado', difficulty: 'media', practiceId: 'respiracion',
+    context: 'En un colegio de Turbo, un grupo midió con respirómetros el intercambio de gases de 3,0 g de semillas en germinación de dos especies, y de semillas hervidas como control, durante 30 min a 25 °C. Corrigieron todas las lecturas con un termobarómetro.',
+    table: {
+      caption: 'Gases intercambiados en 30 min (µL)',
+      headers: ['Semillas', 'O₂ consumido', 'CO₂ producido'],
+      rows: [['Arroz en germinación', 180, 178], ['Ajonjolí en germinación', 150, 106], ['Arroz hervido', 0, 0]],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'El ajonjolí produce menos CO₂ porque respira más despacio que el arroz.', feedback: 'El O₂ consumido es parecido (150 frente a 180 µL); lo que cambia mucho es el CO₂ por cada O₂, que depende del sustrato y no de la rapidez.' },
+      { id: 'b', text: 'El arroz está fermentando, porque produce casi tanto CO₂ como O₂ consume.', feedback: 'La fermentación produce CO₂ sin consumir O₂ y daría un cociente mayor que 1. Un cociente de 1 es el de la oxidación aerobia de carbohidratos.' },
+      { id: 'c', text: 'El arroz oxida principalmente carbohidratos (CO₂/O₂ ≈ 1,0) y el ajonjolí principalmente lípidos (CO₂/O₂ ≈ 0,7).', feedback: 'Correcto.' },
+      { id: 'd', text: 'Las semillas hervidas muestran que el KOH no absorbió el CO₂.', feedback: 'Las semillas hervidas son el control: no respiran porque sus enzimas están desnaturalizadas, por eso no intercambian gases.' },
+    ],
+    correct: 'c',
+    explanation: 'Cociente respiratorio = CO₂/O₂: arroz 178/180 ≈ 0,99 (almidón: C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O); ajonjolí 106/150 ≈ 0,71 (aceite: los lípidos tienen poco oxígeno y necesitan más O₂ por cada CO₂). El control hervido confirma que el intercambio se debe a la respiración de las semillas vivas.',
+    review: 'En la práctica de respiración celular, compara el cociente respiratorio de las semillas de maíz y de maní.',
+  },
+  {
+    id: 'saber-agu-1', grade: 11, topic: 'Bioindicadores de calidad del agua', competency: 'indagacion', component: 'biologico', skill: 'Interpretar un índice biológico para comparar estaciones de muestreo', difficulty: 'media', practiceId: 'agua',
+    context: 'Estudiantes de Turbo muestrearon macroinvertebrados (datos simulados) en tres estaciones de una quebrada: E1 antes de la descarga de aguas residuales de un caserío, E2 a 1 km y E3 a 15 km aguas abajo. Clases del BMWP/Col (Roldán, 2003): I > 100 (buena); II 61–100 (aceptable); III 36–60 (dudosa); IV 16–35 (crítica); V ≤ 15 (muy crítica).',
+    table: {
+      caption: 'Resultados del muestreo por estación',
+      headers: ['Estación', 'OD (mg/L)', 'N.º de familias', 'BMWP/Col', 'Familias más sensibles presentes'],
+      rows: [
+        ['E1', '7,5', '24', '158', 'Perlidae (10), Psephenidae (10)'],
+        ['E2', '5,1', '8', '28', 'Ninguna; dominan Chironomidae (2) y Tubificidae (1)'],
+        ['E3', '6,8', '16', '92', 'Leptophlebiidae (9)'],
+      ],
+    },
+    stem: '¿Qué conclusión es coherente con estos datos?',
+    options: [
+      { id: 'a', text: 'E2 tiene la mejor calidad porque allí hay más organismos de las familias Chironomidae y Tubificidae.', feedback: 'La abundancia de familias tolerantes (puntajes 1 y 2) indica contaminación orgánica, no buena calidad; el índice suma puntajes de familias, no individuos.' },
+      { id: 'b', text: 'La descarga deteriora la quebrada (de clase I en E1 a clase IV en E2) y en E3 hay una recuperación parcial (clase II), porque reaparecen algunas familias sensibles.', feedback: 'Correcto: el BMWP/Col cae de 158 a 28 y sube a 92; la desaparición de las familias sensibles y su regreso parcial muestran la contaminación y la autodepuración.' },
+      { id: 'c', text: 'El oxígeno de E2 (5,1 mg/L) es suficiente para la fauna, así que la descarga no afecta a los macroinvertebrados.', feedback: 'El oxígeno es solo un factor: la carga orgánica, los sedimentos y los cambios a lo largo del tiempo también eliminan familias sensibles, como lo muestra el BMWP/Col.' },
+      { id: 'd', text: 'Como E3 tiene menos familias que E1, la contaminación aumenta aguas abajo de E2.', feedback: 'E3 tiene más familias y mayor puntaje que E2: la calidad mejora aguas abajo, aunque no vuelve a la de E1.' },
+    ],
+    correct: 'b',
+    explanation: 'Con las clases dadas: E1 = 158 (clase I), E2 = 28 (clase IV, crítica) y E3 = 92 (clase II, aceptable). Las familias sensibles (puntaje 9–10) desaparecen después de la descarga y algunas reaparecen aguas abajo: el río se autodepura, pero aún no recupera su estado inicial.',
+    review: 'En la práctica de contaminación del agua, compara el BMWP/Col aguas arriba, cerca del vertimiento y a 30 km.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

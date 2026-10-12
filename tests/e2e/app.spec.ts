@@ -471,6 +471,30 @@ test('conservación: en sistema abierto la balanza pierde 1,05 g (el CO₂ que e
   expect(await tableRows(page)).toBe(1);
 });
 
+test('respiración: el respirómetro mide 119,4 µL de O₂ y CR = 1,00 con maíz', async ({ page }) => {
+  await openFree(page, 'respiracion');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Iniciar medición' }).click();
+  await expect(page.locator('.readout').getByText('119,4 µL', { exact: true }).first()).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('verde (pH ≈ 6,6)')).toBeVisible();
+  await expect(page.locator('.readout').getByText('26,0 µmol')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('agua: aguas abajo del vertimiento el oxígeno baja a 5,31 mg/L', async ({ page }) => {
+  await openFree(page, 'agua');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Tomar muestra y medir' }).click();
+  await expect(page.locator('.readout').getByText('5,31 mg/L')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('22 · clase IV (Crítica)')).toBeVisible();
+  await expect(page.locator('.readout').getByText('59 · Regular')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -531,7 +555,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/31');
+  await expect(page.locator('.kpi').first()).toContainText('1/33');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

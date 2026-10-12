@@ -33,9 +33,8 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       con alternativa por teclado.
 - [x] **Física B:** máquinas simples (6.º, `maquinas`) · calor y equilibrio térmico (6.º, `calor`) · presión en líquidos y
       presión atmosférica (7.º, `presion`).
-- [ ] **Lote 8:** ecosistema: agua, luz y alimento (6.º, ambiental, `ecosistema`) · balanceo visual de ecuaciones
-      químicas con conteo de átomos (8.º, química, `balanceo`) · expresión génica y efecto de mutaciones en la
-      proteína (11.º, biología, `expresion`).
+- [x] **Lote 8:** ecosistema: agua, luz y alimento (6.º, `ecosistema`) · balanceo de ecuaciones con conteo de átomos
+      (8.º, `balanceo`) · expresión génica y efecto de mutaciones (11.º, `expresion`).
 - [ ] **U6 · Modo avanzado:** ecuaciones del modelo en vivo con los valores actuales, parámetros del modelo editables
       y curva del modelo superpuesta a los datos del cuaderno.
 - [ ] **Física C:** transferencia de calor por conducción (7.º, `conduccion`) · sonido y resonancia (8.º, `sonido`) ·

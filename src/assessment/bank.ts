@@ -755,6 +755,67 @@ const RAW_BANK: Question[] = [
     explanation: 'La presión atmosférica es el peso por unidad de área de la columna de aire que hay encima. Al subir, la columna es más corta y la presión baja; como el aire de arriba está menos comprimido (es menos denso), cada 100 m de subida quitan cada vez menos presión. Las fórmulas barométricas (isotérmica o de la atmósfera estándar) describen esta disminución casi exponencial.',
     review: 'En la práctica de presión, cambia el lugar entre Apartadó, Medellín y Bogotá y compara la lectura del barómetro con la gráfica de presión contra altitud.',
   },
+  {
+    id: 'saber-eco-1', grade: 6, topic: 'Oxígeno disuelto y eutrofización en una ciénaga', competency: 'indagacion', component: 'biologico', skill: 'Interpretar datos de oxígeno disuelto a distintas horas y relacionarlos con la fotosíntesis, la respiración y la descomposición', difficulty: 'media', practiceId: 'ecosistema',
+    context: 'Estudiantes de Turbo midieron el oxígeno disuelto en dos sitios de una ciénaga del golfo de Urabá (datos simulados): el sitio A, rodeado de manglar conservado, y el sitio B, cerca de la descarga de aguas residuales de un caserío, donde el agua es verde por la cantidad de algas. Al amanecer encontraron peces muertos flotando en el sitio B.',
+    table: {
+      caption: 'Oxígeno disuelto (mg/L) medido con un oxímetro',
+      headers: ['Sitio', '6:00 (amanecer)', '15:00 (tarde)', 'Aspecto del agua'],
+      rows: [['A: manglar conservado', '4,8', '7,1', 'transparente'], ['B: cerca de la descarga', '0,9', '13,4', 'verde (muchas algas)']],
+    },
+    stem: '¿Qué explicación es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'En el sitio B el agua tiene más oxígeno, así que los peces murieron por otra causa que no tiene que ver con el oxígeno.', feedback: 'El oxígeno del sitio B es alto solo en la tarde. Al amanecer cae a 0,9 mg/L, muy por debajo de lo que necesitan los peces (unos 2 a 3 mg/L).' },
+      { id: 'b', text: 'Los nutrientes de las aguas residuales hicieron crecer muchas algas: de día su fotosíntesis produce mucho oxígeno, pero de noche las algas, los animales y los descomponedores solo respiran y lo agotan antes del amanecer.', feedback: 'Correcto: la diferencia entre la tarde (13,4) y el amanecer (0,9) muestra mucha fotosíntesis de día y mucha respiración y descomposición de noche; los peces mueren de madrugada.' },
+      { id: 'c', text: 'En el sitio A el manglar consume todo el oxígeno con su respiración, por eso tiene menos oxígeno que el sitio B en la tarde.', feedback: 'El sitio A nunca baja a niveles peligrosos: su oxígeno varía poco porque no hay exceso de algas ni de materia orgánica. Tener menos oxígeno en la tarde no lo hace un sitio peor.' },
+      { id: 'd', text: 'Las algas del sitio B respiran solo de noche y hacen fotosíntesis solo de día, así que no afectan el oxígeno total de la ciénaga.', feedback: 'Las algas respiran día y noche, y cuando hay tantas su efecto es enorme: el oxígeno cambia más de 12 mg/L entre la tarde y el amanecer.' },
+    ],
+    correct: 'b',
+    explanation: 'El exceso de nutrientes (eutrofización) hace proliferar las algas. Con luz, la fotosíntesis supera a la respiración y el agua llega a estar sobresaturada de oxígeno; de noche no hay fotosíntesis y la respiración de algas, animales y descomponedores (que además descomponen la materia orgánica de las aguas residuales) agota el oxígeno. Por eso el valor crítico se mide al amanecer, cuando mueren los peces. En el manglar conservado el oxígeno varía mucho menos.',
+    review: 'En la práctica del ecosistema en un frasco, elige «Exceso» de alimento y compara el oxígeno al amanecer y a las 18:00 en los días 3, 7 y 14.',
+  },
+  {
+    id: 'saber-bal-1', grade: 8, topic: 'Balanceo y conservación de la masa', competency: 'uso', component: 'quimico', skill: 'Usar una ecuación balanceada y la ley de Lavoisier para predecir masas', difficulty: 'media', practiceId: 'balanceo',
+    context: 'En una clase de Apartadó se balanceó la ecuación global de la respiración celular, C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O, y se contaron los átomos de cada lado.',
+    table: {
+      caption: 'Átomos de cada elemento en la ecuación balanceada',
+      headers: ['Elemento', 'Reactivos', 'Productos'],
+      rows: [
+        ['Carbono (C)', 6, 6],
+        ['Hidrógeno (H)', 12, 12],
+        ['Oxígeno (O)', 18, 18],
+      ],
+    },
+    stem: 'Si 180 g de glucosa reaccionan por completo con 192 g de oxígeno, ¿qué masa total de dióxido de carbono y agua se forma?',
+    options: [
+      { id: 'a', text: '180 g, porque los productos vienen de la glucosa.', feedback: 'Los productos también contienen los átomos del oxígeno que reaccionó; su masa debe sumarse a la de la glucosa.' },
+      { id: 'b', text: '372 g, porque los átomos de cada elemento son los mismos a los dos lados y la masa total se conserva.', feedback: 'Correcto: 180 g + 192 g = 372 g. Como cada elemento tiene el mismo número de átomos a los dos lados, la masa de los productos es igual a la de los reactivos.' },
+      { id: 'c', text: 'Menos de 372 g, porque el CO₂ es un gas y los gases casi no tienen masa.', feedback: 'Los gases tienen masa: 6 mol de CO₂ pesan unos 264 g. Que un producto sea gas no cambia la masa total.' },
+      { id: 'd', text: '2 232 g, porque hay que multiplicar la masa por los 6 de cada coeficiente.', feedback: 'Los coeficientes ya están considerados en las masas dadas (192 g son 6 mol de O₂); no se vuelve a multiplicar.' },
+    ],
+    correct: 'b',
+    explanation: 'La tabla muestra que la ecuación está balanceada: 6 C, 12 H y 18 O a cada lado. Por la ley de Lavoisier, la masa de los productos es igual a la de los reactivos: 180 g + 192 g = 372 g (6 CO₂ ≈ 264 g y 6 H₂O ≈ 108 g).',
+    review: 'En la práctica de balanceo, balancea la respiración de la glucosa, verifica la ecuación y compara las masas de los dos platos de la balanza.',
+  },
+  {
+    id: 'saber-exp-1', grade: 11, topic: 'Expresión génica y mutaciones', competency: 'indagacion', component: 'biologico', skill: 'Usar datos de ARNm y proteína para identificar la etapa de la expresión génica alterada por una mutación', difficulty: 'alta', practiceId: 'expresion',
+    context: 'Un laboratorio de genética analizó muestras de sangre de cuatro personas de Turbo con anemia de distinto tipo. En cada caso midió la longitud del ARNm de la β-globina, la cantidad de ese ARNm (comparada con la de una persona sana) y la longitud de la β-globina producida (datos simulados). En una persona sana, el ARNm mide 626 nucleótidos y la β-globina, 147 aminoácidos; el exón 2 del gen tiene 223 nucleótidos.',
+    table: {
+      caption: 'ARNm y proteína de la β-globina en cuatro personas',
+      headers: ['Persona', 'Longitud del ARNm (nt)', 'Cantidad de ARNm (% de la normal)', 'Longitud de la β-globina (aminoácidos)'],
+      rows: [['1', '626', '100', '147'], ['2', '626', '18', '147'], ['3', '403', '100', '83'], ['4', '626', '100', '39']],
+    },
+    stem: '¿En qué persona es más probable que la mutación esté en un sitio de empalme del gen?',
+    options: [
+      { id: 'a', text: 'En la persona 2, porque produce mucho menos ARNm que una persona sana.', feedback: 'Producir menos ARNm de la misma longitud y una proteína completa apunta a una transcripción reducida (por ejemplo, una mutación en el promotor), no a un error de empalme.' },
+      { id: 'b', text: 'En la persona 3, porque su ARNm perdió exactamente 223 nucleótidos, la longitud del exón 2, y por eso cambió el marco de lectura y la proteína.', feedback: 'Correcto: 626 − 223 = 403. Si un sitio de empalme falla, el exón 2 se salta; como 223 no es múltiplo de 3, el marco de lectura cambia y la proteína termina antes.' },
+      { id: 'c', text: 'En la persona 4, porque su β-globina es la más corta de todas.', feedback: 'Su ARNm conserva los 626 nucleótidos: el empalme fue normal. Una proteína truncada con ARNm de longitud normal indica un codón de terminación prematuro (mutación sin sentido).' },
+      { id: 'd', text: 'En la persona 1, porque una mutación de empalme no cambia ni el ARNm ni la proteína.', feedback: 'Un error de empalme cambia los exones que forman el ARNm maduro y, por tanto, su longitud. La persona 1 podría tener una mutación de sentido erróneo, que no cambia ninguna longitud.' },
+    ],
+    correct: 'b',
+    explanation: 'Cada etapa de la expresión deja una huella distinta: una mutación en el promotor reduce la cantidad de ARNm normal; una de empalme cambia la longitud del ARNm maduro (salto de exón o retención de intrón); una sin sentido deja el ARNm igual pero trunca la proteína, y una de sentido erróneo no cambia las longitudes. Que el ARNm pierda exactamente la longitud de un exón es la señal de un salto de exón.',
+    review: 'En la práctica de expresión génica, usa «Ir a: sitio aceptor del intrón 1», cambia la A o la G del AG y compara la longitud del ARNm y el gel con los del gen silvestre.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

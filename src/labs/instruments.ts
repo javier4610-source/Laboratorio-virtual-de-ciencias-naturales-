@@ -71,6 +71,12 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'barometro', name: 'Barómetro digital (300 a 1100 hPa)', quantity: 'Presión atmosférica', unit: 'hPa', resolution: 0.1, sigma: 0.3, note: 'Exactitud del sensor y variación de la presión durante el día (marea atmosférica de ± 1 a 2 hPa en el trópico).' },
     { id: 'cinta', name: 'Cinta métrica sobre la bandeja', quantity: 'Alcance del chorro', unit: 'cm', resolution: 0.5, sigma: 0.4, note: 'El chorro se abre al caer y salpica: el punto de impacto tiene un ancho de casi 1 cm.' },
   ],
+  ecosistema: [
+    { id: 'oximetro', name: 'Oxímetro con sonda polarográfica (0 a 20 mg/L)', quantity: 'Oxígeno disuelto', unit: 'mg/L', resolution: 0.1, sigma: 0.15, nonNegative: true, note: 'Calibración en aire saturado, temperatura del agua y consumo de O₂ de la propia sonda si el agua no se mueve.' },
+    { id: 'carta', name: 'Carta de color del azul de bromotimol (cada 0,2 de pH)', quantity: 'pH de la muestra', unit: '—', resolution: 0.2, sigma: 0.15, note: 'Comparar colores a simple vista: la luz del salón y la turbidez verde de las algas cambian el tono percibido.' },
+    { id: 'conteo', name: 'Conteo a simple vista a través del vidrio', quantity: 'Caracoles', unit: 'individuos', resolution: 1, sigma: 0.5, nonNegative: true, note: 'Los caracoles pequeños se esconden entre las hojas y en el sedimento; los recién nacidos miden menos de 1 mm.' },
+    { id: 'biomasa', name: 'Biomasa de elodea estimada por la longitud de las ramitas', quantity: 'Biomasa fresca de elodea', unit: 'g', resolution: 0.5, sigma: 0.3, nonNegative: true, note: 'Se mide la longitud total con una regla a través del vidrio y se convierte con 0,25 g por cada centímetro de ramita.' },
+  ],
 };
 
 /** Especificación de un instrumento de una práctica (lanza un error si no existe: error de programación). */

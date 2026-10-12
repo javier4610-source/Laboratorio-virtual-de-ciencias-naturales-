@@ -207,3 +207,14 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Manipulación ampliada | 4 E2E nuevas: tubos que se agregan, se sacan y se meten al baño; perillas; arrastre de la lámpara y de la muestra | Correcto | — | — | Correcto |
 | Encabezado | Altura medida de 390 a 1600 px | Una sola fila en todos los anchos | El botón «Sonido» hacía que el encabezado ocupara dos filas a 1366 px | Menú compacto bajo 1000 px; iconos del menú ocultos en escritorio | Corregido |
 | Regresión | 443 pruebas unitarias y 69 de interfaz con axe (suite completa) | Todas pasan | Conflicto de importaciones al integrar | Se conservaron ambas | Correcto |
+
+# Lote 8 (ecosistema, balanceo de ecuaciones, expresión génica)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Ecosistema | 13 pruebas: luz y pH calculados a mano, ciclo día/noche, frasco estable, oscuridad, sobrepoblación y K, sin descomponedores, conservación de O₂ + CO₂/1,375 | Correcto | — | — | Correcto |
+| Balanceo de ecuaciones | 16 pruebas: analizador de fórmulas con paréntesis e hidratos, conteo de átomos, solucionador racional de espacio nulo (12 reacciones con solución única), MCD, masas | Correcto | — | — | Correcto |
+| Expresión génica | 14 pruebas: el ARNm maduro (626 nt) traduce exactamente la β-globina humana (147 aa); anemia falciforme, codón 40 sin sentido, corrimiento del marco, sitios de empalme, promotor y poli-A | Correcto | — | — | Correcto |
+| Catálogo | E2E de búsqueda | — | La búsqueda «adn» ahora encuentra también «Expresión génica» | Prueba actualizada a 2 resultados | Correcto |
+| Supuestos declarados | Revisión | — | Parámetros fisiológicos ilustrativos; intrón 2 acortado; sin degradación del ARNm con terminación prematura | Declarados en la interfaz | Declarado |
+| Regresión | 486 pruebas unitarias y 72 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |

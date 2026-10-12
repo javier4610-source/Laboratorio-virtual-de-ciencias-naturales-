@@ -33,10 +33,10 @@ test('inicio: navega a los seis grados', async ({ page }) => {
 test('catálogo: búsqueda y filtros', async ({ page }) => {
   await page.goto('/#/catalogo');
   await page.getByLabel('Buscar').fill('adn');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(1);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(2);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(8);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(9);
 });
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
@@ -538,6 +538,46 @@ test('presión: a 10 cm de agua el manómetro marca 100 mm y 975 Pa; la sonda se
   await expect(page.locator('.readout').getByText('1.170 Pa')).toBeVisible({ timeout: 10_000 });
 });
 
+test('ecosistema: el frasco con luz amanece con 8,0 mg/L de oxígeno y en oscuridad muere', async ({ page }) => {
+  await openFree(page, 'ecosistema');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Simular y medir' }).click();
+  await expect(page.locator('.readout').getByText('8,0 mg/L')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('7,0 g')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByLabel('Horas de luz por día (valor exacto en h)').fill('0');
+  await page.getByLabel('Horas de luz por día (valor exacto en h)').press('Tab');
+  await page.getByRole('button', { name: 'Simular y medir' }).click();
+  await expect(page.locator('.readout').getByText('0,0 mg/L').first()).toBeVisible({ timeout: 10_000 });
+});
+
+test('balanceo: 2 H₂ + O₂ → 2 H₂O conserva 36,03 g', async ({ page }) => {
+  await openFree(page, 'balanceo');
+  await page.getByRole('button', { name: 'Aumentar el coeficiente de H₂', exact: true }).click();
+  await page.getByRole('button', { name: 'Aumentar el coeficiente de H₂O', exact: true }).click();
+  await page.getByRole('button', { name: 'Verificar la ecuación' }).click();
+  await expect(page.locator('.readout').getByText('Balanceada con los menores enteros')).toBeVisible();
+  await expect(page.locator('.readout').getByText('36,03 g').first()).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
+test('expresión: la mutación de la anemia falciforme cambia Glu por Val', async ({ page }) => {
+  await openFree(page, 'expresion');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Aplicar mutación' }).click();
+  await page.getByRole('button', { name: 'Expresar el gen' }).click();
+  await page.getByRole('button', { name: 'Omitir la animación' }).click();
+  await expect(page.locator('.readout').getByText('Glu → Val (cargado (−) → hidrofóbico)')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('99,3 %')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -598,7 +638,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/36');
+  await expect(page.locator('.kpi').first()).toContainText('1/39');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

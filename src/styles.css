@@ -221,8 +221,8 @@ kbd { font-family: var(--font-data); font-size: 0.82em; padding: 1px 6px; border
 .header-tools { display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; }
 .header-tools .theme-toggle { margin-left: 0; }
 .btn.menu-toggle { display: none; }
-@media (min-width: 861px) and (max-width: 1120px) { .nav a .nav-icon { display: none; } }
-@media (max-width: 860px) {
+@media (min-width: 1001px) { .nav a .nav-icon { display: none; } }
+@media (max-width: 1000px) {
   .btn.menu-toggle { display: inline-flex; margin-left: auto; border-color: var(--line); }
   .nav { display: none; width: 100%; flex-direction: column; align-items: stretch; padding-bottom: 10px; }
   .nav.open { display: flex; }
@@ -824,7 +824,7 @@ details.sensor-card[open] > summary::after { transform: rotate(-135deg); }
 .sync-chip.bad { background: var(--bad-soft); color: var(--bad); }
 .sync-chip.info .sync-dot { animation: pulse 1.4s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: 0.35; } }
-@media (max-width: 860px) {
+@media (max-width: 1000px) {
   .course-btn { order: 1; margin-left: auto; padding: 4px; min-width: 40px; justify-content: center; }
   .course-btn.joined { padding: 3px; }
   .course-btn-text { display: none; }
@@ -1279,3 +1279,8 @@ details.nb-panel > summary:has(.nb-pill)::after { margin-left: 4px; }
 /* Conjunto de tubos (enzimas): agrupa pH, selección y botones de agregar o quitar. */
 .tube-set { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px 12px; margin: 0; display: grid; gap: 10px; min-width: 0; }
 .tube-set legend { font-weight: 700; font-size: 0.9rem; padding: 0 6px; }
+/* Encabezado en una sola fila en pantallas medianas: el botón del curso muestra solo su icono. */
+@media (min-width: 1001px) and (max-width: 1180px) {
+  .course-btn:not(.joined) { padding: 4px; min-width: 40px; justify-content: center; }
+  .course-btn:not(.joined) .course-btn-text { display: none; }
+}

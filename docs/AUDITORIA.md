@@ -196,3 +196,14 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Calor y equilibrio térmico | 14 pruebas: Te a mano, solución exacta contra integración numérica, balance de energía, icopor frente a vidrio y lata, calor específico recuperado | Correcto | — | — | Correcto |
 | Supuestos declarados | Revisión | — | Pérdidas de los recipientes ilustrativas; eficiencia de 99 % en el caso ideal por redondeo de lecturas | Declarados en la interfaz | Declarado |
 | Regresión | 415 pruebas unitarias y 61 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |
+
+# Publicación, presión, sonidos y manipulación ampliada
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Publicación en GitHub Pages | Revisión de las ejecuciones de GitHub Actions | Las publicaciones desde «Choques» no llegaban a la página | axe en el servidor de integración: la línea de tiempo del seguimiento era una región desplazable sin acceso por teclado (el ancho de ventana del servidor difiere del local) | Región enfocable; la publicación vuelve a pasar | Corregido |
+| Presión en líquidos | 13 pruebas: p = ρgh, manómetro en U, membrana en cualquier orientación, vasos de Pascal, Torricelli, atmósfera estándar e isotérmica; E2E con teclado sobre la sonda | Correcto | — | — | Correcto |
+| Sonidos | 15 pruebas (envolventes, limitador, preferencias, modo silencioso sin AudioContext) y 3 E2E (sin audio antes de un gesto, botón «Sonido», volumen) | Correcto; sonidos sintetizados, sin archivos | El zumbido del circuito suena al abrir la práctica si el circuito está cerrado | Se detiene con el botón «Sonido» | Declarado |
+| Manipulación ampliada | 4 E2E nuevas: tubos que se agregan, se sacan y se meten al baño; perillas; arrastre de la lámpara y de la muestra | Correcto | — | — | Correcto |
+| Encabezado | Altura medida de 390 a 1600 px | Una sola fila en todos los anchos | El botón «Sonido» hacía que el encabezado ocupara dos filas a 1366 px | Menú compacto bajo 1000 px; iconos del menú ocultos en escritorio | Corregido |
+| Regresión | 443 pruebas unitarias y 69 de interfaz con axe (suite completa) | Todas pasan | Conflicto de importaciones al integrar | Se conservaron ambas | Correcto |

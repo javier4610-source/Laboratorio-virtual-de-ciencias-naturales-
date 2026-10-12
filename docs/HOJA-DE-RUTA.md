@@ -31,8 +31,8 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       (10.º, biología, `respiracion`) · contaminación del agua e indicadores (11.º, ambiental, `agua`).
 - [x] **U5 · Manipulación directa:** arrastrar muestras e instrumentos, perillas y émbolos que se giran o empujan,
       con alternativa por teclado.
-- [ ] **Física B:** ~~máquinas simples: palancas y poleas (6.º, `maquinas`)~~ · ~~calor, temperatura y equilibrio térmico~~ (hechas)
-      (6.º, `calor`) · presión en líquidos y presión atmosférica (7.º, `presion`).
+- [x] **Física B:** máquinas simples (6.º, `maquinas`) · calor y equilibrio térmico (6.º, `calor`) · presión en líquidos y
+      presión atmosférica (7.º, `presion`).
 - [ ] **Lote 8:** ecosistema: agua, luz y alimento (6.º, ambiental, `ecosistema`) · balanceo visual de ecuaciones
       químicas con conteo de átomos (8.º, química, `balanceo`) · expresión génica y efecto de mutaciones en la
       proteína (11.º, biología, `expresion`).
@@ -57,6 +57,8 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       modestos; exportación para Google Classroom y Moodle; pruebas de regresión visual.
 
 ## Hecho
+
+- [x] Sonidos realistas sintetizados (22 laboratorios) y manipulación directa en 17 laboratorios con acabado visual de la escena.
 
 - [x] Fases 1 a 4: 24 prácticas, servidor de informes, accesibilidad WCAG 2.1 AA, modo sin conexión, guías en PDF.
 - [x] Fase 5: espacio de trabajo profesional e instrumentos realistas en los 24 laboratorios.

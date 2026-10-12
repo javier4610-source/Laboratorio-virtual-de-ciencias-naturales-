@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useRoute, href } from './lib/router';
 import { usePrefs } from './lib/prefs';
 import { metaById } from './curriculum/catalog';
@@ -11,6 +11,8 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { PwaNotices } from './components/PwaUi';
 import { KitDefs } from './labs/kit';
 import { Icon, Logo, type IconName } from './components/icons';
+import { CourseButton, JoinPage } from './components/ClassroomUi';
+import { startClassroomSync } from './lib/classroom';
 
 // Páginas pesadas cargadas bajo demanda: el inicio y el catálogo abren rápido en equipos modestos.
 const PracticePage = lazy(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
@@ -53,6 +55,7 @@ export default function App() {
   const [prefs, setPrefs] = usePrefs();
   const [menuOpen, setMenuOpen] = useState(false);
   const [section, id, sub] = route.path;
+  useEffect(() => { startClassroomSync(); }, []);
 
   let page;
   let current = section ?? '';
@@ -64,6 +67,7 @@ export default function App() {
     current = 'catalogo';
   } else if (section === 'banco') page = <BankPage />;
   else if (section === 'docente') page = <TeacherPage />;
+  else if (section === 'unirme') page = <JoinPage code={route.query.get('codigo') ?? undefined} server={route.query.get('servidor') ?? undefined} />;
   else if (section === 'ayuda') page = <HelpPage prefs={prefs} setPrefs={setPrefs} />;
   else page = <NotFound />;
 
@@ -85,7 +89,7 @@ export default function App() {
             <Logo />
             <span>Laboratorio Virtual<small>de Ciencias Naturales · 6.º a 11.º</small></span>
           </a>
-          <button type="button" className="btn small ghost menu-toggle" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen((v) => !v)}><Icon name={menuOpen ? 'cerrar' : 'menu'} size={18} />Menú</button>
+          <button type="button" className="btn small ghost menu-toggle" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen((v) => !v)}><Icon name={menuOpen ? 'cerrar' : 'menu'} size={18} /><span className="menu-label">Menú</span></button>
           <nav id="main-nav" className={`nav${menuOpen ? ' open' : ''}`} aria-label="Navegación principal">
             {nav.map((n) => (
               <a key={n.to} href={n.to ? href(n.to) : href()} aria-current={current === n.to ? 'page' : undefined} onClick={() => setMenuOpen(false)}><Icon name={n.icon} size={17} className="nav-icon" />{n.label}</a>
@@ -94,6 +98,7 @@ export default function App() {
               <Icon name={dark ? 'sol' : 'luna'} size={18} />
             </button>
           </nav>
+          <CourseButton />
         </div>
       </header>
       <main id="main" tabIndex={-1} className="wrap">

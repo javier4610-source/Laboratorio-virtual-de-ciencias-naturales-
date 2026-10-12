@@ -101,7 +101,7 @@ export type Mode = 'guiada' | 'libre' | 'evaluacion';
 /** Tendencias que el estudiante puede predecir y que el sistema puede detectar en los datos. */
 export type Trend = '' | 'aumenta' | 'disminuye' | 'no cambia' | 'máximo' | 'se estabiliza';
 
-export interface AnswerRecord { chosen: string; correct: boolean; attempts: number; firstTryCorrect: boolean; }
+export interface AnswerRecord { chosen: string; correct: boolean; attempts: number; firstTryCorrect: boolean; /** Opción elegida en el primer intento (análisis de errores del docente). */ firstChosen?: string; /** Fecha de la primera respuesta. */ at?: number; }
 
 export interface PracticeSession {
   practiceId: string;

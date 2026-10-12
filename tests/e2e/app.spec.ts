@@ -495,3 +495,57 @@ test('encuesta de opinión viaja en el informe', async ({ page }) => {
   await page.goto('/#/practica/ondas/informe');
   await expect(page.getByText(/fácil de usar 4/)).toBeVisible();
 });
+
+test('seguimiento: el estudiante se une con código y PIN, y el docente ve su avance y puntaje', async ({ page }) => {
+  // Docente crea el curso.
+  await page.goto('/#/docente');
+  await page.getByRole('tab', { name: 'Servidor' }).click();
+  await page.getByLabel('Dirección del servidor').fill('http://localhost:8787');
+  await page.getByRole('button', { name: 'Crear cuenta' }).first().click();
+  await page.getByLabel('Nombre', { exact: true }).fill('Docente Seguimiento');
+  await page.getByLabel('Código de registro institucional').fill('PRUEBA-E2E');
+  await page.getByLabel('Correo').fill(`seguimiento${Date.now()}@colegio.edu.co`);
+  await page.getByLabel('Contraseña').fill('clave-muy-segura');
+  await page.locator('form').getByRole('button', { name: 'Crear cuenta' }).click();
+  await page.getByLabel('Nombre del curso').fill('9-2 Ciencias');
+  await page.getByRole('button', { name: 'Crear curso' }).click();
+  const code = (await page.locator('td.mono').first().textContent())!.trim();
+
+  // Estudiante se une desde el encabezado.
+  await page.goto('/#/');
+  await page.getByRole('button', { name: 'Unirme a mi curso' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Unirme a mi curso' });
+  await dialog.getByLabel('Servidor del colegio').fill('http://localhost:8787');
+  await dialog.getByLabel('Código de tu curso').fill(code);
+  await dialog.getByLabel('Tu nombre y apellido').fill('Camila Restrepo');
+  await dialog.getByLabel('PIN de 4 dígitos').fill('2468');
+  await expect(dialog.getByText('Qué se envía y a quién.')).toBeVisible();
+  await dialog.getByRole('button', { name: 'Unirme al curso' }).click();
+  await expect(page.getByText('¡Listo! Te uniste al curso.')).toBeVisible();
+  await page.getByRole('dialog').getByRole('button', { name: 'Cerrar' }).click();
+  await expect(page.getByRole('button', { name: /Camila Restrepo, 9-2 Ciencias: mi curso/ })).toBeVisible();
+
+  // Hace una medición y responde una pregunta.
+  await openFree(page, 'popgen');
+  await save(page).click();
+  await page.getByRole('tab', { name: /Evaluación/ }).click();
+  const first = page.locator('article.question').first();
+  await first.getByRole('button', { name: /: 48 %$/ }).click();
+  await first.getByRole('button', { name: 'Comprobar respuesta' }).click();
+  await expect(first.getByText('✓ Respuesta correcta')).toBeVisible();
+  await expect(page.locator('.sync-chip')).toHaveText(/Sincronizado/, { timeout: 15_000 });
+
+  // El docente ve al estudiante, su avance y su puntaje.
+  await page.goto('/#/docente');
+  await page.getByRole('tab', { name: 'Seguimiento del curso' }).click();
+  await expect(page.locator('.kpi', { hasText: 'Inscritos' })).toContainText('1');
+  await expect(page.locator('.kpi', { hasText: 'Activos hoy' })).toContainText('1');
+  const row = page.getByRole('row', { name: /Camila Restrepo/ });
+  await expect(row).toBeVisible();
+  await expect(row.locator('td.heat').first()).toContainText('1/1');
+  await expect(row.getByText('100 %')).toBeVisible(); // puntaje: 1 de 1 al primer intento
+  await row.getByRole('button', { name: /Camila Restrepo/ }).click();
+  await expect(page.getByRole('heading', { name: 'Camila Restrepo' })).toBeVisible();
+  await expect(page.getByText('Acierto al 1.er intento')).toBeVisible();
+  await expect(page.getByText('Se unió al curso')).toBeVisible();
+});

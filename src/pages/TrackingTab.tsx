@@ -476,7 +476,7 @@ function StudentView({ session, courseId, studentId, summary, onBack, onDeleted,
               <h3 style={{ margin: 0 }}>Prácticas</h3>
               {d.practices.length === 0 ? <p className="muted">Aún no tiene avances sincronizados.</p> : d.practices.map((p, i) => <PracticeDetail key={p.practiceId} p={p} open={i === 0} />)}
             </div>
-            <section className="card stack-sm timeline-card" aria-labelledby="trk-tl">
+            <section className="card stack-sm timeline-card" aria-labelledby="trk-tl" tabIndex={0}>
               <h3 id="trk-tl">Línea de tiempo</h3>
               {timeline.length === 0 ? <p className="muted small">Sin actividad registrada.</p> : (
                 <ol className="timeline">

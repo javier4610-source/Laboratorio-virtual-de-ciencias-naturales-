@@ -4,7 +4,8 @@ import { fmt, parseLocaleNumber } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
-import { BenchTop } from './kit';
+import { BenchTop, ContactShadow } from './kit';
+import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
 
 const VIEW_M = 12; // metros de cuerda visibles
 const WX0 = 74, WX1 = 590;
@@ -83,19 +84,19 @@ function RopePart({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox={`0 0 ${W} ${H}`} label="Controles del generador y de la regla" scene={
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="wave-t wave-d">
             <title id="wave-t">Onda en una cuerda con regla de medición</title>
             <desc id="wave-d">{`Onda de ${fmt(f, 2)} Hz y amplitud ${fmt(A, 1)} cm en la ${findRope(ropeId).name.toLowerCase()} con ${tension} N. Longitud de onda del modelo ${fmt(res.wavelength, 2)} m. Marcadores de la regla en ${fmt(markA, 2)} m y ${fmt(markB, 2)} m.`}</desc>
             <BenchTop y={226} width={W} />
             {/* generador de vibraciones */}
+            <ContactShadow x={6} y={226} w={48} h={7} />
             <g filter="url(#kit-shadow)">
               <rect x={6} y={52} width={48} height={174} rx={7} fill="url(#kit-body-dark)" />
             </g>
             <rect x={11} y={62} width={38} height={22} rx={3} fill="url(#kit-lcd)" stroke="#05100d" />
             <text x={45} y={77} textAnchor="end" style={{ fontSize: 10, fill: '#7CFFB2', fontFamily: 'var(--font-data)' }}>{fmt(f, 2)}</text>
             <text x={30} y={96} textAnchor="middle" style={{ fontSize: 8, fill: '#c9d2d5', fontWeight: 700 }}>Hz</text>
-            <circle cx={30} cy={118} r={10} fill="url(#kit-metal)" stroke="#5d6b70" />
-            <line x1={30} x2={30} y1={110} y2={116} stroke="#3a4448" strokeWidth="2" strokeLinecap="round" />
             <circle cx={30} cy={146} r={2.4} fill={running ? '#66bb6a' : '#ffb300'} />
             <text transform="translate(33 196) rotate(-90)" textAnchor="middle" style={{ fontSize: 8, fill: '#c9d2d5', letterSpacing: 1 }}>GENERADOR</text>
             {/* guía y pinza que vibra */}
@@ -135,12 +136,21 @@ function RopePart({ api }: LabProps) {
               <g key={i}>
                 <line x1={markerX(m)} x2={markerX(m)} y1="16" y2={200} stroke="var(--accent)" strokeWidth="2" strokeDasharray="5 3" />
                 <path d={`M${markerX(m)} 200 l-5 -8 h10 Z`} fill="var(--accent)" />
-                <text x={markerX(m)} y="12" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--accent)', fontWeight: 700 }}>{i === 0 ? 'A' : 'B'}</text>
+                <rect x={markerX(m) - 8} y={0} width={16} height={17} rx={4} fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth="1" />
+                <text x={markerX(m)} y="12.5" textAnchor="middle" style={{ fontSize: 11, fill: "var(--accent)", fontWeight: 700 }}>{i === 0 ? "A" : "B"}</text>
               </g>
             ))}
             <text x={W - 20} y="24" textAnchor="end" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>t = {fmt(t, 2)} s {running && slow > 1 ? `(cámara lenta ×${slow})` : ''}</text>
-          </svg>
+          </svg>}>
+            <Knob label="Perilla del generador: frecuencia" cx={30} cy={120} r={10} value={f} min={WAVE_LIMITS.frequency[0]} max={WAVE_LIMITS.frequency[1]} step={0.25} pageStep={1} unit="Hz" decimals={2} onChange={setF} />
+            {([['A', markA, setMarkA], ['B', markB, setMarkB]] as const).map(([name, m, set]) => (
+              <DragHandle key={name} label={`Marcador ${name} sobre la regla`} value={m} min={0} max={VIEW_M} step={0.05} pageStep={0.5} unit="m" decimals={2}
+                orientation="horizontal" hit={{ x: markerX(m) - 9, y: 0, w: 18, h: 30 }}
+                valueFromPoint={({ point, start, startValue }) => startValue + (point.x - start.x) / pxPerM} onChange={set} />
+            ))}
+          </ManipScene>
         </div>
+        <ManipHint>Gira la perilla del generador para cambiar la frecuencia y arrastra las pestañas A y B por la regla, o enfócalas con Tab y usa las flechas.</ManipHint>
         <div className="card stack-sm">
           <h3>Mide la longitud de onda</h3>
           <p className="small">Pausa la onda y coloca los marcadores A y B sobre dos crestas consecutivas. La distancia entre ellos es tu medida de λ.</p>

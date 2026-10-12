@@ -9,7 +9,8 @@ import { Notice, Readout, RecordButton, Select, Slider, Warnings } from '../comp
 import { Chart } from '../components/Chart';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
-import { Beaker, BenchTop, Lcd, TestTube, Thermometer } from './kit';
+import { Beaker, BenchTop, ContactShadow, Lcd, TestTube, Thermometer } from './kit';
+import { DragHandle, ManipHint, ManipScene } from './manipulate';
 
 /* ------------------------------------------------------------------ utilidades */
 
@@ -45,6 +46,7 @@ const NORM_FMT: Record<NormRef['param'], (v: number) => string> = {
 const MAP = { x: 10, y: 8, w: 700, h: 186 };
 const KM0 = RANGES.distance[0], KM1 = RANGES.distance[1];
 const kmToX = (km: number) => 46 + ((km - KM0) / (KM1 - KM0)) * 628;
+const xToKm = (x: number) => KM0 + ((x - 46) / 628) * (KM1 - KM0);
 const riverY = (x: number) => 92 + 9 * Math.sin(x / 62) + 4 * Math.sin(x / 23 + 1);
 const RIVER_HALF = 13;
 
@@ -383,6 +385,7 @@ export default function WaterQualityLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox="0 0 720 430" label="Controles del muestreo" scene={
           <svg viewBox="0 0 720 430" role="img" aria-labelledby="agu-t agu-d">
             <title id="agu-t">Tramo de río con un vertimiento y equipo de análisis de agua</title>
             <desc id="agu-d">{desc}</desc>
@@ -477,6 +480,7 @@ export default function WaterQualityLab({ api }: LabProps) {
             <Thermometer x={250} y={226} h={150} min={0} max={40} value={measured ? readings.temp : 25} />
             <WinklerBottle x={300} y={306} liquid={sampleColor} filled={measured} label="DBO₅" />
             <WinklerBottle x={350} y={306} liquid={sampleColor} filled={measured} label="OD₀" />
+            <ContactShadow x={410} y={391} w={112} h={7} />
             {/* gradilla con tubos de coliformes */}
             <g>
               <rect x={410} y={344} width={112} height={8} rx={2} fill="url(#kit-wood)" stroke="#b8975a" />
@@ -501,8 +505,14 @@ export default function WaterQualityLab({ api }: LabProps) {
             {[[86, 'Sonda multiparamétrica'], [220, 'Muestra'], [346, 'DBO₅ (Winkler)'], [466, 'Coliformes (NMP)'], [624, 'Macroinvertebrados']].map(([lx, t]) => (
               <text key={t as string} x={lx as number} y={424} textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>{t as string}</text>
             ))}
-          </svg>
+          </svg>}>
+            <DragHandle label="Punto de muestreo en el río: distancia al vertimiento" value={distance} min={RANGES.distance[0]} max={RANGES.distance[1]} step={0.5} pageStep={2} unit="km" decimals={1}
+              orientation="horizontal" hit={{ x: xs - 14, y: riverY(xs) - 40, w: 28, h: 50 }}
+              valueText={(v) => `${fmt(v, 1)} km ${v < 0 ? "aguas arriba del" : "aguas abajo del"} vertimiento`}
+              valueFromPoint={({ point, start, startValue }) => startValue + xToKm(point.x) - xToKm(start.x)} onChange={change(setDistance)} />
+          </ManipScene>
         </div>
+        <ManipHint>Arrastra el punto de muestreo (amarillo) a lo largo del río, o enfócalo con Tab y usa las flechas.</ManipHint>
 
         <Readout items={[
           { k: 'Temperatura', v: measured ? `${fmt(readings.temp, 1)} °C` : '—', data: true },

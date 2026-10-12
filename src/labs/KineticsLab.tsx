@@ -11,7 +11,8 @@ import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogge
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
-import { BenchTop, GasSyringe, Stopwatch, Thermometer } from './kit';
+import { BenchTop, ContactShadow, GasSyringe, Stopwatch, Thermometer } from './kit';
+import { Knob, ManipHint, ManipScene } from './manipulate';
 
 /** Frasco reactivo de vidrio ámbar con rótulo. */
 function ReagentBottle({ x, label, conc }: { x: number; label: string; conc: string }) {
@@ -168,6 +169,7 @@ export default function KineticsLab({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox={`0 0 ${W} ${H}`} label="Controles del baño" scene={
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="vel-t vel-d">
             <title id="vel-t">{marble ? 'Mármol con ácido clorhídrico en un erlenmeyer conectado a una jeringa de 100 mL' : 'Agua oxigenada con catalizador en un erlenmeyer conectado a una jeringa de 100 mL'}</title>
             <desc id="vel-d">{`Baño a ${fmt(temp, 0)} °C. ${marble ? `HCl ${fmt(concHCl, 1)} mol/L y mármol en ${findParticle(particle).name.toLowerCase()}.` : `Agua oxigenada al ${fmt(concH2O2, 1)} % con catalizador: ${catalystName.toLowerCase()}.`} ${status}`}</desc>
@@ -177,7 +179,13 @@ export default function KineticsLab({ api }: LabProps) {
               <rect x={492} y={BENCH_Y - 9} width={70} height={9} rx={2} fill="url(#kit-body-dark)" />
               <rect x={519} y={18} width={7} height={BENCH_Y - 26} rx={3} fill="url(#kit-metal-h)" stroke="#8f9a9e" strokeWidth="0.6" />
             </g>
+            {/* termostato del baño (la perilla está en la capa de controles) */}
+            <g filter="url(#kit-shadow-soft)"><rect x={36} y={108} width={52} height={58} rx={6} fill="url(#kit-body-dark)" /></g>
+            <rect x={39} y={111} width={46} height={8} rx={3} fill="#fff" opacity="0.06" />
+            <text x={62} y={163} textAnchor="middle" style={{ fontSize: 6, fill: "#c9d2d5", letterSpacing: 0.8 }}>TERMOSTATO</text>
+            <circle cx={80} cy={116} r={2.4} fill={temp > 30 ? "#ff7043" : temp < 15 ? "#4fc3f7" : "#66bb6a"} />
             {/* baño de agua */}
+            <ContactShadow x={30} y={BENCH_Y} w={222} h={8} />
             <rect x={30} y={166} width={222} height={BENCH_Y - 166} rx={4} fill="url(#kit-glass-fill)" filter="url(#kit-shadow-soft)" />
             <rect x={33} y={182} width={216} height={BENCH_Y - 185} fill={bathColor} />
             <rect x={33} y={182} width={216} height={2.5} fill="#fff" opacity="0.4" />
@@ -222,8 +230,11 @@ export default function KineticsLab({ api }: LabProps) {
             <text x="330" y="116" style={{ fontSize: 12, fill: 'var(--ink)' }}>Gas en la jeringa: {fmt(reading, 0)} mL</text>
             <text x="330" y="134" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>{marble ? 'CO₂' : 'O₂'} a 25 °C y 101,3 kPa</text>
             <ReagentBottle x={578} label={marble ? 'HCl' : 'H₂O₂'} conc={marble ? `${fmt(concHCl, 1)} M` : `${fmt(concH2O2, 1)} %`} />
-          </svg>
+          </svg>}>
+            <Knob label="Perilla del termostato del baño" cx={62} cy={138} r={11} value={Math.min(temp, tLimits[1])} min={tLimits[0]} max={tLimits[1]} step={1} pageStep={5} unit="°C" decimals={0} onChange={setTemp} />
+          </ManipScene>
         </div>
+        <ManipHint>Gira la perilla del termostato (junto al baño) para fijar la temperatura, o enfócala con Tab y usa las flechas.</ManipHint>
         <Readout items={[
           { k: 'Cronómetro', v: `${fmt(Math.floor(simT), 0)} s` },
           { k: 'Volumen en la jeringa', v: `${fmt(reading, 0)} mL` },

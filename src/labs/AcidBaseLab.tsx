@@ -6,6 +6,7 @@ import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Burette, Erlenmeyer, Lcd } from './kit';
+import { ManipHint, ManipScene, SvgSlider } from './manipulate';
 
 /** Contorno del líquido dentro del Erlenmeyer del kit (misma geometría), para teñirlo con el indicador. */
 function erlLiquid(x: number, y: number, w: number, h: number, fill: number) {
@@ -89,6 +90,7 @@ function TitrationPart({ api }: LabProps) {
     <div className="lab-layout">
       <div className="stack">
         <div className="bench">
+          <ManipScene viewBox="0 0 640 352" label="Controles de la bureta" scene={
           <svg viewBox="0 0 640 352" role="img" aria-labelledby="tit-t tit-d">
             <title id="tit-t">Montaje de titulación con bureta, erlenmeyer y pH-metro</title>
             <desc id="tit-d">{`Se han añadido ${fmt(vb, 2)} mL de NaOH. pH ${fmt(res.pH, 2)}. Indicador ${ind.name}: ${col.label}.`}</desc>
@@ -145,8 +147,26 @@ function TitrationPart({ api }: LabProps) {
             <WashBottle x={548} y={244} />
             <text x="464" y="150" style={{ fontSize: 12, fill: 'var(--ink)' }}>NaOH añadido: {fmt(vb, 2)} mL</text>
             <text x="464" y="170" style={{ fontSize: 12, fill: 'var(--ink-2)' }}>{ind.name}: {col.label}</text>
-          </svg>
+          </svg>}>
+            {/* Llave de la bureta: al girarla (arrastre hacia abajo o flechas) cae NaOH; la base añadida no se puede retirar. */}
+            <SvgSlider label="Llave de la bureta: NaOH añadido" value={vb} min={0} max={100} step={0.1} pageStep={1} unit="mL" decimals={1}
+              valueText={(v) => `${fmt(v, 1)} mL de NaOH añadidos`}
+              hit={{ x: 191, y: 166, w: 44, h: 26 }}
+              valueFromPoint={({ point, start, startValue }) => startValue + Math.max(0, point.y - start.y) / 12 + Math.max(0, point.x - start.x) / 24}
+              onChange={(v) => { if (v > vb) add(Number((v - vb).toFixed(2))); }}>
+              {({ dragging }) => (
+                <g aria-hidden="true" style={{ pointerEvents: 'none' }}>
+                  <g transform={`rotate(${dragging ? 90 : 0} 212 179.5)`}>
+                    <rect x={196} y={177} width={32} height={5} rx={2.5} fill="#e9ecee" stroke="#5d6b70" strokeWidth="0.8" />
+                    <circle cx={212} cy={179.5} r={3.4} fill="url(#kit-metal)" stroke="#5d6b70" strokeWidth="0.6" />
+                  </g>
+                  {dragging && [0, 1, 2].map((i) => <ellipse key={i} cx={212} cy={208 + i * 12} rx={1.8} ry={2.6} fill="#a9cdea" stroke="#5f8aa3" strokeWidth="0.5" />)}
+                </g>
+              )}
+            </SvgSlider>
+          </ManipScene>
         </div>
+        <ManipHint>Arrastra hacia abajo la llave de la bureta para dejar caer la base gota a gota, o enfócala con Tab y usa las flechas (↑ o → añaden 0,1 mL; RePág añade 1 mL).</ManipHint>
         <div className="card">
           <Chart title="Curva de titulación" xLabel="NaOH añadido (mL)" yLabel="pH" height={260} xDomain={[0, maxV]} yDomain={[0, 14]}
             series={[

@@ -66,6 +66,11 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'termometro', name: 'Termómetro digital de sonda (−50 a 150 °C)', quantity: 'Temperatura', unit: '°C', resolution: 0.1, sigma: 0.1, note: 'Tiempo de respuesta de la sonda, agitación incompleta y posición de la punta dentro del agua.' },
     { id: 'balanza', name: 'Balanza digital (600 g)', quantity: 'Masa', unit: 'g', resolution: 0.1, sigma: 0.08, note: 'Corrientes de aire, gotas en el plato y vasos aún tibios (convección sobre el plato).' },
   ],
+  presion: [
+    { id: 'manometro', name: 'Manómetro en U con agua coloreada y regla milimétrica', quantity: 'Desnivel entre las ramas', unit: 'mm', resolution: 1, sigma: 1, note: 'Paralaje al leer los dos meniscos, capilaridad en el tubo y pequeñas burbujas en la manguera.' },
+    { id: 'barometro', name: 'Barómetro digital (300 a 1100 hPa)', quantity: 'Presión atmosférica', unit: 'hPa', resolution: 0.1, sigma: 0.3, note: 'Exactitud del sensor y variación de la presión durante el día (marea atmosférica de ± 1 a 2 hPa en el trópico).' },
+    { id: 'cinta', name: 'Cinta métrica sobre la bandeja', quantity: 'Alcance del chorro', unit: 'cm', resolution: 0.5, sigma: 0.4, note: 'El chorro se abre al caer y salpica: el punto de impacto tiene un ancho de casi 1 cm.' },
+  ],
 };
 
 /** Especificación de un instrumento de una práctica (lanza un error si no existe: error de programación). */

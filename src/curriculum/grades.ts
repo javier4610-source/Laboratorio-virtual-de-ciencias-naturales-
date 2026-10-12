@@ -80,7 +80,6 @@ export const PLANNED: PlannedPractice[] = [
   { title: 'Cálculos estequiométricos básicos', grade: 9, area: 'quimica', status: 'planificada' },
   { title: 'Expresión génica y efecto de mutaciones', grade: 11, area: 'biologia', status: 'planificada' },
   { title: 'Reto de indagación con interpretación de datos', grade: 11, area: 'ambiental', status: 'planificada' },
-  { title: 'Presión en líquidos y presión atmosférica', grade: 7, area: 'fisica', status: 'planificada' },
   { title: 'Transferencia de calor por conducción', grade: 7, area: 'fisica', status: 'planificada' },
   { title: 'Sonido y resonancia', grade: 8, area: 'fisica', status: 'planificada' },
   { title: 'Trabajo, potencia y plano inclinado', grade: 9, area: 'fisica', status: 'planificada' },

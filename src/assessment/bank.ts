@@ -736,6 +736,25 @@ const RAW_BANK: Question[] = [
     explanation: 'El calor pasa del cuerpo más caliente (aire, 30 °C) al más frío (agua). Según la ley de enfriamiento de Newton, la rapidez es proporcional a la diferencia de temperatura y a qué tan bien conduce el recipiente: por eso cada intervalo la temperatura sube menos, y en el icopor (buen aislante) sube mucho más despacio que en la lata. Ninguna de las dos superará 30 °C.',
     review: 'En la práctica de calor y equilibrio térmico, compara las curvas de temperatura contra tiempo del vaso de icopor y de la lata.',
   },
+  {
+    id: 'saber-pre-1', grade: 7, topic: 'Presión atmosférica y altitud', competency: 'indagacion', component: 'fisico', skill: 'Interpretar una tabla de presión atmosférica contra altitud y explicar la tendencia', difficulty: 'media', practiceId: 'presion',
+    context: 'En una salida de campo de Turbo a Santa Rosa de Osos, un grupo de estudiantes midió la presión atmosférica con la aplicación de barómetro de un celular en varios pueblos de la vía, a la misma hora del día (datos simulados).',
+    table: {
+      caption: 'Presión atmosférica medida en cada lugar',
+      headers: ['Lugar', 'Altitud (m)', 'Presión (hPa)'],
+      rows: [['Turbo', '2', '1011,8'], ['Dabeiba', '450', '961,4'], ['Medellín', '1495', '853,6'], ['Santa Rosa de Osos', '2550', '756,9']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'La presión baja exactamente lo mismo por cada 100 m que se sube, así que es una línea recta.', feedback: 'Calcula la disminución por cada 100 m en cada tramo: unos 11,3 hPa entre Turbo y Dabeiba, 10,3 hPa hasta Medellín y 9,2 hPa hasta Santa Rosa. No es constante.' },
+      { id: 'b', text: 'La presión disminuye al subir, y por cada 100 m baja un poco menos a mayor altitud, porque queda menos aire encima y ese aire es menos denso.', feedback: 'Correcto: la caída por cada 100 m pasa de ≈ 11,3 a ≈ 9,2 hPa; la columna de aire es más corta y más liviana arriba.' },
+      { id: 'c', text: 'La presión es mayor en Santa Rosa de Osos porque está más cerca del cielo y el aire de arriba la empuja más.', feedback: 'Es al revés: en un lugar alto hay menos aire por encima, así que la presión es menor (756,9 hPa frente a 1011,8 hPa en Turbo).' },
+      { id: 'd', text: 'La presión se reduce a la mitad cada 1000 m, así que a 2550 m queda menos de una cuarta parte.', feedback: 'A 2550 m la presión sigue siendo casi tres cuartas partes de la del nivel del mar (756,9/1011,8 ≈ 0,75). Para que se reduzca a la mitad hay que subir unos 5,5 km.' },
+    ],
+    correct: 'b',
+    explanation: 'La presión atmosférica es el peso por unidad de área de la columna de aire que hay encima. Al subir, la columna es más corta y la presión baja; como el aire de arriba está menos comprimido (es menos denso), cada 100 m de subida quitan cada vez menos presión. Las fórmulas barométricas (isotérmica o de la atmósfera estándar) describen esta disminución casi exponencial.',
+    review: 'En la práctica de presión, cambia el lugar entre Apartadó, Medellín y Bogotá y compara la lectura del barómetro con la gráfica de presión contra altitud.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

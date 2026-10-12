@@ -521,6 +521,22 @@ test('calor: 100 g a 60 °C con 100 g a 20 °C en icopor llegan a 39,8 °C', asy
   expect(await tableRows(page)).toBe(1);
 });
 
+test('presión: a 10 cm de agua el manómetro marca 100 mm y 975 Pa; la sonda se baja con el teclado', async ({ page }) => {
+  await openFree(page, 'presion');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Leer el manómetro' }).click();
+  await expect(page.locator('.readout').getByText('975 Pa')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('1.019,5 hPa')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  const sonda = page.getByRole('slider', { name: 'Sonda del manómetro: subir o bajar' });
+  await sonda.focus();
+  for (let i = 0; i < 4; i++) await sonda.press('ArrowDown');
+  await page.getByRole('button', { name: 'Leer el manómetro' }).click();
+  await expect(page.locator('.readout').getByText('1.170 Pa')).toBeVisible({ timeout: 10_000 });
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -581,7 +597,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/35');
+  await expect(page.locator('.kpi').first()).toContainText('1/36');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

@@ -495,6 +495,32 @@ test('agua: aguas abajo del vertimiento el oxígeno baja a 5,31 mg/L', async ({ 
   expect(await tableRows(page)).toBe(1);
 });
 
+test('máquinas: palanca de 1.er género con 400 g a 20 cm se equilibra con 2,0 N a 40 cm', async ({ page }) => {
+  await openFree(page, 'maquinas');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Medir fuerza y recorridos' }).click();
+  await expect(page.locator('.readout').getByText('1,95', { exact: true })).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('0,780 N·m')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+  await page.getByRole('button', { name: 'Poleas', exact: true }).click();
+  await page.getByRole('button', { name: 'Polipasto', exact: true }).click();
+  await page.getByRole('button', { name: 'Medir fuerza y recorridos' }).click();
+  await expect(page.locator('.readout').getByText('4,00', { exact: true })).toBeVisible({ timeout: 10_000 });
+});
+
+test('calor: 100 g a 60 °C con 100 g a 20 °C en icopor llegan a 39,8 °C', async ({ page }) => {
+  await openFree(page, 'calor');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Mezclar y medir' }).click();
+  await expect(page.locator('.readout').getByText('39,8 °C')).toBeVisible({ timeout: 15_000 });
+  await expect(page.locator('.readout').getByText('8.444 J')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  expect(await tableRows(page)).toBe(1);
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -555,7 +581,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/33');
+  await expect(page.locator('.kpi').first()).toContainText('1/35');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

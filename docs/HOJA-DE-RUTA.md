@@ -31,7 +31,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       (10.º, biología, `respiracion`) · contaminación del agua e indicadores (11.º, ambiental, `agua`).
 - [x] **U5 · Manipulación directa:** arrastrar muestras e instrumentos, perillas y émbolos que se giran o empujan,
       con alternativa por teclado.
-- [ ] **Física B:** máquinas simples: palancas y poleas (6.º, `maquinas`) · calor, temperatura y equilibrio térmico
+- [ ] **Física B:** ~~máquinas simples: palancas y poleas (6.º, `maquinas`)~~ · ~~calor, temperatura y equilibrio térmico~~ (hechas)
       (6.º, `calor`) · presión en líquidos y presión atmosférica (7.º, `presion`).
 - [ ] **Lote 8:** ecosistema: agua, luz y alimento (6.º, ambiental, `ecosistema`) · balanceo visual de ecuaciones
       químicas con conteo de átomos (8.º, química, `balanceo`) · expresión génica y efecto de mutaciones en la

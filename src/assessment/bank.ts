@@ -698,6 +698,44 @@ const RAW_BANK: Question[] = [
     explanation: 'Con las clases dadas: E1 = 158 (clase I), E2 = 28 (clase IV, crítica) y E3 = 92 (clase II, aceptable). Las familias sensibles (puntaje 9–10) desaparecen después de la descarga y algunas reaparecen aguas abajo: el río se autodepura, pero aún no recupera su estado inicial.',
     review: 'En la práctica de contaminación del agua, compara el BMWP/Col aguas arriba, cerca del vertimiento y a 30 km.',
   },
+  {
+    id: 'saber-maq-1', grade: 6, topic: 'Máquinas simples y trabajo', competency: 'indagacion', component: 'fisico', skill: 'Analizar datos para relacionar fuerza, distancia y trabajo en un sistema de poleas', difficulty: 'media', practiceId: 'maquinas',
+    context: 'En una finca bananera de Carepa, unos estudiantes subieron un racimo de 30 kg (peso: 294 N) hasta la plataforma de un camión, a 1,2 m de altura, con tres montajes de garruchas. Con un dinamómetro midieron la fuerza y con una cinta métrica la cuerda que tuvieron que jalar (datos simulados).',
+    table: {
+      caption: 'Subida del racimo 1,2 m con distintos montajes',
+      headers: ['Montaje', 'Tramos que sostienen el racimo', 'Fuerza medida (N)', 'Cuerda jalada (m)'],
+      rows: [['Polea fija', 1, 300, '1,2'], ['Polea móvil y polea fija', 2, 152, '2,4'], ['Polipasto', 4, 78, '4,8']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'El polipasto reduce a la cuarta parte el trabajo necesario para subir el racimo, porque la fuerza es cuatro veces menor.', feedback: 'La fuerza baja, pero hay que jalar cuatro veces más cuerda: 78 N · 4,8 m ≈ 374 J, que no es menor que 300 N · 1,2 m = 360 J.' },
+      { id: 'b', text: 'La fuerza disminuye casi en proporción al número de tramos, pero la cuerda jalada aumenta en la misma proporción; el trabajo de entrada no disminuye y hasta crece un poco por el rozamiento y el peso de las poleas.', feedback: 'Correcto.' },
+      { id: 'c', text: 'Con el polipasto el racimo sube más alto, porque se jala más cuerda.', feedback: 'En los tres montajes el racimo sube lo mismo (1,2 m); la cuerda extra es el precio de usar menos fuerza.' },
+      { id: 'd', text: 'Las poleas crean energía, porque con menos fuerza levantan el mismo racimo.', feedback: 'Ninguna máquina crea energía: el trabajo que se hace sobre la cuerda (≈ 360 a 374 J) es mayor que el que recibe el racimo (294 N · 1,2 m ≈ 353 J).' },
+    ],
+    correct: 'b',
+    explanation: 'Trabajo de entrada = F · cuerda jalada: 300 · 1,2 = 360 J; 152 · 2,4 ≈ 365 J; 78 · 4,8 ≈ 374 J. Trabajo útil = 294 N · 1,2 m ≈ 353 J. Las máquinas simples cambian la fuerza por distancia, pero no ahorran trabajo; con más poleas hay más rozamiento y más masa móvil, así que la eficiencia baja un poco (98 %, 97 % y 94 %).',
+    review: 'En la práctica de máquinas simples, compara el trabajo de entrada y el de salida con la polea fija, la polea móvil y el polipasto.',
+  },
+  {
+    id: 'saber-cal-1', grade: 6, topic: 'Calor y equilibrio térmico', competency: 'indagacion', component: 'fisico', skill: 'Interpretar una tabla de temperatura contra tiempo para comparar aislantes térmicos', difficulty: 'media', practiceId: 'calor',
+    context: 'Para un paseo a Necoclí, unos estudiantes de Apartadó quieren saber qué recipiente conserva mejor fría una bebida. Ponen 300 g de agua de la nevera en un vaso de icopor con tapa y la misma cantidad en una lata de aluminio con tapa, los dejan a la sombra con el aire a 30 °C y miden la temperatura del agua cada 10 minutos.',
+    table: {
+      caption: 'Temperatura del agua (°C); aire a 30 °C',
+      headers: ['Tiempo (min)', '0', '10', '20', '30'],
+      rows: [['Vaso de icopor', '8,0', '9,9', '11,5', '13,1'], ['Lata de aluminio', '8,0', '14,3', '18,8', '22,0']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'La lata enfría menos porque el metal deja escapar el frío del agua más rápido que el icopor.', feedback: 'El frío no es algo que «escapa»: lo que pasa es calor, del aire caliente al agua fría. La lata deja entrar ese calor más rápido.' },
+      { id: 'b', text: 'En los dos recipientes el agua gana calor del aire; en la lata lo gana más rápido porque aísla peor, y en ambos la temperatura sube cada vez más despacio a medida que se acerca a 30 °C.', feedback: 'Correcto: la lata sube 6,3; 4,5 y 3,2 °C en cada intervalo (cada vez menos, porque la diferencia con el aire disminuye) y el icopor solo 1,9; 1,6 y 1,6 °C.' },
+      { id: 'c', text: 'El icopor fabrica frío, por eso el agua sube menos de temperatura en él.', feedback: 'El icopor no produce frío ni calor: es un aislante que deja pasar muy poco calor porque tiene aire atrapado en sus burbujas.' },
+      { id: 'd', text: 'Si se espera suficiente tiempo, el agua de la lata llegará a más de 30 °C porque se sigue calentando.', feedback: 'El calor solo pasa mientras el aire está más caliente que el agua; al llegar a 30 °C se alcanza el equilibrio térmico y la temperatura deja de subir.' },
+    ],
+    correct: 'b',
+    explanation: 'El calor pasa del cuerpo más caliente (aire, 30 °C) al más frío (agua). Según la ley de enfriamiento de Newton, la rapidez es proporcional a la diferencia de temperatura y a qué tan bien conduce el recipiente: por eso cada intervalo la temperatura sube menos, y en el icopor (buen aislante) sube mucho más despacio que en la lata. Ninguna de las dos superará 30 °C.',
+    review: 'En la práctica de calor y equilibrio térmico, compara las curvas de temperatura contra tiempo del vaso de icopor y de la lata.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

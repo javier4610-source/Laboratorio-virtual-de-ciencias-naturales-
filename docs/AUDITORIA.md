@@ -186,3 +186,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Medición realista | Fichas de instrumento de ambas prácticas en `instruments.ts` | El selector ideal/real aparece | — | — | Correcto |
 | Supuestos declarados | Revisión | — | Umbrales de presencia de macroinvertebrados didácticos; ríos ilustrativos; normas por validar; levadura excluida por efecto Crabtree | Declarados en la interfaz y en los límites del modelo | Declarado |
 | Regresión | 375 pruebas unitarias y 54 de interfaz con axe (suite completa) | Todas pasan | Prueba E2E con texto repetido en dos lecturas | Selector más preciso | Corregido |
+
+# Manipulación directa (U5) y física B (máquinas simples, calor)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Manipulación directa | 12 pruebas de la geometría (límites, ajuste a la escala, teclado, ángulos que cruzan ±180°, zonas de soltado, objetivo mínimo de 44 px) y 5 E2E con teclado y arrastre en gases, óptica, circuitos, densidad, péndulo, proyectiles y Newton | Correcto; una sola fuente de verdad con los controles del panel | Controles interactivos dentro de escenas `role="img"` no pasan axe | Capa superpuesta con `role="group"` y el mismo viewBox | Corregido |
+| Máquinas simples | 14 pruebas: equilibrio de momentos con y sin masa de la barra, ventaja mecánica, recorridos, polea fija, móvil y polipasto con rozamiento, trabajo, fuera de escala | Correcto | La prueba E2E no seleccionaba «Poleas» antes de «Polipasto» | Prueba corregida | Correcto |
+| Calor y equilibrio térmico | 14 pruebas: Te a mano, solución exacta contra integración numérica, balance de energía, icopor frente a vidrio y lata, calor específico recuperado | Correcto | — | — | Correcto |
+| Supuestos declarados | Revisión | — | Pérdidas de los recipientes ilustrativas; eficiencia de 99 % en el caso ideal por redondeo de lecturas | Declarados en la interfaz | Declarado |
+| Regresión | 415 pruebas unitarias y 61 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |

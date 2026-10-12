@@ -58,6 +58,14 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'dbo', name: 'Botellas Winkler: DBO₅ (5 días a 20 °C)', quantity: 'DBO₅', unit: 'mg/L', resolution: 0.1, sigma: 0.3, relSigma: 0.1, nonNegative: true, note: 'Dilución de la muestra, semilla bacteriana e incubación de 5 días.' },
     { id: 'cf', name: 'Tubos múltiples: coliformes fecales (NMP)', quantity: 'Coliformes fecales', unit: 'NMP/100 mL', resolution: 1, relSigma: 0.3, nonNegative: true, note: 'El NMP es una estimación estadística con un intervalo de confianza amplio.' },
   ],
+  maquinas: [
+    { id: 'dinamometro', name: 'Dinamómetro de resorte (0 a 10 N)', quantity: 'Fuerza', unit: 'N', resolution: 0.1, sigma: 0.05, relSigma: 0.01, nonNegative: true, note: 'Paralaje al leer el indicador, ajuste del cero y rozamiento del resorte con el tubo.' },
+    { id: 'regla', name: 'Regla vertical graduada en milímetros', quantity: 'Recorrido de la cuerda o de la carga', unit: 'cm', resolution: 0.1, sigma: 0.08, nonNegative: true, note: 'Alinear la marca con el cero de la regla y paralaje al leer.' },
+  ],
+  calor: [
+    { id: 'termometro', name: 'Termómetro digital de sonda (−50 a 150 °C)', quantity: 'Temperatura', unit: '°C', resolution: 0.1, sigma: 0.1, note: 'Tiempo de respuesta de la sonda, agitación incompleta y posición de la punta dentro del agua.' },
+    { id: 'balanza', name: 'Balanza digital (600 g)', quantity: 'Masa', unit: 'g', resolution: 0.1, sigma: 0.08, note: 'Corrientes de aire, gotas en el plato y vasos aún tibios (convección sobre el plato).' },
+  ],
 };
 
 /** Especificación de un instrumento de una práctica (lanza un error si no existe: error de programación). */

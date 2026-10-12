@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (33)
+## Prácticas implementadas (35)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -14,6 +14,8 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 6.º | Microscopio virtual: células animales y vegetales | Biología | Aumento total, diámetro del campo (número de campo 18 mm), estimación del tamaño celular, umbral de visibilidad (tamaño aparente, contraste por tinción, profundidad de campo) |
 | 6.º | Cadenas y redes alimentarias | Ambiental | Lotka-Volterra generalizado con respuesta funcional tipo II, regla del 10 %, cascadas tróficas, pirámide de biomasa (RK4) |
 | 6.º | Separación de mezclas | Química | Propiedades de cada componente (magnetismo, solubilidad, densidad); pérdidas en filtro y embudo; energía de evaporación (c·ΔT + L) |
+| 6.º | Máquinas simples: palancas y poleas | Física | Palancas de los tres géneros con dinamómetro y reglas; ley de la palanca; polea fija, móvil y polipasto con rozamiento; ventaja mecánica y conservación del trabajo; ejemplos de Urabá |
+| 6.º | Calor, temperatura y equilibrio térmico | Física | Calorímetro de icopor, vidrio o lata; Te = Σmc·T/Σmc; pérdidas con la ley de enfriamiento de Newton; calor específico de un metal desconocido; registrador de temperatura |
 | 7.º | Difusión y ósmosis a través de la membrana | Biología | Boyle-van 't Hoff, van 't Hoff (π = CRT), turgencia elástica, lisis; difusión de Fick con D ∝ T/η |
 | 7.º | Materiales conductores y aislantes | Física | R = ρL/A con resistividades reales, circuito en serie con resistencia interna, brillo ∝ I²R, clasificación por corriente |
 | 7.º | Factores de la descomposición de la materia orgánica | Ambiental | Modelo de Olson M = M₀e^(−kt) con k según material, Q₁₀ de temperatura, humedad, aireación y tamaño |
@@ -44,7 +46,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Crecimiento poblacional y capacidad de carga | Ambiental | Exponencial y logístico con cosecha |
 | 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 
-Otras 8 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 6 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

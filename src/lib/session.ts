@@ -56,7 +56,8 @@ export function usePracticeSession(practiceId: string) {
 
   const reset = useCallback(() => {
     removeKey(SESSION_PREFIX + practiceId);
-    setSession((s) => emptySession(practiceId, s.mode));
+    // Se conservan el modo de trabajo y el de medición (con sus contadores, para no repetir lecturas).
+    setSession((s) => ({ ...emptySession(practiceId, s.mode), ...(s.measurement ? { measurement: s.measurement } : {}) }));
   }, [practiceId]);
 
   return { session, update, addTrial, reset };

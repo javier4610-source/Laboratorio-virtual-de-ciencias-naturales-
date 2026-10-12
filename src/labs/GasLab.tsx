@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { GAS_LIMITS, INITIAL, simulateGas, type GasLaw } from '../models/gases';
 import { seededRandom } from '../models/math';
+import { useMeasure } from '../components/Measurement';
+import { instrument } from './instruments';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
@@ -58,7 +60,21 @@ export default function GasLab({ api }: LabProps) {
   const [volume, setVolume] = useState(INITIAL.volume);
   const [temperature, setTemperature] = useState(INITIAL.temperature);
   const [tick, setTick] = useState(0);
-  const res = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure }), [law, volume, temperature]);
+  const model = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure }), [law, volume, temperature]);
+  // Lecturas de los instrumentos. En modo real: el émbolo queda un poco desalineado de la marca de la escala
+  // (el volumen real del gas difiere del indicado y la presión sigue P ∝ 1/V del modelo) y el manómetro suma su ruido.
+  const { measure, remeasure, deviation } = useMeasure();
+  const res = useMemo(() => {
+    const syr = instrument('gases', 'jeringa');
+    let pressure = model.pressure, volumeReading = model.volumeReading;
+    if (law === 'charles') volumeReading = measure(model.volume, { ...syr, key: 'jeringa' });
+    else {
+      const dv = deviation('jeringa', syr.sigma ?? 0);
+      if (dv !== 0) pressure = (model.pressure * model.volume) / (model.volume + dv);
+    }
+    const pressureReading = measure(pressure, { ...instrument('gases', 'manometro'), key: 'manometro' });
+    return { ...model, pressureReading, volumeReading };
+  }, [model, law, measure, deviation]);
 
   // Partículas: su rapidez de animación ∝ √T (energía cinética media ∝ T).
   useEffect(() => {
@@ -75,11 +91,13 @@ export default function GasLab({ api }: LabProps) {
   const bathColor = `rgba(${warm ? 230 : 80},${warm ? 120 : 140},${warm ? 80 : 230},${Math.min(0.35, Math.abs(res.temperatureC - 25) / 200 + 0.08)})`;
   const pos = (p: { x: number; vx: number }, len: number) => { const raw = (p.x + p.vx * speed * tick) % 2; const u = raw < 0 ? raw + 2 : raw; return (u > 1 ? 2 - u : u) * len; };
 
-  const record = () => api.addTrial('mediciones', {
+  const record = () => { api.addTrial('mediciones', {
     ley: LAW_NAME[law], volumen: res.volumeReading, temperatura: law === 'boyle' ? INITIAL.temperature : temperature,
     temperaturaK: Number(res.temperatureK.toFixed(2)), presion: res.pressureReading,
     inversoV: Number((1 / res.volumeReading).toFixed(6)), pv: Number((res.pressureReading * res.volumeReading).toFixed(1)),
   });
+  // Cada ensayo guardado cuenta como una medición: la siguiente lectura es una repetición nueva.
+  remeasure('manometro', 'jeringa'); };
 
   return (
     <div className="lab-layout">

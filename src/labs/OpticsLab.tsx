@@ -3,6 +3,8 @@ import { MEDIA, refract } from '../models/optics';
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { useMeasure } from '../components/Measurement';
+import { instrument } from './instruments';
 
 const MEDIUM_FILL: Record<string, string> = { aire: 'rgba(200,225,240,0.10)', agua: 'rgba(70,150,220,0.28)', aceite: 'rgba(232,195,58,0.30)', vidrio: 'rgba(150,210,200,0.35)', diamante: 'rgba(210,220,240,0.55)', misterio: 'rgba(170,140,210,0.32)' };
 
@@ -60,6 +62,15 @@ export default function OpticsLab({ api }: LabProps) {
   const [angle, setAngle] = useState(40);
   const [measured, setMeasured] = useState(false);
   const r = useMemo(() => refract(m1, m2, angle), [m1, m2, angle]);
+  // Lecturas del transportador (el dibujo del rayo usa siempre los ángulos verdaderos del modelo).
+  const { measure, remeasure } = useMeasure();
+  const read = useMemo(() => {
+    const tp = instrument('optica', 'transportador');
+    return {
+      reflection: measure(r.reflection, { ...tp, key: 'reflexion' }),
+      refraction: r.refraction === null ? null : measure(r.refraction, { ...tp, key: 'refraccion' }),
+    };
+  }, [r, measure]);
   const W = 520, H = 400, cx = 260, cy = 200, L = 180;
   const rad = (d: number) => (d * Math.PI) / 180;
   // Rayo incidente desde arriba a la izquierda
@@ -72,9 +83,9 @@ export default function OpticsLab({ api }: LabProps) {
   const change = (fn: () => void) => { fn(); setMeasured(false); };
 
   const record = () => api.addTrial('rayos', {
-    medio1: name(m1), medio2: name(m2), incidencia: angle, reflexion: r.reflection,
-    refraccion: r.refraction === null ? null : Number(r.refraction.toFixed(2)),
-    senoI: Number(Math.sin(rad(angle)).toFixed(4)), senoT: r.refraction === null ? null : Number(Math.sin(rad(r.refraction)).toFixed(4)),
+    medio1: name(m1), medio2: name(m2), incidencia: angle, reflexion: read.reflection,
+    refraccion: read.refraction === null ? null : Number(read.refraction.toFixed(2)),
+    senoI: Number(Math.sin(rad(angle)).toFixed(4)), senoT: read.refraction === null ? null : Number(Math.sin(rad(read.refraction)).toFixed(4)),
     reflejada: Number((r.reflectance * 100).toFixed(2)),
   });
 
@@ -90,7 +101,7 @@ export default function OpticsLab({ api }: LabProps) {
         <div className="bench">
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="opt-t opt-d">
             <title id="opt-t">Rayo de luz que llega a la superficie entre dos medios</title>
-            <desc id="opt-d">{`Luz de ${name(m1).toLowerCase()} a ${name(m2).toLowerCase()} con ${fmt(angle, 1)}° de incidencia. ${measured ? (r.totalInternalReflection ? 'Reflexión total interna: no sale luz al segundo medio.' : `Ángulo de refracción ${fmt(r.refraction!, 1)}°.`) : 'Ángulos aún no medidos.'}`}</desc>
+            <desc id="opt-d">{`Luz de ${name(m1).toLowerCase()} a ${name(m2).toLowerCase()} con ${fmt(angle, 1)}° de incidencia. ${measured ? (r.totalInternalReflection ? 'Reflexión total interna: no sale luz al segundo medio.' : `Ángulo de refracción ${fmt(read.refraction!, 1)}°.`) : 'Ángulos aún no medidos.'}`}</desc>
             <rect x="0" y="0" width={W} height={cy} fill={MEDIUM_FILL[m1]} />
             <rect x="0" y={cy} width={W} height={H - cy} fill={MEDIUM_FILL[m2]} />
             <defs>
@@ -118,8 +129,8 @@ export default function OpticsLab({ api }: LabProps) {
               <g style={{ fontSize: 12, fontFamily: 'var(--font-data)' }}>
                 <path d={arc(0, angle, 50, false)} fill="none" stroke="var(--fis)" strokeWidth="1.5" />
                 <text x={cx - 60} y={cy - 60} textAnchor="end" style={{ fill: 'var(--fis)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>θ₁ = {fmt(angle, 1)}°</text>
-                <text x={cx + 60} y={cy - 60} style={{ fill: 'var(--fis)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>θᵣ = {fmt(r.reflection, 1)}°</text>
-                {r.refraction !== null && <><path d={arc(0, r.refraction, 50, true)} fill="none" stroke="var(--data)" strokeWidth="1.5" /><text x={cx + 60} y={cy + 72} style={{ fill: 'var(--data)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>θ₂ = {fmt(r.refraction, 1)}°</text></>}
+                <text x={cx + 60} y={cy - 60} style={{ fill: 'var(--fis)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>θᵣ = {fmt(read.reflection, 1)}°</text>
+                {r.refraction !== null && read.refraction !== null && <><path d={arc(0, r.refraction, 50, true)} fill="none" stroke="var(--data)" strokeWidth="1.5" /><text x={cx + 60} y={cy + 72} style={{ fill: 'var(--data)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>θ₂ = {fmt(read.refraction, 1)}°</text></>}
               </g>
             )}
             {r.totalInternalReflection && <text x={cx + 20} y={cy + 40} style={{ fontSize: 13, fill: 'var(--bad)', fontWeight: 700, paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}>Reflexión total interna</text>}
@@ -127,8 +138,8 @@ export default function OpticsLab({ api }: LabProps) {
         </div>
         <Readout items={[
           { k: 'θ incidencia', v: `${fmt(angle, 1)}°` },
-          { k: 'θ reflexión', v: measured ? `${fmt(r.reflection, 1)}°` : 'mide', data: true },
-          { k: 'θ refracción', v: measured ? (r.refraction === null ? 'no hay (reflexión total)' : `${fmt(r.refraction, 1)}°`) : 'mide', data: true },
+          { k: 'θ reflexión', v: measured ? `${fmt(read.reflection, 1)}°` : 'mide', data: true },
+          { k: 'θ refracción', v: measured ? (read.refraction === null ? 'no hay (reflexión total)' : `${fmt(read.refraction, 1)}°`) : 'mide', data: true },
           { k: 'Luz reflejada', v: `${fmt(r.reflectance * 100, 1)} %` },
           { k: 'El rayo se acerca a…', v: measured ? r.bendsToward : '—' },
           { k: 'Ángulo crítico', v: r.criticalAngle === null ? 'no existe (n₁ < n₂)' : measured ? `${fmt(r.criticalAngle, 1)}°` : 'búscalo' },
@@ -141,7 +152,7 @@ export default function OpticsLab({ api }: LabProps) {
           <Select label="Medio 2" value={m2} onChange={(v) => change(() => setM2(v))} options={MEDIA.map((m) => ({ value: m.id, label: m.name }))} />
           <Slider label="Ángulo de incidencia" value={angle} min={0} max={89} step={1} unit="°" decimals={0} onChange={(v) => change(() => setAngle(v))} />
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => setMeasured(true)}>Medir con el transportador</button>
+            <button type="button" className="btn primary" onClick={() => { remeasure('reflexion', 'refraccion'); setMeasured(true); }}>Medir con el transportador</button>
             <button type="button" className="btn" onClick={() => change(() => { const a = m1; setM1(m2); setM2(a); })}>Invertir medios</button>
           </div>
           <RecordButton onRecord={record} disabled={!measured} />

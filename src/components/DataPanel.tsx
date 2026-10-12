@@ -4,7 +4,8 @@ import type { SessionApi } from '../lib/session';
 import { fmt } from '../lib/format';
 import { downloadText, trialsToCSV, copyText } from '../lib/report';
 import { Chart } from './Chart';
-import { ConfirmButton, Select } from './ui';
+import { ConfirmButton, Segmented, Select } from './ui';
+import { RepeatStats, UncertaintyCalculator } from './RepeatStats';
 import { onTabListKeyDown } from '../lib/a11y';
 import { buildAnalysis, columnAxisText } from '../lib/analysis';
 import { AXIS_TRANSFORMS, FIT_MODELS } from '../lib/fit';
@@ -101,6 +102,8 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
         onDelete={api ? (id) => api.update((s) => ({ ...s, trials: s.trials.filter((t) => t.id !== id) })) : undefined}
         onNote={api ? (id, note) => api.update((s) => ({ ...s, trials: s.trials.map((t) => (t.id === id ? { ...t, note } : t)) })) : undefined}
       />
+      <RepeatStats dataset={ds} trials={trials} />
+      <UncertaintyCalculator key={ds.id} dataset={ds} trials={trials} />
       </div>
       <div className="notebook-chart stack-sm">
       <div className="filters">
@@ -111,6 +114,14 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
         )}
         <Select label="Modelo de ajuste" value={ax.model} onChange={(v) => setAx({ model: v })} options={FIT_MODELS.map((m) => ({ value: m.value, label: m.label }))} />
       </div>
+      <div className="avg-options btn-row">
+        <label className="check"><input type="checkbox" checked={ax.avg !== ''} onChange={(e) => setAx({ avg: e.target.checked ? 'sd' : '' })} /> Graficar promedios con barras de error (±1 DE o ±EE)</label>
+        {ax.avg !== '' && (
+          <Segmented<'sd' | 'sem'> label="Barras de error" value={ax.avg} onChange={(v) => setAx({ avg: v })}
+            options={[{ value: 'sd', label: '±1 DE' }, { value: 'sem', label: '±EE' }]} />
+        )}
+      </div>
+      {ax.avg !== '' && <p className="small muted" style={{ margin: 0 }}>Cada punto es la media de los ensayos con las mismas variables de entrada; la barra muestra {ax.avg === 'sd' ? '±1 desviación estándar (dispersión de las lecturas)' : '±1 error estándar de la media (DE/√n)'}. Con un solo ensayo, la barra es ± media resolución.</p>}
       <details className="analysis-options" open={ax.xT !== 'x' || ax.yT !== 'x' || undefined}>
         <summary>Linealizar: transformar los ejes</summary>
         <div className="filters">
@@ -125,6 +136,7 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
         series={series} xLabel={data.xAxis.text} yLabel={data.yAxis.text} xUnit={data.xAxis.unit} yUnit={data.yAxis.unit}
         fit={series.length === 1 && ax.model !== 'none' ? ax.model : undefined}
         emptyText="Guarda ensayos para ver la gráfica."
+        errorNote={ax.avg === 'sd' ? 'Las barras indican ±1 desviación estándar de los ensayos repetidos.' : ax.avg === 'sem' ? 'Las barras indican ±1 error estándar de la media.' : undefined}
         exportName={`${practiceId}-${ds.id}-grafica`} copyFallbackLabel={trials.length > 0 ? 'Copiar datos' : undefined}
       />
       {series.length > 1 && ax.model !== 'none' && <p className="small muted">El ajuste solo se calcula cuando los datos no están agrupados.</p>}

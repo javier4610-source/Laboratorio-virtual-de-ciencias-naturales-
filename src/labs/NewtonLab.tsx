@@ -5,6 +5,8 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd } from './kit';
+import { useMeasure } from '../components/Measurement';
+import { instrument } from './instruments';
 
 function Arrow({ x1, y1, x2, y2, color, label }: { x1: number; y1: number; x2: number; y2: number; color: string; label: string }) {
   if (Math.hypot(x2 - x1, y2 - y1) < 2) return null;
@@ -181,7 +183,14 @@ export default function NewtonLab({ api }: LabProps) {
   const [t, setT] = useState(0);
   const [running, setRunning] = useState(false);
   const [done, setDone] = useState(false);
-  const res = useMemo(() => simulateCart({ mass, force, surfaceId: surface }), [mass, force, surface]);
+  const { measure, remeasure } = useMeasure();
+  const res = useMemo(() => {
+    const m = simulateCart({ mass, force, surfaceId: surface });
+    if (!m.moves) return m;
+    // Lectura del cronómetro de fotopuertas (en modo real, con la dispersión típica de la ficha).
+    const time = measure(Math.sqrt((2 * TRACK_LENGTH) / m.acceleration), { ...instrument('newton', 'cronometro'), key: 'cronometro' });
+    return { ...m, time, measuredAcceleration: (2 * TRACK_LENGTH) / time ** 2 };
+  }, [mass, force, surface, measure]);
   const raf = useRef(0);
   const reset = () => { setRunning(false); setDone(false); setT(0); };
   useEffect(reset, [mass, force, surface]);
@@ -269,7 +278,7 @@ export default function NewtonLab({ api }: LabProps) {
           <Slider label="Masa del carrito" value={mass} min={NEWTON_LIMITS.mass[0]} max={NEWTON_LIMITS.mass[1]} step={0.05} unit="kg" decimals={2} onChange={setMass} />
           <Slider label="Fuerza aplicada" value={force} min={NEWTON_LIMITS.force[0]} max={NEWTON_LIMITS.force[1]} step={0.1} unit="N" decimals={1} onChange={setForce} />
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { setT(0); setDone(false); setRunning(true); }} disabled={running}>Soltar el carrito</button>
+            <button type="button" className="btn primary" onClick={() => { remeasure('cronometro'); setT(0); setDone(false); setRunning(true); }} disabled={running}>Soltar el carrito</button>
             <button type="button" className="btn" onClick={reset}>Reiniciar</button>
           </div>
           <RecordButton onRecord={record} disabled={!done} />

@@ -46,6 +46,20 @@ const PATHS = {
   codigo: <><rect x="3.5" y="6" width="17" height="12" rx="2" /><path d="M7.5 10v4M10.5 10v4M13.5 10v4M16.5 10v4" /></>,
   datos: <><ellipse cx="12" cy="6" rx="7" ry="2.5" /><path d="M5 6v12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5" /></>,
   sinConexion: <><path d="M5 12.5a10 10 0 0 1 14 0M8 15.5a6 6 0 0 1 8 0" /><circle cx="12" cy="18.5" r="0.9" /><path d="M2.5 9a14 14 0 0 1 19 0" /></>,
+  /* Cuaderno de datos y gráficas */
+  descargar: <><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5" /><path d="M5 19.5h14" /></>,
+  copiar: <><rect x="8.5" y="8.5" width="11.5" height="11.5" rx="2" /><path d="M15.5 8.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.5a2 2 0 0 0 2 2h2.5" /></>,
+  papelera: <><path d="M4.5 6.5h15M9.5 6.5V4.5h5v2M6.5 6.5l.9 12.6a1.5 1.5 0 0 0 1.5 1.4h6.2a1.5 1.5 0 0 0 1.5-1.4l.9-12.6" /><path d="M10 10.5v6M14 10.5v6" /></>,
+  acercar: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5M8 10.5h5M10.5 8v5" /></>,
+  alejar: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5M8 10.5h5" /></>,
+  encuadrar: <><path d="M4 9V5.5A1.5 1.5 0 0 1 5.5 4H9M15 4h3.5A1.5 1.5 0 0 1 20 5.5V9M20 15v3.5a1.5 1.5 0 0 1-1.5 1.5H15M9 20H5.5A1.5 1.5 0 0 1 4 18.5V15" /><circle cx="12" cy="12" r="2.5" /></>,
+  imagen: <><rect x="3.5" y="4.5" width="17" height="15" rx="2" /><circle cx="9" cy="9.5" r="1.6" /><path d="m4 17.5 5-5 3.5 3.5 2.5-2.5 5 5" /></>,
+  vector: <><path d="M5 19 19 5" /><rect x="3" y="17" width="4" height="4" rx="0.8" /><rect x="17" y="3" width="4" height="4" rx="0.8" /><path d="M5 17V9a4 4 0 0 1 4-4h8" /></>,
+  tabla: <><rect x="3.5" y="4.5" width="17" height="15" rx="2" /><path d="M3.5 9.5h17M3.5 14.5h17M9.5 9.5v10" /></>,
+  ajustes: <><path d="M4 7h9M17 7h3M4 17h3M11 17h9" /><circle cx="15" cy="7" r="2" /><circle cx="9" cy="17" r="2" /></>,
+  sigma: <path d="M17.5 5.5V4h-11l6 8-6 8h11v-1.5" />,
+  incertidumbre: <><path d="M12 4v7M8.5 7.5h7M8.5 15.5h7" /><path d="M5 20h14" /></>,
+  grafica: <><path d="M4 4v16h16" /><circle cx="8.5" cy="14.5" r="1.2" /><circle cx="12" cy="11.5" r="1.2" /><circle cx="15.5" cy="9" r="1.2" /><path d="m7 17 12-11" strokeDasharray="2 2.5" /></>,
   escudo: <><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" /><path d="m9 12 2 2 4-4" /></>,
 } satisfies Record<string, ReactNode>;
 

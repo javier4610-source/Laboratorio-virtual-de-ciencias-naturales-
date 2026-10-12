@@ -5,6 +5,7 @@ import { propagate, standardUncertainty, type Operation } from '../lib/measureme
 import { formatWithUncertainty } from '../lib/fit';
 import { fmt } from '../lib/format';
 import { Select } from './ui';
+import { Icon } from './icons';
 
 const unitText = (c: Column) => (c.unit ? ` (${c.unit})` : '');
 const statText = (v: number, c: Column) => fmt(v, (c.decimals ?? 2) + 1);
@@ -19,15 +20,19 @@ export function RepeatStats({ dataset: ds, trials }: { dataset: Dataset; trials:
   const repeated = groups.filter((g) => g.trials.length >= 2);
   if (trials.length === 0 || measured.length === 0) return null;
   return (
-    <details className="analysis-options repeat-stats" open={repeated.length > 0 || undefined}>
-      <summary>Ensayos repetidos: media y desviación estándar ({repeated.length} {repeated.length === 1 ? 'condición repetida' : 'condiciones repetidas'})</summary>
+    <details className="nb-panel repeat-stats" open={repeated.length > 0 || undefined}>
+      <summary>
+        <span className="nb-panel-icon" aria-hidden="true"><Icon name="sigma" size={18} /></span>
+        <span className="nb-panel-title">Estadística de repeticiones<span className="nb-panel-sub">Ensayos repetidos: media y desviación estándar</span></span>
+        <span className={`nb-pill${repeated.length > 0 ? ' on' : ''}`}>{repeated.length} {repeated.length === 1 ? 'condición repetida' : 'condiciones repetidas'}</span>
+      </summary>
       <p className="small muted" style={{ margin: 0 }}>
         Se agrupan los ensayos con las mismas variables de entrada. DE: desviación estándar muestral (n − 1), mide la dispersión de las lecturas. EE = DE/√n: error estándar de la media.
       </p>
       {repeated.length === 0 && <p className="small" style={{ margin: 0 }}>Aún no hay mediciones repetidas. Repite la misma medición (mismas condiciones) al menos dos veces para ver su dispersión.</p>}
       {repeated.map((g) => (
         <div key={g.key} className="repeat-group">
-          <h4>{g.label} <span className="muted small">(n = {g.trials.length})</span></h4>
+          <h5>{g.label} <span className="nb-pill">n = {g.trials.length}</span></h5>
           <div className="table-wrap" tabIndex={0} role="region" aria-label={`Estadística: ${g.label}`}>
             <table>
               <caption className="sr-only">Estadística de {g.trials.length} ensayos repetidos: {g.label}</caption>
@@ -84,8 +89,11 @@ export function UncertaintyCalculator({ dataset: ds, trials }: { dataset: Datase
   const line = (c: Column, q: { value: number; u: number; n: number }) =>
     `${c.label}: ${q.u > 0 ? formatWithUncertainty(q.value, q.u) : fmt(q.value, (c.decimals ?? 2) + 1)}${c.unit ? ` ${c.unit}` : ''} (n = ${q.n})`;
   return (
-    <details className="analysis-options prop-calc">
-      <summary>Propagación de incertidumbre: cociente o producto</summary>
+    <details className="nb-panel prop-calc">
+      <summary>
+        <span className="nb-panel-icon" aria-hidden="true"><Icon name="incertidumbre" size={18} /></span>
+        <span className="nb-panel-title">Incertidumbre<span className="nb-panel-sub">Propagación de incertidumbre: cociente o producto</span></span>
+      </summary>
       <div className="filters">
         <Select label="Magnitud A" value={a.key} onChange={setA} options={numeric.map((c) => ({ value: c.key, label: `${c.label}${unitText(c)}` }))} />
         <Select label="Operación" value={op} onChange={(v) => setOp(v as Operation)} options={OPS} />

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import type { Dataset, DatasetAnalysis, PracticeSession, Trial } from '../core/types';
 import type { SessionApi } from '../lib/session';
 import { fmt } from '../lib/format';
@@ -6,6 +6,7 @@ import { downloadText, trialsToCSV, copyText } from '../lib/report';
 import { Chart } from './Chart';
 import { ConfirmButton, Segmented, Select } from './ui';
 import { RepeatStats, UncertaintyCalculator } from './RepeatStats';
+import { Icon, type IconName } from './icons';
 import { onTabListKeyDown } from '../lib/a11y';
 import { buildAnalysis, columnAxisText } from '../lib/analysis';
 import { AXIS_TRANSFORMS, FIT_MODELS } from '../lib/fit';
@@ -16,41 +17,109 @@ export function cellText(v: Trial['values'][string], decimals = 2): string {
   return v;
 }
 
+const trialsText = (n: number) => `${n} ${n === 1 ? 'ensayo' : 'ensayos'}`;
+
+/**
+ * Tabla de ensayos con aspecto de hoja de cálculo científica: encabezado fijo en dos líneas
+ * (magnitud / unidad), números tabulares a la derecha, textos largos en una línea (el texto
+ * completo queda en el DOM para lectores de pantalla y en el `title`), columna # fija y
+ * desplazamiento propio en ambos ejes.
+ */
 export function TrialTable({ dataset, trials, onDelete, onNote, caption }: {
   dataset: Dataset; trials: Trial[]; onDelete?: (id: string) => void; onNote?: (id: string, note: string) => void; caption?: string;
 }) {
   if (trials.length === 0) {
     return <p className="muted small">Aún no has guardado ensayos en «{dataset.label}». Usa el botón «Guardar ensayo» del laboratorio.</p>;
   }
+  const now = Date.now();
   return (
-    <div className="table-wrap" tabIndex={0} role="region" aria-label={`Tabla de ensayos: ${dataset.label}`}>
-      <table>
-        <caption>{caption ?? dataset.label} ({trials.length} {trials.length === 1 ? 'ensayo' : 'ensayos'})</caption>
+    <div className="sheet-wrap" tabIndex={0} role="region" aria-label={`Tabla de ensayos: ${dataset.label}`}>
+      <table className="sheet">
+        <caption className="sr-only">{caption ?? dataset.label} ({trialsText(trials.length)})</caption>
         <thead>
           <tr>
-            <th scope="col">#</th>
-            {dataset.columns.map((c) => <th scope="col" key={c.key} className={c.numeric ? 'n' : undefined}>{c.label}{c.unit ? ` (${c.unit})` : ''}</th>)}
-            {onNote && <th scope="col">Observación</th>}
-            {onDelete && <th scope="col"><span className="sr-only">Acciones</span></th>}
+            <th scope="col" className="col-idx">#</th>
+            {dataset.columns.map((c) => (
+              <th scope="col" key={c.key} className={c.numeric ? 'n' : undefined} title={`${c.label}${c.unit ? ` (${c.unit})` : ''}`}>
+                <span className="col-name">{c.label}</span>
+                <span className="col-unit">{c.unit ? <><span className="sr-only"> (</span>{c.unit}<span className="sr-only">)</span></> : <span aria-hidden="true">&nbsp;</span>}</span>
+              </th>
+            ))}
+            {onNote && <th scope="col" className="col-note"><span className="col-name">Observación</span><span className="col-unit" aria-hidden="true">&nbsp;</span></th>}
+            {onDelete && <th scope="col" className="col-act"><span className="sr-only">Acciones</span></th>}
           </tr>
         </thead>
         <tbody>
           {trials.map((t, i) => (
-            <tr key={t.id} className={Date.now() - t.createdAt < 4000 ? 'fresh' : undefined}>
-              <td className="n">{i + 1}</td>
-              {dataset.columns.map((c) => <td key={c.key} className={c.numeric ? 'n' : undefined}>{cellText(t.values[c.key], c.decimals)}</td>)}
+            <tr key={t.id} className={now - t.createdAt < 4000 ? 'fresh' : undefined}>
+              <td className="n col-idx">{i + 1}</td>
+              {dataset.columns.map((c) => {
+                const text = cellText(t.values[c.key], c.decimals);
+                return c.numeric
+                  ? <td key={c.key} className="n">{text}</td>
+                  : <td key={c.key} className="t"><span className="trunc" title={text}>{text}</span></td>;
+              })}
               {onNote && (
-                <td style={{ minWidth: 180 }}>
-                  <input type="text" aria-label={`Observación del ensayo ${i + 1}`} value={t.note ?? ''} placeholder="Escribe una observación" onChange={(e) => onNote(t.id, e.target.value)} style={{ minHeight: 34, padding: '4px 8px' }} />
+                <td className="col-note">
+                  <input type="text" className="cell-input" aria-label={`Observación del ensayo ${i + 1}`} value={t.note ?? ''} placeholder="Escribe una observación" onChange={(e) => onNote(t.id, e.target.value)} />
                 </td>
               )}
               {onDelete && (
-                <td><button type="button" className="btn small ghost danger" onClick={() => onDelete(t.id)} aria-label={`Eliminar ensayo ${i + 1}`}>Eliminar</button></td>
+                <td className="col-act">
+                  <button type="button" className="icon-btn danger tip tip-left" data-tip="Eliminar ensayo" onClick={() => onDelete(t.id)} aria-label={`Eliminar ensayo ${i + 1}`}>
+                    <Icon name="papelera" size={17} />
+                  </button>
+                </td>
               )}
             </tr>
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function SectionHead({ icon, title, children, id }: { icon: IconName; title: string; children?: ReactNode; id?: string }) {
+  return (
+    <div className="nb-section-head">
+      <h4 id={id}><Icon name={icon} size={18} />{title}</h4>
+      {children}
+    </div>
+  );
+}
+
+function ConfigGroup({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <fieldset className="nb-group">
+      <legend>{title}</legend>
+      <div className="nb-group-body">{children}</div>
+    </fieldset>
+  );
+}
+
+/** Estado vacío del cuaderno: explica qué aparecerá y cómo empezar. */
+function EmptyNotebook({ dataset }: { dataset: Dataset }) {
+  return (
+    <div className="nb-empty">
+      <svg className="nb-empty-art" viewBox="0 0 200 120" aria-hidden="true" focusable="false">
+        <rect x="8" y="10" width="86" height="100" rx="8" className="e-paper" />
+        <path d="M8 30h86M8 50h86M8 70h86M8 90h86M30 10v100" className="e-line" />
+        <rect x="14" y="16" width="10" height="8" rx="2" className="e-head" /><rect x="36" y="16" width="50" height="8" rx="2" className="e-head" />
+        <rect x="106" y="10" width="86" height="100" rx="8" className="e-paper" />
+        <path d="M118 22v76h66" className="e-axis" />
+        <path d="M122 92 180 32" className="e-fit" />
+        <circle cx="132" cy="82" r="3.6" className="e-dot" /><circle cx="146" cy="68" r="3.6" className="e-dot" /><circle cx="160" cy="55" r="3.6" className="e-dot" /><circle cx="173" cy="40" r="3.6" className="e-dot" />
+      </svg>
+      <div className="nb-empty-text">
+        <p className="nb-empty-title">Tu cuaderno está listo para recibir datos</p>
+        <p className="muted">Aún no has guardado ensayos en «{dataset.label}». Usa el botón «Guardar ensayo» del laboratorio.</p>
+        <p className="muted">Guarda ensayos para ver la gráfica.</p>
+        <ol className="nb-empty-steps small">
+          <li><span>1</span>Elige las condiciones en los controles del laboratorio.</li>
+          <li><span>2</span>Realiza la medición y lee el resultado.</li>
+          <li><span>3</span>Pulsa «Guardar ensayo en la tabla»: la fila, la gráfica y el ajuste aparecen aquí.</li>
+        </ol>
+      </div>
     </div>
   );
 }
@@ -80,75 +149,110 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
     AXIS_TRANSFORMS.map((t) => ({ value: t.value, label: t.value === 'x' ? `Sin transformar (${c?.label ?? ''})` : t.label(c?.label ?? '') }));
 
   const csv = () => trialsToCSV(practiceId, ds.id, session);
+  const headId = `datos-${ds.id}`;
+  const has = trials.length > 0;
 
   return (
-    <section className="card stack notebook" id="cuaderno" tabIndex={-1} aria-labelledby={`datos-${ds.id}`}>
-      <div className="panel-title">
-        <h3 id={`datos-${ds.id}`}>Cuaderno de laboratorio: datos y gráficas</h3>
-        {datasets.length > 1 && (
-          <div className="seg" role="tablist" aria-label="Conjunto de datos" onKeyDown={onTabListKeyDown}>
-            {datasets.map((d) => (
-              <button key={d.id} type="button" role="tab" aria-selected={d.id === ds.id} tabIndex={d.id === ds.id ? 0 : -1} onClick={() => setDsId(d.id)}>
-                {d.label} ({session.trials.filter((t) => t.datasetId === d.id).length})
-              </button>
-            ))}
+    <section className="card notebook" id="cuaderno" tabIndex={-1} aria-labelledby={headId}>
+      <header className="nb-head">
+        <div className="nb-title">
+          <span className="nb-badge" aria-hidden="true"><Icon name="analisis" size={22} /></span>
+          <div className="nb-title-text">
+            <h3 id={headId}>Cuaderno de laboratorio: datos y gráficas</h3>
+            <p className="nb-meta">
+              <span className={`nb-count${has ? ' has' : ''}`}>{trialsText(trials.length)}</span>
+              <span className="nb-ds" title={ds.label}><Icon name="datos" size={15} />{ds.label}</span>
+            </p>
+          </div>
+        </div>
+        {has && (
+          <div className="nb-actions no-print" role="group" aria-label="Acciones del cuaderno">
+            <button type="button" className="btn small" onClick={() => { const ok = downloadText(`${practiceId}-${ds.id}.csv`, csv(), 'text/csv'); setMsg(ok ? 'Archivo CSV descargado.' : 'Este entorno no permite descargas: usa «Copiar datos».'); }}>
+              <Icon name="descargar" size={17} />Descargar CSV
+            </button>
+            <button type="button" className="btn small" onClick={async () => setMsg((await copyText(csv())) ? 'Datos copiados: pégalos en una hoja de cálculo.' : 'No se pudo copiar automáticamente.')}>
+              <Icon name="copiar" size={17} />Copiar datos
+            </button>
+            {api && <ConfirmButton label="Borrar tabla" icon={<Icon name="papelera" size={17} />} confirmLabel="¿Borrar todos los ensayos de esta tabla?" onConfirm={() => api.update((s) => ({ ...s, trials: s.trials.filter((t) => t.datasetId !== ds.id) }))} />}
           </div>
         )}
-      </div>
-      <div className="notebook-grid">
-      <div className="notebook-table">
-      <TrialTable
-        dataset={ds} trials={trials}
-        onDelete={api ? (id) => api.update((s) => ({ ...s, trials: s.trials.filter((t) => t.id !== id) })) : undefined}
-        onNote={api ? (id, note) => api.update((s) => ({ ...s, trials: s.trials.map((t) => (t.id === id ? { ...t, note } : t)) })) : undefined}
-      />
-      <RepeatStats dataset={ds} trials={trials} />
-      <UncertaintyCalculator key={ds.id} dataset={ds} trials={trials} />
-      </div>
-      <div className="notebook-chart stack-sm">
-      <div className="filters">
-        <Select label="Eje horizontal (x)" value={ax.x} onChange={(v) => setAx({ x: v })} options={numeric.map((c) => ({ value: c.key, label: columnAxisText(c) }))} />
-        <Select label="Eje vertical (y)" value={ax.y} onChange={(v) => setAx({ y: v })} options={numeric.map((c) => ({ value: c.key, label: columnAxisText(c) }))} />
-        {textCols.length > 0 && (
-          <Select label="Agrupar por" value={ax.group} onChange={(v) => setAx({ group: v })} options={[{ value: '', label: 'Sin agrupar' }, ...textCols.map((c) => ({ value: c.key, label: c.label }))]} />
-        )}
-        <Select label="Modelo de ajuste" value={ax.model} onChange={(v) => setAx({ model: v })} options={FIT_MODELS.map((m) => ({ value: m.value, label: m.label }))} />
-      </div>
-      <div className="avg-options btn-row">
-        <label className="check"><input type="checkbox" checked={ax.avg !== ''} onChange={(e) => setAx({ avg: e.target.checked ? 'sd' : '' })} /> Graficar promedios con barras de error (±1 DE o ±EE)</label>
-        {ax.avg !== '' && (
-          <Segmented<'sd' | 'sem'> label="Barras de error" value={ax.avg} onChange={(v) => setAx({ avg: v })}
-            options={[{ value: 'sd', label: '±1 DE' }, { value: 'sem', label: '±EE' }]} />
-        )}
-      </div>
-      {ax.avg !== '' && <p className="small muted" style={{ margin: 0 }}>Cada punto es la media de los ensayos con las mismas variables de entrada; la barra muestra {ax.avg === 'sd' ? '±1 desviación estándar (dispersión de las lecturas)' : '±1 error estándar de la media (DE/√n)'}. Con un solo ensayo, la barra es ± media resolución.</p>}
-      <details className="analysis-options" open={ax.xT !== 'x' || ax.yT !== 'x' || undefined}>
-        <summary>Linealizar: transformar los ejes</summary>
-        <div className="filters">
-          <Select label="Transformar eje x" value={ax.xT} onChange={(v) => setAx({ xT: v })} options={transformOptions(data.xc)} />
-          <Select label="Transformar eje y" value={ax.yT} onChange={(v) => setAx({ yT: v })} options={transformOptions(data.yc)} />
+      </header>
+      {datasets.length > 1 && (
+        <div className="seg nb-datasets" role="tablist" aria-label="Conjunto de datos" onKeyDown={onTabListKeyDown}>
+          {datasets.map((d) => (
+            <button key={d.id} type="button" role="tab" aria-selected={d.id === ds.id} tabIndex={d.id === ds.id ? 0 : -1} onClick={() => setDsId(d.id)}>
+              {d.label} ({session.trials.filter((t) => t.datasetId === d.id).length})
+            </button>
+          ))}
         </div>
-        <p className="small muted">Si una curva se vuelve recta al transformar un eje (por ejemplo, P contra 1/V), la relación entre las variables originales queda identificada.</p>
-      </details>
-      {data.dropped > 0 && <p className="small fit-error">{data.dropped} {data.dropped === 1 ? 'punto no se grafica' : 'puntos no se grafican'}: la transformación elegida no está definida para {data.dropped === 1 ? 'ese valor' : 'esos valores'} (por ejemplo, ln de 0 o 1/0).</p>}
-      <Chart
-        title={`${data.yAxis.label} en función de ${data.xAxis.label}`}
-        series={series} xLabel={data.xAxis.text} yLabel={data.yAxis.text} xUnit={data.xAxis.unit} yUnit={data.yAxis.unit}
-        fit={series.length === 1 && ax.model !== 'none' ? ax.model : undefined}
-        emptyText="Guarda ensayos para ver la gráfica."
-        errorNote={ax.avg === 'sd' ? 'Las barras indican ±1 desviación estándar de los ensayos repetidos.' : ax.avg === 'sem' ? 'Las barras indican ±1 error estándar de la media.' : undefined}
-        exportName={`${practiceId}-${ds.id}-grafica`} copyFallbackLabel={trials.length > 0 ? 'Copiar datos' : undefined}
-      />
-      {series.length > 1 && ax.model !== 'none' && <p className="small muted">El ajuste solo se calcula cuando los datos no están agrupados.</p>}
-      </div>
-      </div>
-      {trials.length > 0 && (
-        <div className="btn-row no-print">
-          <button type="button" className="btn small" onClick={() => { const ok = downloadText(`${practiceId}-${ds.id}.csv`, csv(), 'text/csv'); setMsg(ok ? 'Archivo CSV descargado.' : 'Este entorno no permite descargas: usa «Copiar datos».'); }}>Descargar CSV</button>
-          <button type="button" className="btn small" onClick={async () => setMsg((await copyText(csv())) ? 'Datos copiados: pégalos en una hoja de cálculo.' : 'No se pudo copiar automáticamente.')}>Copiar datos</button>
-          {api && <ConfirmButton label="Borrar tabla" confirmLabel="¿Borrar todos los ensayos de esta tabla?" onConfirm={() => api.update((s) => ({ ...s, trials: s.trials.filter((t) => t.datasetId !== ds.id) }))} />}
-          <span className="small muted" aria-live="polite">{msg}</span>
-        </div>
+      )}
+      <p className="small nb-status" aria-live="polite">{msg}</p>
+
+      {!has ? <EmptyNotebook dataset={ds} /> : (
+        <>
+          <div className="nb-section">
+            <SectionHead icon="tabla" title="Datos">
+              <span className="small muted">Cada fila es un ensayo guardado. Desliza la tabla para ver todas las columnas.</span>
+            </SectionHead>
+            <TrialTable
+              dataset={ds} trials={trials}
+              onDelete={api ? (id) => api.update((s) => ({ ...s, trials: s.trials.filter((t) => t.id !== id) })) : undefined}
+              onNote={api ? (id, note) => api.update((s) => ({ ...s, trials: s.trials.map((t) => (t.id === id ? { ...t, note } : t)) })) : undefined}
+            />
+          </div>
+
+          <div className="nb-section">
+            <SectionHead icon="grafica" title="Gráfica y ajuste" />
+            <div className="nb-workbench">
+              <div className="nb-config no-print">
+                <p className="nb-config-title"><Icon name="ajustes" size={16} />Configuración</p>
+                <ConfigGroup title="Ejes">
+                  <Select label="Eje horizontal (x)" value={ax.x} onChange={(v) => setAx({ x: v })} options={numeric.map((c) => ({ value: c.key, label: columnAxisText(c) }))} />
+                  <Select label="Eje vertical (y)" value={ax.y} onChange={(v) => setAx({ y: v })} options={numeric.map((c) => ({ value: c.key, label: columnAxisText(c) }))} />
+                </ConfigGroup>
+                {textCols.length > 0 && (
+                  <ConfigGroup title="Agrupar">
+                    <Select label="Agrupar por" value={ax.group} onChange={(v) => setAx({ group: v })} options={[{ value: '', label: 'Sin agrupar' }, ...textCols.map((c) => ({ value: c.key, label: c.label }))]} />
+                  </ConfigGroup>
+                )}
+                <ConfigGroup title="Ajuste">
+                  <Select label="Modelo de ajuste" value={ax.model} onChange={(v) => setAx({ model: v })} options={FIT_MODELS.map((m) => ({ value: m.value, label: m.label }))} />
+                  {series.length > 1 && ax.model !== 'none' && <p className="small muted nb-hint">El ajuste solo se calcula cuando los datos no están agrupados.</p>}
+                </ConfigGroup>
+                <ConfigGroup title="Linealizar: transformar los ejes">
+                  <Select label="Transformar eje x" value={ax.xT} onChange={(v) => setAx({ xT: v })} options={transformOptions(data.xc)} />
+                  <Select label="Transformar eje y" value={ax.yT} onChange={(v) => setAx({ yT: v })} options={transformOptions(data.yc)} />
+                  <p className="small muted nb-hint">Si una curva se vuelve recta al transformar un eje (por ejemplo, P contra 1/V), la relación entre las variables originales queda identificada.</p>
+                </ConfigGroup>
+                <ConfigGroup title="Barras de error">
+                  <label className="check"><input type="checkbox" checked={ax.avg !== ''} onChange={(e) => setAx({ avg: e.target.checked ? 'sd' : '' })} /> Graficar promedios con barras de error (±1 DE o ±EE)</label>
+                  {ax.avg !== '' && (
+                    <Segmented<'sd' | 'sem'> label="Barras de error" value={ax.avg} onChange={(v) => setAx({ avg: v })}
+                      options={[{ value: 'sd', label: '±1 DE' }, { value: 'sem', label: '±EE' }]} />
+                  )}
+                  {ax.avg !== '' && <p className="small muted nb-hint">Cada punto es la media de los ensayos con las mismas variables de entrada; la barra muestra {ax.avg === 'sd' ? '±1 desviación estándar (dispersión de las lecturas)' : '±1 error estándar de la media (DE/√n)'}. Con un solo ensayo, la barra es ± media resolución.</p>}
+                </ConfigGroup>
+              </div>
+              <div className="nb-chart-pane">
+                {data.dropped > 0 && <p className="small fit-error">{data.dropped} {data.dropped === 1 ? 'punto no se grafica' : 'puntos no se grafican'}: la transformación elegida no está definida para {data.dropped === 1 ? 'ese valor' : 'esos valores'} (por ejemplo, ln de 0 o 1/0).</p>}
+                <Chart
+                  showTitle height={380}
+                  title={`${data.yAxis.label} en función de ${data.xAxis.label}`}
+                  series={series} xLabel={data.xAxis.text} yLabel={data.yAxis.text} xUnit={data.xAxis.unit} yUnit={data.yAxis.unit}
+                  fit={series.length === 1 && ax.model !== 'none' ? ax.model : undefined}
+                  emptyText="Guarda ensayos para ver la gráfica."
+                  errorNote={ax.avg === 'sd' ? 'Las barras indican ±1 desviación estándar de los ensayos repetidos.' : ax.avg === 'sem' ? 'Las barras indican ±1 error estándar de la media.' : undefined}
+                  exportName={`${practiceId}-${ds.id}-grafica`} copyFallbackLabel="Copiar datos"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="nb-analysis">
+            <RepeatStats dataset={ds} trials={trials} />
+            <UncertaintyCalculator key={ds.id} dataset={ds} trials={trials} />
+          </div>
+        </>
       )}
     </section>
   );

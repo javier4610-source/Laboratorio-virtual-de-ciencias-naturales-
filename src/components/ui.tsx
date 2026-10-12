@@ -132,9 +132,9 @@ export function RecordButton({ onRecord, disabled, label = 'Guardar ensayo en la
 }
 
 /** Botón con confirmación en la misma página (no usa window.confirm, que algunos entornos bloquean). */
-export function ConfirmButton({ label, confirmLabel, onConfirm, className = 'btn small ghost danger' }: { label: string; confirmLabel: string; onConfirm: () => void; className?: string }) {
+export function ConfirmButton({ label, confirmLabel, onConfirm, className = 'btn small ghost danger', icon }: { label: string; confirmLabel: string; onConfirm: () => void; className?: string; icon?: ReactNode }) {
   const [asking, setAsking] = useState(false);
-  if (!asking) return <button type="button" className={className} onClick={() => setAsking(true)}>{label}</button>;
+  if (!asking) return <button type="button" className={className} onClick={() => setAsking(true)}>{icon}{label}</button>;
   return (
     <span className="btn-row" role="group" aria-label="Confirmación">
       <span className="small">{confirmLabel}</span>

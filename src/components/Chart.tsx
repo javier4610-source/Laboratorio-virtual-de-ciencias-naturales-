@@ -2,6 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type P
 import { fmt, fmtSig } from '../lib/format';
 import { FIT_LABEL, FIT_MODELS, equationWithValues, fitModel, formatWithUncertainty, type FitModel, type FitOutcome } from '../lib/fit';
 import { copyText, downloadBlob, slug } from '../lib/report';
+import { Icon } from './icons';
 
 export interface ChartPoint {
   x: number; y: number; label?: string;
@@ -41,6 +42,8 @@ interface ChartProps {
   copyFallbackLabel?: string;
   /** Texto que explica las barras de error (por defecto, ± media resolución del instrumento). */
   errorNote?: string;
+  /** Muestra el título y la leyenda sobre la gráfica (cuaderno de laboratorio). */
+  showTitle?: boolean;
 }
 
 type Domain = [number, number];
@@ -174,10 +177,10 @@ function ResidualPlot({ outcome, xDomain, W, m, xLabel, yUnit, narrow }: {
  * residuos y exportación a PNG/SVG. Incluye título y descripción para lectores de pantalla
  * y una tabla alternativa con los mismos datos.
  */
-export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yDomain, fit, height = 300, hLines, emptyText = 'Aún no hay datos para graficar.', exportName, copyFallbackLabel, errorNote = 'Las barras indican ± media resolución del instrumento.' }: ChartProps) {
+export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yDomain, fit, height = 300, hLines, emptyText = 'Aún no hay datos para graficar.', exportName, copyFallbackLabel, errorNote = 'Las barras indican ± media resolución del instrumento.', showTitle = false }: ChartProps) {
   const id = useId();
   const [showTable, setShowTable] = useState(false);
-  const figRef = useRef<HTMLElement>(null);
+  const figRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [width, setWidth] = useState(640);
   const [view, setView] = useState<View | null>(null);
@@ -370,8 +373,54 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
     return { lines, tw, th, tx, ty, px, py };
   })();
 
+  const fitLabel = fitted ? FIT_LABEL[fitted.model] : '';
+  const legendItems = hasData && (showTitle || series.length > 1 || fitted)
+    ? [
+        ...series.map((s, si) => ({ key: `s${si}`, label: s.label, color: colorOf(s, si), kind: s.kind ?? 'scatter', dashed: s.dashed })),
+        ...(fitted ? [{ key: 'fit', label: `Ajuste ${fitLabel}`, color: 'var(--ink-2)', kind: 'line' as const, dashed: true }] : []),
+      ]
+    : [];
+  const tableId = `${id}-tabla`;
+  const toolbar = (
+    <div className="chart-tools no-print" role="group" aria-label="Herramientas de la gráfica">
+      <button type="button" className="tool-btn tip" data-tip="Acercar (+)" aria-label="Acercar" onClick={() => zoom(0.5)}><Icon name="acercar" size={18} /></button>
+      <button type="button" className="tool-btn tip" data-tip="Alejar (−)" aria-label="Alejar" onClick={() => zoom(2)}><Icon name="alejar" size={18} /></button>
+      <button type="button" className="tool-btn tip" data-tip="Restablecer vista (0)" aria-label="Restablecer vista" onClick={resetView} disabled={!view}><Icon name="encuadrar" size={18} /></button>
+      <span className="tool-sep" aria-hidden="true" />
+      <button type="button" className="tool-btn tip labeled" data-tip="Exportar imagen PNG" aria-label="Imagen PNG" onClick={() => exportImage('png')}><Icon name="imagen" size={18} /><span aria-hidden="true">PNG</span></button>
+      <button type="button" className="tool-btn tip labeled" data-tip="Exportar imagen vectorial SVG" aria-label="Imagen SVG" onClick={() => exportImage('svg')}><Icon name="vector" size={18} /><span aria-hidden="true">SVG</span></button>
+      <span className="tool-sep" aria-hidden="true" />
+      <button type="button" className="tool-btn tip labeled tbl" data-tip={showTable ? 'Ocultar la tabla de puntos' : 'Ver los puntos como tabla'} aria-label={`${showTable ? 'Ocultar' : 'Ver'} los datos de la gráfica como tabla`}
+        aria-expanded={showTable} aria-controls={showTable ? tableId : undefined} onClick={() => setShowTable((v) => !v)}><Icon name="tabla" size={18} /><span aria-hidden="true">Tabla</span></button>
+      {needCopy && <button type="button" className="tool-btn labeled" onClick={copyPoints}><Icon name="copiar" size={18} />Copiar los puntos de la gráfica</button>}
+    </div>
+  );
+
   return (
-    <figure className="chart" style={{ margin: 0 }} ref={figRef}>
+    <figure className={`chart${showTitle ? ' chart-pro' : ''}`} style={{ margin: 0 }}>
+      {(showTitle || hasData) && (
+        <div className="chart-head">
+          <div className="chart-heading">
+            {showTitle && <p className="chart-title" aria-hidden="true">{title}</p>}
+            {legendItems.length > 0 && (
+              <ul className="legend" aria-label="Leyenda">
+                {legendItems.map((it) => (
+                  <li key={it.key}>
+                    <svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" focusable="false">
+                      {it.kind !== 'scatter' && <line x1="1" x2="21" y1="6" y2="6" stroke={it.color} strokeWidth={2.2} strokeDasharray={it.dashed ? '5 3' : undefined} />}
+                      {it.kind !== 'line' && <circle cx="11" cy="6" r="4.2" fill={it.color} />}
+                    </svg>
+                    {it.label}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          {hasData && toolbar}
+        </div>
+      )}
+      <div className={`chart-body${fitted ? ' has-fit' : ''}`}>
+        <div className="chart-plot" ref={figRef}>
       <svg
         ref={svgRef} viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${id}-t ${id}-d`} preserveAspectRatio="xMidYMid meet"
         tabIndex={hasData ? 0 : undefined} className={hasData ? 'chart-interactive' : undefined}
@@ -396,6 +445,7 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
         ))}
         <line className="axis" x1={m.l} x2={W - m.r} y1={H - m.b} y2={H - m.b} />
         <line className="axis" x1={m.l} x2={m.l} y1={m.t} y2={H - m.b} />
+        {hasData && <path className="frame" fill="none" d={`M${m.l},${m.t}H${W - m.r}V${H - m.b}`} />}
         <text className="axis-title" x={(m.l + W - m.r) / 2} y={H - 8} textAnchor="middle">{xLabel}</text>
         <text className="axis-title" transform={`translate(14 ${(m.t + H - m.b) / 2}) rotate(-90)`} textAnchor="middle">{yLabel}</text>
         <g clipPath={`url(#${clipId})`}>
@@ -462,85 +512,79 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
           return <text x={(m.l + W - m.r) / 2} y={cy} textAnchor="middle" style={{ fontSize: 14 }}>{lines.map((l, i) => <tspan key={i} x={(m.l + W - m.r) / 2} dy={i === 0 ? 0 : 18}>{l}</tspan>)}</text>;
         })()}
       </svg>
-      <figcaption className="stack-sm" style={{ marginTop: 6 }}>
-        {hasData && (
-          <p className="small chart-readout" aria-live="polite">
-            {reading ? <span className="num">{reading}</span> : <span className="muted">Pasa el puntero sobre la gráfica o enfócala y usa las flechas para leer los puntos. Arrastra para ampliar una zona.</span>}
-          </p>
-        )}
-        {series.length > 1 && (
-          <div className="legend">
-            {series.map((s, si) => <span key={s.label}><i style={{ background: colorOf(s, si) }} />{s.label}</span>)}
-          </div>
-        )}
-        {hasErr && <p className="small muted" style={{ margin: 0 }}>{errorNote}</p>}
-        {outcome && !outcome.ok && <p className="small fit-error" role="status">{outcome.reason}</p>}
-        {fitted && (
-          <div className="fit-summary small">
-            <p style={{ margin: 0 }}>
-              <strong>Ajuste {FIT_LABEL[fitted.model]}</strong> <span className="num">({FIT_MODELS.find((f) => f.value === fitted.model)!.equation})</span>
-              {fitted.linearized && <span className="muted"> · calculado por linealización ({fitted.model === 'power' ? 'ln y contra ln x' : 'ln y contra x'})</span>}
+          {hasData && (
+            <p className="small chart-readout" aria-live="polite">
+              {reading ? <span className="num">{reading}</span> : <span className="muted">Pasa el puntero sobre la gráfica o enfócala y usa las flechas para leer los puntos. Arrastra para ampliar una zona.</span>}
             </p>
-            <p className="num" style={{ margin: 0 }}>{equationWithValues(fitted)}</p>
-            <ul className="fit-params num">
-              {fitted.params.map((p) => <li key={p.name}>{p.name} = {formatWithUncertainty(p.value, p.se)}{p.unit ? ` ${p.unit}` : ''}</li>)}
-            </ul>
-            <p className="num" style={{ margin: 0 }}>R² = {fmt(fitted.r2, 4)} · n = {fitted.n} {fitted.n === 1 ? 'punto' : 'puntos'}</p>
-            {fitted.dof === 0 && <p className="muted" style={{ margin: 0 }}>Con {fitted.n} puntos no se puede estimar la incertidumbre: guarda más ensayos.</p>}
-          </div>
-        )}
+          )}
+          {fitted && (
+            <div className="residuals-panel">
+              <p className="residuals-title" aria-hidden="true">Residuos <span className="muted">(y medido − y del ajuste)</span></p>
+              <ResidualPlot outcome={outcome as Extract<FitOutcome, { ok: true }>} xDomain={[x0, x1]} W={W} m={m} xLabel={xLabel} yUnit={yUnit} narrow={narrow} />
+            </div>
+          )}
+        </div>
         {fitted && (
-          <details className="residuals">
-            <summary>Gráfica de residuos</summary>
-            <ResidualPlot outcome={outcome as Extract<FitOutcome, { ok: true }>} xDomain={[x0, x1]} W={W} m={m} xLabel={xLabel} yUnit={yUnit} narrow={narrow} />
-          </details>
-        )}
-        {hasData && (
-          <div className="btn-row chart-tools no-print" role="group" aria-label="Herramientas de la gráfica">
-            <button type="button" className="btn small ghost" onClick={() => zoom(0.5)}><span aria-hidden="true">+</span> Acercar</button>
-            <button type="button" className="btn small ghost" onClick={() => zoom(2)}><span aria-hidden="true">−</span> Alejar</button>
-            <button type="button" className="btn small ghost" onClick={resetView} disabled={!view}>Restablecer vista</button>
-            <button type="button" className="btn small ghost" onClick={() => exportImage('png')}>Imagen PNG</button>
-            <button type="button" className="btn small ghost" onClick={() => exportImage('svg')}>Imagen SVG</button>
-            {needCopy && <button type="button" className="btn small ghost" onClick={copyPoints}>Copiar los puntos de la gráfica</button>}
-            <span className="small muted" aria-live="polite">{exportMsg}</span>
+          <div className="fit-card" role="group" aria-labelledby={`${id}-fit`}>
+            <div className="fit-card-head">
+              <svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" focusable="false"><line x1="1" x2="21" y1="6" y2="6" stroke="var(--ink-2)" strokeWidth={2.2} strokeDasharray="5 3" /></svg>
+              <strong id={`${id}-fit`}>Ajuste {fitLabel}</strong>
+            </div>
+            <p className="fit-model num">{FIT_MODELS.find((f) => f.value === fitted.model)!.equation}</p>
+            <p className="fit-eq num">{equationWithValues(fitted)}</p>
+            {fitted.linearized && <p className="small muted fit-note">Calculado por linealización ({fitted.model === 'power' ? 'ln y contra ln x' : 'ln y contra x'}).</p>}
+            <table className="fit-table">
+              <caption className="sr-only">Parámetros del ajuste {fitLabel} con su incertidumbre</caption>
+              <tbody>
+                {fitted.params.map((p) => (
+                  <tr key={p.name}>
+                    <th scope="row">{p.name}</th>
+                    <td className="n">{formatWithUncertainty(p.value, p.se)}</td>
+                    <td className="u">{p.unit}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <dl className="fit-stats">
+              <div><dt>R²</dt><dd className="num">{fmt(fitted.r2, 4)}</dd></div>
+              <div><dt>n</dt><dd className="num">{fitted.n} {fitted.n === 1 ? 'punto' : 'puntos'}</dd></div>
+            </dl>
+            {fitted.dof === 0 && <p className="small muted fit-note">Con {fitted.n} puntos no se puede estimar la incertidumbre: guarda más ensayos.</p>}
           </div>
         )}
-        {all.length > 0 && (
-          <div className="no-print">
-            <button type="button" className="btn small ghost" aria-expanded={showTable} onClick={() => setShowTable((v) => !v)}>
-              {showTable ? 'Ocultar' : 'Ver'} los datos de la gráfica como tabla
-            </button>
-            {showTable && (
-              <div className="table-wrap" tabIndex={0} role="region" aria-label={`Datos de la gráfica: ${title}`} style={{ marginTop: 6, maxHeight: 260, overflowY: 'auto' }}>
-                <table>
-                  <caption>{title}</caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Serie</th><th scope="col" className="n">{xLabel}</th>
-                      {all.some((p) => p.ex) && <th scope="col" className="n">± x</th>}
-                      <th scope="col" className="n">{yLabel}</th>
-                      {all.some((p) => p.ey) && <th scope="col" className="n">± y</th>}
-                      {fitted && <><th scope="col" className="n">y del ajuste</th><th scope="col" className="n">Residuo</th></>}
+      </div>
+      <figcaption className="chart-foot">
+        {hasErr && <p className="small muted">{errorNote}</p>}
+        {outcome && !outcome.ok && <p className="small fit-error" role="status">{outcome.reason}</p>}
+        <p className="small muted chart-status" aria-live="polite">{exportMsg}</p>
+        {all.length > 0 && showTable && (
+          <div className="table-wrap no-print" id={tableId} tabIndex={0} role="region" aria-label={`Datos de la gráfica: ${title}`} style={{ maxHeight: 260, overflowY: 'auto' }}>
+            <table>
+              <caption>{title}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Serie</th><th scope="col" className="n">{xLabel}</th>
+                  {all.some((p) => p.ex) && <th scope="col" className="n">± x</th>}
+                  <th scope="col" className="n">{yLabel}</th>
+                  {all.some((p) => p.ey) && <th scope="col" className="n">± y</th>}
+                  {fitted && <><th scope="col" className="n">y del ajuste</th><th scope="col" className="n">Residuo</th></>}
+                </tr>
+              </thead>
+              <tbody>
+                {series.flatMap((s, si) => s.points.map((p, i) => {
+                  const yf = fitted && si === 0 && finite(p) ? fitted.predict(p.x) : null;
+                  return (
+                    <tr key={`${s.label}-${i}`}>
+                      <td>{s.label}{p.label ? ` · ${p.label}` : ''}</td><td className="n">{fmtSig(p.x, 4)}</td>
+                      {all.some((q) => q.ex) && <td className="n">{p.ex ? fmtSig(p.ex, 2) : '—'}</td>}
+                      <td className="n">{fmtSig(p.y, 4)}</td>
+                      {all.some((q) => q.ey) && <td className="n">{p.ey ? fmtSig(p.ey, 2) : '—'}</td>}
+                      {fitted && <><td className="n">{yf === null ? '—' : fmtSig(yf, 4)}</td><td className="n">{yf === null ? '—' : fmtSig(p.y - yf, 3)}</td></>}
                     </tr>
-                  </thead>
-                  <tbody>
-                    {series.flatMap((s, si) => s.points.map((p, i) => {
-                      const yf = fitted && si === 0 && finite(p) ? fitted.predict(p.x) : null;
-                      return (
-                        <tr key={`${s.label}-${i}`}>
-                          <td>{s.label}{p.label ? ` · ${p.label}` : ''}</td><td className="n">{fmtSig(p.x, 4)}</td>
-                          {all.some((q) => q.ex) && <td className="n">{p.ex ? fmtSig(p.ex, 2) : '—'}</td>}
-                          <td className="n">{fmtSig(p.y, 4)}</td>
-                          {all.some((q) => q.ey) && <td className="n">{p.ey ? fmtSig(p.ey, 2) : '—'}</td>}
-                          {fitted && <><td className="n">{yf === null ? '—' : fmtSig(yf, 4)}</td><td className="n">{yf === null ? '—' : fmtSig(p.y - yf, 3)}</td></>}
-                        </tr>
-                      );
-                    }))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+                  );
+                }))}
+              </tbody>
+            </table>
           </div>
         )}
       </figcaption>

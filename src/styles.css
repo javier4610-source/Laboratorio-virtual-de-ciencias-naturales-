@@ -336,7 +336,8 @@ input[type="range"] { width: 100%; accent-color: var(--accent); min-height: 28px
 .notice.info { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 22%, transparent); }
 .notice strong { font-weight: 700; }
 
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); max-width: 100%; background: var(--surface); }
+/* position: relative contiene los textos .sr-only (absolutos) de tablas anchas: si no, desbordan la página. */
+.table-wrap { position: relative; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); max-width: 100%; background: var(--surface); }
 table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
 th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 th { background: var(--surface-2); font-weight: 700; font-size: 0.82rem; white-space: nowrap; color: var(--ink); }
@@ -972,3 +973,22 @@ td.heat.empty { color: var(--ink-2); }
   .site-header .btn.menu-toggle { min-width: 40px; padding-inline: 8px; }
 }
 table.practices-table td:first-child { min-width: 12em; }
+
+/* Modo de medición (instrumento ideal o real) y ficha de incertidumbre */
+.measure-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; display: grid; gap: 8px; }
+.measure-main { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.measure-main .field { margin: 0; }
+.measure-help { margin: 0; flex: 1 1 260px; min-width: 0; }
+details.measure-sheet { padding: 0 12px; }
+details.measure-sheet[open] { padding-bottom: 10px; }
+details.measure-sheet summary { min-height: 40px; padding: 8px 0; font-size: 0.92rem; }
+.measure-sheet td.small { min-width: 200px; }
+
+/* Estadística de ensayos repetidos y propagación de incertidumbre (cuaderno) */
+.repeat-stats { display: grid; gap: 12px; }
+.repeat-stats h4 { margin: 0; font-size: 0.95rem; }
+.repeat-group { display: grid; gap: 4px; }
+.prop-calc .filters { grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); }
+.measure-panel, .measure-panel > *, .repeat-stats > *, .repeat-group > *, .prop-calc > * { min-width: 0; }
+details.measure-sheet, details.repeat-stats, details.prop-calc { min-width: 0; max-width: 100%; }
+.prop-result { border-left: 3px solid var(--data); background: var(--surface-2); border-radius: 0 8px 8px 0; padding: 8px 12px; margin: 0; overflow-wrap: anywhere; }

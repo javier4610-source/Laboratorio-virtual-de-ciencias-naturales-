@@ -3,6 +3,8 @@ import { brightness, CIRCUIT_LIMITS, solveCircuit, type Topology } from '../mode
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { useMeasure } from '../components/Measurement';
+import { instrument } from './instruments';
 
 function CircuitDefs() {
   return (
@@ -172,16 +174,25 @@ export default function CircuitLab({ api }: LabProps) {
   const els = res.elements;
   const flowing = !res.open && res.totalCurrent > 0;
 
-  const record = () => api.addTrial('medidas', {
-    config: topology, emf, r1: R[0], r2: R[1], r3: R[2],
-    req: res.equivalentResistance === null ? null : Number(res.equivalentResistance.toFixed(4)),
-    itotal: Number(res.totalCurrent.toFixed(5)), vbornes: Number(res.terminalVoltage.toFixed(4)),
-    v1: Number(els[0].voltage.toFixed(4)), i1: Number(els[0].current.toFixed(5)), ptotal: Number(res.totalPower.toFixed(4)),
-  });
+  // Lecturas del multímetro (en modo real, con la dispersión típica de la ficha; la tabla por elemento muestra los valores ideales).
+  const { measure, remeasure, real } = useMeasure();
+  const V = (v: number, key: string) => measure(v, { ...instrument('circuitos', 'voltimetro'), key });
+  const A = (i: number, key: string) => measure(i, { ...instrument('circuitos', 'amperimetro'), key });
+  const totalCurrent = A(res.totalCurrent, 'I-total');
+  const record = () => {
+    api.addTrial('medidas', {
+      config: topology, emf, r1: R[0], r2: R[1], r3: R[2],
+      req: res.equivalentResistance === null ? null : Number(res.equivalentResistance.toFixed(4)),
+      itotal: Number(totalCurrent.toFixed(5)), vbornes: Number(V(res.terminalVoltage, 'V-fuente').toFixed(4)),
+      v1: Number(V(els[0].voltage, 'V-1').toFixed(4)), i1: Number(A(els[0].current, 'I-1').toFixed(5)), ptotal: Number(res.totalPower.toFixed(4)),
+    });
+    // Cada ensayo guardado es una medición: la siguiente lectura del multímetro es una repetición nueva.
+    remeasure('I-total', 'V-fuente', 'I-fuente', 'V-1', 'I-1', 'V-2', 'I-2', 'V-3', 'I-3');
+  };
 
   const meterReading = meter === 'fuente'
-    ? { v: res.terminalVoltage, i: res.totalCurrent, label: 'Bornes de la batería' }
-    : { v: els[Number(meter) - 1].voltage, i: els[Number(meter) - 1].current, label: `R${meter}` };
+    ? { v: V(res.terminalVoltage, 'V-fuente'), i: A(res.totalCurrent, 'I-fuente'), label: 'Bornes de la batería' }
+    : { v: V(els[Number(meter) - 1].voltage, `V-${meter}`), i: A(els[Number(meter) - 1].current, `I-${meter}`), label: `R${meter}` };
 
   const pos: [number, number, boolean][] = topology === 'serie'
     ? [[150, 60, false], [300, 60, false], [450, 60, false]]
@@ -251,7 +262,7 @@ export default function CircuitLab({ api }: LabProps) {
         </div>
         <Readout items={[
           { k: 'Resistencia equivalente', v: res.equivalentResistance === null ? 'circuito abierto' : `${fmt(res.equivalentResistance, 2)} Ω` },
-          { k: 'Corriente total', v: `${fmt(res.totalCurrent, 3)} A`, data: true },
+          { k: 'Corriente total', v: `${fmt(totalCurrent, 3)} A`, data: true },
           { k: 'Voltaje en bornes', v: `${fmt(res.terminalVoltage, 2)} V` },
           { k: 'Potencia en resistores', v: `${fmt(res.totalPower, 2)} W` },
           { k: 'Pérdida en la batería', v: `${fmt(res.internalLoss, 3)} W` },
@@ -286,11 +297,11 @@ export default function CircuitLab({ api }: LabProps) {
         </div>
         <div className="card stack-sm">
           <h3>Multímetro</h3>
-          <Segmented label="Conectar a" value={meter} onChange={setMeter} options={[{ value: '1', label: 'R1' }, { value: '2', label: 'R2' }, { value: '3', label: 'R3' }, { value: 'fuente', label: 'Batería' }]} />
+          <Segmented label="Conectar a" value={meter} onChange={(v) => { remeasure(`V-${v}`, `I-${v}`); setMeter(v); }} options={[{ value: '1', label: 'R1' }, { value: '2', label: 'R2' }, { value: '3', label: 'R3' }, { value: 'fuente', label: 'Batería' }]} />
           <Readout items={[{ k: `Voltímetro (${meterReading.label})`, v: `${fmt(meterReading.v, 2)} V`, data: true }, { k: `Amperímetro (${meterReading.label})`, v: `${fmt(meterReading.i, 3)} A`, data: true }]} />
           <RecordButton onRecord={record} />
         </div>
-        <Notice>Resistores óhmicos e instrumentos ideales. El brillo se estima a partir de la potencia; un filamento real cambia su resistencia al calentarse.</Notice>
+        <Notice>Resistores óhmicos{real ? '; multímetro real (ficha de incertidumbre)' : ' e instrumentos ideales'}. El brillo se estima a partir de la potencia; un filamento real cambia su resistencia al calentarse.</Notice>
       </div>
     </div>
   );

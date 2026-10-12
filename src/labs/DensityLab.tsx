@@ -1,5 +1,8 @@
 import { useMemo, useState } from 'react';
-import { ALL_SAMPLES, closestMaterial, LIMITS, MATERIALS, simulateDensity, WATER_DENSITY } from '../models/density';
+import { ALL_SAMPLES, CYLINDER_RESOLUTION, closestMaterial, LIMITS, MATERIALS, simulateDensity, WATER_DENSITY } from '../models/density';
+import { roundToResolution } from '../models/math';
+import { useMeasure } from '../components/Measurement';
+import { instrument } from './instruments';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { Readout, RecordButton, Select, Slider, Warnings, Notice } from '../components/ui';
 import type { LabProps } from './registry';
@@ -15,7 +18,20 @@ export default function DensityLab({ api }: LabProps) {
   const [guess, setGuess] = useState('');
   const [guessFeedback, setGuessFeedback] = useState<string | null>(null);
 
-  const result = useMemo(() => simulateDensity({ materialId, side, initialWater, pushUnder }), [materialId, side, initialWater, pushUnder]);
+  const model = useMemo(() => simulateDensity({ materialId, side, initialWater, pushUnder }), [materialId, side, initialWater, pushUnder]);
+  // Lecturas de los instrumentos: en modo ideal coinciden con el modelo; en modo real llevan el error aleatorio de la ficha.
+  const { measure, remeasure, real } = useMeasure();
+  const result = useMemo(() => {
+    const sideReading = measure(side, { ...instrument('densidad', 'regla'), key: 'regla' });
+    const massReading = model.massReading === null ? null : measure(model.trueMass, { ...instrument('densidad', 'balanza'), key: 'masa' });
+    let finalWaterReading: number | null = null, displacedVolume: number | null = null;
+    if (model.finalWaterReading !== null) {
+      finalWaterReading = measure(initialWater + model.trueVolume * model.submergedFraction, { ...instrument('densidad', 'probeta'), key: 'probeta' });
+      displacedVolume = roundToResolution(finalWaterReading - roundToResolution(initialWater, CYLINDER_RESOLUTION), CYLINDER_RESOLUTION);
+    }
+    const densityDisplacement = massReading !== null && displacedVolume !== null && displacedVolume > 0 ? massReading / displacedVolume : null;
+    return { ...model, sideReading, geometricVolume: sideReading ** 3, massReading, finalWaterReading, displacedVolume, densityDisplacement };
+  }, [model, side, initialWater, measure]);
   const resetActions = () => { setWeighed(false); setSubmerged(false); setGuessFeedback(null); setGuess(''); };
   const m = result.material;
   const sizePx = side * 20;
@@ -42,7 +58,8 @@ export default function DensityLab({ api }: LabProps) {
 
   const record = () => {
     api.addTrial('medidas', {
-      material: m.name, lado: result.sideReading, vgeo: Number(result.geometricVolume.toFixed(3)),
+      // La arista es la variable de entrada (nominal); la lectura de la regla entra en el volumen geométrico.
+      material: m.name, lado: model.sideReading, vgeo: Number(result.geometricVolume.toFixed(3)),
       masa: result.massReading, vi: initialWater, vf: result.finalWaterReading, vdesp: result.displacedVolume,
       densidad: result.densityDisplacement !== null ? Number(result.densityDisplacement.toFixed(4)) : null,
       flota: result.floats ? (pushUnder ? 'sí (hundido con alfiler)' : 'sí') : 'no',
@@ -126,8 +143,8 @@ export default function DensityLab({ api }: LabProps) {
           <Slider label="Agua inicial en la probeta" value={initialWater} min={LIMITS.initialWater[0]} max={LIMITS.initialWater[1]} step={1} unit="mL" decimals={0} onChange={(v) => { setInitialWater(v); setSubmerged(false); }} />
           <label className="check"><input type="checkbox" checked={pushUnder} onChange={(e) => setPushUnder(e.target.checked)} /> Hundir la muestra con un alfiler si flota</label>
           <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => setWeighed(true)} disabled={weighed}>1. Pesar en la balanza</button>
-            <button type="button" className="btn primary" onClick={() => setSubmerged(true)} disabled={!weighed || submerged}>2. Sumergir en la probeta</button>
+            <button type="button" className="btn primary" onClick={() => { remeasure('masa', 'regla'); setWeighed(true); }} disabled={weighed}>1. Pesar en la balanza</button>
+            <button type="button" className="btn primary" onClick={() => { remeasure('probeta'); setSubmerged(true); }} disabled={!weighed || submerged}>2. Sumergir en la probeta</button>
             <button type="button" className="btn" onClick={resetActions}>Reiniciar medición</button>
           </div>
           <RecordButton onRecord={record} disabled={!weighed || !submerged} />
@@ -145,7 +162,9 @@ export default function DensityLab({ api }: LabProps) {
             </table>
           </div>
         </details>
-        <Notice>Simulación educativa: las lecturas se redondean a la resolución de cada instrumento. No incluye errores aleatorios del observador.</Notice>
+        <Notice>{real
+          ? 'Instrumento real: cada lectura incluye un error aleatorio típico (ficha de incertidumbre). Usa «Reiniciar medición» y repite la misma muestra para estimar la dispersión.'
+          : 'Simulación educativa: las lecturas se redondean a la resolución de cada instrumento. No incluye errores aleatorios del observador.'}</Notice>
       </div>
     </div>
   );

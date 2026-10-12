@@ -39,6 +39,8 @@ interface ChartProps {
   exportName?: string;
   /** Respaldo cuando el entorno bloquea descargas: el contenedor ya ofrece «Copiar datos». */
   copyFallbackLabel?: string;
+  /** Texto que explica las barras de error (por defecto, ± media resolución del instrumento). */
+  errorNote?: string;
 }
 
 type Domain = [number, number];
@@ -172,7 +174,7 @@ function ResidualPlot({ outcome, xDomain, W, m, xLabel, yUnit, narrow }: {
  * residuos y exportación a PNG/SVG. Incluye título y descripción para lectores de pantalla
  * y una tabla alternativa con los mismos datos.
  */
-export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yDomain, fit, height = 300, hLines, emptyText = 'Aún no hay datos para graficar.', exportName, copyFallbackLabel }: ChartProps) {
+export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yDomain, fit, height = 300, hLines, emptyText = 'Aún no hay datos para graficar.', exportName, copyFallbackLabel, errorNote = 'Las barras indican ± media resolución del instrumento.' }: ChartProps) {
   const id = useId();
   const [showTable, setShowTable] = useState(false);
   const figRef = useRef<HTMLElement>(null);
@@ -471,7 +473,7 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
             {series.map((s, si) => <span key={s.label}><i style={{ background: colorOf(s, si) }} />{s.label}</span>)}
           </div>
         )}
-        {hasErr && <p className="small muted" style={{ margin: 0 }}>Las barras indican ± media resolución del instrumento.</p>}
+        {hasErr && <p className="small muted" style={{ margin: 0 }}>{errorNote}</p>}
         {outcome && !outcome.ok && <p className="small fit-error" role="status">{outcome.reason}</p>}
         {fitted && (
           <div className="fit-summary small">

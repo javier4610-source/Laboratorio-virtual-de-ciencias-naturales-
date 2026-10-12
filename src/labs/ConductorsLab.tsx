@@ -4,6 +4,8 @@ import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Select } from '../components/ui';
 import type { LabProps } from './registry';
+import { useMeasure } from '../components/Measurement';
+import { instrument } from './instruments';
 import { BenchTop, Beaker, Lcd, shade } from './kit';
 
 /* ------------------------------------------------------------------ geometría del banco */
@@ -235,7 +237,13 @@ export default function ConductorsLab({ api }: LabProps) {
   const [progress, setProgress] = useState(0);
   const raf = useRef(0);
 
-  const res = useMemo(() => testSample({ sampleId, cells: Number(cells) }), [sampleId, cells]);
+  const model = useMemo(() => testSample({ sampleId, cells: Number(cells) }), [sampleId, cells]);
+  // Lectura del amperímetro (en modo real, con la dispersión típica de la ficha). La clasificación usa el modelo.
+  const { measure, remeasure } = useMeasure();
+  const res = useMemo(() => ({
+    ...model,
+    currentReading: model.currentReading === null ? null : measure(model.current * 1000, { ...instrument('conductores', 'amperimetro'), key: 'amperimetro' }),
+  }), [model, measure]);
   const sample = res.sample;
   const measured = phase === 'medido';
 
@@ -383,7 +391,7 @@ export default function ConductorsLab({ api }: LabProps) {
             hint="Elige si el material será conductor, conductor débil o aislante antes de cerrar el circuito."
           />
           <div className="btn-row">
-            <button type="button" className="btn primary" disabled={prediction === '' || phase !== 'abierto'} onClick={() => { setProgress(0); setPhase('midiendo'); }}>Cerrar el circuito y medir</button>
+            <button type="button" className="btn primary" disabled={prediction === '' || phase !== 'abierto'} onClick={() => { remeasure('amperimetro'); setProgress(0); setPhase('midiendo'); }}>Cerrar el circuito y medir</button>
             <button type="button" className="btn" disabled={phase === 'abierto'} onClick={() => { cancelAnimationFrame(raf.current); setPhase('abierto'); setProgress(0); }}>Abrir el circuito</button>
           </div>
           <RecordButton onRecord={record} disabled={!measured} />

@@ -94,6 +94,8 @@ export interface DatasetAnalysis {
   model?: string;
   /** Linealización de cada eje: 'x' | 'x2' | 'inv' | 'sqrt' | 'ln'. */
   xT?: string; yT?: string;
+  /** Graficar promedios de ensayos repetidos con barras de error: '' (cada ensayo) | 'sd' (±1 DE) | 'sem' (±EE). */
+  avg?: string;
 }
 
 export type Mode = 'guiada' | 'libre' | 'evaluacion';
@@ -121,6 +123,8 @@ export interface PracticeSession {
   feedback?: { easy: number; clear: number; learned: number; comment: string };
   /** Configuración del análisis gráfico de cada conjunto de datos (ejes, linealización y modelo de ajuste). */
   analysis?: Record<string, DatasetAnalysis>;
+  /** Modo de medición de la práctica y contador de repeticiones de cada lectura (semilla del ruido en modo real). */
+  measurement?: { mode: 'ideal' | 'real'; counts: Record<string, number> };
   startedAt: number;
   updatedAt: number;
 }

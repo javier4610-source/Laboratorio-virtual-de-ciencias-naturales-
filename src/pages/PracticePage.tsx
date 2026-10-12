@@ -14,6 +14,7 @@ import { onTabListKeyDown } from '../lib/a11y';
 import { queuePracticeOpen, queueProgress, getEnrollment, useClassroom } from '../lib/classroom';
 import { buildSyncSummary, useActiveTime } from '../lib/syncSummary';
 import { CourseNote, SyncChip } from '../components/ClassroomUi';
+import { MeasurementPanel, MeasurementProvider } from '../components/Measurement';
 
 const MODE_HELP: Record<Mode, string> = {
   guiada: 'Práctica guiada: avanzas por etapas. Debes formular una hipótesis antes de experimentar y guardar ensayos antes de analizar.',
@@ -159,9 +160,12 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
                 onToggle={(i, checked) => api.update((x) => ({ ...x, stepsDone: checked ? [...new Set([...x.stepsDone, i])] : x.stepsDone.filter((k) => k !== i) }))}
                 extra={fs.supported && <button type="button" className="btn small ghost" onClick={fs.toggle} aria-pressed={fs.active}>{fs.active ? 'Salir de pantalla completa' : 'Pantalla completa'}</button>}
               />
-              <Suspense fallback={<p role="status">Cargando el laboratorio…</p>}>
-                <Lab api={api} practice={p} />
-              </Suspense>
+              <MeasurementPanel api={api} practiceId={p.id} />
+              <MeasurementProvider api={api} practiceId={p.id}>
+                <Suspense fallback={<p role="status">Cargando el laboratorio…</p>}>
+                  <Lab api={api} practice={p} />
+                </Suspense>
+              </MeasurementProvider>
             </div>
             <DataPanel practiceId={p.id} datasets={DATASETS[p.id]} api={api} />
             <div className="btn-row">

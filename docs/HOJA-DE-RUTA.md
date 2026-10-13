@@ -37,7 +37,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       (8.º, `balanceo`) · expresión génica y efecto de mutaciones (11.º, `expresion`).
 - [ ] **U6 · Modo avanzado:** ecuaciones del modelo en vivo con los valores actuales, parámetros del modelo editables
       y curva del modelo superpuesta a los datos del cuaderno.
-- [ ] **Física C:** transferencia de calor por conducción (7.º, `conduccion`) · sonido y resonancia (8.º, `sonido`) ·
+- [ ] **Física C:** ~~transferencia de calor por conducción (7.º, `conduccion`)~~ · ~~sonido y resonancia (8.º, `sonido`)~~ (hechas) ·
       trabajo, potencia y plano inclinado (9.º, `trabajo`).
 - [ ] **Lote 9:** empuje y flotación con dinamómetro, principio de Arquímedes (7.º, física, `flotacion`) ·
       movimiento y distancia recorrida con cinta y cronómetro (6.º, física, `movimiento`) · circuitos simples con

@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (39)
+## Prácticas implementadas (41)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -22,11 +22,13 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 7.º | Factores de la descomposición de la materia orgánica | Ambiental | Modelo de Olson M = M₀e^(−kt) con k según material, Q₁₀ de temperatura, humedad, aireación y tamaño |
 | 7.º | Mitosis al microscopio: fases e índice mitótico | Biología | Fracción de células por fase ∝ duración; índice mitótico; ADN 2C→4C; efecto de la colchicina |
 | 7.º | Presión en líquidos y presión atmosférica | Física | Sonda con manómetro en U que se arrastra; p = p_atm + ρgh con cinco líquidos; vasos de Pascal; chorros de Torricelli; barómetro y altitud (Apartadó, Medellín, Bogotá) |
+| 7.º | Transferencia de calor por conducción | Física | Varillas de siete materiales en un baño; tachuelas con cera; tres termopares; ecuación de la aleta resuelta con Crank–Nicolson; ley de Fourier; difusividad; efusividad y sensación de frío al tacto |
 | 8.º | Herencia mendeliana y cuadros de Punnett | Biología | Segregación y transmisión independiente, dominancia completa/incompleta, muestreo con semilla, χ² |
 | 8.º | Reflexión y refracción de la luz | Física | Ley de reflexión, Snell, ángulo crítico y reflexión total interna, reflectancia de Fresnel, índice desconocido por pendiente |
 | 8.º | Laboratorio de ondas | Física | v = λ·f, v = √(T/μ), onda armónica, energía ∝ A²f², sonido en el aire según la temperatura |
 | 8.º | Conservación de la masa | Química | Balanza de 0,01 g; sistema abierto, cerrado con globo y frasco sellado; estequiometría, reactivo limitante y empuje del aire sobre el globo |
 | 8.º | Balanceo de ecuaciones químicas | Química | Moléculas de bolas y varillas que se arrastran a las bandejas; conteo de átomos en vivo; balanza de dos platos (Lavoisier); 12 reacciones; resolución por espacio nulo |
+| 8.º | Sonido y resonancia | Física | Tubo de resonancia con nivel de agua que se arrastra; diapasones que suenan de verdad; osciloscopio con perillas; λ = 2(L₂ − L₁); rapidez del sonido con la temperatura; nivel sonoro y distancia |
 | 9.º | Del ADN a la proteína | Biología | Complementariedad, replicación semiconservativa, código genético, clasificación de mutaciones (HBB Glu6Val) |
 | 9.º | Leyes de Newton | Física | F_neta = m·a, fricción estática y cinética, cinemática con fotopuertas (a = 2d/t²) |
 | 9.º | Velocidad, aceleración y movimiento | Física | MRU y MRUA, fotografía estroboscópica, gráficas x–t y v–t (pendiente y área), frenado, reto de igualar gráficas |

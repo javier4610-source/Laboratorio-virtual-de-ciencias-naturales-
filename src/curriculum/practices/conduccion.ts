@@ -67,7 +67,7 @@ export const conduccion: PracticeDef = {
   ],
   assessment: [
     {
-      id: 'con-1', grade: 7, topic: 'Ley de Fourier', competency: 'uso', component: 'fisico', skill: 'Calcular el flujo de calor por conducción con datos de dos termopares', difficulty: 'alta',
+      id: 'cdc-1', grade: 7, topic: 'Ley de Fourier', competency: 'uso', component: 'fisico', skill: 'Calcular el flujo de calor por conducción con datos de dos termopares', difficulty: 'alta',
       table: {
         caption: 'Varilla de cobre (k = 401 W/(m·K)), sección A = 5,03 × 10⁻⁵ m², baño a 90 °C, lecturas a los 30 min',
         headers: ['Termopar', 'Posición (cm)', 'Temperatura (°C)'],
@@ -85,7 +85,7 @@ export const conduccion: PracticeDef = {
       review: 'En el simulador, con la varilla de cobre, compara el flujo calculado entre los termopares 1 y 2 con el que obtienes al acercarlos al baño.',
     },
     {
-      id: 'con-2', grade: 7, topic: 'Sensación térmica y efusividad', competency: 'explicacion', component: 'fisico', skill: 'Explicar por qué materiales a la misma temperatura se sienten distintos', difficulty: 'media',
+      id: 'cdc-2', grade: 7, topic: 'Sensación térmica y efusividad', competency: 'explicacion', component: 'fisico', skill: 'Explicar por qué materiales a la misma temperatura se sienten distintos', difficulty: 'media',
       stem: 'A las 6 de la mañana, en el parque de Apartadó, una baranda de hierro y una banca de madera llevan toda la noche al aire y están a 25 °C. Al tocarlas, la baranda se siente mucho más fría. ¿Cuál es la mejor explicación?',
       options: [
         { id: 'a', text: 'El hierro está a menor temperatura que la madera porque los metales guardan el frío de la noche.', feedback: 'Después de toda la noche al mismo aire, los dos objetos están en equilibrio térmico a 25 °C. Los metales no «guardan frío»: el frío no es una sustancia.' },
@@ -98,7 +98,7 @@ export const conduccion: PracticeDef = {
       review: 'En la actividad de tacto del simulador, compara la temperatura de contacto del hierro y de la madera a 25 °C y a 50 °C.',
     },
     {
-      id: 'con-3', grade: 7, topic: 'Control de variables', competency: 'indagacion', component: 'fisico', skill: 'Identificar una comparación no controlada y proponer cómo corregirla', difficulty: 'media',
+      id: 'cdc-3', grade: 7, topic: 'Control de variables', competency: 'indagacion', component: 'fisico', skill: 'Identificar una comparación no controlada y proponer cómo corregirla', difficulty: 'media',
       table: {
         caption: 'Varillas de 30 cm y 8 mm desnudas; tachuela pegada con parafina a 3 cm del baño',
         headers: ['Ensayo', 'Varilla', 'Temperatura del baño (°C)', 'Tiempo de caída de la tachuela (s)'],
@@ -116,7 +116,7 @@ export const conduccion: PracticeDef = {
       review: 'En el simulador, mide el latón y el hierro con el baño a 90 °C y luego el latón a 70 °C; compara los tiempos de caída de la tachuela a 3 cm.',
     },
     {
-      id: 'con-4', grade: 7, topic: 'Estado estacionario y aislantes', competency: 'explicacion', component: 'fisico', skill: 'Explicar el perfil de temperatura de una varilla que pierde calor y el efecto de un aislante', difficulty: 'alta',
+      id: 'cdc-4', grade: 7, topic: 'Estado estacionario y aislantes', competency: 'explicacion', component: 'fisico', skill: 'Explicar el perfil de temperatura de una varilla que pierde calor y el efecto de un aislante', difficulty: 'alta',
       stem: 'Con el baño a 90 °C, después de 30 min en la varilla desnuda de acero inoxidable solo cayó la tachuela de 3 cm, y la temperatura a 15 cm ya no sube de 31 °C. ¿Por qué no siguen cayendo tachuelas, y qué pasa si se cubre la varilla con una funda de icopor?',
       options: [
         { id: 'a', text: 'Porque el acero ya se llenó de calor y no recibe más; con icopor sería igual.', feedback: 'El acero sigue recibiendo calor del baño cada segundo, pero lo pierde por su superficie hacia el aire. Un material no «se llena» de calor.' },
@@ -134,7 +134,7 @@ export const conduccion: PracticeDef = {
     question: 'Usando la conducción, la ley de Fourier y la efusividad, explica por qué la olla es de aluminio pero su mango es de madera, por qué la cuchara de palo no quema la mano y por qué una nevera de icopor conserva el hielo durante horas.',
     guidance: 'El aluminio tiene alta conductividad y difusividad: el calor del fogón pasa rápido y de forma pareja a la comida. La madera conduce unas mil veces menos: en estado estacionario el calor que entra por el extremo caliente se pierde al aire en pocos milímetros, y su baja efusividad hace que al tocarla la mano no reciba calor rápido. El icopor es casi todo aire atrapado en burbujas, con k ≈ 0,04 W/(m·K): por la ley de Fourier, una pared de 3 cm deja pasar muy poco calor del aire caliente al hielo.',
   },
-  transferQuestionIds: ['saber-con-1'],
+  transferQuestionIds: ['saber-cdc-1'],
   conclusionGuide: 'Responde la pregunta problema con tus datos: ordena los materiales por el tiempo de caída de la tachuela a 3 cm y por la distancia que alcanzó la cera, relaciónalos con k y con α, usa el flujo calculado con la ley de Fourier para cuantificar cuánto calor pasa, explica por qué la varilla nunca queda toda a la temperatura del baño y por qué el metal se siente más frío que la madera a la misma temperatura.',
   model: conductionModelSpec,
   references: [

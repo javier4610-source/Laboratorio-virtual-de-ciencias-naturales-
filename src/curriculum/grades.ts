@@ -77,8 +77,6 @@ export const PLANNED: PlannedPractice[] = [
   { title: 'Modelo interactivo de ADN y complementariedad', grade: 8, area: 'biologia', status: 'planificada' },
   { title: 'Cálculos estequiométricos básicos', grade: 9, area: 'quimica', status: 'planificada' },
   { title: 'Reto de indagación con interpretación de datos', grade: 11, area: 'ambiental', status: 'planificada' },
-  { title: 'Transferencia de calor por conducción', grade: 7, area: 'fisica', status: 'planificada' },
-  { title: 'Sonido y resonancia', grade: 8, area: 'fisica', status: 'planificada' },
   { title: 'Trabajo, potencia y plano inclinado', grade: 9, area: 'fisica', status: 'planificada' },
   { title: 'Magnetismo e inducción electromagnética', grade: 11, area: 'fisica', status: 'planificada' },
   { title: 'Interferencia y difracción de la luz', grade: 11, area: 'fisica', status: 'planificada' },

@@ -816,6 +816,44 @@ const RAW_BANK: Question[] = [
     explanation: 'Cada etapa de la expresión deja una huella distinta: una mutación en el promotor reduce la cantidad de ARNm normal; una de empalme cambia la longitud del ARNm maduro (salto de exón o retención de intrón); una sin sentido deja el ARNm igual pero trunca la proteína, y una de sentido erróneo no cambia las longitudes. Que el ARNm pierda exactamente la longitud de un exón es la señal de un salto de exón.',
     review: 'En la práctica de expresión génica, usa «Ir a: sitio aceptor del intrón 1», cambia la A o la G del AG y compara la longitud del ARNm y el gel con los del gen silvestre.',
   },
+  {
+    id: 'saber-cdc-1', grade: 7, topic: 'Conducción del calor', competency: 'indagacion', component: 'fisico', skill: 'Interpretar tiempos de calentamiento para relacionar la distancia con el tiempo de conducción y el material', difficulty: 'alta', practiceId: 'conduccion',
+    context: 'En un taller de ornamentación de Apartadó, unos estudiantes quieren saber qué tan rápido «viaja» el calor por varillas de distintos metales. Meten un extremo de cada varilla (30 cm, mismo grosor) en agua a 90 °C y pegan con cera tachuelas a 3 cm y a 9 cm del agua. La cera se ablanda a 55 °C y el aire está a 28 °C.',
+    table: {
+      caption: 'Tiempo hasta que cae cada tachuela (s)',
+      headers: ['Varilla', 'Tachuela a 3 cm', 'Tachuela a 9 cm'],
+      rows: [['Cobre', '6', '62'], ['Aluminio', '8', '79'], ['Latón', '23', '281'], ['Acero inoxidable', '260', 'no cayó en 30 min']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'El calor avanza a rapidez constante en cada metal: si la distancia se triplica, el tiempo también se triplica.', feedback: 'Los datos no lo apoyan: en el cobre el tiempo pasa de 6 a 62 s (unas 10 veces) al triplicar la distancia. La conducción no es un movimiento a rapidez constante.' },
+      { id: 'b', text: 'En todos los metales el calor llega antes a 3 cm que a 9 cm, y al triplicar la distancia el tiempo aumenta unas nueve a doce veces; el orden de los metales es el mismo en las dos distancias.', feedback: 'Correcto: el tiempo de conducción crece aproximadamente con el cuadrado de la distancia (t ≈ x²/α) y el orden cobre, aluminio, latón, acero sigue el de la difusividad térmica.' },
+      { id: 'c', text: 'El acero inoxidable no conduce el calor, porque la tachuela de 9 cm no cayó.', feedback: 'La tachuela de 3 cm sí cayó: el acero conduce, aunque mucho más despacio. A 9 cm no llega a 55 °C porque la varilla pierde calor al aire por su superficie.' },
+      { id: 'd', text: 'Las tachuelas caen antes en el cobre porque el cobre es el metal más pesado de la tabla.', feedback: 'La densidad no explica el resultado: el latón y el acero son casi tan densos como el cobre y tardan mucho más. Lo que importa es la conductividad comparada con la capacidad de almacenar calor (difusividad).' },
+    ],
+    correct: 'b',
+    explanation: 'El calor se propaga por difusión: el tiempo para que un cambio de temperatura llegue a una distancia x es del orden de x²/α, con α = k/(ρ·c). Triplicar la distancia multiplica el tiempo por ≈ 9 (algo más en los metales de menor α, porque la varilla además pierde calor al aire). El cobre (α ≈ 117 mm²/s) es el más rápido y el acero inoxidable (α ≈ 4 mm²/s) el más lento.',
+    review: 'En la práctica de conducción, mide la caída de las tachuelas en las varillas de cobre, latón y acero y compara los tiempos con la escala x²/α.',
+  },
+  {
+    id: 'saber-son-1', grade: 8, topic: 'Resonancia en un tubo y rapidez del sonido', competency: 'indagacion', component: 'fisico', skill: 'Usar datos de resonancias sucesivas para calcular la rapidez del sonido y reconocer el efecto de la corrección de extremo', difficulty: 'alta', practiceId: 'sonido',
+    context: 'En un colegio de Carepa, a 30 °C, un grupo sostiene un diapasón de 512 Hz sobre un tubo de vidrio con agua y baja el nivel del agua lentamente. Con un micrófono conectado a un celular registran la amplitud del sonido y encuentran tres máximos (datos simulados).',
+    table: {
+      caption: 'Longitud de la columna de aire en cada máximo de sonido (diapasón de 512 Hz)',
+      headers: ['Máximo', 'Longitud de la columna de aire (cm)'],
+      rows: [['Primero', '16,0'], ['Segundo', '50,1'], ['Tercero', '84,2']],
+    },
+    stem: 'Uno de los estudiantes calcula la rapidez del sonido con v = 4·L₁·f y obtiene unos 328 m/s, menos de lo que dice el libro para 30 °C (≈ 349 m/s). ¿Qué procedimiento con los mismos datos es más adecuado?',
+    options: [
+      { id: 'a', text: 'Usar v = 4·L₃·f con el tercer máximo, porque la columna más larga se mide con menos error.', feedback: 'El tercer máximo corresponde a cinco cuartos de onda (L₃ + e = 5λ/4), no a un cuarto: 4·L₃·f daría unos 1724 m/s.' },
+      { id: 'b', text: 'Usar v = 2·(L₂ − L₁)·f, porque entre dos máximos seguidos la columna crece media longitud de onda y la parte de la onda que queda fuera de la boca se cancela.', feedback: 'Correcto: L₂ − L₁ = 34,1 cm = λ/2, λ = 68,2 cm y v ≈ 0,682 × 512 ≈ 349 m/s; lo mismo da con L₃ − L₂.' },
+      { id: 'c', text: 'Repetir con un tubo más ancho, porque así el sonido se oye más fuerte y el cálculo 4·L₁·f queda exacto.', feedback: 'En un tubo más ancho la corrección de extremo (≈ 0,6·r) es mayor, así que 4·L₁·f se aleja aún más del valor real.' },
+      { id: 'd', text: 'Promediar las tres longitudes y usar v = 4·L·f con el promedio.', feedback: 'Cada máximo corresponde a un número distinto de cuartos de onda; promediarlos no tiene sentido físico.' },
+    ],
+    correct: 'b',
+    explanation: 'En un tubo cerrado por agua hay resonancia cuando L + e = (2n − 1)·λ/4, donde e ≈ 0,6·r es la corrección del extremo abierto (el vientre de la onda queda un poco por fuera de la boca). Por eso 4·L₁·f subestima la rapidez. La diferencia entre dos resonancias seguidas es exactamente λ/2 y no depende de e: λ = 2·(50,1 − 16,0) cm = 68,2 cm, v = λ·f ≈ 349 m/s, de acuerdo con v = 331,3·√(1 + 30/273,15).',
+    review: 'En la práctica de sonido, marca L₁ y L₂ con el diapasón de 512 Hz y compara la rapidez calculada con 4·L₁·f y con 2·(L₂ − L₁)·f.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

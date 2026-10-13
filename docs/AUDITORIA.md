@@ -218,3 +218,12 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Catálogo | E2E de búsqueda | — | La búsqueda «adn» ahora encuentra también «Expresión génica» | Prueba actualizada a 2 resultados | Correcto |
 | Supuestos declarados | Revisión | — | Parámetros fisiológicos ilustrativos; intrón 2 acortado; sin degradación del ARNm con terminación prematura | Declarados en la interfaz | Declarado |
 | Regresión | 486 pruebas unitarias y 72 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |
+
+# Física C: conducción del calor y sonido y resonancia
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Conducción del calor | 15 pruebas: estado estacionario de la aleta y su flujo, solución erfc del medio semiinfinito, estabilidad del esquema explícito frente a Crank–Nicolson, convergencia de malla, orden de caída de tachuelas, temperatura de contacto | Correcto | El identificador «saber-con-1» ya lo usaba «Conductores y aislantes» | Preguntas renombradas a «cdc-» | Corregido |
+| Sonido y resonancia | 13 pruebas: resonancias a (2n−1)λ/4 con corrección de extremo, espaciado λ/2 en tubo cerrado y abierto, Q y ancho del pico, osciloscopio, −6,02 dB al duplicar la distancia | Correcto | — | — | Correcto |
+| Interfaz | E2E de ambas prácticas, axe en todas las etapas, capturas | 0 infracciones | La prueba contaba filas de la primera tabla de la página (una tabla del laboratorio) | La prueba verifica el aviso de ensayo guardado | Corregido |
+| Regresión | 514 pruebas unitarias y 74 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |

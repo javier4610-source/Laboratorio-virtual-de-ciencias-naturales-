@@ -77,6 +77,17 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'conteo', name: 'Conteo a simple vista a través del vidrio', quantity: 'Caracoles', unit: 'individuos', resolution: 1, sigma: 0.5, nonNegative: true, note: 'Los caracoles pequeños se esconden entre las hojas y en el sedimento; los recién nacidos miden menos de 1 mm.' },
     { id: 'biomasa', name: 'Biomasa de elodea estimada por la longitud de las ramitas', quantity: 'Biomasa fresca de elodea', unit: 'g', resolution: 0.5, sigma: 0.3, nonNegative: true, note: 'Se mide la longitud total con una regla a través del vidrio y se convierte con 0,25 g por cada centímetro de ramita.' },
   ],
+  conduccion: [
+    { id: 'termopar', name: 'Termopar tipo K con registrador (−50 a 400 °C)', quantity: 'Temperatura', unit: '°C', resolution: 0.1, sigma: 0.3, note: 'Contacto térmico de la unión con la varilla (pasta térmica), unión fría del registrador y ruido eléctrico.' },
+    { id: 'cronometro', name: 'Cronómetro (caída de las tachuelas)', quantity: 'Tiempo', unit: 's', resolution: 1, sigma: 1, relSigma: 0.05, note: 'Tamaño desigual de las gotas de cera y tiempo de reacción al ver caer la tachuela.' },
+    { id: 'regla', name: 'Regla graduada en milímetros', quantity: 'Posición sobre la varilla', unit: 'cm', resolution: 0.1, sigma: 0.05, note: 'Alineación del cero con la pared del baño y paralaje.' },
+  ],
+  sonido: [
+    { id: 'regla', name: 'Cinta métrica junto al tubo (1 mm)', quantity: 'Longitud de la columna de aire', unit: 'cm', resolution: 0.1, sigma: 0.15, note: 'El menisco del agua (o el borde del tubo deslizante) y la boca del tubo no están a la altura del ojo: paralaje. Además, el pico de sonido es ancho y cuesta decidir dónde es máximo.' },
+    { id: 'osciloscopio', name: 'Osciloscopio con cursores (retícula de 10 × 8 div)', quantity: 'Lectura de tiempo y de voltaje en la pantalla', unit: 'div', resolution: 0.2, sigma: 0.1, note: 'El grosor del trazo y la ubicación de los cursores: la incertidumbre en ms o en mV depende de la escala elegida (tiempo/div y volts/div).' },
+    { id: 'sonometro', name: 'Sonómetro digital (ponderación Z, 30 a 130 dB)', quantity: 'Nivel sonoro', unit: 'dB', resolution: 0.1, sigma: 0.4, note: 'Reflexiones en las paredes y la mesa, ruido del salón y orientación del micrófono.' },
+    { id: 'cinta', name: 'Cinta métrica sobre la mesa', quantity: 'Distancia al parlante', unit: 'm', resolution: 0.01, sigma: 0.005, note: 'Ubicar el centro del parlante y la rejilla del micrófono del sonómetro.' },
+  ],
 };
 
 /** Especificación de un instrumento de una práctica (lanza un error si no existe: error de programación). */

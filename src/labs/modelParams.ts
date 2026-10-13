@@ -10,6 +10,10 @@ const gravity = (value: number, hint: string): ModelParamSpec => ({
 });
 
 export const MODEL_PARAMS: Record<string, ModelParamSpec[]> = {
+  movimiento: [{
+    key: 'reaccion', sym: 't_{r}', label: 'Tiempo de reacción del compañero al arrancar', unit: 's', value: 0.2, min: 0.1, max: 0.4, step: 0.01, decimals: 2,
+    hint: 'Un compañero que reacciona más tarde a la señal de salida arranca el cronómetro tarde y mide tiempos más cortos (y rapideces mayores).',
+  }],
   newton: [gravity(9.8, 'Cambia el peso y la fricción (f = μ·m·g). Prueba con la Luna (1,62 m/s²) o Júpiter (24,8 m/s²).')],
   proyectiles: [gravity(9.8, 'Cambia el tiempo de vuelo, la altura máxima y el alcance. Luna: 1,62 m/s²; Marte: 3,71 m/s².')],
   presion: [gravity(9.78, 'Cambia la presión hidrostática ρ·g·h y la rapidez de Torricelli √(2·g·h).')],

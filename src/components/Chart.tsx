@@ -152,6 +152,7 @@ function ResidualPlot({ res, title, against, color = 'var(--series-2)', xDomain,
   const sx = (x: number) => m.l + ((x - x0) / (x1 - x0 || 1)) * (W - m.l - m.r);
   const sy = (y: number) => H - b - ((y - y0) / (y1 - y0 || 1)) * (H - t - b);
   const maxAbs = Math.max(...res.map((r) => Math.abs(r.r)));
+  if (maxAbs < 1e-9) return <p className="small muted residuals-zero">Residuos nulos: todos los puntos caen exactamente sobre la curva {against} (datos ideales, sin dispersión). Con el instrumento real verás residuos repartidos alrededor de cero.</p>;
   return (
     <svg className="chart residuals-plot" viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${id}-t ${id}-d`}>
       <title id={`${id}-t`}>{title}</title>

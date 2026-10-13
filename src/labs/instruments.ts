@@ -88,6 +88,22 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'sonometro', name: 'Sonómetro digital (ponderación Z, 30 a 130 dB)', quantity: 'Nivel sonoro', unit: 'dB', resolution: 0.1, sigma: 0.4, note: 'Reflexiones en las paredes y la mesa, ruido del salón y orientación del micrófono.' },
     { id: 'cinta', name: 'Cinta métrica sobre la mesa', quantity: 'Distancia al parlante', unit: 'm', resolution: 0.01, sigma: 0.005, note: 'Ubicar el centro del parlante y la rejilla del micrófono del sonómetro.' },
   ],
+  trabajo: [
+    { id: 'dinamometro', name: 'Dinamómetro de resorte (0 a 10 N)', quantity: 'Fuerza (peso del bloque y fuerza paralela a la rampa)', unit: 'N', resolution: 0.1, sigma: 0.06, relSigma: 0.015, nonNegative: true, note: 'El indicador oscila al jalar (no es fácil mantener la velocidad constante), paralaje y ajuste del cero.' },
+    { id: 'regla', name: 'Regla y cinta métrica graduadas en milímetros', quantity: 'Recorrido sobre la rampa, altura ganada y altura de un escalón', unit: 'cm', resolution: 0.1, sigma: 0.1, nonNegative: true, note: 'Alinear las marcas con el borde del bloque y paralaje al leer la regla vertical.' },
+    { id: 'cronometro', name: 'Cronómetro digital (0,01 s)', quantity: 'Tiempo de subida', unit: 's', resolution: 0.01, sigma: 0.12, nonNegative: true, note: 'Tiempo de reacción de quien pulsa al arrancar y al detener (≈ 0,1 a 0,2 s).' },
+    { id: 'bascula', name: 'Báscula de piso (0,1 kg)', quantity: 'Masa de la persona', unit: 'kg', resolution: 0.1, sigma: 0.1, nonNegative: true, note: 'Postura sobre la báscula y ropa o zapatos.' },
+  ],
+  flotacion: [
+    { id: 'dinamometro', name: 'Dinamómetro de resorte de 5 N', quantity: 'Peso y peso aparente', unit: 'N', resolution: 0.05, sigma: 0.02, nonNegative: true, note: 'Paralaje al leer el indicador, rozamiento del resorte con el tubo y oscilación del objeto colgado.' },
+    { id: 'balanza', name: 'Balanza digital (2000 g, tarada)', quantity: 'Masa del líquido desalojado', unit: 'g', resolution: 0.1, sigma: 0.15, note: 'Gotas que quedan en el pico del vaso de rebose o en las paredes del colector, y corrientes de aire.' },
+    { id: 'densimetro', name: 'Densímetro de vidrio (0,700 a 1,200 g/cm³)', quantity: 'Densidad del líquido', unit: 'g/cm³', resolution: 0.002, sigma: 0.001, note: 'Lectura del menisco sobre el tallo y burbujas adheridas al bulbo.' },
+  ],
+  movimiento: [
+    { id: 'cinta', name: 'Cinta métrica de 50 m (fibra de vidrio)', quantity: 'Distancia entre la salida y la meta', unit: 'm', resolution: 0.01, sigma: 0.02, nonNegative: true, note: 'La cinta no queda del todo templada ni recta sobre el piso y el cero no se alinea exactamente con el borde del cono.' },
+    { id: 'fotopuerta', name: 'Fotopuertas con temporizador (0,01 s)', quantity: 'Tiempo entre la salida y la meta', unit: 's', resolution: 0.01, sigma: 0.003, nonNegative: true, note: 'El haz se corta con la parte del móvil que va adelante (pecho, rueda o balón), no siempre con el mismo punto.' },
+    { id: 'cronometro', name: 'Cronómetro de mano (0,01 s)', quantity: 'Tiempo entre la salida y la meta', unit: 's', resolution: 0.01, sigma: 0.08, nonNegative: true, note: 'Tiempo de reacción humano: se arranca tarde (≈ 0,2 s) y se detiene casi a tiempo porque el móvil se ve llegar.' },
+  ],
 };
 
 /** Especificación de un instrumento de una práctica (lanza un error si no existe: error de programación). */

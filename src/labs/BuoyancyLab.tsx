@@ -473,9 +473,12 @@ export default function BuoyancyLab({ api }: LabProps) {
               <path d={stringPath} fill="none" stroke="#6b5a40" strokeWidth="1" />
               {/* el objeto se vuelve a dibujar por encima del borde del recipiente si sobresale */}
               {objTop < vessel.y && (
-                <svg x={0} y={0} width={W} height={vessel.y} viewBox={`0 0 ${W} ${vessel.y}`} overflow="hidden">
-                  <ObjectArt o={obj} cx={CX} bottom={objBottom} sc={SC} marks />
-                </svg>
+                <g>
+                  <clipPath id="flo-above"><rect x={0} y={0} width={W} height={vessel.y} /></clipPath>
+                  <g clipPath="url(#flo-above)">
+                    <ObjectArt o={obj} cx={CX} bottom={objBottom} sc={SC} marks />
+                  </g>
+                </g>
               )}
               {model.floating && obj.id === 'madera' && (
                 <g aria-hidden="true">

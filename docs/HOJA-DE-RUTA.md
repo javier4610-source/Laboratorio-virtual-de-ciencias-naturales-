@@ -35,10 +35,9 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       presión atmosférica (7.º, `presion`).
 - [x] **Lote 8:** ecosistema: agua, luz y alimento (6.º, `ecosistema`) · balanceo de ecuaciones con conteo de átomos
       (8.º, `balanceo`) · expresión génica y efecto de mutaciones (11.º, `expresion`).
-- [ ] **Física C:** ~~transferencia de calor por conducción (7.º, `conduccion`)~~ · ~~sonido y resonancia (8.º, `sonido`)~~ (hechas) ·
-      trabajo, potencia y plano inclinado (9.º, `trabajo`).
-- [ ] **Lote 9:** empuje y flotación con dinamómetro, principio de Arquímedes (7.º, física, `flotacion`) ·
-      movimiento y distancia recorrida con cinta y cronómetro (6.º, física, `movimiento`) · circuitos simples con
+- [x] **Física C:** conducción del calor (7.º, `conduccion`) · sonido y resonancia (8.º, `sonido`) · trabajo, potencia y
+      plano inclinado (9.º, `trabajo`).
+- [ ] **Lote 9:** ~~empuje y flotación (7.º, `flotacion`)~~ · ~~movimiento y distancia recorrida (6.º, `movimiento`)~~ (hechas) · circuitos simples con
       pilas, interruptores y bombillos (7.º, física, `circuitos-simples`).
 - [ ] **T3 · Retroalimentación del docente:** comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.

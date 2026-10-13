@@ -236,3 +236,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Parámetros editables | Pruebas de rangos y del texto de resumen; E2E en Newton con g = 1,62 m/s² (lecturas 0,98 → 0,16 N y 1,27 → 1,88 N; nota automática en el ensayo; restablecer) | Correcto | — | — | Correcto |
 | Curva del modelo | Pruebas de las curvas de 11 prácticas con transformaciones de ejes; E2E de leyenda, residuos y tablas | Correcto | — | — | Correcto |
 | Regresión | 559 pruebas unitarias y 77 de interfaz con axe (suite completa) | Todas pasan | Conflicto en la hoja de ruta al integrar | Se conservaron ambas versiones | Correcto |
+
+# Trabajo, flotación y movimiento
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Trabajo y plano inclinado | 12 pruebas: caso inicial a mano, F·d = m·g·h + Q, límite μ → 0, tendencias, eficiencia independiente de la masa, P = F·v, torno, escalera | Correcto | — | — | Correcto |
+| Empuje y flotación | 13 pruebas: E = ρ·g·V, peso aparente, fracción sumergida, umbral del huevo, bola y barco de plastilina, densímetro | Correcto | En la escena aparecía una copia del objeto dentro del vaso cuando sobresalía del borde (un `<svg>` anidado se posicionaba mal) | Recorte con `clipPath` | Corregido |
+| Movimiento | 9 pruebas: tiempos, pasos por fotopuertas, ida y vuelta, carrera y adelantamiento, conversión de unidades, cronometraje a mano con tiempo de reacción | Correcto | — | — | Correcto |
+| Cuaderno | Revisión visual con datos ideales | — | Con datos sin dispersión se mostraba «± 0,00000000» y un eje de residuos de 10⁻¹² | Se escribe «± 0» y una nota de residuos nulos | Corregido |
+| Regresión | 568 pruebas unitarias y 80 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |

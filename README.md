@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (41)
+## Prácticas implementadas (44)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -17,12 +17,14 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 6.º | Máquinas simples: palancas y poleas | Física | Palancas de los tres géneros con dinamómetro y reglas; ley de la palanca; polea fija, móvil y polipasto con rozamiento; ventaja mecánica y conservación del trabajo; ejemplos de Urabá |
 | 6.º | Calor, temperatura y equilibrio térmico | Física | Calorímetro de icopor, vidrio o lata; Te = Σmc·T/Σmc; pérdidas con la ley de enfriamiento de Newton; calor específico de un metal desconocido; registrador de temperatura |
 | 6.º | Ecosistema: agua, luz y alimento | Ambiental | Frasco sellado con elodea, caracoles y guppys que se arrastran; fotosíntesis contra respiración; oxímetro y azul de bromotimol; capacidad de carga; descomponedores; manglar y ciénaga de Urabá |
+| 6.º | Movimiento y distancia recorrida | Física | Cancha del colegio con conos, bandera y cinta que se arrastran; fotopuertas o tu propio cronómetro (tiempo de reacción real); rapidez media, km/h, ida y vuelta, carreras |
 | 7.º | Difusión y ósmosis a través de la membrana | Biología | Boyle-van 't Hoff, van 't Hoff (π = CRT), turgencia elástica, lisis; difusión de Fick con D ∝ T/η |
 | 7.º | Materiales conductores y aislantes | Física | R = ρL/A con resistividades reales, circuito en serie con resistencia interna, brillo ∝ I²R, clasificación por corriente |
 | 7.º | Factores de la descomposición de la materia orgánica | Ambiental | Modelo de Olson M = M₀e^(−kt) con k según material, Q₁₀ de temperatura, humedad, aireación y tamaño |
 | 7.º | Mitosis al microscopio: fases e índice mitótico | Biología | Fracción de células por fase ∝ duración; índice mitótico; ADN 2C→4C; efecto de la colchicina |
 | 7.º | Presión en líquidos y presión atmosférica | Física | Sonda con manómetro en U que se arrastra; p = p_atm + ρgh con cinco líquidos; vasos de Pascal; chorros de Torricelli; barómetro y altitud (Apartadó, Medellín, Bogotá) |
 | 7.º | Transferencia de calor por conducción | Física | Varillas de siete materiales en un baño; tachuelas con cera; tres termopares; ecuación de la aleta resuelta con Crank–Nicolson; ley de Fourier; difusividad; efusividad y sensación de frío al tacto |
+| 7.º | Empuje y flotación: principio de Arquímedes | Física | Dinamómetro que se baja, vaso de rebose y balanza; densímetro; el huevo flota al agregar sal; la plastilina en bola se hunde y en barco flota; Urabá y Turbo |
 | 8.º | Herencia mendeliana y cuadros de Punnett | Biología | Segregación y transmisión independiente, dominancia completa/incompleta, muestreo con semilla, χ² |
 | 8.º | Reflexión y refracción de la luz | Física | Ley de reflexión, Snell, ángulo crítico y reflexión total interna, reflectancia de Fresnel, índice desconocido por pendiente |
 | 8.º | Laboratorio de ondas | Física | v = λ·f, v = √(T/μ), onda armónica, energía ∝ A²f², sonido en el aire según la temperatura |
@@ -33,6 +35,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 9.º | Leyes de Newton | Física | F_neta = m·a, fricción estática y cinética, cinemática con fotopuertas (a = 2d/t²) |
 | 9.º | Velocidad, aceleración y movimiento | Física | MRU y MRUA, fotografía estroboscópica, gráficas x–t y v–t (pendiente y área), frenado, reto de igualar gráficas |
 | 9.º | Selección natural con cambios ambientales | Biología | Rasgo cuantitativo heredable, depredación por contraste, diferencial de selección y ecuación del criador R = h²·S |
+| 9.º | Trabajo, potencia y plano inclinado | Física | Rampa de ángulo ajustable, superficies con distinto rozamiento, pesas y dinamómetro; W = F·d frente a m·g·h; eficiencia; potencia con torno; potencia humana en la escalera del colegio |
 | 10.º | Soluciones, molaridad y colorimetría | Química | n = m/M, M = n/V, C₁V₁ = C₂V₂, Beer-Lambert, solubilidad |
 | 10.º | Actividad enzimática | Biología | Michaelis-Menten × Arrhenius × desnaturalización × pH (dos pKa) |
 | 10.º | Fotosíntesis: luz, CO₂ y temperatura | Biología | Inverso del cuadrado, colimitación luz/CO₂ (hipérbola no rectangular), respiración Q₁₀, punto de compensación |
@@ -52,7 +55,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 | 11.º | Expresión génica y mutaciones | Biología | Gen real HBB con promotor, exones e intrones; transcripción, empalme y traducción animados; mutaciones con el teclado o arrastrando bases; anemia falciforme; gel de proteínas |
 
-Otras 9 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 6 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

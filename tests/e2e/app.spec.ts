@@ -606,6 +606,46 @@ test('sonido: el osciloscopio mide 512,8 Hz y la resonancia satura la pantalla',
   await expect(page.locator('.readout').getByText('fuera de la pantalla: aumenta los mV/div')).toBeVisible({ timeout: 10_000 });
 });
 
+test('trabajo: subir 500 g por la rampa de 30° cuesta 2,220 J con 66,2 % de eficiencia', async ({ page }) => {
+  await openFree(page, 'trabajo');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Medir subida por la rampa' }).click();
+  await expect(page.locator('.readout').getByText('2,220 J')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('66,2 %')).toBeVisible();
+  await expect(page.locator('.readout').getByText('1,470 J')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+});
+
+test('flotación: el cilindro de aluminio sumergido 8 cm recibe 0,40 N de empuje', async ({ page }) => {
+  await openFree(page, 'flotacion');
+  await expect(save(page)).toBeDisabled();
+  const descenso = page.getByLabel('Descenso del objeto (valor exacto en cm)');
+  await descenso.fill('8');
+  await descenso.press('Enter');
+  await page.getByRole('button', { name: 'Leer los instrumentos' }).click();
+  await expect(page.locator('.readout').getByText('0,40 N')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('42,3 g')).toBeVisible();
+  await expect(page.locator('.readout').getByText('Se hundiría si se soltara')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+});
+
+test('movimiento: el corredor recorre 20 m en 4,44 s (4,50 m/s = 16,2 km/h)', async ({ page }) => {
+  await openFree(page, 'movimiento');
+  await expect(save(page)).toBeDisabled();
+  await expect(page.locator('.readout').getByText('20,00 m')).toBeVisible();
+  await page.getByRole('button', { name: 'Acelerada ×4' }).click();
+  await page.getByRole('button', { name: 'Dar la salida' }).click();
+  await expect(page.locator('.readout').getByText('4,44 s')).toBeVisible({ timeout: 15_000 });
+  await expect(page.locator('.readout').getByText('16,2 km/h')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -666,7 +706,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/41');
+  await expect(page.locator('.kpi').first()).toContainText('1/44');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

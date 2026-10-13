@@ -854,6 +854,63 @@ const RAW_BANK: Question[] = [
     explanation: 'En un tubo cerrado por agua hay resonancia cuando L + e = (2n − 1)·λ/4, donde e ≈ 0,6·r es la corrección del extremo abierto (el vientre de la onda queda un poco por fuera de la boca). Por eso 4·L₁·f subestima la rapidez. La diferencia entre dos resonancias seguidas es exactamente λ/2 y no depende de e: λ = 2·(50,1 − 16,0) cm = 68,2 cm, v = λ·f ≈ 349 m/s, de acuerdo con v = 331,3·√(1 + 30/273,15).',
     review: 'En la práctica de sonido, marca L₁ y L₂ con el diapasón de 512 Hz y compara la rapidez calculada con 4·L₁·f y con 2·(L₂ − L₁)·f.',
   },
+  {
+    id: 'saber-tpp-1', grade: 9, topic: 'Trabajo y potencia', competency: 'indagacion', component: 'fisico', skill: 'Analizar datos para diferenciar trabajo y potencia', difficulty: 'media', practiceId: 'trabajo',
+    context: 'En un colegio de Apartadó, cuatro estudiantes subieron corriendo o caminando la misma escalera hasta el segundo piso (altura: 3,06 m). Se midió la masa de cada uno con una báscula y el tiempo con un cronómetro (datos simulados; g = 9,8 m/s²).',
+    table: {
+      caption: 'Subida de la escalera del colegio (h = 3,06 m)',
+      headers: ['Estudiante', 'Masa (kg)', 'Tiempo (s)'],
+      rows: [['Ana', 45, '6,0'], ['Luis', 60, '10,0'], ['Sofía', 52, '7,5'], ['Juan', 70, '16,0']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'Juan desarrolló la mayor potencia, porque es el de mayor masa y por eso hizo más trabajo.', feedback: 'Juan sí hizo el mayor trabajo (70 · 9,8 · 3,06 ≈ 2 099 J), pero tardó 16 s: su potencia es la menor (≈ 131 W). La potencia depende también del tiempo.' },
+      { id: 'b', text: 'Todos desarrollaron la misma potencia, porque subieron la misma altura.', feedback: 'La altura es la misma, pero cambian la masa y el tiempo; las potencias van de unos 131 W a unos 225 W.' },
+      { id: 'c', text: 'Juan hizo el mayor trabajo, pero Ana desarrolló la mayor potencia, porque fue quien hizo más trabajo por cada segundo.', feedback: 'Correcto.' },
+      { id: 'd', text: 'Ana hizo el mayor trabajo, porque fue la más rápida.', feedback: 'El trabajo para subir el cuerpo es m·g·h y no depende de la rapidez: Ana, con la menor masa, hizo el menor trabajo (≈ 1 349 J). La rapidez influye en la potencia, no en el trabajo.' },
+    ],
+    correct: 'c',
+    explanation: 'Trabajo W = m·g·h: Ana ≈ 1 349 J, Luis ≈ 1 799 J, Sofía ≈ 1 559 J, Juan ≈ 2 099 J. Potencia P = W/t: Ana ≈ 225 W, Luis ≈ 180 W, Sofía ≈ 208 W, Juan ≈ 131 W. Quien hace más trabajo no es necesariamente quien desarrolla más potencia: la potencia mide qué tan rápido se hace el trabajo.',
+    review: 'En la práctica de trabajo y potencia, usa el reto de la escalera: cambia solo la masa y luego solo el ritmo, y compara el trabajo y la potencia.',
+  },
+  {
+    id: 'saber-flo-1', grade: 7, topic: 'Flotación y densidad del agua', competency: 'explicacion', component: 'fisico', skill: 'Usar una tabla de calado contra carga y el principio de Arquímedes para predecir qué pasa al cambiar la densidad del agua', difficulty: 'alta', practiceId: 'flotacion',
+    context: 'En el muelle de Turbo, un grupo de estudiantes midió el calado (la profundidad a la que queda el fondo plano) de una lancha de 300 kg al subirle carga, en el agua del golfo de Urabá (≈ 1020 kg/m³). La parte sumergida del casco tiene unos 4,0 m² de fondo y paredes casi verticales (datos simulados).',
+    table: {
+      caption: 'Calado de la lancha en el golfo según la carga',
+      headers: ['Carga (kg)', 'Masa total (kg)', 'Calado (cm)'],
+      rows: [['0', '300', '7,4'], ['200', '500', '12,3'], ['400', '700', '17,2'], ['600', '900', '22,1']],
+    },
+    stem: 'La lancha, con los 600 kg de carga, remonta luego el río Atrato, de agua dulce (≈ 1000 kg/m³). ¿Qué calado tendrá y por qué?',
+    options: [
+      { id: 'a', text: 'Unos 21,7 cm: en agua dulce la lancha sube, porque el agua dulce es más liviana y empuja con más facilidad.', feedback: 'Es al revés. Cada metro cúbico de agua dulce pesa menos, así que para sostener el mismo peso la lancha debe desalojar más volumen y hundirse más.' },
+      { id: 'b', text: 'Los mismos 22,1 cm, porque la carga no cambió y el empuje siempre es igual al peso.', feedback: 'El empuje sigue siendo igual al peso, pero E = ρ·g·V_sum: si ρ disminuye, V_sum debe aumentar. El calado no puede quedar igual.' },
+      { id: 'c', text: 'Unos 22,5 cm: el empuje debe seguir igual al peso (900 kg · g) y, como el agua dulce es menos densa, la lancha debe desalojar más volumen: 900 / (1000 · 4,0) = 0,225 m.', feedback: 'Correcto: el calado aumenta en la misma proporción en que baja la densidad (1020/1000 = 1,02 veces).' },
+      { id: 'd', text: 'Se hunde, porque en el río no hay sal que la sostenga.', feedback: 'El agua dulce también produce empuje: la diferencia de densidad con el agua del golfo es de solo 2 %, así que la lancha se hunde apenas 4 mm más.' },
+    ],
+    correct: 'c',
+    explanation: 'Un cuerpo que flota desaloja un peso de líquido igual a su propio peso: ρ·A·h·g = m·g, así que el calado es h = m/(ρ·A). Los datos de la tabla lo confirman (900/(1020·4,0) = 0,221 m). En agua dulce, h = 900/(1000·4,0) = 0,225 m: la lancha se hunde unos 4 mm más. Por eso los barcos tienen marcas de carga distintas para agua dulce y agua de mar.',
+    review: 'En la práctica de empuje y flotación, deja el bloque de madera flotando en agua con sal, quita la sal (agua dulce) y compara la marca de la línea de flotación.',
+  },
+  {
+    id: 'saber-mov-1', grade: 6, topic: 'Rapidez media y conversión de unidades', competency: 'indagacion', component: 'fisico', skill: 'Calcular y comparar rapideces medias a partir de una tabla de datos y convertirlas a km/h', difficulty: 'media', practiceId: 'movimiento',
+    context: 'Para planear la ruta al colegio, tres estudiantes de Apartadó midieron cuánto tardan en recorrer el mismo tramo de 1,2 km de la vía que llega a la I.E. Campo Alegre. En la zona escolar el límite de velocidad es de 30 km/h.',
+    table: {
+      caption: 'Tiempo para recorrer el mismo tramo de vía',
+      headers: ['Forma de viajar', 'Distancia (m)', 'Tiempo (s)'],
+      rows: [['Caminando', '1200', '900'], ['En bicicleta', '1200', '240'], ['En mototaxi', '1200', '100']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'La bicicleta va a 5 m/s (18 km/h) y el mototaxi a 12 m/s (43,2 km/h): el mototaxi supera el límite de la zona escolar.', feedback: 'Correcto: v = d/t; 1200/240 = 5 m/s y 1200/100 = 12 m/s. Al multiplicar por 3,6 se obtienen 18 km/h y 43,2 km/h, más que el límite de 30 km/h.' },
+      { id: 'b', text: 'Caminando se va a 0,75 m/s, porque 900 ÷ 1200 = 0,75.', feedback: 'Se dividió el tiempo entre la distancia. La rapidez es distancia entre tiempo: 1200 m / 900 s ≈ 1,33 m/s (unos 4,8 km/h).' },
+      { id: 'c', text: 'El mototaxi es el más lento, porque en su fila está el número de segundos más pequeño.', feedback: 'Para la misma distancia, quien tarda menos tiempo va más rápido: el mototaxi, con 100 s, es el más rápido.' },
+      { id: 'd', text: 'La bicicleta va a 5 km/h, porque 1200 ÷ 240 = 5.', feedback: 'El cociente 1200 m / 240 s da 5 m/s, no 5 km/h. Para pasar a km/h hay que multiplicar por 3,6: 18 km/h.' },
+    ],
+    correct: 'a',
+    explanation: 'La rapidez media es la distancia dividida entre el tiempo. Caminando: 1200/900 ≈ 1,33 m/s ≈ 4,8 km/h; en bicicleta: 1200/240 = 5 m/s = 18 km/h; en mototaxi: 1200/100 = 12 m/s = 43,2 km/h. Como 1 m/s = 3,6 km/h, solo el mototaxi supera los 30 km/h (8,3 m/s) de la zona escolar.',
+    review: 'En la práctica de movimiento, cronometra la bicicleta y el caminante en el mismo tramo y compara la rapidez media en m/s y en km/h.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

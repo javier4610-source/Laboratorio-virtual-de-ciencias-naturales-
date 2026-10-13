@@ -71,13 +71,10 @@ export function gradeInfo(id: GradeId): GradeInfo {
 
 /** Prácticas de la malla propuesta que todavía no están implementadas. */
 export const PLANNED: PlannedPractice[] = [
-  { title: 'Movimiento y distancia recorrida', grade: 6, area: 'fisica', status: 'planificada' },
   { title: 'Circuitos simples con baterías, interruptores y bombillas', grade: 7, area: 'fisica', status: 'planificada' },
-  { title: 'Densidad y flotación', grade: 7, area: 'fisica', status: 'planificada' },
   { title: 'Modelo interactivo de ADN y complementariedad', grade: 8, area: 'biologia', status: 'planificada' },
   { title: 'Cálculos estequiométricos básicos', grade: 9, area: 'quimica', status: 'planificada' },
   { title: 'Reto de indagación con interpretación de datos', grade: 11, area: 'ambiental', status: 'planificada' },
-  { title: 'Trabajo, potencia y plano inclinado', grade: 9, area: 'fisica', status: 'planificada' },
   { title: 'Magnetismo e inducción electromagnética', grade: 11, area: 'fisica', status: 'planificada' },
   { title: 'Interferencia y difracción de la luz', grade: 11, area: 'fisica', status: 'planificada' },
 ];

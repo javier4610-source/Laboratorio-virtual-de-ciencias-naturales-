@@ -265,6 +265,8 @@ const sup = (n: number) => String(n).split('').map((c) => SUP[c] ?? c).join('');
 export function formatWithUncertainty(value: number, se: number): string {
   if (!Number.isFinite(value)) return '—';
   if (!Number.isFinite(se) || se <= 0) return `${fmtSig(value, 4)} ± —`;
+  // Datos ideales sin dispersión: la incertidumbre del ajuste es solo error de redondeo de la máquina.
+  if (se <= Math.max(Math.abs(value), 1e-6) * 1e-9) return `${fmtSig(Math.abs(value) < 1e-9 ? 0 : value, 6).replace('-', '−')} ± 0`;
   const big = Math.max(Math.abs(value), se);
   const exp = big >= 1e5 || big < 1e-3 ? Math.floor(Math.log10(big)) : 0;
   const v = value / 10 ** exp, e = se / 10 ** exp;

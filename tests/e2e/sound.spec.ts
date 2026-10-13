@@ -30,7 +30,7 @@ const audio = (page: Page) => page.evaluate(() => (window as unknown as { __audi
 
 async function openFree(page: Page, id: string) {
   await page.goto(`/#/practica/${id}`);
-  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Experimento/ }).click();
 }
 

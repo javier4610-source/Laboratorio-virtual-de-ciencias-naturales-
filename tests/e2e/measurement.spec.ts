@@ -29,7 +29,7 @@ async function readings(page: Page) {
 
 test('densidad con instrumento real: repetir la misma medición da lecturas distintas y el cuaderno calcula media y DE', async ({ page }) => {
   await page.goto('/#/practica/densidad');
-  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Experimento/ }).click();
 
   const ideal = page.getByRole('button', { name: 'Instrumento ideal' });
@@ -67,7 +67,7 @@ test('densidad con instrumento real: repetir la misma medición da lecturas dist
 
 test('densidad con instrumento ideal: repetir la misma medición da lecturas idénticas', async ({ page }) => {
   await page.goto('/#/practica/densidad');
-  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Experimento/ }).click();
   await repeatSample(page, 2);
   const values = await readings(page);

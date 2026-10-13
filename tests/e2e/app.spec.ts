@@ -4,7 +4,7 @@ import { SERVER } from './env';
 /** Abre una práctica en modo libre y va a la etapa de experimento. */
 async function openFree(page: Page, id: string) {
   await page.goto(`/#/practica/${id}`);
-  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Experimento/ }).click();
 }
 
@@ -151,7 +151,7 @@ test('estequiometría y población registran ensayos', async ({ page }) => {
 
 test('evaluación: retroalimentación, reintento y puntaje', async ({ page }) => {
   await page.goto('/#/practica/densidad');
-  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Evaluación/ }).click();
   const first = page.locator('article.question').first();
   await first.getByRole('button', { name: /Se reduce a la mitad/ }).click();
@@ -687,7 +687,7 @@ test('servidor: el docente crea un curso, el estudiante envía su informe y el d
 
 test('teclado: las pestañas de etapas se recorren con flechas', async ({ page }) => {
   await page.goto('/#/practica/densidad');
-  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Preparación/ }).focus();
   await page.keyboard.press('ArrowRight');
   await expect(page.getByRole('tab', { name: /Hipótesis/ })).toHaveAttribute('aria-selected', 'true');

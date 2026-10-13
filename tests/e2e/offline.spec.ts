@@ -16,7 +16,7 @@ test('sin conexión: después de la primera visita la aplicación y las práctic
 
   // Una práctica que no se había abierto: su código se cargó en la precarga.
   await page.goto('/#/practica/newton');
-  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Experimento/ }).click();
   await page.getByRole('button', { name: 'Soltar el carrito' }).click();
   await expect(page.locator('.readout').getByText('0,707 s')).toBeVisible();

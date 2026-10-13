@@ -32,7 +32,7 @@ for (const scheme of ['light', 'dark'] as const) {
       const found: string[] = [];
       for (const id of PRACTICES) {
         await page.goto(`/#/practica/${id}`);
-        await page.getByRole('button', { name: 'Exploración libre' }).click();
+        await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
         found.push(...(await audit(page, `${id}/preparación`)));
         await page.getByRole('tab', { name: /Experimento/ }).click();
         await page.waitForTimeout(400);

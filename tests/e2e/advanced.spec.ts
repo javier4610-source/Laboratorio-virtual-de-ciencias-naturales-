@@ -4,7 +4,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 async function openFree(page: Page, id: string) {
   await page.goto(`/#/practica/${id}`);
-  await page.getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Experimento/ }).click();
 }
 

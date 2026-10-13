@@ -227,3 +227,12 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Sonido y resonancia | 13 pruebas: resonancias a (2n−1)λ/4 con corrección de extremo, espaciado λ/2 en tubo cerrado y abierto, Q y ancho del pico, osciloscopio, −6,02 dB al duplicar la distancia | Correcto | — | — | Correcto |
 | Interfaz | E2E de ambas prácticas, axe en todas las etapas, capturas | 0 infracciones | La prueba contaba filas de la primera tabla de la página (una tabla del laboratorio) | La prueba verifica el aviso de ensayo guardado | Corregido |
 | Regresión | 514 pruebas unitarias y 74 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |
+
+# U6 · Modo avanzado
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Ecuaciones en vivo | Pruebas del analizador de notación, sustitución paso a paso (densidad completa), paréntesis en negativos y potencias; E2E en densidad (se actualiza en vivo y la preferencia sobrevive a la recarga) | Correcto; MathML con equivalente en texto | — | — | Correcto |
+| Parámetros editables | Pruebas de rangos y del texto de resumen; E2E en Newton con g = 1,62 m/s² (lecturas 0,98 → 0,16 N y 1,27 → 1,88 N; nota automática en el ensayo; restablecer) | Correcto | — | — | Correcto |
+| Curva del modelo | Pruebas de las curvas de 11 prácticas con transformaciones de ejes; E2E de leyenda, residuos y tablas | Correcto | — | — | Correcto |
+| Regresión | 559 pruebas unitarias y 77 de interfaz con axe (suite completa) | Todas pasan | Conflicto en la hoja de ruta al integrar | Se conservaron ambas versiones | Correcto |

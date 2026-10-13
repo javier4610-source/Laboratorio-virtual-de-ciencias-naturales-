@@ -35,8 +35,6 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       presión atmosférica (7.º, `presion`).
 - [x] **Lote 8:** ecosistema: agua, luz y alimento (6.º, `ecosistema`) · balanceo de ecuaciones con conteo de átomos
       (8.º, `balanceo`) · expresión génica y efecto de mutaciones (11.º, `expresion`).
-- [ ] **U6 · Modo avanzado:** ecuaciones del modelo en vivo con los valores actuales, parámetros del modelo editables
-      y curva del modelo superpuesta a los datos del cuaderno.
 - [ ] **Física C:** transferencia de calor por conducción (7.º, `conduccion`) · sonido y resonancia (8.º, `sonido`) ·
       trabajo, potencia y plano inclinado (9.º, `trabajo`).
 - [ ] **Lote 9:** empuje y flotación con dinamómetro, principio de Arquímedes (7.º, física, `flotacion`) ·
@@ -57,6 +55,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] U6 · Modo avanzado: ecuaciones del modelo con los valores actuales (MathML) en 13 laboratorios, constantes del modelo editables en 6 y curva del modelo con residuos en el cuaderno (11 prácticas).
 - [x] Sonidos realistas sintetizados (22 laboratorios) y manipulación directa en 17 laboratorios con acabado visual de la escena.
 
 - [x] Fases 1 a 4: 24 prácticas, servidor de informes, accesibilidad WCAG 2.1 AA, modo sin conexión, guías en PDF.

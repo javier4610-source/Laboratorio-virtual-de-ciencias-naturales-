@@ -67,6 +67,8 @@ export interface ShotInput {
   height: number; // m, boca del lanzador sobre el piso
   sphereId: string;
   air: boolean; // true = con resistencia del aire
+  /** Gravedad (m/s²); por defecto G. Parámetro editable del modo avanzado. */
+  g?: number;
 }
 
 export interface TrajPoint { t: number; x: number; y: number; }
@@ -102,51 +104,51 @@ const rad = (deg: number) => (deg * Math.PI) / 180;
 const deg = (r: number) => (r * 180) / Math.PI;
 
 /** Tiempo de vuelo ideal (s). */
-export function idealFlightTime(v0: number, angleDeg: number, h: number): number {
+export function idealFlightTime(v0: number, angleDeg: number, h: number, g = G): number {
   const vy = v0 * Math.sin(rad(angleDeg));
-  return (vy + Math.sqrt(vy * vy + 2 * G * h)) / G;
+  return (vy + Math.sqrt(vy * vy + 2 * g * h)) / g;
 }
 
 /** Alcance ideal (m). */
-export function idealRange(v0: number, angleDeg: number, h: number): number {
-  return v0 * Math.cos(rad(angleDeg)) * idealFlightTime(v0, angleDeg, h);
+export function idealRange(v0: number, angleDeg: number, h: number, g = G): number {
+  return v0 * Math.cos(rad(angleDeg)) * idealFlightTime(v0, angleDeg, h, g);
 }
 
 /** Altura máxima ideal sobre el piso (m). */
-export function idealMaxHeight(v0: number, angleDeg: number, h: number): number {
+export function idealMaxHeight(v0: number, angleDeg: number, h: number, g = G): number {
   const vy = v0 * Math.sin(rad(angleDeg));
-  return h + (vy * vy) / (2 * G);
+  return h + (vy * vy) / (2 * g);
 }
 
 /** Ángulo de máximo alcance ideal: tanθ* = v0/√(v0² + 2gh) (45° si h = 0). */
-export function idealOptimalAngle(v0: number, h: number): number {
-  return deg(Math.atan(v0 / Math.sqrt(v0 * v0 + 2 * G * h)));
+export function idealOptimalAngle(v0: number, h: number, g = G): number {
+  return deg(Math.atan(v0 / Math.sqrt(v0 * v0 + 2 * g * h)));
 }
 
 /** Máximo alcance ideal (m) para v0 y h: R* = (v0/g)·√(v0² + 2gh). */
-export function idealMaxRange(v0: number, h: number): number {
-  return (v0 / G) * Math.sqrt(v0 * v0 + 2 * G * h);
+export function idealMaxRange(v0: number, h: number, g = G): number {
+  return (v0 / g) * Math.sqrt(v0 * v0 + 2 * g * h);
 }
 
 /** Estado ideal (posición y velocidad) en el instante t. */
-export function idealState(v0: number, angleDeg: number, h: number, t: number) {
+export function idealState(v0: number, angleDeg: number, h: number, t: number, g = G) {
   const a = rad(angleDeg);
   const vx = v0 * Math.cos(a), vy0 = v0 * Math.sin(a);
-  return { x: vx * t, y: h + vy0 * t - 0.5 * G * t * t, vx, vy: vy0 - G * t };
+  return { x: vx * t, y: h + vy0 * t - 0.5 * g * t * t, vx, vy: vy0 - g * t };
 }
 
 /** Energía mecánica (J) por encima del nivel del piso. */
-export function mechanicalEnergy(mass: number, y: number, vx: number, vy: number): number {
-  return 0.5 * mass * (vx * vx + vy * vy) + mass * G * y;
+export function mechanicalEnergy(mass: number, y: number, vx: number, vy: number, g = G): number {
+  return 0.5 * mass * (vx * vx + vy * vy) + mass * g * y;
 }
 
 /**
  * Ángulos (grados, 0–90) con los que el modelo ideal cae a la distancia D.
  * De y(D) = 0 con u = tanθ:  k·u² − D·u + (k − h) = 0,  k = g·D²/(2v0²).
  */
-export function idealAnglesToHit(v0: number, h: number, D: number): number[] {
+export function idealAnglesToHit(v0: number, h: number, D: number, g = G): number[] {
   if (D <= 0) return [];
-  const k = (G * D * D) / (2 * v0 * v0);
+  const k = (g * D * D) / (2 * v0 * v0);
   const disc = D * D - 4 * k * (k - h);
   if (disc < 0) return [];
   const r = Math.sqrt(disc);
@@ -156,10 +158,10 @@ export function idealAnglesToHit(v0: number, h: number, D: number): number[] {
 
 type State = [number, number, number, number];
 
-function dragDerivs(kOverM: number) {
+function dragDerivs(kOverM: number, g = G) {
   return (s: State): State => {
     const v = Math.hypot(s[2], s[3]);
-    return [s[2], s[3], -kOverM * v * s[2], -G - kOverM * v * s[3]];
+    return [s[2], s[3], -kOverM * v * s[2], -g - kOverM * v * s[3]];
   };
 }
 
@@ -178,8 +180,8 @@ export function dragPerMass(sphere: Sphere): number {
 }
 
 /** Rapidez terminal (m/s) de la esfera en caída libre con arrastre cuadrático. */
-export function terminalSpeed(sphere: Sphere): number {
-  return Math.sqrt(G / dragPerMass(sphere));
+export function terminalSpeed(sphere: Sphere, g = G): number {
+  return Math.sqrt(g / dragPerMass(sphere));
 }
 
 interface Core { flightTime: number; range: number; maxHeight: number; apexTime: number; vxImpact: number; vyImpact: number; path: TrajPoint[]; strobe: TrajPoint[]; }
@@ -189,22 +191,22 @@ function sampleTimes(tf: number, step: number): number[] {
   return Array.from({ length: n + 1 }, (_, i) => Number((i * step).toFixed(6)));
 }
 
-function coreIdeal(v0: number, angle: number, h: number): Core {
-  const tf = idealFlightTime(v0, angle, h);
+function coreIdeal(v0: number, angle: number, h: number, g = G): Core {
+  const tf = idealFlightTime(v0, angle, h, g);
   const vy0 = v0 * Math.sin(rad(angle));
-  const pos = (t: number): TrajPoint => { const s = idealState(v0, angle, h, t); return { t, x: s.x, y: Math.max(0, s.y) }; };
+  const pos = (t: number): TrajPoint => { const s = idealState(v0, angle, h, t, g); return { t, x: s.x, y: Math.max(0, s.y) }; };
   const path = sampleTimes(tf, 0.01).map(pos);
   if (path[path.length - 1].t < tf) path.push(pos(tf));
-  const end = idealState(v0, angle, h, tf);
+  const end = idealState(v0, angle, h, tf, g);
   return {
-    flightTime: tf, range: end.x, maxHeight: idealMaxHeight(v0, angle, h), apexTime: vy0 / G,
+    flightTime: tf, range: end.x, maxHeight: idealMaxHeight(v0, angle, h, g), apexTime: vy0 / g,
     vxImpact: end.vx, vyImpact: end.vy, path, strobe: sampleTimes(tf, STROBE_DT).map(pos),
   };
 }
 
-function coreDrag(v0: number, angle: number, h: number, sphere: Sphere): Core {
+function coreDrag(v0: number, angle: number, h: number, sphere: Sphere, g = G): Core {
   const a = rad(angle);
-  const f = dragDerivs(dragPerMass(sphere));
+  const f = dragDerivs(dragPerMass(sphere), g);
   let s: State = [0, h, v0 * Math.cos(a), v0 * Math.sin(a)];
   let t = 0;
   let maxY = h, apexT = 0;
@@ -237,7 +239,8 @@ function coreDrag(v0: number, angle: number, h: number, sphere: Sphere): Core {
 export function simulateShot(input: ShotInput): ShotResult {
   const sphere = validate(input);
   const { v0, angle, height: h } = input;
-  const c = input.air ? coreDrag(v0, angle, h, sphere) : coreIdeal(v0, angle, h);
+  const g = input.g ?? G;
+  const c = input.air ? coreDrag(v0, angle, h, sphere, g) : coreIdeal(v0, angle, h, g);
   const highest = c.strobe.reduce((m, p) => Math.max(m, p.y), 0);
   return {
     flightTime: c.flightTime, range: c.range, maxHeight: c.maxHeight, apexTime: c.apexTime,
@@ -248,20 +251,21 @@ export function simulateShot(input: ShotInput): ShotResult {
     rangeReading: roundToResolution(c.range, TAPE_RES),
     timeReading: roundToResolution(c.flightTime, TIMER_RES),
     maxHeightReading: roundToResolution(highest, STROBE_SCALE_RES),
-    idealRange: idealRange(v0, angle, h),
+    idealRange: idealRange(v0, angle, h, g),
   };
 }
 
 /** Alcance del modelo (m) sin construir la trayectoria completa para el ideal. */
 export function rangeOf(input: ShotInput): number {
   const sphere = validate(input);
-  return input.air ? coreDrag(input.v0, input.angle, input.height, sphere).range : idealRange(input.v0, input.angle, input.height);
+  const g = input.g ?? G;
+  return input.air ? coreDrag(input.v0, input.angle, input.height, sphere, g).range : idealRange(input.v0, input.angle, input.height, g);
 }
 
 /** Ángulo de máximo alcance (grados) con o sin aire (sección dorada; la función R(θ) es unimodal). */
 export function optimalAngle(input: Omit<ShotInput, 'angle'>): { angle: number; range: number } {
   validate({ ...input, angle: 45 });
-  if (!input.air) return { angle: idealOptimalAngle(input.v0, input.height), range: idealMaxRange(input.v0, input.height) };
+  if (!input.air) return { angle: idealOptimalAngle(input.v0, input.height, input.g ?? G), range: idealMaxRange(input.v0, input.height, input.g ?? G) };
   const R = (a: number) => rangeOf({ ...input, angle: a });
   const phi = (Math.sqrt(5) - 1) / 2;
   let lo = 0, hi = 90;

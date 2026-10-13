@@ -6,6 +6,8 @@ import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { useModelParams, usePublishModel } from '../components/Advanced';
+import { G as G_ENERGY } from '../models/energy';
 import { BenchTop } from './kit';
 
 const W = 640, H = 260, X0 = 72;
@@ -20,7 +22,29 @@ export default function EnergyLab({ api }: LabProps) {
   const [idx, setIdx] = useState(0);
   const [running, setRunning] = useState(false);
   const [done, setDone] = useState(false);
-  const res = useMemo(() => simulateTrack({ mass, startHeight: h0, hillHeight: hc, mu, rolling }), [mass, h0, hc, mu, rolling]);
+  const P = useModelParams();
+  const res = useMemo(() => simulateTrack({ mass, startHeight: h0, hillHeight: hc, mu, rolling, g: P.g }), [mass, h0, hc, mu, rolling, P.g]);
+  usePublishModel(() => {
+    const g = P.g ?? G_ENERGY;
+    return {
+      vars: {
+        E0: { sym: 'E_{p0}', name: 'Energía potencial inicial', value: mass * g * h0, unit: 'J', decimals: 3 },
+        m: { sym: 'm', name: 'Masa de la esfera', value: mass, unit: 'kg', decimals: 2 },
+        g: { sym: 'g', name: 'Gravedad', value: g, unit: 'm/s²', decimals: 2 },
+        h: { sym: 'h_{0}', name: 'Altura de salida', value: h0, unit: 'm', decimals: 2 },
+        mu: { sym: '\\mu', name: 'Coeficiente de fricción', value: mu, decimals: 3 },
+        x: { sym: 'x_{valle}', name: 'Recorrido horizontal hasta el valle', value: 1.5, unit: 'm', decimals: 2 },
+        Ef: { sym: 'E_{f}', name: 'Energía disipada hasta el valle', value: mu * mass * g * 1.5, unit: 'J', decimals: 3 },
+        k: { sym: 'k', name: rolling ? 'Factor de rodadura (esfera maciza)' : 'Factor de rodadura (desliza)', value: res.k, decimals: 2 },
+        v: { sym: 'v_{valle}', name: 'Rapidez en el valle', value: res.speedBottom, unit: 'm/s', decimals: 2 },
+      },
+      equations: [
+        { title: 'Energía potencial gravitatoria', lhs: 'E0', expr: '[m]·[g]·[h]' },
+        { title: 'Trabajo de la fricción', lhs: 'Ef', expr: '[mu]·[m]·[g]·[x]' },
+        { title: 'Conservación de la energía', lhs: 'v', expr: '\\sqrt{\\frac{2·([E0] − [Ef])}{[k]·[m]}}', note: rolling ? 'Al rodar, parte de la energía se va en la rotación (k = 7/5).' : 'Sin fricción, la rapidez no depende de la masa.' },
+      ],
+    };
+  }, [mass, h0, mu, rolling, res, P.g]);
   const raf = useRef(0);
   useEffect(() => { setIdx(0); setRunning(false); setDone(false); }, [mass, h0, hc, mu, rolling]);
 

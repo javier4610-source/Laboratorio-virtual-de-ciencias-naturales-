@@ -369,6 +369,8 @@ export interface ProbeInput {
   /** Altitud del lugar, m. */
   altitudeM: number;
   atmosphere: AtmosphereModel;
+  /** Gravedad (m/s²); por defecto G. Parámetro editable del modo avanzado. */
+  g?: number;
 }
 
 export interface ProbeResult {
@@ -387,14 +389,15 @@ export function simulateProbe(input: ProbeInput): ProbeResult {
   assertInRange('La orientación de la membrana', input.orientationDeg, ...PRESSURE_LIMITS.orientation);
   assertInRange('La altitud', input.altitudeM, ...PRESSURE_LIMITS.altitude);
   const rho = findLiquid(input.liquid).rho;
-  const gauge = membraneGauge(rho, input.depthCm, input.orientationDeg);
+  const g = input.g ?? G;
+  const gauge = membraneGauge(rho, input.depthCm, input.orientationDeg, MEMBRANE_R_CM, g);
   const pAtm = atmosphere(input.atmosphere, input.altitudeM);
-  return { rho, gauge, riseMm: manometerRise(gauge) * 1000, pAtm, pAbs: pAtm + gauge / 100 };
+  return { rho, gauge, riseMm: manometerRise(gauge, RHO_MANOMETER, g) * 1000, pAtm, pAbs: pAtm + gauge / 100 };
 }
 
 /** Cálculos del estudiante con sus lecturas: presión manométrica (Pa) desde el desnivel (mm) y absoluta (hPa). */
-export function analyzeManometer(riseReadingMm: number, pAtmReadingHpa: number): { gauge: number; pAbs: number } {
-  const gauge = gaugeFromManometer(riseReadingMm / 1000);
+export function analyzeManometer(riseReadingMm: number, pAtmReadingHpa: number, g = G): { gauge: number; pAbs: number } {
+  const gauge = gaugeFromManometer(riseReadingMm / 1000, RHO_MANOMETER, g);
   return { gauge, pAbs: pAtmReadingHpa + gauge / 100 };
 }
 

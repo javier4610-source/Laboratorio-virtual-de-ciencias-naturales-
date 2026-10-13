@@ -90,8 +90,8 @@ export function molarVolume(tempC: number, pressureKPa = SETUP.pressure): number
   return ((R_GAS * celsiusToKelvin(tempC)) / (pressureKPa * 1000)) * 1e6;
 }
 
-export function marbleRateConstant(tempC: number): number {
-  return K_MARBLE_25 * arrheniusFactor(EA_MARBLE, tempC);
+export function marbleRateConstant(tempC: number, ea = EA_MARBLE): number {
+  return K_MARBLE_25 * arrheniusFactor(ea, tempC);
 }
 
 /** Constante de primer orden de la descomposición del H₂O₂ con un catalizador (s⁻¹). */
@@ -113,6 +113,8 @@ export interface KineticsInput {
   catalyst?: Catalyst;
   /** Tiempo simulado en s (180 s por defecto). */
   duration?: number;
+  /** Energía de activación del mármol (J/mol); por defecto EA_MARBLE. Parámetro editable del modo avanzado. */
+  eaMarble?: number;
 }
 
 export interface KineticsResult {
@@ -169,7 +171,7 @@ export function simulateKinetics(input: KineticsInput): KineticsResult {
     const acid0 = input.concentration * SETUP.acidVolume;
     limiting = acid0 >= 2 * n0 ? 'CaCO₃ (el HCl está en exceso)' : 'HCl';
     totalVolume = Math.min(n0, acid0 / 2) * Vm;
-    rateConstant = marbleRateConstant(input.temperature);
+    rateConstant = marbleRateConstant(input.temperature, input.eaMarble);
     const k = rateConstant;
     // df/dt con f = fracción de CaCO₃ restante
     const dfdt = (f: number) => {

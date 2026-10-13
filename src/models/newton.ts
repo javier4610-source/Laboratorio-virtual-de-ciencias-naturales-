@@ -26,7 +26,7 @@ export function findSurface(id: string): Surface {
   return s;
 }
 
-export interface NewtonInput { mass: number; force: number; surfaceId: string; }
+export interface NewtonInput { mass: number; force: number; surfaceId: string; /** Gravedad (m/s²); por defecto G. Parámetro editable del modo avanzado. */ g?: number; }
 export interface NewtonResult {
   moves: boolean;
   weight: number; normal: number;
@@ -41,7 +41,7 @@ export function simulateCart(input: NewtonInput): NewtonResult {
   assertInRange('La masa del carrito', input.mass, ...NEWTON_LIMITS.mass);
   assertInRange('La fuerza aplicada', input.force, ...NEWTON_LIMITS.force);
   const s = findSurface(input.surfaceId);
-  const weight = input.mass * G;
+  const weight = input.mass * (input.g ?? G);
   const normal = weight;
   const maxStatic = s.muS * normal;
   if (input.force <= maxStatic && !(s.muS === 0 && input.force > 0)) {

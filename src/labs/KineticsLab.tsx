@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  CATALYSTS, DURATION, findCatalyst, findParticle, KINETICS_LIMITS, PARTICLES, SETUP, simulateKinetics, SYRINGE_RES, TARGET_VOLUME, volumeAt,
+  CATALYSTS, DURATION, EA_MARBLE, K_MARBLE_25, T_REF_C, findCatalyst, findParticle, KINETICS_LIMITS, PARTICLES, SETUP, simulateKinetics, SYRINGE_RES, TARGET_VOLUME, volumeAt,
   type Catalyst, type Particle, type Reaction,
 } from '../models/kinetics';
-import { roundToResolution } from '../models/math';
+import { R_GAS, roundToResolution } from '../models/math';
+import { useModelParams, usePublishModel } from '../components/Advanced';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
@@ -70,10 +71,40 @@ export default function KineticsLab({ api }: LabProps) {
   const concentration = marble ? concHCl : concH2O2;
   const tLimits = marble ? KINETICS_LIMITS.tempMarmol : KINETICS_LIMITS.tempPeroxido;
 
+  const P = useModelParams();
   const res = useMemo(
-    () => simulateKinetics({ reaction, concentration, temperature: Math.min(temp, tLimits[1]), particle, catalyst }),
-    [reaction, concentration, temp, tLimits, particle, catalyst],
+    () => simulateKinetics({ reaction, concentration, temperature: Math.min(temp, tLimits[1]), particle, catalyst, eaMarble: P.ea !== undefined ? P.ea * 1000 : undefined }),
+    [reaction, concentration, temp, tLimits, particle, catalyst, P.ea],
   );
+  usePublishModel(() => {
+    const T = Math.min(temp, tLimits[1]) + 273.15;
+    const cat = findCatalyst(catalyst);
+    const ea = marble ? (P.ea !== undefined ? P.ea * 1000 : EA_MARBLE) : cat.ea;
+    const k25 = marble ? K_MARBLE_25 : cat.k25;
+    const x = (-ea / R_GAS) * (1 / T - 1 / (T_REF_C + 273.15));
+    const kUnit = marble ? 's⁻¹·(mol/L)⁻¹' : 's⁻¹';
+    return {
+      vars: {
+        x: { sym: 'x', name: 'Exponente de Arrhenius', value: x, decimals: 3 },
+        Ea: { sym: 'E_{a}', name: 'Energía de activación', value: ea, unit: 'J/mol', decimals: 0 },
+        R: { sym: 'R', name: 'Constante de los gases', value: R_GAS, unit: 'J/(mol·K)', decimals: 3 },
+        T: { sym: 'T', name: 'Temperatura', value: T, unit: 'K', decimals: 2 },
+        Tr: { sym: 'T_{ref}', name: 'Temperatura de referencia', value: T_REF_C + 273.15, unit: 'K', decimals: 2 },
+        fA: { sym: 'f_{A}', name: 'Factor de Arrhenius (relativo a 25 °C)', value: Math.exp(x), decimals: 3 },
+        k25: { sym: 'k_{25}', name: 'Constante de velocidad a 25 °C', value: k25, unit: kUnit, sig: 3 },
+        k: { sym: 'k', name: 'Constante de velocidad', value: res.rateConstant, unit: kUnit, sig: 3 },
+        v30: { sym: 'V_{30}', name: 'Volumen a 30 s (jeringa)', value: res.v30Reading, unit: 'mL', decimals: 0 },
+        t30: { sym: 'Δt', value: 30, unit: 's', decimals: 0 },
+        vel: { sym: 'v_{media}', name: 'Velocidad media 0–30 s', value: res.v30Reading / 30, unit: 'mL/s', decimals: 2 },
+      },
+      equations: [
+        { title: 'Exponente de Arrhenius', lhs: 'x', expr: '−\\frac{[Ea]}{[R]}·(\\frac{1}{[T]} − \\frac{1}{[Tr]})' },
+        { title: 'Efecto de la temperatura', lhs: 'fA', expr: 'e^{[x]}' },
+        { title: 'Constante de velocidad', lhs: 'k', expr: '[k25]·[fA]', note: !marble && cat.enzyme ? 'La catalasa además pierde actividad al desnaturalizarse a temperaturas altas (no incluido en esta fórmula).' : undefined },
+        { title: 'Velocidad media (lectura de la jeringa)', lhs: 'vel', expr: '\\frac{[v30]}{[t30]}' },
+      ],
+    };
+  }, [res, temp, tLimits, catalyst, marble, P.ea]);
   /** Instante (s simulados) en que se libera cada mL de gas: da burbujas con frecuencia proporcional a la velocidad. */
   const emissions = useMemo(() => {
     const out: number[] = [];

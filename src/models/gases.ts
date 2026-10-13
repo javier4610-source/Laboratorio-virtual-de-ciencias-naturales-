@@ -25,7 +25,7 @@ export function molesInSyringe(): number {
   return (INITIAL.pressure * 1000 * (INITIAL.volume * 1e-6)) / (R_GAS * celsiusToKelvin(INITIAL.temperature));
 }
 
-export interface GasInput { law: GasLaw; volume: number; temperature: number; pressure: number; }
+export interface GasInput { law: GasLaw; volume: number; temperature: number; pressure: number; /** Cantidad de gas (mol); por defecto la de las condiciones iniciales. Parámetro editable del modo avanzado. */ moles?: number; }
 export interface GasResult {
   law: GasLaw;
   pressure: number; // kPa
@@ -39,7 +39,7 @@ export interface GasResult {
 }
 
 export function simulateGas(input: GasInput): GasResult {
-  const n = molesInSyringe();
+  const n = input.moles ?? molesInSyringe();
   let P: number, V: number, T: number;
   const warnings: string[] = [];
   if (input.law === 'boyle') {

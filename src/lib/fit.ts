@@ -202,6 +202,17 @@ export function applyTransform(t: AxisTransform, v: number): number {
   }
 }
 
+/** Inversa de la linealización de un eje: devuelve el valor original a partir del transformado (NaN si no existe). */
+export function inverseTransform(t: AxisTransform, v: number): number {
+  switch (t) {
+    case 'x': return v;
+    case 'x2': return v >= 0 ? Math.sqrt(v) : NaN;
+    case 'inv': return v === 0 ? NaN : 1 / v;
+    case 'sqrt': return v >= 0 ? v * v : NaN;
+    case 'ln': return Math.exp(v);
+  }
+}
+
 /** Propaga una incertidumbre δ a través de la transformación: |f′(v)|·δ. */
 export function propagateTransform(t: AxisTransform, v: number, delta: number): number {
   switch (t) {

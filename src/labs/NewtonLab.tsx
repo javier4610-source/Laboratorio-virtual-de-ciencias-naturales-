@@ -12,6 +12,8 @@ import { ManipHint, ManipScene, Plunger } from './manipulate';
 const PX_PER_N = 5;
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
+import { useModelParams, usePublishModel } from '../components/Advanced';
+import { G } from '../models/newton';
 
 function Arrow({ x1, y1, x2, y2, color, label }: { x1: number; y1: number; x2: number; y2: number; color: string; label: string }) {
   if (Math.hypot(x2 - x1, y2 - y1) < 2) return null;
@@ -191,13 +193,40 @@ export default function NewtonLab({ api }: LabProps) {
   const [running, setRunning] = useState(false);
   const [done, setDone] = useState(false);
   const { measure, remeasure } = useMeasure();
+  const P = useModelParams();
   const res = useMemo(() => {
-    const m = simulateCart({ mass, force, surfaceId: surface });
+    const m = simulateCart({ mass, force, surfaceId: surface, g: P.g });
     if (!m.moves) return m;
     // Lectura del cronómetro de fotopuertas (en modo real, con la dispersión típica de la ficha).
     const time = measure(Math.sqrt((2 * TRACK_LENGTH) / m.acceleration), { ...instrument('newton', 'cronometro'), key: 'cronometro' });
     return { ...m, time, measuredAcceleration: (2 * TRACK_LENGTH) / time ** 2 };
-  }, [mass, force, surface, measure]);
+  }, [mass, force, surface, measure, P.g]);
+  usePublishModel(() => {
+    const s = SURFACES.find((x) => x.id === surface)!;
+    const g = P.g ?? G;
+    return {
+      vars: {
+        a: { sym: 'a', name: 'Aceleración del modelo', value: res.acceleration, unit: 'm/s²', decimals: 3 },
+        F: { sym: 'F', name: 'Fuerza aplicada', value: force, unit: 'N', decimals: 2 },
+        f: { sym: 'f_{k}', name: 'Fricción cinética', value: res.moves ? res.friction : null, unit: 'N', decimals: 2 },
+        fs: { sym: 'f_{s,máx}', name: 'Fricción estática máxima', value: s.muS * mass * g, unit: 'N', decimals: 2 },
+        m: { sym: 'm', name: 'Masa del carrito', value: mass, unit: 'kg', decimals: 2 },
+        g: { sym: 'g', name: 'Gravedad', value: g, unit: 'm/s²', decimals: 2 },
+        mu: { sym: '\\mu_{k}', name: 'Coeficiente de fricción cinética', value: s.muK, decimals: 2 },
+        muS: { sym: '\\mu_{s}', name: 'Coeficiente de fricción estática', value: s.muS, decimals: 2 },
+        N: { sym: 'N', name: 'Fuerza normal', value: mass * g, unit: 'N', decimals: 2 },
+        d: { sym: 'd', name: 'Distancia entre fotopuertas', value: TRACK_LENGTH, unit: 'm', decimals: 2 },
+        t: { sym: 't', name: 'Tiempo (cronómetro)', value: res.time, unit: 's', decimals: 3 },
+        am: { sym: 'a_{med}', name: 'Aceleración medida', value: res.measuredAcceleration, unit: 'm/s²', decimals: 3 },
+      },
+      equations: [
+        { title: 'Fuerza normal (pista horizontal)', lhs: 'N', expr: '[m]·[g]' },
+        { title: 'Fricción', lhs: 'f', expr: '[mu]·[N]', note: res.moves ? undefined : `El carrito no se mueve: F no supera la fricción estática máxima μ_s·N.` },
+        { title: 'Segunda ley de Newton', lhs: 'a', expr: '\\frac{[F] − [f]}{[m]}' },
+        { title: 'Aceleración medida con las fotopuertas', lhs: 'am', expr: '\\frac{2·[d]}{[t]^{2}}' },
+      ],
+    };
+  }, [res, force, mass, surface, P.g]);
   const raf = useRef(0);
   const reset = () => { setRunning(false); setDone(false); setT(0); };
   useEffect(reset, [mass, force, surface]);

@@ -44,6 +44,16 @@ interface ChartProps {
   errorNote?: string;
   /** Muestra el título y la leyenda sobre la gráfica (cuaderno de laboratorio). */
   showTitle?: boolean;
+  /** Curva del modelo (modo avanzado) en las mismas coordenadas de la gráfica, con residuos respecto al modelo. */
+  modelCurve?: ModelCurveProp;
+}
+
+export interface ModelCurveProp {
+  /** Nombre del modelo en la leyenda (p. ej. «m = ρ·V»). */
+  label: string;
+  predict: (x: number) => number;
+  /** Condiciones fijas con que se calculó la curva. */
+  note?: string;
 }
 
 type Domain = [number, number];
@@ -125,11 +135,10 @@ async function svgToPng(svgText: string, W: number, H: number, scale = 2): Promi
 }
 
 /** Gráfica pequeña de residuos (y − y_ajuste) alineada con el eje x de la gráfica principal. */
-function ResidualPlot({ outcome, xDomain, W, m, xLabel, yUnit, narrow }: {
-  outcome: Extract<FitOutcome, { ok: true }>; xDomain: Domain; W: number; m: { l: number; r: number }; xLabel: string; yUnit?: string; narrow: boolean;
+function ResidualPlot({ res, title, against, color = 'var(--series-2)', xDomain, W, m, xLabel, yUnit, narrow }: {
+  res: { x: number; r: number }[]; title: string; against: string; color?: string; xDomain: Domain; W: number; m: { l: number; r: number }; xLabel: string; yUnit?: string; narrow: boolean;
 }) {
   const id = useId().replace(/:/g, '');
-  const res = outcome.fit.residuals;
   const H = narrow ? 144 : 164;
   const t = 24, b = 38;
   // Eje simétrico con marcas −u, 0, +u, donde u es el valor "redondo" que cubre el residuo máximo.
@@ -145,8 +154,8 @@ function ResidualPlot({ outcome, xDomain, W, m, xLabel, yUnit, narrow }: {
   const maxAbs = Math.max(...res.map((r) => Math.abs(r.r)));
   return (
     <svg className="chart residuals-plot" viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${id}-t ${id}-d`}>
-      <title id={`${id}-t`}>Residuos del ajuste {FIT_LABEL[outcome.fit.model]}</title>
-      <desc id={`${id}-d`}>{`${res.length} residuos (y medido − y del ajuste). Residuo máximo en valor absoluto: ${withUnit(fmtSig(maxAbs, 3), yUnit)}. Si los residuos se reparten al azar alrededor de cero, el modelo describe bien los datos; si forman una curva, conviene otro modelo.`}</desc>
+      <title id={`${id}-t`}>{title}</title>
+      <desc id={`${id}-d`}>{`${res.length} residuos (y medido − y ${against}). Residuo máximo en valor absoluto: ${withUnit(fmtSig(maxAbs, 3), yUnit)}. Si los residuos se reparten al azar alrededor de cero, el modelo describe bien los datos; si forman una curva, conviene otro modelo.`}</desc>
       <defs><clipPath id={`${id}-c`}><rect x={m.l} y={t} width={W - m.l - m.r} height={H - t - b} /></clipPath></defs>
       {yt.map((v) => (
         <g key={`y${v}`}>
@@ -162,8 +171,8 @@ function ResidualPlot({ outcome, xDomain, W, m, xLabel, yUnit, narrow }: {
       <g clipPath={`url(#${id}-c)`}>
         {res.map((r, i) => (
           <g key={i}>
-            <line x1={sx(r.x)} x2={sx(r.x)} y1={sy(0)} y2={sy(r.r)} stroke="var(--series-2)" strokeWidth={1.5} />
-            <circle cx={sx(r.x)} cy={sy(r.r)} r={4} fill="var(--series-2)" stroke="var(--surface)" strokeWidth={1.2} />
+            <line x1={sx(r.x)} x2={sx(r.x)} y1={sy(0)} y2={sy(r.r)} stroke={color} strokeWidth={1.5} />
+            <circle cx={sx(r.x)} cy={sy(r.r)} r={4} fill={color} stroke="var(--surface)" strokeWidth={1.2} />
           </g>
         ))}
       </g>
@@ -177,7 +186,7 @@ function ResidualPlot({ outcome, xDomain, W, m, xLabel, yUnit, narrow }: {
  * residuos y exportación a PNG/SVG. Incluye título y descripción para lectores de pantalla
  * y una tabla alternativa con los mismos datos.
  */
-export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yDomain, fit, height = 300, hLines, emptyText = 'Aún no hay datos para graficar.', exportName, copyFallbackLabel, errorNote = 'Las barras indican ± media resolución del instrumento.', showTitle = false }: ChartProps) {
+export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yDomain, fit, height = 300, hLines, emptyText = 'Aún no hay datos para graficar.', exportName, copyFallbackLabel, errorNote = 'Las barras indican ± media resolución del instrumento.', showTitle = false, modelCurve }: ChartProps) {
   const id = useId();
   const [showTable, setShowTable] = useState(false);
   const figRef = useRef<HTMLDivElement>(null);
@@ -203,7 +212,20 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
   const H = hasData ? (narrow ? Math.min(height, 260) : height) : Math.min(height, 170);
   const m = { l: narrow ? 52 : 64, r: 12, t: 14, b: 50 };
   const baseX = xDomain ?? domainOf(all.flatMap((p) => (p.ex ? [p.x - p.ex, p.x + p.ex] : [p.x])));
-  const baseY = yDomain ?? domainOf([...all.flatMap((p) => (p.ey ? [p.y - p.ey, p.y + p.ey] : [p.y])), ...(hLines ?? []).map((h) => h.y)]);
+  // La curva del modelo amplía el eje y solo cerca de los datos (una asíntota no debe aplastar los puntos).
+  const curveYs = (() => {
+    if (!modelCurve || !hasData || yDomain) return [];
+    const ys = all.map((p) => p.y);
+    const lo = Math.min(...ys), hi = Math.max(...ys);
+    const span = Math.max(hi - lo, Math.abs(hi) * 0.1, 1e-9);
+    const out: number[] = [];
+    for (let i = 0; i <= 60; i++) {
+      const y = modelCurve.predict(baseX[0] + ((baseX[1] - baseX[0]) * i) / 60);
+      if (Number.isFinite(y) && y >= lo - 1.5 * span && y <= hi + 1.5 * span) out.push(y);
+    }
+    return out;
+  })();
+  const baseY = yDomain ?? domainOf([...all.flatMap((p) => (p.ey ? [p.y - p.ey, p.y + p.ey] : [p.y])), ...(hLines ?? []).map((h) => h.y), ...curveYs]);
   const [x0, x1] = view?.x ?? baseX;
   const [y0, y1] = view?.y ?? baseY;
   const xt = niceTicks(x0, x1, narrow ? 4 : 6);
@@ -240,6 +262,29 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
     return d;
   }, [fitted, x0, x1, y0, y1, W, H]); // sx y sy dependen solo de estos valores
 
+  // Curva del modelo muestreada en la vista actual (se corta donde el modelo no está definido).
+  const modelPath = useMemo(() => {
+    if (!modelCurve) return '';
+    const N = 240;
+    let d = '', pen = false;
+    for (let i = 0; i <= N; i++) {
+      const x = x0 + ((x1 - x0) * i) / N;
+      const y = modelCurve.predict(x);
+      if (!Number.isFinite(y)) { pen = false; continue; }
+      const py = Math.max(-1e4, Math.min(1e4, sy(y)));
+      d += `${pen ? 'L' : 'M'}${sx(x).toFixed(2)},${py.toFixed(2)}`;
+      pen = true;
+    }
+    return d;
+  }, [modelCurve, x0, x1, y0, y1, W, H]); // sx y sy dependen solo de estos valores
+  // Residuos respecto al modelo (todas las series).
+  const modelRes = useMemo(() => {
+    if (!modelCurve) return [];
+    return series.flatMap((s) => s.points.filter(finite).map((p) => ({ x: p.x, y: p.y, m: modelCurve.predict(p.x) })))
+      .filter((r) => Number.isFinite(r.m)).map((r) => ({ x: r.x, r: r.y - r.m }));
+  }, [modelCurve, series]);
+  const modelRms = modelRes.length ? Math.sqrt(modelRes.reduce((a, r) => a + r.r * r.r, 0) / modelRes.length) : NaN;
+  const modelMean = modelRes.length ? modelRes.reduce((a, r) => a + r.r, 0) / modelRes.length : NaN;
   // Puntos navegables con el cursor, ordenados por x.
   const flat = useMemo(() => series.flatMap((s, si) => s.points.map((p, pi) => ({ si, pi, p }))).filter((e) => finite(e.p)).sort((a, b) => a.p.x - b.p.x || a.p.y - b.p.y), [series]);
   const cur = cursor ? flat.find((e) => e.si === cursor.si && e.pi === cursor.pi) ?? null : null;
@@ -326,7 +371,8 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
 
   const reading = cur
     ? `${series.length > 1 ? `${series[cur.si].label}, ` : ''}${cur.p.label ? `${cur.p.label}: ` : ''}x = ${withUnit(fmtSig(cur.p.x, 4), xUnit)}; y = ${withUnit(fmtSig(cur.p.y, 4), yUnit)}` +
-      (fitted && cur.si === 0 ? `; ajuste = ${withUnit(fmtSig(fitted.predict(cur.p.x), 4), yUnit)}` : '')
+      (fitted && cur.si === 0 ? `; ajuste = ${withUnit(fmtSig(fitted.predict(cur.p.x), 4), yUnit)}` : '') +
+      (modelCurve && Number.isFinite(modelCurve.predict(cur.p.x)) ? `; modelo = ${withUnit(fmtSig(modelCurve.predict(cur.p.x), 4), yUnit)}` : '')
     : '';
 
   const fileBase = slug(exportName ?? title);
@@ -349,7 +395,8 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
     setExportMsg((await copyText(rows.map((r) => r.join('\t')).join('\n'))) ? 'Puntos copiados: pégalos en una hoja de cálculo.' : 'No se pudo copiar automáticamente: abre la tabla de datos y cópiala.');
   };
 
-  const fitDesc = fitted ? ` Ajuste ${FIT_LABEL[fitted.model]}: ${equationWithValues(fitted)}, R² = ${fmt(fitted.r2, 4)}, ${fitted.n} puntos.` : '';
+  const fitDesc = (fitted ? ` Ajuste ${FIT_LABEL[fitted.model]}: ${equationWithValues(fitted)}, R² = ${fmt(fitted.r2, 4)}, ${fitted.n} puntos.` : '') +
+    (modelCurve ? ` Curva del modelo superpuesta (${modelCurve.label}); residuo cuadrático medio respecto al modelo: ${withUnit(fmtSig(modelRms, 3), yUnit)}.` : '');
   const desc = all.length === 0
     ? emptyText
     : `Gráfica de ${yLabel} en función de ${xLabel}. ${series.map((s) => `${s.label}: ${s.points.length} puntos`).join('; ')}.${fitDesc} Con la gráfica enfocada, las flechas recorren los puntos; + y − acercan o alejan; 0 restablece la vista.`;
@@ -374,10 +421,11 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
   })();
 
   const fitLabel = fitted ? FIT_LABEL[fitted.model] : '';
-  const legendItems = hasData && (showTitle || series.length > 1 || fitted)
+  const legendItems = hasData && (showTitle || series.length > 1 || fitted || modelCurve)
     ? [
         ...series.map((s, si) => ({ key: `s${si}`, label: s.label, color: colorOf(s, si), kind: s.kind ?? 'scatter', dashed: s.dashed })),
         ...(fitted ? [{ key: 'fit', label: `Ajuste ${fitLabel}`, color: 'var(--ink-2)', kind: 'line' as const, dashed: true }] : []),
+        ...(modelCurve ? [{ key: 'model', label: `Modelo: ${modelCurve.label}`, color: 'var(--model-curve)', kind: 'line' as const, dashed: false }] : []),
       ]
     : [];
   const tableId = `${id}-tabla`;
@@ -419,7 +467,7 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
           {hasData && toolbar}
         </div>
       )}
-      <div className={`chart-body${fitted ? ' has-fit' : ''}`}>
+      <div className={`chart-body${fitted || (modelCurve && hasData) ? ' has-fit' : ''}`}>
         <div className="chart-plot" ref={figRef}>
       <svg
         ref={svgRef} viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${id}-t ${id}-d`} preserveAspectRatio="xMidYMid meet"
@@ -455,6 +503,7 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
               <text x={W - m.r - 4} y={sy(h.y) - 5} textAnchor="end">{h.label}</text>
             </g>
           ))}
+          {modelPath && <path className="model-curve" d={modelPath} fill="none" stroke="var(--model-curve)" strokeWidth={2.6} strokeLinejoin="round" opacity={0.9} />}
           {fitPath && <path d={fitPath} fill="none" stroke="var(--ink-2)" strokeWidth={1.8} strokeDasharray="6 4" />}
           {series.map((s, si) => {
             const color = colorOf(s, si);
@@ -520,10 +569,32 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
           {fitted && (
             <div className="residuals-panel">
               <p className="residuals-title" aria-hidden="true">Residuos <span className="muted">(y medido − y del ajuste)</span></p>
-              <ResidualPlot outcome={outcome as Extract<FitOutcome, { ok: true }>} xDomain={[x0, x1]} W={W} m={m} xLabel={xLabel} yUnit={yUnit} narrow={narrow} />
+              <ResidualPlot res={fitted.residuals} title={`Residuos del ajuste ${FIT_LABEL[fitted.model]}`} against="del ajuste" xDomain={[x0, x1]} W={W} m={m} xLabel={xLabel} yUnit={yUnit} narrow={narrow} />
+            </div>
+          )}
+          {modelCurve && modelRes.length > 0 && (
+            <div className="residuals-panel model-residuals">
+              <p className="residuals-title" aria-hidden="true">Residuos respecto al modelo <span className="muted">(y medido − y del modelo)</span></p>
+              <ResidualPlot res={modelRes} title="Residuos respecto al modelo" against="del modelo" color="var(--model-curve)" xDomain={[x0, x1]} W={W} m={m} xLabel={xLabel} yUnit={yUnit} narrow={narrow} />
             </div>
           )}
         </div>
+        {(fitted || (modelCurve && hasData)) && <div className="chart-side">
+        {modelCurve && hasData && (
+          <div className="fit-card model-card" role="group" aria-labelledby={`${id}-model`}>
+            <div className="fit-card-head">
+              <svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" focusable="false"><line x1="1" x2="21" y1="6" y2="6" stroke="var(--model-curve)" strokeWidth={2.6} /></svg>
+              <strong id={`${id}-model`}>Curva del modelo</strong>
+            </div>
+            <p className="fit-eq num">{modelCurve.label}</p>
+            {modelCurve.note && <p className="small muted fit-note">{modelCurve.note}</p>}
+            <dl className="fit-stats">
+              <div><dt>RMS residuos</dt><dd className="num">{modelRes.length ? withUnit(fmtSig(modelRms, 3), yUnit) : '—'}</dd></div>
+              <div><dt>Residuo medio</dt><dd className="num">{modelRes.length ? withUnit(fmtSig(modelMean, 3), yUnit) : '—'}</dd></div>
+            </dl>
+            <p className="small muted fit-note">{modelRes.length === 0 ? 'El modelo no está definido en los puntos medidos.' : 'Residuo medio cercano a 0 y residuos sin tendencia: el modelo describe tus datos. Un residuo medio grande indica un error sistemático o un supuesto del modelo que no se cumple.'}</p>
+          </div>
+        )}
         {fitted && (
           <div className="fit-card" role="group" aria-labelledby={`${id}-fit`}>
             <div className="fit-card-head">
@@ -552,6 +623,7 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
             {fitted.dof === 0 && <p className="small muted fit-note">Con {fitted.n} puntos no se puede estimar la incertidumbre: guarda más ensayos.</p>}
           </div>
         )}
+        </div>}
       </div>
       <figcaption className="chart-foot">
         {hasErr && <p className="small muted">{errorNote}</p>}
@@ -568,11 +640,13 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
                   <th scope="col" className="n">{yLabel}</th>
                   {all.some((p) => p.ey) && <th scope="col" className="n">± y</th>}
                   {fitted && <><th scope="col" className="n">y del ajuste</th><th scope="col" className="n">Residuo</th></>}
+                  {modelCurve && <><th scope="col" className="n">y del modelo</th><th scope="col" className="n">Residuo (modelo)</th></>}
                 </tr>
               </thead>
               <tbody>
                 {series.flatMap((s, si) => s.points.map((p, i) => {
                   const yf = fitted && si === 0 && finite(p) ? fitted.predict(p.x) : null;
+                  const ym = modelCurve && finite(p) ? modelCurve.predict(p.x) : NaN;
                   return (
                     <tr key={`${s.label}-${i}`}>
                       <td>{s.label}{p.label ? ` · ${p.label}` : ''}</td><td className="n">{fmtSig(p.x, 4)}</td>
@@ -580,14 +654,32 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
                       <td className="n">{fmtSig(p.y, 4)}</td>
                       {all.some((q) => q.ey) && <td className="n">{p.ey ? fmtSig(p.ey, 2) : '—'}</td>}
                       {fitted && <><td className="n">{yf === null ? '—' : fmtSig(yf, 4)}</td><td className="n">{yf === null ? '—' : fmtSig(p.y - yf, 3)}</td></>}
+                      {modelCurve && <><td className="n">{Number.isFinite(ym) ? fmtSig(ym, 4) : '—'}</td><td className="n">{Number.isFinite(ym) ? fmtSig(p.y - ym, 3) : '—'}</td></>}
                     </tr>
                   );
                 }))}
               </tbody>
             </table>
+            {modelCurve && <CurveTable title={title} curve={modelCurve} xs={all.map((p) => p.x)} xLabel={xLabel} yLabel={yLabel} />}
           </div>
         )}
       </figcaption>
     </figure>
+  );
+}
+
+/** Tabla de puntos de muestra de la curva del modelo (alternativa accesible al trazo). */
+function CurveTable({ title, curve, xs, xLabel, yLabel }: { title: string; curve: ModelCurveProp; xs: number[]; xLabel: string; yLabel: string }) {
+  const lo = Math.min(...xs), hi = Math.max(...xs);
+  const n = lo === hi ? 0 : 10;
+  const rows = Array.from({ length: n + 1 }, (_, i) => lo + ((hi - lo) * i) / (n || 1)).map((x) => ({ x, y: curve.predict(x) }));
+  return (
+    <table className="curve-table">
+      <caption>Curva del modelo ({curve.label}): {title}</caption>
+      <thead><tr><th scope="col" className="n">{xLabel}</th><th scope="col" className="n">{yLabel} según el modelo</th></tr></thead>
+      <tbody>
+        {rows.map((r, i) => <tr key={i}><td className="n">{fmtSig(r.x, 4)}</td><td className="n">{Number.isFinite(r.y) ? fmtSig(r.y, 4) : '—'}</td></tr>)}
+      </tbody>
+    </table>
   );
 }

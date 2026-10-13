@@ -15,6 +15,16 @@ import { queuePracticeOpen, queueProgress, getEnrollment, useClassroom } from '.
 import { buildSyncSummary, useActiveTime } from '../lib/syncSummary';
 import { CourseNote, SyncChip } from '../components/ClassroomUi';
 import { MeasurementPanel, MeasurementProvider } from '../components/Measurement';
+import { AdvancedProvider, AdvancedToggle, ModelEquationsPanel, useAdvancedApi } from '../components/Advanced';
+import type { SessionApi } from '../lib/session';
+import type { LabProps } from '../labs/registry';
+import type { ComponentType } from 'react';
+
+/** Monta el laboratorio con la sesión envuelta por el modo avanzado (marca los ensayos con parámetros modificados). */
+function LabHost({ Lab, api, practice }: { Lab: ComponentType<LabProps>; api: SessionApi; practice: PracticeDef }) {
+  const labApi = useAdvancedApi(api);
+  return <Lab api={labApi} practice={practice} />;
+}
 
 const MODE_HELP: Record<Mode, string> = {
   guiada: 'Práctica guiada: avanzas por etapas. Debes formular una hipótesis antes de experimentar y guardar ensayos antes de analizar.',
@@ -85,6 +95,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
   };
 
   return (
+    <AdvancedProvider key={p.id} practiceId={p.id}>
     <div className="practice">
       <header className={`practice-head${compact ? ' compact' : ''}`}>
         <nav aria-label="Ruta de navegación" className="small muted crumbs">
@@ -161,11 +172,13 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
                 extra={fs.supported && <button type="button" className="btn small ghost" onClick={fs.toggle} aria-pressed={fs.active}>{fs.active ? 'Salir de pantalla completa' : 'Pantalla completa'}</button>}
               />
               <MeasurementPanel api={api} practiceId={p.id} />
+              <AdvancedToggle />
               <MeasurementProvider api={api} practiceId={p.id}>
                 <Suspense fallback={<p role="status">Cargando el laboratorio…</p>}>
-                  <Lab api={api} practice={p} />
+                  <LabHost Lab={Lab} api={api} practice={p} />
                 </Suspense>
               </MeasurementProvider>
+              <ModelEquationsPanel practice={p} />
             </div>
             <DataPanel practiceId={p.id} datasets={DATASETS[p.id]} api={api} />
             <div className="btn-row">
@@ -182,5 +195,6 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
       <p className="small muted no-print">Tu trabajo se guarda automáticamente en este navegador. Para entregarlo, abre «Ver informe» y descarga o copia el archivo para tu docente.</p>
       <CourseNote />
     </div>
+    </AdvancedProvider>
   );
 }

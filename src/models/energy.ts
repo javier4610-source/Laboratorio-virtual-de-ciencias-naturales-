@@ -23,7 +23,7 @@ export function trackHeight(x: number, startHeight: number, hillHeight: number):
 
 export const ENERGY_LIMITS = { mass: [0.05, 2] as [number, number], startHeight: [0.2, 2] as [number, number], hillHeight: [0, 2] as [number, number], mu: [0, 0.1] as [number, number] };
 
-export interface EnergyInput { mass: number; startHeight: number; hillHeight: number; mu: number; rolling: boolean; }
+export interface EnergyInput { mass: number; startHeight: number; hillHeight: number; mu: number; rolling: boolean; /** Gravedad (m/s²); por defecto G. Parámetro editable del modo avanzado. */ g?: number; }
 export interface EnergyPoint { x: number; h: number; v: number; ep: number; ek: number; ef: number; }
 export interface EnergyResult {
   points: EnergyPoint[];
@@ -42,7 +42,8 @@ export function simulateTrack(input: EnergyInput): EnergyResult {
   assertInRange('El coeficiente de fricción', input.mu, ...ENERGY_LIMITS.mu);
   const { mass: m, startHeight: h0, hillHeight: hc, mu } = input;
   const k = input.rolling ? 7 / 5 : 1; // energía de rotación de una esfera maciza que rueda sin deslizar
-  const E0 = m * G * h0;
+  const g = input.g ?? G;
+  const E0 = m * g * h0;
   const N = 800;
   const points: EnergyPoint[] = [];
   let ef = 0;
@@ -54,9 +55,9 @@ export function simulateTrack(input: EnergyInput): EnergyResult {
     const h = trackHeight(x, h0, hc);
     if (i > 0) {
       // ∫ μ·m·g·cos θ ds = μ·m·g·dx (proyección horizontal)
-      ef += mu * m * G * (x - prevX);
+      ef += mu * m * g * (x - prevX);
     }
-    const ep = m * G * h;
+    const ep = m * g * h;
     const ek = E0 - ep - ef;
     if (ek < 0) { stopX = x; break; }
     const v = Math.sqrt((2 * ek) / (m * k));

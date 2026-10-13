@@ -52,7 +52,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 | 11.º | Expresión génica y mutaciones | Biología | Gen real HBB con promotor, exones e intrones; transcripción, empalme y traducción animados; mutaciones con el teclado o arrastrando bases; anemia falciforme; gel de proteínas |
 
-Otras 2 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 9 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

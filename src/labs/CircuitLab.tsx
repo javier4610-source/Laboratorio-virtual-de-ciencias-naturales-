@@ -3,6 +3,7 @@ import { brightness, CIRCUIT_LIMITS, solveCircuit, type Topology } from '../mode
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { usePublishModel } from '../components/Advanced';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
 import { Knob, ManipHint } from './manipulate';
@@ -171,6 +172,30 @@ export default function CircuitLab({ api }: LabProps) {
   const [main, setMain] = useState(true);
   const [meter, setMeter] = useState<'1' | '2' | '3' | 'fuente'>('1');
   const res = useMemo(() => solveCircuit({ topology, emf, internalResistance: r, resistances: R, closed, mainSwitch: main }), [topology, emf, r, R, closed, main]);
+  usePublishModel(() => {
+    const allClosed = closed.every(Boolean) && main;
+    const reqExpr = topology === 'serie' ? '[R1] + [R2] + [R3]'
+      : topology === 'paralelo' ? '\\frac{1}{\\frac{1}{[R1]} + \\frac{1}{[R2]} + \\frac{1}{[R3]}}'
+        : '[R1] + \\frac{[R2]·[R3]}{[R2] + [R3]}';
+    return {
+      vars: {
+        Req: { sym: 'R_{eq}', name: 'Resistencia equivalente', value: res.equivalentResistance, unit: 'Ω', decimals: 2 },
+        R1: { sym: 'R_{1}', value: R[0], unit: 'Ω', decimals: 0 }, R2: { sym: 'R_{2}', value: R[1], unit: 'Ω', decimals: 0 }, R3: { sym: 'R_{3}', value: R[2], unit: 'Ω', decimals: 0 },
+        e: { sym: '\\varepsilon', name: 'Fuerza electromotriz', value: emf, unit: 'V', decimals: 1 },
+        r: { sym: 'r', name: 'Resistencia interna', value: r, unit: 'Ω', decimals: 2 },
+        I: { sym: 'I', name: 'Corriente total', value: res.open ? 0 : res.totalCurrent, unit: 'A', decimals: 3 },
+        V: { sym: 'V_{b}', name: 'Voltaje en los bornes', value: res.terminalVoltage, unit: 'V', decimals: 2 },
+        Pt: { sym: 'P', name: 'Potencia en los resistores', value: res.totalPower, unit: 'W', decimals: 2 },
+      },
+      equations: res.open ? [] : [
+        ...(allClosed ? [{ title: `Resistencia equivalente (${topology})`, lhs: 'Req', expr: reqExpr }] : []),
+        { title: 'Ley de Ohm para el circuito', lhs: 'I', expr: '\\frac{[e]}{[Req] + [r]}' },
+        { title: 'Voltaje en los bornes', lhs: 'V', expr: '[e] − [I]·[r]' },
+        { title: 'Potencia entregada', lhs: 'Pt', expr: '[I]^{2}·[Req]' },
+      ],
+      note: res.open ? 'El circuito está abierto: no circula corriente (I = 0). Cierra los interruptores para ver las ecuaciones con valores.' : allClosed ? undefined : 'Con algún interruptor abierto, R_eq solo incluye las ramas cerradas.',
+    };
+  }, [res, topology, R, emf, r, closed, main]);
   const toggle = (i: number) => { setClosed((c) => c.map((v, j) => (j === i ? !v : v)) as [boolean, boolean, boolean]); playSound('switch'); };
   const toggleMain = () => { setMain((m) => !m); playSound('switch'); };
   const setRi = (i: number, v: number) => setRs((rs) => rs.map((x, j) => (j === i ? v : x)) as [number, number, number]);

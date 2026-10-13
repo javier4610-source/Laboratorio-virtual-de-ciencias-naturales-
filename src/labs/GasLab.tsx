@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { GAS_LIMITS, INITIAL, simulateGas, type GasLaw } from '../models/gases';
-import { seededRandom } from '../models/math';
+import { R_GAS, seededRandom } from '../models/math';
+import { useModelParams, usePublishModel } from '../components/Advanced';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
 import { fmt } from '../lib/format';
@@ -69,7 +70,8 @@ export default function GasLab({ api }: LabProps) {
   const setVolume = (v: number) => { setVolumeState(v); if (v !== volume) playSound('squeak', { intensity: Math.min(1, 40 / Math.max(10, v)) }); };
   const setTemperature = (v: number) => { setTemperatureState(v); if (v !== temperature) playSound('knob'); };
   const [tick, setTick] = useState(0);
-  const model = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure }), [law, volume, temperature]);
+  const P = useModelParams();
+  const model = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure, moles: P.n !== undefined ? P.n / 1000 : undefined }), [law, volume, temperature, P.n]);
   // Lecturas de los instrumentos. En modo real: el émbolo queda un poco desalineado de la marca de la escala
   // (el volumen real del gas difiere del indicado y la presión sigue P ∝ 1/V del modelo) y el manómetro suma su ruido.
   const { measure, remeasure, deviation } = useMeasure();
@@ -84,6 +86,34 @@ export default function GasLab({ api }: LabProps) {
     const pressureReading = measure(pressure, { ...instrument('gases', 'manometro'), key: 'manometro' });
     return { ...model, pressureReading, volumeReading };
   }, [model, law, measure, deviation]);
+  usePublishModel(() => {
+    const n = model.pv * 1e-3 / (R_GAS * model.temperatureK); // mol (kPa·mL = mJ)
+    return {
+      vars: {
+        P: { sym: 'P', name: 'Presión del gas', value: model.pressure, unit: 'kPa', decimals: 1 },
+        V: { sym: 'V', name: 'Volumen del gas', value: model.volume, unit: 'mL', decimals: 1 },
+        T: { sym: 'T', name: 'Temperatura absoluta', value: model.temperatureK, unit: 'K', decimals: 2 },
+        Tc: { sym: 'T_{C}', name: 'Temperatura en grados Celsius', value: model.temperatureC, unit: '°C', decimals: 1 },
+        n: { sym: 'n', name: 'Cantidad de gas', value: n * 1000, unit: 'mmol', decimals: 3 },
+        nmol: { sym: 'n', value: n, unit: 'mol', sig: 4 },
+        R: { sym: 'R', name: 'Constante de los gases', value: R_GAS, unit: 'J/(mol·K)', decimals: 3 },
+        Vm3: { sym: 'V', value: model.volume * 1e-6, unit: 'm³', sig: 4 },
+        Ppa: { sym: 'P', value: model.pressure * 1000, unit: 'Pa', sig: 4 },
+        pv: { sym: 'C', name: 'Constante de Boyle (P·V)', value: model.pv, unit: 'kPa·mL', decimals: 0 },
+        voT: { sym: 'C', name: 'Constante de Charles (V/T)', value: model.vOverT, unit: 'mL/K', decimals: 4 },
+        poT: { sym: 'C', name: 'Constante de Gay-Lussac (P/T)', value: model.pOverT, unit: 'kPa/K', decimals: 4 },
+      },
+      equations: [
+        { title: 'Temperatura absoluta', lhs: 'T', expr: '[Tc] + 273,15\\,\\text{K}' },
+        { title: 'Ecuación del gas ideal (P en Pa, V en m³)', lhs: 'Ppa', expr: '\\frac{[nmol]·[R]·[T]}{[Vm3]}' },
+        law === 'boyle'
+          ? { title: 'Ley de Boyle (T constante)', lhs: 'pv', expr: '[P]·[V]', note: 'P·V no cambia al mover el émbolo: P es inversamente proporcional a V.' }
+          : law === 'charles'
+            ? { title: 'Ley de Charles (P constante)', lhs: 'voT', expr: '\\frac{[V]}{[T]}', note: 'V/T no cambia al calentar: V es proporcional a T (en kelvin).' }
+            : { title: 'Ley de Gay-Lussac (V constante)', lhs: 'poT', expr: '\\frac{[P]}{[T]}', note: 'P/T no cambia al calentar: P es proporcional a T (en kelvin).' },
+      ],
+    };
+  }, [model, law]);
 
   // Partículas: su rapidez de animación ∝ √T (energía cinética media ∝ T).
   useEffect(() => {

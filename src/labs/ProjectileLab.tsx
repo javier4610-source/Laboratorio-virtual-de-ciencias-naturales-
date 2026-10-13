@@ -9,6 +9,7 @@ import { impactIntensity, playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import { Chart } from '../components/Chart';
 import type { LabProps } from './registry';
+import { useModelParams, usePublishModel } from '../components/Advanced';
 import { BenchTop, Lcd, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
 
@@ -211,9 +212,35 @@ export default function ProjectileLab({ api }: LabProps) {
   const v0 = launcher === 'resorte' ? SPRING_LEVELS.find((l) => l.id === level)!.v0 : v0c;
   const withAir = air === 'aire';
   const sphere = findSphere(sphereId);
-  const shot = useMemo(() => simulateShot({ v0, angle, height, sphereId, air: withAir }), [v0, angle, height, sphereId, withAir]);
-  const idealPath = useMemo(() => (withAir ? simulateShot({ v0, angle, height, sphereId, air: false }).path : null), [v0, angle, height, sphereId, withAir]);
-  const best = useMemo(() => (activity === 'libre' ? null : optimalAngle({ v0, height, sphereId, air: withAir })), [activity, v0, height, sphereId, withAir]);
+  const P = useModelParams();
+  const g = P.g ?? G;
+  const shot = useMemo(() => simulateShot({ v0, angle, height, sphereId, air: withAir, g: P.g }), [v0, angle, height, sphereId, withAir, P.g]);
+  const idealPath = useMemo(() => (withAir ? simulateShot({ v0, angle, height, sphereId, air: false, g: P.g }).path : null), [v0, angle, height, sphereId, withAir, P.g]);
+  const best = useMemo(() => (activity === 'libre' ? null : optimalAngle({ v0, height, sphereId, air: withAir, g: P.g })), [activity, v0, height, sphereId, withAir, P.g]);
+  usePublishModel(() => {
+    const th = (angle * Math.PI) / 180;
+    const vy = v0 * Math.sin(th);
+    return {
+      vars: {
+        v0: { sym: 'v_{0}', name: 'Rapidez de salida', value: v0, unit: 'm/s', decimals: 2 },
+        th: { sym: '\\theta', name: 'Ángulo de lanzamiento', value: angle, unit: '°', decimals: 1 },
+        h: { sym: 'h', name: 'Altura de lanzamiento', value: height, unit: 'm', decimals: 2 },
+        g: { sym: 'g', name: 'Gravedad', value: g, unit: 'm/s²', decimals: 2 },
+        vx: { sym: 'v_{x}', name: 'Componente horizontal', value: v0 * Math.cos(th), unit: 'm/s', decimals: 3 },
+        vy: { sym: 'v_{y0}', name: 'Componente vertical inicial', value: vy, unit: 'm/s', decimals: 3 },
+        H: { sym: 'y_{máx}', name: 'Altura máxima (sin aire)', value: height + (vy * vy) / (2 * g), unit: 'm', decimals: 3 },
+        t: { sym: 't_{v}', name: 'Tiempo de vuelo (sin aire)', value: (vy + Math.sqrt(vy * vy + 2 * g * height)) / g, unit: 's', decimals: 3 },
+        R: { sym: 'R', name: 'Alcance (sin aire)', value: shot.idealRange, unit: 'm', decimals: 3 },
+      },
+      equations: [
+        { title: 'Componentes de la velocidad', lhs: 'vx', expr: '[v0]·\\cos [th]' },
+        { lhs: 'vy', expr: '[v0]·\\sin [th]' },
+        { title: 'Altura máxima', lhs: 'H', expr: '[h] + \\frac{[vy]^{2}}{2·[g]}' },
+        { title: 'Tiempo de vuelo (y = 0)', lhs: 't', expr: '\\frac{[vy] + \\sqrt{[vy]^{2} + 2·[g]·[h]}}{[g]}' },
+        { title: 'Alcance', lhs: 'R', expr: '[vx]·[t]', note: withAir ? 'Con aire, el alcance real es menor: el arrastre se integra numéricamente (no tiene fórmula cerrada).' : undefined },
+      ],
+    };
+  }, [v0, angle, height, g, shot, withAir]);
 
   // Cualquier cambio de condiciones deja el lanzador listo para un disparo nuevo.
   useEffect(() => { setPhase('listo'); setT(0); }, [v0, angle, height, sphereId, withAir]);
@@ -222,11 +249,11 @@ export default function ProjectileLab({ api }: LabProps) {
 
   // Escala del dibujo: depende de v0 y h, no del ángulo (no revela el alcance).
   const span = useMemo(() => {
-    const xs = Math.max(0.6, idealMaxRange(v0, height) * 1.06, (target ?? 0) + 0.2);
-    const ys = Math.max(0.5, height + (v0 * v0) / (2 * G) * 1.02);
+    const xs = Math.max(0.6, idealMaxRange(v0, height, g) * 1.06, (target ?? 0) + 0.2);
+    const ys = Math.max(0.5, height + (v0 * v0) / (2 * g) * 1.02);
     const s = Math.min((X_MAX - X0) / xs, (Y_FLOOR - Y_TOP) / ys);
     return { s, xs, ys };
-  }, [v0, height, target]);
+  }, [v0, height, target, g]);
   const s = span.s;
   const px = (x: number) => X0 + x * s;
   const py = (y: number) => Y_FLOOR - y * s;

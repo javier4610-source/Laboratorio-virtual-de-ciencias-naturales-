@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import {
   HOLE_HEIGHTS, LIQUIDS, PLACES, PRESSURE_INSTRUMENTS, PRESSURE_LIMITS, TANK_DEPTH_CM, VESSELS, analyzeManometer, atmosphere, baseAreaCm2,
-  findLiquid, findPlace, findVessel, jet, mercuryColumnMm, pascalVessel, simulateProbe, speedFromRange, uTubeResponse, vesselRadius,
+  CV_ORIFICE, G, RHO_MANOMETER, findLiquid, findPlace, findVessel, jet, mercuryColumnMm, pascalVessel, simulateProbe, speedFromRange, uTubeResponse, vesselRadius,
   type AtmosphereModel, type LiquidId, type LiquidInfo, type PlaceId, type VesselId, type VesselInfo,
 } from '../models/pressure';
 import { fmt } from '../lib/format';
@@ -10,6 +10,8 @@ import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
+import { useModelParams, usePublishModel } from '../components/Advanced';
+import type { ModelState } from '../lib/advanced';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, Lcd, shade } from './kit';
 import { clockAngle, DragHandle, ManipHint, ManipScene, Plunger, toSvgPoint, zoneAt } from './manipulate';
@@ -504,11 +506,13 @@ export default function PressureLab({ api }: LabProps) {
   const isJets = exp === 'chorros';
 
   /* --------------------------- modelo e instrumentos */
+  const P = useModelParams();
+  const g = P.g ?? G;
   const probe = useMemo(() => simulateProbe({
-    liquid: liquidId, depthCm: exp === 'pascal' ? height : depth, orientationDeg: exp === 'pascal' ? 0 : orientation, altitudeM: place.altitude, atmosphere: atm,
-  }), [liquidId, exp, height, depth, orientation, place.altitude, atm]);
-  const pascal = useMemo(() => pascalVessel(vesselId, liquid.rho, height), [vesselId, liquid.rho, height]);
-  const jets = useMemo(() => HOLE_HEIGHTS.map((y) => jet(y, level)), [level]);
+    liquid: liquidId, depthCm: exp === 'pascal' ? height : depth, orientationDeg: exp === 'pascal' ? 0 : orientation, altitudeM: place.altitude, atmosphere: atm, g: P.g,
+  }), [liquidId, exp, height, depth, orientation, place.altitude, atm, P.g]);
+  const pascal = useMemo(() => pascalVessel(vesselId, liquid.rho, height, g), [vesselId, liquid.rho, height, g]);
+  const jets = useMemo(() => HOLE_HEIGHTS.map((y) => jet(y, level, CV_ORIFICE, g)), [level, g]);
   const otherAtm = useMemo(() => atmosphere(atm === 'estandar' ? 'isoterma' : 'estandar', place.altitude), [atm, place.altitude]);
 
   // Instrumentos: ficha de la práctica si está integrada; si no, la del modelo (modo real con la misma incertidumbre).
@@ -521,7 +525,50 @@ export default function PressureLab({ api }: LabProps) {
     pAtm: measure(probe.pAtm, { ...baroSpec, key: 'barometro' }),
     ranges: jets.map((j, i) => (holes[i] && j.flows ? measure(j.range, { ...tapeSpec, key: `alcance${HOLE_HEIGHTS[i]}` }) : null)),
   }), [measure, manoSpec, baroSpec, tapeSpec, probe, jets, holes]);
-  const analysis = useMemo(() => analyzeManometer(readings.rise, readings.pAtm), [readings]);
+  const analysis = useMemo(() => analyzeManometer(readings.rise, readings.pAtm, g), [readings, g]);
+  usePublishModel((): ModelState => {
+    if (exp === 'chorros') {
+      const j = jets.find((x) => x.flows) ?? jets[0];
+      return {
+        vars: {
+          v: { sym: 'v_{T}', name: `Rapidez de Torricelli (agujero a ${j.holeCm} cm)`, value: j.vIdeal, unit: 'm/s', decimals: 2 },
+          g: { sym: 'g', name: 'Gravedad', value: g, unit: 'm/s²', decimals: 2 },
+          h: { sym: 'h', name: 'Agua sobre el agujero', value: j.headCm / 100, unit: 'm', decimals: 3 },
+          y: { sym: 'y', name: 'Altura del agujero sobre la bandeja', value: j.holeCm / 100, unit: 'm', decimals: 2 },
+          t: { sym: 't_{caída}', name: 'Tiempo de caída del chorro', value: j.tFall, unit: 's', decimals: 3 },
+          cv: { sym: 'C_{v}', name: 'Coeficiente de velocidad del orificio', value: CV_ORIFICE, decimals: 2 },
+          R: { sym: 'R', name: 'Alcance del chorro', value: j.range / 100, unit: 'm', decimals: 3 },
+        },
+        equations: [
+          { title: 'Teorema de Torricelli', lhs: 'v', expr: '\\sqrt{2·[g]·[h]}' },
+          { title: 'Caída del chorro', lhs: 't', expr: '\\sqrt{\\frac{2·[y]}{[g]}}' },
+          { title: 'Alcance (con pérdidas del orificio)', lhs: 'R', expr: '[cv]·[v]·[t]', note: 'R = 2·C_v·√(h·y): el alcance no depende de g.' },
+        ],
+      };
+    }
+    const hM = (exp === 'pascal' ? height : depth) / 100;
+    return {
+      vars: {
+        p: { sym: 'p_{man}', name: 'Presión manométrica (modelo)', value: probe.gauge, unit: 'Pa', decimals: 0 },
+        rho: { sym: '\\rho', name: `Densidad (${liquid.name.toLowerCase()})`, value: liquid.rho, unit: 'kg/m³', decimals: 0 },
+        g: { sym: 'g', name: 'Gravedad', value: g, unit: 'm/s²', decimals: 2 },
+        h: { sym: 'h', name: 'Profundidad', value: hM, unit: 'm', decimals: 3 },
+        dh: { sym: 'Δh', name: 'Desnivel del manómetro (modelo)', value: probe.riseMm / 1000, unit: 'm', decimals: 4 },
+        rm: { sym: '\\rho_{m}', name: 'Densidad del agua del manómetro', value: RHO_MANOMETER, unit: 'kg/m³', decimals: 0 },
+        dhr: { sym: 'Δh_{lect}', name: 'Desnivel leído', value: readings.rise / 1000, unit: 'm', decimals: 3 },
+        pm: { sym: 'p_{med}', name: 'Presión manométrica con tu lectura', value: analysis.gauge, unit: 'Pa', decimals: 0 },
+        pa: { sym: 'p_{atm}', name: 'Presión atmosférica (barómetro)', value: readings.pAtm, unit: 'hPa', decimals: 1 },
+        pabs: { sym: 'p_{abs}', name: 'Presión absoluta', value: analysis.pAbs, unit: 'hPa', decimals: 1 },
+        pmh: { sym: 'p_{med}', value: analysis.gauge / 100, unit: 'hPa', decimals: 2 },
+      },
+      equations: [
+        { title: 'Presión hidrostática', lhs: 'p', expr: '[rho]·[g]·[h]', note: exp === 'sonda' && orientation !== 0 ? 'Si la membrana queda totalmente sumergida, la lectura no depende de su orientación.' : undefined },
+        { title: 'Manómetro en U', lhs: 'dh', expr: '\\frac{[p]}{[rm]·[g]}' },
+        { title: 'Presión con tu lectura', lhs: 'pm', expr: '[rm]·[g]·[dhr]' },
+        { title: 'Presión absoluta', lhs: 'pabs', expr: '[pa] + [pmh]' },
+      ],
+    };
+  }, [exp, jets, g, probe, liquid, height, depth, orientation, readings, analysis]);
 
   /* --------------------------- fases de la medición */
   const reset = () => { cancelAnimationFrame(raf.current); setPhase('listo'); setJetT(0); };
@@ -582,7 +629,7 @@ export default function PressureLab({ api }: LabProps) {
       jets.forEach((j, i) => {
         const R = readings.ranges[i];
         if (R === null) return;
-        const v = speedFromRange(R, j.holeCm);
+        const v = speedFromRange(R, j.holeCm, g);
         api.addTrial('chorros', {
           agujero: j.holeCm, nivel: level, carga: j.headCm, alcance: R, tCaida: Number(j.tFall.toFixed(3)),
           vMedida: Number(v.toFixed(2)), vTorricelli: Number(j.vIdeal.toFixed(2)), alcanceIdeal: Number(j.rangeIdeal.toFixed(1)),
@@ -910,7 +957,7 @@ export default function PressureLab({ api }: LabProps) {
                 const R = readings.ranges[i];
                 return {
                   k: `Agujero a ${y} cm (h = ${fmt(jets[i].headCm, 0)} cm): medida · √(2gh)`,
-                  v: R === null ? '—' : show(`${fmt(speedFromRange(R, y), 2)} · ${fmt(jets[i].vIdeal, 2)} m/s`),
+                  v: R === null ? '—' : show(`${fmt(speedFromRange(R, y, g), 2)} · ${fmt(jets[i].vIdeal, 2)} m/s`),
                 };
               })} />
               <p className="small muted" style={{ margin: 0 }}>Rapidez medida = alcance ÷ tiempo de caída, con t = √(2y/g). La de Torricelli supone un agujero ideal sin rozamiento.</p>

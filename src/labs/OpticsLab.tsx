@@ -7,6 +7,7 @@ import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
 import { playSound } from '../lib/sound';
+import { usePublishModel } from '../components/Advanced';
 
 const MEDIUM_FILL: Record<string, string> = { aire: 'rgba(200,225,240,0.10)', agua: 'rgba(70,150,220,0.28)', aceite: 'rgba(232,195,58,0.30)', vidrio: 'rgba(150,210,200,0.35)', diamante: 'rgba(210,220,240,0.55)', misterio: 'rgba(170,140,210,0.32)' };
 
@@ -73,6 +74,29 @@ export default function OpticsLab({ api }: LabProps) {
       refraction: r.refraction === null ? null : measure(r.refraction, { ...tp, key: 'refraccion' }),
     };
   }, [r, measure]);
+  usePublishModel(() => {
+    const name = (id: string) => MEDIA.find((m) => m.id === id)!.name;
+    return {
+      vars: {
+        n1: { sym: 'n_{1}', name: `Índice de refracción (${name(m1).toLowerCase()})`, value: r.n1, decimals: 4 },
+        n2: { sym: 'n_{2}', name: `Índice de refracción (${name(m2).toLowerCase()})`, value: r.n2, decimals: 4 },
+        t1: { sym: '\\theta_{1}', name: 'Ángulo de incidencia', value: angle, unit: '°', decimals: 1 },
+        t2: { sym: '\\theta_{2}', name: 'Ángulo de refracción', value: r.refraction, unit: '°', decimals: 1 },
+        s2: { sym: '\\sin \\theta_{2}', name: 'Seno del ángulo de refracción', value: r.refraction === null ? null : Math.sin((r.refraction * Math.PI) / 180), decimals: 4 },
+        tr: { sym: '\\theta_{r}', name: 'Ángulo de reflexión', value: r.reflection, unit: '°', decimals: 1 },
+        tc: { sym: '\\theta_{c}', name: 'Ángulo crítico', value: r.criticalAngle, unit: '°', decimals: 1 },
+        v2: { sym: 'v_{2}', name: 'Rapidez de la luz en el medio 2', value: r.speedInMedium2, unit: 'm/s', sig: 4 },
+        c: { sym: 'c', value: 299792458, unit: 'm/s', sig: 4 },
+        one: { sym: '1', value: 1 },
+      },
+      equations: [
+        { title: 'Ley de la reflexión', lhs: 'tr', expr: '[t1]' },
+        { title: 'Ley de Snell', lhs: 's2', expr: '\\frac{[n1]}{[n2]}·\\sin [t1]', note: r.totalInternalReflection ? 'sen θ₂ > 1: no hay refracción, ocurre reflexión total interna.' : undefined },
+        ...(r.criticalAngle !== null ? [{ title: 'Ángulo crítico (n₁ > n₂)', lhs: 'tc', expr: '\\sin^{−1}(\\frac{[n2]}{[n1]})' }] : []),
+        { title: 'Rapidez de la luz en el medio 2', lhs: 'v2', expr: '\\frac{[c]}{[n2]}' },
+      ],
+    };
+  }, [r, m1, m2, angle]);
   const W = 520, H = 400, cx = 260, cy = 200, L = 180;
   const rad = (d: number) => (d * Math.PI) / 180;
   // Rayo incidente desde arriba a la izquierda

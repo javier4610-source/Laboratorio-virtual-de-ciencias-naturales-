@@ -11,6 +11,7 @@ import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogge
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { usePublishModel } from '../components/Advanced';
 import { Stopwatch } from './kit';
 
 type AnimSpeed = 'real' | 'x4';
@@ -132,6 +133,21 @@ export default function KinematicsLab({ api }: LabProps) {
 
   const input = useMemo(() => ({ v0, acceleration: acc, duration }), [v0, acc, duration]);
   const res = useMemo(() => simulateRun(input), [input]);
+  usePublishModel(() => ({
+    vars: {
+      x: { sym: 'x', name: 'Distancia recorrida', value: res.distance, unit: 'm', decimals: 2 },
+      v0: { sym: 'v_{0}', name: 'Velocidad inicial', value: v0, unit: 'm/s', decimals: 1 },
+      a: { sym: 'a', name: 'Aceleración', value: acc, unit: 'm/s²', decimals: 1 },
+      t: { sym: 't', name: 'Tiempo observado', value: res.time, unit: 's', decimals: 2 },
+      vf: { sym: 'v', name: 'Velocidad final', value: res.finalSpeed, unit: 'm/s', decimals: 2 },
+      vm: { sym: 'v_{media}', name: 'Velocidad media', value: res.meanSpeed, unit: 'm/s', decimals: 2 },
+    },
+    equations: [
+      { title: 'Posición (MRUV)', lhs: 'x', expr: '[v0]·[t] + \\frac{1}{2}·[a]·[t]^{2}', note: res.endReason === 'frenado' ? 'El ciclista se detiene antes: después de v = 0 ya no avanza (la fórmula solo vale hasta ese instante).' : res.endReason === 'pista' ? 'El recorrido termina al llegar al final de la pista.' : undefined },
+      { title: 'Velocidad final', lhs: 'vf', expr: '[v0] + [a]·[t]' },
+      { title: 'Velocidad media', lhs: 'vm', expr: '\\frac{[x]}{[t]}' },
+    ],
+  }), [res, v0, acc]);
   const tObs = useMemo(() => observationTime(input).tObs, [input]);
   const curve = useMemo(() => sampleCurve(input), [input]);
   const challenge = CHALLENGES.find((c) => c.id === challengeId) ?? null;

@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { usePublishModel } from '../components/Advanced';
 import { BenchTop, Lcd, shade, Stopwatch } from './kit';
 import { clockAngle, DragHandle, ManipHint, ManipScene } from './manipulate';
 
@@ -206,6 +207,22 @@ export default function PendulumLab({ api }: LabProps) {
   const bob = findBob(bobId);
   const place = findPlace(placeId);
   const rPx = Math.max(6, Math.min(18, 4 + bobRadius(massG, bob.density) * 400));
+  usePublishModel(() => ({
+    vars: {
+      T0: { sym: 'T_{0}', name: 'Período de pequeñas oscilaciones', value: run.T0, unit: 's', decimals: 4 },
+      Ts: { sym: 'T', name: 'Período con corrección de amplitud', value: run.Tseries, unit: 's', decimals: 4 },
+      L: { sym: 'L', name: 'Longitud del péndulo', value: length, unit: 'm', decimals: 3 },
+      g: { sym: 'g', name: `Gravedad (${place.name})`, value: place.g, unit: 'm/s²', decimals: 2 },
+      th: { sym: '\\theta_{0}', name: 'Amplitud en radianes', value: (amplitude * Math.PI) / 180, unit: 'rad', decimals: 3 },
+      Tm: { sym: 'T_{med}', name: 'Período medido', value: meas ? meas.period : null, unit: 's', decimals: 3 },
+      gc: { sym: 'g_{calc}', name: 'Gravedad calculada', value: meas ? (4 * Math.PI ** 2 * length) / meas.period ** 2 : null, unit: 'm/s²', decimals: 2 },
+    },
+    equations: [
+      { title: 'Péndulo simple (ángulos pequeños)', lhs: 'T0', expr: '2\\pi\\sqrt{\\frac{[L]}{[g]}}', note: 'No depende de la masa de la lenteja.' },
+      { title: 'Corrección por amplitud', lhs: 'Ts', expr: '[T0]·(1 + \\frac{[th]^{2}}{16})', note: 'A mayor amplitud, el período crece un poco (sen θ ≠ θ).' },
+      { title: 'Gravedad a partir de tu medición', lhs: 'gc', expr: '\\frac{4\\pi^{2}·[L]}{[Tm]^{2}}' },
+    ],
+  }), [run, length, place, amplitude, meas]);
   const tStop = mode === 'fotopuerta' ? run.tGateEnd : run.tEnd;
 
   const reset = () => { cancelAnimationFrame(raf.current); setRunning(false); setReleased(false); setDone(false); setMeas(null); setT(0); };

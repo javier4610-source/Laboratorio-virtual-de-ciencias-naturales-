@@ -54,6 +54,8 @@
   --series-6: #a16207;
   --series-7: #be185d;
   --series-8: #4b5563;
+  /* Curva del modelo (modo avanzado): sigue a --series-4 en ambos temas. */
+  --model-curve: var(--series-4);
   --shadow-1: 0 1px 2px rgba(10, 30, 28, 0.06), 0 1px 1px rgba(10, 30, 28, 0.03);
   --shadow-2: 0 2px 4px rgba(10, 30, 28, 0.05), 0 10px 24px -6px rgba(10, 30, 28, 0.14);
   --shadow-3: 0 4px 10px rgba(10, 30, 28, 0.08), 0 24px 48px -12px rgba(10, 30, 28, 0.24);
@@ -1284,3 +1286,47 @@ details.nb-panel > summary:has(.nb-pill)::after { margin-left: 4px; }
   .course-btn:not(.joined) { padding: 4px; min-width: 40px; justify-content: center; }
   .course-btn:not(.joined) .course-btn-text { display: none; }
 }
+
+/* ======================================================================
+   Modo avanzado (U6): interruptor, ecuaciones del modelo con valores,
+   parámetros editables y curva del modelo en el cuaderno.
+   ====================================================================== */
+.adv-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px; min-width: 0; }
+.adv-help { margin: 0; flex: 1 1 260px; min-width: 0; }
+.switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 4px 6px; margin-left: -6px; background: none; border: 0; border-radius: 8px; color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+.switch:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.switch-track { position: relative; width: 44px; height: 24px; border-radius: 999px; background: var(--surface-2); border: 2px solid var(--line-strong); transition: background 0.15s, border-color 0.15s; flex: none; }
+.switch-thumb { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink-2); transition: transform 0.15s, background 0.15s; }
+.switch[aria-checked="true"] .switch-track { background: var(--accent); border-color: var(--accent); }
+.switch[aria-checked="true"] .switch-thumb { transform: translateX(20px); background: var(--accent-ink); }
+.adv-panel { display: grid; gap: 10px; border-top: 3px solid var(--model-curve); min-width: 0; }
+.adv-panel > * { min-width: 0; }
+.adv-head h3 { margin: 0; }
+.adv-head p { margin: 2px 0 0; }
+.adv-eqs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.adv-eq { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.adv-eq-title { margin: 0 0 4px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); }
+.adv-eq-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 1.12rem; color: var(--ink); min-width: 0; }
+.adv-step { display: inline-flex; align-items: center; max-width: 100%; overflow-x: auto; }
+.adv-eq-note { margin: 6px 0 0; }
+math.mml { font-family: 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', math, serif; font-size: 1.08em; }
+math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.86em; }
+.math-fallback { font-variant-numeric: tabular-nums; }
+.adv-vars dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 14px; margin: 8px 0 0; }
+.adv-vars dl > div { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px dashed var(--line); padding: 4px 0; min-width: 0; }
+.adv-vars dt { margin: 0; min-width: 0; }
+.adv-vars dd { margin: 0; font-weight: 700; white-space: nowrap; }
+.adv-static li { font-family: var(--font-data); font-size: 0.9rem; }
+.adv-params { display: grid; gap: 8px; border-top: 1px dashed var(--line); padding-top: 10px; }
+.adv-params-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.adv-params-head h4 { margin: 0; }
+.adv-params > p { margin: 0; }
+.adv-param { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: var(--surface); }
+.adv-param.modified { border-color: var(--warn); box-shadow: inset 4px 0 0 var(--warn); }
+.adv-param-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-top: 4px; }
+.adv-badge { display: inline-block; font-size: 0.8rem; font-weight: 700; color: var(--ink); background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent); border-radius: 999px; padding: 2px 10px; }
+.adv-modified { margin: 0; }
+.chart-side { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.model-card { border-top-color: var(--model-curve); }
+.curve-table { margin-top: 12px; }
+@media print { .adv-bar, .adv-params { display: none; } }

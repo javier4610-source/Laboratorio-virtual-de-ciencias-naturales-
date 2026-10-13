@@ -9,7 +9,11 @@ import { RepeatStats, UncertaintyCalculator } from './RepeatStats';
 import { Icon, type IconName } from './icons';
 import { onTabListKeyDown } from '../lib/a11y';
 import { buildAnalysis, columnAxisText } from '../lib/analysis';
-import { AXIS_TRANSFORMS, FIT_MODELS } from '../lib/fit';
+import { AXIS_TRANSFORMS, FIT_MODELS, applyTransform, inverseTransform } from '../lib/fit';
+import { useAdvanced } from './Advanced';
+import { CURVE_MODELS, fixedInputsText, modelCurve } from '../labs/modelCurves';
+import { modifiedSummary } from '../lib/advanced';
+import type { ModelCurveProp } from './Chart';
 
 export function cellText(v: Trial['values'][string], decimals = 2): string {
   if (v === null || v === undefined) return '—';
@@ -148,6 +152,25 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
   const transformOptions = (c?: { label: string }) =>
     AXIS_TRANSFORMS.map((t) => ({ value: t.value, label: t.value === 'x' ? `Sin transformar (${c?.label ?? ''})` : t.label(c?.label ?? '') }));
 
+  // Curva del modelo (modo avanzado): condiciones fijas tomadas del último ensayo del conjunto.
+  const adv = useAdvanced();
+  const curveModel = adv.enabled && adv.practiceId === practiceId ? CURVE_MODELS[practiceId]?.[ds.id] : undefined;
+  const [overlay, setOverlay] = useState(false);
+  const last = trials[trials.length - 1];
+  const curve = useMemo<ModelCurveProp | null | undefined>(() => {
+    if (!curveModel || !overlay || !last) return undefined;
+    const f = modelCurve(practiceId, ds.id, ax.x, ax.y, last.values, adv.active);
+    if (!f) return null;
+    const labels = Object.fromEntries(ds.columns.map((c) => [c.key, { label: c.label, unit: c.unit }]));
+    const fixed = fixedInputsText(practiceId, ds.id, ax.x, last.values, labels);
+    const mod = modifiedSummary(adv.specs, adv.values);
+    return {
+      label: curveModel.name,
+      predict: (X: number) => applyTransform(ax.yT, f(inverseTransform(ax.xT, X))),
+      note: `${curveModel.description}${fixed ? ` Condiciones fijas (último ensayo): ${fixed}.` : ''}${mod ? ` ${mod}.` : ''}`,
+    };
+  }, [curveModel, overlay, last, practiceId, ds, ax.x, ax.y, ax.xT, ax.yT, adv.active, adv.specs, adv.values]);
+
   const csv = () => trialsToCSV(practiceId, ds.id, session);
   const headId = `datos-${ds.id}`;
   const has = trials.length > 0;
@@ -219,6 +242,13 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
                   <Select label="Modelo de ajuste" value={ax.model} onChange={(v) => setAx({ model: v })} options={FIT_MODELS.map((m) => ({ value: m.value, label: m.label }))} />
                   {series.length > 1 && ax.model !== 'none' && <p className="small muted nb-hint">El ajuste solo se calcula cuando los datos no están agrupados.</p>}
                 </ConfigGroup>
+                {curveModel && (
+                  <ConfigGroup title="Modelo (modo avanzado)">
+                    <label className="check"><input type="checkbox" checked={overlay} onChange={(e) => setOverlay(e.target.checked)} /> Superponer la curva del modelo</label>
+                    {overlay && curve === null && <p className="small nb-hint fit-error" role="status">El modelo no calcula «{data.yc?.label}» en función de «{data.xc?.label}». Elige en los ejes una variable de entrada y una medida que el modelo relacione.</p>}
+                    {overlay && curve && <p className="small muted nb-hint">La curva usa el modelo ideal ({curveModel.name}) con las demás variables del último ensayo; los residuos muestran cuánto se apartan tus datos del modelo.</p>}
+                  </ConfigGroup>
+                )}
                 <ConfigGroup title="Linealizar: transformar los ejes">
                   <Select label="Transformar eje x" value={ax.xT} onChange={(v) => setAx({ xT: v })} options={transformOptions(data.xc)} />
                   <Select label="Transformar eje y" value={ax.yT} onChange={(v) => setAx({ yT: v })} options={transformOptions(data.yc)} />
@@ -243,6 +273,7 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
                   emptyText="Guarda ensayos para ver la gráfica."
                   errorNote={ax.avg === 'sd' ? 'Las barras indican ±1 desviación estándar de los ensayos repetidos.' : ax.avg === 'sem' ? 'Las barras indican ±1 error estándar de la media.' : undefined}
                   exportName={`${practiceId}-${ds.id}-grafica`} copyFallbackLabel="Copiar datos"
+                  modelCurve={curve ?? undefined}
                 />
               </div>
             </div>

@@ -9,6 +9,7 @@ import { impactIntensity, playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { usePublishModel } from '../components/Advanced';
 import { BenchTop, DigitalBalance, Lcd } from './kit';
 
 /* ------------------------------------------------------------------ geometría del dibujo */
@@ -247,6 +248,29 @@ export default function CollisionsLab({ api }: LabProps) {
 
   const res = useMemo(() => simulateCollision({ type, m1, m2, v1, v2, e, energy }), [type, m1, m2, v1, v2, e, energy]);
   const tl = useMemo(() => timeline(res), [res]);
+  usePublishModel(() => {
+    const md = res.model;
+    return {
+      vars: {
+        p: { sym: 'p_{antes}', name: 'Momento lineal total antes', value: md.pBefore, unit: 'kg·m/s', decimals: 4 },
+        pd: { sym: 'p_{después}', name: 'Momento lineal total después', value: md.pAfter, unit: 'kg·m/s', decimals: 4 },
+        m1: { sym: 'm_{1}', value: m1, unit: 'kg', decimals: 2 }, m2: { sym: 'm_{2}', value: m2, unit: 'kg', decimals: 2 },
+        v1: { sym: 'v_{1}', value: md.v1, unit: 'm/s', decimals: 2 }, v2: { sym: 'v_{2}', value: md.v2, unit: 'm/s', decimals: 2 },
+        v1f: { sym: 'v_{1}\\prime', value: md.v1f, unit: 'm/s', decimals: 3 }, v2f: { sym: 'v_{2}\\prime', value: md.v2f, unit: 'm/s', decimals: 3 },
+        e: { sym: 'e', name: 'Coeficiente de restitución', value: Number.isFinite(res.e) ? res.e : null, decimals: 2 },
+        Ec: { sym: 'E_{c}', name: 'Energía cinética total antes', value: md.ecBefore, unit: 'J', decimals: 4 },
+        Ecd: { sym: 'E_{c}\\prime', name: 'Energía cinética total después', value: md.ecAfter, unit: 'J', decimals: 4 },
+      },
+      equations: [
+        { title: 'Momento lineal antes', lhs: 'p', expr: '[m1]·[v1] + [m2]·[v2]' },
+        { title: 'Momento lineal después (se conserva)', lhs: 'pd', expr: '[m1]·[v1f] + [m2]·[v2f]' },
+        ...(type !== 'explosion' && res.collides ? [{ title: 'Coeficiente de restitución', lhs: 'e', expr: '−\\frac{[v2f] − [v1f]}{[v2] − [v1]}' }] : []),
+        { title: 'Energía cinética antes', lhs: 'Ec', expr: '\\frac{1}{2}·[m1]·[v1]^{2} + \\frac{1}{2}·[m2]·[v2]^{2}' },
+        { title: 'Energía cinética después', lhs: 'Ecd', expr: '\\frac{1}{2}·[m1]·[v1f]^{2} + \\frac{1}{2}·[m2]·[v2f]^{2}' },
+      ],
+      note: res.collides ? undefined : 'Los deslizadores no se alcanzan: no hay choque.',
+    };
+  }, [res, m1, m2, type]);
   const samples = useMemo(() => (done ? contactSamples(res) : []), [done, res]);
 
   const reset = () => { cancelAnimationFrame(raf.current); setRunning(false); setDone(false); setT(0); };

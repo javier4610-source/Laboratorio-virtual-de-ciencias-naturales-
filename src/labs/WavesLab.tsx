@@ -4,6 +4,7 @@ import { fmt, parseLocaleNumber } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { usePublishModel } from '../components/Advanced';
 import { BenchTop, ContactShadow } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
 
@@ -47,6 +48,21 @@ function RopePart({ api }: LabProps) {
   const [markB, setMarkB] = useState(6);
   const [measured, setMeasured] = useState('');
   const res = useMemo(() => ropeWave({ ropeId, tension, frequency: f, amplitude: A }), [ropeId, tension, f, A]);
+  usePublishModel(() => ({
+    vars: {
+      v: { sym: 'v', name: 'Rapidez de la onda', value: res.speed, unit: 'm/s', decimals: 2 },
+      T: { sym: 'F_{T}', name: 'Tensión de la cuerda', value: tension, unit: 'N', decimals: 0 },
+      mu: { sym: '\\mu', name: 'Densidad lineal de la cuerda', value: findRope(ropeId).mu, unit: 'kg/m', decimals: 2 },
+      f: { sym: 'f', name: 'Frecuencia', value: f, unit: 'Hz', decimals: 2 },
+      lam: { sym: '\\lambda', name: 'Longitud de onda', value: res.wavelength, unit: 'm', decimals: 3 },
+      P: { sym: 'T', name: 'Período', value: res.period, unit: 's', decimals: 3 },
+    },
+    equations: [
+      { title: 'Rapidez en una cuerda tensa', lhs: 'v', expr: '\\sqrt{\\frac{[T]}{[mu]}}' },
+      { title: 'Ecuación de la onda', lhs: 'lam', expr: '\\frac{[v]}{[f]}', note: 'La frecuencia la fija el generador; la rapidez, la cuerda.' },
+      { title: 'Período', lhs: 'P', expr: '\\frac{1}{[f]}' },
+    ],
+  }), [res, tension, ropeId, f]);
   const raf = useRef<number | null>(null);
   const last = useRef<number | null>(null);
 
@@ -203,6 +219,18 @@ function SoundPart({ api }: LabProps) {
   const [freq, setFreq] = useState(440);
   const [temp, setTemp] = useState(20);
   const res = soundWave({ frequency: freq, temperature: temp });
+  usePublishModel(() => ({
+    vars: {
+      v: { sym: 'v', name: 'Rapidez del sonido', value: res.speed, unit: 'm/s', decimals: 1 },
+      Tc: { sym: 'T_{C}', name: 'Temperatura del aire', value: temp, unit: '°C', decimals: 0 },
+      f: { sym: 'f', name: 'Frecuencia', value: freq, unit: 'Hz', decimals: 0 },
+      lam: { sym: '\\lambda', name: 'Longitud de onda', value: res.wavelength, unit: 'm', sig: 4 },
+    },
+    equations: [
+      { title: 'Rapidez del sonido en el aire', lhs: 'v', expr: '331,3\\,\\text{m/s} + 0,606\\,\\text{m/(s·°C)}·[Tc]' },
+      { title: 'Ecuación de la onda', lhs: 'lam', expr: '\\frac{[v]}{[f]}' },
+    ],
+  }), [res, temp, freq]);
   const record = () => api.addTrial('sonido', { temperatura: temp, frecuencia: freq, rapidez: Number(res.speed.toFixed(2)), lambda: Number(res.wavelength.toFixed(5)), rango: res.range });
   return (
     <div className="lab-layout">

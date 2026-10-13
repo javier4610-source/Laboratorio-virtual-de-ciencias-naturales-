@@ -9,6 +9,7 @@ import type { LabProps } from './registry';
 import { BenchTop, Cube, DigitalBalance, GraduatedCylinder, Ruler } from './kit';
 import { DragHandle, ManipHint, ManipScene, zoneAt } from './manipulate';
 import { playSound } from '../lib/sound';
+import { usePublishModel } from '../components/Advanced';
 
 /** Lugares donde puede estar la muestra: 0 mesa, 1 plato de la balanza, 2 dentro de la probeta. */
 const STATION_TEXT = ['La muestra está sobre la mesa', 'La muestra está en el plato de la balanza', 'La muestra está dentro de la probeta'];
@@ -41,6 +42,32 @@ export default function DensityLab({ api }: LabProps) {
     const densityDisplacement = massReading !== null && displacedVolume !== null && displacedVolume > 0 ? massReading / displacedVolume : null;
     return { ...model, sideReading, geometricVolume: sideReading ** 3, massReading, finalWaterReading, displacedVolume, densityDisplacement };
   }, [model, side, initialWater, measure]);
+  // Modo avanzado: ecuaciones del modelo con las lecturas actuales.
+  usePublishModel(() => {
+    const m = weighed ? result.massReading : null;
+    const vd = submerged ? result.displacedVolume : null;
+    const floatsFree = result.floats && !pushUnder;
+    return {
+      vars: {
+        rho: { sym: '\\rho', name: 'Densidad calculada', value: m !== null && vd ? m / vd : null, unit: 'g/cm³', decimals: 2 },
+        m: { sym: 'm', name: 'Masa (balanza)', value: m, unit: 'g', decimals: 1 },
+        V: { sym: 'V_{desp}', name: 'Volumen desplazado', value: vd, unit: 'cm³', decimals: 1 },
+        Vg: { sym: 'V_{cubo}', name: 'Volumen geométrico', value: result.geometricVolume, unit: 'cm³', decimals: 2 },
+        a: { sym: 'a', name: 'Arista (regla)', value: result.sideReading, unit: 'cm', decimals: 1 },
+        Vf: { sym: 'V_{f}', name: 'Lectura final de la probeta', value: submerged ? result.finalWaterReading : null, unit: 'mL', decimals: 1 },
+        Vi: { sym: 'V_{i}', name: 'Lectura inicial de la probeta', value: initialWater, unit: 'mL', decimals: 1 },
+        rhoS: { sym: '\\rho_{obj}', name: 'Densidad de tabla del material', value: result.material.density, unit: 'g/cm³', decimals: 2 },
+        rhoW: { sym: '\\rho_{agua}', name: 'Densidad del agua (20 °C)', value: WATER_DENSITY, unit: 'g/cm³', decimals: 3 },
+        f: { sym: 'f_{sum}', name: 'Fracción sumergida', value: result.submergedFraction, decimals: 3 },
+      },
+      equations: [
+        { title: 'Densidad', lhs: 'rho', expr: '\\frac{[m]}{[V]}', note: '1 mL = 1 cm³: el volumen desplazado se lee en la probeta.' },
+        { title: 'Volumen desplazado', lhs: 'V', expr: '[Vf] − [Vi]' },
+        { title: 'Volumen del cubo', lhs: 'Vg', expr: '[a]^{3}' },
+        ...(floatsFree ? [{ title: 'Flotación (Arquímedes)', lhs: 'f', expr: '\\frac{[rhoS]}{[rhoW]}', note: 'Si flota, solo se sumerge esta fracción: el volumen desplazado es menor que el del cubo.' }] : []),
+      ],
+    };
+  }, [result, weighed, submerged, initialWater, pushUnder]);
   const resetActions = () => { setWeighed(false); setSubmerged(false); setGuessFeedback(null); setGuess(''); };
   const m = result.material;
   const sizePx = side * 20;

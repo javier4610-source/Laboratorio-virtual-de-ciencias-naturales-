@@ -85,6 +85,8 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
       (activo cuando el docente publique el servidor y defina `NCBI_EMAIL`) y rastreo génico con datos validados.
 - [x] **v2 · Fase 5:** visor de estructuras de proteínas (PDB y AlphaFold) con procedencia, pLDDT y validación contra
       Biopython; vista de respaldo sin WebGL.
-- [ ] **v2 · Fases 6–10:** FBA, fármacos, genómica, dinámica molecular,
+- [x] **v2 · Fase 6:** metabolismo con FBA (E. coli core) en el navegador, validado contra COBRApy 0.32.1 (439 casos,
+      error relativo ≤ 3×10⁻¹²); genes esenciales y variabilidad de flujos.
+- [ ] **v2 · Fases 7–10:** fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por
       infraestructura hasta decisión del docente).

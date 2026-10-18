@@ -320,3 +320,12 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Visor | E2E con WebGL (2,027 Å) y sin poder descargar el visor (traza de respaldo, mismas mediciones, axe); capturas en tema claro y oscuro con insulina, OCA2 (AlphaFold) y hemoglobina | Correcto | Las marcas A, B y R de la cinta de secuencia tapaban el título | Más espacio sobre la primera fila | Corregido |
 | Regresión | 865 pruebas unitarias y 100 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
 
+
+# Programa v2 · Fase 6: metabolismo con análisis de balance de flujos
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Solucionador FBA | 24 pruebas: crecimiento con glucosa 10 mmol/gDW/h igual a COBRApy 0.32.1 con GLPK (0,873921506968 y 0,211662949735 h⁻¹); 439 casos (fuentes de carbono, oxígeno, eliminaciones de genes y reacciones) con error relativo máximo 3×10⁻¹²; balance de masa ‖S·v‖ ≤ 10⁻⁹; reglas GPR; FVA con error ≤ 4,8×10⁻¹⁰; genes esenciales (aerobio: gltA, icd, gapA, ptsH, ptsI, eno, pgk; anaerobio además tpiA, ppc, pgi); entradas fuera de rango rechazadas | Correcto | — | — | Correcto |
+| Práctica | E2E (0,8739 h⁻¹ y 48 min; sin oxígeno 0,2117 h⁻¹ y 24,2 %; guardar en la tabla); axe WCAG 2.2 AA en tema claro, oscuro y teléfono; capturas en ambos temas | Correcto | Una referencia bibliográfica no verificable desde el entorno | Retirada de las referencias | Corregido |
+| Licencias | Modelo con cita (PMID 26443778); licencia del archivo del modelo | Parcial | La licencia de BiGG no se pudo consultar (dominio bloqueado) | Registrada como «Por verificar» en `docs/v2/LICENCIAS.md` | Parcial |
+| Regresión | 891 pruebas unitarias y 101 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |

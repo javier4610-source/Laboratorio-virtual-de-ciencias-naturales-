@@ -65,6 +65,12 @@ compilación). Ninguna tiene licencia de copyleft fuerte (GPL o AGPL).
 | ReportLab (Python) | Generación de guías en PDF (`npm run guias`), incluido su generador de código QR | BSD según los metadatos del paquete instalado en el entorno de desarrollo (5.0.1); la versión usada por el docente está **por verificar** |
 | Fuente DejaVu Sans | Texto de las guías en PDF | **Por verificar** |
 
+### Modelos y datos incluidos (Fase 6)
+
+| Recurso | Uso | Licencia y condiciones |
+|---|---|---|
+| Modelo E. coli core (`e_coli_core`), archivo `cobra/data/textbook.xml.gz` del paquete `cobra` 0.32.1 (SHA-256 c674befd…f72a) | Práctica `metabolismo` (FBA), exportado a `src/data/ecoli_core.json` | **Por verificar:** el archivo no declara licencia; el paquete COBRApy se distribuye con licencia LGPL-2.0-or-later o GPL-2.0-or-later. Cita: Orth, Fleming y Palsson (2010), EcoSal Plus 4(1), doi:10.1128/ecosalplus.10.2.1 (verificada en PubMed, PMID 26443778) |
+
 ## 5. Bibliotecas candidatas (no instaladas)
 
 Ver ADR 0005. Se añadirán a la sección 2 solo si se adoptan.

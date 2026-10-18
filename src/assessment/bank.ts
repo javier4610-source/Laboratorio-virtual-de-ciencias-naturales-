@@ -1119,6 +1119,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Estructura 3D de proteínas», elige el modelo de OCA2, colorea por pLDDT y analiza residuos del núcleo y del extremo inicial.',
     transfer: '¿Qué experimento o qué información adicional (por ejemplo, una estructura del PDB, la PAE entre dominios o datos de interacción) necesitarías para afirmar cómo se ubica OCA2 en la membrana del melanosoma?',
   },
+  {
+    id: 'saber-fba-1', grade: 11, topic: 'Oxígeno, crecimiento y fermentación en un modelo metabólico', competency: 'indagacion', component: 'biologico',
+    skill: 'Analizar los resultados de un modelo metabólico y distinguir lo que predice de lo que se ha medido', difficulty: 'alta', practiceId: 'metabolismo',
+    context: 'Un semillero de biotecnología de Turbo usó un modelo metabólico de Escherichia coli (E. coli core) y un análisis de balance de flujos (FBA) para predecir el crecimiento máximo de la bacteria con glucosa (captación máxima de 10 mmol por gramo de célula seca por hora) y distintas cantidades máximas de oxígeno. El modelo supone que la célula maximiza su crecimiento.',
+    table: {
+      caption: 'Resultados del FBA con el modelo E. coli core (Modelo calculado, no mediciones)',
+      headers: ['O₂ máximo (mmol/gDW/h)', 'Crecimiento óptimo (h⁻¹)', 'Acetato secretado (mmol/gDW/h)', 'Etanol secretado (mmol/gDW/h)'],
+      rows: [['0', '0,2117', '8,50', '8,28'], ['5', '0,3916', '12,23', '1,82'], ['15', '0,7178', '6,81', '0,00'], ['20', '0,8326', '1,80', '0,00'], ['25', '0,8739', '0,00', '0,00'], ['30', '0,8739', '0,00', '0,00']],
+    },
+    stem: '¿Cuál de las siguientes conclusiones es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'Según el modelo, más oxígeno permite más crecimiento hasta un punto (entre 20 y 25) a partir del cual el oxígeno deja de limitar; con poco oxígeno predice secreción de acetato y etanol. Habría que medirlo en cultivos para saber si la bacteria real se comporta así.', feedback: 'Correcto: el crecimiento sube de 0,2117 a 0,8739 h⁻¹ y se estabiliza entre 25 y 30; los productos de fermentación aparecen cuando el O₂ es escaso. Son predicciones del modelo.' },
+      { id: 'b', text: 'El crecimiento aumenta siempre que aumenta el oxígeno, sin límite.', feedback: 'Entre 25 y 30 mmol/gDW/h el crecimiento no cambia: a partir de cierto punto la glucosa, no el oxígeno, limita el crecimiento.' },
+      { id: 'c', text: 'Sin oxígeno la bacteria no crece, porque el oxígeno es indispensable para todos los seres vivos.', feedback: 'Con 0 de oxígeno el modelo predice 0,2117 h⁻¹: E. coli puede crecer por fermentación, más despacio.' },
+      { id: 'd', text: 'Los datos demuestran que en el laboratorio la bacteria expulsa exactamente 12,23 mmol/gDW/h de acetato con 5 de oxígeno.', feedback: 'La tabla contiene predicciones de un modelo (FBA), no mediciones; además, el modelo supone crecimiento óptimo y no incluye regulación ni cinética.' },
+    ],
+    correct: 'a',
+    explanation: 'En el FBA, el oxígeno es una restricción: cuando es escaso, la red no puede reoxidar todo el NADH por respiración y el óptimo incluye fermentación (acetato, etanol), con menos ATP y menos crecimiento. Cuando hay suficiente oxígeno, la captación de glucosa pasa a limitar. Todo esto es una predicción del modelo que debe contrastarse con datos experimentales.',
+    review: 'En la práctica «Metabolismo celular: análisis de balance de flujos (FBA)», calcula la referencia y mira la gráfica de crecimiento frente al oxígeno; luego elige «Limitado» y prueba 5 y 15 mmol/gDW/h.',
+    transfer: '¿Qué mediciones harías en un cultivo real (por ejemplo, densidad óptica y ácidos en el medio) para poner a prueba estas predicciones, y qué variables tendrías que controlar?',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

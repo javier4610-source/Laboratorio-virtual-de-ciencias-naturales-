@@ -35,6 +35,12 @@ const SYNTHETIC_SAMPLES = new Set(['reto']);
 
 /** Procedencia de una práctica según el modo de medición elegido. */
 export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'real' = 'ideal'): Provenance {
+  if (practiceId === 'metabolismo') {
+    return {
+      data: 'modelo', scene: 'modelo',
+      detail: 'Predicción de un modelo basado en restricciones (FBA) con E. coli core (e_coli_core, archivo textbook.xml.gz de COBRApy 0.32.1; Orth, Fleming y Palsson, 2010), resuelta en el navegador y validada contra COBRApy con GLPK. No incluye regulación, cinética ni espacio: es un óptimo posible, no una medición.',
+    };
+  }
   if (practiceId === 'proteinas') {
     return {
       data: 'modelo', scene: 'modelo',

@@ -28,6 +28,7 @@ import { vantHoff } from '../../src/models/equilibrium';
 import { carryingCapacity, K_NORMAL } from '../../src/models/foodweb';
 import { simulateGas } from '../../src/models/gases';
 import { relativeToTss, TSS } from '../../src/models/geneExpression';
+import { REFERENCE_CONDITION, runFba } from '../../src/models/metabolism';
 import { heat } from '../../src/models/heat';
 import { dipoleField } from '../../src/models/induction';
 import { fringeSpacingSmallAngle } from '../../src/models/interference';
@@ -272,6 +273,10 @@ export const GOLDEN: GoldenCase[] = [
     const s = parseStructure(readFileSync(new URL('../../src/data/proteinas/3I40.cif', import.meta.url), 'utf8'));
     const a = findAtom(s, 'A', 6, 'SG')!, b = findAtom(s, 'A', 11, 'SG')!;
     close(measureDistance(s, a.index, b.index), 2.027, 1e-3);
+  } },
+  { id: 'metabolismo', origin: 'referencia', what: 'FBA de E. coli core (glucosa 10 mmol/gDW/h): crecimiento 0,8739 h⁻¹ con O₂ sin límite y 0,2117 h⁻¹ sin O₂, iguales a COBRApy 0.32.1 con GLPK (tolerancia relativa 10⁻⁶)', run: () => {
+    close(runFba(REFERENCE_CONDITION).growth, 0.873921506968, 1e-6);
+    close(runFba({ ...REFERENCE_CONDITION, oxygen: 0 }).growth, 0.211662949735, 1e-6);
   } },
 ];
 

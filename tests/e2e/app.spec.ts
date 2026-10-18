@@ -825,6 +825,20 @@ test('proteínas: en la insulina (PDB 3I40, rayos X) el puente disulfuro Cys6–
   await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
 });
 
+test('metabolismo: FBA de E. coli core da 0,8739 h⁻¹ con oxígeno y 0,2117 h⁻¹ sin oxígeno', async ({ page }) => {
+  await openFree(page, 'metabolismo');
+  await expect(page.getByRole('button', { name: 'Guardar condición en la tabla' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Calcular el óptimo' }).click();
+  await expect(page.locator('.readout').getByText('0,8739 h⁻¹').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('48 min').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Guardar condición en la tabla' }).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  await page.getByRole('button', { name: 'Sin oxígeno' }).click();
+  await page.getByRole('button', { name: 'Calcular el óptimo' }).click();
+  await expect(page.locator('.readout').getByText('0,2117 h⁻¹').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('24,2 %').first()).toBeVisible();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -885,7 +899,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/54');
+  await expect(page.locator('.kpi').first()).toContainText('1/55');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

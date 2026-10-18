@@ -7,6 +7,21 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [1.6.0] · 2026-10-18
+
+Programa v2 · Fase 6: metabolismo con análisis de balance de flujos.
+
+### Añadido
+- Práctica 55, metabolismo celular con FBA (11.º): modelo E. coli core (e_coli_core, 72 metabolitos, 95 reacciones,
+  137 genes; archivo `textbook.xml.gz` de COBRApy 0.32.1; Orth, Fleming y Palsson, 2010) resuelto en el navegador
+  (Nivel 0) con un símplex de dos fases propio. Fuente de carbono, captación, límite de oxígeno, eliminación de genes
+  (reglas GPR) y de reacciones; mapa de flujos; curva de crecimiento frente al oxígeno; variabilidad de flujos (FVA);
+  búsqueda de genes esenciales; tabla de las 95 reacciones.
+- Validación contra COBRApy con GLPK (`scripts/validacion/cobra_fba.py`, archivo de referencia
+  `tests/fixtures/cobra-fba.json`): 439 casos con error relativo máximo 3×10⁻¹²; FVA con error ≤ 4,8×10⁻¹⁰; genes
+  esenciales iguales en aerobiosis y anaerobiosis. Valor dorado 0,8739 h⁻¹ (aerobio) y 0,2117 h⁻¹ (anaerobio).
+- Procedencia: «Predicción computacional» con aviso explícito de que es un óptimo posible, no una medición.
+
 ## [1.5.0] · 2026-10-18
 
 Programa v2 · Fase 5: visor de estructuras de proteínas.

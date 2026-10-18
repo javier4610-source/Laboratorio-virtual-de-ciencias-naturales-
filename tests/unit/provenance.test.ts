@@ -44,6 +44,10 @@ describe('procedencia de los datos', () => {
     expect(practiceProvenance('proteinas')).toMatchObject({ data: 'modelo', scene: 'modelo' });
     expect(practiceProvenance('proteinas').detail).toMatch(/AlphaFold/);
   });
+  it('metabolismo: el FBA se declara predicción de un modelo calculado, no medición', () => {
+    expect(practiceProvenance('metabolismo')).toMatchObject({ data: 'modelo', scene: 'modelo' });
+    expect(practiceProvenance('metabolismo').detail).toMatch(/no una medición/);
+  });
   it('el modo «Instrumento real» y la práctica de datos sintéticos lo dicen explícitamente', () => {
     expect(practiceProvenance('newton', 'real').detail).toMatch(/ruido de medición sintético/);
     expect(trialStatusText('newton', 'real')).toBe(`${STATUS_LABEL.modelo} con ruido de medición sintético`);

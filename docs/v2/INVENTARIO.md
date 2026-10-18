@@ -2,11 +2,11 @@
 
 Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se regenera desde el código.
 
-- Prácticas en el catálogo: **54**
-- Con laboratorio registrado: 54 · con prueba E2E propia: 54 · con revisión axe: 0
+- Prácticas en el catálogo: **55**
+- Con laboratorio registrado: 55 · con prueba E2E propia: 55 · con revisión axe: 0
 - Con modo de instrumento real: 22 · con modo avanzado: 19 · con parámetros editables: 8
 - Con manipulación directa: 31 · con sonido: 38 · con texto que rotula partes ilustrativas: 19
-- Archivos de pruebas unitarias: 51 (735 pruebas declaradas)
+- Archivos de pruebas unitarias: 52 (756 pruebas declaradas)
 
 | Práctica | Grado | Área | Laboratorio (líneas) | Modelos | Pruebas unitarias | E2E | axe | Instr. real | Avanzado | Manipulación | Sonido | Rótulo ilustrativo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -57,6 +57,7 @@ Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se r
 | `expresion` Expresión génica y efecto de mutaciones en la proteína | 11.º | biologia | ExpressionLab (862) | geneExpression, dna | 93 en geneExpression.test.ts, models.test.ts, sequences.test.ts | sí | no | no | no | sí | sí | no |
 | `induccion` Magnetismo e inducción electromagnética | 11.º | fisica | InductionLab (1248) | induction | 12 en induction.test.ts | sí | no | sí | sí | sí | sí | no |
 | `interferencia` Interferencia y difracción de la luz | 11.º | fisica | InterferenceLab (603) | interference | 19 en interference.test.ts | sí | no | sí | sí | sí | sí | no |
+| `metabolismo` Metabolismo celular: análisis de balance de flujos (FBA) | 11.º | biologia | MetabolismLab (500) | metabolism | 20 en metabolism.test.ts | sí | no | no | no | no | no | no |
 | `ph` pH, dilución y neutralización ácido-base | 11.º | quimica | AcidBaseLab (280) | acidbase, chemistry | 97 en models.test.ts, models2.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
 | `poblacion` Crecimiento poblacional y capacidad de carga | 11.º | ambiental | PopulationLab (203) | population | 55 en models.test.ts | sí | no | no | no | no | no | sí |
 | `popgen` Genética de poblaciones y frecuencias alélicas | 11.º | biologia | PopGenLab (179) | popgen | 24 en models2.test.ts | sí | no | no | no | no | no | sí |

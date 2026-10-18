@@ -1205,6 +1205,31 @@
     "illustrative": false
   },
   {
+    "id": "metabolismo",
+    "title": "Metabolismo celular: análisis de balance de flujos (FBA)",
+    "grade": 11,
+    "area": "biologia",
+    "lab": "MetabolismLab",
+    "models": [
+      "metabolism"
+    ],
+    "tests": [
+      "metabolism.test.ts"
+    ],
+    "nTests": 20,
+    "e2e": true,
+    "a11y": false,
+    "loc": 500,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
     "id": "ph",
     "title": "pH, dilución y neutralización ácido-base",
     "grade": 11,

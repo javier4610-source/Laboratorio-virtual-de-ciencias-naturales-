@@ -17,6 +17,17 @@ Consecuencia: cualquier función que consulte un servicio externo se podrá cons
 grabadas, pero su ejecución real quedará como **«no verificado»** hasta que (a) se habilite el dominio en la
 configuración de red del entorno, o (b) se ejecute la prueba real periódica en GitHub Actions.
 
+### Actualización de acceso (2026-10-18, después de que el docente habilitara dominios)
+
+| Servicio | Desde este entorno | Desde el navegador del estudiante (CORS) |
+|---|---|---|
+| RCSB PDB (`data.rcsb.org`, `files.rcsb.org`) | Sí (200) | Sí (`Access-Control-Allow-Origin: *`) |
+| UniProt (`rest.uniprot.org`) | Sí (200) | Sí |
+| PubChem PUG REST | Sí (200) | Sí |
+| NCBI E-utilities | Sí (200) | Sí |
+| NCBI BLAST (`Blast.cgi`) | Sí (200) | **No** (sin cabecera CORS): requiere el proxy de Nivel 1 |
+| AlphaFold DB (`alphafold.ebi.ac.uk`) | **No** (bloqueado por la red del entorno) | Por verificar |
+
 ## 2. Supuestos de la sección 2: confirmados o corregidos
 
 | Supuesto | Resultado | Detalle |

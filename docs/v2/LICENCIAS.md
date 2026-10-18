@@ -24,7 +24,7 @@ Se distribuyen con la aplicación publicada.
 | `@fontsource/atkinson-hyperlegible` | 5.2.6 | OFL-1.1 | Fuente: se puede usar, empaquetar y redistribuir con el software; no se vende sola; conservar la licencia; las versiones modificadas no pueden usar el nombre reservado de la fuente |
 | `@fontsource/bricolage-grotesque` | 5.2.8 | OFL-1.1 | Ídem |
 | `@fontsource/jetbrains-mono` | 5.2.6 | OFL-1.1 | Ídem |
-| `3dmol` (3Dmol.js) | 2.5.5 | BSD-3-Clause | Conservar el aviso de copyright y la licencia: se publica en `licencias/3dmol-LICENSE.txt` (copia de `node_modules/3dmol/LICENSE`). Incorpora código de GLmol, Three.js y jQuery según su LICENSE; el fragmento minificado parece incluir pako (licencia **por verificar**). Citar: Rego, N. y Koes, D. (2015), *Bioinformatics* 31(8), doi:10.1093/bioinformatics/btu829 (tomado de su `CITATION.cff`). Se carga solo en la práctica de geometría y no se precarga al instalar la aplicación |
+| `3dmol` (3Dmol.js) | 2.5.5 | BSD-3-Clause | Conservar el aviso de copyright y la licencia: se publica en `licencias/3dmol-LICENSE.txt` (copia de `node_modules/3dmol/LICENSE`). Incorpora código de GLmol, Three.js y jQuery según su LICENSE; el fragmento minificado parece incluir pako (licencia **por verificar**). Citar: Rego, N. y Koes, D. (2015), *Bioinformatics* 31(8), doi:10.1093/bioinformatics/btu829 (tomado de su `CITATION.cff`). Se carga solo en la práctica de geometría; se incluye en la descarga para uso sin conexión. Sin WebGL o sin 3Dmol.js, la práctica usa una vista de respaldo en SVG propia |
 | `qrcode` | 1.5.4 | MIT | Conservar el aviso de copyright; se carga bajo demanda al abrir el código QR |
 
 Dependencia transitiva de ejecución: `scheduler` (MIT), requerida por `react-dom`.

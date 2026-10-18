@@ -7,6 +7,15 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [1.4.1] · 2026-10-18
+
+### Corregido
+- Geometría molecular: el visor 3D dejaba solo un aviso cuando el equipo no ofrece WebGL (frecuente en computadores
+  escolares) o cuando no se podía descargar 3Dmol.js (conexión intermitente), y cualquier error interno lo apagaba sin
+  registro. Ahora aparece una vista de respaldo en SVG con las mismas coordenadas del archivo, que se gira con el
+  ratón, el dedo o las flechas del teclado y permite elegir átomos y medir; los errores quedan en la consola.
+- El visor 3D se incluye en la descarga para uso sin conexión.
+
 ## [1.4.0] · 2026-10-18
 
 Programa v2 · Fase 4: secuencias, BLAST y rastreo génico.

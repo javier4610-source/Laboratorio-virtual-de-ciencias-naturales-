@@ -14,9 +14,6 @@ const files = walk(dist)
   .map((p) => relative(dist, p).split('\\').join('/'))
   // .woff es el respaldo de .woff2 para navegadores antiguos: no hace falta guardarlo.
   .filter((f) => f !== 'sw.js' && !f.endsWith('.woff') && !f.endsWith('.map'))
-  // El visor 3D (3Dmol.js, ~545 KB) solo lo usa la práctica de geometría molecular: no se precarga al instalar;
-  // se descarga al abrirla y queda en la caché de ejecución para usarlo sin conexión después.
-  .filter((f) => !/3Dmol/i.test(f))
   .sort();
 
 const hash = createHash('sha256');

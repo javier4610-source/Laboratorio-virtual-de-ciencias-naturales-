@@ -305,3 +305,10 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Rastreo génico | 17 pruebas; validación contra los registros en vivo 67/67 y 25 enlaces con respuesta 200; E2E (HBB c.20A>T → p.Glu7Val, 99,3 %; 39,1 % exónico) | Correcto | 11 enlaces de Reactome no verificables (dominio bloqueado en el entorno) | Marcados «no verificado» en el informe | Parcial (enlaces) |
 | Regresión | 847 pruebas unitarias y 97 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
 
+# Corrección: visor 3D de geometría molecular (reportado por el docente)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Visor 3D | Chromium con GPU por software, sin WebGL (`--disable-webgl`), sin poder descargar 3Dmol.js (sin service worker y con la descarga bloqueada), teléfono 390 × 844 | Con WebGL funciona (dibuja y gira al arrastrar); sin WebGL o sin descarga solo mostraba un aviso | En equipos sin WebGL o sin conexión no había vista de la molécula; los errores internos apagaban el visor sin registro | Vista de respaldo en SVG con las coordenadas reales (girar con ratón, dedo o teclado; elegir átomos; medir), registro de errores en la consola, 3Dmol.js incluido en la descarga sin conexión | Corregido; E2E nuevo `tests/e2e/geometria.spec.ts` |
+| Regresión | 847 pruebas unitarias y 98 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
+

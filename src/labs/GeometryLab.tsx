@@ -7,6 +7,7 @@ import {
 } from '../models/geometry';
 import { BUNDLED_CONFORMERS, MISSING_3D, PUBCHEM3D_METHOD } from '../data/conformers';
 import { CPK, prettyFormula } from '../models/balancing';
+import { MoleculeSvg } from '../components/MoleculeSvg';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
@@ -344,10 +345,11 @@ export default function GeometryLab({ api }: LabProps) {
       try {
         viewerRef.current = lib.createViewer(host, { backgroundColor: 'white', backgroundAlpha: 0, antialias: true });
         setEngine('disponible');
-      } catch {
+      } catch (e) {
+        console.warn('[geometría] No se pudo crear el visor 3D; se usa la vista de respaldo.', e);
         setEngine('no-disponible');
       }
-    }).catch(() => { if (!cancelled) setEngine('no-disponible'); });
+    }).catch((e) => { console.warn('[geometría] No se pudo descargar el visor 3D (¿sin conexión?); se usa la vista de respaldo.', e); if (!cancelled) setEngine('no-disponible'); });
     const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => { try { viewerRef.current?.resize(); viewerRef.current?.render(); } catch { /* sin visor */ } });
     ro?.observe(host);
     return () => {
@@ -370,7 +372,8 @@ export default function GeometryLab({ api }: LabProps) {
       v.addModel(entry.sdf, 'sdf');
       // El lienzo puede tener aún tamaño 0 al montarse: se ajusta el encuadre cuando ya tiene su tamaño real.
       zoomedFor.current = '';
-    } catch {
+    } catch (e) {
+      console.warn('[geometría] El visor 3D no pudo cargar la molécula; se usa la vista de respaldo.', e);
       setEngine('no-disponible');
     }
   }, [engine, entry.sdf]);
@@ -408,7 +411,8 @@ export default function GeometryLab({ api }: LabProps) {
         if (radius < 5) v.zoom(Math.min(3, 5 / radius));
       }
       v.render();
-    } catch {
+    } catch (e) {
+      console.warn('[geometría] Error al dibujar en el visor 3D; se usa la vista de respaldo.', e);
       setEngine('no-disponible');
     }
   }, [engine, entry.sdf, mol, style, showLabels, selection, current]);
@@ -540,22 +544,32 @@ export default function GeometryLab({ api }: LabProps) {
           <div style={{ position: 'relative', width: '100%', height: 340, borderRadius: 10, background: 'var(--surface-2)', border: '1px solid var(--line)', overflow: 'hidden' }}>
             <div ref={hostRef} role="img" aria-label={`Modelo 3D interactivo de ${entry.name}; arrastra para girar, rueda para acercar y toca un átomo para elegirlo`} aria-describedby="gmv-3d-desc"
               style={{ position: 'absolute', inset: 0, visibility: engine === 'disponible' ? 'visible' : 'hidden' }} />
-            {engine !== 'disponible' && (
-              <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', padding: 16, textAlign: 'center' }}>
-                <div className="small" style={{ maxWidth: 420 }}>
-                  {engine === 'cargando' && <p role="status">Cargando el visor 3D (3Dmol.js)…</p>}
-                  {engine === 'sin-webgl' && <p role="status"><strong>Vista 3D no disponible:</strong> este navegador o equipo no ofrece WebGL. Puedes medir igual con las listas de átomos; abajo está la tabla de enlaces y ángulos calculada con las mismas coordenadas.</p>}
-                  {engine === 'no-disponible' && <><p role="status"><strong>Vista 3D no disponible:</strong> no se pudo cargar el visor. Las mediciones con las listas de átomos y la tabla calculada siguen funcionando.</p><button type="button" className="btn small" onClick={() => setRetry((n) => n + 1)}>Reintentar el visor 3D</button></>}
-                </div>
+            {engine === 'cargando' && (
+              <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
+                <p role="status" className="small">Cargando el visor 3D (3Dmol.js)…</p>
+              </div>
+            )}
+            {fallbackOpen && (
+              <div style={{ position: 'absolute', inset: 0 }}>
+                <MoleculeSvg atoms={mol.atoms.map((a) => ({ index: a.index, element: a.element, x: a.x, y: a.y, z: a.z, label: label(a.index) }))}
+                  bonds={mol.bonds} style={style} selection={selection} onPick={(i) => pickRef.current(i)} title={entry.name} />
               </div>
             )}
           </div>
+          {fallbackOpen && (
+            <div className="notice small" role="status" style={{ marginTop: 8 }}>
+              <strong>Vista de respaldo:</strong> {engine === 'sin-webgl' ? 'este navegador o equipo no ofrece WebGL,' : 'no se pudo cargar el visor 3D (por ejemplo, sin conexión),'} así que la molécula
+              se dibuja aquí con las mismas coordenadas del archivo. Arrástrala o usa las flechas del teclado para girarla y toca un átomo para elegirlo;
+              las mediciones son idénticas. Los tamaños de las esferas son solo de dibujo.
+              {engine === 'no-disponible' && <> <button type="button" className="btn small" onClick={() => setRetry((n) => n + 1)}>Reintentar el visor 3D</button></>}
+            </div>
+          )}
           <p id="gmv-3d-desc" className="sr-only">{sceneText}</p>
-          <div className="btn-row" style={{ marginTop: 8 }}>
+          {!fallbackOpen && <div className="btn-row" style={{ marginTop: 8 }}>
             <button type="button" className="btn small" disabled={engine !== 'disponible'} onClick={() => view((v, ms) => v.rotate(90, 'y', ms))}>Girar 90° (eje vertical)</button>
             <button type="button" className="btn small" disabled={engine !== 'disponible'} onClick={() => view((v, ms) => v.rotate(90, 'x', ms))}>Girar 90° (eje horizontal)</button>
             <button type="button" className="btn small" disabled={engine !== 'disponible'} onClick={() => view((v, ms) => v.zoomTo({}, ms))}>Centrar la molécula</button>
-          </div>
+          </div>}
           <p className="small muted" style={{ margin: '6px 0 10px' }}>
             Toca átomos en el modelo 3D para elegirlos (el próximo será <strong>{slotNames[slot % slotNames.length]}</strong>) o usa las listas de la derecha con el teclado.
           </p>

@@ -61,6 +61,7 @@ import { analyze, collect } from '../../src/models/inquiry';
 import { angleTable, parseSdf } from '../../src/models/geometry';
 import { BUNDLED_CONFORMERS } from '../../src/data/conformers';
 import { translateSeq } from '../../src/models/sequences';
+import { consequenceFromHgvs, geneByKey } from '../../src/models/geneTrace';
 import biopython from '../fixtures/biopython-secuencias.json';
 import { ropeSpeed } from '../../src/models/waves';
 import { idealAdvantage } from '../../src/models/workPower';
@@ -260,6 +261,10 @@ export const GOLDEN: GoldenCase[] = [
     const table = (biopython.geneticCodes['1'] as { codons: Record<string, string> }).codons;
     expect(Object.keys(table)).toHaveLength(64);
     for (const [codon, aa] of Object.entries(table)) expect(translateSeq(codon, 1)).toBe(aa);
+  } },
+  { id: 'rastreo', origin: 'referencia', what: 'anemia falciforme: NM_000518.5(HBB):c.20A>T es de sentido erróneo p.Glu7Val (ClinVar 15333), calculado al traducir el CDS real (codón 7 GAG → GTG)', run: () => {
+    const r = consequenceFromHgvs(geneByKey('HBB')!, 'c.20A>T');
+    expect(r).toMatchObject({ consequence: 'sentido-erroneo', hgvsP: 'p.Glu7Val', refCodon: 'GAG', altCodon: 'GTG', aaPosition: 7 });
   } },
 ];
 

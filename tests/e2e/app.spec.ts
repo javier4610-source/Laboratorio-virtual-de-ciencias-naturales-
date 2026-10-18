@@ -794,6 +794,20 @@ test('secuencias: ARNm de HBB (NM_000518.5) con 51,3 % GC, ORF de 147 aa en 51..
   await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
 });
 
+test('rastreo génico: HBB c.20A>T da p.Glu7Val (99,3 % de identidad) y el gen tiene 39,1 % de fracción exónica', async ({ page }) => {
+  await openFree(page, 'rastreo');
+  await expect(page.getByRole('button', { name: 'Guardar la variante en la tabla' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Analizar la variante' }).click();
+  await expect(page.locator('.readout').getByText('De sentido erróneo').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('p.Glu7Val').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('99,3 %').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Guardar la variante en la tabla' }).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  await page.getByRole('button', { name: 'Calcular la estructura del gen' }).click();
+  await expect(page.locator('.readout').getByText('39,1 %').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('980 nt').first()).toBeVisible();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -854,7 +868,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/52');
+  await expect(page.locator('.kpi').first()).toContainText('1/53');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

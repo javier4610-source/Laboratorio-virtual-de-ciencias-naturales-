@@ -1075,6 +1075,29 @@ const RAW_BANK: Question[] = [
     explanation: 'Un alineamiento cuantifica el parecido de dos secuencias según una matriz y unas penalizaciones. La identidad alta sugiere homología (ancestro común), pero la función depende también de pocos residuos clave, de la regulación del gen y del contexto celular, y se establece con experimentos. Por eso la identidad se reporta con el método y no se usa sola para concluir sobre la función.',
     review: 'En la práctica «Secuencias biológicas: análisis y alineamiento», alinea las tres parejas preparadas y lee la nota de cada comparación.',
   },
+  {
+    id: 'saber-rgn-1', grade: 11, topic: 'Variantes génicas y traducción', competency: 'indagacion', component: 'biologico', skill: 'Usar la traducción de referencia para interpretar el efecto de variantes registradas en una base de datos', difficulty: 'alta', practiceId: 'rastreo',
+    context: 'Un grupo de estudiantes de Apartadó consultó en ClinVar tres variantes del gen HBB (β-globina) registradas como patogénicas y calculó, traduciendo la región codificante de referencia NM_000518.5, cómo cambia la proteína en cada caso. La β-globina de referencia tiene 147 aminoácidos.',
+    table: {
+      caption: 'Variantes de HBB (ClinVar) y proteína calculada por traducción',
+      headers: ['Variante (HGVS c.)', 'Cambio en el ADN codificante', 'Cambio en la proteína', 'Longitud calculada (aminoácidos)', 'Identidad con la referencia (%)'],
+      rows: [
+        ['c.20A>T', 'Codón 7: GAG → GTG', 'p.Glu7Val', '147', '99,3'],
+        ['c.118C>T', 'Codón 40: CAG → TAG', 'p.Gln40Ter', '39', '26,5'],
+        ['c.27dup', 'Se duplica la G de la posición 27', 'p.Ser10fs', '22', '6,8'],
+      ],
+    },
+    stem: '¿Qué conclusión es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'La c.20A>T es inofensiva porque la proteína conserva el 99,3 % de identidad con la de referencia.', feedback: 'La identidad no mide la gravedad: un solo aminoácido cambiado en un lugar clave puede alterar la función. Esa variante está registrada como patogénica (es la de la anemia falciforme).' },
+      { id: 'b', text: 'En la c.27dup se añade una base, cambia el marco de lectura desde el codón 10 y aparece pronto un codón de terminación; en la c.118C>T la sustitución crea directamente un codón de terminación.', feedback: 'Correcto: la duplicación de una base (no múltiplo de 3) corre el marco y la sustitución CAG → TAG es sin sentido; ambas acortan la proteína por caminos distintos.' },
+      { id: 'c', text: 'Las tres variantes son de sentido erróneo porque en las tres cambia la secuencia de la proteína.', feedback: 'Sentido erróneo es cambiar un aminoácido por otro sin cambiar la longitud. Las variantes 2 y 3 acortan la proteína: son sin sentido y de cambio del marco.' },
+      { id: 'd', text: 'La c.118C>T y la c.27dup no pueden ser patogénicas porque están en el primer o segundo exón, lejos del final del gen.', feedback: 'La posición dentro del gen no protege: una terminación temprana elimina la mayor parte de la proteína. Además, la patogenicidad la establecen las evidencias registradas, no la ubicación.' },
+    ],
+    correct: 'b',
+    explanation: 'La traducción de referencia permite predecir el cambio en la secuencia: una sustitución puede cambiar un aminoácido (p.Glu7Val) o crear un codón de terminación (p.Gln40Ter), y una inserción o deleción que no es múltiplo de 3 cambia el marco (p.Ser10fs). La predicción no dice por sí sola cuán grave es el efecto en la persona: eso depende de la función de la proteína y de otras evidencias.',
+    review: 'En la práctica de rastreo génico, analiza las tres variantes de HBB registradas en ClinVar y compara la longitud y la identidad de la proteína con la notación p.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

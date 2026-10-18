@@ -35,6 +35,12 @@ const SYNTHETIC_SAMPLES = new Set(['reto']);
 
 /** Procedencia de una práctica según el modo de medición elegido. */
 export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'real' = 'ideal'): Provenance {
+  if (practiceId === 'rastreo') {
+    return {
+      data: 'modelo', scene: 'modelo',
+      detail: 'Ficha con registros reales de NCBI, UniProt, RCSB PDB y ClinVar (consultados el 2026-10-18); cada afirmación muestra su tipo de evidencia. Las longitudes y la consecuencia de las variantes se calculan con esos registros; el dibujo usa las coordenadas reales.',
+    };
+  }
   if (practiceId === 'secuencias') {
     return {
       data: 'modelo', scene: 'modelo',

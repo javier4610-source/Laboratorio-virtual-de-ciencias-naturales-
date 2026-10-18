@@ -36,6 +36,10 @@ describe('procedencia de los datos', () => {
     expect(practiceProvenance('secuencias')).toMatchObject({ data: 'modelo', scene: 'modelo' });
     expect(practiceProvenance('secuencias').detail).toMatch(/Biopython/);
   });
+  it('rastreo génico: ficha con registros reales y su tipo de evidencia; cálculos sobre esos registros', () => {
+    expect(practiceProvenance('rastreo')).toMatchObject({ data: 'modelo', scene: 'modelo' });
+    expect(practiceProvenance('rastreo').detail).toMatch(/ClinVar/);
+  });
   it('el modo «Instrumento real» y la práctica de datos sintéticos lo dicen explícitamente', () => {
     expect(practiceProvenance('newton', 'real').detail).toMatch(/ruido de medición sintético/);
     expect(trialStatusText('newton', 'real')).toBe(`${STATUS_LABEL.modelo} con ruido de medición sintético`);

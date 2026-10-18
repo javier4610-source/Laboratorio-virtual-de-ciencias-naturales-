@@ -83,9 +83,9 @@ atribución exigida, y documentarlo aquí con fecha.
 
 | Servicio | Uso previsto (prompt) | Estado | Términos, cuotas y licencia de datos |
 |---|---|---|---|
-| NCBI (Entrez, BLAST) | Secuencias y BLAST (10.1, 10.2) | No usado todavía | Verificar términos vigentes antes de integrar. El prompt menciona límites de solicitudes por segundo y de envíos BLAST que deben confirmarse en la documentación oficial |
-| RCSB PDB | Estructuras experimentales (10.4) | No usado todavía | Verificar términos vigentes antes de integrar |
-| UniProt | Proteínas (10.2) | No usado todavía | Verificar términos vigentes antes de integrar |
+| NCBI (Entrez, BLAST) | Secuencias y BLAST (10.1, 10.2) | **Datos incluidos** en `secuencias` y `rastreo` (consultados el 2026-10-18); BLAST: ver docs/v2/BLAST.md | Verificar términos vigentes antes de integrar. El prompt menciona límites de solicitudes por segundo y de envíos BLAST que deben confirmarse en la documentación oficial |
+| RCSB PDB | Estructuras experimentales (10.4) | **Metadatos incluidos** en `rastreo` (2HHB, 3I40, 1DP0) | Verificar términos vigentes antes de integrar |
+| UniProt | Proteínas (10.2) | **Datos incluidos** en `secuencias` y `rastreo` (licencia CC BY 4.0 según la nota del agente: **por verificar** en uniprot.org antes de publicar) | Verificar términos vigentes antes de integrar |
 | AlphaFold DB | Estructuras predichas (10.4) | No usado todavía | Verificar términos vigentes antes de integrar |
 | PubChem (PUG REST y confórmeros 3D) | Geometría molecular (9.2); moléculas (10.5) | **En uso** desde la versión con la práctica `geometria`: 12 confórmeros incluidos en la aplicación (descargados el 2026-10-18, con CID, URL y SHA-256) y búsqueda en vivo opcional | El README de PubChem3D (ftp.ncbi.nlm.nih.gov/pubchem/Compound_3D/README, «Fair Use Disclaimer», leído el 2026-10-18) dice que NCBI no restringe el uso ni la distribución de los datos, aunque algunos depositantes pueden reclamar derechos sobre los datos originales; los confórmeros 3D los calcula PubChem. Atribución: CID, URL y fecha en la interfaz. Política de cuotas de PUG REST: **por verificar** (la página de documentación devolvió un desafío reCAPTCHA); el laboratorio espacia las solicitudes ≥ 0,5 s, una a la vez, con 15 s de tiempo máximo. CORS: permitido |
 

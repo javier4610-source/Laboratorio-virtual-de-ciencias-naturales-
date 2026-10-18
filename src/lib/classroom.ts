@@ -148,7 +148,7 @@ export async function flush(): Promise<void> {
     const st = (err as ApiError).status;
     if (st === 401) {
       setEnrollment(null);
-      status = { ...status, state: 'error', message: 'Tu sesión del curso expiró. Vuelve a unirte con tu nombre y PIN.' };
+      status = { ...status, state: 'error', message: 'Tu sesión del curso expiró. Vuelve a unirte con tu alias y PIN.' };
       emit();
       flushing = false;
       return;

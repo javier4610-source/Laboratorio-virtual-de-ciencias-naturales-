@@ -39,13 +39,13 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       plano inclinado (9.º, `trabajo`).
 - [x] **Lote 9:** empuje y flotación (7.º, `flotacion`) · movimiento y distancia recorrida (6.º, `movimiento`) · circuitos simples con
       pilas, interruptores y bombillos (7.º, física, `circuitos-simples`).
-- [ ] **T3 · Retroalimentación del docente:** comentarios y calificación por práctica que el estudiante ve en su
+- [ ] **T3 · Retroalimentación del docente** (espera T2: necesita el servidor publicado): comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.
 - [x] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
       (11.º, `interferencia`).
 - [x] **Lote 10:** extracción de ADN y complementariedad de bases (8.º, biología, `extraccion-adn`) · el mol,
       la masa molar y la balanza (9.º, química, `mol`) · reto de indagación: diseñar un experimento e
-      interpretar datos reales de Urabá (11.º, ambiental, `reto`).
+      interpretar datos de sistemas de Urabá (11.º, ambiental, `reto`; datos sintéticos con semilla visible, no reales).
 - [ ] **T2 · Publicación del servidor:** el docente eligió Render; `Dockerfile`, `render.yaml` y la guía
       `docs/DESPLIEGUE-SERVIDOR.md` están listos. Falta que el docente cree la cuenta y entregue la dirección para
       configurar la variable `API_URL`; política de privacidad y autorización de acudientes (Ley 1581).
@@ -77,7 +77,7 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
 - [x] **v2 · Fase 0:** diagnóstico, inventario automático (`node scripts/inventario.mjs`), supuestos verificados.
 - [x] **v2 · Fase 1:** valores dorados por práctica (`tests/golden`), axe con WCAG 2.2 AA, prueba en viewport móvil,
       CHANGELOG y versión semántica. Criterio: todas las prácticas cubiertas por pruebas que pasan.
-- [ ] **v2 · Fase 2:** ADR (`docs/v2/adr`), sistema de procedencia visible, registro de experimentos exportable (JSON
+- [x] **v2 · Fase 2:** ADR (`docs/v2/adr`), sistema de procedencia visible, registro de experimentos exportable (JSON
       con esquema, semilla y versión del modelo), plantilla de ficha de enriquecimiento, alias en el seguimiento.
 - [ ] **v2 · Fase 3:** energía con integración temporal (referencia 98,1 J y 14,0 m/s), gas a 101,325 kPa (22,414 L),
       geometría molecular 3D con un motor real, QR por práctica.

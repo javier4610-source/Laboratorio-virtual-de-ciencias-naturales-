@@ -85,7 +85,15 @@ export interface GradeInfo {
 export interface Column { key: string; label: string; unit?: string; numeric: boolean; decimals?: number; /** Variable que el estudiante controla (entrada del experimento). */ input?: boolean; /** Resolución del instrumento (en la unidad de la columna): se grafica como barra de ± media resolución. */ resolution?: number; }
 export interface Dataset { id: string; label: string; columns: Column[]; defaultX: string; defaultY: string; }
 export type TrialValue = number | string | null;
-export interface Trial { id: string; datasetId: string; createdAt: number; values: Record<string, TrialValue>; note?: string; }
+/** Metadatos de reproducibilidad de un ensayo (programa v2, sección 12). */
+export interface TrialMeta {
+  /** Versión de la aplicación con la que se calculó. */
+  v: string;
+  /** Modo de medición: ideal (redondeo a la resolución) o real (ruido sintético con semilla determinista). */
+  medicion: 'ideal' | 'real';
+}
+
+export interface Trial { id: string; datasetId: string; createdAt: number; values: Record<string, TrialValue>; note?: string; meta?: TrialMeta; }
 
 /** Elección del estudiante en el cuaderno para un conjunto de datos. */
 export interface DatasetAnalysis {

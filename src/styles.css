@@ -1330,3 +1330,13 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 .model-card { border-top-color: var(--model-curve); }
 .curve-table { margin-top: 12px; }
 @media print { .adv-bar, .adv-params { display: none; } }
+
+/* Procedencia de datos y escenas (programa v2, ADR 0002) */
+.prov-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 12px; border: 1px dashed var(--line); border-radius: var(--radius); background: var(--surface-2); }
+.prov-chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-weight: 600; font-size: 0.82rem; white-space: nowrap; }
+.prov-chip .prov-prefix { font-weight: 500; color: var(--ink-2); }
+.prov-chip::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--ink-2); flex: none; }
+.prov-chip.prov-modelo::before { background: var(--accent); }
+.prov-chip.prov-ilustracion::before { background: var(--warn); border-radius: 2px; }
+.prov-chip.prov-experimental::before { background: var(--ok); }
+@media (max-width: 600px) { .prov-chip { white-space: normal; } }

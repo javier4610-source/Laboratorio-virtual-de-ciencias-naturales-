@@ -50,7 +50,7 @@ export function usePracticeSession(practiceId: string) {
 
   const addTrial = useCallback((datasetId: string, values: Record<string, TrialValue>) => {
     const trial: Trial = { id: newTrialId(), datasetId, createdAt: Date.now(), values };
-    update((s) => ({ ...s, trials: [...s.trials, trial] }));
+    update((s) => ({ ...s, trials: [...s.trials, { ...trial, meta: { v: __APP_VERSION__, medicion: s.measurement?.mode ?? 'ideal' } }] }));
     return trial;
   }, [update]);
 

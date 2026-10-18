@@ -1,4 +1,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
+import { ProvenanceStrip } from '../components/Provenance';
+import { ExperimentRecordCard } from '../components/ExperimentRecord';
+import { practiceProvenance } from '../lib/provenance';
 import type { Mode, PracticeDef } from '../core/types';
 import { usePracticeSession } from '../lib/session';
 import { progressPercent, saveProgress, stageDone, STAGES, MIN_TRIALS, type StageId } from '../lib/progress';
@@ -173,6 +176,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
               />
               <MeasurementPanel api={api} practiceId={p.id} />
               <AdvancedToggle />
+              <ProvenanceStrip prov={practiceProvenance(p.id, s.measurement?.mode)} />
               <MeasurementProvider api={api} practiceId={p.id}>
                 <Suspense fallback={<p role="status">Cargando el laboratorio…</p>}>
                   <LabHost Lab={Lab} api={api} practice={p} />
@@ -181,6 +185,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
               <ModelEquationsPanel practice={p} />
             </div>
             <DataPanel practiceId={p.id} datasets={DATASETS[p.id]} api={api} />
+            <ExperimentRecordCard practice={p} api={api} />
             <div className="btn-row">
               <button type="button" className="btn primary" onClick={() => go('analisis')}>Ir al análisis</button>
               {s.trials.length < MIN_TRIALS && <span className="small muted">Se recomiendan al menos {MIN_TRIALS} ensayos para identificar una tendencia.</span>}

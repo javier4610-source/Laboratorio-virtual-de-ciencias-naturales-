@@ -1,0 +1,90 @@
+# Tabla de licencias y fuentes de datos
+
+Fecha: 2026-10-18 · Prompt maestro, sección 14.4. Se actualiza cada vez que se añade, quita o actualiza una
+dependencia o un servicio externo (ADR 0005).
+
+Método de verificación: versión fijada en `package.json`; licencia leída del campo `license` de
+`node_modules/<paquete>/package.json` instalado y contrastada con `package-lock.json`.
+
+## 1. Código del laboratorio
+
+| Elemento | Licencia | Observación |
+|---|---|---|
+| Código fuente del repositorio | **Por verificar** | No hay archivo `LICENSE` en la raíz; `package.json` declara `"private": true` y no tiene campo `license`. El docente debe decidir la licencia antes de aceptar contribuciones o redistribuir |
+| Logo institucional (`scripts/guias/assets/LOGO_COLEGIOS.png`) | Propiedad de la institución | Uso autorizado: **por verificar** con la institución. Solo se usa en las guías en PDF |
+
+## 2. Dependencias de ejecución (`dependencies`)
+
+Se distribuyen con la aplicación publicada.
+
+| Paquete | Versión | Licencia | Obligaciones principales |
+|---|---|---|---|
+| `react` | 19.3.0 | MIT | Conservar el aviso de copyright y la licencia |
+| `react-dom` | 19.3.0 | MIT | Ídem |
+| `@fontsource/atkinson-hyperlegible` | 5.2.6 | OFL-1.1 | Fuente: se puede usar, empaquetar y redistribuir con el software; no se vende sola; conservar la licencia; las versiones modificadas no pueden usar el nombre reservado de la fuente |
+| `@fontsource/bricolage-grotesque` | 5.2.8 | OFL-1.1 | Ídem |
+| `@fontsource/jetbrains-mono` | 5.2.6 | OFL-1.1 | Ídem |
+
+Dependencia transitiva de ejecución: `scheduler` (MIT), requerida por `react-dom`.
+
+Nota sobre las fuentes: el archivo `LICENSE` que trae cada paquete `@fontsource` contiene el texto de la SIL Open Font
+License 1.1, pero su línea de titular dice «Google Inc.», que no corresponde necesariamente a los autores de cada
+tipografía. Los titulares reales del copyright están **por verificar** en el repositorio original de cada fuente
+antes de redactar la atribución en la interfaz.
+
+## 3. Dependencias de desarrollo (`devDependencies`)
+
+Se usan para compilar y probar; **no** se distribuyen en el sitio publicado.
+
+| Paquete | Versión | Licencia |
+|---|---|---|
+| `@axe-core/playwright` | 4.10.2 | MPL-2.0 |
+| `@playwright/test` | 1.56.1 | Apache-2.0 |
+| `@types/node` | 22.15.30 | MIT |
+| `@types/react` | 19.3.0 | MIT |
+| `@types/react-dom` | 19.3.0 | MIT |
+| `@vitejs/plugin-react` | 5.2.0 | MIT |
+| `typescript` | 5.9.3 | Apache-2.0 |
+| `vite` | 7.3.7 | MIT |
+| `vitest` | 5.0.3 | MIT |
+
+Resumen de las 146 entradas de `package-lock.json` (directas y transitivas) por licencia declarada: MIT 128,
+Apache-2.0 6, ISC 5, OFL-1.1 3, MPL-2.0 2 (`axe-core` 4.10.3 y `@axe-core/playwright`), BSD-3-Clause 1
+(`source-map-js`), CC-BY-4.0 1 (`caniuse-lite`, base de datos de compatibilidad de navegadores usada en la
+compilación). Ninguna tiene licencia de copyleft fuerte (GPL o AGPL).
+
+## 4. Herramientas fuera de `package.json`
+
+| Herramienta | Uso | Licencia |
+|---|---|---|
+| Node.js ≥ 22.13 (`node:http`, `node:sqlite`, `node:crypto`) | Servidor opcional (`server/`) y scripts | **Por verificar** la licencia de la versión instalada en el servidor (Node.js se distribuye bajo licencia de tipo MIT con componentes de terceros) |
+| ReportLab (Python) | Generación de guías en PDF (`npm run guias`), incluido su generador de código QR | BSD según los metadatos del paquete instalado en el entorno de desarrollo (5.0.1); la versión usada por el docente está **por verificar** |
+| Fuente DejaVu Sans | Texto de las guías en PDF | **Por verificar** |
+
+## 5. Bibliotecas candidatas (no instaladas)
+
+Ver ADR 0005. Se añadirán a la sección 2 solo si se adoptan.
+
+| Biblioteca | Versión en npm (2026-10-18) | Licencia según npm |
+|---|---|---|
+| 3Dmol.js (`3dmol`) | 2.5.5 | BSD-3-Clause |
+| NGL (`ngl`) | 2.5.0 | MIT |
+| RDKit.js (`@rdkit/rdkit`) | 2026.9.1 | BSD-3-Clause |
+| Pyodide (`pyodide`) | 314.0.7 | MPL-2.0 |
+
+## 6. Servicios externos y bases de datos previstos
+
+**Ninguno se usa todavía.** Antes de integrar cualquiera: leer y citar sus términos de uso y política de cuotas
+vigentes, comprobar si permiten CORS desde el navegador, registrar la licencia de los datos que entregan y la forma de
+atribución exigida, y documentarlo aquí con fecha.
+
+| Servicio | Uso previsto (prompt) | Estado | Términos, cuotas y licencia de datos |
+|---|---|---|---|
+| NCBI (Entrez, BLAST) | Secuencias y BLAST (10.1, 10.2) | No usado todavía | Verificar términos vigentes antes de integrar. El prompt menciona límites de solicitudes por segundo y de envíos BLAST que deben confirmarse en la documentación oficial |
+| RCSB PDB | Estructuras experimentales (10.4) | No usado todavía | Verificar términos vigentes antes de integrar |
+| UniProt | Proteínas (10.2) | No usado todavía | Verificar términos vigentes antes de integrar |
+| AlphaFold DB | Estructuras predichas (10.4) | No usado todavía | Verificar términos vigentes antes de integrar |
+| PubChem | Moléculas (10.5) | No usado todavía | Verificar términos vigentes antes de integrar |
+
+Hoy la aplicación no hace ninguna solicitud a terceros en tiempo de ejecución: las fuentes tipográficas van incluidas
+(README) y el único servicio remoto posible es el servidor institucional opcional, que no está desplegado.

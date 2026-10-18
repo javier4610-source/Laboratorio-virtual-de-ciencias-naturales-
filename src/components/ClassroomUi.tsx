@@ -80,7 +80,7 @@ export function JoinForm({ initialCode = '', initialServer = '', onJoined }: { i
     e.preventDefault();
     if (!server.trim()) { setError('Escribe la dirección del servidor de tu colegio.'); return; }
     if (!/^[A-Za-z0-9]{6}$/.test(code.trim())) { setError('El código del curso tiene 6 caracteres (letras y números).'); return; }
-    if (name.trim().length < 3) { setError('Escribe tu nombre y apellido (o el alias que acordaste con tu docente).'); return; }
+    if (name.trim().length < 3) { setError('Escribe el alias o código que te asignó tu docente (al menos 3 caracteres).'); return; }
     if (!/^\d{4}$/.test(pin)) { setError('El PIN debe tener exactamente 4 dígitos.'); return; }
     setBusy(true); setError('');
     try {
@@ -106,15 +106,15 @@ export function JoinForm({ initialCode = '', initialServer = '', onJoined }: { i
         <span className="hint" id={`${id}-code-h`}>Te lo da tu docente: 6 letras y números.</span>
       </div>
       <div className="field">
-        <label htmlFor={`${id}-name`}>Tu nombre y apellido</label>
-        <input id={`${id}-name`} type="text" value={name} maxLength={60} autoComplete="name" onChange={(e) => setName(e.target.value)} aria-describedby={`${id}-name-h`} />
-        <span className="hint" id={`${id}-name-h`}>O el alias que acordaste con tu docente. Escríbelo igual cada vez.</span>
+        <label htmlFor={`${id}-name`}>Tu alias o código de estudiante</label>
+        <input id={`${id}-name`} type="text" value={name} maxLength={60} autoComplete="off" onChange={(e) => setName(e.target.value)} aria-describedby={`${id}-name-h`} />
+        <span className="hint" id={`${id}-name-h`}>Usa el alias o código que te asignó tu docente (por ejemplo, 9B-07). Por privacidad, no escribas tu nombre completo. Escríbelo igual cada vez.</span>
       </div>
       <div className="field">
         <label htmlFor={`${id}-pin`}>PIN de 4 dígitos</label>
         <input id={`${id}-pin`} type="password" className="pin-input" inputMode="numeric" pattern="[0-9]{4}" maxLength={4} autoComplete="off" value={pin}
           onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))} aria-describedby={`${id}-pin-h`} />
-        <span className="hint" id={`${id}-pin-h`}>Invéntalo y recuérdalo: con tu nombre y este PIN vuelves a entrar desde otro equipo.</span>
+        <span className="hint" id={`${id}-pin-h`}>Invéntalo y recuérdalo: con tu alias y este PIN vuelves a entrar desde otro equipo.</span>
       </div>
       {error && <p className="notice bad" role="alert">{error}</p>}
       <div className="btn-row">

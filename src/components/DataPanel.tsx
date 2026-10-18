@@ -14,6 +14,8 @@ import { useAdvanced } from './Advanced';
 import { CURVE_MODELS, fixedInputsText, modelCurve } from '../labs/modelCurves';
 import { modifiedSummary } from '../lib/advanced';
 import type { ModelCurveProp } from './Chart';
+import { StatusChip } from './Provenance';
+import { flag } from '../lib/flags';
 
 export function cellText(v: Trial['values'][string], decimals = 2): string {
   if (v === null || v === undefined) return '—';
@@ -185,6 +187,7 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
             <p className="nb-meta">
               <span className={`nb-count${has ? ' has' : ''}`}>{trialsText(trials.length)}</span>
               <span className="nb-ds" title={ds.label}><Icon name="datos" size={15} />{ds.label}</span>
+              {flag('procedencia') && <StatusChip status="modelo" prefix="Datos" />}
             </p>
           </div>
         </div>

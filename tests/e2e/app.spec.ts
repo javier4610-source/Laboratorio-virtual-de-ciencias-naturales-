@@ -183,7 +183,7 @@ test('informe del estudiante se importa en el panel docente', async ({ page }) =
   await openFree(page, 'poblacion');
   await save(page).click();
   await page.goto('/#/practica/poblacion/informe');
-  await page.getByLabel('Nombre del estudiante').fill('Ana Prueba');
+  await page.getByLabel('Nombre o alias del estudiante').fill('Ana Prueba');
   const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: /Descargar archivo para el docente/ }).click()]);
   const path = await download.path();
   await page.goto('/#/docente');
@@ -762,7 +762,7 @@ test('servidor: el docente crea un curso, el estudiante envía su informe y el d
   await openFree(page, 'popgen');
   await save(page).click();
   await page.goto('/#/practica/popgen/informe');
-  await page.getByLabel('Nombre del estudiante').fill('Valentina Mosquera');
+  await page.getByLabel('Nombre o alias del estudiante').fill('Valentina Mosquera');
   await page.locator('summary', { hasText: 'Enviar a mi docente por internet' }).click();
   await page.locator('#srv-url').fill(SERVER);
   await page.getByLabel('Código del curso').fill(code);
@@ -831,13 +831,13 @@ test('seguimiento: el estudiante se une con código y PIN, y el docente ve su av
   const dialog = page.getByRole('dialog', { name: 'Unirme a mi curso' });
   await dialog.getByLabel('Servidor del colegio').fill(SERVER);
   await dialog.getByLabel('Código de tu curso').fill(code);
-  await dialog.getByLabel('Tu nombre y apellido').fill('Camila Restrepo');
+  await dialog.getByLabel('Tu alias o código de estudiante').fill('11A-07');
   await dialog.getByLabel('PIN de 4 dígitos').fill('2468');
   await expect(dialog.getByText('Qué se envía y a quién.')).toBeVisible();
   await dialog.getByRole('button', { name: 'Unirme al curso' }).click();
   await expect(page.getByText('¡Listo! Te uniste al curso.')).toBeVisible();
   await page.getByRole('dialog').getByRole('button', { name: 'Cerrar' }).click();
-  await expect(page.getByRole('button', { name: /Camila Restrepo, 9-2 Ciencias: mi curso/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /11A-07, 9-2 Ciencias: mi curso/ })).toBeVisible();
 
   // Hace una medición y responde una pregunta.
   await openFree(page, 'popgen');
@@ -854,12 +854,12 @@ test('seguimiento: el estudiante se une con código y PIN, y el docente ve su av
   await page.getByRole('tab', { name: 'Seguimiento del curso' }).click();
   await expect(page.locator('.kpi', { hasText: 'Inscritos' })).toContainText('1');
   await expect(page.locator('.kpi', { hasText: 'Activos hoy' })).toContainText('1');
-  const row = page.getByRole('row', { name: /Camila Restrepo/ });
+  const row = page.getByRole('row', { name: /11A-07/ });
   await expect(row).toBeVisible();
   await expect(row.locator('td.heat').first()).toContainText('1/1');
   await expect(row.getByText('100 %')).toBeVisible(); // puntaje: 1 de 1 al primer intento
-  await row.getByRole('button', { name: /Camila Restrepo/ }).click();
-  await expect(page.getByRole('heading', { name: 'Camila Restrepo' })).toBeVisible();
+  await row.getByRole('button', { name: /11A-07/ }).click();
+  await expect(page.getByRole('heading', { name: '11A-07' })).toBeVisible();
   await expect(page.getByText('Acierto al 1.er intento')).toBeVisible();
   await expect(page.getByText('Se unió al curso')).toBeVisible();
 });

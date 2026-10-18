@@ -7,6 +7,25 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [1.2.0] · 2026-10-18
+
+Programa v2 · Fase 2: procedencia, registro reproducible y privacidad.
+
+### Añadido
+- Etiquetas de estatus epistémico (ADR 0002): franja «Lecturas y datos: Modelo calculado · Escena: Ilustración
+  educativa» sobre cada laboratorio, etiqueta en el cuaderno y columna «Estatus del dato» en el CSV. El modo
+  «Instrumento real» y los datos sintéticos del reto lo dicen explícitamente.
+- Registro reproducible del experimento (ADR 0003): exportar e importar un JSON con la pregunta, la hipótesis, el
+  modelo, la versión de la aplicación, el modo de medición con su regla de semilla y cada ensayo con su estatus; sin
+  datos personales. Esquema en `docs/v2/esquema-registro-experimento.json`.
+- Cada ensayo nuevo guarda la versión de la aplicación y el modo de medición.
+- Indicadores de característica (`src/lib/flags.ts`): `procedencia` y `registroExperimento`, activados por defecto.
+- ADR 0001–0005, plantillas de actividad y de ficha de enriquecimiento, y tabla de licencias (`docs/v2`).
+
+### Cambiado
+- Seguimiento de curso: el estudiante se une con un alias o código, no con su nombre completo (ADR 0004). El informe
+  pide «Nombre o alias del estudiante».
+
 ## [1.1.0] · 2026-10-18
 
 ### Añadido

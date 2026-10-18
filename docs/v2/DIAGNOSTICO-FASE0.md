@@ -1,6 +1,6 @@
 # Fase 0 · Diagnóstico del laboratorio (prompt maestro v2)
 
-Fecha: 2026-10-18 · Alcance: auditoría de solo lectura del repositorio; no se modificó ninguna práctica.
+Fecha: 2026-10-18 (antes del Lote 10: entonces había 47 prácticas; hoy hay 50) · Alcance: auditoría de solo lectura del repositorio; no se modificó ninguna práctica.
 Inventario detallado y generado desde el código: [`INVENTARIO.md`](INVENTARIO.md) (`node scripts/inventario.mjs`).
 
 ## 1. Acceso verificado (sección 18.1)

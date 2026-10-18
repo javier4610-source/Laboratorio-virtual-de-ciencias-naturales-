@@ -276,3 +276,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Honestidad (programa v2) | Revisión de rótulos: «Ilustración educativa», «Modelo calculado», «Datos sintéticos … (semilla N)»; sin datos reales inventados ni referencias dudosas | Correcto | — | — | Correcto |
 | Regresión | 706 pruebas unitarias (incluidos 50 valores dorados) y 88 E2E con axe WCAG 2.2 AA y teléfono | Todas pasan | En la prueba E2E del catálogo cambiaron los conteos (búsqueda «adn» y química) por las prácticas nuevas | Conteos actualizados | Correcto |
 
+# Programa v2 · Fase 2: procedencia, registro reproducible y privacidad
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Procedencia | 3 pruebas unitarias (ninguna práctica declara evidencia experimental; modo real y datos sintéticos rotulados; columna de estatus en el CSV) y E2E de la franja y la etiqueta del cuaderno | Correcto | — | — | Correcto |
+| Registro reproducible | 5 pruebas unitarias (campos, sin datos personales, ida y vuelta exportar → importar con los mismos ensayos, rechazo de formato/práctica/columnas/valores inválidos, coincidencia con el esquema JSON) y E2E (descargar, borrar la tabla, importar y recuperar; rechazo de otra práctica) | Correcto | Al importar, el mensaje contaba los ensayos antes de que React aplicara el cambio y decía que no había ensayos nuevos | Se cuenta sobre la sesión actual y luego se actualiza | Corregido |
+| Privacidad | Revisión de textos del seguimiento y del informe | Correcto | El formulario pedía «nombre y apellido» | Alias o código por defecto | Corregido |
+| Documentación | ADR 0001–0005, plantillas, licencias; revisión cruzada con el código | Correcto | El ADR 0003 describía campos con nombres distintos a los implementados | Se alineó con el esquema real | Corregido |
+| Regresión | 714 pruebas unitarias y 89 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
+

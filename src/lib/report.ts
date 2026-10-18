@@ -1,5 +1,6 @@
 import type { Competency, PracticeDef, PracticeSession, Question } from '../core/types';
 import { DATASETS } from '../labs/datasets';
+import { trialStatusText } from './provenance';
 import { questionById } from '../curriculum';
 
 export const REPORT_FORMAT = 'lvcn-informe-v1';
@@ -73,7 +74,7 @@ function csvCell(v: unknown): string {
 export function trialsToCSV(practiceId: string, datasetId: string, s: PracticeSession): string {
   const ds = DATASETS[practiceId]?.find((d) => d.id === datasetId);
   if (!ds) return '';
-  const header = ['#', ...ds.columns.map((c) => (c.unit ? `${c.label} (${c.unit})` : c.label)), 'Observación'];
+  const header = ['#', ...ds.columns.map((c) => (c.unit ? `${c.label} (${c.unit})` : c.label)), 'Observación', 'Estatus del dato'];
   const rows = s.trials.filter((t) => t.datasetId === datasetId).map((t, i) => [
     i + 1,
     ...ds.columns.map((c) => {
@@ -81,6 +82,7 @@ export function trialsToCSV(practiceId: string, datasetId: string, s: PracticeSe
       return typeof v === 'number' ? String(v).replace('.', ',') : v;
     }),
     t.note ?? '',
+    trialStatusText(practiceId, t.meta?.medicion),
   ]);
   return [header, ...rows].map((r) => r.map(csvCell).join(';')).join('\n');
 }

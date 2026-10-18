@@ -164,7 +164,7 @@ export function ReportPage({ practice: p }: { practice: PracticeDef }) {
       <h1>Informe de práctica</h1>
       <div className="card stack no-print">
         <div className="grid-2">
-          <div className="field"><label htmlFor="st-name">Nombre del estudiante</label><input id="st-name" type="text" value={student.name} onChange={(e) => setStudent({ ...student, name: e.target.value })} autoComplete="name" /></div>
+          <div className="field"><label htmlFor="st-name">Nombre o alias del estudiante</label><input id="st-name" type="text" value={student.name} onChange={(e) => setStudent({ ...student, name: e.target.value })} autoComplete="name" /></div>
           <div className="field"><label htmlFor="st-course">Curso o grupo</label><input id="st-course" type="text" value={student.course} onChange={(e) => setStudent({ ...student, course: e.target.value })} placeholder="p. ej. 10-2" /></div>
         </div>
         <div className="btn-row">

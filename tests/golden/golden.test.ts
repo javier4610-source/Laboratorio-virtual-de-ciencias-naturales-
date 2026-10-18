@@ -22,6 +22,7 @@ import { simulateDensity } from '../../src/models/density';
 import { reverseComplement } from '../../src/models/dna';
 import { bromothymolName } from '../../src/models/ecosystem';
 import { simulateTrack } from '../../src/models/energy';
+import { DRIFT_TOLERANCE, simulateFall } from '../../src/models/energyTime';
 import { findEnzyme, initialRate } from '../../src/models/enzyme';
 import { vantHoff } from '../../src/models/equilibrium';
 import { carryingCapacity, K_NORMAL } from '../../src/models/foodweb';
@@ -177,9 +178,12 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'cinetica', origin: 'referencia', what: 'volumen molar a 0 °C y 101,325 kPa = 22 413,97 mL (prompt 9.2: ≈ 22,414 L)', run: () => {
     close(molarVolume(0, 101.325), 22413.97, 0.01);
   } },
-  { id: 'energia', origin: 'referencia', what: 'Ep = m·g·h = 1 · 9,81 · 2 = 19,62 J y v = √(2gh) = 6,264 m/s sin fricción (la pista admite h ≤ 2 m; el caso h = 10 m del prompt queda para la Fase 3)', run: () => {
+  { id: 'energia', origin: 'referencia', what: 'Ep = m·g·h = 1 · 9,81 · 2 = 19,62 J y v = √(2gh) = 6,264 m/s sin fricción en la pista; y caso del prompt 9.1 con integración RK4: m = 1 kg, h = 10 m → Ep = 98,1 J, v = √(2gh) = 14,007 m/s, t = 1,4278 s, deriva de Em < 10⁻⁶', run: () => {
     const t = simulateTrack({ mass: 1, startHeight: 2, hillHeight: 0, mu: 0, rolling: false, g: 9.81 });
     close(t.totalEnergy, 19.62, 1e-9); close(t.speedBottom, Math.sqrt(2 * 9.81 * 2), 1e-6);
+    const f = simulateFall({ mass: 1, height: 10, v0: 0, g: 9.81, dt: 0.01 });
+    close(f.ep0, 98.1, 1e-9); close(f.vGround!, Math.sqrt(2 * 9.81 * 10), 1e-6); close(f.tGround!, Math.sqrt(2 * 10 / 9.81), 1e-6);
+    expect(f.maxDrift).toBeLessThan(DRIFT_TOLERANCE);
   } },
   { id: 'proyectiles', origin: 'independiente', what: 'alcance ideal a 45° desde el suelo: v²/g = 100/9,81 = 10,194 m', run: () => {
     close(idealRange(10, 45, 0, 9.81), 10.1937, 1e-4);

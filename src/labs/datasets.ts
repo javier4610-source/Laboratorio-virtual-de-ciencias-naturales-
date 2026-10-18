@@ -299,7 +299,27 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'supera', label: '¿Supera la colina?', numeric: false },
       { key: 'disipada', label: 'Energía disipada', unit: 'J', numeric: true, decimals: 3 },
     ],
-  }],
+  }, {
+  id: 'caida', label: 'Caídas y lanzamientos verticales', defaultX: 'altura', defaultY: 'vSuelo',
+  columns: [
+    { key: 'lugar', label: 'Gravedad de', numeric: false, input: true },
+    { key: 'masa', label: 'Masa', unit: 'kg', numeric: true, decimals: 2, input: true },
+    { key: 'altura', label: 'Altura inicial', unit: 'm', numeric: true, decimals: 2, input: true },
+    { key: 'v0', label: 'Velocidad inicial (+ hacia arriba)', unit: 'm/s', numeric: true, decimals: 2, input: true },
+    { key: 'g', label: 'Gravedad', unit: 'm/s²', numeric: true, decimals: 2, input: true },
+    { key: 'aire', label: 'Resistencia del aire', numeric: false, input: true },
+    { key: 'coefAire', label: 'Coeficiente de arrastre (b en kg/s o c en kg/m)', numeric: true, decimals: 3, input: true },
+    { key: 'metodo', label: 'Método de integración', numeric: false, input: true },
+    { key: 'dt', label: 'Paso de tiempo Δt', unit: 's', numeric: true, decimals: 3, input: true },
+    { key: 'ep0', label: 'Ep inicial', unit: 'J', numeric: true, decimals: 2 },
+    { key: 'tSuelo', label: 'Tiempo de caída', unit: 's', numeric: true, decimals: 4 },
+    { key: 'vSuelo', label: 'Rapidez al llegar al suelo', unit: 'm/s', numeric: true, decimals: 3 },
+    { key: 'hMax', label: 'Altura máxima', unit: 'm', numeric: true, decimals: 3 },
+    { key: 'disipada', label: 'Energía disipada por el aire', unit: 'J', numeric: true, decimals: 3 },
+    { key: 'deriva', label: 'Deriva relativa máxima de Em (+ E disipada)', numeric: true, decimals: 10 },
+    { key: 'tolerancia', label: '¿Dentro de la tolerancia (1 × 10⁻⁶)?', numeric: false },
+  ],
+}],
   celulas: [{
     id: 'observaciones', label: 'Observaciones al microscopio', defaultX: 'aumento', defaultY: 'campo',
     columns: [

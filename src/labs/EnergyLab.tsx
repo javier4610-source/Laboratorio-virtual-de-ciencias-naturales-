@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ENERGY_LIMITS, simulateTrack, trackHeight, TRACK_X } from '../models/energy';
-import { fmt } from '../lib/format';
+import { fmt, fmtSig } from '../lib/format';
+import { flag } from '../lib/flags';
+import {
+  DRIFT_TOLERANCE, FALL_LIMITS, GRAVITY_PRESETS, idealFall, simulateFall,
+  type DragModel, type FallMethod, type FallPoint, type FallResult, type GravityPreset,
+} from '../models/energyTime';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
-import { Chart } from '../components/Chart';
-import { Notice, Readout, RecordButton, Slider } from '../components/ui';
+import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { Chart, niceTicks } from '../components/Chart';
 import type { LabProps } from './registry';
 import { useModelParams, usePublishModel } from '../components/Advanced';
 import { G as G_ENERGY } from '../models/energy';
@@ -13,7 +18,8 @@ import { BenchTop } from './kit';
 const W = 640, H = 260, X0 = 72;
 const rulerTicks = Array.from({ length: 21 }, (_, i) => i / 10);
 
-export default function EnergyLab({ api }: LabProps) {
+/** Actividad original: esfera en una pista con colinas (sin cambios de comportamiento). */
+function TrackActivity({ api }: LabProps) {
   const [mass, setMass] = useState(0.5);
   const [h0, setH0] = useState(1);
   const [hc, setHc] = useState(0.6);
@@ -196,6 +202,281 @@ export default function EnergyLab({ api }: LabProps) {
         </div>
         <Notice>g = 9,8 m/s²; sin resistencia del aire. La fricción se modela como μ·m·g por metro horizontal (aproximación para pendientes suaves).</Notice>
       </div>
+    </div>
+  );
+}
+
+/* ======================================================= caída y lanzamiento vertical (Fase 3, energiaTemporal) */
+
+type Activity = 'pista' | 'caida';
+type Pace = 'real' | 'lenta';
+
+const DT_OPTIONS = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05];
+const PRESET_LABEL: Record<GravityPreset, string> = { tierra: 'Tierra', luna: 'Luna', marte: 'Marte' };
+const FW = 640, FH = 300, GROUND_Y = 272, TOP_Y = 26, RULER_X = 96, BALL_X = 230;
+
+/** Estado interpolado en el instante t (solo para dibujar entre los puntos calculados que se guardaron). */
+function stateAt(points: FallPoint[], t: number): FallPoint {
+  if (t <= points[0].t) return points[0];
+  const last = points[points.length - 1];
+  if (t >= last.t) return last;
+  let lo = 0, hi = points.length - 1;
+  while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (points[mid].t <= t) lo = mid; else hi = mid; }
+  const a = points[lo], b = points[hi], u = (t - a.t) / (b.t - a.t);
+  const mix = (k: keyof FallPoint) => a[k] + u * (b[k] - a[k]);
+  return { t, y: mix('y'), v: mix('v'), ek: mix('ek'), ep: mix('ep'), em: mix('em'), edis: mix('edis') };
+}
+
+function FallActivity({ api }: LabProps) {
+  const [mass, setMass] = useState(1);
+  const [h0, setH0] = useState(10);
+  const [v0, setV0] = useState(0);
+  const [preset, setPreset] = useState<GravityPreset>('tierra');
+  const [drag, setDrag] = useState<DragModel>('ninguno');
+  const [bLin, setBLin] = useState(0.1);
+  const [cQuad, setCQuad] = useState(0.01);
+  const [dt, setDt] = useState(0.01);
+  const [method, setMethod] = useState<FallMethod>('rk4');
+  const [pace, setPace] = useState<Pace>('real');
+  const [tNow, setTNow] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [done, setDone] = useState(false);
+  const g = GRAVITY_PRESETS[preset];
+  const dragCoef = drag === 'lineal' ? bLin : drag === 'cuadratico' ? cQuad : 0;
+  const sim = useMemo((): { res: FallResult | null; error: string | null } => {
+    try { return { res: simulateFall({ mass, height: h0, v0, g, dt, method, drag, dragCoef }), error: null }; }
+    catch (e) { return { res: null, error: e instanceof Error ? e.message : String(e) }; }
+  }, [mass, h0, v0, g, dt, method, drag, dragCoef]);
+  const res = sim.res;
+  const ideal = useMemo(() => idealFall({ mass, height: h0, v0, g }), [mass, h0, v0, g]);
+  const tEnd = res ? res.points[res.points.length - 1].t : 0;
+
+  usePublishModel(() => ({
+    vars: {
+      m: { sym: 'm', name: 'Masa de la pelota', value: mass, unit: 'kg', decimals: 2 },
+      g: { sym: 'g', name: `Gravedad (${PRESET_LABEL[preset]})`, value: g, unit: 'm/s²', decimals: 2 },
+      h: { sym: 'h_{0}', name: 'Altura inicial', value: h0, unit: 'm', decimals: 2 },
+      v0: { sym: 'v_{0}', name: 'Velocidad vertical inicial', value: v0, unit: 'm/s', decimals: 2 },
+      Ep0: { sym: 'E_{p0}', name: 'Energía potencial inicial', value: ideal.ep0, unit: 'J', decimals: 3 },
+      Em0: { sym: 'E_{m0}', name: 'Energía mecánica inicial', value: ideal.em0, unit: 'J', decimals: 3 },
+      vs: { sym: 'v_{suelo}', name: 'Rapidez al llegar al suelo sin aire (fórmula)', value: ideal.vGround, unit: 'm/s', decimals: 3 },
+      ts: { sym: 't_{suelo}', name: 'Tiempo de caída sin aire (fórmula)', value: ideal.tGround, unit: 's', decimals: 4 },
+    },
+    equations: [
+      { title: 'Energía potencial gravitatoria', lhs: 'Ep0', expr: '[m]·[g]·[h]' },
+      { title: 'Energía mecánica inicial', lhs: 'Em0', expr: '[Ep0] + ½·[m]·[v0]^{2}' },
+      { title: 'Conservación sin aire', lhs: 'vs', expr: '\\sqrt{[v0]^{2} + 2·[g]·[h]}', note: drag === 'ninguno' ? 'La integración numérica debe reproducir este valor.' : 'Con aire, la rapidez calculada por integración es menor que la de esta fórmula.' },
+      { title: 'Tiempo hasta el suelo sin aire', lhs: 'ts', expr: '\\frac{[v0] + [vs]}{[g]}' },
+    ],
+    note: `Integración en el tiempo: ${method === 'rk4' ? 'Runge-Kutta de 4.º orden' : 'Euler explícito'} con Δt = ${fmt(dt, 3)} s. El parámetro g del modo avanzado solo afecta a la pista; aquí la gravedad se elige con Tierra, Luna o Marte.`,
+  }), [mass, h0, v0, g, preset, ideal, drag, method, dt]);
+
+  useEffect(() => { setTNow(0); setRunning(false); setDone(false); }, [res]);
+
+  const raf = useRef(0);
+  useEffect(() => {
+    if (!running || !res) return;
+    const finish = () => {
+      setTNow(tEnd); setRunning(false); setDone(true);
+      if (res.landed) playSound('thud', { intensity: Math.min(1, 0.3 + (res.vGround ?? 0) / 25) });
+    };
+    if (prefersReducedMotion()) { finish(); return; }
+    const rate = pace === 'lenta' ? 0.25 : 1;
+    const start = performance.now();
+    const loop = (now: number) => {
+      const t = ((now - start) / 1000) * rate;
+      if (t >= tEnd) { finish(); return; }
+      setTNow(t);
+      raf.current = requestAnimationFrame(loop);
+    };
+    raf.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf.current);
+  }, [running, res, tEnd, pace]);
+
+  const release = () => { setTNow(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.7 }); };
+  const reset = () => { setTNow(0); setDone(false); setRunning(false); };
+
+  const started = running || done;
+  const cur = res ? stateAt(res.points, tNow) : null;
+  const yTop = useMemo(() => {
+    const top = Math.max(h0, res?.apex?.y ?? h0);
+    const ticks = niceTicks(0, top, 5);
+    return Math.max(top, ticks[ticks.length - 1]);
+  }, [h0, res]);
+  const ticks = useMemo(() => niceTicks(0, yTop, 5), [yTop]);
+  const sy = (y: number) => GROUND_Y - (y / yTop) * (GROUND_Y - TOP_Y);
+  // marcas estroboscópicas cada 0,1 s (tiempo simulado) hasta el instante actual
+  const strobe = useMemo(() => {
+    if (!res) return [];
+    const out: FallPoint[] = [];
+    for (let t = 0; t < tEnd; t += 0.1) out.push(stateAt(res.points, t));
+    return out.length > 300 ? out.filter((_, i) => i % Math.ceil(out.length / 300) === 0) : out;
+  }, [res, tEnd]);
+  // gráficas «en vivo»: crecen con la animación (actualizadas cada 0,05 s de tiempo simulado)
+  const tChart = done ? tEnd : Math.floor(tNow / 0.05) * 0.05;
+  const shown = useMemo(() => {
+    if (!res || !started) return [];
+    const pts = res.points.filter((q) => q.t <= tChart);
+    if (pts.length && pts[pts.length - 1].t < tChart) pts.push(stateAt(res.points, tChart));
+    return pts;
+  }, [res, started, tChart]);
+  const withAir = drag !== 'ninguno';
+  const seriesFor = (x: (q: FallPoint) => number) => [
+    { label: 'Ep', kind: 'line' as const, points: shown.map((q) => ({ x: x(q), y: q.ep })) },
+    { label: 'Ec', kind: 'line' as const, points: shown.map((q) => ({ x: x(q), y: q.ek })) },
+    { label: 'Em = Ec + Ep', kind: 'line' as const, dashed: true, points: shown.map((q) => ({ x: x(q), y: q.em })) },
+    ...(withAir ? [{ label: 'E disipada', kind: 'line' as const, points: shown.map((q) => ({ x: x(q), y: q.edis })) }] : []),
+  ];
+  const eMax = res ? res.em0 * 1.08 : 1;
+
+  const tolText = fmtSig(DRIFT_TOLERANCE, 1);
+  const driftLabel = withAir ? 'Deriva máxima de Em + E disipada' : 'Deriva máxima de Em';
+  const landedText = (f: (r: FallResult) => string) => (!res ? '—' : !done ? 'suelta la pelota' : res.landed ? f(res) : `no llega al suelo en ${fmt(tEnd, 0)} s`);
+
+  const record = () => {
+    if (!res) return;
+    api.addTrial('caida', {
+      lugar: PRESET_LABEL[preset], masa: mass, altura: h0, v0, g,
+      aire: drag === 'ninguno' ? 'sin aire' : drag === 'lineal' ? 'lineal' : 'cuadrático', coefAire: dragCoef,
+      metodo: method === 'rk4' ? 'RK4' : 'Euler', dt,
+      ep0: Number(res.ep0.toFixed(4)),
+      tSuelo: res.tGround === null ? '—' : Number(res.tGround.toFixed(5)),
+      vSuelo: res.vGround === null ? '—' : Number(res.vGround.toFixed(4)),
+      hMax: Number((res.apex?.y ?? h0).toFixed(4)),
+      disipada: Number(res.edisFinal.toFixed(4)),
+      deriva: Number(res.maxDrift.toPrecision(3)),
+      tolerancia: res.withinTolerance ? 'sí' : 'no',
+    });
+  };
+
+  return (
+    <div className="lab-layout">
+      <div className="stack">
+        <div className="bench">
+          <svg viewBox={`0 0 ${FW} ${FH}`} role="img" aria-labelledby="enc-t enc-d">
+            <title id="enc-t">Pelota que cae junto a una regla vertical</title>
+            <desc id="enc-d">{`Altura inicial ${fmt(h0, 2)} m; velocidad inicial ${fmt(v0, 2)} m/s; gravedad ${fmt(g, 2)} m/s². ${cur ? `Instante ${fmt(cur.t, 2)} s: altura ${fmt(cur.y, 2)} m, rapidez ${fmt(Math.abs(cur.v), 2)} m/s.` : ''}`}</desc>
+            {/* suelo */}
+            <rect x={0} y={GROUND_Y} width={FW} height={FH - GROUND_Y} fill="var(--surface-2)" />
+            <line x1={0} x2={FW} y1={GROUND_Y} y2={GROUND_Y} stroke="var(--ink-2)" />
+            {/* regla vertical */}
+            <rect x={RULER_X} y={TOP_Y - 6} width={22} height={GROUND_Y - TOP_Y + 6} rx={2} fill="url(#kit-wood)" stroke="#b8975a" />
+            {ticks.map((y) => (
+              <g key={y}>
+                <line x1={RULER_X} x2={RULER_X + 8} y1={sy(y)} y2={sy(y)} stroke="#4d3b1c" strokeWidth={1.1} />
+                <text x={RULER_X - 6} y={sy(y) + 4} textAnchor="end" style={{ fontSize: 11, fill: 'var(--ink-2)', fontFamily: 'var(--font-data)' }}>{fmt(y, y % 1 === 0 ? 0 : 1)} m</text>
+              </g>
+            ))}
+            {/* altura inicial y altura máxima */}
+            <line x1={RULER_X + 22} x2={BALL_X + 60} y1={sy(h0)} y2={sy(h0)} stroke="var(--ink-2)" strokeDasharray="3 3" />
+            <text x={BALL_X + 64} y={sy(h0) + 4} style={{ fontSize: 11, fill: 'var(--ink-2)' }}>h₀ = {fmt(h0, 2)} m</text>
+            {res?.apex && done && (
+              <g>
+                <line x1={RULER_X + 22} x2={BALL_X + 60} y1={sy(res.apex.y)} y2={sy(res.apex.y)} stroke="var(--fis)" strokeDasharray="5 3" />
+                <text x={BALL_X + 64} y={sy(res.apex.y) + 4} style={{ fontSize: 11, fill: 'var(--fis)' }}>h máx = {fmt(res.apex.y, 2)} m</text>
+              </g>
+            )}
+            {/* posiciones cada 0,1 s ya recorridas */}
+            {started && strobe.filter((q) => q.t <= tNow + 1e-9).map((q) => (
+              <circle key={q.t} cx={BALL_X} cy={sy(q.y) - 8} r={3} fill="none" stroke="var(--data)" strokeOpacity={0.7} />
+            ))}
+            {cur && (
+              <g>
+                <ellipse cx={BALL_X} cy={GROUND_Y + 2} rx={9 * (0.4 + 0.6 * (1 - cur.y / yTop))} ry={2} fill="#000" opacity="0.18" />
+                <circle cx={BALL_X} cy={sy(cur.y) - 8} r={8} fill="url(#enc-ball)" stroke="#2f383b" strokeWidth="0.8" />
+                <rect x={BALL_X + 16} y={sy(cur.y) - 24} width={190} height={20} rx={10} fill="var(--surface)" stroke="var(--line)" />
+                <text x={BALL_X + 111} y={sy(cur.y) - 10} textAnchor="middle" style={{ fontSize: 11, fontFamily: 'var(--font-data)', fill: 'var(--ink)' }}>{`t = ${fmt(cur.t, 2)} s · v = ${fmt(Math.abs(cur.v), 2)} m/s`}</text>
+              </g>
+            )}
+            <defs>
+              <radialGradient id="enc-ball" cx="0.36" cy="0.3" r="0.75">
+                <stop offset="0" stopColor="#ffffff" />
+                <stop offset="0.25" stopColor="#d9e0e3" />
+                <stop offset="0.7" stopColor="#7d898e" />
+                <stop offset="1" stopColor="#3a4448" />
+              </radialGradient>
+            </defs>
+          </svg>
+          <p className="small muted" style={{ margin: '6px 8px' }}>
+            La posición de la pelota proviene del cálculo (integración numérica en el tiempo); entre dos puntos calculados se interpola solo para dibujar. Ritmo: {pace === 'real' ? 'tiempo real' : 'cámara lenta (×0,25)'}. Los círculos marcan la posición cada 0,1 s.
+          </p>
+        </div>
+        {sim.error && <Notice kind="bad">{sim.error}</Notice>}
+        <Readout items={[
+          { k: 'Ep inicial', v: res ? `${fmt(res.ep0, 2)} J` : '—', data: true },
+          { k: 'Rapidez al llegar al suelo', v: landedText((r) => `${fmt(r.vGround, 3)} m/s`), data: true },
+          { k: 'Tiempo de caída', v: landedText((r) => `${fmt(r.tGround, 4)} s`), data: true },
+          { k: driftLabel, v: res && done ? fmtSig(res.maxDrift, 2) : '—' },
+          { k: 'Rapidez según √(v₀² + 2gh₀)', v: `${fmt(ideal.vGround, 3)} m/s` },
+          ...(v0 > 0 ? [{ k: 'Altura máxima', v: res && done && res.apex ? `${fmt(res.apex.y, 3)} m` : '—' }] : []),
+          ...(withAir ? [{ k: 'Energía disipada por el aire', v: res && done ? `${fmt(res.edisFinal, 3)} J` : '—' }] : []),
+        ]} />
+        {res && done && (
+          <Notice kind={res.withinTolerance ? 'ok' : 'warn'}>
+            {res.withinTolerance
+              ? `La deriva máxima (${fmtSig(res.maxDrift, 2)}) es menor que la tolerancia declarada (${tolText}): con este método y este Δt, ${withAir ? 'Em + E disipada' : 'la energía mecánica'} se mantiene constante dentro de la precisión que se le pide al modelo.`
+              : `La deriva máxima (${fmtSig(res.maxDrift, 2)}) supera la tolerancia declarada (${tolText}): con este método y este Δt el cálculo no conserva bien ${withAir ? 'Em + E disipada' : 'la energía mecánica'}. Es un error del método numérico, no de la física: prueba con un Δt menor o con RK4.`}
+          </Notice>
+        )}
+        <div className="grid-2">
+          <div className="card">
+            <Chart title="Energía en función del tiempo" xLabel="Tiempo (s)" yLabel="Energía (J)" height={240}
+              xDomain={[0, Math.max(tEnd, 1e-3)]} yDomain={[0, eMax]} series={started ? seriesFor((q) => q.t) : []}
+              emptyText="Suelta la pelota para ver la gráfica." exportName="energia-tiempo" />
+          </div>
+          <div className="card">
+            <Chart title="Energía en función de la altura" xLabel="Altura (m)" yLabel="Energía (J)" height={240}
+              xDomain={[0, yTop]} yDomain={[0, eMax]} series={started ? seriesFor((q) => q.y) : []}
+              emptyText="Suelta la pelota para ver la gráfica." exportName="energia-altura" />
+          </div>
+        </div>
+      </div>
+      <div className="controls">
+        <div className="card stack">
+          <h3>Condiciones</h3>
+          <Slider label="Masa de la pelota" value={mass} min={FALL_LIMITS.mass[0]} max={FALL_LIMITS.mass[1]} step={0.1} unit="kg" decimals={2} onChange={setMass} />
+          <Slider label="Altura inicial" value={h0} min={FALL_LIMITS.height[0]} max={FALL_LIMITS.height[1]} step={0.5} unit="m" decimals={2} onChange={setH0} />
+          <Slider label="Velocidad inicial (positiva hacia arriba)" value={v0} min={FALL_LIMITS.v0[0]} max={FALL_LIMITS.v0[1]} step={0.5} unit="m/s" decimals={2} onChange={setV0} />
+          <Segmented<GravityPreset> label="Gravedad" value={preset} onChange={setPreset}
+            options={(Object.keys(GRAVITY_PRESETS) as GravityPreset[]).map((k) => ({ value: k, label: `${PRESET_LABEL[k]} (${fmt(GRAVITY_PRESETS[k], 2)} m/s²)` }))} />
+          <Segmented<DragModel> label="Resistencia del aire" value={drag} onChange={setDrag}
+            options={[{ value: 'ninguno', label: 'Sin aire (ideal)' }, { value: 'lineal', label: 'Lineal (F = b·v)' }, { value: 'cuadratico', label: 'Cuadrática (F = c·v²)' }]} />
+          {drag === 'lineal' && <Slider label="Coeficiente de arrastre lineal b" value={bLin} min={FALL_LIMITS.linearDrag[0]} max={FALL_LIMITS.linearDrag[1]} step={0.01} unit="kg/s" decimals={2} onChange={setBLin} />}
+          {drag === 'cuadratico' && <Slider label="Coeficiente de arrastre cuadrático c" value={cQuad} min={FALL_LIMITS.quadraticDrag[0]} max={FALL_LIMITS.quadraticDrag[1]} step={0.001} unit="kg/m" decimals={3} onChange={setCQuad} />}
+          <h3>Cálculo numérico</h3>
+          <Segmented<FallMethod> label="Método de integración" value={method} onChange={setMethod}
+            options={[{ value: 'rk4', label: 'RK4 (4.º orden)' }, { value: 'euler', label: 'Euler explícito (para comparar)' }]} />
+          <Select label="Paso de tiempo Δt" value={String(dt)} onChange={(v) => setDt(Number(v))}
+            options={DT_OPTIONS.map((d) => ({ value: String(d), label: `${fmt(d, 3)} s` }))} />
+          <Segmented<Pace> label="Ritmo de la animación" value={pace} onChange={setPace}
+            options={[{ value: 'real', label: 'Tiempo real' }, { value: 'lenta', label: 'Cámara lenta (×0,25)' }]} />
+          <div className="btn-row">
+            <button type="button" className="btn primary" onClick={release} disabled={running || !res}>Soltar la pelota</button>
+            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
+          </div>
+          <RecordButton onRecord={record} disabled={!done || !res} />
+        </div>
+        <Notice>
+          Modelo calculado: integración en el tiempo con paso fijo Δt ({method === 'rk4' ? 'Runge-Kutta de 4.º orden' : 'Euler explícito'}); el instante de llegada al suelo se interpola entre dos pasos. Tolerancia declarada para la deriva de Em sin aire con RK4: {tolText}. El arrastre del aire es un modelo simplificado con coeficiente constante; no se simula el rebote. El parámetro g del modo avanzado solo afecta a la pista.
+        </Notice>
+      </div>
+    </div>
+  );
+}
+
+export default function EnergyLab(props: LabProps) {
+  // Indicador de característica: apagado, el laboratorio es exactamente la pista original.
+  const [temporal] = useState(() => flag('energiaTemporal'));
+  const [activity, setActivity] = useState<Activity>('pista');
+  if (!temporal) return <TrackActivity {...props} />;
+  return (
+    <div className="stack">
+      <Segmented<Activity> label="Actividad del laboratorio" value={activity} onChange={(v) => { setActivity(v); playSound('switch'); }}
+        options={[
+          { value: 'pista', label: 'Esfera en la pista con colinas' },
+          { value: 'caida', label: 'Caída y lanzamiento vertical (integración en el tiempo)' },
+        ]} />
+      {activity === 'pista' ? <TrackActivity {...props} /> : <FallActivity {...props} />}
     </div>
   );
 }

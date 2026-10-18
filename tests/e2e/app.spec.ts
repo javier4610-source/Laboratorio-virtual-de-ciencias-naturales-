@@ -739,6 +739,30 @@ test('reto: el río con semilla 123 da una pendiente de −0,135 ± 0,024 mg/L p
   await page.getByRole('button', { name: 'Guardar las 6 muestras en la tabla' }).click();
 });
 
+test('energía (integración en el tiempo): m = 1 kg desde 10 m da 98,10 J, 14,007 m/s y 1,4278 s; Euler supera la tolerancia', async ({ page }) => {
+  await openFree(page, 'energia');
+  await page.getByLabel('Actividad del laboratorio').getByRole('button', { name: 'Caída y lanzamiento vertical (integración en el tiempo)' }).click();
+  await expect(page.locator('.readout').getByText('98,10 J').first()).toBeVisible();
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Soltar la pelota' }).click();
+  await expect(page.locator('.readout').getByText('14,007 m/s').first()).toBeVisible({ timeout: 8_000 });
+  await expect(page.locator('.readout').getByText('1,4278 s').first()).toBeVisible();
+  await expect(page.getByText(/es menor que la tolerancia declarada \(1 × 10⁻⁶\)/).first()).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  await page.getByLabel('Método de integración').getByRole('button', { name: 'Euler explícito (para comparar)' }).click();
+  await page.getByRole('button', { name: 'Soltar la pelota' }).click();
+  await expect(page.getByText(/supera la tolerancia declarada/).first()).toBeVisible({ timeout: 8_000 });
+});
+
+test('energía: con el indicador apagado el laboratorio queda como antes', async ({ page }) => {
+  await page.evaluate(() => localStorage.setItem('lvcn:flags', JSON.stringify({ energiaTemporal: false })));
+  await openFree(page, 'energia');
+  await expect(page.getByRole('button', { name: 'Soltar la esfera' })).toBeVisible();
+  await expect(page.getByLabel('Actividad del laboratorio')).toHaveCount(0);
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');

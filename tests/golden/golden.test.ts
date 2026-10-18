@@ -168,10 +168,11 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'fotosintesis', origin: 'independiente', what: 'ley del inverso del cuadrado: I(10 cm)/I(20 cm) = 4', run: () => {
     close(irradiance(10) / irradiance(20), 4, 1e-9);
   } },
-  { id: 'gases', origin: 'referencia', what: '1 mol de gas ideal a 0 °C: V = nRT/P = 22 420 mL con la presión fija de la jeringa (101,3 kPa); 22 414 mL a 101,325 kPa', run: () => {
-    const g = simulateGas({ law: 'charles', volume: 100, temperature: 0, pressure: 101.3, moles: 1 });
-    close(g.volume, (8.314462618 * 273.15 / 101300) * 1e6, 1e-6);
-    close(g.volume * (101.3 / 101.325), 22413.97, 0.05);
+  { id: 'gases', origin: 'referencia', what: '1 mol de gas ideal a 0 °C y 101,325 kPa (presión exterior editable): V = nRT/P = 22 413,97 mL ≈ 22,414 L (prompt 9.2); con la presión por defecto de la jeringa (101,3 kPa), 22 419,5 mL', run: () => {
+    const g = simulateGas({ law: 'charles', volume: 100, temperature: 0, pressure: 0, externalPressure: 101.325, moles: 1 });
+    close(g.volume, 22413.97, 0.01);
+    const app = simulateGas({ law: 'charles', volume: 100, temperature: 0, pressure: 0, moles: 1 });
+    close(app.volume, (8.314462618 * 273.15 / 101300) * 1e6, 1e-6);
   } },
   { id: 'cinetica', origin: 'referencia', what: 'volumen molar a 0 °C y 101,325 kPa = 22 413,97 mL (prompt 9.2: ≈ 22,414 L)', run: () => {
     close(molarVolume(0, 101.325), 22413.97, 0.01);

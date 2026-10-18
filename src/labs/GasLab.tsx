@@ -71,7 +71,7 @@ export default function GasLab({ api }: LabProps) {
   const setTemperature = (v: number) => { setTemperatureState(v); if (v !== temperature) playSound('knob'); };
   const [tick, setTick] = useState(0);
   const P = useModelParams();
-  const model = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure, moles: P.n !== undefined ? P.n / 1000 : undefined }), [law, volume, temperature, P.n]);
+  const model = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure, externalPressure: P.pext, moles: P.n !== undefined ? P.n / 1000 : undefined }), [law, volume, temperature, P.n, P.pext]);
   // Lecturas de los instrumentos. En modo real: el émbolo queda un poco desalineado de la marca de la escala
   // (el volumen real del gas difiere del indicado y la presión sigue P ∝ 1/V del modelo) y el manómetro suma su ruido.
   const { measure, remeasure, deviation } = useMeasure();

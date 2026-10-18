@@ -25,7 +25,7 @@ export function molesInSyringe(): number {
   return (INITIAL.pressure * 1000 * (INITIAL.volume * 1e-6)) / (R_GAS * celsiusToKelvin(INITIAL.temperature));
 }
 
-export interface GasInput { law: GasLaw; volume: number; temperature: number; pressure: number; /** Cantidad de gas (mol); por defecto la de las condiciones iniciales. Parámetro editable del modo avanzado. */ moles?: number; }
+export interface GasInput { law: GasLaw; volume: number; temperature: number; pressure: number; /** Cantidad de gas (mol); por defecto la de las condiciones iniciales. Parámetro editable del modo avanzado. */ moles?: number; /** Presión exterior (kPa) que equilibra el émbolo en la ley de Charles; por defecto la del laboratorio. Parámetro del modo avanzado. */ externalPressure?: number; }
 export interface GasResult {
   law: GasLaw;
   pressure: number; // kPa
@@ -49,8 +49,10 @@ export function simulateGas(input: GasInput): GasResult {
     P = (n * R_GAS * T) / (V * 1e-6) / 1000;
   } else if (input.law === 'charles') {
     assertInRange('La temperatura', input.temperature, ...GAS_LIMITS.temperature);
+    const pExt = input.externalPressure ?? INITIAL.pressure;
+    assertInRange('La presión exterior', pExt, 50, 150);
     T = celsiusToKelvin(input.temperature);
-    P = INITIAL.pressure;
+    P = pExt; // a presión constante, el émbolo se equilibra con la presión exterior
     V = (n * R_GAS * T) / (P * 1000) * 1e6;
   } else {
     assertInRange('La temperatura', input.temperature, ...GAS_LIMITS.temperature);

@@ -21,6 +21,9 @@ export const MODEL_PARAMS: Record<string, ModelParamSpec[]> = {
   gases: [{
     key: 'n', sym: 'n', label: 'Cantidad de aire en la jeringa', unit: 'mmol', value: 4.09, min: 1, max: 8, step: 0.01, decimals: 2,
     hint: 'Más moléculas de gas en el mismo volumen y a la misma temperatura producen más presión (P·V = n·R·T).',
+  }, {
+    key: 'pext', sym: 'P_{ext}', label: 'Presión exterior (ley de Charles)', unit: 'kPa', value: 101.3, min: 90, max: 110, step: 0.005, decimals: 3,
+    hint: 'A presión constante el émbolo se equilibra con la presión exterior. Con 1 mol, 0 °C y 101,325 kPa el volumen molar del gas ideal es 22,414 L.',
   }],
   cinetica: [{
     key: 'ea', sym: 'E_{a}', label: 'Energía de activación (mármol + HCl)', unit: 'kJ/mol', value: 45, min: 20, max: 90, step: 1, decimals: 0,

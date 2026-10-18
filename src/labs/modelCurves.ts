@@ -104,7 +104,7 @@ const gases: CurveModel = {
     const n = p.n !== undefined ? p.n / 1000 : molesInSyringe();
     let P: number, V: number, T: number;
     if (law === 'boyle') { T = celsiusToKelvin(GAS_INITIAL.temperature); V = num(inp.volumen); P = (n * R_GAS * T) / (V * 1e-6) / 1000; }
-    else if (law === 'charles') { T = celsiusToKelvin(num(inp.temperatura)); P = GAS_INITIAL.pressure; V = ((n * R_GAS * T) / (P * 1000)) * 1e6; }
+    else if (law === 'charles') { T = celsiusToKelvin(num(inp.temperatura)); P = p.pext ?? GAS_INITIAL.pressure; V = ((n * R_GAS * T) / (P * 1000)) * 1e6; }
     else { T = celsiusToKelvin(num(inp.temperatura)); V = GAS_INITIAL.volume; P = (n * R_GAS * T) / (V * 1e-6) / 1000; }
     if (!(V > 0) || !(T > 0)) return null;
     return { presion: P, volumen: V, temperatura: T - 273.15, temperaturaK: T, inversoV: 1 / V, pv: P * V };
@@ -117,7 +117,7 @@ const gases: CurveModel = {
       if (law === 'boyle') return { volumen: x };
       if (law === 'charles') {
         const n = p.n !== undefined ? p.n / 1000 : molesInSyringe();
-        return { temperatura: (GAS_INITIAL.pressure * 1000 * x * 1e-6) / (n * R_GAS) - 273.15 };
+        return { temperatura: ((p.pext ?? GAS_INITIAL.pressure) * 1000 * x * 1e-6) / (n * R_GAS) - 273.15 };
       }
       return null;
     },

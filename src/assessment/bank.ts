@@ -911,6 +911,63 @@ const RAW_BANK: Question[] = [
     explanation: 'La rapidez media es la distancia dividida entre el tiempo. Caminando: 1200/900 ≈ 1,33 m/s ≈ 4,8 km/h; en bicicleta: 1200/240 = 5 m/s = 18 km/h; en mototaxi: 1200/100 = 12 m/s = 43,2 km/h. Como 1 m/s = 3,6 km/h, solo el mototaxi supera los 30 km/h (8,3 m/s) de la zona escolar.',
     review: 'En la práctica de movimiento, cronometra la bicicleta y el caminante en el mismo tramo y compara la rapidez media en m/s y en km/h.',
   },
+  {
+    id: 'saber-itf-1', grade: 11, topic: 'Redes de difracción: paso de las pistas de un CD', competency: 'indagacion', component: 'fisico', skill: 'Calcular el periodo de una red a partir de mediciones y reconocer el límite de la aproximación de ángulo pequeño', difficulty: 'alta', practiceId: 'interferencia',
+    context: 'En un colegio de Turbo, un grupo quita la capa metálica de un trozo de CD para que la luz lo atraviese, lo ilumina perpendicularmente con un puntero láser de 650 nm y observa en una pantalla una mancha central y dos manchas brillantes de primer orden, una a cada lado (datos simulados).',
+    table: {
+      caption: 'Mediciones con el trozo de CD',
+      headers: ['Magnitud', 'Valor'],
+      rows: [['Distancia del CD a la pantalla, L', '20,0 cm'], ['Distancia entre las dos manchas de primer orden', '17,8 cm'], ['Longitud de onda del láser', '650 nm']],
+    },
+    stem: '¿Cuál es aproximadamente la separación entre las pistas del CD?',
+    options: [
+      { id: 'a', text: '0,73 µm, porque d = λ·L/Δy usando la distancia entre las dos manchas.', feedback: 'Usaste la distancia entre las dos manchas; cada mancha de primer orden está a la mitad (8,9 cm) del centro.' },
+      { id: 'b', text: '1,46 µm, porque d = λ·L/y con y = 8,9 cm.', feedback: 'Esa es la aproximación de ángulo pequeño (sen θ ≈ y/L), que aquí falla: θ ≈ 24°, y tan θ ya difiere de sen θ en casi un 10 %.' },
+      { id: 'c', text: '1,6 µm, porque sen θ = 8,9/√(8,9² + 20,0²) ≈ 0,407 y d = λ/sen θ.', feedback: 'Correcto: con la geometría exacta sen θ ≈ 0,407 y d = 650 nm/0,407 ≈ 1,60 µm (unas 625 pistas por milímetro).' },
+      { id: 'd', text: '625 µm, porque hay 625 pistas por cada milímetro.', feedback: 'Confundiste el periodo con su inverso: 625 pistas por milímetro corresponden a 1/625 mm = 1,6 µm.' },
+    ],
+    correct: 'c',
+    explanation: 'Los máximos de una red cumplen d·sen θ = m·λ. Con m = 1, y = 17,8/2 = 8,9 cm y L = 20,0 cm: sen θ = y/√(y² + L²) ≈ 0,407, de modo que d = 650 nm/0,407 ≈ 1,6 µm, el paso de pista estándar de un CD. Como el ángulo es grande (≈ 24°), aproximar sen θ ≈ y/L subestima d en casi un 10 %.',
+    review: 'En la práctica de interferencia, usa el láser rojo y el trozo de CD con la pantalla a 20 cm; mide el primer orden con la regla y calcula d con la ecuación exacta y con la aproximación.',
+  },
+  {
+    id: 'saber-emi-1', grade: 11, topic: 'Inducción electromagnética', competency: 'indagacion', component: 'fisico', skill: 'Analizar datos de un generador para identificar de qué depende la fem inducida', difficulty: 'media', practiceId: 'induccion',
+    context: 'Un grupo de estudiantes de Apartadó construyó un pequeño generador: una bobina rectangular de 20 cm² que gira entre dos imanes (B = 0,20 T). Midieron con un osciloscopio la fem pico y la frecuencia de la señal para varias combinaciones de vueltas y rapidez de giro (datos simulados).',
+    table: {
+      caption: 'Generador didáctico (bobina de 20 cm², B = 0,20 T)',
+      headers: ['Ensayo', 'Vueltas', 'Rapidez de giro (rpm)', 'fem pico (V)', 'Frecuencia (Hz)'],
+      rows: [['1', 100, 300, '1,26', '5,0'], ['2', 100, 600, '2,51', '10,0'], ['3', 200, 600, '5,03', '10,0'], ['4', 200, 1200, '10,05', '20,0']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'La fem pico depende solo del número de vueltas, porque entre los ensayos 2 y 3 se duplica.', feedback: 'Entre los ensayos 1 y 2 las vueltas no cambian y la fem también se duplica: la rapidez de giro también influye.' },
+      { id: 'b', text: 'Al duplicar las vueltas se duplica la frecuencia, porque la bobina tiene más alambre.', feedback: 'En los ensayos 2 y 3 se duplican las vueltas y la frecuencia sigue en 10 Hz: la frecuencia solo depende de la rapidez de giro (f = rpm/60).' },
+      { id: 'c', text: 'La fem pico es proporcional al número de vueltas y a la rapidez de giro, mientras que la frecuencia depende solo de la rapidez de giro.', feedback: 'Correcto: ε₀ = N·B·A·ω, y f = ω/2π = rpm/60.' },
+      { id: 'd', text: 'La fem pico no depende de la rapidez de giro, porque el campo de los imanes es siempre el mismo.', feedback: 'El campo es el mismo, pero lo que induce la fem es la rapidez con que cambia el flujo: al girar el doble de rápido, la fem pico se duplica (ensayos 1 y 2).' },
+    ],
+    correct: 'c',
+    explanation: 'Según la ley de Faraday, ε(t) = N·B·A·ω·sen(ωt): la amplitud ε₀ = N·B·A·ω es proporcional a N (ensayos 2 y 3) y a ω (ensayos 1 y 2), mientras que la frecuencia f = ω/2π solo depende de la rapidez de giro. Con 100 vueltas a 600 rpm: ε₀ = 100 · 0,20 T · 0,0020 m² · 62,8 rad/s ≈ 2,51 V. Para entregar 60 Hz, un generador de dos polos debe girar a 3 600 rpm.',
+    review: 'En la práctica de inducción electromagnética, en la pestaña «Generador», cambia por separado las vueltas y la rapidez de giro y compara la fem pico y la frecuencia.',
+  },
+  {
+    id: 'saber-csi-1', grade: 7, topic: 'Circuitos en serie y en paralelo', competency: 'explicacion', component: 'fisico', skill: 'Explicar resultados experimentales con un modelo de circuito', difficulty: 'media', practiceId: 'circuitos-simples',
+    context: 'En Turbo, Valentina usó dos pilas AA en serie (3 V) y bombillos de linterna iguales. Armó varios montajes y midió con un amperímetro la corriente que entrega la batería.',
+    table: {
+      caption: 'Corriente de la batería y brillo de cada bombillo',
+      headers: ['Montaje', 'Corriente de la batería (A)', 'Brillo de cada bombillo'],
+      rows: [['1 bombillo', 0.32, 'Fuerte'], ['2 bombillos en serie', 0.22, 'Débil'], ['2 bombillos en paralelo', 0.63, 'Fuerte'], ['3 bombillos en paralelo', 0.92, 'Fuerte']],
+    },
+    stem: '¿Qué explicación es coherente con estos datos?',
+    options: [
+      { id: 'a', text: 'En paralelo, cada bombillo recibe casi todo el voltaje de la batería; por eso brilla igual que uno solo, y la batería entrega más corriente total cuantos más bombillos hay.', feedback: 'Correcto: cada rama en paralelo toma su propia corriente (unos 0,31 A) y la corriente total es la suma; por eso la batería se gasta más rápido.' },
+      { id: 'b', text: 'En paralelo la corriente se reparte entre los bombillos, así que cada uno recibe menos corriente y brilla menos.', feedback: 'Cada bombillo en paralelo brilla fuerte: la corriente total aumenta (0,63 A, 0,92 A), así que cada rama recibe casi la misma corriente que un bombillo solo.' },
+      { id: 'c', text: 'En serie los bombillos brillan menos porque la batería entrega más corriente y se calienta.', feedback: 'En serie la batería entrega MENOS corriente (0,22 A): el voltaje se reparte entre los bombillos y cada uno recibe la mitad.' },
+      { id: 'd', text: 'El brillo no depende de la conexión, sino de cuántas pilas se usen.', feedback: 'Las pilas fueron las mismas en todos los montajes; lo que cambió fue la conexión, y el brillo sí cambió.' },
+    ],
+    correct: 'a',
+    explanation: 'En paralelo cada bombillo está conectado directamente a la batería y recibe casi su voltaje completo; la corriente total es la suma de las corrientes de las ramas (ley de nodos). En serie hay un solo camino y el voltaje se reparte: cada bombillo recibe cerca de 1,5 V, la corriente es menor y brillan poco. La corriente total en paralelo no crece exactamente en proporción porque cae un poco de voltaje en la resistencia interna de las pilas.',
+    review: 'En la práctica de circuitos simples, carga «dos bombillos en serie» y «dos bombillos en paralelo» y compara la lectura del amperímetro; luego agrega un tercer bombillo en paralelo.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

@@ -246,3 +246,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Movimiento | 9 pruebas: tiempos, pasos por fotopuertas, ida y vuelta, carrera y adelantamiento, conversión de unidades, cronometraje a mano con tiempo de reacción | Correcto | — | — | Correcto |
 | Cuaderno | Revisión visual con datos ideales | — | Con datos sin dispersión se mostraba «± 0,00000000» y un eje de residuos de 10⁻¹² | Se escribe «± 0» y una nota de residuos nulos | Corregido |
 | Regresión | 568 pruebas unitarias y 80 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |
+
+# Interferencia, inducción y circuitos simples
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Interferencia y difracción | Pruebas del modelo (Fraunhofer de rendija, doble rendija, red, Airy); E2E: Δy = 10,40 mm con d = 250 µm y L = 100 cm da λ = 650,0 nm | Correcto | — | — | Correcto |
+| Inducción electromagnética | 12 pruebas: campo del dipolo (axial = 2 × ecuatorial, 1/r³), espira exacta con integrales elípticas, solenoide 4,929 mT frente a 5,027 mT ideal, flujo analítico frente a numérico, ∫ε dt independiente de la rapidez, generador 2,513 V, transformador 120 V → 6 V; E2E: pico −86 mV y área −5,32 mV·s | Correcto | El identificador de la pregunta Saber `saber-ind-1` ya existía (preguntas de indagación) | Se usó `saber-emi-1` | Correcto |
+| Circuitos simples | 16 pruebas: análisis nodal, ley de Ohm, cortocircuito, circuito abierto, serie y paralelo, ley de nodos de Kirchhoff, polaridad del LED, motor y zumbador, conductores y aislantes; E2E: 0,223 A en serie y 0,621 A en paralelo | Correcto | En la prueba E2E el valor del multímetro aparecía dos veces (lectura y tablero) | Selector más preciso | Correcto |
+| Regresión | 615 pruebas unitarias y 83 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |
+

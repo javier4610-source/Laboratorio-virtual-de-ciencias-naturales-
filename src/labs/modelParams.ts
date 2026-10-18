@@ -26,6 +26,10 @@ export const MODEL_PARAMS: Record<string, ModelParamSpec[]> = {
     key: 'ea', sym: 'E_{a}', label: 'Energía de activación (mármol + HCl)', unit: 'kJ/mol', value: 45, min: 20, max: 90, step: 1, decimals: 0,
     hint: 'Una Eₐ mayor hace que la temperatura influya más en la velocidad (ecuación de Arrhenius).',
   }],
+  induccion: [{
+    key: 'momento', sym: 'm', label: 'Momento magnético del imán de ferrita', unit: 'A·m²', value: 1.2, min: 0.2, max: 6, step: 0.1, decimals: 1,
+    hint: 'Un imán más fuerte produce más campo a la misma distancia (B ∝ m/r³) y más flujo por la bobina: la fem y el área ∫ε dt crecen en la misma proporción.',
+  }],
 };
 
 export const paramsFor = (practiceId: string): ModelParamSpec[] => MODEL_PARAMS[practiceId] ?? [];

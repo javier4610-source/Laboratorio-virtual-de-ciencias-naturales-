@@ -20,6 +20,9 @@ import { ph } from './practices/ph';
 import { fotosintesis } from './practices/fotosintesis';
 import { ondas } from './practices/ondas';
 import { mitosis } from './practices/mitosis';
+import { circuitosSimples } from './practices/circuitos-simples';
+import { induccion } from './practices/induccion';
+import { interferencia } from './practices/interferencia';
 import { movimiento } from './practices/movimiento';
 import { flotacion } from './practices/flotacion';
 import { trabajo } from './practices/trabajo';
@@ -47,7 +50,7 @@ import { cinematica } from './practices/cinematica';
 import { celulas } from './practices/celulas';
 
 /** Catálogo de prácticas implementadas. Para agregar una nueva: definirla aquí y registrar su componente en labs/registry.ts. */
-export const PRACTICES: PracticeDef[] = ([densidad, mezclas, celulas, redes, maquinas, calor, movimiento, ecosistema, osmosis, presion, flotacion, conduccion, mitosis, conductores, descomposicion, mendel, ondas, sonido, optica, adn, conservacion, balanceo, newton, cinematica, trabajo, seleccion, soluciones, enzimas, fotosintesis, gases, cinetica, energia, proyectiles, pendulo, choques, respiracion, circuitos, estequiometria, equilibrio, ph, poblacion, popgen, agua, expresion] as PracticeDef[]).map(balancePractice);
+export const PRACTICES: PracticeDef[] = ([densidad, mezclas, celulas, redes, maquinas, calor, movimiento, ecosistema, circuitosSimples, osmosis, presion, flotacion, conduccion, mitosis, conductores, descomposicion, mendel, ondas, sonido, optica, adn, conservacion, balanceo, newton, cinematica, trabajo, seleccion, soluciones, enzimas, fotosintesis, gases, cinetica, energia, proyectiles, pendulo, choques, respiracion, circuitos, estequiometria, equilibrio, ph, poblacion, popgen, agua, expresion, interferencia, induccion] as PracticeDef[]).map(balancePractice);
 
 export function practiceById(id: string): PracticeDef | undefined {
   return PRACTICES.find((p) => p.id === id);

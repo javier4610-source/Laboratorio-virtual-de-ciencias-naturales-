@@ -104,6 +104,21 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'fotopuerta', name: 'Fotopuertas con temporizador (0,01 s)', quantity: 'Tiempo entre la salida y la meta', unit: 's', resolution: 0.01, sigma: 0.003, nonNegative: true, note: 'El haz se corta con la parte del móvil que va adelante (pecho, rueda o balón), no siempre con el mismo punto.' },
     { id: 'cronometro', name: 'Cronómetro de mano (0,01 s)', quantity: 'Tiempo entre la salida y la meta', unit: 's', resolution: 0.01, sigma: 0.08, nonNegative: true, note: 'Tiempo de reacción humano: se arranca tarde (≈ 0,2 s) y se detiene casi a tiempo porque el móvil se ve llegar.' },
   ],
+  interferencia: [
+    { id: 'calibrador', name: 'Calibrador (pie de rey) apoyado en la pantalla', quantity: 'Posición de una franja', unit: 'mm', resolution: 0.05, sigma: 0.06, note: 'Las franjas no tienen bordes nítidos: decidir dónde está el centro de una franja (o de un mínimo) es la mayor fuente de error.' },
+    { id: 'regla', name: 'Regla milimetrada pegada a la pantalla', quantity: 'Posición de un orden de la red', unit: 'mm', resolution: 1, sigma: 0.5, note: 'Grosor de la mancha de luz y paralaje al leer la regla.' },
+    { id: 'riel', name: 'Escala del riel óptico', quantity: 'Distancia rendija–pantalla L', unit: 'cm', resolution: 0.1, sigma: 0.15, note: 'Ubicar el plano de la diapositiva y de la pantalla sobre la escala del riel.' },
+    { id: 'sensor', name: 'Sensor de luz (fotodiodo con ventana de 0,2 mm)', quantity: 'Intensidad relativa al máximo central', unit: '%', resolution: 0.1, sigma: 0.2, relSigma: 0.02, note: 'Luz ambiente, ruido electrónico y fluctuaciones de la potencia del láser.' },
+  ],
+  induccion: [
+    { id: 'teslametro', name: 'Teslámetro con sonda Hall (0,01 mT)', quantity: 'Campo magnético en la punta de la sonda', unit: 'mT', resolution: 0.01, sigma: 0.02, relSigma: 0.02, note: 'Orientación del sensor Hall, deriva del cero y posición exacta de la punta.' },
+    { id: 'sensorFem', name: 'Sensor de voltaje con registrador (1 mV, 2 000 muestras/s)', quantity: 'Fuerza electromotriz inducida en la bobina', unit: 'mV', resolution: 1, sigma: 2, relSigma: 0.02, note: 'Ruido eléctrico, rapidez no del todo constante de la mano y muestreo finito.' },
+    { id: 'multimetro', name: 'Multímetro digital en voltios CA (0,01 V)', quantity: 'Voltaje eficaz y pico', unit: 'V', resolution: 0.01, sigma: 0.01, relSigma: 0.01, nonNegative: true, note: 'El multímetro escolar mide bien solo ondas sinusoidales de 45 a 400 Hz.' },
+  ],
+  'circuitos-simples': [
+    { id: 'voltimetro', name: 'Multímetro escolar: voltímetro (rango 20 V)', quantity: 'Voltaje', unit: 'V', resolution: 0.01, sigma: 0.01, relSigma: 0.005, note: 'Contacto de las puntas con los bornes y exactitud del rango (± 0,5 % de la lectura).' },
+    { id: 'amperimetro', name: 'Multímetro escolar: amperímetro (rango 10 A)', quantity: 'Corriente', unit: 'A', resolution: 0.001, sigma: 0.002, relSigma: 0.01, note: 'Resistencia de contacto de las puntas y exactitud del rango de 10 A (± 1 % de la lectura).' },
+  ],
 };
 
 /** Especificación de un instrumento de una práctica (lanza un error si no existe: error de programación). */

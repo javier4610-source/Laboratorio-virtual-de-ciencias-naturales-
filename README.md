@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (44)
+## Prácticas implementadas (47)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -25,6 +25,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 7.º | Presión en líquidos y presión atmosférica | Física | Sonda con manómetro en U que se arrastra; p = p_atm + ρgh con cinco líquidos; vasos de Pascal; chorros de Torricelli; barómetro y altitud (Apartadó, Medellín, Bogotá) |
 | 7.º | Transferencia de calor por conducción | Física | Varillas de siete materiales en un baño; tachuelas con cera; tres termopares; ecuación de la aleta resuelta con Crank–Nicolson; ley de Fourier; difusividad; efusividad y sensación de frío al tacto |
 | 7.º | Empuje y flotación: principio de Arquímedes | Física | Dinamómetro que se baja, vaso de rebose y balanza; densímetro; el huevo flota al agregar sal; la plastilina en bola se hunde y en barco flota; Urabá y Turbo |
+| 7.º | Circuitos simples con baterías, interruptores y bombillas | Física | Tablero de bornes: se arrastran pilas, interruptores, bombillos, LED, motor, zumbador y cables; serie y paralelo, cortocircuito, conductores y aislantes; multímetro (análisis nodal exacto) |
 | 8.º | Herencia mendeliana y cuadros de Punnett | Biología | Segregación y transmisión independiente, dominancia completa/incompleta, muestreo con semilla, χ² |
 | 8.º | Reflexión y refracción de la luz | Física | Ley de reflexión, Snell, ángulo crítico y reflexión total interna, reflectancia de Fresnel, índice desconocido por pendiente |
 | 8.º | Laboratorio de ondas | Física | v = λ·f, v = √(T/μ), onda armónica, energía ∝ A²f², sonido en el aire según la temperatura |
@@ -54,8 +55,10 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Crecimiento poblacional y capacidad de carga | Ambiental | Exponencial y logístico con cosecha |
 | 11.º | Genética de poblaciones | Biología | Hardy-Weinberg, selección (incluida ventaja del heterocigoto), mutación, migración, deriva Wright-Fisher |
 | 11.º | Expresión génica y mutaciones | Biología | Gen real HBB con promotor, exones e intrones; transcripción, empalme y traducción animados; mutaciones con el teclado o arrastrando bases; anemia falciforme; gel de proteínas |
+| 11.º | Interferencia y difracción de la luz | Física | Banco óptico con láseres de tres colores; rendija simple, doble rendija de Young, redes, CD y patrón de Airy; calibrador y sensor de luz; λ desconocida y paso de pistas de un CD |
+| 11.º | Magnetismo e inducción electromagnética | Física | Mapa de campo con brújulas y sonda Hall; ley de Faraday con imán que se arrastra, galvanómetro y registrador (área ∫ε dt = −N·ΔΦ); generador con manivela y osciloscopio; transformador |
 
-Otras 6 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Otras 3 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

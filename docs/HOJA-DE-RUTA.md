@@ -37,11 +37,11 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       (8.º, `balanceo`) · expresión génica y efecto de mutaciones (11.º, `expresion`).
 - [x] **Física C:** conducción del calor (7.º, `conduccion`) · sonido y resonancia (8.º, `sonido`) · trabajo, potencia y
       plano inclinado (9.º, `trabajo`).
-- [ ] **Lote 9:** ~~empuje y flotación (7.º, `flotacion`)~~ · ~~movimiento y distancia recorrida (6.º, `movimiento`)~~ (hechas) · circuitos simples con
+- [x] **Lote 9:** empuje y flotación (7.º, `flotacion`) · movimiento y distancia recorrida (6.º, `movimiento`) · circuitos simples con
       pilas, interruptores y bombillos (7.º, física, `circuitos-simples`).
 - [ ] **T3 · Retroalimentación del docente:** comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.
-- [ ] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
+- [x] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
       (11.º, `interferencia`).
 - [ ] **Lote 10:** extracción de ADN y complementariedad de bases (8.º, biología, `extraccion-adn`) · el mol,
       la masa molar y la balanza (9.º, química, `mol`) · reto de indagación: diseñar un experimento e

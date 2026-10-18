@@ -646,6 +646,53 @@ test('movimiento: el corredor recorre 20 m en 4,44 s (4,50 m/s = 16,2 km/h)', as
   await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
 });
 
+test('interferencia: doble rendija, Δy de 10,40 mm entre cursores da λ = 650 nm', async ({ page }) => {
+  await openFree(page, 'interferencia');
+  await page.getByRole('button', { name: 'Encender la fuente de luz' }).click();
+  await expect(page.locator('.readout').getByText('99,5 %')).toBeVisible();
+  await page.getByRole('button', { name: 'Leer el calibrador' }).click();
+  await expect(page.locator('.readout').getByText('10,00 mm', { exact: true }).first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('625,0 nm')).toBeVisible();
+  await page.getByLabel('Cursor B del calibrador (valor exacto en mm)').fill('5,20');
+  await page.getByLabel('Cursor B del calibrador (valor exacto en mm)').press('Enter');
+  await page.getByLabel('Cursor A del calibrador (valor exacto en mm)').fill('-5,20');
+  await page.getByLabel('Cursor A del calibrador (valor exacto en mm)').press('Enter');
+  await page.getByRole('button', { name: 'Leer el calibrador' }).click();
+  await expect(page.locator('.readout').getByText('10,40 mm')).toBeVisible();
+  await expect(page.locator('.readout').getByText('650,0 nm')).toBeVisible();
+  await expect(page.locator('.readout').getByText('250,0 µm')).toBeVisible();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+});
+
+test('inducción: el imán de ferrita entra a 0,50 m/s y la bobina da un pico de −86 mV (∫ε dt = −5,32 mV·s)', async ({ page }) => {
+  await openFree(page, 'induccion');
+  await page.getByLabel('Actividad del laboratorio').getByRole('button', { name: 'Ley de Faraday' }).click();
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Introducir el imán a velocidad constante' }).click();
+  await expect(page.locator('.readout').getByText('−86 mV')).toBeVisible({ timeout: 15_000 });
+  await expect(page.locator('.readout').getByText('−5,32 mV·s')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  await page.getByLabel('Actividad del laboratorio').getByRole('button', { name: 'Transformador' }).click();
+  await page.getByRole('button', { name: 'Medir con los multímetros' }).click();
+  await expect(page.locator('.readout').getByText('6,00 V', { exact: true })).toBeVisible();
+});
+
+test('circuitos simples: dos bombillos en serie llevan 0,223 A y en paralelo 0,621 A', async ({ page }) => {
+  await openFree(page, 'circuitos-simples');
+  await expect(page.locator('.readout').getByText('0,000 A').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Cargar circuito: dos bombillos en serie' }).click();
+  await expect(page.locator('.readout').getByText('0,223 A').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('2 de 2').first()).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  await page.getByRole('button', { name: 'Cargar circuito: dos bombillos en paralelo' }).click();
+  await expect(page.locator('.readout').getByText('0,621 A').first()).toBeVisible();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -706,7 +753,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/44');
+  await expect(page.locator('.kpi').first()).toContainText('1/47');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

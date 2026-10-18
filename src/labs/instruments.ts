@@ -119,6 +119,12 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'voltimetro', name: 'Multímetro escolar: voltímetro (rango 20 V)', quantity: 'Voltaje', unit: 'V', resolution: 0.01, sigma: 0.01, relSigma: 0.005, note: 'Contacto de las puntas con los bornes y exactitud del rango (± 0,5 % de la lectura).' },
     { id: 'amperimetro', name: 'Multímetro escolar: amperímetro (rango 10 A)', quantity: 'Corriente', unit: 'A', resolution: 0.001, sigma: 0.002, relSigma: 0.01, note: 'Resistencia de contacto de las puntas y exactitud del rango de 10 A (± 1 % de la lectura).' },
   ],
+  'extraccion-adn': [
+    { id: 'escala', name: 'Escala visual de referencia del precipitado (1 u.a.)', quantity: 'Índice de rendimiento relativo del ADN enrollado', unit: 'u.a.', resolution: 1, sigma: 2, relSigma: 0.15, nonNegative: true, note: 'Ilustrativo: variabilidad entre frutas (madurez, variedad), pérdidas al filtrar y apreciación visual del ovillo.' },
+  ],
+  mol: [
+    { id: 'balanza', name: 'Balanza de precisión (220 g × 0,001 g) con cámara antiviento', quantity: 'Masa', unit: 'g', resolution: 0.001, sigma: 0.0015, note: 'Corrientes de aire, vibraciones de la mesa, electricidad estática de la navecilla de plástico y objetos aún tibios.' },
+  ],
 };
 
 /** Especificación de un instrumento de una práctica (lanza un error si no existe: error de programación). */

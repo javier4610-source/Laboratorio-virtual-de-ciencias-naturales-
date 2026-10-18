@@ -7,6 +7,14 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [1.1.0] · 2026-10-18
+
+### Añadido
+- Tres prácticas (50 en total): modelo interactivo de ADN y complementariedad con extracción de ADN (8.º),
+  cálculos estequiométricos básicos con el mol y la balanza (9.º) y reto de indagación con datos sintéticos
+  reproducibles y crítica del diseño (11.º). Ya no quedan prácticas «Próximamente».
+- Valores dorados de las tres prácticas nuevas.
+
 ## [1.0.0] · 2026-10-18
 
 Primera versión con número semántico. Línea base de regresión del programa v2 (Fase 1).

@@ -43,7 +43,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       laboratorio; asignación de prácticas con fecha y recordatorios.
 - [x] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
       (11.º, `interferencia`).
-- [ ] **Lote 10:** extracción de ADN y complementariedad de bases (8.º, biología, `extraccion-adn`) · el mol,
+- [x] **Lote 10:** extracción de ADN y complementariedad de bases (8.º, biología, `extraccion-adn`) · el mol,
       la masa molar y la balanza (9.º, química, `mol`) · reto de indagación: diseñar un experimento e
       interpretar datos reales de Urabá (11.º, ambiental, `reto`).
 - [ ] **T2 · Publicación del servidor:** el docente eligió Render; `Dockerfile`, `render.yaml` y la guía

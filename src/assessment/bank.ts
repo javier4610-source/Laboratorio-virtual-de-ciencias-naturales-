@@ -968,6 +968,68 @@ const RAW_BANK: Question[] = [
     explanation: 'En paralelo cada bombillo está conectado directamente a la batería y recibe casi su voltaje completo; la corriente total es la suma de las corrientes de las ramas (ley de nodos). En serie hay un solo camino y el voltaje se reparte: cada bombillo recibe cerca de 1,5 V, la corriente es menor y brillan poco. La corriente total en paralelo no crece exactamente en proporción porque cae un poco de voltaje en la resistencia interna de las pilas.',
     review: 'En la práctica de circuitos simples, carga «dos bombillos en serie» y «dos bombillos en paralelo» y compara la lectura del amperímetro; luego agrega un tercer bombillo en paralelo.',
   },
+  {
+    id: 'saber-xad-1', grade: 8, topic: 'Extracción de ADN', competency: 'indagacion', component: 'biologico', skill: 'Identificar comparaciones controladas en una tabla de ensayos y sacar conclusiones válidas sobre la extracción de ADN', difficulty: 'media', practiceId: 'extraccion-adn',
+    context: 'Un grupo de Apartadó extrajo ADN con un tampón casero de 100 mL con 10 mL de detergente, machacando 2 min, y comparó la cantidad de precipitado con una escala visual (índice relativo de 0 a 100). Los valores provienen de un modelo calculado del simulador, no de mediciones reales.',
+    table: {
+      caption: 'Índice de rendimiento de la extracción (modelo calculado)',
+      headers: ['Ensayo', 'Material', 'Sal (g)', 'Temperatura del alcohol (°C)', 'Índice (u.a.)'],
+      rows: [['1', 'Fresa', '1,5', '25', '21'], ['2', 'Fresa', '1,5', '4', '43'], ['3', 'Fresa', '0', '4', '6'], ['4', 'Cebolla', '0', '−18', '2']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'Comparando los ensayos 3 y 4, enfriar más el alcohol disminuye el precipitado.', feedback: 'Entre los ensayos 3 y 4 cambiaron dos variables (el material y la temperatura): la comparación no está controlada y no permite atribuir el cambio al alcohol.' },
+      { id: 'b', text: 'Comparando los ensayos 1 y 2, el alcohol frío probablemente aumenta el precipitado; y comparando 2 y 3, la sal también lo aumenta.', feedback: 'Correcto: en cada par cambia una sola variable, y en ambos el índice sube con el alcohol frío o con la sal.' },
+      { id: 'c', text: 'La sal no influye, porque el ensayo 4 tampoco tiene sal y su índice es parecido al del ensayo 3.', feedback: 'Los ensayos 3 y 4 no tienen sal ninguno de los dos, así que no sirven para evaluar la sal. La comparación 2–3 muestra que quitar la sal bajó el índice de 43 a 6.' },
+      { id: 'd', text: 'La cebolla no tiene ADN, porque en el ensayo 4 casi no se observó precipitado.', feedback: 'Todas las células con núcleo tienen ADN. El ensayo 4 se hizo sin sal y con otro material; un precipitado escaso no demuestra ausencia de ADN.' },
+    ],
+    correct: 'b',
+    explanation: 'Una conclusión es válida cuando compara ensayos que difieren en una sola variable. Del 1 al 2 solo cambia la temperatura del alcohol (25 → 4 °C) y el índice sube de 21 a 43: el ADN es menos soluble en alcohol frío. Del 2 al 3 solo se quita la sal y el índice baja de 43 a 6: sin iones Na⁺ que neutralicen los fosfatos, el ADN se agrega mucho menos. El ensayo 4 cambia dos variables a la vez.',
+    review: 'En la práctica «Modelo interactivo de ADN y complementariedad», repite la extracción de fresa cambiando solo la sal y luego solo la temperatura del alcohol, y grafica el índice.',
+  },
+  {
+    id: 'saber-mlr-1', grade: 9, topic: 'El mol y la masa molar', competency: 'indagacion', component: 'quimico', skill: 'Comparar cantidades de sustancia y de átomos en masas iguales de sustancias distintas', difficulty: 'media', practiceId: 'mol',
+    context: 'En un colegio de Chigorodó, un grupo pesó 10,00 g de cuatro sustancias y calculó, con las masas atómicas estándar, la masa molar y la cantidad de sustancia de cada una (datos calculados).',
+    table: {
+      caption: 'Muestras de 10,00 g',
+      headers: ['Sustancia', 'Fórmula', 'Masa molar (g/mol)', 'Cantidad de sustancia (mol)', 'Átomos por fórmula'],
+      rows: [
+        ['Agua', 'H₂O', '18,015', '0,5551', 3],
+        ['Sal de cocina', 'NaCl', '58,44', '0,1711', 2],
+        ['Azúcar (sacarosa)', 'C₁₂H₂₂O₁₁', '342,30', '0,02921', 45],
+        ['Hierro', 'Fe', '55,845', '0,1791', 1],
+      ],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'Como las cuatro muestras tienen la misma masa, todas tienen el mismo número de partículas.', feedback: 'A igual masa, la cantidad de sustancia es n = m/M: cambia con la masa molar, y por eso la tabla muestra moles distintos.' },
+      { id: 'b', text: 'La sacarosa tiene más moléculas que las demás porque su masa molar es la mayor.', feedback: 'Es al revés: con la masa fija, cuanto mayor es M, menos moles hay (n = m/M). La sacarosa es la que tiene menos entidades.' },
+      { id: 'c', text: 'El agua tiene la mayor cantidad de moléculas y de átomos; la sacarosa tiene menos moléculas que la sal, pero más átomos, porque cada molécula tiene 45 átomos.', feedback: 'Correcto: los átomos son n × N_A × (átomos por fórmula): 0,02921 × 45 ≈ 1,31 mol de átomos en la sacarosa frente a 0,1711 × 2 ≈ 0,34 mol en la sal, y 0,5551 × 3 ≈ 1,67 mol en el agua.' },
+      { id: 'd', text: 'El hierro tiene más átomos que el agua porque es un metal y los metales son más densos.', feedback: 'La densidad no interviene: con 10 g hay 0,1791 mol de átomos de hierro, mientras que el agua tiene 0,5551 × 3 ≈ 1,67 mol de átomos.' },
+    ],
+    correct: 'c',
+    explanation: 'La cantidad de sustancia es n = m/M, así que con la misma masa hay menos moles de la sustancia de mayor masa molar. Para comparar átomos se multiplica por los átomos de cada fórmula: agua 1,665 mol de átomos, sacarosa 1,315, sal 0,342 y hierro 0,179. Multiplicando por N_A = 6,022 × 10²³ mol⁻¹, el agua tiene unos 1,00 × 10²⁴ átomos.',
+    review: 'En la práctica de cálculos estequiométricos básicos, pesa masas parecidas de agua, sal, azúcar y una puntilla y compara la tabla de átomos de cada elemento.',
+  },
+  {
+    id: 'saber-rti-1', grade: 11, topic: 'Variables de confusión en un estudio ambiental', competency: 'indagacion', component: 'cts', skill: 'Identificar una variable de confusión que limita una conclusión a partir de datos', difficulty: 'alta', practiceId: 'reto',
+    context: 'Estudiantes de un colegio de Urabá analizaron cómo cambia la turbidez de una quebrada según la lluvia acumulada en las 24 horas previas (datos sintéticos de un simulador, no mediciones reales). Tomaban la muestra cuando el camino a la quebrada era transitable, por lo que después de los aguaceros más fuertes llegaban más tarde.',
+    table: {
+      caption: 'Muestras de la quebrada',
+      headers: ['Lluvia en 24 h (mm)', 'Tiempo desde el fin de la lluvia (h)', 'Turbidez (UNT)'],
+      rows: [['0', '2,0', '6,3'], ['10', '3,2', '20,1'], ['20', '4,4', '32,4'], ['40', '6,8', '45,9'], ['60', '9,2', '54,6']],
+    },
+    stem: 'Los estudiantes concluyen: «a partir de 40 mm, más lluvia casi no aumenta la turbidez». ¿Cuál es la crítica más adecuada a esa conclusión?',
+    options: [
+      { id: 'a', text: 'La conclusión es válida porque la correlación entre la lluvia y la turbidez es positiva y fuerte.', feedback: 'Una correlación fuerte no valida una conclusión sobre la forma del efecto si otra variable cambió al mismo tiempo que la lluvia.' },
+      { id: 'b', text: 'El tiempo desde la lluvia aumentó junto con la lluvia; como las partículas se sedimentan con el tiempo, las muestras de los aguaceros fuertes pudieron dar menos turbidez por haberse tomado más tarde. Habría que muestrear siempre el mismo tiempo después de la lluvia.', feedback: 'Correcto: el tiempo de muestreo es una variable de confusión alineada con la lluvia, y es probable que explique al menos parte del aplanamiento de la curva.' },
+      { id: 'c', text: 'El dato de 0 mm se debe eliminar porque ese día no llovió y no aporta información.', feedback: 'El día sin lluvia es la línea base: sin ese nivel de referencia no se sabría cuánto aumentó la turbidez por la lluvia.' },
+      { id: 'd', text: 'Con cinco niveles de lluvia no se puede calcular ninguna tendencia.', feedback: 'Cinco niveles bien distribuidos permiten describir una tendencia; el problema del estudio no es el número de niveles sino la variable que no se controló.' },
+    ],
+    correct: 'b',
+    explanation: 'La turbidez depende de la lluvia y también del tiempo transcurrido, porque las partículas se sedimentan. En este estudio el tiempo creció de 2,0 a 9,2 h a la vez que la lluvia, así que los dos efectos se confunden. Para saber si la turbidez realmente se estabiliza, hay que mantener constante el tiempo de muestreo (o aleatorizarlo) y repetir mediciones.',
+    review: 'En el reto de indagación, elige «Quebrada después de un aguacero» y compara «No controlar» con «Mantener constante».',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

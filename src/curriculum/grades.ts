@@ -71,7 +71,4 @@ export function gradeInfo(id: GradeId): GradeInfo {
 
 /** Prácticas de la malla propuesta que todavía no están implementadas. */
 export const PLANNED: PlannedPractice[] = [
-  { title: 'Modelo interactivo de ADN y complementariedad', grade: 8, area: 'biologia', status: 'planificada' },
-  { title: 'Cálculos estequiométricos básicos', grade: 9, area: 'quimica', status: 'planificada' },
-  { title: 'Reto de indagación con interpretación de datos', grade: 11, area: 'ambiental', status: 'planificada' },
 ];

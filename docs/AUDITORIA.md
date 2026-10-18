@@ -265,3 +265,14 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Referencias del prompt | pH HCl 0,100 M = 1,000; ácido acético 0,100 M = 2,875; volumen molar 22 413,97 mL; Ep = 19,62 J y v = √(2gh) | Cumplen | La jeringa de gases fija 101,3 kPa (22 420 mL); la pista de energía no admite h = 10 m | Documentado; se atiende en la Fase 3 | Pendiente (Fase 3) |
 | Accesibilidad | axe con WCAG 2.2 AA en todas las prácticas, temas claro y oscuro, y en teléfono | Pasa | En teléfono, bancos y tablas desplazables no recibían el foco del teclado en 18 prácticas | Utilidad central `initScrollRegionFocus` | Corregido |
 | Regresión | Suite completa: 663 pruebas unitarias y 85 E2E | Todas pasan | — | — | Correcto |
+
+# Lote 10: extracción de ADN, el mol y reto de indagación (50 prácticas)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Extracción de ADN y complementariedad | 12 pruebas: factores del índice de rendimiento, tendencias, complemento, puentes de hidrógeno (2 y 3), regla de Wallace (GATTACAGGA = 28 °C), Chargaff en doble hebra y no en hebra sola; E2E: 43 u.a., 10 de 10 pares, 24 puentes, Tm = 28 °C | Correcto | — | — | Correcto |
+| El mol | 18 pruebas: masas molares (NaCl 58,44; H₂O 18,015; sacarosa 342,30), N = n·N_A, volumen molar 22,414 L, tara, conservación de la masa en todo el rango; E2E: 1,250 g → 0,02139 mol; vinagre pierde 1,048 g de CO₂ | Correcto | — | — | Correcto |
+| Reto de indagación | 10 pruebas: misma semilla da los mismos datos, σ del ruido igual a la declarada (±3 % en 20 000 muestras), estadísticos y ajuste a mano, cada disparador de la crítica, confusión que invierte la pendiente; E2E: pendiente −0,135 ± 0,024 mg/L por km con semilla 123 y rótulo de datos sintéticos | Correcto | — | — | Correcto |
+| Honestidad (programa v2) | Revisión de rótulos: «Ilustración educativa», «Modelo calculado», «Datos sintéticos … (semilla N)»; sin datos reales inventados ni referencias dudosas | Correcto | — | — | Correcto |
+| Regresión | 706 pruebas unitarias (incluidos 50 valores dorados) y 88 E2E con axe WCAG 2.2 AA y teléfono | Todas pasan | En la prueba E2E del catálogo cambiaron los conteos (búsqueda «adn» y química) por las prácticas nuevas | Conteos actualizados | Correcto |
+

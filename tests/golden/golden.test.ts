@@ -54,6 +54,9 @@ import { leverEffort } from '../../src/models/simpleMachines';
 import { dilute } from '../../src/models/solutions';
 import { speedOfSound } from '../../src/models/soundResonance';
 import { doSaturation } from '../../src/models/waterQuality';
+import { normalizeSequence, wallaceTm } from '../../src/models/dnaExtraction';
+import { AVOGADRO, countEntities } from '../../src/models/mole';
+import { analyze, collect } from '../../src/models/inquiry';
 import { ropeSpeed } from '../../src/models/waves';
 import { idealAdvantage } from '../../src/models/workPower';
 
@@ -222,6 +225,19 @@ export const GOLDEN: GoldenCase[] = [
   } },
   { id: 'induccion', origin: 'independiente', what: 'campo axial de un dipolo B = (μ₀/4π)·2m/r³ con m = 1 A·m², r = 0,1 m → 2,0×10⁻⁴ T', run: () => {
     close(dipoleField(1, 0.1, 0).b, 2e-4, 1e-12);
+  } },
+  { id: 'extraccion-adn', origin: 'independiente', what: 'regla de Wallace para 5′-GATTACAGGA-3′: Tm = 2·(A+T) + 4·(G+C) = 2·6 + 4·4 = 28 °C', run: () => {
+    expect(wallaceTm(normalizeSequence('GATTACAGGA'))).toEqual({ tm: 28, valid: true });
+  } },
+  { id: 'mol', origin: 'independiente', what: '1,250 g de NaCl (58,44 g/mol): n = 0,021389 mol y N = n·N_A = 1,2881×10²² unidades fórmula', run: () => {
+    const c = countEntities(1.25, 'NaCl');
+    close(c.moles, 1.25 / 58.44, 2e-6); close(c.entities / 1e22, (1.25 / 58.44) * AVOGADRO / 1e22, 2e-4);
+  } },
+  { id: 'reto', origin: 'línea base', what: 'diseño del río con semilla 123 (3 niveles, 0–10 km, 2 réplicas, sin controlar la temperatura): datos sintéticos reproducibles', run: () => {
+    const d = { system: 'rio', levels: 3, min: 0, max: 10, replicates: 2, confound: 'sin-control', seed: 123 } as const;
+    const a = analyze(collect(d));
+    expect(analyze(collect(d)).slope).toBe(a.slope);
+    expect({ slope: +a.slope.toFixed(4), intercept: +a.intercept.toFixed(3), r: +a.r.toFixed(3) }).toMatchSnapshot();
   } },
 ];
 

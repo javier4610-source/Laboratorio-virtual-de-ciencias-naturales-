@@ -33,10 +33,10 @@ test('inicio: navega a los seis grados', async ({ page }) => {
 test('catálogo: búsqueda y filtros', async ({ page }) => {
   await page.goto('/#/catalogo');
   await page.getByLabel('Buscar').fill('adn');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(2);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(3);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(9);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(10);
 });
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
@@ -693,6 +693,52 @@ test('circuitos simples: dos bombillos en serie llevan 0,223 A y en paralelo 0,6
   await expect(page.locator('.readout').getByText('0,621 A').first()).toBeVisible();
 });
 
+test('extracción de ADN: fresa con 1,5 g de sal y alcohol a 4 °C da 43 u.a.; la doble hebra de GATTACAGGA tiene 24 puentes y Tm = 28 °C', async ({ page }) => {
+  await openFree(page, 'extraccion-adn');
+  for (const step of ['Verter el tampón de lisis', 'Filtrar el extracto', 'Verter el alcohol frío', 'Enrollar el ADN con la varilla']) {
+    await page.getByRole('button', { name: step }).click();
+  }
+  await expect(page.locator('.readout').getByText('43 u.a.').first()).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  await page.getByLabel('Actividad del laboratorio').getByRole('button', { name: 'Doble hebra y complementariedad' }).click();
+  for (const b of 'CTAATGTCCT') await page.getByRole('button', { name: `Colocar ${b}`, exact: true }).click();
+  await page.getByRole('button', { name: 'Verificar la doble hebra' }).click();
+  await expect(page.locator('.readout').getByText('10 de 10')).toBeVisible();
+  await expect(page.locator('.readout').getByText('24', { exact: true })).toBeVisible();
+  await expect(page.locator('.readout').getByText('28 °C').first()).toBeVisible();
+});
+
+test('mol: 1,250 g de sal son 0,02139 mol; con vinagre se pierden 1,048 g de CO₂', async ({ page }) => {
+  await openFree(page, 'mol');
+  await page.getByRole('button', { name: 'Colocar la navecilla en el plato' }).click();
+  await page.getByRole('button', { name: 'Tarar la balanza' }).click();
+  await page.getByRole('button', { name: 'Agregar una porción' }).click();
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Leer la balanza' }).click();
+  await expect(page.locator('.readout').getByText('1,250 g').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('0,02139 mol')).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  await page.getByRole('button', { name: 'Reacción en la balanza' }).click();
+  await page.getByRole('button', { name: 'Pesar antes' }).click();
+  await expect(page.locator('.readout').getByText('120,927 g').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Agregar el bicarbonato al vinagre' }).click();
+  await page.getByRole('button', { name: 'Pesar después' }).click({ timeout: 15_000 });
+  await expect(page.locator('.readout').getByText('1,048 g').first()).toBeVisible({ timeout: 15_000 });
+});
+
+test('reto: el río con semilla 123 da una pendiente de −0,135 ± 0,024 mg/L por km y la crítica señala la confusión', async ({ page }) => {
+  await openFree(page, 'reto');
+  await page.getByRole('button', { name: 'Recolectar datos' }).click();
+  await expect(page.locator('.readout').getByText('−0,135 ± 0,024 mg/L por km')).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByText(/Datos sintéticos generados por un modelo calculado \(semilla 123\)/).filter({ visible: true }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Crítica de tu diseño' })).toBeVisible();
+  await page.getByRole('button', { name: 'Guardar las 6 muestras en la tabla' }).click();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -753,7 +799,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/47');
+  await expect(page.locator('.kpi').first()).toContainText('1/50');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

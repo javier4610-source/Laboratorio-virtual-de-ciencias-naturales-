@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (47)
+## Prácticas implementadas (50)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -32,11 +32,13 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 8.º | Conservación de la masa | Química | Balanza de 0,01 g; sistema abierto, cerrado con globo y frasco sellado; estequiometría, reactivo limitante y empuje del aire sobre el globo |
 | 8.º | Balanceo de ecuaciones químicas | Química | Moléculas de bolas y varillas que se arrastran a las bandejas; conteo de átomos en vivo; balanza de dos platos (Lavoisier); 12 reacciones; resolución por espacio nulo |
 | 8.º | Sonido y resonancia | Física | Tubo de resonancia con nivel de agua que se arrastra; diapasones que suenan de verdad; osciloscopio con perillas; λ = 2(L₂ − L₁); rapidez del sonido con la temperatura; nivel sonoro y distancia |
+| 8.º | Modelo interactivo de ADN y complementariedad | Biología | Extracción de ADN de fresa, banano o cebolla (tampón, filtrado, alcohol frío, varilla) con índice de rendimiento de un modelo calculado; doble hebra arrastrando bases, puentes de hidrógeno, antiparalelismo, %GC, regla de Wallace y reglas de Chargaff |
 | 9.º | Del ADN a la proteína | Biología | Complementariedad, replicación semiconservativa, código genético, clasificación de mutaciones (HBB Glu6Val) |
 | 9.º | Leyes de Newton | Física | F_neta = m·a, fricción estática y cinética, cinemática con fotopuertas (a = 2d/t²) |
 | 9.º | Velocidad, aceleración y movimiento | Física | MRU y MRUA, fotografía estroboscópica, gráficas x–t y v–t (pendiente y área), frenado, reto de igualar gráficas |
 | 9.º | Selección natural con cambios ambientales | Biología | Rasgo cuantitativo heredable, depredación por contraste, diferencial de selección y ecuación del criador R = h²·S |
 | 9.º | Trabajo, potencia y plano inclinado | Física | Rampa de ángulo ajustable, superficies con distinto rozamiento, pesas y dinamómetro; W = F·d frente a m·g·h; eficiencia; potencia con torno; potencia humana en la escalera del colegio |
+| 9.º | Cálculos estequiométricos básicos | Química | El mol y la masa molar (pesos atómicos IUPAC); contar partículas pesando en una balanza analítica con tara; bicarbonato con vinagre y bicarbonato calentado en la balanza; conservación de la masa; volumen molar |
 | 10.º | Soluciones, molaridad y colorimetría | Química | n = m/M, M = n/V, C₁V₁ = C₂V₂, Beer-Lambert, solubilidad |
 | 10.º | Actividad enzimática | Biología | Michaelis-Menten × Arrhenius × desnaturalización × pH (dos pKa) |
 | 10.º | Fotosíntesis: luz, CO₂ y temperatura | Biología | Inverso del cuadrado, colimitación luz/CO₂ (hipérbola no rectangular), respiración Q₁₀, punto de compensación |
@@ -57,8 +59,9 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Expresión génica y mutaciones | Biología | Gen real HBB con promotor, exones e intrones; transcripción, empalme y traducción animados; mutaciones con el teclado o arrastrando bases; anemia falciforme; gel de proteínas |
 | 11.º | Interferencia y difracción de la luz | Física | Banco óptico con láseres de tres colores; rendija simple, doble rendija de Young, redes, CD y patrón de Airy; calibrador y sensor de luz; λ desconocida y paso de pistas de un CD |
 | 11.º | Magnetismo e inducción electromagnética | Física | Mapa de campo con brújulas y sonda Hall; ley de Faraday con imán que se arrastra, galvanómetro y registrador (área ∫ε dt = −N·ΔΦ); generador con manivela y osciloscopio; transformador |
+| 11.º | Reto de indagación con interpretación de datos | Ambiental | El estudiante diseña el experimento (niveles, réplicas, presupuesto, control de una variable de confusión) en un río, un suelo bajo sombrío o una quebrada; datos sintéticos de un modelo con semilla visible; ajuste con incertidumbre y crítica calculada del diseño |
 
-Otras 3 prácticas de la malla propuesta aparecen como **«Próximamente»** (no están implementadas).
+Todas las prácticas de la malla propuesta están implementadas.
 
 Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 

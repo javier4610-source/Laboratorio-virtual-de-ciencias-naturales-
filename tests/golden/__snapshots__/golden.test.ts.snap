@@ -16,4 +16,12 @@ exports[`valores dorados por práctica > mitosis [línea base]: fracciones esper
 }
 `;
 
+exports[`valores dorados por práctica > reto [línea base]: diseño del río con semilla 123 (3 niveles, 0–10 km, 2 réplicas, sin controlar la temperatura): datos sintéticos reproducibles 1`] = `
+{
+  "intercept": 6.723,
+  "r": -0.943,
+  "slope": -0.135,
+}
+`;
+
 exports[`valores dorados por práctica > seleccion [línea base]: supervivencia de una presa de tono 0,5 sobre fondo 0,5 con depredación 0,6 1`] = `1`;

@@ -1049,4 +1049,23 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  geometria: [{
+    id: 'mediciones', label: 'Distancias y ángulos en confórmeros 3D', defaultX: 'paresLibres', defaultY: 'angulo',
+    columns: [
+      { key: 'molecula', label: 'Molécula', numeric: false, input: true },
+      { key: 'formula', label: 'Fórmula', numeric: false },
+      { key: 'cid', label: 'PubChem CID', numeric: false },
+      { key: 'tipo', label: 'Medición', numeric: false, input: true },
+      { key: 'atomos', label: 'Átomos', numeric: false, input: true },
+      { key: 'centro', label: 'Átomo del vértice', numeric: false },
+      { key: 'notacion', label: 'Notación VSEPR del vértice', numeric: false },
+      { key: 'dominios', label: 'Dominios electrónicos del vértice', numeric: true, decimals: 0 },
+      { key: 'paresLibres', label: 'Pares libres del vértice', numeric: true, decimals: 0 },
+      { key: 'distancia', label: 'Distancia', unit: 'Å', numeric: true, decimals: 3, resolution: 0.001 },
+      { key: 'angulo', label: 'Ángulo calculado', unit: '°', numeric: true, decimals: 1, resolution: 0.1 },
+      { key: 'anguloIdeal', label: 'Ángulo ideal (VSEPR)', unit: '°', numeric: true, decimals: 1 },
+      { key: 'diferencia', label: 'Calculado − ideal', unit: '°', numeric: true, decimals: 1 },
+      { key: 'fuente', label: 'Procedencia de las coordenadas', numeric: false },
+    ],
+  }],
 };

@@ -27,6 +27,11 @@ describe('procedencia de los datos', () => {
       expect(p.detail).toMatch(/no son mediciones reales/);
     }
   });
+  it('la geometría molecular declara sus coordenadas como predicción computacional de PubChem', () => {
+    const p = practiceProvenance('geometria');
+    expect(p).toMatchObject({ data: 'modelo', scene: 'prediccion' });
+    expect(p.detail).toMatch(/PubChem/);
+  });
   it('el modo «Instrumento real» y la práctica de datos sintéticos lo dicen explícitamente', () => {
     expect(practiceProvenance('newton', 'real').detail).toMatch(/ruido de medición sintético/);
     expect(trialStatusText('newton', 'real')).toBe(`${STATUS_LABEL.modelo} con ruido de medición sintético`);

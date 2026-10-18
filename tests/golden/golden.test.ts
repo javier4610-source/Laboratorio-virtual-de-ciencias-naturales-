@@ -58,6 +58,8 @@ import { doSaturation } from '../../src/models/waterQuality';
 import { normalizeSequence, wallaceTm } from '../../src/models/dnaExtraction';
 import { AVOGADRO, countEntities } from '../../src/models/mole';
 import { analyze, collect } from '../../src/models/inquiry';
+import { angleTable, parseSdf } from '../../src/models/geometry';
+import { BUNDLED_CONFORMERS } from '../../src/data/conformers';
 import { ropeSpeed } from '../../src/models/waves';
 import { idealAdvantage } from '../../src/models/workPower';
 
@@ -243,6 +245,12 @@ export const GOLDEN: GoldenCase[] = [
     const a = analyze(collect(d));
     expect(analyze(collect(d)).slope).toBe(a.slope);
     expect({ slope: +a.slope.toFixed(4), intercept: +a.intercept.toFixed(3), r: +a.r.toFixed(3) }).toMatchSnapshot();
+  } },
+  { id: 'geometria', origin: 'independiente', what: 'tetraedro regular: los seis ángulos H–C–H del confórmero 3D de metano (PubChem CID 297) valen arccos(−1/3) = 109,47° ± 0,5°', run: () => {
+    const ch4 = BUNDLED_CONFORMERS.find((c) => c.cid === 297)!;
+    const angles = angleTable(parseSdf(ch4.sdf)).map((r) => r.angle);
+    expect(angles).toHaveLength(6);
+    for (const a of angles) close(a, (Math.acos(-1 / 3) * 180) / Math.PI, 0.5);
   } },
 ];
 

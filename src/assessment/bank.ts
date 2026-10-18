@@ -1030,6 +1030,32 @@ const RAW_BANK: Question[] = [
     explanation: 'La turbidez depende de la lluvia y también del tiempo transcurrido, porque las partículas se sedimentan. En este estudio el tiempo creció de 2,0 a 9,2 h a la vez que la lluvia, así que los dos efectos se confunden. Para saber si la turbidez realmente se estabiliza, hay que mantener constante el tiempo de muestreo (o aleatorizarlo) y repetir mediciones.',
     review: 'En el reto de indagación, elige «Quebrada después de un aguacero» y compara «No controlar» con «Mantener constante».',
   },
+  {
+    id: 'saber-gmv-1', grade: 10, topic: 'Geometría molecular y VSEPR', competency: 'indagacion', component: 'quimico',
+    skill: 'Contrastar una predicción del modelo VSEPR con datos de geometría y reconocer sus límites', difficulty: 'alta', practiceId: 'geometria',
+    context: 'En un colegio de Apartadó, un grupo midió en un visor 3D los ángulos de enlace de cuatro moléculas con dos pares libres en el átomo central. Las coordenadas son confórmeros 3D calculados por PubChem (predicción computacional, no medición experimental).',
+    table: {
+      caption: 'Ángulos y longitudes calculados con confórmeros 3D de PubChem',
+      headers: ['Molécula', 'Átomo central (período)', 'Notación VSEPR', 'Longitud de enlace (Å)', 'Ángulo de enlace (°)'],
+      rows: [
+        ['H₂O', 'O (2)', 'AX₂E₂', '0,969', '104,0'],
+        ['H₂S', 'S (3)', 'AX₂E₂', '1,341', '93,4'],
+        ['NH₃', 'N (2)', 'AX₃E', '1,019', '106,0'],
+        ['PH₃', 'P (3)', 'AX₃E', '1,415', '94,5'],
+      ],
+    },
+    stem: '¿Cuál de las siguientes conclusiones es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'Como H₂O y H₂S tienen la misma notación VSEPR, la diferencia en sus ángulos se debe a un error de medición.', feedback: 'Los valores se calcularon con las coordenadas, sin error de lectura apreciable (0,1°). La diferencia de 10,6° es sistemática y aparece también entre NH₃ y PH₃: es un límite del modelo, no un error.' },
+      { id: 'b', text: 'Los cuatro ángulos son menores que 109,5°, como predice VSEPR, pero con la misma notación el ángulo es menor cuando el átomo central es del período 3; VSEPR por sí solo no predice esa diferencia.', feedback: 'Correcto: la tendencia cualitativa (pares libres → ángulo menor que el ideal) se cumple, y los datos muestran un efecto que el modelo básico no cuantifica.' },
+      { id: 'c', text: 'Los enlaces más largos producen ángulos mayores, porque los átomos de hidrógeno quedan más separados.', feedback: 'En la tabla ocurre lo contrario: H₂S y PH₃ tienen los enlaces más largos y los ángulos más pequeños.' },
+      { id: 'd', text: 'Los datos demuestran experimentalmente que el ángulo del agua es exactamente 104,0°.', feedback: 'Son predicciones computacionales de PubChem, no mediciones; además, ningún dato científico es «exacto»: tiene método e incertidumbre.' },
+    ],
+    correct: 'b',
+    explanation: 'Con cuatro dominios (dos o tres átomos y uno o dos pares libres), VSEPR predice ángulos menores que el tetraédrico de 109,5°, y así ocurre en las cuatro moléculas. Pero los átomos centrales del período 3 (S y P), con enlaces más largos, dan ángulos cercanos a 90°: el modelo acierta la tendencia y no la magnitud. Además, los datos provienen de confórmeros calculados y deben compararse con estructuras experimentales antes de afirmar valores reales.',
+    review: 'En la práctica «Geometría molecular en 3D y modelo VSEPR», mide los ángulos de H₂O, H₂S, NH₃ y PH₃ y lee la procedencia de las coordenadas.',
+    transfer: '¿Qué información adicional (fuente experimental, método de medición) necesitarías para decidir si el confórmero de PubChem del H₂S representa bien el ángulo real de la molécula en fase gaseosa?',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

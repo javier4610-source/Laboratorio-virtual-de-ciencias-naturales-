@@ -36,7 +36,7 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(3);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(10);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(11);
 });
 
 test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
@@ -763,6 +763,22 @@ test('energía: con el indicador apagado el laboratorio queda como antes', async
   await expect(page.getByLabel('Actividad del laboratorio')).toHaveCount(0);
 });
 
+test('geometría molecular: el ángulo H–O–H del confórmero de PubChem es 104,0° frente a 109,5° ideal; la procedencia dice «Predicción computacional»', async ({ page }) => {
+  await openFree(page, 'geometria');
+  await expect(page.getByRole('note', { name: 'Procedencia de los resultados' })).toContainText('Escena: Predicción computacional');
+  await expect(save(page)).toBeDisabled();
+  await page.getByRole('button', { name: 'Medir ángulo' }).click();
+  await expect(page.locator('.readout').getByText('104,0°').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('109,5°').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('−5,5°').first()).toBeVisible();
+  await expect(save(page)).toBeEnabled();
+  await save(page).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  await page.getByRole('button', { name: 'Distancia (2 átomos)' }).click();
+  await page.getByRole('button', { name: 'Medir distancia' }).click();
+  await expect(page.locator('.readout').getByText('0,969 Å').first()).toBeVisible();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -823,7 +839,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/50');
+  await expect(page.locator('.kpi').first()).toContainText('1/51');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

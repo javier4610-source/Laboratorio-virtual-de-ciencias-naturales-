@@ -35,6 +35,12 @@ const SYNTHETIC_SAMPLES = new Set(['reto']);
 
 /** Procedencia de una práctica según el modo de medición elegido. */
 export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'real' = 'ideal'): Provenance {
+  if (practiceId === 'geometria') {
+    return {
+      data: 'modelo', scene: 'prediccion',
+      detail: 'Coordenadas 3D: confórmeros calculados por PubChem (OMEGA + MMFF94s), no estructuras medidas; distancias, ángulos y VSEPR se calculan a partir de ellas.',
+    };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

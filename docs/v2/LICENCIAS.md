@@ -24,6 +24,8 @@ Se distribuyen con la aplicación publicada.
 | `@fontsource/atkinson-hyperlegible` | 5.2.6 | OFL-1.1 | Fuente: se puede usar, empaquetar y redistribuir con el software; no se vende sola; conservar la licencia; las versiones modificadas no pueden usar el nombre reservado de la fuente |
 | `@fontsource/bricolage-grotesque` | 5.2.8 | OFL-1.1 | Ídem |
 | `@fontsource/jetbrains-mono` | 5.2.6 | OFL-1.1 | Ídem |
+| `3dmol` (3Dmol.js) | 2.5.5 | BSD-3-Clause | Conservar el aviso de copyright y la licencia: se publica en `licencias/3dmol-LICENSE.txt` (copia de `node_modules/3dmol/LICENSE`). Incorpora código de GLmol, Three.js y jQuery según su LICENSE; el fragmento minificado parece incluir pako (licencia **por verificar**). Citar: Rego, N. y Koes, D. (2015), *Bioinformatics* 31(8), doi:10.1093/bioinformatics/btu829 (tomado de su `CITATION.cff`). Se carga solo en la práctica de geometría y no se precarga al instalar la aplicación |
+| `qrcode` | 1.5.4 | MIT | Conservar el aviso de copyright; se carga bajo demanda al abrir el código QR |
 
 Dependencia transitiva de ejecución: `scheduler` (MIT), requerida por `react-dom`.
 
@@ -39,6 +41,8 @@ Se usan para compilar y probar; **no** se distribuyen en el sitio publicado.
 | Paquete | Versión | Licencia |
 |---|---|---|
 | `@axe-core/playwright` | 4.10.2 | MPL-2.0 |
+| `jsqr` | 1.4.0 | Apache-2.0 |
+| `@types/qrcode` | 1.5.5 | MIT |
 | `@playwright/test` | 1.56.1 | Apache-2.0 |
 | `@types/node` | 22.15.30 | MIT |
 | `@types/react` | 19.3.0 | MIT |
@@ -67,14 +71,13 @@ Ver ADR 0005. Se añadirán a la sección 2 solo si se adoptan.
 
 | Biblioteca | Versión en npm (2026-10-18) | Licencia según npm |
 |---|---|---|
-| 3Dmol.js (`3dmol`) | 2.5.5 | BSD-3-Clause |
 | NGL (`ngl`) | 2.5.0 | MIT |
 | RDKit.js (`@rdkit/rdkit`) | 2026.9.1 | BSD-3-Clause |
 | Pyodide (`pyodide`) | 314.0.7 | MPL-2.0 |
 
 ## 6. Servicios externos y bases de datos previstos
 
-**Ninguno se usa todavía.** Antes de integrar cualquiera: leer y citar sus términos de uso y política de cuotas
+Antes de integrar cualquiera: leer y citar sus términos de uso y política de cuotas
 vigentes, comprobar si permiten CORS desde el navegador, registrar la licencia de los datos que entregan y la forma de
 atribución exigida, y documentarlo aquí con fecha.
 
@@ -84,7 +87,7 @@ atribución exigida, y documentarlo aquí con fecha.
 | RCSB PDB | Estructuras experimentales (10.4) | No usado todavía | Verificar términos vigentes antes de integrar |
 | UniProt | Proteínas (10.2) | No usado todavía | Verificar términos vigentes antes de integrar |
 | AlphaFold DB | Estructuras predichas (10.4) | No usado todavía | Verificar términos vigentes antes de integrar |
-| PubChem | Moléculas (10.5) | No usado todavía | Verificar términos vigentes antes de integrar |
+| PubChem (PUG REST y confórmeros 3D) | Geometría molecular (9.2); moléculas (10.5) | **En uso** desde la versión con la práctica `geometria`: 12 confórmeros incluidos en la aplicación (descargados el 2026-10-18, con CID, URL y SHA-256) y búsqueda en vivo opcional | El README de PubChem3D (ftp.ncbi.nlm.nih.gov/pubchem/Compound_3D/README, «Fair Use Disclaimer», leído el 2026-10-18) dice que NCBI no restringe el uso ni la distribución de los datos, aunque algunos depositantes pueden reclamar derechos sobre los datos originales; los confórmeros 3D los calcula PubChem. Atribución: CID, URL y fecha en la interfaz. Política de cuotas de PUG REST: **por verificar** (la página de documentación devolvió un desafío reCAPTCHA); el laboratorio espacia las solicitudes ≥ 0,5 s, una a la vez, con 15 s de tiempo máximo. CORS: permitido |
 
-Hoy la aplicación no hace ninguna solicitud a terceros en tiempo de ejecución: las fuentes tipográficas van incluidas
-(README) y el único servicio remoto posible es el servidor institucional opcional, que no está desplegado.
+La única solicitud a terceros en tiempo de ejecución es la búsqueda opcional en PubChem de la práctica de geometría,
+que el estudiante inicia a mano. Las fuentes tipográficas y los confórmeros incluidos van empaquetados con la aplicación.

@@ -33,7 +33,7 @@
 | Estatus | Cuándo se usa | Ejemplo en el laboratorio |
 |---|---|---|
 | **Evidencia experimental** | Datos medidos en un sistema real, con fuente identificable (publicación, base de datos, medición propia documentada) | Ninguno hoy. Futuro: estructura PDB por difracción, con método y resolución |
-| **Predicción computacional** | Salida de un modelo entrenado o de un motor de predicción (estructura predicha, ADMET, aprendizaje automático) | Ninguno hoy. Futuro: modelo de AlphaFold DB con pLDDT |
+| **Predicción computacional** | Salida de un modelo entrenado o de un motor de predicción (estructura predicha, confórmero calculado, ADMET, aprendizaje automático) | Coordenadas 3D de la práctica `geometria` (confórmeros de PubChem, OMEGA + MMFF94s). Futuro: modelo de AlphaFold DB con pLDDT |
 | **Modelo calculado** | Resultado de ecuaciones o reglas explícitas con supuestos declarados | **Todos los resultados numéricos actuales**, incluidas las lecturas en modo «instrumento real» (modelo + ruido sintético con semilla) y los datos del `reto` |
 | **Ilustración educativa** | Representación visual que no se deriva de un cálculo | Escenas dibujadas que no dependen del modelo |
 | **Sin información disponible** | No hay dato, o no se pudo obtener | Servicio externo no disponible, campo sin fuente |

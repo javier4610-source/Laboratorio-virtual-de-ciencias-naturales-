@@ -79,6 +79,52 @@ function HeroScene() {
   );
 }
 
+/**
+ * Motivo científico decorativo del héroe: un átomo con tres órbitas (los electrones con los colores de las áreas),
+ * una molécula hexagonal y una onda. Solo SVG y CSS; se anima en giro lento y se detiene con «reducir movimiento».
+ */
+function HeroBackdrop() {
+  const orbits = [0, 60, 120];
+  const electrons = ['var(--fis)', 'var(--qui)', 'var(--bio)'];
+  const hex = Array.from({ length: 6 }, (_, i) => { const a = (Math.PI / 3) * i - Math.PI / 2; return [Math.round(Math.cos(a) * 34 * 10) / 10, Math.round(Math.sin(a) * 34 * 10) / 10]; });
+  return (
+    <div className="hero-backdrop" aria-hidden="true">
+      <svg className="hero-atom" viewBox="0 0 520 520" focusable="false">
+        <defs>
+          <radialGradient id="hero-nucleus" cx="0.4" cy="0.35" r="0.7">
+            <stop offset="0" stopColor="var(--hero-nucleus-hi)" />
+            <stop offset="1" stopColor="var(--accent)" />
+          </radialGradient>
+          <radialGradient id="hero-halo" r="0.5">
+            <stop offset="0" stopColor="var(--accent)" stopOpacity="0.22" />
+            <stop offset="1" stopColor="var(--accent)" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="260" cy="260" r="200" fill="url(#hero-halo)" />
+        <g className="hero-atom-spin">
+          {orbits.map((r, i) => (
+            <g key={r} transform={`rotate(${r} 260 260)`}>
+              <ellipse cx="260" cy="260" rx="230" ry="84" className="hero-orbit" />
+              <ellipse cx="260" cy="260" rx="230" ry="84" className="hero-orbit-flow" style={{ animationDelay: `${-i * 2.2}s` }} />
+              <circle cx={30} cy="260" r="7" fill={electrons[i]} className="hero-electron" />
+            </g>
+          ))}
+        </g>
+        <circle cx="260" cy="260" r="22" fill="url(#hero-nucleus)" />
+        <circle cx="253" cy="252" r="6" fill="#ffffff" fillOpacity="0.35" />
+      </svg>
+      <svg className="hero-molecule" viewBox="-60 -60 120 120" focusable="false">
+        <polygon points={hex.map((p) => p.join(',')).join(' ')} className="hero-mol-ring" />
+        <polygon points={hex.map(([x, y]) => `${x * 0.72},${y * 0.72}`).join(' ')} className="hero-mol-inner" />
+        {hex.map(([x, y], i) => <circle key={i} cx={x} cy={y} r={i % 2 ? 4 : 5.5} className={i % 2 ? 'hero-mol-h' : 'hero-mol-c'} />)}
+      </svg>
+      <svg className="hero-wave" viewBox="0 0 400 60" preserveAspectRatio="none" focusable="false">
+        <path d="M0 30 C 25 5, 50 5, 75 30 S 125 55, 150 30 S 200 5, 225 30 S 275 55, 300 30 S 350 5, 375 30 S 400 42, 400 42" />
+      </svg>
+    </div>
+  );
+}
+
 function CodeEntry() {
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -160,9 +206,10 @@ export function HomePage() {
   return (
     <div className="home">
       <section className="hero" aria-labelledby="hero-h">
+        <HeroBackdrop />
         <div className="hero-copy">
           <span className="eyebrow hero-eyebrow"><span className="pulse" aria-hidden="true" />Grados 6.º a 11.º · Biología · Química · Física · Ambiente</span>
-          <h1 id="hero-h">Laboratorio Virtual de Ciencias Naturales</h1>
+          <h1 id="hero-h">Laboratorio Virtual de <span className="hero-accent">Ciencias Naturales</span></h1>
           <p className="lead">Formula hipótesis, cambia variables, mide, grafica y concluye. Cada práctica calcula sus resultados con un modelo científico declarado, con sus supuestos y sus límites.</p>
           <div className="btn-row hero-actions">
             <button type="button" className="btn primary large" onClick={() => { const el = document.getElementById('grados'); el?.scrollIntoView({ behavior: 'smooth' }); el?.focus({ preventScroll: true }); }}>Elegir mi grado</button>
@@ -174,7 +221,7 @@ export function HomePage() {
             {stats.map(([v, k]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
           </dl>
         </div>
-        <div className="hero-figure"><HeroScene /></div>
+        <div className="hero-figure"><div className="hero-stage"><HeroScene /></div></div>
       </section>
 
       <section aria-labelledby="grados" className="home-section">

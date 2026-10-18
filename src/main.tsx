@@ -5,6 +5,7 @@ import { initScrollRegionFocus } from './lib/a11y';
 import { initPwa } from './lib/pwa';
 import './fonts';
 import './styles.css';
+import './theme-2026.css';
 
 initPwa();
 initScrollRegionFocus();

@@ -58,6 +58,14 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [section, id, sub] = route.path;
   useEffect(() => { startClassroomSync(); installSound(); }, []);
+  // Encabezado translúcido con desenfoque solo cuando la página se desplaza (un único oyente pasivo).
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 4);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   let page;
   let current = section ?? '';
@@ -85,7 +93,7 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#main" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Saltar al contenido</a>
-      <header className="site-header">
+      <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
         <div className="wrap">
           <a className="brand" href={href()} onClick={() => setMenuOpen(false)}>
             <Logo />

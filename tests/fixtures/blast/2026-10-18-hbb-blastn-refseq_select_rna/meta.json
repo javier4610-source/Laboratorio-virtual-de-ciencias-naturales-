@@ -1,0 +1,26 @@
+{
+  "description": "Respuestas reales de NCBI BLAST (Common URL API, Blast.cgi) grabadas desde el entorno de desarrollo. En submit.html y status-waiting.html las metaetiquetas ncbi_sessionid y ncbi_phid se reemplazaron por REDACTADO; el resto de los archivos es la respuesta tal cual.",
+  "rid": "D9HJG79C016",
+  "rtoeSeconds": 1,
+  "program": "blastn",
+  "database": "refseq_select_rna",
+  "databaseTitle": "RefSeq Select RNA sequences",
+  "databasePostedDate": "Oct 13, 2026  2:43 AM",
+  "databasePostedDateNote": "Texto tal como lo informa result.txt («Posted date»); el NCBI no indica la zona horaria.",
+  "databaseSequences": 60444,
+  "databaseLetters": 191995482,
+  "blastVersion": "BLASTN 2.17.0+",
+  "query": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+  "queryLabel": "Nucleótidos 1-90 de la región codificante del ARNm de HBB humano (NM_000518.5)",
+  "querySource": "efetch (db=nuccore, id=NM_000518, rettype=fasta_cds_na) el 2026-10-18: CDS = 51..494 del registro NM_000518.5 (protein_id NP_000509.1).",
+  "submittedAt": "2026-10-18T13:14:55Z",
+  "resultRetrievedAt": "2026-10-18T14:22:22Z",
+  "files": {
+    "submit.html": "POST Blast.cgi CMD=Put PROGRAM=blastn DATABASE=refseq_select_rna HITLIST_SIZE=10 EXPECT=10 tool=lvcn-laboratorio (sin email: en el entorno no había un correo autorizado). 2026-10-18T13:14:55Z",
+    "status-waiting.html": "GET Blast.cgi?CMD=Get&RID=D9HJG79C016&FORMAT_TYPE=JSON2_S&tool=lvcn-laboratorio → Status=WAITING. 2026-10-18T13:15:58Z",
+    "result.json": "GET Blast.cgi?CMD=Get&RID=D9HJG79C016&FORMAT_TYPE=JSON2_S&tool=lvcn-laboratorio → JSON2. 2026-10-18T14:22:22Z",
+    "result.txt": "GET Blast.cgi?CMD=Get&RID=D9HJG79C016&FORMAT_TYPE=Text&DESCRIPTIONS=10&ALIGNMENTS=1&tool=lvcn-laboratorio → texto con fecha de la base. 2026-10-18T14:23:46Z"
+  },
+  "timeline": "WAITING («Status Searching») en las 37 consultas JSON2_S hechas entre 13:15:58Z y 13:58:17Z (≥ 65 s entre consultas); listo en la consulta de 14:22:22Z. El NCBI no informa en qué momento exacto terminó.",
+  "topHit": { "accession": "NM_000518", "accessionVersion": "NM_000518.5", "description": "Homo sapiens hemoglobin subunit beta (HBB), mRNA", "identityPct": 100, "coveragePct": 100, "bitScore": 163.589, "evalue": 6.92717e-40, "hitFrom": 51, "hitTo": 140 }
+}

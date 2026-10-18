@@ -591,9 +591,10 @@
     ],
     "tests": [
       "geneExpression.test.ts",
-      "models.test.ts"
+      "models.test.ts",
+      "sequences.test.ts"
     ],
-    "nTests": 69,
+    "nTests": 93,
     "e2e": true,
     "a11y": false,
     "loc": 496,
@@ -1137,9 +1138,10 @@
     ],
     "tests": [
       "geneExpression.test.ts",
-      "models.test.ts"
+      "models.test.ts",
+      "sequences.test.ts"
     ],
-    "nTests": 69,
+    "nTests": 93,
     "e2e": true,
     "a11y": false,
     "loc": 862,
@@ -1281,6 +1283,31 @@
     "illustrative": true
   },
   {
+    "id": "rastreo",
+    "title": "Rastreo génico: del gen a la proteína y su función",
+    "grade": 11,
+    "area": "biologia",
+    "lab": "GeneTraceLab",
+    "models": [
+      "geneTrace"
+    ],
+    "tests": [
+      "geneTrace.test.ts"
+    ],
+    "nTests": 17,
+    "e2e": true,
+    "a11y": false,
+    "loc": 495,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "reto",
     "title": "Reto de indagación con interpretación de datos",
     "grade": 11,
@@ -1304,5 +1331,34 @@
     "sound": true,
     "datasets": true,
     "illustrative": true
+  },
+  {
+    "id": "secuencias",
+    "title": "Secuencias biológicas: análisis y alineamiento",
+    "grade": 11,
+    "area": "biologia",
+    "lab": "SequencesLab",
+    "models": [
+      "sequences",
+      "dna",
+      "geneExpression"
+    ],
+    "tests": [
+      "geneExpression.test.ts",
+      "models.test.ts",
+      "sequences.test.ts"
+    ],
+    "nTests": 93,
+    "e2e": true,
+    "a11y": false,
+    "loc": 601,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
   }
 ]

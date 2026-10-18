@@ -13,6 +13,7 @@ import { downloadText } from '../lib/report';
 import { StatusChip } from '../components/Provenance';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { BlastPanel } from '../components/BlastPanel';
 
 type Tab = 'composicion' | 'traduccion' | 'alineamiento';
 type StrandView = 'original' | 'complemento' | 'reverso' | 'arn';
@@ -492,8 +493,7 @@ export default function SequencesLab({ api }: LabProps) {
 
         <section id="sqb-blast" className="card stack" aria-labelledby="sqb-blast-h">
           <h3 id="sqb-blast-h">Buscar secuencias parecidas (BLAST)</h3>
-          <p><strong>Pendiente de integrar.</strong> Esta sección todavía no se conecta con ningún servicio: no muestra ni simula resultados de BLAST.</p>
-          <p className="small muted">Cuando se integre, recuerda: un resultado BLAST depende de la base de datos consultada y de la fecha de la búsqueda; sin conexión se mostrará «servicio no disponible», nunca resultados inventados.</p>
+          <BlastPanel key={`${rec.id}-${rec.kind}`} sequence={rec.sequence.slice(0, 1000)} kind={isNuc ? 'nucleotide' : 'protein'} />
         </section>
 
         <details className="card">

@@ -792,6 +792,13 @@ test('secuencias: ARNm de HBB (NM_000518.5) con 51,3 % GC, ORF de 147 aa en 51..
   await expect(page.locator('.readout').getByText('80,0 % (88/110)').first()).toBeVisible();
   await page.getByRole('button', { name: 'Guardar comparación en la tabla' }).click();
   await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+  // Sin servidor institucional, BLAST no finge resultados: avisa y ofrece el formulario oficial y el resultado grabado, rotulado.
+  const blast = page.locator('#sqb-blast');
+  await expect(blast.getByText('Servicio no disponible.')).toBeVisible();
+  await expect(blast.getByRole('link', { name: /Abrir BLAST del NCBI/ })).toBeVisible();
+  await blast.getByRole('button', { name: 'Ver un resultado grabado de ejemplo' }).click();
+  await expect(blast.getByText(/Resultado grabado el .* \(no es una búsqueda en vivo\)/)).toBeVisible();
+  await expect(blast.getByText('NM_000518.5').first()).toBeVisible();
 });
 
 test('rastreo génico: HBB c.20A>T da p.Glu7Val (99,3 % de identidad) y el gen tiene 39,1 % de fracción exónica', async ({ page }) => {

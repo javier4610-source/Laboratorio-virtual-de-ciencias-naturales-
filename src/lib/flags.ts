@@ -14,6 +14,8 @@ export const FLAG_DEFAULTS = {
   energiaTemporal: true,
   /** Código QR con el enlace permanente de cada práctica (Fase 3). */
   qrPracticas: true,
+  /** Búsqueda BLAST real a través del servidor del colegio (proxy de Nivel 1); sin servidor muestra «Servicio no disponible». */
+  blast: true,
 } as const;
 
 export type FlagName = keyof typeof FLAG_DEFAULTS;

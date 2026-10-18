@@ -296,3 +296,12 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | QR por práctica | Unidad (enlaces válidos y estables para las 51 prácticas); E2E (decodificación con jsQR, apertura en teléfono, axe del diálogo, indicador apagado); 100 PDF decodificados sin errores | Correcto | — | — | Correcto |
 | Regresión | 750 pruebas unitarias y 95 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
 
+# Programa v2 · Fase 4: secuencias, BLAST y rastreo génico
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Secuencias | 39 pruebas: 64 codones × 3 tablas y 12 codones ambiguos iguales a Biopython 1.85; %GC y reverso complementario; traducción de los CDS igual a la anotación; ORF exactos; 16 alineamientos con puntaje igual a Biopython; BLOSUM62 igual al archivo del NCBI; E2E (51,3 % GC, ORF 51..494, insulina humana frente a bovina: 458,0 y 80,0 %) | Correcto | — | — | Correcto |
+| BLAST | 37 pruebas con respuestas grabadas de una búsqueda real (RID D9HJG79C016): analizador, cola con 10 s entre contactos y 60 s por RID, límites, listas permitidas, estados; E2E sin servidor (aviso, formulario oficial, resultado grabado rotulado) | Correcto | La búsqueda real tardó 67 min en la cola del NCBI | Tiempo máximo de 120 min en el proxy | Correcto; la búsqueda en vivo queda **bloqueada por infraestructura** hasta publicar el servidor |
+| Rastreo génico | 17 pruebas; validación contra los registros en vivo 67/67 y 25 enlaces con respuesta 200; E2E (HBB c.20A>T → p.Glu7Val, 99,3 %; 39,1 % exónico) | Correcto | 11 enlaces de Reactome no verificables (dominio bloqueado en el entorno) | Marcados «no verificado» en el informe | Parcial (enlaces) |
+| Regresión | 847 pruebas unitarias y 97 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
+

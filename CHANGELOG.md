@@ -7,6 +7,25 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [1.4.0] · 2026-10-18
+
+Programa v2 · Fase 4: secuencias, BLAST y rastreo génico.
+
+### Añadido
+- Práctica 52, secuencias biológicas (11.º): lectura FASTA/GenBank con límites, composición y %GC, complemento,
+  transcripción, traducción con las tablas NCBI 1, 2 y 11, ORF en seis marcos y alineamiento global y local
+  (Gotoh, BLOSUM62). 39 pruebas, entre ellas 16 alineamientos con puntaje idéntico al de Biopython 1.85
+  (`scripts/validacion/biopython_secuencias.py`). Catálogo con 8 registros reales (NCBI RefSeq y UniProt) consultados
+  el 2026-10-18.
+- BLAST real del NCBI (prompt 10.1): proxy de Nivel 1 en el servidor del colegio (`server/blast.mjs`) que respeta las
+  reglas publicadas por el NCBI (una consulta cada 10 s, un sondeo por RID por minuto, `tool` y `email`), cliente con
+  estados reales y panel accesible. Sin servidor: «Servicio no disponible», enlace al formulario oficial y un resultado
+  grabado de una búsqueda real (RID D9HJG79C016, blastn 2.17.0+, refseq_select_rna, 2026-10-18) rotulado como tal.
+  Pruebas con respuestas grabadas. Indicador `blast`.
+- Práctica 53, rastreo génico (11.º): 5 genes con datos de NCBI Gene/Nucleotide, UniProt, RCSB PDB y ClinVar,
+  comparados con los registros en vivo por `scripts/validacion/genes_fetch.mjs` (67/67; informe en
+  `docs/v2/validacion-genes.md`); cada afirmación con su tipo de evidencia (ECO); variantes calculadas sobre el CDS.
+
 ## [1.3.0] · 2026-10-18
 
 Programa v2 · Fase 3: física y química ampliadas con 3D y QR.

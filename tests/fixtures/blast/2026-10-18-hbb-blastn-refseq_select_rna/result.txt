@@ -1,0 +1,91 @@
+<p><!--
+QBlastInfoBegin
+	Status=READY
+QBlastInfoEnd
+--><p>
+<PRE>
+
+BLASTN 2.17.0+
+Reference: Stephen F. Altschul, Thomas L. Madden, Alejandro
+A. Schaffer, Jinghui Zhang, Zheng Zhang, Webb Miller, and
+David J. Lipman (1997), "Gapped BLAST and PSI-BLAST: a new
+generation of protein database search programs", Nucleic
+Acids Res. 25:3389-3402.
+
+
+RID: D9HJG79C016
+
+
+Database: RefSeq Select RNA sequences
+           60,444 sequences; 191,995,482 total letters
+Query= HBB_CDS_1-90 NM_000518.5 CDS nt 1-90
+
+Length=90
+
+
+                                                                   Score     E     Max
+Sequences producing significant alignments:                       (Bits)  Value  Ident
+
+NM_000518.5 Homo sapiens hemoglobin subunit beta (HBB), mRNA       163     7e-40  100%      
+NM_000519.4 Homo sapiens hemoglobin subunit delta (HBD), mRNA      136     1e-31  93%       
+NM_008220.5 Mus musculus hemoglobin, beta adult t chain (Hbb-b...  104     6e-22  86%       
+NM_001201391.1 Mus musculus hemoglobin, beta adult s chain (Hb...  104     6e-22  86%       
+NM_016956.3 Mus musculus hemoglobin, beta adult minor chain (H...  96.0    3e-19  83%       
+NM_001278161.1 Mus musculus hemoglobin, beta adult major chain...  96.0    3e-19  83%       
+NM_033234.1 Rattus norvegicus hemoglobin, beta adult major cha...  96.0    3e-19  83%       
+NM_005330.4 Homo sapiens hemoglobin subunit epsilon 1 (HBE1), ...  91.5    4e-18  82%       
+NM_001409355.1 Rattus norvegicus hemoglobin, beta adult minor ...  77.9    8e-14  79%       
+NM_001111269.2 Rattus norvegicus hemoglobin, beta adult t chai...  77.9    8e-14  79%       
+
+ALIGNMENTS
+>NM_000518.5 Homo sapiens hemoglobin subunit beta (HBB), mRNA
+Length=628
+
+ Score = 163 bits (180),  Expect = 7e-40
+ Identities = 90/90 (100%), Gaps = 0/90 (0%)
+ Strand=Plus/Plus
+
+Query  1    ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAAC  60
+            ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Sbjct  51   ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAAC  110
+
+Query  61   GTGGATGAAGTTGGTGGTGAGGCCCTGGGC  90
+            ||||||||||||||||||||||||||||||
+Sbjct  111  GTGGATGAAGTTGGTGGTGAGGCCCTGGGC  140
+
+
+  Database: RefSeq Select RNA sequences
+    Posted date:  Oct 13, 2026  2:43 AM
+  Number of letters in database: 191,995,482
+  Number of sequences in database:  60,444
+
+Lambda      K        H
+   0.634    0.408    0.912 
+Gapped
+Lambda      K        H
+   0.625    0.410    0.780 
+Matrix: blastn matrix:2 -3
+Gap Penalties: Existence: 5, Extension: 2
+Number of Sequences: 60444
+Number of Hits to DB: 216626
+Number of extensions: 463
+Number of successful extensions: 463
+Number of sequences better than 10: 33
+Number of HSP's better than 10 without gapping: 0
+Number of HSP's gapped: 463
+Number of HSP's successfully gapped: 33
+Length of query: 90
+Length of database: 191995482
+Length adjustment: 26
+Effective length of query: 64
+Effective length of database: 190423938
+Effective search space: 12187132032
+Effective search space used: 12187132032
+A: 0
+X1: 22 (20.1 bits)
+X2: 33 (29.8 bits)
+X3: 110 (99.2 bits)
+S1: 28 (26.5 bits)
+S2: 33 (31.0 bits)
+
+

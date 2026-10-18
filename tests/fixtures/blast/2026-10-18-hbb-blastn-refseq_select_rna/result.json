@@ -1,0 +1,371 @@
+{
+"BlastOutput2": [
+{
+    "report": {
+      "program": "blastn",
+      "version": "BLASTN 2.17.0+",
+      "reference": "Stephen F. Altschul, Thomas L. Madden, Alejandro A. Sch&auml;ffer, Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), \"Gapped BLAST and PSI-BLAST: a new generation of protein database search programs\", Nucleic Acids Res. 25:3389-3402.",
+      "search_target": {
+        "db": "refseq_select_rna"
+      },
+      "params": {
+        "expect": 10,
+        "sc_match": 2,
+        "sc_mismatch": -3,
+        "gap_open": 5,
+        "gap_extend": 2,
+        "filter": "L;m;"
+      },
+      "results": {
+        "search": {
+          "query_id": "Query_1148715",
+          "query_title": "HBB_CDS_1-90 NM_000518.5 CDS nt 1-90",
+          "query_len": 90,
+          "hits": [
+            {
+              "num": 1,
+              "description": [
+                {
+                  "id": "gi|1401724401|ref|NM_000518.5|",
+                  "accession": "NM_000518",
+                  "title": "Homo sapiens hemoglobin subunit beta (HBB), mRNA",
+                  "taxid": 9606,
+                  "sciname": "Homo sapiens"
+                }
+              ],
+              "len": 628,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 163.589,
+                  "score": 180,
+                  "evalue": 6.92717e-40,
+                  "identity": 90,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 51,
+                  "hit_to": 140,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "midline": "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+                }
+              ]
+            },
+            {
+              "num": 2,
+              "description": [
+                {
+                  "id": "gi|1531243787|ref|NM_000519.4|",
+                  "accession": "NM_000519",
+                  "title": "Homo sapiens hemoglobin subunit delta (HBD), mRNA",
+                  "taxid": 9606,
+                  "sciname": "Homo sapiens"
+                }
+              ],
+              "len": 620,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 136.539,
+                  "score": 150,
+                  "evalue": 9.62892e-32,
+                  "identity": 84,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 51,
+                  "hit_to": 140,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCATCTGACTCCTGAGGAGAAGACTGCTGTCAATGCCCTGTGGGGCAAAGTGAACGTGGATGCAGTTGGTGGTGAGGCCCTGGGC",
+                  "midline": "||||||||||||||||||||||||||| |||| || | ||||||||||||||| ||||||||||||| ||||||||||||||||||||||"
+                }
+              ]
+            },
+            {
+              "num": 3,
+              "description": [
+                {
+                  "id": "gi|498827405|ref|NM_008220.5|",
+                  "accession": "NM_008220",
+                  "title": "Mus musculus hemoglobin, beta adult t chain (Hbb-bt), mRNA",
+                  "taxid": 10090,
+                  "sciname": "Mus musculus"
+                }
+              ],
+              "len": 646,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 104.98,
+                  "score": 115,
+                  "evalue": 5.6912e-22,
+                  "identity": 77,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 55,
+                  "hit_to": 144,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCACCTGACTGATGCTGAGAAGGCTGCTGTCTCTGGCCTGTGGGGAAAGGTGAACGCCGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "midline": "|||||||| ||||||  ||  |||||| |||| ||  ||| ||||||||| ||||||||||  |||||||||||||||||||||||||||"
+                }
+              ]
+            },
+            {
+              "num": 4,
+              "description": [
+                {
+                  "id": "gi|319402142|ref|NM_001201391.1|",
+                  "accession": "NM_001201391",
+                  "title": "Mus musculus hemoglobin, beta adult s chain (Hbb-bs), mRNA",
+                  "taxid": 10090,
+                  "sciname": "Mus musculus"
+                }
+              ],
+              "len": 639,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 104.98,
+                  "score": 115,
+                  "evalue": 5.6912e-22,
+                  "identity": 77,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 54,
+                  "hit_to": 143,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCACCTGACTGATGCTGAGAAGGCTGCTGTCTCTGGCCTGTGGGGAAAGGTGAACGCCGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "midline": "|||||||| ||||||  ||  |||||| |||| ||  ||| ||||||||| ||||||||||  |||||||||||||||||||||||||||"
+                }
+              ]
+            },
+            {
+              "num": 5,
+              "description": [
+                {
+                  "id": "gi|498796912|ref|NM_016956.3|",
+                  "accession": "NM_016956",
+                  "title": "Mus musculus hemoglobin, beta adult minor chain (Hbb-b2), mRNA",
+                  "taxid": 10090,
+                  "sciname": "Mus musculus"
+                }
+              ],
+              "len": 630,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 95.9632,
+                  "score": 105,
+                  "evalue": 2.94811e-19,
+                  "identity": 75,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 55,
+                  "hit_to": 144,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCACCTGACTGATGCTGAGAAGTCTGCTGTCTCTTGCCTGTGGGCAAAGGTGAACCCCGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "midline": "|||||||| ||||||  ||  ||||||||||| ||  ||  ||||||||  |||||||||   |||||||||||||||||||||||||||"
+                }
+              ]
+            },
+            {
+              "num": 6,
+              "description": [
+                {
+                  "id": "gi|498752596|ref|NM_001278161.1|",
+                  "accession": "NM_001278161",
+                  "title": "Mus musculus hemoglobin, beta adult major chain (Hbb-b1), mRNA",
+                  "taxid": 10090,
+                  "sciname": "Mus musculus"
+                }
+              ],
+              "len": 630,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 95.9632,
+                  "score": 105,
+                  "evalue": 2.94811e-19,
+                  "identity": 75,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 55,
+                  "hit_to": 144,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCACCTGACTGATGCTGAGAAGGCTGCTGTCTCTTGCCTGTGGGGAAAGGTGAACTCCGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "midline": "|||||||| ||||||  ||  |||||| |||| ||  ||  ||||||||| |||||||||   |||||||||||||||||||||||||||"
+                }
+              ]
+            },
+            {
+              "num": 7,
+              "description": [
+                {
+                  "id": "gi|17985948|ref|NM_033234.1|",
+                  "accession": "NM_033234",
+                  "title": "Rattus norvegicus hemoglobin, beta adult major chain (Hbb-b1), mRNA",
+                  "taxid": 10116,
+                  "sciname": "Rattus norvegicus"
+                }
+              ],
+              "len": 620,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 95.9632,
+                  "score": 105,
+                  "evalue": 2.94811e-19,
+                  "identity": 75,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 48,
+                  "hit_to": 137,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCACCTGACTGATGCTGAGAAGGCTGCTGTTAATGGCCTGTGGGGAAAGGTGAACCCTGATGATGTTGGTGGCGAGGCCCTGGGC",
+                  "midline": "|||||||| ||||||  ||  |||||| |||| |||| || ||||||||| |||||||||   ||||| |||||||| ||||||||||||"
+                }
+              ]
+            },
+            {
+              "num": 8,
+              "description": [
+                {
+                  "id": "gi|1520687574|ref|NM_005330.4|",
+                  "accession": "NM_005330",
+                  "title": "Homo sapiens hemoglobin subunit epsilon 1 (HBE1), mRNA",
+                  "taxid": 9606,
+                  "sciname": "Homo sapiens"
+                }
+              ],
+              "len": 623,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 91.4547,
+                  "score": 100,
+                  "evalue": 3.59154e-18,
+                  "identity": 74,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 56,
+                  "hit_to": 145,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCATTTTACTGCTGAGGAGAAGGCTGCCGTCACTAGCCTGTGGAGCAAGATGAATGTGGAAGAGGCTGGAGGTGAAGCCTTGGGC",
+                  "midline": "||||||||| | ||| ||||||||||| ||||||| |||  ||||||| ||||| |||| ||||| || | ||| ||||| ||| |||||"
+                }
+              ]
+            },
+            {
+              "num": 9,
+              "description": [
+                {
+                  "id": "gi|2271940150|ref|NM_001409355.1|",
+                  "accession": "NM_001409355",
+                  "title": "Rattus norvegicus hemoglobin, beta adult minor chain (Hbb-b2), mRNA",
+                  "taxid": 10116,
+                  "sciname": "Rattus norvegicus"
+                }
+              ],
+              "len": 627,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 77.9295,
+                  "score": 85,
+                  "evalue": 7.91089e-14,
+                  "identity": 71,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 53,
+                  "hit_to": 142,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCACCTAACTGATGCTGAGAAGGCTACTGTTAGTGGCCTGTGGGGAAAGGTGAATGCTGATAATGTTGGCGCTGAGGCCCTGGGC",
+                  "midline": "|||||||| || |||  ||  |||||| || | |||| || ||||||||| |||||||| |  ||| | ||||| | |||||||||||||"
+                }
+              ]
+            },
+            {
+              "num": 10,
+              "description": [
+                {
+                  "id": "gi|1999501387|ref|NM_001111269.2|",
+                  "accession": "NM_001111269",
+                  "title": "Rattus norvegicus hemoglobin, beta adult t chain (Hbb-bt), mRNA",
+                  "taxid": 10116,
+                  "sciname": "Rattus norvegicus"
+                }
+              ],
+              "len": 632,
+              "hsps": [
+                {
+                  "num": 1,
+                  "bit_score": 77.9295,
+                  "score": 85,
+                  "evalue": 7.91089e-14,
+                  "identity": 71,
+                  "query_from": 1,
+                  "query_to": 90,
+                  "query_strand": "Plus",
+                  "hit_from": 54,
+                  "hit_to": 143,
+                  "hit_strand": "Plus",
+                  "align_len": 90,
+                  "gaps": 0,
+                  "qseq": "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGC",
+                  "hseq": "ATGGTGCACCTAACTGATGCTGAGAAGGCTACTGTTAGTGGCCTGTGGGGAAAGGTGAATGCTGATAATGTTGGCGCTGAGGCCCTGGGC",
+                  "midline": "|||||||| || |||  ||  |||||| || | |||| || ||||||||| |||||||| |  ||| | ||||| | |||||||||||||"
+                }
+              ]
+            }
+          ],
+          "stat": {
+            "db_num": 60444,
+            "db_len": 191995482,
+            "hsp_len": 26,
+            "eff_space": 12187132032,
+            "kappa": 0.41,
+            "lambda": 0.625,
+            "entropy": 0.78
+          }
+        }
+      }
+    }
+  }
+]
+}
+

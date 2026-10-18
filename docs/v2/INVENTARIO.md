@@ -2,11 +2,11 @@
 
 Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se regenera desde el código.
 
-- Prácticas en el catálogo: **51**
-- Con laboratorio registrado: 51 · con prueba E2E propia: 51 · con revisión axe: 0
+- Prácticas en el catálogo: **53**
+- Con laboratorio registrado: 53 · con prueba E2E propia: 53 · con revisión axe: 0
 - Con modo de instrumento real: 22 · con modo avanzado: 19 · con parámetros editables: 8
-- Con manipulación directa: 31 · con sonido: 37 · con texto que rotula partes ilustrativas: 18
-- Archivos de pruebas unitarias: 47 (663 pruebas declaradas)
+- Con manipulación directa: 31 · con sonido: 37 · con texto que rotula partes ilustrativas: 19
+- Archivos de pruebas unitarias: 50 (718 pruebas declaradas)
 
 | Práctica | Grado | Área | Laboratorio (líneas) | Modelos | Pruebas unitarias | E2E | axe | Instr. real | Avanzado | Manipulación | Sonido | Rótulo ilustrativo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -33,7 +33,7 @@ Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se r
 | `ondas` Laboratorio de ondas: frecuencia, amplitud y longitud de onda | 8.º | fisica | WavesLab (272) | waves | 24 en models2.test.ts | sí | no | no | sí | sí | no | no |
 | `optica` Reflexión y refracción de la luz | 8.º | fisica | OpticsLab (200) | optics | 21 en models3.test.ts | sí | no | sí | sí | sí | sí | no |
 | `sonido` Sonido y resonancia | 8.º | fisica | SoundLab (932) | soundResonance | 13 en soundResonance.test.ts | sí | no | sí | no | sí | sí | no |
-| `adn` Del ADN a la proteína: replicación, transcripción y traducción | 9.º | biologia | DnaLab (496) | dna | 69 en geneExpression.test.ts, models.test.ts | sí | no | no | no | no | no | no |
+| `adn` Del ADN a la proteína: replicación, transcripción y traducción | 9.º | biologia | DnaLab (496) | dna | 93 en geneExpression.test.ts, models.test.ts, sequences.test.ts | sí | no | no | no | no | no | no |
 | `cinematica` Velocidad, aceleración y movimiento | 9.º | fisica | KinematicsLab (302) | kinematics | 12 en kinematics.test.ts | sí | no | no | sí | no | sí | no |
 | `mol` Cálculos estequiométricos básicos | 9.º | quimica | MoleLab (744) | mole, balancing | 34 en balancing.test.ts, mole.test.ts | sí | no | sí | sí | sí | sí | sí |
 | `newton` Leyes de Newton: fuerza, masa y aceleración | 9.º | fisica | NewtonLab (335) | newton | 41 en advanced.test.ts, models3.test.ts | sí | no | sí | sí | sí | sí | no |
@@ -54,10 +54,12 @@ Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se r
 | `circuitos` Circuitos eléctricos: voltaje, corriente y resistencia | 11.º | fisica | CircuitLab (342) | circuits | 55 en models.test.ts | sí | no | sí | sí | sí | sí | no |
 | `equilibrio` Equilibrio químico y principio de Le Châtelier | 11.º | quimica | EquilibriumLab (469) | equilibrium | 11 en equilibrium.test.ts | sí | no | no | no | no | sí | sí |
 | `estequiometria` Estequiometría y reactivo limitante | 11.º | quimica | StoichLab (215) | stoichiometry, chemistry | 84 en lib.test.ts, models.test.ts, mole.test.ts | sí | no | no | no | no | no | no |
-| `expresion` Expresión génica y efecto de mutaciones en la proteína | 11.º | biologia | ExpressionLab (862) | geneExpression, dna | 69 en geneExpression.test.ts, models.test.ts | sí | no | no | no | sí | sí | no |
+| `expresion` Expresión génica y efecto de mutaciones en la proteína | 11.º | biologia | ExpressionLab (862) | geneExpression, dna | 93 en geneExpression.test.ts, models.test.ts, sequences.test.ts | sí | no | no | no | sí | sí | no |
 | `induccion` Magnetismo e inducción electromagnética | 11.º | fisica | InductionLab (1248) | induction | 12 en induction.test.ts | sí | no | sí | sí | sí | sí | no |
 | `interferencia` Interferencia y difracción de la luz | 11.º | fisica | InterferenceLab (603) | interference | 19 en interference.test.ts | sí | no | sí | sí | sí | sí | no |
 | `ph` pH, dilución y neutralización ácido-base | 11.º | quimica | AcidBaseLab (280) | acidbase, chemistry | 97 en models.test.ts, models2.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
 | `poblacion` Crecimiento poblacional y capacidad de carga | 11.º | ambiental | PopulationLab (203) | population | 55 en models.test.ts | sí | no | no | no | no | no | sí |
 | `popgen` Genética de poblaciones y frecuencias alélicas | 11.º | biologia | PopGenLab (179) | popgen | 24 en models2.test.ts | sí | no | no | no | no | no | sí |
+| `rastreo` Rastreo génico: del gen a la proteína y su función | 11.º | biologia | GeneTraceLab (495) | geneTrace | 17 en geneTrace.test.ts | sí | no | no | no | no | no | sí |
 | `reto` Reto de indagación con interpretación de datos | 11.º | ambiental | InquiryLab (459) | inquiry | 10 en inquiry.test.ts | sí | no | no | no | no | sí | sí |
+| `secuencias` Secuencias biológicas: análisis y alineamiento | 11.º | biologia | SequencesLab (601) | sequences, dna, geneExpression | 93 en geneExpression.test.ts, models.test.ts, sequences.test.ts | sí | no | no | no | no | no | no |

@@ -81,6 +81,8 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
       con esquema, semilla y versión del modelo), plantilla de ficha de enriquecimiento, alias en el seguimiento.
 - [x] **v2 · Fase 3:** energía con integración temporal (referencia 98,1 J y 14,0 m/s), gas a 101,325 kPa (22,414 L),
       geometría molecular 3D con un motor real, QR por práctica.
-- [ ] **v2 · Fases 4–10:** secuencias y BLAST, visor molecular, FBA, fármacos, genómica, dinámica molecular,
+- [x] **v2 · Fase 4:** secuencias (validadas con Biopython), BLAST real con proxy de Nivel 1 en el servidor del colegio
+      (activo cuando el docente publique el servidor y defina `NCBI_EMAIL`) y rastreo génico con datos validados.
+- [ ] **v2 · Fases 5–10:** visor molecular, FBA, fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por
       infraestructura hasta decisión del docente).

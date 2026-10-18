@@ -97,3 +97,34 @@ Esta guía no es asesoría jurídica; consulte con el área encargada de la inst
 - No hay recuperación de contraseña por correo (requiere un servicio de correo); el administrador puede borrar la cuenta en la base de datos para que el docente la cree de nuevo.
 - El límite de intentos se guarda en memoria y se reinicia al reiniciar el servidor; varios estudiantes detrás de la misma red del colegio comparten el límite de envíos (120 cada 10 minutos por IP, pensado para un salón completo detrás de la misma red; ajustable en `createApp`).
 - No hay panel de administración.
+
+## Proxy de NCBI BLAST (opcional, Nivel 1)
+
+El navegador no puede llamar directamente a `Blast.cgi` del NCBI (no envía cabeceras CORS). El módulo `server/blast.mjs` hace de intermediario: una **cola global** que respeta las reglas del NCBI verificadas el 2026-10-18 (detalle y citas en `docs/v2/BLAST.md`):
+
+- como máximo **un contacto con el NCBI cada 10 s** (envíos y consultas de estado comparten la misma cola);
+- como máximo **una consulta por minuto para el mismo RID** (la primera, ≥ 60 s después del envío);
+- parámetros `tool` y `email` en cada solicitud;
+- tope diario de envíos (100 por defecto: el NCBI pasa a una cola lenta a quien supera 100 búsquedas en 24 h).
+
+Los navegadores consultan el estado guardado en memoria del servidor; sus consultas no generan contactos adicionales con el NCBI. Las búsquedas idénticas recientes (24 h) reutilizan el resultado.
+
+| Variable | Descripción |
+|---|---|
+| `NCBI_EMAIL` | Correo de contacto del responsable (lo pide el NCBI). **Sin ella, BLAST queda desactivado** y la interfaz muestra «Servicio no disponible» con el enlace al formulario oficial. No se escribe ningún correo en el código. |
+| `NCBI_TOOL` | Nombre de la herramienta ante el NCBI (por defecto `lvcn-laboratorio`). |
+| `BLAST_DAILY_LIMIT` | Envíos al NCBI por 24 h en todo el servidor (por defecto 100). |
+| `BLAST_MAX_QUEUE` | Búsquedas en espera como máximo (por defecto 30). |
+
+El CORS es el mismo del resto del servidor (`ALLOWED_ORIGINS`).
+
+| Método y ruta | Descripción |
+|---|---|
+| `GET /api/blast` | Disponibilidad (`available`, `reason`), programas, bases permitidas y límites. |
+| `POST /api/blast` | `{ program, database, query, hitlistSize?, expect? }`. 202 con `{ job }` en cola; 200 con `cached: true` si hay una búsqueda idéntica reciente. |
+| `GET /api/blast/:id` | Estado de la búsqueda: `en-cola`, `ejecutando`, `completado` (con `result.hits`), `fallido` (con `error`) o `cancelado`; incluye el `rid` del NCBI. |
+| `DELETE /api/blast/:id` | Cancela. En cola: no se envía. En ejecución: el servidor deja de consultar (la URL API del NCBI no documenta una cancelación). |
+
+Programas: `blastn`, `blastp`, `blastx`, `tblastn`. Bases: `core_nt`, `refseq_select_rna`, `refseq_rna` (nucleótidos); `swissprot`, `refseq_select_prot`, `refseq_protein` (proteínas). Consulta de 15 a 1000 residuos (un registro FASTA o texto), 1 a 50 resultados, valor E > 0 y ≤ 1000. Límites por IP (opción `blast.limits` de `createApp`): 20 envíos por hora y 600 consultas de estado cada 10 min. Tiempo máximo de una búsqueda: 120 min (la búsqueda real grabada el 2026-10-18, de solo 90 nt, siguió «Searching» en el NCBI durante más de 43 min); reintentos ante errores de red: 2; tiempo de espera por solicitud al NCBI: 30 s. Los resultados se guardan en memoria 24 h (se pierden al reiniciar).
+
+Antes de activarlo, el docente debe decidirlo por escrito (ADR 0001, punto 2): quién figura como contacto en `NCBI_EMAIL` y qué cuota diaria se acepta.

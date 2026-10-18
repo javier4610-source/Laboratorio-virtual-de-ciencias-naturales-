@@ -3,6 +3,7 @@
 import { createServer } from 'node:http';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash, randomBytes, randomInt, scryptSync, timingSafeEqual } from 'node:crypto';
+import { createBlastService, blastOptionsFromEnv } from './blast.mjs';
 
 export const REPORT_FORMAT = 'lvcn-informe-v1';
 const MAX_BODY = 512 * 1024; // bytes
@@ -298,7 +299,7 @@ export function createRateLimiter(limit, windowMs, now = () => Date.now()) {
  *  allowedOrigins: lista de orígenes permitidos (CORS) del sitio del laboratorio
  *  now: reloj inyectable para pruebas
  */
-export function createApp({ dbPath = 'laboratorio.db', registrationCode, allowedOrigins = [], now = () => Date.now(), limits = {}, tzOffsetMinutes = -300 } = {}) {
+export function createApp({ dbPath = 'laboratorio.db', registrationCode, allowedOrigins = [], now = () => Date.now(), limits = {}, tzOffsetMinutes = -300, blast: blastOptions } = {}) {
   if (!registrationCode || registrationCode.length < 6) throw new Error('Define REGISTRATION_CODE (al menos 6 caracteres) para proteger el registro de docentes.');
   const db = new DatabaseSync(dbPath);
   db.exec('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL;');
@@ -316,6 +317,8 @@ export function createApp({ dbPath = 'laboratorio.db', registrationCode, allowed
   const MAX_STUDENTS = limits.studentsPerCourse ?? 300;
   const MAX_PRACTICES = 80;
   const today = () => dayOf(now(), tzOffsetMinutes);
+  // Proxy de NCBI BLAST (server/blast.mjs): se activa con NCBI_EMAIL o con la opción `blast`.
+  const blast = createBlastService(blastOptions ?? blastOptionsFromEnv());
 
   const q = {
     insertTeacher: db.prepare('INSERT INTO teachers (name, email, password_hash, created_at) VALUES (?, ?, ?, ?)'),
@@ -579,6 +582,9 @@ export function createApp({ dbPath = 'laboratorio.db', registrationCode, allowed
   /** Enrutador: devuelve [status, body]. */
   async function route(method, path, body, req, ip) {
     if (method === 'GET' && path === '/api/salud') return [200, { ok: true, version: 1 }];
+
+    const blastRoute = await blast.handle(method, path, body, ip);
+    if (blastRoute) return blastRoute;
 
     if (method === 'POST' && path === '/api/docentes') {
       if (!authLimiter(`${ip}:auth`)) throw new HttpError(429, 'Demasiados intentos. Espera unos minutos.');

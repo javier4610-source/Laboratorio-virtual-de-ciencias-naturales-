@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (50)
+## Prácticas implementadas (51)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -49,6 +49,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 10.º | Choques y cantidad de movimiento | Física | Riel de aire con fotopuertas y balanza; choques elástico, parcial e inelástico y explosión; p se conserva y Ec se transforma; coeficiente de restitución |
 | 10.º | Respiración celular y balance energético | Biología | Respirómetro de tres tubos con KOH y termobarómetro; Q10 y desnaturalización; cociente respiratorio; fermentación en anoxia; contabilidad del ATP (32 frente a 38) |
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |
+| 10.º | Geometría molecular en 3D y modelo VSEPR | Química | Visor 3D (3Dmol.js) con 12 confórmeros reales de PubChem (CID, fecha y huella SHA-256); medición de distancias y ángulos con el ratón o el teclado; predicción VSEPR (AXₘEₙ) frente al ángulo calculado; procedencia «Predicción computacional»; búsqueda opcional en PubChem |
 | 11.º | Contaminación del agua e indicadores | Ambiental | Ríos de Urabá simulados; sonda multiparamétrica, DBO₅ y coliformes; curva de Streeter–Phelps; BMWP/Col (Roldán); índice de calidad tipo NSF; comparación con normas colombianas |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
 | 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |

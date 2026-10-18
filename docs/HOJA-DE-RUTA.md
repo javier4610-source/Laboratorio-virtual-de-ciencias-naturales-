@@ -79,7 +79,7 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
       CHANGELOG y versión semántica. Criterio: todas las prácticas cubiertas por pruebas que pasan.
 - [x] **v2 · Fase 2:** ADR (`docs/v2/adr`), sistema de procedencia visible, registro de experimentos exportable (JSON
       con esquema, semilla y versión del modelo), plantilla de ficha de enriquecimiento, alias en el seguimiento.
-- [ ] **v2 · Fase 3:** energía con integración temporal (referencia 98,1 J y 14,0 m/s), gas a 101,325 kPa (22,414 L),
+- [x] **v2 · Fase 3:** energía con integración temporal (referencia 98,1 J y 14,0 m/s), gas a 101,325 kPa (22,414 L),
       geometría molecular 3D con un motor real, QR por práctica.
 - [ ] **v2 · Fases 4–10:** secuencias y BLAST, visor molecular, FBA, fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por

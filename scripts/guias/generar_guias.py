@@ -34,6 +34,8 @@ from reportlab.platypus import (CondPageBreak, Flowable, Image, KeepTogether, Pa
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.abspath(os.path.join(AQUI, '..', '..'))
 SALIDA = os.path.join(RAIZ, 'guias-pdf')
+# Debe coincidir con PUBLIC_BASE de src/lib/permalink.ts: los QR impresos apuntan a enlaces permanentes
+# (los ids de las prácticas son un contrato estable y nunca se renombran).
 URL_BASE = os.environ.get('LAB_URL', 'https://javier4610-source.github.io/Laboratorio-virtual-de-ciencias-naturales-/')
 LOGO = os.path.join(AQUI, 'assets', 'LOGO_COLEGIOS.png')
 
@@ -177,8 +179,14 @@ def logo(ancho=2.1 * cm):
     return d
 
 
+def enlace_permanente(pid):
+    """Igual que practicePermalink() en src/lib/permalink.ts."""
+    return f'{URL_BASE}#/practica/{pid}'
+
+
 def codigo_qr(url, lado=3.0 * cm):
-    w = qr.QrCodeWidget(url)
+    """QR vectorial con el generador incluido en ReportLab (reportlab.graphics.barcode.qr, licencia BSD)."""
+    w = qr.QrCodeWidget(url, barLevel='M')
     x1, y1, x2, y2 = w.getBounds()
     d = Drawing(lado, lado, transform=[lado / (x2 - x1), 0, 0, lado / (y2 - y1), 0, 0])
     d.add(w)
@@ -306,7 +314,7 @@ def bloque_pregunta(num, q, est, con_clave=False):
 
 
 def guia_estudiante(p, est, ruta):
-    url = f'{URL_BASE}#/practica/{p["id"]}'
+    url = enlace_permanente(p['id'])
     area = AREAS.get(p['area'], p['area'])
     doc = SimpleDocTemplate(ruta, pagesize=letter, leftMargin=1.6 * cm, rightMargin=1.6 * cm, topMargin=1.3 * cm, bottomMargin=1.7 * cm,
                             title=f'Guía: {p["title"]}', author=f'{DOCENTE.title()} · I.E. Campo Alegre', subject='Guía de laboratorio virtual de Ciencias Naturales')
@@ -427,6 +435,12 @@ def clave_docente(p, est, ruta):
     h = encabezado(est, 'Uso exclusivo del docente')
     h += [Paragraph('CLAVE DE RESPUESTAS Y NOTAS PARA EL DOCENTE', ParagraphStyle('x', parent=est['peq'], textColor=ROJO, fontName='Guia-B')),
           Paragraph(t(p['title']), est['titulo']), Paragraph(f'Grado {p["grade"]}.º · {AREAS.get(p["area"], p["area"])} · {t(p["topic"])}', est['peq']), Spacer(1, 8)]
+    url = enlace_permanente(p['id'])
+    acceso = Table([[codigo_qr(url, 2.4 * cm), Paragraph(
+        f'<b>Enlace permanente de la práctica</b> (el mismo QR de la guía del estudiante):<br/>'
+        f'<font name="Guia-B" color="#1B5E20">{t(url)}</font>', est['peq'])]], colWidths=[2.8 * cm, None])
+    acceso.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, -1), VERDE_SUAVE), ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'), ('BOX', (0, 0), (-1, -1), 0.8, VERDE)]))
+    h += [acceso, Spacer(1, 8)]
 
     h += [barra_seccion('RESPUESTAS DE LA EVALUACIÓN', est, ROJO), Spacer(1, 4)]
     filas = [['N.º', 'Clave', 'Competencia', 'Justificación científica', 'Repaso sugerido']]

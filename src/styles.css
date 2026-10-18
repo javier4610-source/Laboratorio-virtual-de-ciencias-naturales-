@@ -1340,3 +1340,9 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 .prov-chip.prov-ilustracion::before { background: var(--warn); border-radius: 2px; }
 .prov-chip.prov-experimental::before { background: var(--ok); }
 @media (max-width: 600px) { .prov-chip { white-space: normal; } }
+
+/* Compartir práctica con código QR (programa v2, 8.4). El QR siempre negro sobre blanco para que se lea en tema oscuro. */
+.qr-box { display: grid; place-items: center; align-self: center; width: min(260px, 100%); aspect-ratio: 1; padding: 8px; border-radius: var(--radius); background: #fff; }
+.qr-svg, .qr-svg svg { display: block; width: 100%; height: 100%; }
+.qr-box .muted { color: #44504b; }
+.qr-url { margin: 0; overflow-wrap: anywhere; font-family: var(--font-data); font-size: 0.85rem; }

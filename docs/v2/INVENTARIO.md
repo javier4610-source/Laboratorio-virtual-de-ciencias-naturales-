@@ -2,11 +2,11 @@
 
 Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se regenera desde el código.
 
-- Prácticas en el catálogo: **50**
-- Con laboratorio registrado: 50 · con prueba E2E propia: 50 · con revisión axe: 0
+- Prácticas en el catálogo: **51**
+- Con laboratorio registrado: 51 · con prueba E2E propia: 51 · con revisión axe: 0
 - Con modo de instrumento real: 22 · con modo avanzado: 19 · con parámetros editables: 8
-- Con manipulación directa: 31 · con sonido: 36 · con texto que rotula partes ilustrativas: 18
-- Archivos de pruebas unitarias: 43 (620 pruebas declaradas)
+- Con manipulación directa: 31 · con sonido: 37 · con texto que rotula partes ilustrativas: 18
+- Archivos de pruebas unitarias: 47 (663 pruebas declaradas)
 
 | Práctica | Grado | Área | Laboratorio (líneas) | Modelos | Pruebas unitarias | E2E | axe | Instr. real | Avanzado | Manipulación | Sonido | Rótulo ilustrativo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -41,10 +41,11 @@ Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se r
 | `trabajo` Trabajo, potencia y plano inclinado | 9.º | fisica | WorkLab (813) | workPower | 12 en workPower.test.ts | sí | no | sí | no | sí | sí | no |
 | `choques` Choques y cantidad de movimiento | 10.º | fisica | CollisionsLab (485) | collisions | 13 en collisions.test.ts | sí | no | no | sí | no | sí | no |
 | `cinetica` Factores que afectan la velocidad de reacción | 10.º | quimica | KineticsLab (334) | kinetics | 31 en advanced.test.ts, kinetics.test.ts | sí | no | no | sí | sí | sí | sí |
-| `energia` Conservación de la energía mecánica | 10.º | fisica | EnergyLab (202) | energy | 41 en advanced.test.ts, models3.test.ts | sí | no | no | sí | no | sí | no |
+| `energia` Conservación de la energía mecánica | 10.º | fisica | EnergyLab (483) | energy, energyTime | 56 en advanced.test.ts, energyTime.test.ts, models3.test.ts | sí | no | no | sí | no | sí | no |
 | `enzimas` Actividad enzimática: temperatura, pH y concentración | 10.º | biologia | EnzymeLab (289) | enzyme | 66 en lib.test.ts, models.test.ts | sí | no | no | no | sí | no | sí |
 | `fotosintesis` Fotosíntesis: luz, CO₂ y temperatura | 10.º | biologia | PhotoLab (199) | photosynthesis | 24 en models2.test.ts | sí | no | no | no | sí | no | sí |
 | `gases` Leyes de los gases: presión, volumen y temperatura | 10.º | quimica | GasLab (208) | gases | 41 en advanced.test.ts, models3.test.ts | sí | no | sí | sí | sí | sí | no |
+| `geometria` Geometría molecular en 3D y modelo VSEPR | 10.º | quimica | GeometryLab (690) | geometry, balancing | 50 en balancing.test.ts, geometry.test.ts, mole.test.ts | sí | no | no | no | no | sí | no |
 | `pendulo` Péndulo simple y movimiento armónico | 10.º | fisica | PendulumLab (451) | pendulum | 31 en advanced.test.ts, pendulum.test.ts | sí | no | no | sí | sí | sí | no |
 | `proyectiles` Movimiento de proyectiles | 10.º | fisica | ProjectileLab (505) | projectile | 33 en advanced.test.ts, projectile.test.ts | sí | no | no | sí | sí | sí | no |
 | `respiracion` Respiración celular y balance energético | 10.º | biologia | RespirationLab (423) | respiration | 11 en respiration.test.ts | sí | no | sí | no | sí | sí | no |

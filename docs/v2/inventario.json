@@ -792,16 +792,18 @@
     "area": "fisica",
     "lab": "EnergyLab",
     "models": [
-      "energy"
+      "energy",
+      "energyTime"
     ],
     "tests": [
       "advanced.test.ts",
+      "energyTime.test.ts",
       "models3.test.ts"
     ],
-    "nTests": 41,
+    "nTests": 56,
     "e2e": true,
     "a11y": false,
-    "loc": 202,
+    "loc": 483,
     "measure": false,
     "advanced": true,
     "params": true,
@@ -884,6 +886,34 @@
     "params": true,
     "instr": true,
     "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "geometria",
+    "title": "Geometría molecular en 3D y modelo VSEPR",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "GeometryLab",
+    "models": [
+      "geometry",
+      "balancing"
+    ],
+    "tests": [
+      "balancing.test.ts",
+      "geometry.test.ts",
+      "mole.test.ts"
+    ],
+    "nTests": 50,
+    "e2e": true,
+    "a11y": false,
+    "loc": 690,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
     "sound": true,
     "datasets": true,
     "illustrative": false

@@ -286,3 +286,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Documentación | ADR 0001–0005, plantillas, licencias; revisión cruzada con el código | Correcto | El ADR 0003 describía campos con nombres distintos a los implementados | Se alineó con el esquema real | Corregido |
 | Regresión | 714 pruebas unitarias y 89 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
 
+# Programa v2 · Fase 3: física y química ampliadas con 3D y QR
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Energía en el tiempo | 15 pruebas: caso de referencia (98,1 J; 14,007 m/s; 1,4278 s) para todo Δt; deriva RK4 sin aire ≤ 1,3×10⁻¹⁴ (tolerancia declarada 10⁻⁶); convergencia de 4.º orden con aire lineal frente a la solución exacta; Euler supera la tolerancia; altura máxima; Luna y Marte; E2E con el indicador encendido y apagado | Correcto | — | — | Correcto |
+| Gases | Valor dorado: 1 mol, 0 °C, 101,325 kPa → 22 413,97 mL | Correcto | La ley de Charles ignoraba la presión recibida | Campo opcional `externalPressure` y parámetro del modo avanzado | Corregido |
+| Geometría molecular 3D | 16 pruebas (lector SDF con límites, distancias y ángulos a mano, SHA-256 y CID de los 12 confórmeros, CH₄ 109,5°, lineales 180°, planas 120° de media, clases VSEPR); valor dorado tetraédrico; E2E (agua 104,0° frente a 109,5°; 0,969 Å); visor revisado con WebGL en tema claro y oscuro | Correcto | El visor encuadraba las moléculas pequeñas diminutas (3Dmol encuadra un radio mínimo de ~5 Å) | Encuadre después del estilo y zoom según el tamaño real de la molécula | Corregido |
+| QR por práctica | Unidad (enlaces válidos y estables para las 51 prácticas); E2E (decodificación con jsQR, apertura en teléfono, axe del diálogo, indicador apagado); 100 PDF decodificados sin errores | Correcto | — | — | Correcto |
+| Regresión | 750 pruebas unitarias y 95 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
+

@@ -13,6 +13,8 @@ import { AnalysisSection, EvaluationSection, HypothesisSection, ModelSection, Pr
 import { ConfirmButton, Segmented } from '../components/ui';
 import { ProcedureCoach, SavedToast, useFullscreen } from '../components/Workspace';
 import { href } from '../lib/router';
+import { flag } from '../lib/flags';
+import { ShareQrButton } from '../components/ShareQr';
 import { onTabListKeyDown } from '../lib/a11y';
 import { queuePracticeOpen, queueProgress, getEnrollment, useClassroom } from '../lib/classroom';
 import { buildSyncSummary, useActiveTime } from '../lib/syncSummary';
@@ -120,6 +122,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
             <div className="btn-row">
               <SyncChip />
               <a className="btn" href={href('practica', p.id, 'informe')}>Ver informe</a>
+              {flag('qrPracticas') && <ShareQrButton practiceId={p.id} title={p.title} />}
               <ConfirmButton label="Reiniciar práctica" confirmLabel="¿Borrar hipótesis, datos y respuestas de esta práctica?" onConfirm={() => { api.reset(); setStage('preparacion'); }} />
             </div>
           </div>

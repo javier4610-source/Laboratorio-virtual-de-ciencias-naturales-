@@ -7,6 +7,29 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [1.3.0] · 2026-10-18
+
+Programa v2 · Fase 3: física y química ampliadas con 3D y QR.
+
+### Añadido
+- Práctica 51: geometría molecular en 3D y modelo VSEPR (10.º). Coordenadas de confórmeros calculados por PubChem
+  (12 moléculas, con CID, URL, fecha y SHA-256), visor 3Dmol.js 2.5.5 cargado solo en esta práctica y fuera de la
+  precarga sin conexión, mediciones accesibles por teclado y descripción textual de la escena 3D.
+- Energía: actividad «Caída y lanzamiento vertical» con integración RK4 de paso controlado, gráficas de Ec, Ep y Em
+  frente al tiempo y la altura, aire opcional y control de deriva con tolerancia declarada (10⁻⁶). Caso de referencia
+  del prompt 9.1: 98,1 J, 14,007 m/s y 1,4278 s.
+- Código QR con el enlace permanente de cada práctica, en la aplicación («Compartir (QR)») y en las 100 guías PDF;
+  verificado decodificando el QR y abriendo el enlace en un teléfono.
+- Indicadores `energiaTemporal` y `qrPracticas`.
+
+### Cambiado
+- Gases: en la ley de Charles la presión exterior es un parámetro del modo avanzado (por defecto 101,3 kPa); con
+  101,325 kPa, 0 °C y 1 mol el modelo da 22,414 L (prompt 9.2).
+
+### Corregido
+- La ley de Charles ignoraba la presión que se le pasaba (usaba siempre 101,3 kPa); ahora la recibe en un campo nuevo
+  y opcional (`externalPressure`) sin cambiar el contrato anterior.
+
 ## [1.2.0] · 2026-10-18
 
 Programa v2 · Fase 2: procedencia, registro reproducible y privacidad.

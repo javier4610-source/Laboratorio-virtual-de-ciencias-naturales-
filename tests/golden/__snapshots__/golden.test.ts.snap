@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`valores dorados por práctica > descomposicion [línea base]: constante de descomposición de la cáscara de banano en las condiciones iniciales 1`] = `0.15`;
+
+exports[`valores dorados por práctica > enzimas [línea base]: velocidad inicial de la catalasa a 37 °C, pH 7, sustrato 1, enzima 1 1`] = `4.85187269`;
+
+exports[`valores dorados por práctica > mezclas [línea base]: tiempo para evaporar 50 g de agua con 300 W 1`] = `11.997222`;
+
+exports[`valores dorados por práctica > mitosis [línea base]: fracciones esperadas de fases en el meristemo (deben sumar 1) 1`] = `
+{
+  "anafase": 0.011111,
+  "interfase": 0.888889,
+  "metafase": 0.019444,
+  "profase": 0.055556,
+  "telofase": 0.025,
+}
+`;
+
+exports[`valores dorados por práctica > seleccion [línea base]: supervivencia de una presa de tono 0,5 sobre fondo 0,5 con depredación 0,6 1`] = `1`;

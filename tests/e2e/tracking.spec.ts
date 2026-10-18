@@ -5,7 +5,7 @@ import { expect, test, type APIRequestContext, type Page } from '@playwright/tes
  * Seguimiento del curso con datos de ejemplo: accesibilidad (axe) en ambos temas,
  * sin desborde horizontal a 390 px. Con SCREENSHOTS=carpeta guarda capturas.
  */
-import { SERVER } from './env';
+import { AXE_TAGS, SERVER } from './env';
 const SHOTS = process.env.SCREENSHOTS;
 
 async function post(request: APIRequestContext, method: 'post' | 'put', path: string, data: unknown, token?: string) {
@@ -52,7 +52,7 @@ async function seed(page: Page) {
 }
 
 async function audit(page: Page, label: string) {
-  const r = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  const r = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
   return r.violations.map((v) => `${label} · ${v.id}: ${v.help} → ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
 }
 

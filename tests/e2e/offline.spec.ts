@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { AXE_TAGS } from './env';
 
 test.use({ serviceWorkers: 'allow' });
 
@@ -7,7 +8,7 @@ test('sin conexión: después de la primera visita la aplicación y las práctic
   await page.goto('/');
   await page.waitForFunction(() => !!navigator.serviceWorker?.controller, null, { timeout: 30_000 });
   await expect(page.getByText('ya funciona sin conexión')).toBeVisible();
-  const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  const axe = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
   expect(axe.violations).toEqual([]);
 
   await context.setOffline(true);

@@ -256,3 +256,12 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Circuitos simples | 16 pruebas: análisis nodal, ley de Ohm, cortocircuito, circuito abierto, serie y paralelo, ley de nodos de Kirchhoff, polaridad del LED, motor y zumbador, conductores y aislantes; E2E: 0,223 A en serie y 0,621 A en paralelo | Correcto | En la prueba E2E el valor del multímetro aparecía dos veces (lectura y tablero) | Selector más preciso | Correcto |
 | Regresión | 615 pruebas unitarias y 83 de interfaz con axe (suite completa) | Todas pasan | — | — | Correcto |
 
+
+# Programa v2 · Fase 1: línea base de regresión
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Valores dorados | 47 casos (uno por práctica) + prueba de cobertura del catálogo: 32 con valor calculado a mano, 9 con valor de referencia y 6 de línea base (5 por instantánea) | 48 de 48 pasan | Cuatro casos fallaron en el primer intento por datos de la prueba (pista de 1 m, densidad del aire en g/mL, identificador «guisante», rango de velocidad ±1 m/s); ningún modelo estaba mal | Se ajustaron las entradas de la prueba | Correcto |
+| Referencias del prompt | pH HCl 0,100 M = 1,000; ácido acético 0,100 M = 2,875; volumen molar 22 413,97 mL; Ep = 19,62 J y v = √(2gh) | Cumplen | La jeringa de gases fija 101,3 kPa (22 420 mL); la pista de energía no admite h = 10 m | Documentado; se atiende en la Fase 3 | Pendiente (Fase 3) |
+| Accesibilidad | axe con WCAG 2.2 AA en todas las prácticas, temas claro y oscuro, y en teléfono | Pasa | En teléfono, bancos y tablas desplazables no recibían el foco del teclado en 18 prácticas | Utilidad central `initScrollRegionFocus` | Corregido |
+| Regresión | Suite completa: 663 pruebas unitarias y 85 E2E | Todas pasan | — | — | Correcto |

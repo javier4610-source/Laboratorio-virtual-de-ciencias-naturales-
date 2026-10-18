@@ -75,7 +75,7 @@ referencia inventados; todo dato con su estatus (evidencia experimental, predicc
 ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOSTICO-FASE0.md`.
 
 - [x] **v2 · Fase 0:** diagnóstico, inventario automático (`node scripts/inventario.mjs`), supuestos verificados.
-- [ ] **v2 · Fase 1:** valores dorados por práctica (`tests/golden`), axe con WCAG 2.2 AA, prueba en viewport móvil,
+- [x] **v2 · Fase 1:** valores dorados por práctica (`tests/golden`), axe con WCAG 2.2 AA, prueba en viewport móvil,
       CHANGELOG y versión semántica. Criterio: todas las prácticas cubiertas por pruebas que pasan.
 - [ ] **v2 · Fase 2:** ADR (`docs/v2/adr`), sistema de procedencia visible, registro de experimentos exportable (JSON
       con esquema, semilla y versión del modelo), plantilla de ficha de enriquecimiento, alias en el seguimiento.

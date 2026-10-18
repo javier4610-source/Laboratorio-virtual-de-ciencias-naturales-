@@ -1,16 +1,18 @@
 import AxeBuilder from '@axe-core/playwright';
+import { AXE_TAGS } from './env';
 import { expect, test, type Page } from '@playwright/test';
+import { CATALOG } from '../../src/curriculum/catalog';
 
-const PRACTICES = ['densidad', 'osmosis', 'mitosis', 'mendel', 'ondas', 'adn', 'soluciones', 'enzimas', 'fotosintesis', 'circuitos', 'estequiometria', 'ph', 'poblacion', 'popgen', 'mezclas', 'optica', 'newton', 'gases', 'energia', 'celulas', 'redes', 'seleccion', 'cinematica', 'cinetica', 'conductores', 'descomposicion', 'equilibrio', 'proyectiles', 'pendulo', 'choques', 'conservacion', 'respiracion', 'agua', 'maquinas', 'calor', 'presion', 'ecosistema', 'balanceo', 'expresion', 'conduccion', 'sonido', 'trabajo', 'flotacion', 'movimiento', 'interferencia', 'induccion', 'circuitos-simples'];
+const PRACTICES = CATALOG.map((p) => p.id);
 
 async function audit(page: Page, label: string) {
-  const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
   const summary = results.violations.map((v) => `${label} · ${v.id} (${v.impact}): ${v.help} → ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
   return summary;
 }
 
 for (const scheme of ['light', 'dark'] as const) {
-  test.describe(`accesibilidad WCAG 2.1 AA (tema ${scheme === 'light' ? 'claro' : 'oscuro'})`, () => {
+  test.describe(`accesibilidad WCAG 2.2 AA (tema ${scheme === 'light' ? 'claro' : 'oscuro'})`, () => {
     test.use({ colorScheme: scheme });
 
     test('páginas generales', async ({ page }) => {

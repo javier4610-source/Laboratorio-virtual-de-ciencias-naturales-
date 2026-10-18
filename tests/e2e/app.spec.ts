@@ -815,6 +815,16 @@ test('rastreo génico: HBB c.20A>T da p.Glu7Val (99,3 % de identidad) y el gen t
   await expect(page.locator('.readout').getByText('980 nt').first()).toBeVisible();
 });
 
+test('proteínas: en la insulina (PDB 3I40, rayos X) el puente disulfuro Cys6–Cys11 mide 2,027 Å', async ({ page }) => {
+  await openFree(page, 'proteinas');
+  await expect(page.getByRole('button', { name: 'Guardar distancia en la tabla' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Medir distancia' }).click();
+  await expect(page.locator('.readout').getByText('2,027 Å').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('5 residuos').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Guardar distancia en la tabla' }).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -875,7 +885,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/53');
+  await expect(page.locator('.kpi').first()).toContainText('1/54');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

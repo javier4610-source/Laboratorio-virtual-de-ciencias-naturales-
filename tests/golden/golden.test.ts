@@ -62,6 +62,8 @@ import { angleTable, parseSdf } from '../../src/models/geometry';
 import { BUNDLED_CONFORMERS } from '../../src/data/conformers';
 import { translateSeq } from '../../src/models/sequences';
 import { consequenceFromHgvs, geneByKey } from '../../src/models/geneTrace';
+import { findAtom, measureDistance, parseStructure } from '../../src/models/protein';
+import { readFileSync } from 'node:fs';
 import biopython from '../fixtures/biopython-secuencias.json';
 import { ropeSpeed } from '../../src/models/waves';
 import { idealAdvantage } from '../../src/models/workPower';
@@ -265,6 +267,11 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'rastreo', origin: 'referencia', what: 'anemia falciforme: NM_000518.5(HBB):c.20A>T es de sentido erróneo p.Glu7Val (ClinVar 15333), calculado al traducir el CDS real (codón 7 GAG → GTG)', run: () => {
     const r = consequenceFromHgvs(geneByKey('HBB')!, 'c.20A>T');
     expect(r).toMatchObject({ consequence: 'sentido-erroneo', hgvsP: 'p.Glu7Val', refCodon: 'GAG', altCodon: 'GTG', aaPosition: 7 });
+  } },
+  { id: 'proteinas', origin: 'referencia', what: 'puente disulfuro de la insulina humana (PDB 3I40): distancia SG(Cys A6)–SG(Cys A11) = 2,027 Å, igual a Biopython 1.85 con tolerancia 10⁻³ Å', run: () => {
+    const s = parseStructure(readFileSync(new URL('../../src/data/proteinas/3I40.cif', import.meta.url), 'utf8'));
+    const a = findAtom(s, 'A', 6, 'SG')!, b = findAtom(s, 'A', 11, 'SG')!;
+    close(measureDistance(s, a.index, b.index), 2.027, 1e-3);
   } },
 ];
 

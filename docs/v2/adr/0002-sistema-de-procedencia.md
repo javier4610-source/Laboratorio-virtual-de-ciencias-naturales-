@@ -32,8 +32,8 @@
 
 | Estatus | Cuándo se usa | Ejemplo en el laboratorio |
 |---|---|---|
-| **Evidencia experimental** | Datos medidos en un sistema real, con fuente identificable (publicación, base de datos, medición propia documentada) | Secuencias del catálogo de `secuencias` (RefSeq revisadas y Swiss-Prot) y, en `rastreo`, estructuras PDB por difracción de rayos X (con método y resolución) y anotaciones de UniProt con códigos ECO experimentales |
-| **Predicción computacional** | Salida de un modelo entrenado o de un motor de predicción (estructura predicha, confórmero calculado, ADMET, aprendizaje automático) | Coordenadas 3D de la práctica `geometria` (confórmeros de PubChem, OMEGA + MMFF94s). Futuro: modelo de AlphaFold DB con pLDDT |
+| **Evidencia experimental** | Datos medidos en un sistema real, con fuente identificable (publicación, base de datos, medición propia documentada) | Secuencias del catálogo de `secuencias` (RefSeq revisadas y Swiss-Prot) y estructuras PDB por difracción en `proteinas` y, en `rastreo`, estructuras PDB por difracción de rayos X (con método y resolución) y anotaciones de UniProt con códigos ECO experimentales |
+| **Predicción computacional** | Salida de un modelo entrenado o de un motor de predicción (estructura predicha, confórmero calculado, ADMET, aprendizaje automático) | Coordenadas 3D de la práctica `geometria` (confórmeros de PubChem, OMEGA + MMFF94s) y el modelo AF-Q04671-F1 de AlphaFold DB en `proteinas`, con su pLDDT |
 | **Modelo calculado** | Resultado de ecuaciones o reglas explícitas con supuestos declarados | **Todos los resultados numéricos actuales**, incluidas las lecturas en modo «instrumento real» (modelo + ruido sintético con semilla) y los datos del `reto` |
 | **Ilustración educativa** | Representación visual que no se deriva de un cálculo | Escenas dibujadas que no dependen del modelo |
 | **Sin información disponible** | No hay dato, o no se pudo obtener | Servicio externo no disponible, campo sin fuente |

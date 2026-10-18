@@ -312,3 +312,11 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Visor 3D | Chromium con GPU por software, sin WebGL (`--disable-webgl`), sin poder descargar 3Dmol.js (sin service worker y con la descarga bloqueada), teléfono 390 × 844 | Con WebGL funciona (dibuja y gira al arrastrar); sin WebGL o sin descarga solo mostraba un aviso | En equipos sin WebGL o sin conexión no había vista de la molécula; los errores internos apagaban el visor sin registro | Vista de respaldo en SVG con las coordenadas reales (girar con ratón, dedo o teclado; elegir átomos; medir), registro de errores en la consola, 3Dmol.js incluido en la descarga sin conexión | Corregido; E2E nuevo `tests/e2e/geometria.spec.ts` |
 | Regresión | 847 pruebas unitarias y 98 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
 
+# Programa v2 · Fase 5: visor de estructuras de proteínas
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Lector de estructuras | 16 pruebas: cadenas, residuos (estándar, heterogrupos, agua) y átomos de las 5 estructuras iguales a Biopython 1.85; 20 distancias con tolerancia 10⁻³ Å (p. ej., puente disulfuro de la insulina 2,027 Å; His87–Fe del hemo 2,146 Å); fracciones de pLDDT de OCA2 iguales a las de la API de AlphaFold; entradas malformadas rechazadas | Correcto | — | — | Correcto |
+| Visor | E2E con WebGL (2,027 Å) y sin poder descargar el visor (traza de respaldo, mismas mediciones, axe); capturas en tema claro y oscuro con insulina, OCA2 (AlphaFold) y hemoglobina | Correcto | Las marcas A, B y R de la cinta de secuencia tapaban el título | Más espacio sobre la primera fila | Corregido |
+| Regresión | 865 pruebas unitarias y 100 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
+

@@ -31,3 +31,15 @@ test('geometría: sin el visor 3D aparece la vista de respaldo, se gira con el t
   const axe = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
   expect(axe.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 });
+
+test('proteínas: sin el visor 3D aparece la traza de Cα de respaldo con las mediciones intactas', async ({ page }) => {
+  await page.route('**/*', (r) => (/3dmol/i.test(r.request().url()) ? r.abort() : r.continue()));
+  await page.goto('/#/practica/proteinas');
+  await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
+  await page.getByRole('tab', { name: /Experimento/ }).click();
+  await expect(page.getByText(/Vista de respaldo/).first()).toBeVisible({ timeout: 15_000 });
+  await page.getByRole('button', { name: 'Medir distancia' }).click();
+  await expect(page.locator('.readout').getByText('2,027 Å').first()).toBeVisible();
+  const axe = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+  expect(axe.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+});

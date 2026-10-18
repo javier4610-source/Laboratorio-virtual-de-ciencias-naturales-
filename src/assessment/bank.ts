@@ -1098,6 +1098,27 @@ const RAW_BANK: Question[] = [
     explanation: 'La traducción de referencia permite predecir el cambio en la secuencia: una sustitución puede cambiar un aminoácido (p.Glu7Val) o crear un codón de terminación (p.Gln40Ter), y una inserción o deleción que no es múltiplo de 3 cambia el marco (p.Ser10fs). La predicción no dice por sí sola cuán grave es el efecto en la persona: eso depende de la función de la proteína y de otras evidencias.',
     review: 'En la práctica de rastreo génico, analiza las tres variantes de HBB registradas en ClinVar y compara la longitud y la identidad de la proteína con la notación p.',
   },
+  {
+    id: 'saber-p3d-1', grade: 11, topic: 'Predicción de estructuras de proteínas y confianza', competency: 'indagacion', component: 'biologico',
+    skill: 'Analizar datos de confianza de una predicción estructural y reconocer qué conclusiones permite', difficulty: 'alta', practiceId: 'proteinas',
+    context: 'Un grupo de estudiantes de Apartadó analizó el modelo de AlphaFold de la proteína humana OCA2 (AF-Q04671-F1, 838 residuos), que no tiene estructura experimental. Para cada residuo calcularon la distancia de su carbono α al centro de la proteína y promediaron el pLDDT, la confianza que el modelo asigna a cada posición (0 a 100).',
+    table: {
+      caption: 'Modelo AF-Q04671-F1 (AlphaFold DB, versión 6): pLDDT medio según la distancia al centroide de los Cα',
+      headers: ['Distancia al centroide (Å)', 'Número de residuos', 'pLDDT medio'],
+      rows: [['0 a 15', '85', '89,0'], ['15 a 25', '206', '89,7'], ['25 a 35', '207', '80,6'], ['35 a 50', '178', '64,6'], ['50 o más', '162', '46,9']],
+    },
+    stem: '¿Cuál de las siguientes conclusiones es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'Los residuos alejados del centro se midieron con menor resolución en el experimento.', feedback: 'El modelo de AlphaFold no proviene de un experimento: no tiene resolución. El pLDDT es una confianza de la predicción.' },
+      { id: 'b', text: 'La predicción es confiable en el núcleo compacto y poco confiable en las regiones más alejadas, que pueden ser desordenadas; la forma de esas regiones no debe interpretarse.', feedback: 'Correcto: el pLDDT medio baja de cerca de 90 (muy alta o alta) a 46,9 (muy baja) en los residuos más lejanos.' },
+      { id: 'c', text: 'Como el pLDDT del núcleo es cercano a 90, el modelo demuestra la estructura exacta de OCA2 en la célula.', feedback: 'Una confianza alta no convierte una predicción en una medición: AlphaFold modela una cadena sola, sin ligandos ni complejos y en una conformación.' },
+      { id: 'd', text: 'Los residuos alejados del centro tienen pLDDT bajo porque están a más de 50 Å de su posición real.', feedback: 'El pLDDT no es una distancia ni un error en Å; además, la distancia al centroide no es el error de la predicción.' },
+    ],
+    correct: 'b',
+    explanation: 'En los modelos de AlphaFold, la confianza local (pLDDT) varía por regiones. En OCA2 el núcleo, con pLDDT medio cercano a 90, puede usarse para formular hipótesis; las regiones periféricas, con pLDDT medio de 46,9, suelen ser desordenadas o mal predichas. En ningún caso la predicción es una estructura medida.',
+    review: 'En la práctica «Estructura 3D de proteínas», elige el modelo de OCA2, colorea por pLDDT y analiza residuos del núcleo y del extremo inicial.',
+    transfer: '¿Qué experimento o qué información adicional (por ejemplo, una estructura del PDB, la PAE entre dominios o datos de interacción) necesitarías para afirmar cómo se ubica OCA2 en la membrana del melanosoma?',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

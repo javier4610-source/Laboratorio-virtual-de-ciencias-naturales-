@@ -1,0 +1,856 @@
+{
+ "generator": "scripts/validacion/biopython_proteinas.py",
+ "biopython": "1.85",
+ "numpy": "2.5.4",
+ "python": "3.13.16",
+ "note": "Valores de referencia calculados con Biopython (Bio.PDB.MMCIFParser y MMCIF2Dict) sobre los mmCIF incluidos; no editar a mano. Regenerar con el script.",
+ "conventions": {
+  "model": "solo el primer modelo",
+  "chainId": "auth_asym_id",
+  "resSeq": "auth_seq_id",
+  "altloc": "cada átomo con posiciones alternativas cuenta una vez; Biopython elige la de mayor ocupación (la primera si empatan)",
+  "residueKinds": "standard = registros ATOM (id[0] == ' '), hetero = HETATM que no es agua, water = HOH",
+  "plddtBands": "muy alta ≥ 90, alta ≥ 70, baja ≥ 50, muy baja < 50 (Cα, columna B_iso_or_equiv)",
+  "caCentroid": "promedio de los Cα de los residuos estándar del primer modelo"
+ },
+ "structures": {
+  "3I40": {
+   "file": "3I40.cif",
+   "sha256": "66594e3f81cbc1d4a028e0410f3ff4c37057e53afa239ec38007de9727f147c0",
+   "bytes": 86563,
+   "models": 1,
+   "atomSiteRecordsModel1": 446,
+   "atoms": 438,
+   "chains": [
+    {
+     "id": "A",
+     "standard": 21,
+     "hetero": 0,
+     "water": 12,
+     "heteroNames": [],
+     "atoms": 175
+    },
+    {
+     "id": "B",
+     "standard": 30,
+     "hetero": 0,
+     "water": 23,
+     "heteroNames": [],
+     "atoms": 263
+    }
+   ],
+   "polymerResidues": {
+    "A": 21,
+    "B": 30
+   },
+   "secondaryStructureRows": {
+    "structConfHelix": 4,
+    "structConfStrand": 0,
+    "structConfOther": 0,
+    "sheetRange": 0
+   },
+   "caCentroid": [
+    -19.259960698146447,
+    -0.6774117631070754,
+    -8.74696080883344
+   ],
+   "caCount": 51,
+   "centroidProbes": [
+    {
+     "chain": "A",
+     "resSeq": 1,
+     "resName": "GLY",
+     "distance": 10.019669607228998,
+     "bFactor": 43.47
+    },
+    {
+     "chain": "B",
+     "resSeq": 30,
+     "resName": "ALA",
+     "distance": 13.150610880185855,
+     "bFactor": 74.07
+    }
+   ],
+   "distances": [
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 6,
+      "resName": "CYS",
+      "atom": "SG",
+      "altloc": "",
+      "bFactor": 27.82
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 11,
+      "resName": "CYS",
+      "atom": "SG",
+      "altloc": "",
+      "bFactor": 28.09
+     },
+     "distance": 2.0270349979400635,
+     "note": "Puente disulfuro A6–A11 (dentro de la cadena A)"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 7,
+      "resName": "CYS",
+      "atom": "SG",
+      "altloc": "",
+      "bFactor": 28.27
+     },
+     "b": {
+      "chain": "B",
+      "resSeq": 7,
+      "resName": "CYS",
+      "atom": "SG",
+      "altloc": "",
+      "bFactor": 29.45
+     },
+     "distance": 2.0389292240142822,
+     "note": "Puente disulfuro A7–B7 (entre cadenas)"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 20,
+      "resName": "CYS",
+      "atom": "SG",
+      "altloc": "",
+      "bFactor": 22.45
+     },
+     "b": {
+      "chain": "B",
+      "resSeq": 19,
+      "resName": "CYS",
+      "atom": "SG",
+      "altloc": "",
+      "bFactor": 21.21
+     },
+     "distance": 2.036468982696533,
+     "note": "Puente disulfuro A20–B19 (entre cadenas)"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 1,
+      "resName": "GLY",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 43.47
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 21,
+      "resName": "ASN",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 36.6
+     },
+     "distance": 16.0886287689209,
+     "note": "Extremos de la cadena A"
+    },
+    {
+     "a": {
+      "chain": "B",
+      "resSeq": 1,
+      "resName": "PHE",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 53.84
+     },
+     "b": {
+      "chain": "B",
+      "resSeq": 30,
+      "resName": "ALA",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 74.07
+     },
+     "distance": 23.879758834838867,
+     "note": "Extremos de la cadena B"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 14,
+      "resName": "TYR",
+      "atom": "CG",
+      "altloc": "A",
+      "bFactor": 28.31
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 6,
+      "resName": "CYS",
+      "atom": "SG",
+      "altloc": "",
+      "bFactor": 27.82
+     },
+     "distance": 9.857139587402344,
+     "note": "Átomo con posiciones alternativas (TYR A14, ocupación 0,50/0,50)"
+    }
+   ],
+   "centroidTrend": null
+  },
+  "2HHB": {
+   "file": "2HHB.cif",
+   "sha256": "d41ec279c2fb8e9b53e6ab4c1e6ecca52e20346a3f3808a6d31d9e8307dd3810",
+   "bytes": 534538,
+   "models": 1,
+   "atomSiteRecordsModel1": 4779,
+   "atoms": 4779,
+   "chains": [
+    {
+     "id": "A",
+     "standard": 141,
+     "hetero": 1,
+     "water": 58,
+     "heteroNames": [
+      "HEM"
+     ],
+     "atoms": 1170
+    },
+    {
+     "id": "B",
+     "standard": 146,
+     "hetero": 2,
+     "water": 58,
+     "heteroNames": [
+      "HEM",
+      "PO4"
+     ],
+     "atoms": 1225
+    },
+    {
+     "id": "C",
+     "standard": 141,
+     "hetero": 1,
+     "water": 58,
+     "heteroNames": [
+      "HEM"
+     ],
+     "atoms": 1170
+    },
+    {
+     "id": "D",
+     "standard": 146,
+     "hetero": 2,
+     "water": 47,
+     "heteroNames": [
+      "HEM",
+      "PO4"
+     ],
+     "atoms": 1214
+    }
+   ],
+   "polymerResidues": {
+    "A": 141,
+    "B": 146,
+    "C": 141,
+    "D": 146
+   },
+   "secondaryStructureRows": {
+    "structConfHelix": 32,
+    "structConfStrand": 0,
+    "structConfOther": 0,
+    "sheetRange": 0
+   },
+   "caCentroid": [
+    10.241634130763467,
+    13.42357667967781,
+    39.87080137571807
+   ],
+   "caCount": 574,
+   "centroidProbes": [
+    {
+     "chain": "A",
+     "resSeq": 87,
+     "resName": "HIS",
+     "distance": 18.891463870208113,
+     "bFactor": 17.57
+    },
+    {
+     "chain": "D",
+     "resSeq": 146,
+     "resName": "HIS",
+     "distance": 20.3693983277139,
+     "bFactor": 37.63
+    }
+   ],
+   "distances": [
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 87,
+      "resName": "HIS",
+      "atom": "NE2",
+      "altloc": "",
+      "bFactor": 14.28
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 142,
+      "resName": "HEM",
+      "atom": "FE",
+      "altloc": "",
+      "bFactor": 18.06
+     },
+     "distance": 2.1456139087677,
+     "note": "His proximal α (F8) – hierro del hemo"
+    },
+    {
+     "a": {
+      "chain": "B",
+      "resSeq": 92,
+      "resName": "HIS",
+      "atom": "NE2",
+      "altloc": "",
+      "bFactor": 15.44
+     },
+     "b": {
+      "chain": "B",
+      "resSeq": 148,
+      "resName": "HEM",
+      "atom": "FE",
+      "altloc": "",
+      "bFactor": 15.54
+     },
+     "distance": 2.1471750736236572,
+     "note": "His proximal β (F8) – hierro del hemo"
+    },
+    {
+     "a": {
+      "chain": "C",
+      "resSeq": 87,
+      "resName": "HIS",
+      "atom": "NE2",
+      "altloc": "",
+      "bFactor": 15.58
+     },
+     "b": {
+      "chain": "C",
+      "resSeq": 142,
+      "resName": "HEM",
+      "atom": "FE",
+      "altloc": "",
+      "bFactor": 16.98
+     },
+     "distance": 2.170114755630493,
+     "note": "His proximal α (F8) – hierro del hemo, segunda cadena α"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 142,
+      "resName": "HEM",
+      "atom": "FE",
+      "altloc": "",
+      "bFactor": 18.06
+     },
+     "b": {
+      "chain": "B",
+      "resSeq": 148,
+      "resName": "HEM",
+      "atom": "FE",
+      "altloc": "",
+      "bFactor": 15.54
+     },
+     "distance": 36.489524841308594,
+     "note": "Hierro – hierro entre los hemos de α1 y β1"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 1,
+      "resName": "VAL",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 41.33
+     },
+     "b": {
+      "chain": "C",
+      "resSeq": 1,
+      "resName": "VAL",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 49.37
+     },
+     "distance": 17.029136657714844,
+     "note": "Extremos amino de las dos cadenas α"
+    }
+   ],
+   "centroidTrend": {
+    "bins": [
+     {
+      "min": 0,
+      "max": 8,
+      "n": 2,
+      "meanB": 14.155000000000001
+     },
+     {
+      "min": 8,
+      "max": 12,
+      "n": 18,
+      "meanB": 13.996666666666666
+     },
+     {
+      "min": 12,
+      "max": 16,
+      "n": 53,
+      "meanB": 14.434528301886791
+     },
+     {
+      "min": 16,
+      "max": 20,
+      "n": 105,
+      "meanB": 16.041238095238093
+     },
+     {
+      "min": 20,
+      "max": null,
+      "n": 396,
+      "meanB": 23.468409090909095
+     }
+    ],
+    "pearsonR": 0.5199036756243379
+   }
+  },
+  "2LZM": {
+   "file": "2LZM.cif",
+   "sha256": "9fa81cd0454d37c53cd5046b96ef7d993a99c249e77a2da4dc3adf7cdc263d90",
+   "bytes": 191798,
+   "models": 1,
+   "atomSiteRecordsModel1": 1427,
+   "atoms": 1427,
+   "chains": [
+    {
+     "id": "A",
+     "standard": 164,
+     "hetero": 0,
+     "water": 118,
+     "heteroNames": [],
+     "atoms": 1427
+    }
+   ],
+   "polymerResidues": {
+    "A": 164
+   },
+   "secondaryStructureRows": {
+    "structConfHelix": 10,
+    "structConfStrand": 0,
+    "structConfOther": 0,
+    "sheetRange": 4
+   },
+   "caCentroid": [
+    35.204731720249825,
+    11.569963398298658,
+    9.732268231489309
+   ],
+   "caCount": 164,
+   "centroidProbes": [
+    {
+     "chain": "A",
+     "resSeq": 1,
+     "resName": "MET",
+     "distance": 16.030067326615175,
+     "bFactor": 19.55
+    },
+    {
+     "chain": "A",
+     "resSeq": 105,
+     "resName": "GLN",
+     "distance": 2.944107051417474,
+     "bFactor": 29.71
+    }
+   ],
+   "distances": [
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 11,
+      "resName": "GLU",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 15.37
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 20,
+      "resName": "ASP",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 28.25
+     },
+     "distance": 9.754993438720703,
+     "note": "Glu11 – Asp20 (residuos del sitio activo)"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 1,
+      "resName": "MET",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 19.55
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 164,
+      "resName": "LEU",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 47.98
+     },
+     "distance": 11.432546615600586,
+     "note": "Extremos de la cadena"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 3,
+      "resName": "ILE",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 10.61
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 4,
+      "resName": "PHE",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 6.45
+     },
+     "distance": 3.817063570022583,
+     "note": "Cα consecutivos"
+    }
+   ],
+   "centroidTrend": {
+    "bins": [
+     {
+      "min": 0,
+      "max": 8,
+      "n": 10,
+      "meanB": 14.381
+     },
+     {
+      "min": 8,
+      "max": 12,
+      "n": 28,
+      "meanB": 13.984999999999998
+     },
+     {
+      "min": 12,
+      "max": 16,
+      "n": 49,
+      "meanB": 17.37734693877551
+     },
+     {
+      "min": 16,
+      "max": 20,
+      "n": 49,
+      "meanB": 21.00469387755102
+     },
+     {
+      "min": 20,
+      "max": null,
+      "n": 28,
+      "meanB": 23.34035714285714
+     }
+    ],
+    "pearsonR": 0.382196710652177
+   }
+  },
+  "1EMA": {
+   "file": "1EMA.cif",
+   "sha256": "b7d583424b6f960a7421fd4c88cdb6bbb10025667cd863d8cd14f70bc775aceb",
+   "bytes": 244153,
+   "models": 1,
+   "atomSiteRecordsModel1": 1866,
+   "atoms": 1866,
+   "chains": [
+    {
+     "id": "A",
+     "standard": 221,
+     "hetero": 5,
+     "water": 95,
+     "heteroNames": [
+      "CRO",
+      "MSE"
+     ],
+     "atoms": 1866
+    }
+   ],
+   "polymerResidues": {
+    "A": 226
+   },
+   "secondaryStructureRows": {
+    "structConfHelix": 4,
+    "structConfStrand": 0,
+    "structConfOther": 0,
+    "sheetRange": 11
+   },
+   "caCentroid": [
+    24.97406340292676,
+    28.650552050560307,
+    38.87400905902569
+   ],
+   "caCount": 221,
+   "centroidProbes": [
+    {
+     "chain": "A",
+     "resSeq": 2,
+     "resName": "SER",
+     "distance": 23.16023585298761,
+     "bFactor": 80.05
+    },
+    {
+     "chain": "A",
+     "resSeq": 148,
+     "resName": "HIS",
+     "distance": 12.569880754801018,
+     "bFactor": 8.06
+    }
+   ],
+   "distances": [
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 2,
+      "resName": "SER",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 80.05
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 229,
+      "resName": "ILE",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 31.81
+     },
+     "distance": 19.1060791015625,
+     "note": "Primer y último Cα del modelo"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 66,
+      "resName": "CRO",
+      "atom": "OH",
+      "altloc": "",
+      "bFactor": 13.84
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 148,
+      "resName": "HIS",
+      "atom": "ND1",
+      "altloc": "",
+      "bFactor": 12.77
+     },
+     "distance": 2.849985361099243,
+     "note": "Cromóforo (CRO66) – His148"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 66,
+      "resName": "CRO",
+      "atom": "CA2",
+      "altloc": "",
+      "bFactor": 16.08
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 96,
+      "resName": "ARG",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 16.87
+     },
+     "distance": 10.799642562866211,
+     "note": "Cromóforo (CRO66) – Arg96"
+    }
+   ],
+   "centroidTrend": null
+  },
+  "AF-Q04671-F1": {
+   "file": "AF-Q04671-F1-model_v6.cif",
+   "sha256": "ab72cb230712225c6a68c7b649dcdfe0adb612ee4a09e0a1c193786dbbc7593b",
+   "bytes": 756330,
+   "models": 1,
+   "atomSiteRecordsModel1": 6538,
+   "atoms": 6538,
+   "chains": [
+    {
+     "id": "A",
+     "standard": 838,
+     "hetero": 0,
+     "water": 0,
+     "heteroNames": [],
+     "atoms": 6538
+    }
+   ],
+   "polymerResidues": {
+    "A": 838
+   },
+   "secondaryStructureRows": {
+    "structConfHelix": 39,
+    "structConfStrand": 11,
+    "structConfOther": 54,
+    "sheetRange": 0
+   },
+   "caCentroid": [
+    1.9520751838761254,
+    8.393933172366607,
+    4.948717208720326
+   ],
+   "caCount": 838,
+   "centroidProbes": [
+    {
+     "chain": "A",
+     "resSeq": 1,
+     "resName": "MET",
+     "distance": 44.308164365344304,
+     "bFactor": 27.69
+    },
+    {
+     "chain": "A",
+     "resSeq": 500,
+     "resName": "LYS",
+     "distance": 24.35829321301811,
+     "bFactor": 82.0
+    }
+   ],
+   "distances": [
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 1,
+      "resName": "MET",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 27.69
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 838,
+      "resName": "ASN",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 69.0
+     },
+     "distance": 62.8307991027832,
+     "note": "Extremos de la cadena (Met1 – Asn838)"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 300,
+      "resName": "VAL",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 76.38
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 600,
+      "resName": "GLU",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 59.06
+     },
+     "distance": 85.0446548461914,
+     "note": "Cα 300 – Cα 600"
+    },
+    {
+     "a": {
+      "chain": "A",
+      "resSeq": 400,
+      "resName": "ILE",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 89.44
+     },
+     "b": {
+      "chain": "A",
+      "resSeq": 401,
+      "resName": "PHE",
+      "atom": "CA",
+      "altloc": "",
+      "bFactor": 88.0
+     },
+     "distance": 3.8344576358795166,
+     "note": "Cα consecutivos"
+    }
+   ],
+   "centroidTrend": {
+    "bins": [
+     {
+      "min": 0,
+      "max": 15,
+      "n": 85,
+      "meanB": 88.97658823529412
+     },
+     {
+      "min": 15,
+      "max": 25,
+      "n": 206,
+      "meanB": 89.69495145631068
+     },
+     {
+      "min": 25,
+      "max": 35,
+      "n": 207,
+      "meanB": 80.61497584541063
+     },
+     {
+      "min": 35,
+      "max": 50,
+      "n": 178,
+      "meanB": 64.6420786516854
+     },
+     {
+      "min": 50,
+      "max": null,
+      "n": 162,
+      "meanB": 46.912716049382716
+     }
+    ],
+    "pearsonR": -0.6714527396783507
+   },
+   "plddt": {
+    "residues": 838,
+    "mean": 73.78713603818615,
+    "min": 21.55,
+    "max": 97.69,
+    "counts": {
+     "muyAlta": 243,
+     "alta": 352,
+     "baja": 72,
+     "muyBaja": 171
+    },
+    "fractions": {
+     "muyAlta": 0.29,
+     "alta": 0.42,
+     "baja": 0.086,
+     "muyBaja": 0.204
+    },
+    "meanFirst150": 29.765333333333327,
+    "meanRest": 83.38491279069767,
+    "apiFractions": {
+     "veryHigh": 0.29,
+     "confident": 0.42,
+     "low": 0.086,
+     "veryLow": 0.204
+    },
+    "apiGlobalMetric": 73.81
+   }
+  }
+ }
+}

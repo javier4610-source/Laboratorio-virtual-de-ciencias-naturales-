@@ -83,6 +83,8 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
       geometría molecular 3D con un motor real, QR por práctica.
 - [x] **v2 · Fase 4:** secuencias (validadas con Biopython), BLAST real con proxy de Nivel 1 en el servidor del colegio
       (activo cuando el docente publique el servidor y defina `NCBI_EMAIL`) y rastreo génico con datos validados.
-- [ ] **v2 · Fases 5–10:** visor molecular, FBA, fármacos, genómica, dinámica molecular,
+- [x] **v2 · Fase 5:** visor de estructuras de proteínas (PDB y AlphaFold) con procedencia, pLDDT y validación contra
+      Biopython; vista de respaldo sin WebGL.
+- [ ] **v2 · Fases 6–10:** FBA, fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por
       infraestructura hasta decisión del docente).

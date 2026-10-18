@@ -909,7 +909,7 @@
     "nTests": 50,
     "e2e": true,
     "a11y": false,
-    "loc": 690,
+    "loc": 704,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1281,6 +1281,31 @@
     "sound": false,
     "datasets": true,
     "illustrative": true
+  },
+  {
+    "id": "proteinas",
+    "title": "Estructura 3D de proteínas: experimental y predicha",
+    "grade": 11,
+    "area": "biologia",
+    "lab": "ProteinLab",
+    "models": [
+      "protein"
+    ],
+    "tests": [
+      "protein.test.ts"
+    ],
+    "nTests": 16,
+    "e2e": true,
+    "a11y": false,
+    "loc": 1125,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
   },
   {
     "id": "rastreo",

@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (53)
+## Prácticas implementadas (54)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -63,6 +63,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Reto de indagación con interpretación de datos | Ambiental | El estudiante diseña el experimento (niveles, réplicas, presupuesto, control de una variable de confusión) en un río, un suelo bajo sombrío o una quebrada; datos sintéticos de un modelo con semilla visible; ajuste con incertidumbre y crítica calculada del diseño |
 | 11.º | Secuencias biológicas: análisis y alineamiento | Biología | FASTA y GenBank; %GC, complemento, transcripción, traducción (tablas NCBI 1, 2 y 11), ORF en 6 marcos; alineamiento global y local con BLOSUM62 y huecos afines, validado contra Biopython 1.85; BLAST real del NCBI a través del servidor del colegio (sin servidor: aviso honesto, formulario oficial y un resultado grabado y rotulado) |
 | 11.º | Rastreo génico: del gen a la proteína y su función | Biología | 5 genes reales (HBB, INS, LCT, OCA2, lacZ) con registros de NCBI, UniProt, PDB y ClinVar validados automáticamente; exones e intrones con coordenadas reales; ruta en 13 pasos con tipo de evidencia (demostrado o inferido); consecuencia de variantes calculada sobre el CDS (p. ej., anemia falciforme) |
+| 11.º | Estructura 3D de proteínas: experimental y predicha | Biología | Visor 3D (3Dmol.js) con 4 estructuras experimentales del PDB (insulina 3I40, hemoglobina 2HHB, lisozima 2LZM, GFP 1EMA) y un modelo de AlphaFold (OCA2) incluidos, más carga en vivo por identificador; cintas, esferas y palitos; color por estructura secundaria, cadena o confianza pLDDT; distancias validadas contra Biopython; traza de respaldo sin WebGL |
 
 Todas las prácticas de la malla propuesta están implementadas.
 

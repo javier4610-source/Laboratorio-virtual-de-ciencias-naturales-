@@ -7,6 +7,18 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [1.5.0] · 2026-10-18
+
+Programa v2 · Fase 5: visor de estructuras de proteínas.
+
+### Añadido
+- Práctica 54, estructura 3D de proteínas (11.º): estructuras experimentales del PDB (3I40, 2HHB, 2LZM, 1EMA; rayos X
+  con método, resolución y fecha) y el modelo AF-Q04671-F1 de AlphaFold DB (v6, pLDDT y resumen del PAE), incluidos
+  con URL, fecha y SHA-256; carga en vivo desde RCSB y AlphaFold con estados reales; estilos, colores por estructura
+  secundaria, cadena, tipo de residuo o pLDDT; mediciones de distancia; ligandos; exportación de imagen. Lector mmCIF y
+  PDB validado contra Biopython 1.85 (cadenas, residuos, átomos y 20 distancias con tolerancia 10⁻³ Å).
+- Traza de carbonos alfa de respaldo (SVG) cuando no hay WebGL o no se puede cargar el visor 3D.
+
 ## [1.4.1] · 2026-10-18
 
 ### Corregido

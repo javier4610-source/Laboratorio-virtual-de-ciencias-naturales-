@@ -2,11 +2,11 @@
 
 Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se regenera desde el código.
 
-- Prácticas en el catálogo: **53**
-- Con laboratorio registrado: 53 · con prueba E2E propia: 53 · con revisión axe: 0
+- Prácticas en el catálogo: **54**
+- Con laboratorio registrado: 54 · con prueba E2E propia: 54 · con revisión axe: 0
 - Con modo de instrumento real: 22 · con modo avanzado: 19 · con parámetros editables: 8
-- Con manipulación directa: 31 · con sonido: 37 · con texto que rotula partes ilustrativas: 19
-- Archivos de pruebas unitarias: 50 (718 pruebas declaradas)
+- Con manipulación directa: 31 · con sonido: 38 · con texto que rotula partes ilustrativas: 19
+- Archivos de pruebas unitarias: 51 (735 pruebas declaradas)
 
 | Práctica | Grado | Área | Laboratorio (líneas) | Modelos | Pruebas unitarias | E2E | axe | Instr. real | Avanzado | Manipulación | Sonido | Rótulo ilustrativo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -45,7 +45,7 @@ Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se r
 | `enzimas` Actividad enzimática: temperatura, pH y concentración | 10.º | biologia | EnzymeLab (289) | enzyme | 66 en lib.test.ts, models.test.ts | sí | no | no | no | sí | no | sí |
 | `fotosintesis` Fotosíntesis: luz, CO₂ y temperatura | 10.º | biologia | PhotoLab (199) | photosynthesis | 24 en models2.test.ts | sí | no | no | no | sí | no | sí |
 | `gases` Leyes de los gases: presión, volumen y temperatura | 10.º | quimica | GasLab (208) | gases | 41 en advanced.test.ts, models3.test.ts | sí | no | sí | sí | sí | sí | no |
-| `geometria` Geometría molecular en 3D y modelo VSEPR | 10.º | quimica | GeometryLab (690) | geometry, balancing | 50 en balancing.test.ts, geometry.test.ts, mole.test.ts | sí | no | no | no | no | sí | no |
+| `geometria` Geometría molecular en 3D y modelo VSEPR | 10.º | quimica | GeometryLab (704) | geometry, balancing | 50 en balancing.test.ts, geometry.test.ts, mole.test.ts | sí | no | no | no | no | sí | no |
 | `pendulo` Péndulo simple y movimiento armónico | 10.º | fisica | PendulumLab (451) | pendulum | 31 en advanced.test.ts, pendulum.test.ts | sí | no | no | sí | sí | sí | no |
 | `proyectiles` Movimiento de proyectiles | 10.º | fisica | ProjectileLab (505) | projectile | 33 en advanced.test.ts, projectile.test.ts | sí | no | no | sí | sí | sí | no |
 | `respiracion` Respiración celular y balance energético | 10.º | biologia | RespirationLab (423) | respiration | 11 en respiration.test.ts | sí | no | sí | no | sí | sí | no |
@@ -60,6 +60,7 @@ Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se r
 | `ph` pH, dilución y neutralización ácido-base | 11.º | quimica | AcidBaseLab (280) | acidbase, chemistry | 97 en models.test.ts, models2.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
 | `poblacion` Crecimiento poblacional y capacidad de carga | 11.º | ambiental | PopulationLab (203) | population | 55 en models.test.ts | sí | no | no | no | no | no | sí |
 | `popgen` Genética de poblaciones y frecuencias alélicas | 11.º | biologia | PopGenLab (179) | popgen | 24 en models2.test.ts | sí | no | no | no | no | no | sí |
+| `proteinas` Estructura 3D de proteínas: experimental y predicha | 11.º | biologia | ProteinLab (1125) | protein | 16 en protein.test.ts | sí | no | no | no | no | sí | no |
 | `rastreo` Rastreo génico: del gen a la proteína y su función | 11.º | biologia | GeneTraceLab (495) | geneTrace | 17 en geneTrace.test.ts | sí | no | no | no | no | no | sí |
 | `reto` Reto de indagación con interpretación de datos | 11.º | ambiental | InquiryLab (459) | inquiry | 10 en inquiry.test.ts | sí | no | no | no | no | sí | sí |
 | `secuencias` Secuencias biológicas: análisis y alineamiento | 11.º | biologia | SequencesLab (601) | sequences, dna, geneExpression | 93 en geneExpression.test.ts, models.test.ts, sequences.test.ts | sí | no | no | no | no | no | no |

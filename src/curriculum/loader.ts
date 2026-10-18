@@ -26,6 +26,7 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   newton: () => import('./practices/newton').then((m) => m.newton),
   gases: () => import('./practices/gases').then((m) => m.gases),
   energia: () => import('./practices/energia').then((m) => m.energia),
+  proteinas: () => import('./practices/proteinas').then((m) => m.proteinas),
   rastreo: () => import('./practices/rastreo').then((m) => m.rastreo),
   secuencias: () => import('./practices/secuencias').then((m) => m.secuencias),
   geometria: () => import('./practices/geometria').then((m) => m.geometria),

@@ -35,6 +35,12 @@ const SYNTHETIC_SAMPLES = new Set(['reto']);
 
 /** Procedencia de una práctica según el modo de medición elegido. */
 export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'real' = 'ideal'): Provenance {
+  if (practiceId === 'proteinas') {
+    return {
+      data: 'modelo', scene: 'modelo',
+      detail: 'Coordenadas reales: estructuras experimentales del PDB (3I40, 2HHB, 2LZM, 1EMA) y el modelo predicho AF-Q04671-F1 de AlphaFold DB, descargados el 2026-10-18; cada estructura muestra su estatus (evidencia experimental o predicción computacional). Distancias y conteos: modelo calculado, validado contra Biopython 1.85.',
+    };
+  }
   if (practiceId === 'rastreo') {
     return {
       data: 'modelo', scene: 'modelo',

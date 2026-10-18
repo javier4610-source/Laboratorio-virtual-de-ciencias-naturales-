@@ -40,6 +40,10 @@ describe('procedencia de los datos', () => {
     expect(practiceProvenance('rastreo')).toMatchObject({ data: 'modelo', scene: 'modelo' });
     expect(practiceProvenance('rastreo').detail).toMatch(/ClinVar/);
   });
+  it('proteínas: distingue estructuras experimentales del PDB y modelos predichos de AlphaFold', () => {
+    expect(practiceProvenance('proteinas')).toMatchObject({ data: 'modelo', scene: 'modelo' });
+    expect(practiceProvenance('proteinas').detail).toMatch(/AlphaFold/);
+  });
   it('el modo «Instrumento real» y la práctica de datos sintéticos lo dicen explícitamente', () => {
     expect(practiceProvenance('newton', 'real').detail).toMatch(/ruido de medición sintético/);
     expect(trialStatusText('newton', 'real')).toBe(`${STATUS_LABEL.modelo} con ruido de medición sintético`);

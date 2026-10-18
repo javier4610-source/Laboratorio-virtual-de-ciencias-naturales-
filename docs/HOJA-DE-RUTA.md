@@ -64,3 +64,23 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 ## Bloqueos
 
 (ninguno)
+
+## Programa v2 · prompt maestro del docente (plataforma in silico)
+
+Fuente: «PROMPT_LABORATORIO_VIRTUAL_v2.docx» (docente, 2026-10-18). Prioridad: 1) integridad científica y seguridad,
+2) no romper lo existente, 3) valor pedagógico, 4) calidad técnica e interfaz, 5) cantidad y espectacularidad.
+Cada fase termina con un informe (cambios, pruebas con resultado real, limitaciones, riesgos, siguiente paso) y no
+se empieza la siguiente sin cumplir el criterio de salida. Nada simulado como real; ningún identificador o
+referencia inventados; todo dato con su estatus (evidencia experimental, predicción computacional, modelo calculado,
+ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOSTICO-FASE0.md`.
+
+- [x] **v2 · Fase 0:** diagnóstico, inventario automático (`node scripts/inventario.mjs`), supuestos verificados.
+- [ ] **v2 · Fase 1:** valores dorados por práctica (`tests/golden`), axe con WCAG 2.2 AA, prueba en viewport móvil,
+      CHANGELOG y versión semántica. Criterio: todas las prácticas cubiertas por pruebas que pasan.
+- [ ] **v2 · Fase 2:** ADR (`docs/v2/adr`), sistema de procedencia visible, registro de experimentos exportable (JSON
+      con esquema, semilla y versión del modelo), plantilla de ficha de enriquecimiento, alias en el seguimiento.
+- [ ] **v2 · Fase 3:** energía con integración temporal (referencia 98,1 J y 14,0 m/s), gas a 101,325 kPa (22,414 L),
+      geometría molecular 3D con un motor real, QR por práctica.
+- [ ] **v2 · Fases 4–10:** secuencias y BLAST, visor molecular, FBA, fármacos, genómica, dinámica molecular,
+      cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por
+      infraestructura hasta decisión del docente).

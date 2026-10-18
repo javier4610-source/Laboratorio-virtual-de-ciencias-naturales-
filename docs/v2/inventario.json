@@ -1,0 +1,1197 @@
+[
+  {
+    "id": "calor",
+    "title": "Calor, temperatura y equilibrio térmico",
+    "grade": 6,
+    "area": "fisica",
+    "lab": "HeatLab",
+    "models": [
+      "heat"
+    ],
+    "tests": [
+      "heat.test.ts"
+    ],
+    "nTests": 14,
+    "e2e": true,
+    "a11y": true,
+    "loc": 568,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "celulas",
+    "title": "Microscopio virtual: células animales y vegetales",
+    "grade": 6,
+    "area": "biologia",
+    "lab": "MicroscopeLab",
+    "models": [
+      "microscope"
+    ],
+    "tests": [
+      "microscope.test.ts"
+    ],
+    "nTests": 15,
+    "e2e": true,
+    "a11y": true,
+    "loc": 324,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "densidad",
+    "title": "Medición de masa, volumen y densidad",
+    "grade": 6,
+    "area": "fisica",
+    "lab": "DensityLab",
+    "models": [
+      "density"
+    ],
+    "tests": [
+      "models.test.ts"
+    ],
+    "nTests": 55,
+    "e2e": true,
+    "a11y": true,
+    "loc": 240,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "ecosistema",
+    "title": "Ecosistema: agua, luz y alimento",
+    "grade": 6,
+    "area": "ambiental",
+    "lab": "EcosystemLab",
+    "models": [
+      "ecosystem"
+    ],
+    "tests": [
+      "ecosystem.test.ts"
+    ],
+    "nTests": 13,
+    "e2e": true,
+    "a11y": true,
+    "loc": 704,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "maquinas",
+    "title": "Máquinas simples: palancas y poleas",
+    "grade": 6,
+    "area": "fisica",
+    "lab": "MachinesLab",
+    "models": [
+      "simpleMachines"
+    ],
+    "tests": [
+      "simpleMachines.test.ts"
+    ],
+    "nTests": 14,
+    "e2e": true,
+    "a11y": true,
+    "loc": 800,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "mezclas",
+    "title": "Separación de mezclas: filtración, decantación, imantación y evaporación",
+    "grade": 6,
+    "area": "quimica",
+    "lab": "MixturesLab",
+    "models": [
+      "mixtures"
+    ],
+    "tests": [
+      "models3.test.ts"
+    ],
+    "nTests": 21,
+    "e2e": true,
+    "a11y": true,
+    "loc": 203,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "movimiento",
+    "title": "Movimiento y distancia recorrida",
+    "grade": 6,
+    "area": "fisica",
+    "lab": "MotionLab",
+    "models": [
+      "motion"
+    ],
+    "tests": [
+      "motion.test.ts"
+    ],
+    "nTests": 9,
+    "e2e": true,
+    "a11y": true,
+    "loc": 820,
+    "measure": true,
+    "advanced": true,
+    "params": true,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "redes",
+    "title": "Cadenas y redes alimentarias",
+    "grade": 6,
+    "area": "ambiental",
+    "lab": "FoodWebLab",
+    "models": [
+      "foodweb"
+    ],
+    "tests": [
+      "foodweb.test.ts"
+    ],
+    "nTests": 12,
+    "e2e": true,
+    "a11y": true,
+    "loc": 375,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "circuitos-simples",
+    "title": "Circuitos simples con baterías, interruptores y bombillas",
+    "grade": 7,
+    "area": "fisica",
+    "lab": "SimpleCircuitsLab",
+    "models": [
+      "simpleCircuits"
+    ],
+    "tests": [
+      "simpleCircuits.test.ts"
+    ],
+    "nTests": 16,
+    "e2e": true,
+    "a11y": true,
+    "loc": 1050,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "conduccion",
+    "title": "Transferencia de calor por conducción",
+    "grade": 7,
+    "area": "fisica",
+    "lab": "ConductionLab",
+    "models": [
+      "conduction"
+    ],
+    "tests": [
+      "conduction.test.ts"
+    ],
+    "nTests": 15,
+    "e2e": true,
+    "a11y": true,
+    "loc": 760,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "conductores",
+    "title": "Materiales conductores y aislantes",
+    "grade": 7,
+    "area": "fisica",
+    "lab": "ConductorsLab",
+    "models": [
+      "conductors"
+    ],
+    "tests": [
+      "conductors.test.ts"
+    ],
+    "nTests": 12,
+    "e2e": true,
+    "a11y": true,
+    "loc": 408,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "descomposicion",
+    "title": "Factores de la descomposición de la materia orgánica",
+    "grade": 7,
+    "area": "ambiental",
+    "lab": "DecompositionLab",
+    "models": [
+      "decomposition"
+    ],
+    "tests": [
+      "decomposition.test.ts"
+    ],
+    "nTests": 10,
+    "e2e": true,
+    "a11y": true,
+    "loc": 400,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "flotacion",
+    "title": "Empuje y flotación: principio de Arquímedes",
+    "grade": 7,
+    "area": "fisica",
+    "lab": "BuoyancyLab",
+    "models": [
+      "buoyancy",
+      "pressure"
+    ],
+    "tests": [
+      "advanced.test.ts",
+      "buoyancy.test.ts",
+      "pressure.test.ts"
+    ],
+    "nTests": 46,
+    "e2e": true,
+    "a11y": true,
+    "loc": 619,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "mitosis",
+    "title": "Mitosis al microscopio: fases e índice mitótico",
+    "grade": 7,
+    "area": "biologia",
+    "lab": "MitosisLab",
+    "models": [
+      "mitosis"
+    ],
+    "tests": [
+      "models2.test.ts"
+    ],
+    "nTests": 24,
+    "e2e": true,
+    "a11y": true,
+    "loc": 262,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "osmosis",
+    "title": "Difusión y ósmosis a través de la membrana",
+    "grade": 7,
+    "area": "biologia",
+    "lab": "OsmosisLab",
+    "models": [
+      "osmosis"
+    ],
+    "tests": [
+      "models.test.ts"
+    ],
+    "nTests": 55,
+    "e2e": true,
+    "a11y": true,
+    "loc": 424,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "presion",
+    "title": "Presión en líquidos y presión atmosférica",
+    "grade": 7,
+    "area": "fisica",
+    "lab": "PressureLab",
+    "models": [
+      "pressure"
+    ],
+    "tests": [
+      "advanced.test.ts",
+      "buoyancy.test.ts",
+      "pressure.test.ts"
+    ],
+    "nTests": 46,
+    "e2e": true,
+    "a11y": true,
+    "loc": 1042,
+    "measure": true,
+    "advanced": true,
+    "params": true,
+    "instr": true,
+    "manip": true,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "balanceo",
+    "title": "Balanceo de ecuaciones químicas con conteo de átomos",
+    "grade": 8,
+    "area": "quimica",
+    "lab": "BalancingLab",
+    "models": [
+      "balancing"
+    ],
+    "tests": [
+      "balancing.test.ts"
+    ],
+    "nTests": 16,
+    "e2e": true,
+    "a11y": true,
+    "loc": 607,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "conservacion",
+    "title": "Conservación de la masa en sistemas abiertos y cerrados",
+    "grade": 8,
+    "area": "quimica",
+    "lab": "ConservationLab",
+    "models": [
+      "massConservation"
+    ],
+    "tests": [
+      "massConservation.test.ts"
+    ],
+    "nTests": 12,
+    "e2e": true,
+    "a11y": true,
+    "loc": 518,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "mendel",
+    "title": "Herencia mendeliana y cuadros de Punnett",
+    "grade": 8,
+    "area": "biologia",
+    "lab": "MendelLab",
+    "models": [
+      "mendel"
+    ],
+    "tests": [
+      "models.test.ts"
+    ],
+    "nTests": 55,
+    "e2e": true,
+    "a11y": true,
+    "loc": 398,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "ondas",
+    "title": "Laboratorio de ondas: frecuencia, amplitud y longitud de onda",
+    "grade": 8,
+    "area": "fisica",
+    "lab": "WavesLab",
+    "models": [
+      "waves"
+    ],
+    "tests": [
+      "models2.test.ts"
+    ],
+    "nTests": 24,
+    "e2e": true,
+    "a11y": true,
+    "loc": 272,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "optica",
+    "title": "Reflexión y refracción de la luz",
+    "grade": 8,
+    "area": "fisica",
+    "lab": "OpticsLab",
+    "models": [
+      "optics"
+    ],
+    "tests": [
+      "models3.test.ts"
+    ],
+    "nTests": 21,
+    "e2e": true,
+    "a11y": true,
+    "loc": 200,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "sonido",
+    "title": "Sonido y resonancia",
+    "grade": 8,
+    "area": "fisica",
+    "lab": "SoundLab",
+    "models": [
+      "soundResonance"
+    ],
+    "tests": [
+      "soundResonance.test.ts"
+    ],
+    "nTests": 13,
+    "e2e": true,
+    "a11y": true,
+    "loc": 932,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "adn",
+    "title": "Del ADN a la proteína: replicación, transcripción y traducción",
+    "grade": 9,
+    "area": "biologia",
+    "lab": "DnaLab",
+    "models": [
+      "dna"
+    ],
+    "tests": [
+      "geneExpression.test.ts",
+      "models.test.ts"
+    ],
+    "nTests": 69,
+    "e2e": true,
+    "a11y": true,
+    "loc": 496,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "cinematica",
+    "title": "Velocidad, aceleración y movimiento",
+    "grade": 9,
+    "area": "fisica",
+    "lab": "KinematicsLab",
+    "models": [
+      "kinematics"
+    ],
+    "tests": [
+      "kinematics.test.ts"
+    ],
+    "nTests": 12,
+    "e2e": true,
+    "a11y": true,
+    "loc": 302,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "newton",
+    "title": "Leyes de Newton: fuerza, masa y aceleración",
+    "grade": 9,
+    "area": "fisica",
+    "lab": "NewtonLab",
+    "models": [
+      "newton"
+    ],
+    "tests": [
+      "advanced.test.ts",
+      "models3.test.ts"
+    ],
+    "nTests": 41,
+    "e2e": true,
+    "a11y": true,
+    "loc": 335,
+    "measure": true,
+    "advanced": true,
+    "params": true,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "seleccion",
+    "title": "Selección natural con cambios ambientales",
+    "grade": 9,
+    "area": "biologia",
+    "lab": "SelectionLab",
+    "models": [
+      "selection"
+    ],
+    "tests": [
+      "selection.test.ts"
+    ],
+    "nTests": 14,
+    "e2e": true,
+    "a11y": true,
+    "loc": 279,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "trabajo",
+    "title": "Trabajo, potencia y plano inclinado",
+    "grade": 9,
+    "area": "fisica",
+    "lab": "WorkLab",
+    "models": [
+      "workPower"
+    ],
+    "tests": [
+      "workPower.test.ts"
+    ],
+    "nTests": 12,
+    "e2e": true,
+    "a11y": true,
+    "loc": 813,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "choques",
+    "title": "Choques y cantidad de movimiento",
+    "grade": 10,
+    "area": "fisica",
+    "lab": "CollisionsLab",
+    "models": [
+      "collisions"
+    ],
+    "tests": [
+      "collisions.test.ts"
+    ],
+    "nTests": 13,
+    "e2e": true,
+    "a11y": true,
+    "loc": 485,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "cinetica",
+    "title": "Factores que afectan la velocidad de reacción",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "KineticsLab",
+    "models": [
+      "kinetics"
+    ],
+    "tests": [
+      "advanced.test.ts",
+      "kinetics.test.ts"
+    ],
+    "nTests": 31,
+    "e2e": true,
+    "a11y": true,
+    "loc": 334,
+    "measure": false,
+    "advanced": true,
+    "params": true,
+    "instr": false,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "energia",
+    "title": "Conservación de la energía mecánica",
+    "grade": 10,
+    "area": "fisica",
+    "lab": "EnergyLab",
+    "models": [
+      "energy"
+    ],
+    "tests": [
+      "advanced.test.ts",
+      "models3.test.ts"
+    ],
+    "nTests": 41,
+    "e2e": true,
+    "a11y": true,
+    "loc": 202,
+    "measure": false,
+    "advanced": true,
+    "params": true,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "enzimas",
+    "title": "Actividad enzimática: temperatura, pH y concentración",
+    "grade": 10,
+    "area": "biologia",
+    "lab": "EnzymeLab",
+    "models": [
+      "enzyme"
+    ],
+    "tests": [
+      "lib.test.ts",
+      "models.test.ts"
+    ],
+    "nTests": 66,
+    "e2e": true,
+    "a11y": true,
+    "loc": 289,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "fotosintesis",
+    "title": "Fotosíntesis: luz, CO₂ y temperatura",
+    "grade": 10,
+    "area": "biologia",
+    "lab": "PhotoLab",
+    "models": [
+      "photosynthesis"
+    ],
+    "tests": [
+      "models2.test.ts"
+    ],
+    "nTests": 24,
+    "e2e": true,
+    "a11y": true,
+    "loc": 199,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "gases",
+    "title": "Leyes de los gases: presión, volumen y temperatura",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "GasLab",
+    "models": [
+      "gases"
+    ],
+    "tests": [
+      "advanced.test.ts",
+      "models3.test.ts"
+    ],
+    "nTests": 41,
+    "e2e": true,
+    "a11y": true,
+    "loc": 208,
+    "measure": true,
+    "advanced": true,
+    "params": true,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "pendulo",
+    "title": "Péndulo simple y movimiento armónico",
+    "grade": 10,
+    "area": "fisica",
+    "lab": "PendulumLab",
+    "models": [
+      "pendulum"
+    ],
+    "tests": [
+      "advanced.test.ts",
+      "pendulum.test.ts"
+    ],
+    "nTests": 31,
+    "e2e": true,
+    "a11y": true,
+    "loc": 451,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "proyectiles",
+    "title": "Movimiento de proyectiles",
+    "grade": 10,
+    "area": "fisica",
+    "lab": "ProjectileLab",
+    "models": [
+      "projectile"
+    ],
+    "tests": [
+      "advanced.test.ts",
+      "projectile.test.ts"
+    ],
+    "nTests": 33,
+    "e2e": true,
+    "a11y": true,
+    "loc": 505,
+    "measure": false,
+    "advanced": true,
+    "params": true,
+    "instr": false,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "respiracion",
+    "title": "Respiración celular y balance energético",
+    "grade": 10,
+    "area": "biologia",
+    "lab": "RespirationLab",
+    "models": [
+      "respiration"
+    ],
+    "tests": [
+      "respiration.test.ts"
+    ],
+    "nTests": 11,
+    "e2e": true,
+    "a11y": true,
+    "loc": 423,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "soluciones",
+    "title": "Preparación de soluciones, molaridad y colorimetría",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "SolutionsLab",
+    "models": [
+      "solutions",
+      "chemistry"
+    ],
+    "tests": [
+      "models.test.ts"
+    ],
+    "nTests": 55,
+    "e2e": true,
+    "a11y": true,
+    "loc": 281,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "agua",
+    "title": "Contaminación del agua e indicadores fisicoquímicos y biológicos",
+    "grade": 11,
+    "area": "ambiental",
+    "lab": "WaterQualityLab",
+    "models": [
+      "waterQuality"
+    ],
+    "tests": [
+      "waterQuality.test.ts"
+    ],
+    "nTests": 15,
+    "e2e": true,
+    "a11y": true,
+    "loc": 637,
+    "measure": true,
+    "advanced": false,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "circuitos",
+    "title": "Circuitos eléctricos: voltaje, corriente y resistencia",
+    "grade": 11,
+    "area": "fisica",
+    "lab": "CircuitLab",
+    "models": [
+      "circuits"
+    ],
+    "tests": [
+      "models.test.ts"
+    ],
+    "nTests": 55,
+    "e2e": true,
+    "a11y": true,
+    "loc": 342,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "equilibrio",
+    "title": "Equilibrio químico y principio de Le Châtelier",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "EquilibriumLab",
+    "models": [
+      "equilibrium"
+    ],
+    "tests": [
+      "equilibrium.test.ts"
+    ],
+    "nTests": 11,
+    "e2e": true,
+    "a11y": true,
+    "loc": 469,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "estequiometria",
+    "title": "Estequiometría y reactivo limitante",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "StoichLab",
+    "models": [
+      "stoichiometry",
+      "chemistry"
+    ],
+    "tests": [
+      "lib.test.ts",
+      "models.test.ts"
+    ],
+    "nTests": 66,
+    "e2e": true,
+    "a11y": true,
+    "loc": 215,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "expresion",
+    "title": "Expresión génica y efecto de mutaciones en la proteína",
+    "grade": 11,
+    "area": "biologia",
+    "lab": "ExpressionLab",
+    "models": [
+      "geneExpression",
+      "dna"
+    ],
+    "tests": [
+      "geneExpression.test.ts",
+      "models.test.ts"
+    ],
+    "nTests": 69,
+    "e2e": true,
+    "a11y": true,
+    "loc": 862,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "induccion",
+    "title": "Magnetismo e inducción electromagnética",
+    "grade": 11,
+    "area": "fisica",
+    "lab": "InductionLab",
+    "models": [
+      "induction"
+    ],
+    "tests": [
+      "induction.test.ts"
+    ],
+    "nTests": 12,
+    "e2e": true,
+    "a11y": true,
+    "loc": 1248,
+    "measure": true,
+    "advanced": true,
+    "params": true,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "interferencia",
+    "title": "Interferencia y difracción de la luz",
+    "grade": 11,
+    "area": "fisica",
+    "lab": "InterferenceLab",
+    "models": [
+      "interference"
+    ],
+    "tests": [
+      "interference.test.ts"
+    ],
+    "nTests": 19,
+    "e2e": true,
+    "a11y": true,
+    "loc": 603,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "ph",
+    "title": "pH, dilución y neutralización ácido-base",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "AcidBaseLab",
+    "models": [
+      "acidbase",
+      "chemistry"
+    ],
+    "tests": [
+      "models.test.ts",
+      "models2.test.ts"
+    ],
+    "nTests": 79,
+    "e2e": true,
+    "a11y": true,
+    "loc": 280,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "poblacion",
+    "title": "Crecimiento poblacional y capacidad de carga",
+    "grade": 11,
+    "area": "ambiental",
+    "lab": "PopulationLab",
+    "models": [
+      "population"
+    ],
+    "tests": [
+      "models.test.ts"
+    ],
+    "nTests": 55,
+    "e2e": true,
+    "a11y": true,
+    "loc": 203,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "popgen",
+    "title": "Genética de poblaciones y frecuencias alélicas",
+    "grade": 11,
+    "area": "biologia",
+    "lab": "PopGenLab",
+    "models": [
+      "popgen"
+    ],
+    "tests": [
+      "models2.test.ts"
+    ],
+    "nTests": 24,
+    "e2e": true,
+    "a11y": true,
+    "loc": 179,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  }
+]

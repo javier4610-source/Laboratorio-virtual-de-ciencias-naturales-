@@ -1056,6 +1056,25 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Geometría molecular en 3D y modelo VSEPR», mide los ángulos de H₂O, H₂S, NH₃ y PH₃ y lee la procedencia de las coordenadas.',
     transfer: '¿Qué información adicional (fuente experimental, método de medición) necesitarías para decidir si el confórmero de PubChem del H₂S representa bien el ángulo real de la molécula en fase gaseosa?',
   },
+  {
+    id: 'saber-sqb-1', grade: 11, topic: 'Comparación de secuencias y función', competency: 'indagacion', component: 'biologico', skill: 'Evaluar si los datos de identidad de secuencia permiten concluir sobre la función de una proteína', difficulty: 'alta', practiceId: 'secuencias',
+    context: 'Un semillero de investigación de un colegio de Chigorodó comparó tres parejas de secuencias reales descargadas del NCBI y de UniProt con alineamientos globales. Para las proteínas usó la matriz BLOSUM62 (apertura de hueco 11, extensión 1); para el ADN, +1 por coincidencia y −1 por no coincidencia (apertura 2, extensión 1). En el cuerpo humano, la β-globina y la α-globina forman juntas la hemoglobina que transporta el oxígeno; la δ-globina forma una hemoglobina minoritaria en el adulto.',
+    table: {
+      caption: 'Identidad de tres parejas de secuencias (calculada en el laboratorio virtual)',
+      headers: ['Pareja comparada', 'Tipo de secuencia', 'Identidad (%)'],
+      rows: [['Preproinsulina humana (P01308) y bovina (P01317)', 'Proteína', '80,0'], ['β-globina (P68871) y α-globina (P69905) humanas', 'Proteína', '43,6'], ['Región codificante de HBB (NM_000518.5) y de HBD (NM_000519.4)', 'ADN', '93,0']],
+    },
+    stem: '¿Cuál conclusión es coherente con los datos y con la información del contexto?',
+    options: [
+      { id: 'a', text: 'La β- y la α-globina no pueden tener funciones relacionadas, porque comparten menos de la mitad de sus aminoácidos.', feedback: 'Ambas transportan oxígeno en la misma hemoglobina con 43,6 % de identidad: una identidad baja no demuestra funciones distintas.' },
+      { id: 'b', text: 'HBB y HBD cumplen exactamente la misma función, porque su identidad supera el 90 %.', feedback: 'La δ-globina forma una hemoglobina minoritaria: una identidad alta sugiere origen común, pero no demuestra la misma función ni la misma cantidad de proteína.' },
+      { id: 'c', text: 'La identidad mide el parecido de las secuencias con un método dado; por sí sola no basta para afirmar ni descartar que dos proteínas tengan la misma función.', feedback: 'Correcto: las globinas α y β tienen baja identidad y función relacionada, mientras HBB y HBD tienen alta identidad y papeles distintos en el adulto.' },
+      { id: 'd', text: 'Las insulinas humana y bovina son más parecidas que HBB y HBD, porque comparar proteínas siempre da identidades más altas que comparar ADN.', feedback: 'Los datos muestran lo contrario (80,0 % frente a 93,0 %), y además identidades calculadas con secuencias y métodos distintos no se comparan directamente.' },
+    ],
+    correct: 'c',
+    explanation: 'Un alineamiento cuantifica el parecido de dos secuencias según una matriz y unas penalizaciones. La identidad alta sugiere homología (ancestro común), pero la función depende también de pocos residuos clave, de la regulación del gen y del contexto celular, y se establece con experimentos. Por eso la identidad se reporta con el método y no se usa sola para concluir sobre la función.',
+    review: 'En la práctica «Secuencias biológicas: análisis y alineamiento», alinea las tres parejas preparadas y lee la nota de cada comparación.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

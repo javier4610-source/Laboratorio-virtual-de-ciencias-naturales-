@@ -35,6 +35,12 @@ const SYNTHETIC_SAMPLES = new Set(['reto']);
 
 /** Procedencia de una práctica según el modo de medición elegido. */
 export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'real' = 'ideal'): Provenance {
+  if (practiceId === 'secuencias') {
+    return {
+      data: 'modelo', scene: 'modelo',
+      detail: 'Secuencias del catálogo: registros de NCBI RefSeq y UniProtKB/Swiss-Prot (evidencia experimental, con número de acceso y fecha de consulta 2026-10-18); %GC, traducciones, ORF y alineamientos: modelo calculado, validado contra Biopython 1.85. Las secuencias que escribe el estudiante quedan «Sin información disponible».',
+    };
+  }
   if (practiceId === 'geometria') {
     return {
       data: 'modelo', scene: 'prediccion',

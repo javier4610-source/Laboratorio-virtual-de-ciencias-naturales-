@@ -60,6 +60,8 @@ import { AVOGADRO, countEntities } from '../../src/models/mole';
 import { analyze, collect } from '../../src/models/inquiry';
 import { angleTable, parseSdf } from '../../src/models/geometry';
 import { BUNDLED_CONFORMERS } from '../../src/data/conformers';
+import { translateSeq } from '../../src/models/sequences';
+import biopython from '../fixtures/biopython-secuencias.json';
 import { ropeSpeed } from '../../src/models/waves';
 import { idealAdvantage } from '../../src/models/workPower';
 
@@ -251,6 +253,13 @@ export const GOLDEN: GoldenCase[] = [
     const angles = angleTable(parseSdf(ch4.sdf)).map((r) => r.angle);
     expect(angles).toHaveLength(6);
     for (const a of angles) close(a, (Math.acos(-1 / 3) * 180) / Math.PI, 0.5);
+  } },
+  { id: 'secuencias', origin: 'referencia', what: 'código genético estándar (NCBI tabla 1): ATG → M, codones de parada → *, y los 64 codones iguales a Biopython (versión registrada en el archivo de referencia)', run: () => {
+    expect(translateSeq('ATGTAATAGTGA', 1)).toBe('M***');
+    expect(biopython.biopython).toBe('1.85');
+    const table = (biopython.geneticCodes['1'] as { codons: Record<string, string> }).codons;
+    expect(Object.keys(table)).toHaveLength(64);
+    for (const [codon, aa] of Object.entries(table)) expect(translateSeq(codon, 1)).toBe(aa);
   } },
 ];
 

@@ -32,6 +32,10 @@ describe('procedencia de los datos', () => {
     expect(p).toMatchObject({ data: 'modelo', scene: 'prediccion' });
     expect(p.detail).toMatch(/PubChem/);
   });
+  it('secuencias: mapa y resultados calculados; catálogo con procedencia de NCBI y UniProt', () => {
+    expect(practiceProvenance('secuencias')).toMatchObject({ data: 'modelo', scene: 'modelo' });
+    expect(practiceProvenance('secuencias').detail).toMatch(/Biopython/);
+  });
   it('el modo «Instrumento real» y la práctica de datos sintéticos lo dicen explícitamente', () => {
     expect(practiceProvenance('newton', 'real').detail).toMatch(/ruido de medición sintético/);
     expect(trialStatusText('newton', 'real')).toBe(`${STATUS_LABEL.modelo} con ruido de medición sintético`);

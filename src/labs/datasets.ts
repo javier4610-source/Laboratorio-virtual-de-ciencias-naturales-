@@ -1068,4 +1068,37 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'fuente', label: 'Procedencia de las coordenadas', numeric: false },
     ],
   }],
+  secuencias: [
+    {
+      id: 'comparaciones', label: 'Comparaciones de secuencias (alineamientos)', defaultX: 'apertura', defaultY: 'aperturas',
+      columns: [
+        { key: 'sec1', label: 'Secuencia A', numeric: false, input: true },
+        { key: 'sec2', label: 'Secuencia B', numeric: false, input: true },
+        { key: 'modo', label: 'Método', numeric: false, input: true },
+        { key: 'matriz', label: 'Matriz de sustitución', numeric: false, input: true },
+        { key: 'apertura', label: 'Penalización por abrir un hueco', unit: 'puntos', numeric: true, decimals: 1, input: true },
+        { key: 'extension', label: 'Penalización por extender un hueco', unit: 'puntos', numeric: true, decimals: 1, input: true },
+        { key: 'longitud', label: 'Longitud del alineamiento', unit: 'columnas', numeric: true, decimals: 0 },
+        { key: 'identidad', label: 'Identidad', unit: '%', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'similitud', label: 'Similitud', unit: '%', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'huecos', label: 'Columnas con hueco', unit: 'columnas', numeric: true, decimals: 0 },
+        { key: 'aperturas', label: 'Número de huecos', numeric: true, decimals: 0 },
+        { key: 'puntaje', label: 'Puntaje', unit: 'puntos', numeric: true, decimals: 1 },
+      ],
+    },
+    {
+      id: 'traducciones', label: 'Traducciones y marcos de lectura abiertos', defaultX: 'minimo', defaultY: 'orfs',
+      columns: [
+        { key: 'secuencia', label: 'Secuencia', numeric: false, input: true },
+        { key: 'tabla', label: 'Tabla del código genético (NCBI)', numeric: true, decimals: 0, input: true },
+        { key: 'inicios', label: 'Codones de inicio admitidos', numeric: false, input: true },
+        { key: 'minimo', label: 'Longitud mínima del ORF', unit: 'aa', numeric: true, decimals: 0, input: true },
+        { key: 'longitud', label: 'Longitud de la secuencia', unit: 'nt', numeric: true, decimals: 0 },
+        { key: 'gc', label: '%GC', unit: '%', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'orfs', label: 'ORF encontrados', numeric: true, decimals: 0 },
+        { key: 'orfMax', label: 'ORF más largo', unit: 'aa', numeric: true, decimals: 0 },
+        { key: 'codonInicio', label: 'Codón de inicio del ORF más largo', numeric: false },
+      ],
+    },
+  ],
 };

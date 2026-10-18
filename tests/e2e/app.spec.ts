@@ -779,6 +779,21 @@ test('geometría molecular: el ángulo H–O–H del confórmero de PubChem es 1
   await expect(page.locator('.readout').getByText('0,969 Å').first()).toBeVisible();
 });
 
+test('secuencias: ARNm de HBB (NM_000518.5) con 51,3 % GC, ORF de 147 aa en 51..494 e insulina humana frente a bovina con puntaje 458', async ({ page }) => {
+  await openFree(page, 'secuencias');
+  await expect(page.locator('.readout').getByText('51,3 %').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('628 nt').first()).toBeVisible();
+  await page.getByLabel('Herramienta').getByRole('button', { name: 'Traducción y ORF' }).click();
+  await page.getByRole('button', { name: 'Buscar ORF' }).click();
+  await expect(page.locator('.readout').getByText('147 aa, marco +3, 51..494').first()).toBeVisible();
+  await page.getByLabel('Herramienta').getByRole('button', { name: 'Alineamiento' }).click();
+  await page.getByRole('button', { name: 'Alinear', exact: true }).click();
+  await expect(page.locator('.readout').getByText('458,0').first()).toBeVisible();
+  await expect(page.locator('.readout').getByText('80,0 % (88/110)').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Guardar comparación en la tabla' }).click();
+  await expect(page.getByText('Ensayo guardado (1 en esta sesión).')).toBeVisible();
+});
+
 test('servidor: el docente crea un curso, el estudiante envía su informe y el docente lo recibe', async ({ page }) => {
   // Docente
   await page.goto('/#/docente');
@@ -839,7 +854,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/51');
+  await expect(page.locator('.kpi').first()).toContainText('1/52');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

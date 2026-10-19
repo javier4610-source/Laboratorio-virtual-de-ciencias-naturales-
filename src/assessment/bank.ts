@@ -1140,6 +1140,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Metabolismo celular: análisis de balance de flujos (FBA)», calcula la referencia y mira la gráfica de crecimiento frente al oxígeno; luego elige «Limitado» y prueba 5 y 15 mmol/gDW/h.',
     transfer: '¿Qué mediciones harías en un cultivo real (por ejemplo, densidad óptica y ácidos en el medio) para poner a prueba estas predicciones, y qué variables tendrías que controlar?',
   },
+  {
+    id: 'saber-ecp-1', grade: 8, topic: 'Energía potencial gravitatoria y energía cinética', competency: 'indagacion', component: 'fisico',
+    skill: 'Analizar datos de caída para relacionar la altura con la energía y con la rapidez', difficulty: 'media', practiceId: 'cinetica-potencial',
+    context: 'En un semillero de física de Carepa, un grupo soltó desde el reposo un objeto de 0,50 kg desde distintas alturas sobre una fotopuerta, en un montaje donde la resistencia del aire es despreciable. La fotopuerta midió el tiempo que una bandera de 5,00 cm tardó en cruzar el haz y con él calcularon la rapidez (datos simulados; g = 9,81 m/s²).',
+    table: {
+      caption: 'Caída de un objeto de 0,50 kg (datos simulados)',
+      headers: ['Altura h (m)', 'Ep = m·g·h (J)', 'Tiempo de bloqueo (ms)', 'Rapidez v (m/s)'],
+      rows: [['1,0', '4,9', '11,29', '4,43'], ['2,0', '9,8', '7,98', '6,27'], ['4,0', '19,6', '5,64', '8,87'], ['8,0', '39,2', '3,99', '12,5']],
+    },
+    stem: '¿Cuál de las siguientes conclusiones se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'Al duplicar la altura se duplica la rapidez, porque la energía potencial también se duplica.', feedback: 'La Ep sí se duplica, pero la rapidez pasa de 4,43 a 6,27 m/s: se multiplica por 1,41 ≈ √2, no por 2.' },
+      { id: 'b', text: 'Al duplicar la altura se duplican la energía potencial y la energía cinética al llegar, pero la rapidez solo se multiplica por √2 ≈ 1,41, porque la energía cinética depende de v².', feedback: 'Correcto: ½ · 0,50 · 6,27² ≈ 9,8 J = Ep; con el cuádruple de altura (4 m) la rapidez se duplica (8,87 ≈ 2 · 4,43).' },
+      { id: 'c', text: 'La rapidez no depende de la altura, porque el tiempo de bloqueo disminuye cuando la altura aumenta.', feedback: 'Que el tiempo de bloqueo disminuya significa justamente que la rapidez aumenta (v = L/Δt).' },
+      { id: 'd', text: 'Con un objeto de 1,0 kg, la rapidez desde 2,0 m sería el doble, porque tendría el doble de energía potencial.', feedback: 'Tendría el doble de Ep, pero también necesitaría el doble de energía para cada rapidez: sin aire la masa se cancela y llegaría a 6,27 m/s.' },
+    ],
+    correct: 'b',
+    explanation: 'Sin aire, m·g·h = ½·m·v², de modo que la energía cinética al llegar es proporcional a la altura y la rapidez a √h: v = √(2·g·h). Duplicar h duplica Ep y Ec, pero multiplica v por √2; para duplicar la rapidez hay que cuadruplicar la altura. La masa se cancela.',
+    review: 'En la práctica «Energía cinética y energía potencial», estación 2, suelta 1,00 kg desde 1, 2, 4 y 8 m, guarda las caídas y compara la gráfica de Ec frente a Ep.',
+    transfer: 'Si repitieran el experimento en Marte (g = 3,71 m/s²), ¿cómo cambiarían la energía potencial y la rapidez desde 8,0 m? Calcúlalas.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

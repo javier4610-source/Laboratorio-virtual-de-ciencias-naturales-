@@ -122,6 +122,14 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
   'extraccion-adn': [
     { id: 'escala', name: 'Escala visual de referencia del precipitado (1 u.a.)', quantity: 'Índice de rendimiento relativo del ADN enrollado', unit: 'u.a.', resolution: 1, sigma: 2, relSigma: 0.15, nonNegative: true, note: 'Ilustrativo: variabilidad entre frutas (madurez, variedad), pérdidas al filtrar y apreciación visual del ovillo.' },
   ],
+  'cinetica-potencial': [
+    { id: 'balanza', name: 'Balanza digital (0,1 g)', quantity: 'Masa del carrito o del objeto', unit: 'g', resolution: 0.1, sigma: 0.05, nonNegative: true, note: 'Corrientes de aire y posición del objeto en el plato.' },
+    { id: 'fotopuerta', name: 'Fotopuerta con temporizador (0,01 ms)', quantity: 'Tiempo de bloqueo de la bandera de 5,00 cm', unit: 'ms', resolution: 0.01, sigma: 0.01, relSigma: 0.002, nonNegative: true, note: 'La electrónica es precisa; dominan la alineación de la bandera con el haz y el ancho efectivo del haz.' },
+    { id: 'cinta', name: 'Cinta métrica de 10 m (1 mm)', quantity: 'Altura h sobre el haz de la fotopuerta', unit: 'm', resolution: 0.001, sigma: 0.0015, nonNegative: true, note: 'Cinta que no queda del todo vertical o tensa y paralaje al leer la marca.' },
+    { id: 'fuerza', name: 'Sensor de fuerza digital (±50 N, 0,01 N)', quantity: 'Fuerza del torno al subir el objeto o fuerza del resorte comprimido', unit: 'N', resolution: 0.01, sigma: 0.01, relSigma: 0.003, nonNegative: true, note: 'Ruido del sensor y pequeñas oscilaciones del objeto al subirlo.' },
+    { id: 'regla', name: 'Regla del lanzador (1 mm)', quantity: 'Compresión x del resorte', unit: 'cm', resolution: 0.1, sigma: 0.05, nonNegative: true, note: 'Alinear el borde del carrito con la marca y paralaje.' },
+    { id: 'lanzador', name: 'Lanzador de rapidez regulable', quantity: 'Rapidez real de salida (no se lee: la mide la fotopuerta)', unit: 'm/s', resolution: 0.001, relSigma: 0.01, note: 'El empujador no entrega siempre la misma rapidez: varía cerca de 1 % entre lanzamientos.' },
+  ],
   mol: [
     { id: 'balanza', name: 'Balanza de precisión (220 g × 0,001 g) con cámara antiviento', quantity: 'Masa', unit: 'g', resolution: 0.001, sigma: 0.0015, note: 'Corrientes de aire, vibraciones de la mesa, electricidad estática de la navecilla de plástico y objetos aún tibios.' },
   ],

@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (55)
+## Prácticas implementadas (56)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -33,6 +33,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 8.º | Balanceo de ecuaciones químicas | Química | Moléculas de bolas y varillas que se arrastran a las bandejas; conteo de átomos en vivo; balanza de dos platos (Lavoisier); 12 reacciones; resolución por espacio nulo |
 | 8.º | Sonido y resonancia | Física | Tubo de resonancia con nivel de agua que se arrastra; diapasones que suenan de verdad; osciloscopio con perillas; λ = 2(L₂ − L₁); rapidez del sonido con la temperatura; nivel sonoro y distancia |
 | 8.º | Modelo interactivo de ADN y complementariedad | Biología | Extracción de ADN de fresa, banano o cebolla (tampón, filtrado, alcohol frío, varilla) con índice de rendimiento de un modelo calculado; doble hebra arrastrando bases, puentes de hidrógeno, antiparalelismo, %GC, regla de Wallace y reglas de Chargaff |
+| 8.º | Energía cinética y energía potencial | Física | Tres estaciones: riel de aire con fotopuerta (Ec = ½mv², linealización Ec–v²), torre de caída de 10 m con torno, sensor de fuerza y fotopuerta en la Tierra, la Luna o Marte (F·h = mgh = ½mv²; caso de referencia 98,1 J y 14,0 m/s) y lanzador de resorte (½kx²); barras de energía en vivo, rozamiento y aire en el modo avanzado, instrumento real con semilla e ideas erróneas puestas a prueba |
 | 9.º | Del ADN a la proteína | Biología | Complementariedad, replicación semiconservativa, código genético, clasificación de mutaciones (HBB Glu6Val) |
 | 9.º | Leyes de Newton | Física | F_neta = m·a, fricción estática y cinética, cinemática con fotopuertas (a = 2d/t²) |
 | 9.º | Velocidad, aceleración y movimiento | Física | MRU y MRUA, fotografía estroboscópica, gráficas x–t y v–t (pendiente y área), frenado, reto de igualar gráficas |

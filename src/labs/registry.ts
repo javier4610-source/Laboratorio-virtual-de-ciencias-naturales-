@@ -28,6 +28,7 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   newton: lazy(() => import('./NewtonLab')),
   gases: lazy(() => import('./GasLab')),
   energia: lazy(() => import('./EnergyLab')),
+  'cinetica-potencial': lazy(() => import('./KineticPotentialLab')),
   metabolismo: lazy(() => import('./MetabolismLab')),
   proteinas: lazy(() => import('./ProteinLab')),
   rastreo: lazy(() => import('./GeneTraceLab')),

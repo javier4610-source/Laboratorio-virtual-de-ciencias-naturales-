@@ -349,6 +349,20 @@ const SCENES: Record<string, () => ReactNode> = {
       <GasSyringe x={150} y={56} length={100} height={34} fraction={0.4} capacity={100} major={50} />
     </>
   ),
+  'cinetica-potencial': () => (
+    <>
+      <Bench />
+      <rect x={20} y={112} width={280} height={12} rx={2} fill="#c3cdd1" stroke="#8c979b" />
+      <rect x={150} y={52} width={18} height={14} rx={2} fill="#37474f" /><rect x={163} y={66} width={3} height={46} fill="#9aa5a9" />
+      <line x1={159} x2={159} y1={66} y2={100} stroke="#ff5252" strokeDasharray="3 2" />
+      <rect x={96} y={88} width={44} height={22} rx={3} fill="url(#kit-metal)" stroke="#7d8a8f" /><rect x={113} y={70} width={10} height={18} fill="#1f2a2d" />
+      <g transform="translate(214 22)">
+        <rect width={88} height={70} rx={6} fill="var(--surface)" stroke="var(--line)" />
+        <rect x={10} y={14} width={50} height={10} rx={2} fill="var(--series-1)" /><rect x={10} y={30} width={22} height={10} rx={2} fill="var(--series-2)" />
+        <rect x={10} y={46} width={72} height={10} rx={2} fill="none" stroke="var(--series-8)" strokeDasharray="4 2" />
+      </g>
+    </>
+  ),
   energia: () => (
     <>
       <path d="M20 30 Q60 30 90 100 Q120 150 160 140 Q200 130 228 90 Q250 62 300 62" fill="none" stroke="#78909c" strokeWidth="5" strokeLinecap="round" />

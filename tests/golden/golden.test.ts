@@ -28,6 +28,7 @@ import { vantHoff } from '../../src/models/equilibrium';
 import { carryingCapacity, K_NORMAL } from '../../src/models/foodweb';
 import { simulateGas } from '../../src/models/gases';
 import { relativeToTss, TSS } from '../../src/models/geneExpression';
+import { kineticEnergy, simulateDrop } from '../../src/models/kineticPotential';
 import { REFERENCE_CONDITION, runFba } from '../../src/models/metabolism';
 import { heat } from '../../src/models/heat';
 import { dipoleField } from '../../src/models/induction';
@@ -273,6 +274,12 @@ export const GOLDEN: GoldenCase[] = [
     const s = parseStructure(readFileSync(new URL('../../src/data/proteinas/3I40.cif', import.meta.url), 'utf8'));
     const a = findAtom(s, 'A', 6, 'SG')!, b = findAtom(s, 'A', 11, 'SG')!;
     close(measureDistance(s, a.index, b.index), 2.027, 1e-3);
+  } },
+  { id: 'cinetica-potencial', origin: 'referencia', what: 'caso del prompt 9.1: m = 1 kg, h = 10 m, g = 9,81 m/s² → Ep = m·g·h = 98,1 J = F·h, v = √(2gh) = 14,007 m/s; fotopuerta (bandera de 5,00 cm centrada en el haz) Δt = √(2·10,025/g) − √(2·9,975/g) = 3,5696 ms; y Ec ∝ v²: doble rapidez → 4 × Ec', run: () => {
+    const d = simulateDrop({ mass: 1, height: 10, place: 'tierra' });
+    close(d.ep0, 98.1, 1e-9); close(d.liftWork, 98.1, 1e-9); close(d.ekGate, 98.1, 1e-9);
+    close(d.vGate, 14.00714, 1e-5); close(d.dtGate * 1000, Math.sqrt(2 * 10.025 / 9.81) * 1000 - Math.sqrt(2 * 9.975 / 9.81) * 1000, 1e-9);
+    close(kineticEnergy(0.5, 2) / kineticEnergy(0.5, 1), 4, 1e-12);
   } },
   { id: 'metabolismo', origin: 'referencia', what: 'FBA de E. coli core (glucosa 10 mmol/gDW/h): crecimiento 0,8739 h⁻¹ con O₂ sin límite y 0,2117 h⁻¹ sin O₂, iguales a COBRApy 0.32.1 con GLPK (tolerancia relativa 10⁻⁶)', run: () => {
     close(runFba(REFERENCE_CONDITION).growth, 0.873921506968, 1e-6);

@@ -431,6 +431,31 @@
     "illustrative": false
   },
   {
+    "id": "cinetica-potencial",
+    "title": "Energía cinética y energía potencial",
+    "grade": 8,
+    "area": "fisica",
+    "lab": "KineticPotentialLab",
+    "models": [
+      "kineticPotential"
+    ],
+    "tests": [
+      "kineticPotential.test.ts"
+    ],
+    "nTests": 28,
+    "e2e": true,
+    "a11y": false,
+    "loc": 1076,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
     "id": "conservacion",
     "title": "Conservación de la masa en sistemas abiertos y cerrados",
     "grade": 8,

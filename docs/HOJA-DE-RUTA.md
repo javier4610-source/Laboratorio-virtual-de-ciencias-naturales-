@@ -87,6 +87,7 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
       Biopython; vista de respaldo sin WebGL.
 - [x] **v2 · Fase 6:** metabolismo con FBA (E. coli core) en el navegador, validado contra COBRApy 0.32.1 (439 casos,
       error relativo ≤ 3×10⁻¹²); genes esenciales y variabilidad de flujos.
+- [x] **Rediseño visual 2026** de la interfaz y práctica 56 de energía cinética y potencial (8.º) (versión 1.7.0).
 - [ ] **v2 · Fases 7–10:** fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por
       infraestructura hasta decisión del docente).

@@ -329,3 +329,12 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Práctica | E2E (0,8739 h⁻¹ y 48 min; sin oxígeno 0,2117 h⁻¹ y 24,2 %; guardar en la tabla); axe WCAG 2.2 AA en tema claro, oscuro y teléfono; capturas en ambos temas | Correcto | Una referencia bibliográfica no verificable desde el entorno | Retirada de las referencias | Corregido |
 | Licencias | Modelo con cita (PMID 26443778); licencia del archivo del modelo | Parcial | La licencia de BiGG no se pudo consultar (dominio bloqueado) | Registrada como «Por verificar» en `docs/v2/LICENCIAS.md` | Parcial |
 | Regresión | 891 pruebas unitarias y 101 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |
+
+# Rediseño visual y práctica 56: energía cinética y potencial (versión 1.7.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Rediseño visual | E2E completo con axe WCAG 2.2 AA en tema claro, oscuro y teléfono; capturas de inicio, catálogo, grado y prácticas en ambos temas a 1280 y 390 px | Correcto | Números decorativos del ciclo con contraste 1,79:1; el diálogo «Mi curso» se auditaba a mitad de su animación de opacidad | Contraste ≥ 3:1 (texto grande); la animación del diálogo solo desplaza | Corregido |
+| Modelo de energía cinética y potencial | 28 pruebas: 98,1 J y 14,007 m/s calculados a mano; Δt de la fotopuerta = 3,5696 ms; doble rapidez → 4 × Ec; ½kx² = ½mv²; conservación en todo instante con y sin rozamiento o aire; comparación con integración RK4 independiente; rangos y casos límite | Correcto | — | — | Correcto |
+| Práctica | Valor dorado (caso 9.1 del programa); E2E de las tres estaciones (100,00 ms y 0,0625 J; 98,1 J, 9,81 N, 3,57 ms y 14,0 m/s; resorte 2,50 N) y del teclado; axe en ambos temas; capturas | Correcto | La burbuja de ayuda del botón «Tabla» de las gráficas ensancha la página a 390 px | Recorte local en el contenedor de gráficas de esta práctica | Correcto (pendiente revisar la causa general en el componente de gráficas) |
+| Regresión | 920 pruebas unitarias y 105 E2E (axe WCAG 2.2 AA, teléfono) | Todas pasan | — | — | Correcto |

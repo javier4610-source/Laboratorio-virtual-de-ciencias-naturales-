@@ -7,6 +7,26 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [1.7.0] · 2026-10-19
+
+### Añadido
+- Práctica 56, energía cinética y energía potencial (8.º): riel de aire con fotopuerta (Ec = ½·m·v² y linealización
+  Ec–v²), torre de caída de hasta 10 m con torno, sensor de fuerza y fotopuerta, con gravedad de la Tierra, la Luna
+  o Marte (F·h = m·g·h = ½·m·v²), y lanzador de resorte (½·k·x²). Incluye barras de energía en vivo, rozamiento y aire en
+  el modo avanzado (energía térmica), modo de instrumento real con semilla, panel de ideas erróneas con
+  retroalimentación calculada y 6 preguntas más una tipo Saber 11. Reproduce el caso de referencia del programa: 1 kg a
+  10 m da 98,1 J y 14,0 m/s.
+
+### Cambiado
+- Rediseño visual de la interfaz (`src/theme-2026.css`):
+  - encabezado translúcido al desplazarse;
+  - portada con fondo de malla de color, un átomo en SVG animado con los colores de las áreas y el título en degradado;
+  - tarjetas con relieve y brillo del área, catálogo, pestañas, lecturas, tablas, diálogos y pie de página renovados;
+  - modo oscuro propio;
+  - animaciones desactivadas con «reducir movimiento»; impresión sin decoración.
+
+  No cambia textos, accesibilidad ni el interior de los laboratorios.
+
 ## [1.6.0] · 2026-10-18
 
 Programa v2 · Fase 6: metabolismo con análisis de balance de flujos.

@@ -1,12 +1,12 @@
 # Inventario automático del laboratorio
 
-Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se regenera desde el código.
+Generado por `node scripts/inventario.mjs` el 2026-10-19. No editar a mano: se regenera desde el código.
 
-- Prácticas en el catálogo: **55**
-- Con laboratorio registrado: 55 · con prueba E2E propia: 55 · con revisión axe: 0
-- Con modo de instrumento real: 22 · con modo avanzado: 19 · con parámetros editables: 8
-- Con manipulación directa: 31 · con sonido: 38 · con texto que rotula partes ilustrativas: 19
-- Archivos de pruebas unitarias: 52 (756 pruebas declaradas)
+- Prácticas en el catálogo: **56**
+- Con laboratorio registrado: 56 · con prueba E2E propia: 56 · con revisión axe: 0
+- Con modo de instrumento real: 23 · con modo avanzado: 20 · con parámetros editables: 8
+- Con manipulación directa: 32 · con sonido: 39 · con texto que rotula partes ilustrativas: 19
+- Archivos de pruebas unitarias: 53 (784 pruebas declaradas)
 
 | Práctica | Grado | Área | Laboratorio (líneas) | Modelos | Pruebas unitarias | E2E | axe | Instr. real | Avanzado | Manipulación | Sonido | Rótulo ilustrativo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -27,6 +27,7 @@ Generado por `node scripts/inventario.mjs` el 2026-10-18. No editar a mano: se r
 | `osmosis` Difusión y ósmosis a través de la membrana | 7.º | biologia | OsmosisLab (424) | osmosis | 55 en models.test.ts | sí | no | no | no | no | no | sí |
 | `presion` Presión en líquidos y presión atmosférica | 7.º | fisica | PressureLab (1042) | pressure | 46 en advanced.test.ts, buoyancy.test.ts, pressure.test.ts | sí | no | sí | sí | sí | no | sí |
 | `balanceo` Balanceo de ecuaciones químicas con conteo de átomos | 8.º | quimica | BalancingLab (607) | balancing | 34 en balancing.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
+| `cinetica-potencial` Energía cinética y energía potencial | 8.º | fisica | KineticPotentialLab (1076) | kineticPotential | 28 en kineticPotential.test.ts | sí | no | sí | sí | sí | sí | no |
 | `conservacion` Conservación de la masa en sistemas abiertos y cerrados | 8.º | quimica | ConservationLab (518) | massConservation | 12 en massConservation.test.ts | sí | no | no | no | no | sí | no |
 | `extraccion-adn` Modelo interactivo de ADN y complementariedad | 8.º | biologia | DnaExtractionLab (881) | dnaExtraction | 12 en dnaExtraction.test.ts | sí | no | sí | sí | sí | sí | sí |
 | `mendel` Herencia mendeliana y cuadros de Punnett | 8.º | biologia | MendelLab (398) | mendel | 55 en models.test.ts | sí | no | no | no | no | no | sí |

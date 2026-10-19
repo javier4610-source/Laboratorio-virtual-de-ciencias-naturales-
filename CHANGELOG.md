@@ -7,7 +7,9 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
-Cambio **MAYOR** (se publicará como 2.0.0): cambia el flujo de todas las prácticas y contratos existentes — el formato
+## [2.0.0] · 2026-10-19
+
+Cambio **MAYOR**: cambia el flujo de todas las prácticas y contratos existentes — el formato
 de las fichas `PracticeDef`, los identificadores de etapa y el esquema del registro de experimento —, aunque los datos
 guardados siguen siendo legibles. Decisión y consecuencias en [ADR 0006](docs/v2/adr/0006-retiro-etapa-hipotesis.md).
 

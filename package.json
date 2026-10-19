@@ -1,7 +1,7 @@
 {
   "name": "laboratorio-virtual-ciencias-naturales",
   "private": true,
-  "version": "1.7.0",
+  "version": "2.0.0",
   "description": "Laboratorio Virtual de Ciencias Naturales: prácticas interactivas para grados 6.º a 11.º (Colombia).",
   "type": "module",
   "scripts": {

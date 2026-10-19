@@ -88,6 +88,8 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
 - [x] **v2 · Fase 6:** metabolismo con FBA (E. coli core) en el navegador, validado contra COBRApy 0.32.1 (439 casos,
       error relativo ≤ 3×10⁻¹²); genes esenciales y variabilidad de flujos.
 - [x] **Rediseño visual 2026** de la interfaz y práctica 56 de energía cinética y potencial (8.º) (versión 1.7.0).
+- [x] **Etapa de hipótesis retirada** de todas las prácticas por decisión del docente (versión 2.0.0, ADR 0006).
+- [ ] **Química:** funciones inorgánicas (óxidos, hidróxidos, ácidos, sales), nomenclatura inorgánica y orgánica, hidrocarburos, aromáticos, grupos funcionales y reacciones en 3D (en curso).
 - [ ] **v2 · Fases 7–10:** fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por
       infraestructura hasta decisión del docente).

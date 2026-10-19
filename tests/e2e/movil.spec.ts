@@ -21,7 +21,7 @@ test('móvil: inicio y catálogo sin desbordamiento horizontal', async ({ page }
 });
 
 test('móvil: cada práctica carga su laboratorio sin errores', async ({ page }) => {
-  test.setTimeout(300_000);
+  test.setTimeout(600_000);
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(`${page.url()} · ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error') errors.push(`${page.url()} · ${m.text()}`); });

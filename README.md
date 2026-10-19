@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (56)
+## Prácticas implementadas (59)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -41,6 +41,9 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 9.º | Trabajo, potencia y plano inclinado | Física | Rampa de ángulo ajustable, superficies con distinto rozamiento, pesas y dinamómetro; W = F·d frente a m·g·h; eficiencia; potencia con torno; potencia humana en la escalera del colegio |
 | 9.º | Cálculos estequiométricos básicos | Química | El mol y la masa molar (pesos atómicos IUPAC); contar partículas pesando en una balanza analítica con tara; bicarbonato con vinagre y bicarbonato calentado en la balanza; conservación de la masa; volumen molar |
 | 10.º | Soluciones, molaridad y colorimetría | Química | n = m/M, M = n/V, C₁V₁ = C₂V₂, Beer-Lambert, solubilidad |
+| 10.º | Óxidos e hidróxidos: formación, nomenclatura y carácter ácido-base | Química | Combustión de metales y no metales con balanza, disolución en agua con indicadores y pH calculado por balance de cargas; reacciones en 3D (ilustración rotulada) y redes cristalinas de MgO y CaO desde parámetros de red publicados; nombres en los tres sistemas |
+| 10.º | Ácidos y sales: hidrácidos, oxácidos, neutralización y nomenclatura | Química | Formación de ácidos, titulación con bureta y pH-metro (curva y equivalencia), hidrólisis de sales (NaHCO₃ 8,34; NH₄Cl 5,12), neutralización en 3D y cristal de NaCl |
+| 10.º | Nomenclatura química inorgánica | Química | Constructor con tabla periódica: fórmula por neutralidad de cargas y nombres sistemático, Stock y tradicional (IUPAC 2005), retos de nombrar y formular; motor validado con 149 compuestos y sinónimos de PubChem |
 | 10.º | Actividad enzimática | Biología | Michaelis-Menten × Arrhenius × desnaturalización × pH (dos pKa) |
 | 10.º | Fotosíntesis: luz, CO₂ y temperatura | Biología | Inverso del cuadrado, colimitación luz/CO₂ (hipérbola no rectangular), respiración Q₁₀, punto de compensación |
 | 10.º | Leyes de los gases | Química | Gas ideal PV = nRT: Boyle, Charles (cero absoluto por extrapolación), Gay-Lussac; resolución de instrumentos |

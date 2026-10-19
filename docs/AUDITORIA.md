@@ -351,3 +351,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Informe y registro | Pruebas unitarias: el informe lleva los campos vacíos (para paneles anteriores) sin el texto antiguo; el registro nuevo no trae `hipotesis` y uno antiguo que la trae se sigue importando; esquema JSON con `hipotesis` opcional y obsoleta | Correcto | — | Formatos `lvcn-informe-v1` y `lvcn-registro-experimento/1` se conservan | Correcto |
 | Guías en PDF | `npm run guias` (112 PDF) y extracción de texto | Sin actividad ni pregunta de hipótesis; quedan menciones del concepto científico (chi-cuadrado, FBA, AlphaFold, estándares del MEN) | — | Actividad 1 solo con variables; pregunta de tendencia en el análisis; rúbrica sin hipótesis | Correcto |
 | Regresión | 930 pruebas unitarias (Vitest, 58 archivos) y 106 E2E (axe WCAG 2.2 AA en tema claro, oscuro y teléfono) | Todas pasan | — | — | Correcto |
+
+# Química inorgánica y kit 3D (versión 2.1.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Kit 3D | 18 pruebas: Na–Cl = a/2; coordinación 6:6, 8:4 y 8:8; densidades calculadas frente a las publicadas (< 1,5 %; NaCl 2,1635 frente a 2,17 g/cm³); conservación de átomos en toda la animación; rechazo de ecuaciones no balanceadas; visor con WebGL y respaldo SVG con `--disable-webgl` | Correcto | El lienzo 3D no se encogía en teléfonos | `minWidth: 0` en las figuras del kit | Corregido |
+| Motor de nomenclatura | 149 compuestos con sus tres nombres en español; 145 con CID de PubChem de la misma fórmula y nombre del motor entre sus sinónimos; casos difíciles (Fe, Cu, Sn, Pb, Hg; ácidos de Cl, Br, I, S, N, P, C, Mn, Cr; peróxidos; hidruros) | Correcto | Agrupamiento de Hg₂; «cloruro de carbono» sin «(IV)» | Corregidos | Correcto |
+| Modelos de pH | pH por balance de cargas igual al modelo existente (10⁻⁸); HCl 0,1 M = 1,00; acético 0,1 M = 2,875; equivalencia HCl/NaOH 7,00; NaHCO₃ 8,34; NH₄Cl 5,12; Mg(OH)₂ saturado 10,35 | Correcto | — | — | Correcto |
+| Prácticas | Valores dorados; E2E de las tres prácticas y sin WebGL; axe WCAG 2.2 AA en ambos temas; teléfono sin desbordamiento; capturas revisadas | Correcto | Chip de texto largo ensanchaba la página 45 px a 390 px | Chip con salto de línea | Corregido |
+| Regresión | 975 pruebas unitarias y 117 E2E | Todas pasan | Las pruebas que recorren todas las prácticas superaban 5 min | Tiempo máximo de 10 min | Corregido |

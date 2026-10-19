@@ -7,6 +7,20 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.1.0] · 2026-10-19
+
+### Añadido
+- Kit 3D de química (`src/chem/`): visor de moléculas con confórmeros 3D de PubChem (38 especies con CID, URL, fecha y
+  SHA-256), reacciones en 3D con átomos mapeados, ecuación balanceada y conteo de átomos (rotuladas como ilustración
+  educativa), redes cristalinas iónicas (NaCl, KCl, MgO, CaO, CaF₂, CsCl) calculadas desde parámetros de red publicados y
+  respaldo en SVG sin WebGL.
+- Prácticas 57 a 59 (química, 10.º): óxidos e hidróxidos; ácidos y sales (titulación e hidrólisis de sales); nomenclatura
+  química inorgánica (sistemática, Stock y tradicional; motor validado con 149 compuestos y sinónimos de PubChem).
+
+### Corregido
+- Visores 3D y chips de texto largo que ensanchaban la página en teléfonos.
+- Tiempo máximo de las pruebas de accesibilidad y de teléfono que recorren todas las prácticas (de 5 a 10 minutos).
+
 ## [2.0.0] · 2026-10-19
 
 Cambio **MAYOR**: cambia el flujo de todas las prácticas y contratos existentes — el formato

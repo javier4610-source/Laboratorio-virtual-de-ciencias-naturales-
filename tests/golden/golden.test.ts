@@ -28,6 +28,9 @@ import { vantHoff } from '../../src/models/equilibrium';
 import { carryingCapacity, K_NORMAL } from '../../src/models/foodweb';
 import { simulateGas } from '../../src/models/gases';
 import { relativeToTss, TSS } from '../../src/models/geneExpression';
+import { burn, dissolve, molar } from '../../src/models/oxidesHydroxides';
+import { saltSolution, titrationPH } from '../../src/models/acidsSalts';
+import { buildCompound } from '../../src/models/inorganicNomenclature';
 import { kineticEnergy, simulateDrop } from '../../src/models/kineticPotential';
 import { REFERENCE_CONDITION, runFba } from '../../src/models/metabolism';
 import { heat } from '../../src/models/heat';
@@ -280,6 +283,23 @@ export const GOLDEN: GoldenCase[] = [
     close(d.ep0, 98.1, 1e-9); close(d.liftWork, 98.1, 1e-9); close(d.ekGate, 98.1, 1e-9);
     close(d.vGate, 14.00714, 1e-5); close(d.dtGate * 1000, Math.sqrt(2 * 10.025 / 9.81) * 1000 - Math.sqrt(2 * 9.975 / 9.81) * 1000, 1e-9);
     close(kineticEnergy(0.5, 2) / kineticEnergy(0.5, 1), 4, 1e-12);
+  } },
+  { id: 'oxidos-hidroxidos', origin: 'independiente', what: '2 Mg + O₂ → 2 MgO: m(MgO)/m(Mg) = 40,304/24,305 = 1,6583 (0,50 g → 0,83 g); Mg(OH)₂ saturado con Kps = 5,61×10⁻¹² → pH = 14 + log(2·(Kps/4)^(1/3)) = 10,35; 0,310 g de Na₂O en 100 mL → NaOH 0,100 M → pH 13,00', run: () => {
+    const b = burn('mg', 0.5);
+    close(b.ratio, 40.304 / 24.305, 1e-12); expect(b.massReading).toBe(0.83);
+    close(dissolve('mg', b.molesOxide, 100).pH, 14 + Math.log10(2 * Math.cbrt(5.61e-12 / 4)), 1e-6);
+    close(dissolve('na2o', 0.31 / molar('Na2O'), 100).pH, 14 + Math.log10((2 * 0.31) / molar('Na2O') / 0.1), 1e-4);
+  } },
+  { id: 'acidos-sales', origin: 'independiente', what: 'neutralización HCl 0,100 M (25,00 mL) + NaOH 0,100 M: pH 7,00 en V_eq = 25,00 mL; NaHCO₃ 0,100 M → pH ≈ (pKa₁ + pKa₂)/2 = (6,351 + 10,329)/2 = 8,34; NH₄Cl 0,100 M → pH ≈ ½(pKa − log C) = 5,12', run: () => {
+    close(titrationPH('hcl', 0.1, 25, 0.1, 25), 7, 1e-6);
+    close(saltSolution('nahco3', 0.1).pH, (6.351 + 10.329) / 2, 0.01);
+    close(saltSolution('nh4cl', 0.1).pH, (9.245 + 1) / 2, 0.01);
+  } },
+  { id: 'nomenclatura-inorganica', origin: 'independiente', what: 'neutralidad de cargas Fe³⁺/O²⁻ → Fe₂O₃ (trióxido de dihierro, óxido de hierro(III), óxido férrico); Hg₂²⁺/Cl⁻ → Hg₂Cl₂; H₂SO₄ = dihidrogeno(tetraoxidosulfato) (IUPAC 2005)', run: () => {
+    const fe = buildCompound({ kind: 'oxido', el: 'Fe', ox: 3 });
+    expect([fe.formula, fe.names.sistematica, fe.names.stock, fe.names.tradicional]).toEqual(['Fe2O3', 'trióxido de dihierro', 'óxido de hierro(III)', 'óxido férrico']);
+    expect(buildCompound({ kind: 'sal-binaria', cation: { el: 'Hg', ox: 1 }, anion: 'Cl' }).formula).toBe('Hg2Cl2');
+    expect(buildCompound({ kind: 'oxacido', el: 'S', ox: 6 }).names.sistematica).toBe('dihidrogeno(tetraoxidosulfato)');
   } },
   { id: 'metabolismo', origin: 'referencia', what: 'FBA de E. coli core (glucosa 10 mmol/gDW/h): crecimiento 0,8739 h⁻¹ con O₂ sin límite y 0,2117 h⁻¹ sin O₂, iguales a COBRApy 0.32.1 con GLPK (tolerancia relativa 10⁻⁶)', run: () => {
     close(runFba(REFERENCE_CONDITION).growth, 0.873921506968, 1e-6);

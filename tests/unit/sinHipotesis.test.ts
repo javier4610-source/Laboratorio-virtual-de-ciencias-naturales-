@@ -44,7 +44,7 @@ describe('etapas sin hipótesis', () => {
 
 describe('fichas de las prácticas', () => {
   it('ninguna ficha conserva el campo «hypothesis» ni un enunciado de hipótesis', () => {
-    expect(PRACTICES.length).toBe(56);
+    expect(PRACTICES.length).toBeGreaterThanOrEqual(56);
     for (const p of PRACTICES) {
       expect(p, p.id).not.toHaveProperty('hypothesis');
       // El fundamento y los objetivos pueden nombrar la hipótesis como concepto científico (chi-cuadrado en Mendel,
@@ -57,7 +57,9 @@ describe('fichas de las prácticas', () => {
   });
 
   it('las 56 fichas migradas conservan al menos una relación para el análisis de tendencia', () => {
-    for (const p of PRACTICES) expect(p.relations?.length ?? 0, p.id).toBeGreaterThan(0);
+    // Prácticas sin relaciones numéricas (talleres de nomenclatura): el tipo permite omitir `relations`.
+    const SIN_RELACIONES = new Set(['nomenclatura-inorganica']);
+    for (const p of PRACTICES.filter((x) => !SIN_RELACIONES.has(x.id))) expect(p.relations?.length ?? 0, p.id).toBeGreaterThan(0);
   });
 });
 

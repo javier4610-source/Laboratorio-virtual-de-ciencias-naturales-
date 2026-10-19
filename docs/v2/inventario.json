@@ -761,6 +761,35 @@
     "illustrative": false
   },
   {
+    "id": "acidos-sales",
+    "title": "Ácidos y sales: hidrácidos, oxácidos, neutralización y nomenclatura",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "AcidsSaltsLab",
+    "models": [
+      "aqueousEquilibria",
+      "acidsSalts",
+      "inorganicNomenclature",
+      "oxidesHydroxides"
+    ],
+    "tests": [
+      "inorganicChemistry.test.ts",
+      "inorganicNomenclature.test.ts"
+    ],
+    "nTests": 24,
+    "e2e": true,
+    "a11y": false,
+    "loc": 285,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "choques",
     "title": "Choques y cantidad de movimiento",
     "grade": 10,
@@ -928,10 +957,11 @@
     ],
     "tests": [
       "balancing.test.ts",
+      "chemKit.test.ts",
       "geometry.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 50,
+    "nTests": 68,
     "e2e": true,
     "a11y": false,
     "loc": 704,
@@ -943,6 +973,61 @@
     "sound": true,
     "datasets": true,
     "illustrative": false
+  },
+  {
+    "id": "nomenclatura-inorganica",
+    "title": "Nomenclatura química inorgánica",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "InorganicNomenclatureLab",
+    "models": [
+      "geometry",
+      "inorganicNomenclature"
+    ],
+    "tests": [
+      "chemKit.test.ts",
+      "geometry.test.ts",
+      "inorganicNomenclature.test.ts"
+    ],
+    "nTests": 45,
+    "e2e": true,
+    "a11y": false,
+    "loc": 264,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "oxidos-hidroxidos",
+    "title": "Óxidos e hidróxidos: formación, nomenclatura y carácter ácido-base",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "OxidesHydroxidesLab",
+    "models": [
+      "inorganicNomenclature",
+      "oxidesHydroxides"
+    ],
+    "tests": [
+      "inorganicChemistry.test.ts",
+      "inorganicNomenclature.test.ts"
+    ],
+    "nTests": 24,
+    "e2e": true,
+    "a11y": false,
+    "loc": 251,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
   },
   {
     "id": "pendulo",
@@ -1265,11 +1350,12 @@
       "chemistry"
     ],
     "tests": [
+      "inorganicChemistry.test.ts",
       "models.test.ts",
       "models2.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 97,
+    "nTests": 110,
     "e2e": true,
     "a11y": false,
     "loc": 280,

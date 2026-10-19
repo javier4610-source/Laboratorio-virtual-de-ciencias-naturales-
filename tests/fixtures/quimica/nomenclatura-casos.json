@@ -1,0 +1,2634 @@
+[
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Fe",
+   "ox": 3
+  },
+  "queries": [
+   "iron(III) oxide",
+   "ferric oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dihierro",
+   "stock": "óxido de hierro(III)",
+   "tradicional": "óxido férrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Fe",
+   "ox": 2
+  },
+  "queries": [
+   "iron(II) oxide",
+   "ferrous oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de hierro",
+   "stock": "óxido de hierro(II)",
+   "tradicional": "óxido ferroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Cu",
+   "ox": 1
+  },
+  "queries": [
+   "copper(I) oxide",
+   "cuprous oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de dicobre",
+   "stock": "óxido de cobre(I)",
+   "tradicional": "óxido cuproso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Cu",
+   "ox": 2
+  },
+  "queries": [
+   "copper(II) oxide",
+   "cupric oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de cobre",
+   "stock": "óxido de cobre(II)",
+   "tradicional": "óxido cúprico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Sn",
+   "ox": 2
+  },
+  "queries": [
+   "tin(II) oxide",
+   "stannous oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de estaño",
+   "stock": "óxido de estaño(II)",
+   "tradicional": "óxido estannoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Sn",
+   "ox": 4
+  },
+  "queries": [
+   "tin(IV) oxide",
+   "stannic oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de estaño",
+   "stock": "óxido de estaño(IV)",
+   "tradicional": "óxido estánnico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Pb",
+   "ox": 2
+  },
+  "queries": [
+   "lead(II) oxide",
+   "lead monoxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de plomo",
+   "stock": "óxido de plomo(II)",
+   "tradicional": "óxido plumboso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Pb",
+   "ox": 4
+  },
+  "queries": [
+   "lead(IV) oxide",
+   "lead dioxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de plomo",
+   "stock": "óxido de plomo(IV)",
+   "tradicional": "óxido plúmbico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Hg",
+   "ox": 1
+  },
+  "queries": [
+   "mercury(I) oxide",
+   "mercurous oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de dimercurio",
+   "stock": "óxido de mercurio(I)",
+   "tradicional": "óxido mercurioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Hg",
+   "ox": 2
+  },
+  "queries": [
+   "mercury(II) oxide",
+   "mercuric oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de mercurio",
+   "stock": "óxido de mercurio(II)",
+   "tradicional": "óxido mercúrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Na",
+   "ox": 1
+  },
+  "queries": [
+   "sodium oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de disodio",
+   "stock": "óxido de sodio",
+   "tradicional": "óxido sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "K",
+   "ox": 1
+  },
+  "queries": [
+   "potassium oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de dipotasio",
+   "stock": "óxido de potasio",
+   "tradicional": "óxido potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ca",
+   "ox": 2
+  },
+  "queries": [
+   "calcium oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de calcio",
+   "stock": "óxido de calcio",
+   "tradicional": "óxido cálcico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Mg",
+   "ox": 2
+  },
+  "queries": [
+   "magnesium oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de magnesio",
+   "stock": "óxido de magnesio",
+   "tradicional": "óxido magnésico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ba",
+   "ox": 2
+  },
+  "queries": [
+   "barium oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de bario",
+   "stock": "óxido de bario",
+   "tradicional": "óxido bárico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Al",
+   "ox": 3
+  },
+  "queries": [
+   "aluminum oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dialuminio",
+   "stock": "óxido de aluminio",
+   "tradicional": "óxido alumínico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Zn",
+   "ox": 2
+  },
+  "queries": [
+   "zinc oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de cinc",
+   "stock": "óxido de cinc",
+   "tradicional": "óxido cíncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Cr",
+   "ox": 3
+  },
+  "queries": [
+   "chromium(III) oxide",
+   "chromic oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dicromo",
+   "stock": "óxido de cromo(III)",
+   "tradicional": "óxido crómico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Cr",
+   "ox": 6
+  },
+  "queries": [
+   "chromium trioxide",
+   "chromium(VI) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de cromo",
+   "stock": "óxido de cromo(VI)",
+   "tradicional": "anhídrido crómico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Mn",
+   "ox": 4
+  },
+  "queries": [
+   "manganese dioxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de manganeso",
+   "stock": "óxido de manganeso(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Mn",
+   "ox": 7
+  },
+  "queries": [
+   "manganese heptoxide",
+   "dimanganese heptoxide"
+  ],
+  "es": {
+   "sistematica": "heptaóxido de dimanganeso",
+   "stock": "óxido de manganeso(VII)",
+   "tradicional": "anhídrido permangánico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "C",
+   "ox": 2
+  },
+  "queries": [
+   "carbon monoxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de carbono",
+   "stock": "óxido de carbono(II)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "C",
+   "ox": 4
+  },
+  "queries": [
+   "carbon dioxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de carbono",
+   "stock": "óxido de carbono(IV)",
+   "tradicional": "anhídrido carbónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "S",
+   "ox": 4
+  },
+  "queries": [
+   "sulfur dioxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de azufre",
+   "stock": "óxido de azufre(IV)",
+   "tradicional": "anhídrido sulfuroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "S",
+   "ox": 6
+  },
+  "queries": [
+   "sulfur trioxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de azufre",
+   "stock": "óxido de azufre(VI)",
+   "tradicional": "anhídrido sulfúrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "N",
+   "ox": 1
+  },
+  "queries": [
+   "nitrous oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de dinitrógeno",
+   "stock": "óxido de nitrógeno(I)",
+   "tradicional": "óxido nitroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "N",
+   "ox": 2
+  },
+  "queries": [
+   "nitric oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de nitrógeno",
+   "stock": "óxido de nitrógeno(II)",
+   "tradicional": "óxido nítrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "N",
+   "ox": 3
+  },
+  "queries": [
+   "dinitrogen trioxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dinitrógeno",
+   "stock": "óxido de nitrógeno(III)",
+   "tradicional": "anhídrido nitroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "N",
+   "ox": 4
+  },
+  "queries": [
+   "nitrogen dioxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de nitrógeno",
+   "stock": "óxido de nitrógeno(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "N",
+   "ox": 5
+  },
+  "queries": [
+   "dinitrogen pentoxide"
+  ],
+  "es": {
+   "sistematica": "pentaóxido de dinitrógeno",
+   "stock": "óxido de nitrógeno(V)",
+   "tradicional": "anhídrido nítrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "P",
+   "ox": 5
+  },
+  "queries": [
+   "phosphorus pentoxide",
+   "tetraphosphorus decaoxide"
+  ],
+  "es": {
+   "sistematica": "pentaóxido de difósforo",
+   "stock": "óxido de fósforo(V)",
+   "tradicional": "anhídrido fosfórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "P",
+   "ox": 3
+  },
+  "queries": [
+   "phosphorus trioxide",
+   "tetraphosphorus hexaoxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de difósforo",
+   "stock": "óxido de fósforo(III)",
+   "tradicional": "anhídrido fosforoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Cl",
+   "ox": 1
+  },
+  "queries": [
+   "dichlorine monoxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de dicloro",
+   "stock": "óxido de cloro(I)",
+   "tradicional": "anhídrido hipocloroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Cl",
+   "ox": 7
+  },
+  "queries": [
+   "dichlorine heptoxide"
+  ],
+  "es": {
+   "sistematica": "heptaóxido de dicloro",
+   "stock": "óxido de cloro(VII)",
+   "tradicional": "anhídrido perclórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Si",
+   "ox": 4
+  },
+  "queries": [
+   "silicon dioxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de silicio",
+   "stock": "óxido de silicio",
+   "tradicional": "anhídrido silícico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "B",
+   "ox": 3
+  },
+  "queries": [
+   "boron oxide",
+   "boron trioxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de diboro",
+   "stock": "óxido de boro",
+   "tradicional": "anhídrido bórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "I",
+   "ox": 5
+  },
+  "queries": [
+   "iodine pentoxide",
+   "diiodine pentoxide"
+  ],
+  "es": {
+   "sistematica": "pentaóxido de diyodo",
+   "stock": "óxido de yodo(V)",
+   "tradicional": "anhídrido yódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "peroxido",
+   "el": "H"
+  },
+  "queries": [
+   "hydrogen peroxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de dihidrógeno",
+   "stock": "peróxido de hidrógeno",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "peroxido",
+   "el": "Na"
+  },
+  "queries": [
+   "sodium peroxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de disodio",
+   "stock": "peróxido de sodio",
+   "tradicional": "peróxido sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "peroxido",
+   "el": "Ba"
+  },
+  "queries": [
+   "barium peroxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de bario",
+   "stock": "peróxido de bario",
+   "tradicional": "peróxido bárico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "peroxido",
+   "el": "Ca"
+  },
+  "queries": [
+   "calcium peroxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de calcio",
+   "stock": "peróxido de calcio",
+   "tradicional": "peróxido cálcico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Na",
+   "ox": 1
+  },
+  "queries": [
+   "sodium hydroxide"
+  ],
+  "es": {
+   "sistematica": "hidróxido de sodio",
+   "stock": "hidróxido de sodio",
+   "tradicional": "hidróxido sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "K",
+   "ox": 1
+  },
+  "queries": [
+   "potassium hydroxide"
+  ],
+  "es": {
+   "sistematica": "hidróxido de potasio",
+   "stock": "hidróxido de potasio",
+   "tradicional": "hidróxido potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Ca",
+   "ox": 2
+  },
+  "queries": [
+   "calcium hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de calcio",
+   "stock": "hidróxido de calcio",
+   "tradicional": "hidróxido cálcico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Mg",
+   "ox": 2
+  },
+  "queries": [
+   "magnesium hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de magnesio",
+   "stock": "hidróxido de magnesio",
+   "tradicional": "hidróxido magnésico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Ba",
+   "ox": 2
+  },
+  "queries": [
+   "barium hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de bario",
+   "stock": "hidróxido de bario",
+   "tradicional": "hidróxido bárico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Al",
+   "ox": 3
+  },
+  "queries": [
+   "aluminum hydroxide"
+  ],
+  "es": {
+   "sistematica": "trihidróxido de aluminio",
+   "stock": "hidróxido de aluminio",
+   "tradicional": "hidróxido alumínico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Fe",
+   "ox": 2
+  },
+  "queries": [
+   "iron(II) hydroxide",
+   "ferrous hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de hierro",
+   "stock": "hidróxido de hierro(II)",
+   "tradicional": "hidróxido ferroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Fe",
+   "ox": 3
+  },
+  "queries": [
+   "iron(III) hydroxide",
+   "ferric hydroxide"
+  ],
+  "es": {
+   "sistematica": "trihidróxido de hierro",
+   "stock": "hidróxido de hierro(III)",
+   "tradicional": "hidróxido férrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Cu",
+   "ox": 2
+  },
+  "queries": [
+   "copper(II) hydroxide",
+   "cupric hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de cobre",
+   "stock": "hidróxido de cobre(II)",
+   "tradicional": "hidróxido cúprico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Ni",
+   "ox": 2
+  },
+  "queries": [
+   "nickel(II) hydroxide",
+   "nickel hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de níquel",
+   "stock": "hidróxido de níquel(II)",
+   "tradicional": "hidróxido niqueloso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Zn",
+   "ox": 2
+  },
+  "queries": [
+   "zinc hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de cinc",
+   "stock": "hidróxido de cinc",
+   "tradicional": "hidróxido cíncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Pb",
+   "ox": 2
+  },
+  "queries": [
+   "lead(II) hydroxide",
+   "lead hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de plomo",
+   "stock": "hidróxido de plomo(II)",
+   "tradicional": "hidróxido plumboso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Co",
+   "ox": 2
+  },
+  "queries": [
+   "cobalt(II) hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de cobalto",
+   "stock": "hidróxido de cobalto(II)",
+   "tradicional": "hidróxido cobaltoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "Na"
+  },
+  "queries": [
+   "sodium hydride"
+  ],
+  "es": {
+   "sistematica": "hidruro de sodio",
+   "stock": "hidruro de sodio",
+   "tradicional": "hidruro sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "Li"
+  },
+  "queries": [
+   "lithium hydride"
+  ],
+  "es": {
+   "sistematica": "hidruro de litio",
+   "stock": "hidruro de litio",
+   "tradicional": "hidruro lítico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "Ca"
+  },
+  "queries": [
+   "calcium hydride"
+  ],
+  "es": {
+   "sistematica": "dihidruro de calcio",
+   "stock": "hidruro de calcio",
+   "tradicional": "hidruro cálcico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "Al"
+  },
+  "queries": [
+   "aluminum hydride",
+   "alane"
+  ],
+  "es": {
+   "sistematica": "trihidruro de aluminio",
+   "stock": "hidruro de aluminio",
+   "tradicional": "hidruro alumínico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "N"
+  },
+  "queries": [
+   "ammonia"
+  ],
+  "es": {
+   "sistematica": "azano",
+   "stock": null,
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "P"
+  },
+  "queries": [
+   "phosphine"
+  ],
+  "es": {
+   "sistematica": "fosfano",
+   "stock": null,
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "C"
+  },
+  "queries": [
+   "methane"
+  ],
+  "es": {
+   "sistematica": "metano",
+   "stock": null,
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "Si"
+  },
+  "queries": [
+   "silane"
+  ],
+  "es": {
+   "sistematica": "silano",
+   "stock": null,
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidracido",
+   "el": "Cl"
+  },
+  "queries": [
+   "hydrogen chloride"
+  ],
+  "es": {
+   "sistematica": "cloruro de hidrógeno",
+   "stock": null,
+   "tradicional": "ácido clorhídrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidracido",
+   "el": "F"
+  },
+  "queries": [
+   "hydrogen fluoride"
+  ],
+  "es": {
+   "sistematica": "fluoruro de hidrógeno",
+   "stock": null,
+   "tradicional": "ácido fluorhídrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidracido",
+   "el": "Br"
+  },
+  "queries": [
+   "hydrogen bromide"
+  ],
+  "es": {
+   "sistematica": "bromuro de hidrógeno",
+   "stock": null,
+   "tradicional": "ácido bromhídrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidracido",
+   "el": "I"
+  },
+  "queries": [
+   "hydrogen iodide"
+  ],
+  "es": {
+   "sistematica": "yoduro de hidrógeno",
+   "stock": null,
+   "tradicional": "ácido yodhídrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidracido",
+   "el": "S"
+  },
+  "queries": [
+   "hydrogen sulfide"
+  ],
+  "es": {
+   "sistematica": "sulfuro de dihidrógeno",
+   "stock": null,
+   "tradicional": "ácido sulfhídrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Cl",
+   "ox": 1,
+   "form": "normal"
+  },
+  "queries": [
+   "hypochlorous acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(oxidoclorato)",
+   "stock": null,
+   "tradicional": "ácido hipocloroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Cl",
+   "ox": 3,
+   "form": "normal"
+  },
+  "queries": [
+   "chlorous acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(dioxidoclorato)",
+   "stock": null,
+   "tradicional": "ácido cloroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Cl",
+   "ox": 5,
+   "form": "normal"
+  },
+  "queries": [
+   "chloric acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(trioxidoclorato)",
+   "stock": null,
+   "tradicional": "ácido clórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Cl",
+   "ox": 7,
+   "form": "normal"
+  },
+  "queries": [
+   "perchloric acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(tetraoxidoclorato)",
+   "stock": null,
+   "tradicional": "ácido perclórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Br",
+   "ox": 1,
+   "form": "normal"
+  },
+  "queries": [
+   "hypobromous acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(oxidobromato)",
+   "stock": null,
+   "tradicional": "ácido hipobromoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Br",
+   "ox": 5,
+   "form": "normal"
+  },
+  "queries": [
+   "bromic acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(trioxidobromato)",
+   "stock": null,
+   "tradicional": "ácido brómico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "I",
+   "ox": 5,
+   "form": "normal"
+  },
+  "queries": [
+   "iodic acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(trioxidoyodato)",
+   "stock": null,
+   "tradicional": "ácido yódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "I",
+   "ox": 7,
+   "form": "normal"
+  },
+  "queries": [
+   "metaperiodic acid",
+   "periodic acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(tetraoxidoyodato)",
+   "stock": null,
+   "tradicional": "ácido peryódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "S",
+   "ox": 4,
+   "form": "normal"
+  },
+  "queries": [
+   "sulfurous acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(trioxidosulfato)",
+   "stock": null,
+   "tradicional": "ácido sulfuroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "S",
+   "ox": 6,
+   "form": "normal"
+  },
+  "queries": [
+   "sulfuric acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(tetraoxidosulfato)",
+   "stock": null,
+   "tradicional": "ácido sulfúrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "S",
+   "ox": 6,
+   "form": "di"
+  },
+  "queries": [
+   "disulfuric acid",
+   "pyrosulfuric acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(heptaoxidodisulfato)",
+   "stock": null,
+   "tradicional": "ácido disulfúrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "N",
+   "ox": 3,
+   "form": "normal"
+  },
+  "queries": [
+   "nitrous acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(dioxidonitrato)",
+   "stock": null,
+   "tradicional": "ácido nitroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "N",
+   "ox": 5,
+   "form": "normal"
+  },
+  "queries": [
+   "nitric acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(trioxidonitrato)",
+   "stock": null,
+   "tradicional": "ácido nítrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "P",
+   "ox": 3,
+   "form": "normal"
+  },
+  "queries": [
+   "phosphorous acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(hidridotrioxidofosfato)",
+   "stock": null,
+   "tradicional": "ácido fosforoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "P",
+   "ox": 5,
+   "form": "normal"
+  },
+  "queries": [
+   "phosphoric acid"
+  ],
+  "es": {
+   "sistematica": "trihidrogeno(tetraoxidofosfato)",
+   "stock": null,
+   "tradicional": "ácido fosfórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "P",
+   "ox": 5,
+   "form": "meta"
+  },
+  "queries": [
+   "metaphosphoric acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(trioxidofosfato)",
+   "stock": null,
+   "tradicional": "ácido metafosfórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "P",
+   "ox": 5,
+   "form": "di"
+  },
+  "queries": [
+   "pyrophosphoric acid",
+   "diphosphoric acid"
+  ],
+  "es": {
+   "sistematica": "tetrahidrogeno(heptaoxidodifosfato)",
+   "stock": null,
+   "tradicional": "ácido difosfórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "C",
+   "ox": 4,
+   "form": "normal"
+  },
+  "queries": [
+   "carbonic acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(trioxidocarbonato)",
+   "stock": null,
+   "tradicional": "ácido carbónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "B",
+   "ox": 3,
+   "form": "normal"
+  },
+  "queries": [
+   "boric acid"
+  ],
+  "es": {
+   "sistematica": "trihidrogeno(trioxidoborato)",
+   "stock": null,
+   "tradicional": "ácido bórico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Si",
+   "ox": 4,
+   "form": "normal"
+  },
+  "queries": [
+   "orthosilicic acid",
+   "silicic acid"
+  ],
+  "es": {
+   "sistematica": "tetrahidrogeno(tetraoxidosilicato)",
+   "stock": null,
+   "tradicional": "ácido silícico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Mn",
+   "ox": 7,
+   "form": "normal"
+  },
+  "queries": [
+   "permanganic acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(tetraoxidomanganato)",
+   "stock": null,
+   "tradicional": "ácido permangánico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Cr",
+   "ox": 6,
+   "form": "normal"
+  },
+  "queries": [
+   "chromic acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(tetraoxidocromato)",
+   "stock": null,
+   "tradicional": "ácido crómico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Cr",
+   "ox": 6,
+   "form": "di"
+  },
+  "queries": [
+   "dichromic acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(heptaoxidodicromato)",
+   "stock": null,
+   "tradicional": "ácido dicrómico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "sodium chloride"
+  ],
+  "es": {
+   "sistematica": "cloruro de sodio",
+   "stock": "cloruro de sodio",
+   "tradicional": "cloruro sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "anion": "I"
+  },
+  "queries": [
+   "potassium iodide"
+  ],
+  "es": {
+   "sistematica": "yoduro de potasio",
+   "stock": "yoduro de potasio",
+   "tradicional": "yoduro potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ca",
+    "ox": 2
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "calcium fluoride"
+  ],
+  "es": {
+   "sistematica": "difluoruro de calcio",
+   "stock": "fluoruro de calcio",
+   "tradicional": "fluoruro cálcico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ag",
+    "ox": 1
+   },
+   "anion": "Br"
+  },
+  "queries": [
+   "silver bromide"
+  ],
+  "es": {
+   "sistematica": "bromuro de plata",
+   "stock": "bromuro de plata",
+   "tradicional": "bromuro argéntico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Fe",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "iron(II) chloride",
+   "ferrous chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de hierro",
+   "stock": "cloruro de hierro(II)",
+   "tradicional": "cloruro ferroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Fe",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "iron(III) chloride",
+   "ferric chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de hierro",
+   "stock": "cloruro de hierro(III)",
+   "tradicional": "cloruro férrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Cu",
+    "ox": 1
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "copper(I) chloride",
+   "cuprous chloride"
+  ],
+  "es": {
+   "sistematica": "monocloruro de cobre",
+   "stock": "cloruro de cobre(I)",
+   "tradicional": "cloruro cuproso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Cu",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "copper(II) chloride",
+   "cupric chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de cobre",
+   "stock": "cloruro de cobre(II)",
+   "tradicional": "cloruro cúprico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Hg",
+    "ox": 1
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "mercury(I) chloride",
+   "mercurous chloride",
+   "calomel"
+  ],
+  "es": {
+   "sistematica": "dicloruro de dimercurio",
+   "stock": "cloruro de mercurio(I)",
+   "tradicional": "cloruro mercurioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Hg",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "mercury(II) chloride",
+   "mercuric chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de mercurio",
+   "stock": "cloruro de mercurio(II)",
+   "tradicional": "cloruro mercúrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Sn",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "tin(II) chloride",
+   "stannous chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de estaño",
+   "stock": "cloruro de estaño(II)",
+   "tradicional": "cloruro estannoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Sn",
+    "ox": 4
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "tin(IV) chloride",
+   "stannic chloride"
+  ],
+  "es": {
+   "sistematica": "tetracloruro de estaño",
+   "stock": "cloruro de estaño(IV)",
+   "tradicional": "cloruro estánnico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Pb",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "lead(II) chloride",
+   "lead chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de plomo",
+   "stock": "cloruro de plomo(II)",
+   "tradicional": "cloruro plumboso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Pb",
+    "ox": 2
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "lead(II) sulfide",
+   "lead sulfide"
+  ],
+  "es": {
+   "sistematica": "monosulfuro de plomo",
+   "stock": "sulfuro de plomo(II)",
+   "tradicional": "sulfuro plumboso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Fe",
+    "ox": 2
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "iron(II) sulfide",
+   "ferrous sulfide"
+  ],
+  "es": {
+   "sistematica": "monosulfuro de hierro",
+   "stock": "sulfuro de hierro(II)",
+   "tradicional": "sulfuro ferroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "sodium sulfide"
+  ],
+  "es": {
+   "sistematica": "sulfuro de disodio",
+   "stock": "sulfuro de sodio",
+   "tradicional": "sulfuro sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "NH4"
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "ammonium chloride"
+  ],
+  "es": {
+   "sistematica": "cloruro de amonio",
+   "stock": "cloruro de amonio",
+   "tradicional": "cloruro amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "P",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "phosphorus trichloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de fósforo",
+   "stock": "cloruro de fósforo(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "P",
+    "ox": 5
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "phosphorus pentachloride"
+  ],
+  "es": {
+   "sistematica": "pentacloruro de fósforo",
+   "stock": "cloruro de fósforo(V)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "C",
+    "ox": 4
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "carbon tetrachloride"
+  ],
+  "es": {
+   "sistematica": "tetracloruro de carbono",
+   "stock": "cloruro de carbono(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "C",
+    "ox": 4
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "carbon disulfide"
+  ],
+  "es": {
+   "sistematica": "disulfuro de carbono",
+   "stock": "sulfuro de carbono(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "S",
+    "ox": 6
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "sulfur hexafluoride"
+  ],
+  "es": {
+   "sistematica": "hexafluoruro de azufre",
+   "stock": "fluoruro de azufre(VI)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "B",
+    "ox": 3
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "boron trifluoride"
+  ],
+  "es": {
+   "sistematica": "trifluoruro de boro",
+   "stock": "fluoruro de boro",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Si",
+    "ox": 4
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "silicon tetrachloride"
+  ],
+  "es": {
+   "sistematica": "tetracloruro de silicio",
+   "stock": "cloruro de silicio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "N",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "nitrogen trichloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de nitrógeno",
+   "stock": "cloruro de nitrógeno(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Ca",
+    "ox": 2
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "calcium carbonate"
+  ],
+  "es": {
+   "sistematica": "carbonato de calcio",
+   "stock": "carbonato de calcio",
+   "tradicional": "carbonato cálcico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "sodium carbonate"
+  ],
+  "es": {
+   "sistematica": "carbonato de disodio",
+   "stock": "carbonato de sodio",
+   "tradicional": "carbonato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4,
+    "form": "normal"
+   },
+   "hLeft": 1
+  },
+  "queries": [
+   "sodium bicarbonate",
+   "sodium hydrogen carbonate"
+  ],
+  "es": {
+   "sistematica": "hidrogenocarbonato de sodio",
+   "stock": "hidrogenocarbonato de sodio",
+   "tradicional": "bicarbonato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Cu",
+    "ox": 2
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "copper(II) sulfate",
+   "cupric sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de cobre",
+   "stock": "sulfato de cobre(II)",
+   "tradicional": "sulfato cúprico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Fe",
+    "ox": 2
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "iron(II) sulfate",
+   "ferrous sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de hierro",
+   "stock": "sulfato de hierro(II)",
+   "tradicional": "sulfato ferroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Fe",
+    "ox": 3
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "iron(III) sulfate",
+   "ferric sulfate"
+  ],
+  "es": {
+   "sistematica": "tris(sulfato) de dihierro",
+   "stock": "sulfato de hierro(III)",
+   "tradicional": "sulfato férrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Ba",
+    "ox": 2
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "barium sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de bario",
+   "stock": "sulfato de bario",
+   "tradicional": "sulfato bárico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Mg",
+    "ox": 2
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "magnesium sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de magnesio",
+   "stock": "sulfato de magnesio",
+   "tradicional": "sulfato magnésico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "S",
+    "ox": 4,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "sodium sulfite"
+  ],
+  "es": {
+   "sistematica": "sulfito de disodio",
+   "stock": "sulfito de sodio",
+   "tradicional": "sulfito sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 1
+  },
+  "queries": [
+   "sodium bisulfate",
+   "sodium hydrogen sulfate"
+  ],
+  "es": {
+   "sistematica": "hidrogenosulfato de sodio",
+   "stock": "hidrogenosulfato de sodio",
+   "tradicional": "bisulfato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "potassium nitrate"
+  ],
+  "es": {
+   "sistematica": "nitrato de potasio",
+   "stock": "nitrato de potasio",
+   "tradicional": "nitrato potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "N",
+    "ox": 3,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "sodium nitrite"
+  ],
+  "es": {
+   "sistematica": "nitrito de sodio",
+   "stock": "nitrito de sodio",
+   "tradicional": "nitrito sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Ag",
+    "ox": 1
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "silver nitrate"
+  ],
+  "es": {
+   "sistematica": "nitrato de plata",
+   "stock": "nitrato de plata",
+   "tradicional": "nitrato argéntico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Pb",
+    "ox": 2
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "lead(II) nitrate",
+   "lead nitrate"
+  ],
+  "es": {
+   "sistematica": "bis(nitrato) de plomo",
+   "stock": "nitrato de plomo(II)",
+   "tradicional": "nitrato plumboso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Cu",
+    "ox": 2
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "copper(II) nitrate",
+   "cupric nitrate"
+  ],
+  "es": {
+   "sistematica": "bis(nitrato) de cobre",
+   "stock": "nitrato de cobre(II)",
+   "tradicional": "nitrato cúprico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Hg",
+    "ox": 1
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "mercury(I) nitrate",
+   "mercurous nitrate"
+  ],
+  "es": {
+   "sistematica": "bis(nitrato) de dimercurio",
+   "stock": "nitrato de mercurio(I)",
+   "tradicional": "nitrato mercurioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "ammonium nitrate"
+  ],
+  "es": {
+   "sistematica": "nitrato de amonio",
+   "stock": "nitrato de amonio",
+   "tradicional": "nitrato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "ammonium sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de diamonio",
+   "stock": "sulfato de amonio",
+   "tradicional": "sulfato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Cl",
+    "ox": 1,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "sodium hypochlorite"
+  ],
+  "es": {
+   "sistematica": "hipoclorito de sodio",
+   "stock": "hipoclorito de sodio",
+   "tradicional": "hipoclorito sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Cl",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "potassium chlorate"
+  ],
+  "es": {
+   "sistematica": "clorato de potasio",
+   "stock": "clorato de potasio",
+   "tradicional": "clorato potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Cl",
+    "ox": 7,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "sodium perchlorate"
+  ],
+  "es": {
+   "sistematica": "perclorato de sodio",
+   "stock": "perclorato de sodio",
+   "tradicional": "perclorato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Br",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "sodium bromate"
+  ],
+  "es": {
+   "sistematica": "bromato de sodio",
+   "stock": "bromato de sodio",
+   "tradicional": "bromato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "I",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "potassium iodate"
+  ],
+  "es": {
+   "sistematica": "yodato de potasio",
+   "stock": "yodato de potasio",
+   "tradicional": "yodato potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Mn",
+    "ox": 7,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "potassium permanganate"
+  ],
+  "es": {
+   "sistematica": "permanganato de potasio",
+   "stock": "permanganato de potasio",
+   "tradicional": "permanganato potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Mn",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "potassium manganate"
+  ],
+  "es": {
+   "sistematica": "manganato de dipotasio",
+   "stock": "manganato de potasio",
+   "tradicional": "manganato potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Cr",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "potassium chromate"
+  ],
+  "es": {
+   "sistematica": "cromato de dipotasio",
+   "stock": "cromato de potasio",
+   "tradicional": "cromato potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Cr",
+    "ox": 6,
+    "form": "di"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "potassium dichromate"
+  ],
+  "es": {
+   "sistematica": "dicromato de dipotasio",
+   "stock": "dicromato de potasio",
+   "tradicional": "dicromato potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Ca",
+    "ox": 2
+   },
+   "acid": {
+    "el": "P",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "tricalcium phosphate",
+   "calcium phosphate"
+  ],
+  "es": {
+   "sistematica": "bis(fosfato) de tricalcio",
+   "stock": "fosfato de calcio",
+   "tradicional": "fosfato cálcico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "P",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 2
+  },
+  "queries": [
+   "potassium dihydrogen phosphate",
+   "monopotassium phosphate"
+  ],
+  "es": {
+   "sistematica": "dihidrogenofosfato de potasio",
+   "stock": "dihidrogenofosfato de potasio",
+   "tradicional": "fosfato diácido potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "P",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 1
+  },
+  "queries": [
+   "dipotassium hydrogen phosphate",
+   "dipotassium phosphate"
+  ],
+  "es": {
+   "sistematica": "hidrogenofosfato de dipotasio",
+   "stock": "hidrogenofosfato de potasio",
+   "tradicional": "fosfato monoácido potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "P",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 2
+  },
+  "queries": [
+   "ammonium dihydrogen phosphate",
+   "monoammonium phosphate"
+  ],
+  "es": {
+   "sistematica": "dihidrogenofosfato de amonio",
+   "stock": "dihidrogenofosfato de amonio",
+   "tradicional": "fosfato diácido amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Si",
+    "ox": 4,
+    "form": "meta"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "sodium metasilicate"
+  ],
+  "es": {
+   "sistematica": "metasilicato de disodio",
+   "stock": "metasilicato de sodio",
+   "tradicional": "metasilicato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "P",
+    "ox": 5,
+    "form": "di"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "tetrasodium pyrophosphate",
+   "sodium pyrophosphate"
+  ],
+  "es": {
+   "sistematica": "difosfato de tetrasodio",
+   "stock": "difosfato de sodio",
+   "tradicional": "difosfato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-basica",
+   "cation": {
+    "el": "Mg",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "magnesium chloride hydroxide",
+   "magnesium hydroxychloride"
+  ],
+  "es": {
+   "sistematica": "cloruro hidróxido de magnesio",
+   "stock": "cloruro hidróxido de magnesio",
+   "tradicional": "cloruro básico magnésico"
+  }
+ }
+]

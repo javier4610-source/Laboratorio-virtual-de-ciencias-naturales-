@@ -363,6 +363,33 @@ const SCENES: Record<string, () => ReactNode> = {
       </g>
     </>
   ),
+  'oxidos-hidroxidos': () => (
+    <>
+      <Bench />
+      <rect x={40} y={70} width={12} height={70} rx={2} fill="url(#kit-metal-h)" /><circle cx={46} cy={58} r={14} fill="#ffffff" opacity="0.9" /><circle cx={46} cy={58} r={22} fill="#ffd36b" opacity="0.35" />
+      <Beaker x={110} y={66} w={70} h={74} fill={0.6} liquid="#2f5fc4" liquidOpacity={0.45} />
+      <TestTube x={210} y={64} w={16} h={72} fill={0.55} liquid="#d63384" liquidOpacity={0.8} /><TestTube x={238} y={64} w={16} h={72} fill={0.55} liquid="#e8c419" liquidOpacity={0.8} />
+      <TestTube x={266} y={64} w={16} h={72} fill={0.55} liquid="#3fa34d" liquidOpacity={0.8} />
+    </>
+  ),
+  'acidos-sales': () => (
+    <>
+      <Bench />
+      <rect x={96} y={10} width={4} height={130} fill="url(#kit-metal-h)" />
+      <Burette x={110} y={10} h={100} capacity={50} level={20} liquid="#a9cdea" liquidOpacity={0.85} major={10} />
+      <Erlenmeyer x={88} y={92} w={60} h={48} fill={0.45} liquid="#d63384" liquidOpacity={0.5} />
+      <MiniPlot x={200} y={24} d="M0 40 C30 38 45 34 50 22 C55 8 70 6 75 5" />
+    </>
+  ),
+  'nomenclatura-inorganica': () => (
+    <>
+      {[['Fe', 'var(--fis)'], ['O', 'var(--qui)'], ['S', 'var(--qui)'], ['Cu', 'var(--fis)']].map(([s, c], i) => (
+        <g key={s} transform={`translate(${28 + i * 58} 34)`}><rect width={50} height={56} rx={8} fill="var(--surface)" stroke={c} strokeWidth="2" />
+        <text x={25} y={36} textAnchor="middle" style={{ fontSize: 22, fontWeight: 700, fill: 'var(--ink)' }}>{s}</text></g>
+      ))}
+      <text x={160} y={128} textAnchor="middle" style={{ fontSize: 18, fontWeight: 700, fill: 'var(--ink)' }}>Fe₂O₃ · óxido de hierro(III)</text>
+    </>
+  ),
   energia: () => (
     <>
       <path d="M20 30 Q60 30 90 100 Q120 150 160 140 Q200 130 228 90 Q250 62 300 62" fill="none" stroke="#78909c" strokeWidth="5" strokeLinecap="round" />

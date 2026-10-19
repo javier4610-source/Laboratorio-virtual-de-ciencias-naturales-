@@ -20,6 +20,9 @@ import { ph } from './practices/ph';
 import { fotosintesis } from './practices/fotosintesis';
 import { ondas } from './practices/ondas';
 import { mitosis } from './practices/mitosis';
+import { nomenclaturaInorganica } from './practices/nomenclatura-inorganica';
+import { acidosSales } from './practices/acidos-sales';
+import { oxidosHidroxidos } from './practices/oxidos-hidroxidos';
 import { cineticaPotencial } from './practices/cinetica-potencial';
 import { metabolismo } from './practices/metabolismo';
 import { proteinas } from './practices/proteinas';
@@ -59,7 +62,7 @@ import { cinematica } from './practices/cinematica';
 import { celulas } from './practices/celulas';
 
 /** Catálogo de prácticas implementadas. Para agregar una nueva: definirla aquí y registrar su componente en labs/registry.ts. */
-export const PRACTICES: PracticeDef[] = ([densidad, mezclas, celulas, redes, maquinas, calor, movimiento, ecosistema, circuitosSimples, osmosis, presion, flotacion, conduccion, mitosis, conductores, descomposicion, mendel, cineticaPotencial, ondas, sonido, optica, adn, extraccionAdn, conservacion, balanceo, newton, cinematica, trabajo, mol, seleccion, soluciones, geometria, enzimas, fotosintesis, gases, cinetica, energia, proyectiles, pendulo, choques, respiracion, circuitos, estequiometria, equilibrio, ph, poblacion, popgen, agua, expresion, secuencias, rastreo, proteinas, metabolismo, interferencia, induccion, reto] as PracticeDef[]).map(balancePractice);
+export const PRACTICES: PracticeDef[] = ([densidad, mezclas, celulas, redes, maquinas, calor, movimiento, ecosistema, circuitosSimples, osmosis, presion, flotacion, conduccion, mitosis, conductores, descomposicion, mendel, cineticaPotencial, ondas, sonido, optica, adn, extraccionAdn, conservacion, balanceo, newton, cinematica, trabajo, mol, seleccion, soluciones, geometria, oxidosHidroxidos, acidosSales, nomenclaturaInorganica, enzimas, fotosintesis, gases, cinetica, energia, proyectiles, pendulo, choques, respiracion, circuitos, estequiometria, equilibrio, ph, poblacion, popgen, agua, expresion, secuencias, rastreo, proteinas, metabolismo, interferencia, induccion, reto] as PracticeDef[]).map(balancePractice);
 
 export function practiceById(id: string): PracticeDef | undefined {
   return PRACTICES.find((p) => p.id === id);

@@ -1249,4 +1249,88 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'oxidos-hidroxidos': [
+    {
+      id: 'oxidos', label: 'Combustión y óxido + agua', defaultX: 'masa', defaultY: 'masaOxido',
+      columns: [
+        { key: 'reactivo', label: 'Reactivo', numeric: false, input: true },
+        { key: 'tipo', label: 'Tipo de reactivo', numeric: false },
+        { key: 'masa', label: 'Masa del reactivo', unit: 'g', numeric: true, decimals: 2, input: true },
+        { key: 'masaOxido', label: 'Masa del óxido (balanza)', unit: 'g', numeric: true, decimals: 2, resolution: 0.01 },
+        { key: 'razon', label: 'Razón m(óxido)/m(reactivo)', numeric: true, decimals: 3 },
+        { key: 'oxido', label: 'Óxido', numeric: false },
+        { key: 'funcionOxido', label: 'Tipo de óxido', numeric: false },
+        { key: 'agua', label: 'Volumen de agua', unit: 'mL', numeric: true, decimals: 0, input: true },
+        { key: 'concentracion', label: 'Concentración disuelta del producto', unit: 'mol/L', numeric: true, decimals: 6 },
+        { key: 'pH', label: 'pH (pH-metro)', numeric: true, decimals: 2, resolution: 0.01 },
+        { key: 'caracter', label: 'Carácter de la disolución', numeric: false },
+        { key: 'fenolftaleina', label: 'Fenolftaleína', numeric: false },
+        { key: 'tornasol', label: 'Papel tornasol', numeric: false },
+        { key: 'universal', label: 'Indicador universal', numeric: false },
+        { key: 'producto', label: 'Producto con el agua', numeric: false },
+      ],
+    },
+  ],
+  'acidos-sales': [
+    {
+      id: 'acidos', label: 'Estación 1: formación de ácidos', defaultX: 'concentracion', defaultY: 'pH',
+      columns: [
+        { key: 'acido', label: 'Ácido', numeric: false, input: true },
+        { key: 'tipo', label: 'Tipo', numeric: false },
+        { key: 'concentracion', label: 'Concentración del ácido', unit: 'mol/L', numeric: true, decimals: 3, input: true },
+        { key: 'pH', label: 'pH (pH-metro)', numeric: true, decimals: 2, resolution: 0.01 },
+        { key: 'nombre', label: 'Nombre', numeric: false },
+      ],
+    },
+    {
+      id: 'titulacion', label: 'Estación 2: titulación con NaOH', defaultX: 'volBase', defaultY: 'pH',
+      columns: [
+        { key: 'acido', label: 'Ácido', numeric: false, input: true },
+        { key: 'concAcido', label: 'Concentración del ácido', unit: 'mol/L', numeric: true, decimals: 3, input: true },
+        { key: 'volAcido', label: 'Volumen del ácido', unit: 'mL', numeric: true, decimals: 2, input: true },
+        { key: 'concBase', label: 'Concentración del NaOH', unit: 'mol/L', numeric: true, decimals: 3, input: true },
+        { key: 'volBase', label: 'NaOH añadido', unit: 'mL', numeric: true, decimals: 2, input: true },
+        { key: 'pH', label: 'pH (pH-metro)', numeric: true, decimals: 2, resolution: 0.01 },
+        { key: 'estado', label: 'Estado de la titulación', numeric: false },
+      ],
+    },
+    {
+      id: 'sales', label: 'Estación 3: disoluciones de sales', defaultX: 'concentracion', defaultY: 'pH',
+      columns: [
+        { key: 'sal', label: 'Sal', numeric: false, input: true },
+        { key: 'tipoSal', label: 'Tipo de sal (nomenclatura)', numeric: false },
+        { key: 'concentracion', label: 'Concentración de la sal', unit: 'mol/L', numeric: true, decimals: 3, input: true },
+        { key: 'pH', label: 'pH (pH-metro)', numeric: true, decimals: 2, resolution: 0.01 },
+        { key: 'caracter', label: 'Carácter de la disolución', numeric: false },
+        { key: 'origen', label: 'Origen (ácido + base)', numeric: false },
+      ],
+    },
+  ],
+  'nomenclatura-inorganica': [
+    {
+      id: 'compuestos', label: 'Compuestos formados', defaultX: 'elementos', defaultY: 'atomos',
+      columns: [
+        { key: 'funcion', label: 'Función química', numeric: false, input: true },
+        { key: 'formula', label: 'Fórmula', numeric: false },
+        { key: 'sistematica', label: 'Nombre sistemático', numeric: false },
+        { key: 'stock', label: 'Nombre Stock', numeric: false },
+        { key: 'tradicional', label: 'Nombre tradicional', numeric: false },
+        { key: 'elementos', label: 'Número de elementos', numeric: true, decimals: 0 },
+        { key: 'atomos', label: 'Átomos por unidad fórmula', numeric: true, decimals: 0 },
+      ],
+    },
+    {
+      id: 'retos', label: 'Retos de nombrar y formular', defaultX: 'reto', defaultY: 'aciertos',
+      columns: [
+        { key: 'reto', label: 'Reto', numeric: true, decimals: 0, input: true },
+        { key: 'tipo', label: 'Tipo de reto', numeric: false, input: true },
+        { key: 'sistema', label: 'Sistema pedido', numeric: false, input: true },
+        { key: 'compuesto', label: 'Compuesto', numeric: false },
+        { key: 'respuesta', label: 'Respuesta escrita', numeric: false },
+        { key: 'correcto', label: 'Correcto (1 = sí)', numeric: true, decimals: 0 },
+        { key: 'intentos', label: 'Intentos', numeric: true, decimals: 0 },
+        { key: 'aciertos', label: 'Aciertos acumulados', numeric: true, decimals: 0 },
+      ],
+    },
+  ],
 };

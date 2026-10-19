@@ -2,11 +2,11 @@
 
 Generado por `node scripts/inventario.mjs` el 2026-10-19. No editar a mano: se regenera desde el código.
 
-- Prácticas en el catálogo: **56**
-- Con laboratorio registrado: 56 · con prueba E2E propia: 56 · con revisión axe: 0
+- Prácticas en el catálogo: **59**
+- Con laboratorio registrado: 59 · con prueba E2E propia: 59 · con revisión axe: 0
 - Con modo de instrumento real: 23 · con modo avanzado: 20 · con parámetros editables: 8
-- Con manipulación directa: 32 · con sonido: 39 · con texto que rotula partes ilustrativas: 19
-- Archivos de pruebas unitarias: 53 (784 pruebas declaradas)
+- Con manipulación directa: 32 · con sonido: 42 · con texto que rotula partes ilustrativas: 21
+- Archivos de pruebas unitarias: 57 (836 pruebas declaradas)
 
 | Práctica | Grado | Área | Laboratorio (líneas) | Modelos | Pruebas unitarias | E2E | axe | Instr. real | Avanzado | Manipulación | Sonido | Rótulo ilustrativo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -40,13 +40,16 @@ Generado por `node scripts/inventario.mjs` el 2026-10-19. No editar a mano: se r
 | `newton` Leyes de Newton: fuerza, masa y aceleración | 9.º | fisica | NewtonLab (335) | newton | 41 en advanced.test.ts, models3.test.ts | sí | no | sí | sí | sí | sí | no |
 | `seleccion` Selección natural con cambios ambientales | 9.º | biologia | SelectionLab (279) | selection | 14 en selection.test.ts | sí | no | no | no | no | no | no |
 | `trabajo` Trabajo, potencia y plano inclinado | 9.º | fisica | WorkLab (813) | workPower | 12 en workPower.test.ts | sí | no | sí | no | sí | sí | no |
+| `acidos-sales` Ácidos y sales: hidrácidos, oxácidos, neutralización y nomenclatura | 10.º | quimica | AcidsSaltsLab (285) | aqueousEquilibria, acidsSalts, inorganicNomenclature, oxidesHydroxides | 24 en inorganicChemistry.test.ts, inorganicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
 | `choques` Choques y cantidad de movimiento | 10.º | fisica | CollisionsLab (485) | collisions | 13 en collisions.test.ts | sí | no | no | sí | no | sí | no |
 | `cinetica` Factores que afectan la velocidad de reacción | 10.º | quimica | KineticsLab (334) | kinetics | 31 en advanced.test.ts, kinetics.test.ts | sí | no | no | sí | sí | sí | sí |
 | `energia` Conservación de la energía mecánica | 10.º | fisica | EnergyLab (483) | energy, energyTime | 56 en advanced.test.ts, energyTime.test.ts, models3.test.ts | sí | no | no | sí | no | sí | no |
 | `enzimas` Actividad enzimática: temperatura, pH y concentración | 10.º | biologia | EnzymeLab (289) | enzyme | 66 en lib.test.ts, models.test.ts | sí | no | no | no | sí | no | sí |
 | `fotosintesis` Fotosíntesis: luz, CO₂ y temperatura | 10.º | biologia | PhotoLab (199) | photosynthesis | 24 en models2.test.ts | sí | no | no | no | sí | no | sí |
 | `gases` Leyes de los gases: presión, volumen y temperatura | 10.º | quimica | GasLab (208) | gases | 41 en advanced.test.ts, models3.test.ts | sí | no | sí | sí | sí | sí | no |
-| `geometria` Geometría molecular en 3D y modelo VSEPR | 10.º | quimica | GeometryLab (704) | geometry, balancing | 50 en balancing.test.ts, geometry.test.ts, mole.test.ts | sí | no | no | no | no | sí | no |
+| `geometria` Geometría molecular en 3D y modelo VSEPR | 10.º | quimica | GeometryLab (704) | geometry, balancing | 68 en balancing.test.ts, chemKit.test.ts, geometry.test.ts, mole.test.ts | sí | no | no | no | no | sí | no |
+| `nomenclatura-inorganica` Nomenclatura química inorgánica | 10.º | quimica | InorganicNomenclatureLab (264) | geometry, inorganicNomenclature | 45 en chemKit.test.ts, geometry.test.ts, inorganicNomenclature.test.ts | sí | no | no | no | no | sí | no |
+| `oxidos-hidroxidos` Óxidos e hidróxidos: formación, nomenclatura y carácter ácido-base | 10.º | quimica | OxidesHydroxidesLab (251) | inorganicNomenclature, oxidesHydroxides | 24 en inorganicChemistry.test.ts, inorganicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
 | `pendulo` Péndulo simple y movimiento armónico | 10.º | fisica | PendulumLab (451) | pendulum | 31 en advanced.test.ts, pendulum.test.ts | sí | no | no | sí | sí | sí | no |
 | `proyectiles` Movimiento de proyectiles | 10.º | fisica | ProjectileLab (505) | projectile | 33 en advanced.test.ts, projectile.test.ts | sí | no | no | sí | sí | sí | no |
 | `respiracion` Respiración celular y balance energético | 10.º | biologia | RespirationLab (423) | respiration | 11 en respiration.test.ts | sí | no | sí | no | sí | sí | no |
@@ -59,7 +62,7 @@ Generado por `node scripts/inventario.mjs` el 2026-10-19. No editar a mano: se r
 | `induccion` Magnetismo e inducción electromagnética | 11.º | fisica | InductionLab (1248) | induction | 12 en induction.test.ts | sí | no | sí | sí | sí | sí | no |
 | `interferencia` Interferencia y difracción de la luz | 11.º | fisica | InterferenceLab (603) | interference | 19 en interference.test.ts | sí | no | sí | sí | sí | sí | no |
 | `metabolismo` Metabolismo celular: análisis de balance de flujos (FBA) | 11.º | biologia | MetabolismLab (500) | metabolism | 20 en metabolism.test.ts | sí | no | no | no | no | no | no |
-| `ph` pH, dilución y neutralización ácido-base | 11.º | quimica | AcidBaseLab (280) | acidbase, chemistry | 97 en models.test.ts, models2.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
+| `ph` pH, dilución y neutralización ácido-base | 11.º | quimica | AcidBaseLab (280) | acidbase, chemistry | 110 en inorganicChemistry.test.ts, models.test.ts, models2.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
 | `poblacion` Crecimiento poblacional y capacidad de carga | 11.º | ambiental | PopulationLab (203) | population | 55 en models.test.ts | sí | no | no | no | no | no | sí |
 | `popgen` Genética de poblaciones y frecuencias alélicas | 11.º | biologia | PopGenLab (179) | popgen | 24 en models2.test.ts | sí | no | no | no | no | no | sí |
 | `proteinas` Estructura 3D de proteínas: experimental y predicha | 11.º | biologia | ProteinLab (1125) | protein | 16 en protein.test.ts | sí | no | no | no | no | sí | no |

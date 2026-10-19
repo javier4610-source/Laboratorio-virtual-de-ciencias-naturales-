@@ -35,6 +35,10 @@ const SYNTHETIC_SAMPLES = new Set(['reto']);
 
 /** Procedencia de una práctica según el modo de medición elegido. */
 export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'real' = 'ideal'): Provenance {
+  if (practiceId === 'hidrocarburos' || practiceId === 'aromaticos') {
+    return { data: 'experimental', scene: 'modelo',
+      detail: 'Propiedades (temperaturas, densidades, entalpías de combustión): evidencia experimental publicada, tomada de PubChem (HSDB) con la obra que cita cada dato. Longitudes y ángulos: modelo calculado sobre confórmeros 3D de PubChem (MMFF94s). Conformaciones, tubos de ensayo y reacciones en 3D: ilustración educativa (rotulada en cada vista).' };
+  }
   if (practiceId === 'metabolismo') {
     return {
       data: 'modelo', scene: 'modelo',

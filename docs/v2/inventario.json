@@ -1159,6 +1159,36 @@
     "illustrative": false
   },
   {
+    "id": "aromaticos",
+    "title": "Hidrocarburos aromáticos",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "AromaticsLab",
+    "models": [
+      "hydrocarbons",
+      "aromaticity",
+      "organicGraph",
+      "organicNomenclature",
+      "organicBuilder"
+    ],
+    "tests": [
+      "organicModels.test.ts",
+      "organicNomenclature.test.ts"
+    ],
+    "nTests": 30,
+    "e2e": true,
+    "a11y": false,
+    "loc": 319,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "circuitos",
     "title": "Circuitos eléctricos: voltaje, corriente y resistencia",
     "grade": 11,
@@ -1265,6 +1295,34 @@
     "illustrative": false
   },
   {
+    "id": "hidrocarburos",
+    "title": "Hidrocarburos: alcanos, alquenos y alquinos",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "HydrocarbonsLab",
+    "models": [
+      "hydrocarbons",
+      "organicGraph",
+      "organicNomenclature"
+    ],
+    "tests": [
+      "organicModels.test.ts",
+      "organicNomenclature.test.ts"
+    ],
+    "nTests": 30,
+    "e2e": true,
+    "a11y": false,
+    "loc": 522,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "induccion",
     "title": "Magnetismo e inducción electromagnética",
     "grade": 11,
@@ -1338,6 +1396,34 @@
     "sound": false,
     "datasets": true,
     "illustrative": false
+  },
+  {
+    "id": "nomenclatura-organica",
+    "title": "Nomenclatura orgánica IUPAC",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "NomenclatureLab",
+    "models": [
+      "organicBuilder",
+      "organicGraph",
+      "organicNomenclature"
+    ],
+    "tests": [
+      "organicModels.test.ts",
+      "organicNomenclature.test.ts"
+    ],
+    "nTests": 30,
+    "e2e": true,
+    "a11y": false,
+    "loc": 437,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
   },
   {
     "id": "ph",

@@ -7,6 +7,20 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.2.0] · 2026-10-19
+
+### Añadido
+- Prácticas 60 a 62 (química, 11.º): hidrocarburos (alcanos, alquenos y alquinos); hidrocarburos aromáticos;
+  nomenclatura orgánica IUPAC (motor propio validado contra los nombres de PubChem en 188 estructuras: 173 idénticas y
+  15 diferencias clasificadas y explicadas).
+- Módulos reutilizables de química orgánica (`src/models/ORGANICA.md`): lector y escritor SMILES, motor de nomenclatura,
+  constructor, dibujo 2D y visor 3D con localizadores.
+- Procedencia «Evidencia experimental» para las propiedades publicadas de hidrocarburos y aromáticos.
+
+### Cambiado
+- El módulo `src/chem/reaction3d.ts` se renombró `reactionScene.ts` para no confundirse con `Reaction3D.tsx` al generar
+  el catálogo.
+
 ## [2.1.0] · 2026-10-19
 
 ### Añadido

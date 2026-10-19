@@ -390,6 +390,42 @@ const SCENES: Record<string, () => ReactNode> = {
       <text x={160} y={128} textAnchor="middle" style={{ fontSize: 18, fontWeight: 700, fill: 'var(--ink)' }}>Fe₂O₃ · óxido de hierro(III)</text>
     </>
   ),
+  hidrocarburos: () => (
+    <>
+      <Bench />
+      <g stroke="var(--ink)" strokeWidth={3} strokeLinecap="round" fill="none">
+        <polyline points="40,96 72,78 104,96 136,78 168,96" />
+        <line x1={198} y1={86} x2={232} y2={86} /><line x1={198} y1={94} x2={232} y2={94} />
+        <line x1={258} y1={82} x2={296} y2={82} /><line x1={258} y1={90} x2={296} y2={90} /><line x1={258} y1={98} x2={296} y2={98} />
+      </g>
+      {[[40, 96], [72, 78], [104, 96], [136, 78], [168, 96]].map(([x, y]) => <circle key={x} cx={x} cy={y} r={7} fill="#5b6770" />)}
+      <circle cx={198} cy={90} r={7} fill="#5b6770" /><circle cx={232} cy={90} r={7} fill="#5b6770" />
+      <circle cx={258} cy={90} r={7} fill="#5b6770" /><circle cx={296} cy={90} r={7} fill="#5b6770" />
+      <text x={104} y={128} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink-2)', fontWeight: 700 }}>C–C</text>
+      <text x={215} y={128} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink-2)', fontWeight: 700 }}>C=C</text>
+      <text x={277} y={128} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink-2)', fontWeight: 700 }}>C≡C</text>
+    </>
+  ),
+  aromaticos: () => (
+    <>
+      <Bench />
+      <g transform="translate(160 80)">
+        <polygon points="0,-46 40,-23 40,23 0,46 -40,23 -40,-23" fill="none" stroke="var(--ink)" strokeWidth={3.5} strokeLinejoin="round" />
+        <circle r={26} fill="none" stroke="var(--qui)" strokeWidth={3} />
+        {[[0, -46], [40, -23], [40, 23], [0, 46], [-40, 23], [-40, -23]].map(([x, y]) => <circle key={`${x}${y}`} cx={x} cy={y} r={6} fill="#5b6770" />)}
+      </g>
+      <text x={262} y={60} style={{ fontSize: 15, fill: 'var(--ink-2)', fontWeight: 700 }}>4n+2</text>
+    </>
+  ),
+  'nomenclatura-organica': () => (
+    <>
+      <Bench />
+      <g stroke="var(--ink)" strokeWidth={3} strokeLinecap="round" fill="none"><polyline points="34,100 70,80 106,100 142,80 178,100" /><line x1={106} y1={100} x2={106} y2={128} /></g>
+      {[['1', 34, 118], ['2', 70, 72], ['3', 106, 92], ['4', 142, 72], ['5', 178, 118]].map(([t, x, y]) => <text key={t} x={x} y={y} textAnchor="middle" style={{ fontSize: 13, fill: 'var(--qui)', fontWeight: 800 }}>{t}</text>)}
+      <rect x={200} y={40} width={106} height={44} rx={8} fill="var(--surface)" stroke="var(--line)" />
+      <text x={253} y={67} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink)', fontWeight: 700 }}>3-metil…ano</text>
+    </>
+  ),
   energia: () => (
     <>
       <path d="M20 30 Q60 30 90 100 Q120 150 160 140 Q200 130 228 90 Q250 62 300 62" fill="none" stroke="#78909c" strokeWidth="5" strokeLinecap="round" />

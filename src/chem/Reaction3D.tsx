@@ -4,7 +4,7 @@ import { StatusChip } from '../components/Provenance';
 import { Segmented } from '../components/ui';
 import { drawRadius, elementColor } from './elements';
 import { ProjectedSvg } from './ProjectedSvg';
-import { bondChanges, buildReactionScene, checkBalanced, countsAt, equationText, frameBonds, framePositions, phaseName, PHASES, REACTION3D_LABEL, STEPS, type Reaction3DDef } from './reaction3d';
+import { bondChanges, buildReactionScene, checkBalanced, countsAt, equationText, frameBonds, framePositions, phaseName, PHASES, REACTION3D_LABEL, STEPS, type Reaction3DDef } from './reactionScene';
 import { prettyFormula } from '../models/balancing';
 import { reducedMotion, use3DViewer, useThemeVersion } from './engine3d';
 import type { V3 } from './species';

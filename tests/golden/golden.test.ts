@@ -31,6 +31,11 @@ import { relativeToTss, TSS } from '../../src/models/geneExpression';
 import { burn, dissolve, molar } from '../../src/models/oxidesHydroxides';
 import { saltSolution, titrationPH } from '../../src/models/acidsSalts';
 import { buildCompound } from '../../src/models/inorganicNomenclature';
+import { combustionEquation, combustionEnergy, monohalogenation } from '../../src/models/hydrocarbons';
+import { getOrganic } from '../../src/data/quimica/organica';
+import { huckelAnalysis, symmetricEigenvalues } from '../../src/models/aromaticity';
+import { parseSmiles } from '../../src/models/organicGraph';
+import { nameSmiles } from '../../src/models/organicNomenclature';
 import { kineticEnergy, simulateDrop } from '../../src/models/kineticPotential';
 import { REFERENCE_CONDITION, runFba } from '../../src/models/metabolism';
 import { heat } from '../../src/models/heat';
@@ -300,6 +305,27 @@ export const GOLDEN: GoldenCase[] = [
     expect([fe.formula, fe.names.sistematica, fe.names.stock, fe.names.tradicional]).toEqual(['Fe2O3', 'trióxido de dihierro', 'óxido de hierro(III)', 'óxido férrico']);
     expect(buildCompound({ kind: 'sal-binaria', cation: { el: 'Hg', ox: 1 }, anion: 'Cl' }).formula).toBe('Hg2Cl2');
     expect(buildCompound({ kind: 'oxacido', el: 'S', ox: 6 }).names.sistematica).toBe('dihidrogeno(tetraoxidosulfato)');
+  } },
+  { id: 'hidrocarburos', origin: 'referencia', what: 'CH₄ + 2 O₂ → CO₂ + 2 H₂O; ΔcH° del metano 890,8 kJ/mol (CRC 94.ª ed. vía HSDB/PubChem) → 890,8/16,043 = 55,53 kJ/g; cloración estadística del propano 6 H : 2 H = 75 % : 25 %', run: () => {
+    expect(combustionEquation('CH₄', 1, 4, 'completa')).toBe('CH₄ + 2 O₂ → CO₂ + 2 H₂O');
+    expect(combustionEquation('C₃H₈', 3, 8, 'completa')).toBe('C₃H₈ + 5 O₂ → 3 CO₂ + 4 H₂O');
+    const e = combustionEnergy(getOrganic('metano'))!; close(e.kJmol, 890.8, 1e-9); close(e.kJg, 55.526, 1e-3);
+    expect(monohalogenation('CCC', 'Cl').map((p) => [p.nombre, p.percent])).toEqual([['1-cloropropano', 75], ['2-cloropropano', 25]]);
+  } },
+  { id: 'aromaticos', origin: 'referencia', what: 'Hückel (1931): orbitales π del benceno x = 2, 1, 1, −1, −1, −2 (β); 6 e⁻ π = 4·1 + 2 → aromático; ciclobutadieno 4 e⁻ π (4n) → antiaromático', run: () => {
+    const ben = huckelAnalysis(parseSmiles('c1ccccc1'));
+    ben.levels!.map((l) => l.x).forEach((x, i) => close(x, [2, 1, 1, -1, -1, -2][i], 1e-9));
+    expect([ben.piElectrons, ben.verdict]).toEqual([6, 'aromático']);
+    expect(huckelAnalysis(parseSmiles('C1=CC=C1')).verdict).toBe('antiaromático');
+    symmetricEigenvalues([[0, 1], [1, 0]]).forEach((x, i) => close(x, [1, -1][i], 1e-12));
+  } },
+  { id: 'nomenclatura-organica', origin: 'referencia', what: 'nombres IUPAC iguales a los de PubChem (LexiChem): CC(C)CC(C)(C)C → 2,2,4-trimethylpentane, C=C(CC)CCC → 3-methylidenehexane (cadena más larga, regla 2013), C/C=C/C → (E)-but-2-ene; en español 2,2,4-trimetilpentano y 2-metil-1-yodobutano (orden alfabético en español)', run: () => {
+    const n = (s: string) => { const r = nameSmiles(s); if (!r.ok) throw new Error(r.motivo); return r; };
+    expect(n('CC(C)CC(C)(C)C').en).toBe('2,2,4-trimethylpentane');
+    expect(n('C=C(CC)CCC').en).toBe('3-methylidenehexane');
+    expect(n('C/C=C/C').en).toBe('(E)-but-2-ene');
+    expect(n('CC(C)CC(C)(C)C').es).toBe('2,2,4-trimetilpentano');
+    expect(n('CCC(C)CI').es).toBe('2-metil-1-yodobutano');
   } },
   { id: 'metabolismo', origin: 'referencia', what: 'FBA de E. coli core (glucosa 10 mmol/gDW/h): crecimiento 0,8739 h⁻¹ con O₂ sin límite y 0,2117 h⁻¹ sin O₂, iguales a COBRApy 0.32.1 con GLPK (tolerancia relativa 10⁻⁶)', run: () => {
     close(runFba(REFERENCE_CONDITION).growth, 0.873921506968, 1e-6);

@@ -116,4 +116,11 @@ describe('registro reproducible del experimento', () => {
     expect([...schema.required].sort()).toEqual(Object.keys(rec).sort());
     expect(schema.properties.formato.const).toBe(RECORD_FORMAT);
   });
+  it('hidrocarburos y aromáticos: propiedades experimentales publicadas, geometría calculada', () => {
+    for (const id of ['hidrocarburos', 'aromaticos']) {
+      const pr = practiceProvenance(id, 'ideal');
+      expect(pr.data).toBe('experimental');
+      expect(pr.detail).toMatch(/HSDB/);
+    }
+  });
 });

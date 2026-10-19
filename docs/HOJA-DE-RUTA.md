@@ -90,7 +90,8 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
 - [x] **Rediseño visual 2026** de la interfaz y práctica 56 de energía cinética y potencial (8.º) (versión 1.7.0).
 - [x] **Etapa de hipótesis retirada** de todas las prácticas por decisión del docente (versión 2.0.0, ADR 0006).
 - [x] **Química inorgánica** (versión 2.1.0): kit 3D, óxidos e hidróxidos, ácidos y sales, nomenclatura inorgánica.
-- [ ] **Química orgánica:** hidrocarburos, aromáticos, nomenclatura IUPAC, grupos funcionales oxigenados y nitrogenados, reacciones orgánicas en 3D (en curso).
+- [x] **Química orgánica, parte 1** (versión 2.2.0): hidrocarburos, aromáticos y nomenclatura IUPAC.
+- [ ] **Química orgánica, parte 2:** grupos funcionales oxigenados y nitrogenados, reacciones orgánicas en 3D (en curso).
 - [ ] **v2 · Fases 7–10:** fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por
       infraestructura hasta decisión del docente).

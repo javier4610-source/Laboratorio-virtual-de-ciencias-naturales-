@@ -361,3 +361,13 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Modelos de pH | pH por balance de cargas igual al modelo existente (10⁻⁸); HCl 0,1 M = 1,00; acético 0,1 M = 2,875; equivalencia HCl/NaOH 7,00; NaHCO₃ 8,34; NH₄Cl 5,12; Mg(OH)₂ saturado 10,35 | Correcto | — | — | Correcto |
 | Prácticas | Valores dorados; E2E de las tres prácticas y sin WebGL; axe WCAG 2.2 AA en ambos temas; teléfono sin desbordamiento; capturas revisadas | Correcto | Chip de texto largo ensanchaba la página 45 px a 390 px | Chip con salto de línea | Corregido |
 | Regresión | 975 pruebas unitarias y 117 E2E | Todas pasan | Las pruebas que recorren todas las prácticas superaban 5 min | Tiempo máximo de 10 min | Corregido |
+
+# Química orgánica, parte 1 (versión 2.2.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Motor de nomenclatura | 189 SMILES (188 estructuras) frente al IUPACName de PubChem (LexiChem): 173 idénticas; 4 solo paréntesis; 8 nombres retenidos de uso general; 3 localizador del cicloalqueno; 0 sin clasificar (la prueba falla si aparece una). 30 nombres en español a mano, E/Z, regla 2013 de la cadena más larga y orden alfabético por idioma | Correcto | — | — | Correcto (el «-1-» en cicloalquenos sustituidos es una convención por verificar en el texto IUPAC 2013) |
+| Propiedades | Valores literales de PubChem PUG View (HSDB con su obra citada), con URL y fecha; huecos mostrados como «Sin información» | Correcto | NIST WebBook inaccesible desde el entorno | Solo HSDB citando CRC o Riddick | Parcial (algunos ΔcH° sin dato) |
+| Geometría | C–C 1,512 / C=C 1,334 / C≡C 1,200 Å; benceno 6 × 1,395 Å; Hückel del benceno 2, 1, 1, −1, −1, −2 β | Correcto | El confórmero del tropilio de PubChem no es plano | Se muestran los dos veredictos con nota | Correcto |
+| Prácticas | Valores dorados; 12 E2E con axe en ambos temas, 390 y 1280 px; visor con WebGL y sin WebGL; capturas revisadas | Correcto | — | — | Correcto |
+| Regresión | 1039 pruebas unitarias y E2E completo | Todas pasan | Las pruebas que recorren todas las prácticas superaban 10 min | Tiempo máximo de 15 min | Corregido |

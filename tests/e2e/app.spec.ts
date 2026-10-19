@@ -37,7 +37,7 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(3);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(14);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(17);
 });
 
 test('densidad (guiada): preparación, experimento sin hipótesis, cálculo, tabla y análisis de la tendencia', async ({ page }) => {
@@ -908,7 +908,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/59');
+  await expect(page.locator('.kpi').first()).toContainText('1/62');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

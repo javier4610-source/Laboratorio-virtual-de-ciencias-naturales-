@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (59)
+## Prácticas implementadas (62)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -69,6 +69,9 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Rastreo génico: del gen a la proteína y su función | Biología | 5 genes reales (HBB, INS, LCT, OCA2, lacZ) con registros de NCBI, UniProt, PDB y ClinVar validados automáticamente; exones e intrones con coordenadas reales; ruta en 13 pasos con tipo de evidencia (demostrado o inferido); consecuencia de variantes calculada sobre el CDS (p. ej., anemia falciforme) |
 | 11.º | Estructura 3D de proteínas: experimental y predicha | Biología | Visor 3D (3Dmol.js) con 4 estructuras experimentales del PDB (insulina 3I40, hemoglobina 2HHB, lisozima 2LZM, GFP 1EMA) y un modelo de AlphaFold (OCA2) incluidos, más carga en vivo por identificador; cintas, esferas y palitos; color por estructura secundaria, cadena o confianza pLDDT; distancias validadas contra Biopython; traza de respaldo sin WebGL |
 | 11.º | Metabolismo celular: análisis de balance de flujos (FBA) | Biología | Modelo E. coli core (95 reacciones, 137 genes) resuelto en el navegador con un símplex propio validado contra COBRApy 0.32.1 (0,8739 h⁻¹ con glucosa y oxígeno; 0,2117 h⁻¹ sin oxígeno); mapa de flujos, fuente de carbono, oxígeno, eliminación de genes y reacciones, variabilidad de flujos (FVA) y genes esenciales |
+| 11.º | Hidrocarburos: alcanos, alquenos y alquinos | Química | Series homólogas con propiedades experimentales citadas (PubChem/HSDB), hibridación y geometría medidas en confórmeros 3D, isomería y cis/trans, conformaciones (ilustración), combustión con ΔcH° y CO₂ por energía, pruebas de insaturación y halogenación estadística; reacciones en 3D |
+| 11.º | Hidrocarburos aromáticos | Química | Benceno con seis C–C iguales (1,395 Å) frente al ciclohexano y el ciclohexeno, regla de Hückel con orbitales calculados, derivados (o-/m-/p-) y sustitución electrofílica en 3D |
+| 11.º | Nomenclatura orgánica IUPAC | Química | Constructor de moléculas con nombre IUPAC 2013 al instante (español e inglés), explicación paso a paso, del nombre a la estructura y errores frecuentes; motor validado contra 188 estructuras de PubChem |
 
 Todas las prácticas de la malla propuesta están implementadas.
 

@@ -1,0 +1,1897 @@
+{
+"_generado": "scripts/validacion/organica_pubchem.py el 2026-10-19 (PubChem PUG REST y PUG View); no editar a mano",
+"motorIupac": "PubChem IUPACName (calculado con LexiChem TK de OpenEye)",
+"fecha": "2026-10-19",
+"estructuras": [
+{
+"smilesEntrada": "C",
+"clase": "alcano",
+"cid": 297,
+"iupacPubChem": "methane",
+"formula": "CH4",
+"smiles": "C",
+"smilesConectividad": "C",
+"title": "Methane"
+},
+{
+"smilesEntrada": "CC",
+"clase": "alcano",
+"cid": 6324,
+"iupacPubChem": "ethane",
+"formula": "C2H6",
+"smiles": "CC",
+"smilesConectividad": "CC",
+"title": "Ethane"
+},
+{
+"smilesEntrada": "CCC",
+"clase": "alcano",
+"cid": 6334,
+"iupacPubChem": "propane",
+"formula": "C3H8",
+"smiles": "CCC",
+"smilesConectividad": "CCC",
+"title": "Propane"
+},
+{
+"smilesEntrada": "CCCC",
+"clase": "alcano",
+"cid": 7843,
+"iupacPubChem": "butane",
+"formula": "C4H10",
+"smiles": "CCCC",
+"smilesConectividad": "CCCC",
+"title": "Butane"
+},
+{
+"smilesEntrada": "CCCCC",
+"clase": "alcano",
+"cid": 8003,
+"iupacPubChem": "pentane",
+"formula": "C5H12",
+"smiles": "CCCCC",
+"smilesConectividad": "CCCCC",
+"title": "Pentane"
+},
+{
+"smilesEntrada": "CCCCCC",
+"clase": "alcano",
+"cid": 8058,
+"iupacPubChem": "hexane",
+"formula": "C6H14",
+"smiles": "CCCCCC",
+"smilesConectividad": "CCCCCC",
+"title": "Hexane"
+},
+{
+"smilesEntrada": "CCCCCCC",
+"clase": "alcano",
+"cid": 8900,
+"iupacPubChem": "heptane",
+"formula": "C7H16",
+"smiles": "CCCCCCC",
+"smilesConectividad": "CCCCCCC",
+"title": "Heptane"
+},
+{
+"smilesEntrada": "CCCCCCCC",
+"clase": "alcano",
+"cid": 356,
+"iupacPubChem": "octane",
+"formula": "C8H18",
+"smiles": "CCCCCCCC",
+"smilesConectividad": "CCCCCCCC",
+"title": "Octane"
+},
+{
+"smilesEntrada": "CCCCCCCCC",
+"clase": "alcano",
+"cid": 8141,
+"iupacPubChem": "nonane",
+"formula": "C9H20",
+"smiles": "CCCCCCCCC",
+"smilesConectividad": "CCCCCCCCC",
+"title": "Nonane"
+},
+{
+"smilesEntrada": "CCCCCCCCCC",
+"clase": "alcano",
+"cid": 15600,
+"iupacPubChem": "decane",
+"formula": "C10H22",
+"smiles": "CCCCCCCCCC",
+"smilesConectividad": "CCCCCCCCCC",
+"title": "Decane"
+},
+{
+"smilesEntrada": "CCCCCCCCCCC",
+"clase": "alcano",
+"cid": 14257,
+"iupacPubChem": "undecane",
+"formula": "C11H24",
+"smiles": "CCCCCCCCCCC",
+"smilesConectividad": "CCCCCCCCCCC",
+"title": "Undecane"
+},
+{
+"smilesEntrada": "CCCCCCCCCCCC",
+"clase": "alcano",
+"cid": 8182,
+"iupacPubChem": "dodecane",
+"formula": "C12H26",
+"smiles": "CCCCCCCCCCCC",
+"smilesConectividad": "CCCCCCCCCCCC",
+"title": "Dodecane"
+},
+{
+"smilesEntrada": "CCCCCCCCCCCCCCCCCCCC",
+"clase": "alcano",
+"cid": 8222,
+"iupacPubChem": "icosane",
+"formula": "C20H42",
+"smiles": "CCCCCCCCCCCCCCCCCCCC",
+"smilesConectividad": "CCCCCCCCCCCCCCCCCCCC",
+"title": "Eicosane"
+},
+{
+"smilesEntrada": "CC(C)C",
+"clase": "ramificado",
+"cid": 6360,
+"iupacPubChem": "2-methylpropane",
+"formula": "C4H10",
+"smiles": "CC(C)C",
+"smilesConectividad": "CC(C)C",
+"title": "Isobutane"
+},
+{
+"smilesEntrada": "CCC(C)C",
+"clase": "ramificado",
+"cid": 6556,
+"iupacPubChem": "2-methylbutane",
+"formula": "C5H12",
+"smiles": "CCC(C)C",
+"smilesConectividad": "CCC(C)C",
+"title": "Isopentane"
+},
+{
+"smilesEntrada": "CC(C)(C)C",
+"clase": "ramificado",
+"cid": 10041,
+"iupacPubChem": "2,2-dimethylpropane",
+"formula": "C5H12",
+"smiles": "CC(C)(C)C",
+"smilesConectividad": "CC(C)(C)C",
+"title": "Neopentane"
+},
+{
+"smilesEntrada": "CCCC(C)C",
+"clase": "ramificado",
+"cid": 7892,
+"iupacPubChem": "2-methylpentane",
+"formula": "C6H14",
+"smiles": "CCCC(C)C",
+"smilesConectividad": "CCCC(C)C",
+"title": "2-Methylpentane"
+},
+{
+"smilesEntrada": "CCC(C)CC",
+"clase": "ramificado",
+"cid": 7282,
+"iupacPubChem": "3-methylpentane",
+"formula": "C6H14",
+"smiles": "CCC(C)CC",
+"smilesConectividad": "CCC(C)CC",
+"title": "3-Methylpentane"
+},
+{
+"smilesEntrada": "CCC(C)(C)C",
+"clase": "ramificado",
+"cid": 6403,
+"iupacPubChem": "2,2-dimethylbutane",
+"formula": "C6H14",
+"smiles": "CCC(C)(C)C",
+"smilesConectividad": "CCC(C)(C)C",
+"title": "2,2-Dimethylbutane"
+},
+{
+"smilesEntrada": "CC(C)C(C)C",
+"clase": "ramificado",
+"cid": 6589,
+"iupacPubChem": "2,3-dimethylbutane",
+"formula": "C6H14",
+"smiles": "CC(C)C(C)C",
+"smilesConectividad": "CC(C)C(C)C",
+"title": "2,3-Dimethylbutane"
+},
+{
+"smilesEntrada": "CCCCC(C)C",
+"clase": "ramificado",
+"cid": 11582,
+"iupacPubChem": "2-methylhexane",
+"formula": "C7H16",
+"smiles": "CCCCC(C)C",
+"smilesConectividad": "CCCCC(C)C",
+"title": "2-Methylhexane"
+},
+{
+"smilesEntrada": "CCCC(C)CC",
+"clase": "ramificado",
+"cid": 11507,
+"iupacPubChem": "3-methylhexane",
+"formula": "C7H16",
+"smiles": "CCCC(C)CC",
+"smilesConectividad": "CCCC(C)CC",
+"title": "3-Methylhexane"
+},
+{
+"smilesEntrada": "CCCC(C)(C)C",
+"clase": "ramificado",
+"cid": 11542,
+"iupacPubChem": "2,2-dimethylpentane",
+"formula": "C7H16",
+"smiles": "CCCC(C)(C)C",
+"smilesConectividad": "CCCC(C)(C)C",
+"title": "2,2-Dimethylpentane"
+},
+{
+"smilesEntrada": "CCC(C)(C)CC",
+"clase": "ramificado",
+"cid": 11229,
+"iupacPubChem": "3,3-dimethylpentane",
+"formula": "C7H16",
+"smiles": "CCC(C)(C)CC",
+"smilesConectividad": "CCC(C)(C)CC",
+"title": "3,3-Dimethylpentane"
+},
+{
+"smilesEntrada": "CC(C)CC(C)C",
+"clase": "ramificado",
+"cid": 7907,
+"iupacPubChem": "2,4-dimethylpentane",
+"formula": "C7H16",
+"smiles": "CC(C)CC(C)C",
+"smilesConectividad": "CC(C)CC(C)C",
+"title": "2,4-Dimethylpentane"
+},
+{
+"smilesEntrada": "CC(C)C(C)(C)C",
+"clase": "ramificado",
+"cid": 10044,
+"iupacPubChem": "2,2,3-trimethylbutane",
+"formula": "C7H16",
+"smiles": "CC(C)C(C)(C)C",
+"smilesConectividad": "CC(C)C(C)(C)C",
+"title": "2,2,3-Trimethylbutane"
+},
+{
+"smilesEntrada": "CCC(CC)CC",
+"clase": "ramificado",
+"cid": 12048,
+"iupacPubChem": "3-ethylpentane",
+"formula": "C7H16",
+"smiles": "CCC(CC)CC",
+"smilesConectividad": "CCC(CC)CC",
+"title": "3-Ethylpentane"
+},
+{
+"smilesEntrada": "CC(C)C(C)CC",
+"clase": "ramificado",
+"cid": 11260,
+"iupacPubChem": "2,3-dimethylpentane",
+"formula": "C7H16",
+"smiles": "CCC(C)C(C)C",
+"smilesConectividad": "CCC(C)C(C)C",
+"title": "2,3-Dimethylpentane"
+},
+{
+"smilesEntrada": "CC(C)CC(C)(C)C",
+"clase": "ramificado",
+"cid": 10907,
+"iupacPubChem": "2,2,4-trimethylpentane",
+"formula": "C8H18",
+"smiles": "CC(C)CC(C)(C)C",
+"smilesConectividad": "CC(C)CC(C)(C)C",
+"title": "2,2,4-Trimethylpentane"
+},
+{
+"smilesEntrada": "CC(C)(C)C(C)(C)C",
+"clase": "ramificado",
+"cid": 11675,
+"iupacPubChem": "2,2,3,3-tetramethylbutane",
+"formula": "C8H18",
+"smiles": "CC(C)(C)C(C)(C)C",
+"smilesConectividad": "CC(C)(C)C(C)(C)C",
+"title": "2,2,3,3-Tetramethylbutane"
+},
+{
+"smilesEntrada": "CCC(CC)(CC)CC",
+"clase": "ramificado",
+"cid": 14020,
+"iupacPubChem": "3,3-diethylpentane",
+"formula": "C9H20",
+"smiles": "CCC(CC)(CC)CC",
+"smilesConectividad": "CCC(CC)(CC)CC",
+"title": "3,3-Diethylpentane"
+},
+{
+"smilesEntrada": "CCC(C)C(CC)C(C)C",
+"clase": "ramificado",
+"cid": 522447,
+"iupacPubChem": "3-ethyl-2,4-dimethylhexane",
+"formula": "C10H22",
+"smiles": "CCC(C)C(CC)C(C)C",
+"smilesConectividad": "CCC(C)C(CC)C(C)C",
+"title": "3-Ethyl-2,4-dimethylhexane"
+},
+{
+"smilesEntrada": "CCCC(C(C)C)CCC",
+"clase": "ramificado",
+"cid": 142981,
+"iupacPubChem": "4-propan-2-ylheptane",
+"formula": "C10H22",
+"smiles": "CCCC(CCC)C(C)C",
+"smilesConectividad": "CCCC(CCC)C(C)C",
+"title": "Heptane, 4-(1-methylethyl)-"
+},
+{
+"smilesEntrada": "CCCC(CCC)C(C)(C)C",
+"clase": "ramificado",
+"cid": 14123358,
+"iupacPubChem": "4-tert-butylheptane",
+"formula": "C11H24",
+"smiles": "CCCC(CCC)C(C)(C)C",
+"smilesConectividad": "CCCC(CCC)C(C)(C)C",
+"title": "4-tert-Butylheptane"
+},
+{
+"smilesEntrada": "CCCCC(CC(C)C)CCCC",
+"clase": "ramificado",
+"cid": 545936,
+"iupacPubChem": "5-(2-methylpropyl)nonane",
+"formula": "C13H28",
+"smiles": "CCCCC(CCCC)CC(C)C",
+"smilesConectividad": "CCCCC(CCCC)CC(C)C",
+"title": "5-Isobutylnonane"
+},
+{
+"smilesEntrada": "CCC(C)CC(CC)CC",
+"clase": "ramificado",
+"cid": 103700,
+"iupacPubChem": "3-ethyl-5-methylheptane",
+"formula": "C10H22",
+"smiles": "CCC(C)CC(CC)CC",
+"smilesConectividad": "CCC(C)CC(CC)CC",
+"title": "3-Ethyl-5-methylheptane"
+},
+{
+"smilesEntrada": "CC(C)C(C)C(C)C",
+"clase": "ramificado",
+"cid": 11269,
+"iupacPubChem": "2,3,4-trimethylpentane",
+"formula": "C8H18",
+"smiles": "CC(C)C(C)C(C)C",
+"smilesConectividad": "CC(C)C(C)C(C)C",
+"title": "2,3,4-Trimethylpentane"
+},
+{
+"smilesEntrada": "CCCCC(CC)CCC",
+"clase": "ramificado",
+"cid": 85925,
+"iupacPubChem": "4-ethyloctane",
+"formula": "C10H22",
+"smiles": "CCCCC(CC)CCC",
+"smilesConectividad": "CCCCC(CC)CCC",
+"title": "4-Ethyloctane"
+},
+{
+"smilesEntrada": "CCC(C)C(C)CC",
+"clase": "ramificado",
+"cid": 11412,
+"iupacPubChem": "3,4-dimethylhexane",
+"formula": "C8H18",
+"smiles": "CCC(C)C(C)CC",
+"smilesConectividad": "CCC(C)C(C)CC",
+"title": "3,4-Dimethylhexane"
+},
+{
+"smilesEntrada": "CCCCCC(C)C(C)(C)CC",
+"clase": "ramificado",
+"cid": 53424858,
+"iupacPubChem": "3,3,4-trimethylnonane",
+"formula": "C12H26",
+"smiles": "CCCCCC(C)C(C)(C)CC",
+"smilesConectividad": "CCCCCC(C)C(C)(C)CC",
+"title": "3,3,4-Trimethylnonane"
+},
+{
+"smilesEntrada": "CCCC(CC)C(C)CC",
+"clase": "ramificado",
+"cid": 521414,
+"iupacPubChem": "4-ethyl-3-methylheptane",
+"formula": "C10H22",
+"smiles": "CCCC(CC)C(C)CC",
+"smilesConectividad": "CCCC(CC)C(C)CC",
+"title": "4-Ethyl-3-methylheptane"
+},
+{
+"smilesEntrada": "CCCCC(C(C)CC)CCCC",
+"clase": "ramificado",
+"cid": 43943,
+"iupacPubChem": "5-butan-2-ylnonane",
+"formula": "C13H28",
+"smiles": "CCCCC(CCCC)C(C)CC",
+"smilesConectividad": "CCCCC(CCCC)C(C)CC",
+"title": "5-(1-Methylpropyl)nonane"
+},
+{
+"smilesEntrada": "CCC(C)(CC)C(C)C",
+"clase": "ramificado",
+"cid": 28027,
+"iupacPubChem": "3-ethyl-2,3-dimethylpentane",
+"formula": "C9H20",
+"smiles": "CCC(C)(CC)C(C)C",
+"smilesConectividad": "CCC(C)(CC)C(C)C",
+"title": "Pentane, 3-ethyl-2,3-dimethyl-"
+},
+{
+"smilesEntrada": "CCCCC(CCC)C(C)CC",
+"clase": "ramificado",
+"cid": 21201031,
+"iupacPubChem": "3-methyl-4-propyloctane",
+"formula": "C12H26",
+"smiles": "CCCCC(CCC)C(C)CC",
+"smilesConectividad": "CCCCC(CCC)C(C)CC",
+"title": "3-Methyl-4-propyloctane"
+},
+{
+"smilesEntrada": "C=C",
+"clase": "alqueno",
+"cid": 6325,
+"iupacPubChem": "ethene",
+"formula": "C2H4",
+"smiles": "C=C",
+"smilesConectividad": "C=C",
+"title": "Ethylene"
+},
+{
+"smilesEntrada": "CC=C",
+"clase": "alqueno",
+"cid": 8252,
+"iupacPubChem": "prop-1-ene",
+"formula": "C3H6",
+"smiles": "CC=C",
+"smilesConectividad": "CC=C",
+"title": "Propylene"
+},
+{
+"smilesEntrada": "CCC=C",
+"clase": "alqueno",
+"cid": 7844,
+"iupacPubChem": "but-1-ene",
+"formula": "C4H8",
+"smiles": "CCC=C",
+"smilesConectividad": "CCC=C",
+"title": "1-Butene"
+},
+{
+"smilesEntrada": "CC=CC",
+"clase": "alqueno",
+"cid": 12220,
+"iupacPubChem": "but-2-ene",
+"formula": "C4H8",
+"smiles": "CC=CC",
+"smilesConectividad": "CC=CC",
+"title": "But-2-ene"
+},
+{
+"smilesEntrada": "C/C=C/C",
+"clase": "alqueno",
+"cid": 62695,
+"iupacPubChem": "(E)-but-2-ene",
+"formula": "C4H8",
+"smiles": "C/C=C/C",
+"smilesConectividad": "CC=CC",
+"title": "trans-2-BUTENE"
+},
+{
+"smilesEntrada": "C/C=C\\C",
+"clase": "alqueno",
+"cid": 5287573,
+"iupacPubChem": "(Z)-but-2-ene",
+"formula": "C4H8",
+"smiles": "C/C=C\\C",
+"smilesConectividad": "CC=CC",
+"title": "cis-2-BUTENE"
+},
+{
+"smilesEntrada": "CC(C)=C",
+"clase": "alqueno",
+"cid": 8255,
+"iupacPubChem": "2-methylprop-1-ene",
+"formula": "C4H8",
+"smiles": "CC(=C)C",
+"smilesConectividad": "CC(=C)C",
+"title": "Isobutylene"
+},
+{
+"smilesEntrada": "CCCC=C",
+"clase": "alqueno",
+"cid": 8004,
+"iupacPubChem": "pent-1-ene",
+"formula": "C5H10",
+"smiles": "CCCC=C",
+"smilesConectividad": "CCCC=C",
+"title": "1-Pentene"
+},
+{
+"smilesEntrada": "CC/C=C/C",
+"clase": "alqueno",
+"cid": 5326161,
+"iupacPubChem": "(E)-pent-2-ene",
+"formula": "C5H10",
+"smiles": "CC/C=C/C",
+"smilesConectividad": "CCC=CC",
+"title": "trans-2-Pentene"
+},
+{
+"smilesEntrada": "CC/C=C\\C",
+"clase": "alqueno",
+"cid": 5326160,
+"iupacPubChem": "(Z)-pent-2-ene",
+"formula": "C5H10",
+"smiles": "CC/C=C\\C",
+"smilesConectividad": "CCC=CC",
+"title": "cis-2-PENTENE"
+},
+{
+"smilesEntrada": "CC=C(C)C",
+"clase": "alqueno",
+"cid": 10553,
+"iupacPubChem": "2-methylbut-2-ene",
+"formula": "C5H10",
+"smiles": "CC=C(C)C",
+"smilesConectividad": "CC=C(C)C",
+"title": "2-Methyl-2-butene"
+},
+{
+"smilesEntrada": "CC(C)C=C",
+"clase": "alqueno",
+"cid": 11239,
+"iupacPubChem": "3-methylbut-1-ene",
+"formula": "C5H10",
+"smiles": "CC(C)C=C",
+"smilesConectividad": "CC(C)C=C",
+"title": "3-Methyl-1-butene"
+},
+{
+"smilesEntrada": "CCC(C)=C",
+"clase": "alqueno",
+"cid": 11240,
+"iupacPubChem": "2-methylbut-1-ene",
+"formula": "C5H10",
+"smiles": "CCC(=C)C",
+"smilesConectividad": "CCC(=C)C",
+"title": "2-Methyl-1-butene"
+},
+{
+"smilesEntrada": "CCCCC=C",
+"clase": "alqueno",
+"cid": 11597,
+"iupacPubChem": "hex-1-ene",
+"formula": "C6H12",
+"smiles": "CCCCC=C",
+"smilesConectividad": "CCCCC=C",
+"title": "1-Hexene"
+},
+{
+"smilesEntrada": "CC/C=C/CC",
+"clase": "alqueno",
+"cid": 638066,
+"iupacPubChem": "(E)-hex-3-ene",
+"formula": "C6H12",
+"smiles": "CC/C=C/CC",
+"smilesConectividad": "CCC=CCC",
+"title": "trans-3-Hexene"
+},
+{
+"smilesEntrada": "CC(C)=C(C)C",
+"clase": "alqueno",
+"cid": 11250,
+"iupacPubChem": "2,3-dimethylbut-2-ene",
+"formula": "C6H12",
+"smiles": "CC(=C(C)C)C",
+"smilesConectividad": "CC(=C(C)C)C",
+"title": "2,3-Dimethyl-2-butene"
+},
+{
+"smilesEntrada": "C=CC=C",
+"clase": "alqueno",
+"cid": 7845,
+"iupacPubChem": "buta-1,3-diene",
+"formula": "C4H6",
+"smiles": "C=CC=C",
+"smilesConectividad": "C=CC=C",
+"title": "1,3-Butadiene"
+},
+{
+"smilesEntrada": "CC(=C)C=C",
+"clase": "alqueno",
+"cid": 6557,
+"iupacPubChem": "2-methylbuta-1,3-diene",
+"formula": "C5H8",
+"smiles": "CC(=C)C=C",
+"smilesConectividad": "CC(=C)C=C",
+"title": "Isoprene"
+},
+{
+"smilesEntrada": "C=CCC=C",
+"clase": "alqueno",
+"cid": 11587,
+"iupacPubChem": "penta-1,4-diene",
+"formula": "C5H8",
+"smiles": "C=CCC=C",
+"smilesConectividad": "C=CCC=C",
+"title": "1,4-Pentadiene"
+},
+{
+"smilesEntrada": "C=C=C",
+"clase": "alqueno",
+"cid": 10037,
+"iupacPubChem": "propa-1,2-diene",
+"formula": "C3H4",
+"smiles": "C=C=C",
+"smilesConectividad": "C=C=C",
+"title": "Allene"
+},
+{
+"smilesEntrada": "CCCCCCC=C",
+"clase": "alqueno",
+"cid": 8125,
+"iupacPubChem": "oct-1-ene",
+"formula": "C8H16",
+"smiles": "CCCCCCC=C",
+"smilesConectividad": "CCCCCCC=C",
+"title": "1-Octene"
+},
+{
+"smilesEntrada": "CCCCCCCCC=C",
+"clase": "alqueno",
+"cid": 13381,
+"iupacPubChem": "dec-1-ene",
+"formula": "C10H20",
+"smiles": "CCCCCCCCC=C",
+"smilesConectividad": "CCCCCCCCC=C",
+"title": "1-Decene"
+},
+{
+"smilesEntrada": "C/C=C/C(C)C",
+"clase": "alqueno",
+"cid": 172092,
+"iupacPubChem": "(E)-4-methylpent-2-ene",
+"formula": "C6H12",
+"smiles": "C/C=C/C(C)C",
+"smilesConectividad": "CC=CC(C)C",
+"title": "4-Methyl-2-pentene, (2E)-"
+},
+{
+"smilesEntrada": "C/C=C\\C(C)C",
+"clase": "alqueno",
+"cid": 5326159,
+"iupacPubChem": "(Z)-4-methylpent-2-ene",
+"formula": "C6H12",
+"smiles": "C/C=C\\C(C)C",
+"smilesConectividad": "CC=CC(C)C",
+"title": "4-Methyl-2-pentene, (2Z)-"
+},
+{
+"smilesEntrada": "CCC(=C)CC",
+"clase": "alqueno",
+"cid": 12970,
+"iupacPubChem": "3-methylidenepentane",
+"formula": "C6H12",
+"smiles": "CCC(=C)CC",
+"smilesConectividad": "CCC(=C)CC",
+"title": "2-Ethyl-1-butene"
+},
+{
+"smilesEntrada": "CCCC(=C)CC",
+"clase": "alqueno",
+"cid": 520668,
+"iupacPubChem": "3-methylidenehexane",
+"formula": "C7H14",
+"smiles": "CCCC(=C)CC",
+"smilesConectividad": "CCCC(=C)CC",
+"title": "3-Methylidenehexane"
+},
+{
+"smilesEntrada": "C=CC(C)(C)C",
+"clase": "alqueno",
+"cid": 11210,
+"iupacPubChem": "3,3-dimethylbut-1-ene",
+"formula": "C6H12",
+"smiles": "CC(C)(C)C=C",
+"smilesConectividad": "CC(C)(C)C=C",
+"title": "3,3-Dimethyl-1-butene"
+},
+{
+"smilesEntrada": "C/C=C/C=C/C",
+"clase": "alqueno",
+"cid": 638071,
+"iupacPubChem": "(2E,4E)-hexa-2,4-diene",
+"formula": "C6H10",
+"smiles": "C/C=C/C=C/C",
+"smilesConectividad": "CC=CC=CC",
+"title": "trans,trans-2,4-Hexadiene"
+},
+{
+"smilesEntrada": "CC(C)/C=C/C(C)C",
+"clase": "alqueno",
+"cid": 638067,
+"iupacPubChem": "(E)-2,5-dimethylhex-3-ene",
+"formula": "C8H16",
+"smiles": "CC(C)/C=C/C(C)C",
+"smilesConectividad": "CC(C)C=CC(C)C",
+"title": "(3E)-2,5-Dimethyl-3-hexene"
+},
+{
+"smilesEntrada": "CCC(=CC)CC",
+"clase": "alqueno",
+"cid": 13159,
+"iupacPubChem": "3-ethylpent-2-ene",
+"formula": "C7H14",
+"smiles": "CCC(=CC)CC",
+"smilesConectividad": "CCC(=CC)CC",
+"title": "3-Ethyl-2-pentene"
+},
+{
+"smilesEntrada": "C=CC=CC=C",
+"clase": "alqueno",
+"cid": 16695,
+"iupacPubChem": "hexa-1,3,5-triene",
+"formula": "C6H8",
+"smiles": "C=CC=CC=C",
+"smilesConectividad": "C=CC=CC=C",
+"title": "1,3,5-Hexatriene"
+},
+{
+"smilesEntrada": "CCC(C=C)CCC",
+"clase": "alqueno",
+"cid": 103003,
+"iupacPubChem": "3-ethylhex-1-ene",
+"formula": "C8H16",
+"smiles": "CCCC(CC)C=C",
+"smilesConectividad": "CCCC(CC)C=C",
+"title": "3-Ethyl-1-hexene"
+},
+{
+"smilesEntrada": "C#C",
+"clase": "alquino",
+"cid": 6326,
+"iupacPubChem": "acetylene",
+"formula": "C2H2",
+"smiles": "C#C",
+"smilesConectividad": "C#C",
+"title": "Acetylene"
+},
+{
+"smilesEntrada": "CC#C",
+"clase": "alquino",
+"cid": 6335,
+"iupacPubChem": "prop-1-yne",
+"formula": "C3H4",
+"smiles": "CC#C",
+"smilesConectividad": "CC#C",
+"title": "Propyne"
+},
+{
+"smilesEntrada": "CCC#C",
+"clase": "alquino",
+"cid": 7846,
+"iupacPubChem": "but-1-yne",
+"formula": "C4H6",
+"smiles": "CCC#C",
+"smilesConectividad": "CCC#C",
+"title": "1-Butyne"
+},
+{
+"smilesEntrada": "CC#CC",
+"clase": "alquino",
+"cid": 10419,
+"iupacPubChem": "but-2-yne",
+"formula": "C4H6",
+"smiles": "CC#CC",
+"smilesConectividad": "CC#CC",
+"title": "Dimethylacetylene"
+},
+{
+"smilesEntrada": "CCCC#C",
+"clase": "alquino",
+"cid": 12309,
+"iupacPubChem": "pent-1-yne",
+"formula": "C5H8",
+"smiles": "CCCC#C",
+"smilesConectividad": "CCCC#C",
+"title": "1-Pentyne"
+},
+{
+"smilesEntrada": "CCC#CC",
+"clase": "alquino",
+"cid": 12310,
+"iupacPubChem": "pent-2-yne",
+"formula": "C5H8",
+"smiles": "CCC#CC",
+"smilesConectividad": "CCC#CC",
+"title": "2-Pentyne"
+},
+{
+"smilesEntrada": "CC(C)C#C",
+"clase": "alquino",
+"cid": 69019,
+"iupacPubChem": "3-methylbut-1-yne",
+"formula": "C5H8",
+"smiles": "CC(C)C#C",
+"smilesConectividad": "CC(C)C#C",
+"title": "3-Methylbut-1-yne"
+},
+{
+"smilesEntrada": "CCCCC#C",
+"clase": "alquino",
+"cid": 12732,
+"iupacPubChem": "hex-1-yne",
+"formula": "C6H10",
+"smiles": "CCCCC#C",
+"smilesConectividad": "CCCCC#C",
+"title": "1-Hexyne"
+},
+{
+"smilesEntrada": "CCC#CCC",
+"clase": "alquino",
+"cid": 13568,
+"iupacPubChem": "hex-3-yne",
+"formula": "C6H10",
+"smiles": "CCC#CCC",
+"smilesConectividad": "CCC#CCC",
+"title": "3-Hexyne"
+},
+{
+"smilesEntrada": "CC(C)C#CC",
+"clase": "alquino",
+"cid": 140789,
+"iupacPubChem": "4-methylpent-2-yne",
+"formula": "C6H10",
+"smiles": "CC#CC(C)C",
+"smilesConectividad": "CC#CC(C)C",
+"title": "4-Methyl-2-pentyne"
+},
+{
+"smilesEntrada": "CC(C)(C)C#C",
+"clase": "alquino",
+"cid": 13512,
+"iupacPubChem": "3,3-dimethylbut-1-yne",
+"formula": "C6H10",
+"smiles": "CC(C)(C)C#C",
+"smilesConectividad": "CC(C)(C)C#C",
+"title": "3,3-Dimethyl-1-butyne"
+},
+{
+"smilesEntrada": "C=CC#C",
+"clase": "alquino",
+"cid": 12720,
+"iupacPubChem": "but-1-en-3-yne",
+"formula": "C4H4",
+"smiles": "C=CC#C",
+"smilesConectividad": "C=CC#C",
+"title": "Vinyl acetylene"
+},
+{
+"smilesEntrada": "C=CCC#C",
+"clase": "alquino",
+"cid": 522708,
+"iupacPubChem": "pent-1-en-4-yne",
+"formula": "C5H6",
+"smiles": "C=CCC#C",
+"smilesConectividad": "C=CCC#C",
+"title": "1-Penten-4-yne"
+},
+{
+"smilesEntrada": "C/C=C/C#C",
+"clase": "alquino",
+"cid": 638083,
+"iupacPubChem": "(E)-pent-3-en-1-yne",
+"formula": "C5H6",
+"smiles": "C/C=C/C#C",
+"smilesConectividad": "CC=CC#C",
+"title": "3-Penten-1-yne"
+},
+{
+"smilesEntrada": "C#CCCC#C",
+"clase": "alquino",
+"cid": 69402,
+"iupacPubChem": "hexa-1,5-diyne",
+"formula": "C6H6",
+"smiles": "C#CCCC#C",
+"smilesConectividad": "C#CCCC#C",
+"title": "Dipropargyl"
+},
+{
+"smilesEntrada": "CCCCCCC#C",
+"clase": "alquino",
+"cid": 12370,
+"iupacPubChem": "oct-1-yne",
+"formula": "C8H14",
+"smiles": "CCCCCCC#C",
+"smilesConectividad": "CCCCCCC#C",
+"title": "1-Octyne"
+},
+{
+"smilesEntrada": "CCC(C#C)CC",
+"clase": "alquino",
+"cid": 519834,
+"iupacPubChem": "3-ethylpent-1-yne",
+"formula": "C7H12",
+"smiles": "CCC(CC)C#C",
+"smilesConectividad": "CCC(CC)C#C",
+"title": "3-Ethylpent-1-yne"
+},
+{
+"smilesEntrada": "C#CC=CC=C",
+"clase": "alquino",
+"cid": 139149,
+"iupacPubChem": "hexa-1,3-dien-5-yne",
+"formula": "C6H6",
+"smiles": "C=CC=CC#C",
+"smilesConectividad": "C=CC=CC#C",
+"title": "1,3-Hexadien-5-yne"
+},
+{
+"smilesEntrada": "CC#CC(C)C",
+"clase": "alquino",
+"cid": 140789,
+"iupacPubChem": "4-methylpent-2-yne",
+"formula": "C6H10",
+"smiles": "CC#CC(C)C",
+"smilesConectividad": "CC#CC(C)C",
+"title": "4-Methyl-2-pentyne"
+},
+{
+"smilesEntrada": "C1CC1",
+"clase": "ciclico",
+"cid": 6351,
+"iupacPubChem": "cyclopropane",
+"formula": "C3H6",
+"smiles": "C1CC1",
+"smilesConectividad": "C1CC1",
+"title": "Cyclopropane"
+},
+{
+"smilesEntrada": "C1CCC1",
+"clase": "ciclico",
+"cid": 9250,
+"iupacPubChem": "cyclobutane",
+"formula": "C4H8",
+"smiles": "C1CCC1",
+"smilesConectividad": "C1CCC1",
+"title": "Cyclobutane"
+},
+{
+"smilesEntrada": "C1CCCC1",
+"clase": "ciclico",
+"cid": 9253,
+"iupacPubChem": "cyclopentane",
+"formula": "C5H10",
+"smiles": "C1CCCC1",
+"smilesConectividad": "C1CCCC1",
+"title": "Cyclopentane"
+},
+{
+"smilesEntrada": "C1CCCCC1",
+"clase": "ciclico",
+"cid": 8078,
+"iupacPubChem": "cyclohexane",
+"formula": "C6H12",
+"smiles": "C1CCCCC1",
+"smilesConectividad": "C1CCCCC1",
+"title": "Cyclohexane"
+},
+{
+"smilesEntrada": "C1CCCCCC1",
+"clase": "ciclico",
+"cid": 9265,
+"iupacPubChem": "cycloheptane",
+"formula": "C7H14",
+"smiles": "C1CCCCCC1",
+"smilesConectividad": "C1CCCCCC1",
+"title": "Cycloheptane"
+},
+{
+"smilesEntrada": "C1CCCCCCC1",
+"clase": "ciclico",
+"cid": 9266,
+"iupacPubChem": "cyclooctane",
+"formula": "C8H16",
+"smiles": "C1CCCCCCC1",
+"smilesConectividad": "C1CCCCCCC1",
+"title": "Cyclooctane"
+},
+{
+"smilesEntrada": "C1CCCCCCCCC1",
+"clase": "ciclico",
+"cid": 9267,
+"iupacPubChem": "cyclodecane",
+"formula": "C10H20",
+"smiles": "C1CCCCCCCCC1",
+"smilesConectividad": "C1CCCCCCCCC1",
+"title": "Cyclodecane"
+},
+{
+"smilesEntrada": "CC1CCCCC1",
+"clase": "ciclico",
+"cid": 7962,
+"iupacPubChem": "methylcyclohexane",
+"formula": "C7H14",
+"smiles": "CC1CCCCC1",
+"smilesConectividad": "CC1CCCCC1",
+"title": "Methylcyclohexane"
+},
+{
+"smilesEntrada": "CCC1CCCC1",
+"clase": "ciclico",
+"cid": 15431,
+"iupacPubChem": "ethylcyclopentane",
+"formula": "C7H14",
+"smiles": "CCC1CCCC1",
+"smilesConectividad": "CCC1CCCC1",
+"title": "Ethylcyclopentane"
+},
+{
+"smilesEntrada": "CC1(C)CCCCC1",
+"clase": "ciclico",
+"cid": 11549,
+"iupacPubChem": "1,1-dimethylcyclohexane",
+"formula": "C8H16",
+"smiles": "CC1(CCCCC1)C",
+"smilesConectividad": "CC1(CCCCC1)C",
+"title": "1,1-Dimethylcyclohexane"
+},
+{
+"smilesEntrada": "CC1CCCCC1C",
+"clase": "ciclico",
+"cid": 11416,
+"iupacPubChem": "1,2-dimethylcyclohexane",
+"formula": "C8H16",
+"smiles": "CC1CCCCC1C",
+"smilesConectividad": "CC1CCCCC1C",
+"title": "1,2-Dimethylcyclohexane"
+},
+{
+"smilesEntrada": "CC1CCCC(C)C1",
+"clase": "ciclico",
+"cid": 11564,
+"iupacPubChem": "1,3-dimethylcyclohexane",
+"formula": "C8H16",
+"smiles": "CC1CCCC(C1)C",
+"smilesConectividad": "CC1CCCC(C1)C",
+"title": "1,3-Dimethylcyclohexane"
+},
+{
+"smilesEntrada": "CC1CCC(C)CC1",
+"clase": "ciclico",
+"cid": 11523,
+"iupacPubChem": "1,4-dimethylcyclohexane",
+"formula": "C8H16",
+"smiles": "CC1CCC(CC1)C",
+"smilesConectividad": "CC1CCC(CC1)C",
+"title": "1,4-Dimethylcyclohexane"
+},
+{
+"smilesEntrada": "CCC1CCCC(C)C1",
+"clase": "ciclico",
+"cid": 35412,
+"iupacPubChem": "1-ethyl-3-methylcyclohexane",
+"formula": "C9H18",
+"smiles": "CCC1CCCC(C1)C",
+"smilesConectividad": "CCC1CCCC(C1)C",
+"title": "1-Ethyl-3-methylcyclohexane (cis-and trans-mixture)"
+},
+{
+"smilesEntrada": "CCCC1CC1",
+"clase": "ciclico",
+"cid": 17014,
+"iupacPubChem": "propylcyclopropane",
+"formula": "C6H12",
+"smiles": "CCCC1CC1",
+"smilesConectividad": "CCCC1CC1",
+"title": "Propylcyclopropane"
+},
+{
+"smilesEntrada": "CC(C)C1CCCCC1",
+"clase": "ciclico",
+"cid": 12763,
+"iupacPubChem": "propan-2-ylcyclohexane",
+"formula": "C9H18",
+"smiles": "CC(C)C1CCCCC1",
+"smilesConectividad": "CC(C)C1CCCCC1",
+"title": "Isopropylcyclohexane"
+},
+{
+"smilesEntrada": "CC(C)(C)C1CCCCC1",
+"clase": "ciclico",
+"cid": 18508,
+"iupacPubChem": "tert-butylcyclohexane",
+"formula": "C10H20",
+"smiles": "CC(C)(C)C1CCCCC1",
+"smilesConectividad": "CC(C)(C)C1CCCCC1",
+"title": "tert-Butylcyclohexane"
+},
+{
+"smilesEntrada": "C1CCC=CC1",
+"clase": "ciclico",
+"cid": 8079,
+"iupacPubChem": "cyclohexene",
+"formula": "C6H10",
+"smiles": "C1CCC=CC1",
+"smilesConectividad": "C1CCC=CC1",
+"title": "Cyclohexene"
+},
+{
+"smilesEntrada": "C1CC=CC1",
+"clase": "ciclico",
+"cid": 8882,
+"iupacPubChem": "cyclopentene",
+"formula": "C5H8",
+"smiles": "C1CC=CC1",
+"smilesConectividad": "C1CC=CC1",
+"title": "Cyclopentene"
+},
+{
+"smilesEntrada": "CC1=CCCCC1",
+"clase": "ciclico",
+"cid": 11574,
+"iupacPubChem": "1-methylcyclohexene",
+"formula": "C7H12",
+"smiles": "CC1=CCCCC1",
+"smilesConectividad": "CC1=CCCCC1",
+"title": "1-Methylcyclohexene"
+},
+{
+"smilesEntrada": "CC1CCCC=C1",
+"clase": "ciclico",
+"cid": 11573,
+"iupacPubChem": "3-methylcyclohexene",
+"formula": "C7H12",
+"smiles": "CC1CCCC=C1",
+"smilesConectividad": "CC1CCCC=C1",
+"title": "3-Methylcyclohexene"
+},
+{
+"smilesEntrada": "CC1CCC=CC1",
+"clase": "ciclico",
+"cid": 11572,
+"iupacPubChem": "4-methylcyclohexene",
+"formula": "C7H12",
+"smiles": "CC1CCC=CC1",
+"smilesConectividad": "CC1CCC=CC1",
+"title": "4-Methylcyclohexene"
+},
+{
+"smilesEntrada": "C1CC=CC=C1",
+"clase": "ciclico",
+"cid": 11605,
+"iupacPubChem": "cyclohexa-1,3-diene",
+"formula": "C6H8",
+"smiles": "C1CC=CC=C1",
+"smilesConectividad": "C1CC=CC=C1",
+"title": "1,3-Cyclohexadiene"
+},
+{
+"smilesEntrada": "C1C=CCC=C1",
+"clase": "ciclico",
+"cid": 12343,
+"iupacPubChem": "cyclohexa-1,4-diene",
+"formula": "C6H8",
+"smiles": "C1C=CCC=C1",
+"smilesConectividad": "C1C=CCC=C1",
+"title": "1,4-Cyclohexadiene"
+},
+{
+"smilesEntrada": "C1=CC=CC=CC=C1",
+"clase": "ciclico",
+"cid": 12378,
+"iupacPubChem": "cyclooctatetraene",
+"formula": "C8H8",
+"smiles": "C1=CC=CC=CC=C1",
+"smilesConectividad": "C1=CC=CC=CC=C1",
+"title": "(4-Methyl-6-trifluoromethyl-pyrimidin-2-yl-sulfanyl)-acetic acid"
+},
+{
+"smilesEntrada": "C=C1CCCCC1",
+"clase": "ciclico",
+"cid": 14502,
+"iupacPubChem": "methylidenecyclohexane",
+"formula": "C7H12",
+"smiles": "C=C1CCCCC1",
+"smilesConectividad": "C=C1CCCCC1",
+"title": "Methylenecyclohexane"
+},
+{
+"smilesEntrada": "C=CC1CCCCC1",
+"clase": "ciclico",
+"cid": 12757,
+"iupacPubChem": "ethenylcyclohexane",
+"formula": "C8H14",
+"smiles": "C=CC1CCCCC1",
+"smilesConectividad": "C=CC1CCCCC1",
+"title": "Vinylcyclohexane"
+},
+{
+"smilesEntrada": "C#CC1CCCCC1",
+"clase": "ciclico",
+"cid": 70263,
+"iupacPubChem": "ethynylcyclohexane",
+"formula": "C8H12",
+"smiles": "C#CC1CCCCC1",
+"smilesConectividad": "C#CC1CCCCC1",
+"title": "Ethynylcyclohexane"
+},
+{
+"smilesEntrada": "C1CCC(CC1)C1CCCCC1",
+"clase": "ciclico",
+"cid": 7094,
+"iupacPubChem": "cyclohexylcyclohexane",
+"formula": "C12H22",
+"smiles": "C1CCC(CC1)C2CCCCC2",
+"smilesConectividad": "C1CCC(CC1)C2CCCCC2",
+"title": "Bicyclohexyl"
+},
+{
+"smilesEntrada": "CC1=CC=CCC1",
+"clase": "ciclico",
+"cid": 121731,
+"iupacPubChem": "1-methylcyclohexa-1,3-diene",
+"formula": "C7H10",
+"smiles": "CC1=CC=CCC1",
+"smilesConectividad": "CC1=CC=CCC1",
+"title": "1-Methylcyclohexa-1,3-diene"
+},
+{
+"smilesEntrada": "CC1CCCC1C",
+"clase": "ciclico",
+"cid": 17148,
+"iupacPubChem": "1,2-dimethylcyclopentane",
+"formula": "C7H14",
+"smiles": "CC1CCCC1C",
+"smilesConectividad": "CC1CCCC1C",
+"title": "1,2-Dimethylcyclopentane"
+},
+{
+"smilesEntrada": "CCCCC1CCCCC1",
+"clase": "ciclico",
+"cid": 15506,
+"iupacPubChem": "butylcyclohexane",
+"formula": "C10H20",
+"smiles": "CCCCC1CCCCC1",
+"smilesConectividad": "CCCCC1CCCCC1",
+"title": "Butylcyclohexane"
+},
+{
+"smilesEntrada": "CC1CC1",
+"clase": "ciclico",
+"cid": 11657,
+"iupacPubChem": "methylcyclopropane",
+"formula": "C4H8",
+"smiles": "CC1CC1",
+"smilesConectividad": "CC1CC1",
+"title": "Methylcyclopropane"
+},
+{
+"smilesEntrada": "c1ccccc1",
+"clase": "aromatico",
+"cid": 241,
+"iupacPubChem": "benzene",
+"formula": "C6H6",
+"smiles": "C1=CC=CC=C1",
+"smilesConectividad": "C1=CC=CC=C1",
+"title": "Benzene"
+},
+{
+"smilesEntrada": "Cc1ccccc1",
+"clase": "aromatico",
+"cid": 1140,
+"iupacPubChem": "toluene",
+"formula": "C7H8",
+"smiles": "CC1=CC=CC=C1",
+"smilesConectividad": "CC1=CC=CC=C1",
+"title": "Toluene"
+},
+{
+"smilesEntrada": "CCc1ccccc1",
+"clase": "aromatico",
+"cid": 7500,
+"iupacPubChem": "ethylbenzene",
+"formula": "C8H10",
+"smiles": "CCC1=CC=CC=C1",
+"smilesConectividad": "CCC1=CC=CC=C1",
+"title": "Ethylbenzene"
+},
+{
+"smilesEntrada": "CCCc1ccccc1",
+"clase": "aromatico",
+"cid": 7668,
+"iupacPubChem": "propylbenzene",
+"formula": "C9H12",
+"smiles": "CCCC1=CC=CC=C1",
+"smilesConectividad": "CCCC1=CC=CC=C1",
+"title": "Propylbenzene"
+},
+{
+"smilesEntrada": "CC(C)c1ccccc1",
+"clase": "aromatico",
+"cid": 7406,
+"iupacPubChem": "cumene",
+"formula": "C9H12",
+"smiles": "CC(C)C1=CC=CC=C1",
+"smilesConectividad": "CC(C)C1=CC=CC=C1",
+"title": "Cumene"
+},
+{
+"smilesEntrada": "CCCCc1ccccc1",
+"clase": "aromatico",
+"cid": 7705,
+"iupacPubChem": "butylbenzene",
+"formula": "C10H14",
+"smiles": "CCCCC1=CC=CC=C1",
+"smilesConectividad": "CCCCC1=CC=CC=C1",
+"title": "Butylbenzene"
+},
+{
+"smilesEntrada": "CC(C)(C)c1ccccc1",
+"clase": "aromatico",
+"cid": 7366,
+"iupacPubChem": "tert-butylbenzene",
+"formula": "C10H14",
+"smiles": "CC(C)(C)C1=CC=CC=C1",
+"smilesConectividad": "CC(C)(C)C1=CC=CC=C1",
+"title": "Tert-Butylbenzene"
+},
+{
+"smilesEntrada": "Cc1ccccc1C",
+"clase": "aromatico",
+"cid": 7237,
+"iupacPubChem": "1,2-xylene",
+"formula": "C8H10",
+"smiles": "CC1=CC=CC=C1C",
+"smilesConectividad": "CC1=CC=CC=C1C",
+"title": "O-Xylene"
+},
+{
+"smilesEntrada": "Cc1cccc(C)c1",
+"clase": "aromatico",
+"cid": 7929,
+"iupacPubChem": "1,3-xylene",
+"formula": "C8H10",
+"smiles": "CC1=CC(=CC=C1)C",
+"smilesConectividad": "CC1=CC(=CC=C1)C",
+"title": "M-Xylene"
+},
+{
+"smilesEntrada": "Cc1ccc(C)cc1",
+"clase": "aromatico",
+"cid": 7809,
+"iupacPubChem": "1,4-xylene",
+"formula": "C8H10",
+"smiles": "CC1=CC=C(C=C1)C",
+"smilesConectividad": "CC1=CC=C(C=C1)C",
+"title": "P-Xylene"
+},
+{
+"smilesEntrada": "Cc1cc(C)cc(C)c1",
+"clase": "aromatico",
+"cid": 7947,
+"iupacPubChem": "1,3,5-trimethylbenzene",
+"formula": "C9H12",
+"smiles": "CC1=CC(=CC(=C1)C)C",
+"smilesConectividad": "CC1=CC(=CC(=C1)C)C",
+"title": "Mesitylene"
+},
+{
+"smilesEntrada": "Cc1ccc(C)c(C)c1",
+"clase": "aromatico",
+"cid": 7247,
+"iupacPubChem": "1,2,4-trimethylbenzene",
+"formula": "C9H12",
+"smiles": "CC1=CC(=C(C=C1)C)C",
+"smilesConectividad": "CC1=CC(=C(C=C1)C)C",
+"title": "1,2,4-Trimethylbenzene"
+},
+{
+"smilesEntrada": "C=Cc1ccccc1",
+"clase": "aromatico",
+"cid": 7501,
+"iupacPubChem": "styrene",
+"formula": "C8H8",
+"smiles": "C=CC1=CC=CC=C1",
+"smilesConectividad": "C=CC1=CC=CC=C1",
+"title": "Styrene"
+},
+{
+"smilesEntrada": "C#Cc1ccccc1",
+"clase": "aromatico",
+"cid": 10821,
+"iupacPubChem": "ethynylbenzene",
+"formula": "C8H6",
+"smiles": "C#CC1=CC=CC=C1",
+"smilesConectividad": "C#CC1=CC=CC=C1",
+"title": "Phenylacetylene"
+},
+{
+"smilesEntrada": "CCc1ccc(C)cc1",
+"clase": "aromatico",
+"cid": 12160,
+"iupacPubChem": "1-ethyl-4-methylbenzene",
+"formula": "C9H12",
+"smiles": "CCC1=CC=C(C=C1)C",
+"smilesConectividad": "CCC1=CC=C(C=C1)C",
+"title": "1-Ethyl-4-Methylbenzene"
+},
+{
+"smilesEntrada": "CCc1ccccc1C",
+"clase": "aromatico",
+"cid": 11903,
+"iupacPubChem": "1-ethyl-2-methylbenzene",
+"formula": "C9H12",
+"smiles": "CCC1=CC=CC=C1C",
+"smilesConectividad": "CCC1=CC=CC=C1C",
+"title": "1-Ethyl-2-Methylbenzene"
+},
+{
+"smilesEntrada": "C1CCC(CC1)c1ccccc1",
+"clase": "aromatico",
+"cid": 13229,
+"iupacPubChem": "cyclohexylbenzene",
+"formula": "C12H16",
+"smiles": "C1CCC(CC1)C2=CC=CC=C2",
+"smilesConectividad": "C1CCC(CC1)C2=CC=CC=C2",
+"title": "Cyclohexylbenzene"
+},
+{
+"smilesEntrada": "C1CC1c1ccccc1",
+"clase": "aromatico",
+"cid": 70112,
+"iupacPubChem": "cyclopropylbenzene",
+"formula": "C9H10",
+"smiles": "C1CC1C2=CC=CC=C2",
+"smilesConectividad": "C1CC1C2=CC=CC=C2",
+"title": "Cyclopropylbenzene"
+},
+{
+"smilesEntrada": "CCc1cccc(CC)c1",
+"clase": "aromatico",
+"cid": 8864,
+"iupacPubChem": "1,3-diethylbenzene",
+"formula": "C10H14",
+"smiles": "CCC1=CC(=CC=C1)CC",
+"smilesConectividad": "CCC1=CC(=CC=C1)CC",
+"title": "1,3-Diethylbenzene"
+},
+{
+"smilesEntrada": "CC(C)c1ccc(C)cc1",
+"clase": "aromatico",
+"cid": 7463,
+"iupacPubChem": "1-methyl-4-propan-2-ylbenzene",
+"formula": "C10H14",
+"smiles": "CC1=CC=C(C=C1)C(C)C",
+"smilesConectividad": "CC1=CC=C(C=C1)C(C)C",
+"title": "P-Cymene"
+},
+{
+"smilesEntrada": "Cc1ccccc1CC(C)C",
+"clase": "aromatico",
+"cid": 118943,
+"iupacPubChem": "1-methyl-2-(2-methylpropyl)benzene",
+"formula": "C11H16",
+"smiles": "CC1=CC=CC=C1CC(C)C",
+"smilesConectividad": "CC1=CC=CC=C1CC(C)C",
+"title": "1-Methyl-2-(2-methylpropyl)benzene"
+},
+{
+"smilesEntrada": "c1ccc2ccccc2c1",
+"clase": "aromatico",
+"cid": 931,
+"iupacPubChem": "naphthalene",
+"formula": "C10H8",
+"smiles": "C1=CC=C2C=CC=CC2=C1",
+"smilesConectividad": "C1=CC=C2C=CC=CC2=C1",
+"title": "Naphthalene"
+},
+{
+"smilesEntrada": "Cc1c(C)c(C)c(C)c(C)c1C",
+"clase": "aromatico",
+"cid": 6908,
+"iupacPubChem": "1,2,3,4,5,6-hexamethylbenzene",
+"formula": "C12H18",
+"smiles": "CC1=C(C(=C(C(=C1C)C)C)C)C",
+"smilesConectividad": "CC1=C(C(=C(C(=C1C)C)C)C)C",
+"title": "Hexamethylbenzene"
+},
+{
+"smilesEntrada": "CCCc1ccc(CC)cc1",
+"clase": "aromatico",
+"cid": 519740,
+"iupacPubChem": "1-ethyl-4-propylbenzene",
+"formula": "C11H16",
+"smiles": "CCCC1=CC=C(C=C1)CC",
+"smilesConectividad": "CCCC1=CC=C(C=C1)CC",
+"title": "1-Ethyl-4-propylbenzene"
+},
+{
+"smilesEntrada": "CCCCCc1ccccc1",
+"clase": "aromatico",
+"cid": 10864,
+"iupacPubChem": "pentylbenzene",
+"formula": "C11H16",
+"smiles": "CCCCCC1=CC=CC=C1",
+"smilesConectividad": "CCCCCC1=CC=CC=C1",
+"title": "Pentylbenzene"
+},
+{
+"smilesEntrada": "Clc1ccccc1",
+"clase": "halogeno",
+"cid": 7964,
+"iupacPubChem": "chlorobenzene",
+"formula": "C6H5Cl",
+"smiles": "C1=CC=C(C=C1)Cl",
+"smilesConectividad": "C1=CC=C(C=C1)Cl",
+"title": "Chlorobenzene"
+},
+{
+"smilesEntrada": "Brc1ccccc1",
+"clase": "halogeno",
+"cid": 7961,
+"iupacPubChem": "bromobenzene",
+"formula": "C6H5Br",
+"smiles": "C1=CC=C(C=C1)Br",
+"smilesConectividad": "C1=CC=C(C=C1)Br",
+"title": "Bromobenzene"
+},
+{
+"smilesEntrada": "Ic1ccccc1",
+"clase": "halogeno",
+"cid": 11575,
+"iupacPubChem": "iodobenzene",
+"formula": "C6H5I",
+"smiles": "C1=CC=C(C=C1)I",
+"smilesConectividad": "C1=CC=C(C=C1)I",
+"title": "Iodobenzene"
+},
+{
+"smilesEntrada": "Fc1ccccc1",
+"clase": "halogeno",
+"cid": 10008,
+"iupacPubChem": "fluorobenzene",
+"formula": "C6H5F",
+"smiles": "C1=CC=C(C=C1)F",
+"smilesConectividad": "C1=CC=C(C=C1)F",
+"title": "Fluorobenzene"
+},
+{
+"smilesEntrada": "Clc1ccccc1Cl",
+"clase": "halogeno",
+"cid": 7239,
+"iupacPubChem": "1,2-dichlorobenzene",
+"formula": "C6H4Cl2",
+"smiles": "C1=CC=C(C(=C1)Cl)Cl",
+"smilesConectividad": "C1=CC=C(C(=C1)Cl)Cl",
+"title": "1,2-Dichlorobenzene"
+},
+{
+"smilesEntrada": "Clc1ccc(Cl)cc1",
+"clase": "halogeno",
+"cid": 4685,
+"iupacPubChem": "1,4-dichlorobenzene",
+"formula": "C6H4Cl2",
+"smiles": "C1=CC(=CC=C1Cl)Cl",
+"smilesConectividad": "C1=CC(=CC=C1Cl)Cl",
+"title": "1,4-Dichlorobenzene"
+},
+{
+"smilesEntrada": "Clc1ccc(Br)cc1",
+"clase": "halogeno",
+"cid": 7806,
+"iupacPubChem": "1-bromo-4-chlorobenzene",
+"formula": "C6H4BrCl",
+"smiles": "C1=CC(=CC=C1Cl)Br",
+"smilesConectividad": "C1=CC(=CC=C1Cl)Br",
+"title": "p-Bromochlorobenzene"
+},
+{
+"smilesEntrada": "Cc1ccc(Cl)cc1",
+"clase": "halogeno",
+"cid": 7810,
+"iupacPubChem": "1-chloro-4-methylbenzene",
+"formula": "C7H7Cl",
+"smiles": "CC1=CC=C(C=C1)Cl",
+"smilesConectividad": "CC1=CC=C(C=C1)Cl",
+"title": "4-Chlorotoluene"
+},
+{
+"smilesEntrada": "Cc1ccccc1Br",
+"clase": "halogeno",
+"cid": 7236,
+"iupacPubChem": "1-bromo-2-methylbenzene",
+"formula": "C7H7Br",
+"smiles": "CC1=CC=CC=C1Br",
+"smilesConectividad": "CC1=CC=CC=C1Br",
+"title": "2-Bromotoluene"
+},
+{
+"smilesEntrada": "CCc1cccc(Cl)c1",
+"clase": "halogeno",
+"cid": 136426,
+"iupacPubChem": "1-chloro-3-ethylbenzene",
+"formula": "C8H9Cl",
+"smiles": "CCC1=CC(=CC=C1)Cl",
+"smilesConectividad": "CCC1=CC(=CC=C1)Cl",
+"title": "1-Chloro-3-ethylbenzene"
+},
+{
+"smilesEntrada": "Clc1cc(Cl)cc(Cl)c1",
+"clase": "halogeno",
+"cid": 7950,
+"iupacPubChem": "1,3,5-trichlorobenzene",
+"formula": "C6H3Cl3",
+"smiles": "C1=C(C=C(C=C1Cl)Cl)Cl",
+"smilesConectividad": "C1=C(C=C(C=C1Cl)Cl)Cl",
+"title": "1,3,5-Trichlorobenzene"
+},
+{
+"smilesEntrada": "Cc1ccc(I)cc1",
+"clase": "halogeno",
+"cid": 12207,
+"iupacPubChem": "1-iodo-4-methylbenzene",
+"formula": "C7H7I",
+"smiles": "CC1=CC=C(C=C1)I",
+"smilesConectividad": "CC1=CC=C(C=C1)I",
+"title": "4-Iodotoluene"
+},
+{
+"smilesEntrada": "CCl",
+"clase": "halogeno",
+"cid": 6327,
+"iupacPubChem": "chloromethane",
+"formula": "CH3Cl",
+"smiles": "CCl",
+"smilesConectividad": "CCl",
+"title": "Methyl Chloride"
+},
+{
+"smilesEntrada": "ClCCl",
+"clase": "halogeno",
+"cid": 6344,
+"iupacPubChem": "dichloromethane",
+"formula": "CH2Cl2",
+"smiles": "C(Cl)Cl",
+"smilesConectividad": "C(Cl)Cl",
+"title": "Dichloromethane"
+},
+{
+"smilesEntrada": "ClC(Cl)Cl",
+"clase": "halogeno",
+"cid": 6212,
+"iupacPubChem": "chloroform",
+"formula": "CHCl3",
+"smiles": "C(Cl)(Cl)Cl",
+"smilesConectividad": "C(Cl)(Cl)Cl",
+"title": "Chloroform"
+},
+{
+"smilesEntrada": "ClC(Cl)(Cl)Cl",
+"clase": "halogeno",
+"cid": 5943,
+"iupacPubChem": "tetrachloromethane",
+"formula": "CCl4",
+"smiles": "C(Cl)(Cl)(Cl)Cl",
+"smilesConectividad": "C(Cl)(Cl)(Cl)Cl",
+"title": "Carbon Tetrachloride"
+},
+{
+"smilesEntrada": "CCBr",
+"clase": "halogeno",
+"cid": 6332,
+"iupacPubChem": "bromoethane",
+"formula": "C2H5Br",
+"smiles": "CCBr",
+"smilesConectividad": "CCBr",
+"title": "Ethyl Bromide"
+},
+{
+"smilesEntrada": "BrCCBr",
+"clase": "halogeno",
+"cid": 7839,
+"iupacPubChem": "1,2-dibromoethane",
+"formula": "C2H4Br2",
+"smiles": "C(CBr)Br",
+"smilesConectividad": "C(CBr)Br",
+"title": "1,2-Dibromoethane"
+},
+{
+"smilesEntrada": "CC(C)Br",
+"clase": "halogeno",
+"cid": 6358,
+"iupacPubChem": "2-bromopropane",
+"formula": "C3H7Br",
+"smiles": "CC(C)Br",
+"smilesConectividad": "CC(C)Br",
+"title": "2-Bromopropane"
+},
+{
+"smilesEntrada": "CCCCCl",
+"clase": "halogeno",
+"cid": 8005,
+"iupacPubChem": "1-chlorobutane",
+"formula": "C4H9Cl",
+"smiles": "CCCCCl",
+"smilesConectividad": "CCCCCl",
+"title": "Butyl Chloride"
+},
+{
+"smilesEntrada": "CCC(C)Cl",
+"clase": "halogeno",
+"cid": 6563,
+"iupacPubChem": "2-chlorobutane",
+"formula": "C4H9Cl",
+"smiles": "CCC(C)Cl",
+"smilesConectividad": "CCC(C)Cl",
+"title": "2-Chlorobutane"
+},
+{
+"smilesEntrada": "CC(C)(C)Br",
+"clase": "halogeno",
+"cid": 10485,
+"iupacPubChem": "2-bromo-2-methylpropane",
+"formula": "C4H9Br",
+"smiles": "CC(C)(C)Br",
+"smilesConectividad": "CC(C)(C)Br",
+"title": "t-Butyl bromide"
+},
+{
+"smilesEntrada": "CC(C)CCl",
+"clase": "halogeno",
+"cid": 10554,
+"iupacPubChem": "1-chloro-2-methylpropane",
+"formula": "C4H9Cl",
+"smiles": "CC(C)CCl",
+"smilesConectividad": "CC(C)CCl",
+"title": "Isobutyl chloride"
+},
+{
+"smilesEntrada": "CI",
+"clase": "halogeno",
+"cid": 6328,
+"iupacPubChem": "iodomethane",
+"formula": "CH3I",
+"smiles": "CI",
+"smilesConectividad": "CI",
+"title": "Methyl iodide"
+},
+{
+"smilesEntrada": "CCC(C)CI",
+"clase": "halogeno",
+"cid": 141479,
+"iupacPubChem": "1-iodo-2-methylbutane",
+"formula": "C5H11I",
+"smiles": "CCC(C)CI",
+"smilesConectividad": "CCC(C)CI",
+"title": "1-Iodo-2-methylbutane"
+},
+{
+"smilesEntrada": "CC(Br)C(C)Cl",
+"clase": "halogeno",
+"cid": 12644679,
+"iupacPubChem": "2-bromo-3-chlorobutane",
+"formula": "C4H8BrCl",
+"smiles": "CC(C(C)Br)Cl",
+"smilesConectividad": "CC(C(C)Br)Cl",
+"title": "2-Bromo-3-chlorobutane"
+},
+{
+"smilesEntrada": "ClCCBr",
+"clase": "halogeno",
+"cid": 7849,
+"iupacPubChem": "1-bromo-2-chloroethane",
+"formula": "C2H4BrCl",
+"smiles": "C(CBr)Cl",
+"smilesConectividad": "C(CBr)Cl",
+"title": "1-Bromo-2-Chloroethane"
+},
+{
+"smilesEntrada": "Cl/C=C/Cl",
+"clase": "halogeno",
+"cid": 638186,
+"iupacPubChem": "(E)-1,2-dichloroethene",
+"formula": "C2H2Cl2",
+"smiles": "C(=C/Cl)\\Cl",
+"smilesConectividad": "C(=CCl)Cl",
+"title": "Trans-1,2-Dichloroethylene"
+},
+{
+"smilesEntrada": "C=CCl",
+"clase": "halogeno",
+"cid": 6338,
+"iupacPubChem": "chloroethene",
+"formula": "C2H3Cl",
+"smiles": "C=CCl",
+"smilesConectividad": "C=CCl",
+"title": "Vinyl Chloride"
+},
+{
+"smilesEntrada": "C=CCCl",
+"clase": "halogeno",
+"cid": 7850,
+"iupacPubChem": "3-chloroprop-1-ene",
+"formula": "C3H5Cl",
+"smiles": "C=CCCl",
+"smilesConectividad": "C=CCCl",
+"title": "Allyl chloride"
+},
+{
+"smilesEntrada": "CC(C)(Cl)CCBr",
+"clase": "halogeno",
+"cid": 88306463,
+"iupacPubChem": "1-bromo-3-chloro-3-methylbutane",
+"formula": "C5H10BrCl",
+"smiles": "CC(C)(CCBr)Cl",
+"smilesConectividad": "CC(C)(CCBr)Cl",
+"title": "1-Bromo-3-chloro-3-methylbutane"
+},
+{
+"smilesEntrada": "FC(F)(F)C(Cl)Br",
+"clase": "halogeno",
+"cid": 3562,
+"iupacPubChem": "2-bromo-2-chloro-1,1,1-trifluoroethane",
+"formula": "C2HBrClF3",
+"smiles": "C(C(F)(F)F)(Cl)Br",
+"smilesConectividad": "C(C(F)(F)F)(Cl)Br",
+"title": "Halothane"
+},
+{
+"smilesEntrada": "CC(Cl)CC(C)C",
+"clase": "halogeno",
+"cid": 91415,
+"iupacPubChem": "2-chloro-4-methylpentane",
+"formula": "C6H13Cl",
+"smiles": "CC(C)CC(C)Cl",
+"smilesConectividad": "CC(C)CC(C)Cl",
+"title": "Pentane, 2-chloro-4-methyl-"
+},
+{
+"smilesEntrada": "ClC1CCCCC1",
+"clase": "halogeno",
+"cid": 10952,
+"iupacPubChem": "chlorocyclohexane",
+"formula": "C6H11Cl",
+"smiles": "C1CCC(CC1)Cl",
+"smilesConectividad": "C1CCC(CC1)Cl",
+"title": "Chlorocyclohexane"
+},
+{
+"smilesEntrada": "BrC1CCCC1Br",
+"clase": "halogeno",
+"cid": 139113,
+"iupacPubChem": "1,2-dibromocyclopentane",
+"formula": "C5H8Br2",
+"smiles": "C1CC(C(C1)Br)Br",
+"smilesConectividad": "C1CC(C(C1)Br)Br",
+"title": "1,2-Dibromocyclopentane"
+},
+{
+"smilesEntrada": "ClC(Cl)=C(Cl)Cl",
+"clase": "halogeno",
+"cid": 31373,
+"iupacPubChem": "1,1,2,2-tetrachloroethene",
+"formula": "C2Cl4",
+"smiles": "C(=C(Cl)Cl)(Cl)Cl",
+"smilesConectividad": "C(=C(Cl)Cl)(Cl)Cl",
+"title": "Tetrachloroethylene"
+}
+]
+}

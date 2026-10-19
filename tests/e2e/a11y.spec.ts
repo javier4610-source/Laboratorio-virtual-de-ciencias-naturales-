@@ -30,7 +30,7 @@ for (const scheme of ['light', 'dark'] as const) {
     });
 
     test('todas las prácticas en sus etapas', async ({ page }) => {
-      test.setTimeout(600_000);
+      test.setTimeout(900_000);
       const found: string[] = [];
       for (const id of PRACTICES) {
         await page.goto(`/#/practica/${id}`);

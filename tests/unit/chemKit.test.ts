@@ -8,7 +8,7 @@ import { atomAngle, atomDistance, buildVsepr, elementCounts, hillFormulaOf, PUBC
 import {
   calculatedDensity, cationAnionDistance, coordinationNumber, coordinationShell, CRYSTALS, densityDeviation, generateLattice, getCrystal, latticeFragment, shannonSum,
 } from '../../src/chem/crystal';
-import { bondChanges, buildReactionScene, checkBalanced, countsAt, equationText, frameBonds, framePositions, REACTION3D_LABEL, STEPS, type Reaction3DDef } from '../../src/chem/reaction3d';
+import { bondChanges, buildReactionScene, checkBalanced, countsAt, equationText, frameBonds, framePositions, REACTION3D_LABEL, STEPS, type Reaction3DDef } from '../../src/chem/reactionScene';
 
 const TETRA = (Math.acos(-1 / 3) * 180) / Math.PI;
 

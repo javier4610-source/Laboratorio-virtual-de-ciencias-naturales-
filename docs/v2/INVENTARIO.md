@@ -2,11 +2,11 @@
 
 Generado por `node scripts/inventario.mjs` el 2026-10-19. No editar a mano: se regenera desde el código.
 
-- Prácticas en el catálogo: **59**
-- Con laboratorio registrado: 59 · con prueba E2E propia: 59 · con revisión axe: 0
+- Prácticas en el catálogo: **62**
+- Con laboratorio registrado: 62 · con prueba E2E propia: 62 · con revisión axe: 0
 - Con modo de instrumento real: 23 · con modo avanzado: 20 · con parámetros editables: 8
-- Con manipulación directa: 32 · con sonido: 42 · con texto que rotula partes ilustrativas: 21
-- Archivos de pruebas unitarias: 57 (836 pruebas declaradas)
+- Con manipulación directa: 32 · con sonido: 44 · con texto que rotula partes ilustrativas: 24
+- Archivos de pruebas unitarias: 59 (867 pruebas declaradas)
 
 | Práctica | Grado | Área | Laboratorio (líneas) | Modelos | Pruebas unitarias | E2E | axe | Instr. real | Avanzado | Manipulación | Sonido | Rótulo ilustrativo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -55,13 +55,16 @@ Generado por `node scripts/inventario.mjs` el 2026-10-19. No editar a mano: se r
 | `respiracion` Respiración celular y balance energético | 10.º | biologia | RespirationLab (423) | respiration | 11 en respiration.test.ts | sí | no | sí | no | sí | sí | no |
 | `soluciones` Preparación de soluciones, molaridad y colorimetría | 10.º | quimica | SolutionsLab (281) | solutions, chemistry | 73 en models.test.ts, mole.test.ts | sí | no | no | no | no | sí | no |
 | `agua` Contaminación del agua e indicadores fisicoquímicos y biológicos | 11.º | ambiental | WaterQualityLab (637) | waterQuality | 15 en waterQuality.test.ts | sí | no | sí | no | sí | sí | no |
+| `aromaticos` Hidrocarburos aromáticos | 11.º | quimica | AromaticsLab (319) | hydrocarbons, aromaticity, organicGraph, organicNomenclature, organicBuilder | 30 en organicModels.test.ts, organicNomenclature.test.ts | sí | no | no | no | no | no | sí |
 | `circuitos` Circuitos eléctricos: voltaje, corriente y resistencia | 11.º | fisica | CircuitLab (342) | circuits | 55 en models.test.ts | sí | no | sí | sí | sí | sí | no |
 | `equilibrio` Equilibrio químico y principio de Le Châtelier | 11.º | quimica | EquilibriumLab (469) | equilibrium | 11 en equilibrium.test.ts | sí | no | no | no | no | sí | sí |
 | `estequiometria` Estequiometría y reactivo limitante | 11.º | quimica | StoichLab (215) | stoichiometry, chemistry | 84 en lib.test.ts, models.test.ts, mole.test.ts | sí | no | no | no | no | no | no |
 | `expresion` Expresión génica y efecto de mutaciones en la proteína | 11.º | biologia | ExpressionLab (862) | geneExpression, dna | 93 en geneExpression.test.ts, models.test.ts, sequences.test.ts | sí | no | no | no | sí | sí | no |
+| `hidrocarburos` Hidrocarburos: alcanos, alquenos y alquinos | 11.º | quimica | HydrocarbonsLab (522) | hydrocarbons, organicGraph, organicNomenclature | 30 en organicModels.test.ts, organicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
 | `induccion` Magnetismo e inducción electromagnética | 11.º | fisica | InductionLab (1248) | induction | 12 en induction.test.ts | sí | no | sí | sí | sí | sí | no |
 | `interferencia` Interferencia y difracción de la luz | 11.º | fisica | InterferenceLab (603) | interference | 19 en interference.test.ts | sí | no | sí | sí | sí | sí | no |
 | `metabolismo` Metabolismo celular: análisis de balance de flujos (FBA) | 11.º | biologia | MetabolismLab (500) | metabolism | 20 en metabolism.test.ts | sí | no | no | no | no | no | no |
+| `nomenclatura-organica` Nomenclatura orgánica IUPAC | 11.º | quimica | NomenclatureLab (437) | organicBuilder, organicGraph, organicNomenclature | 30 en organicModels.test.ts, organicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
 | `ph` pH, dilución y neutralización ácido-base | 11.º | quimica | AcidBaseLab (280) | acidbase, chemistry | 110 en inorganicChemistry.test.ts, models.test.ts, models2.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
 | `poblacion` Crecimiento poblacional y capacidad de carga | 11.º | ambiental | PopulationLab (203) | population | 55 en models.test.ts | sí | no | no | no | no | no | sí |
 | `popgen` Genética de poblaciones y frecuencias alélicas | 11.º | biologia | PopGenLab (179) | popgen | 24 en models2.test.ts | sí | no | no | no | no | no | sí |

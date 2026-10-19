@@ -6,5 +6,5 @@ export { ProjectedSvg } from './ProjectedSvg';
 export * from './species';
 export * from './molecules';
 export * from './crystal';
-export * from './reaction3d';
+export * from './reactionScene';
 export { elementColor, covalentBondLength, ionicRadius, PYYKKO_REF, SHANNON_REF } from './elements';

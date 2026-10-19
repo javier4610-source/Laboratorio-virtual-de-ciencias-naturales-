@@ -1,0 +1,182 @@
+import type { PracticeDef } from '../../core/types';
+import type { ModelSpec } from '../../models/types';
+
+const nomenclatureModelSpec: ModelSpec = {
+  name: 'Motor de nomenclatura IUPAC 2013 para hidrocarburos y haloderivados (algoritmo determinista validado contra PubChem)',
+  inputs: [
+    { symbol: 'esqueleto', name: 'Cadena (1–12 C), anillo (3–8 C) o benceno', unit: '—', initial: 'cadena de 5 C' },
+    { symbol: 'enlaces', name: 'Orden de cada enlace del esqueleto (1, 2, 3) y configuración cis/trans', unit: '—' },
+    { symbol: 'sustituyentes', name: 'Alquilos (simples y ramificados), alquenilos, alquinilos, metiliden, ciclohexil, fenil y halógenos', unit: '—' },
+  ],
+  outputs: [
+    { symbol: 'nombre', name: 'Nombre sistemático en español y en inglés', unit: '—' },
+    { symbol: 'cadena', name: 'Cadena o anillo principal y localizadores', unit: '—' },
+    { symbol: 'pasos', name: 'Explicación de cada decisión (criterio que desempató)', unit: '—' },
+  ],
+  equations: [
+    'Progenitor: anillo si lo hay (P-44.1.2.2, 2013); si no, la cadena más larga → más enlaces múltiples → más dobles enlaces',
+    'Numeración: localizadores más bajos para la valencia libre (sustituyentes) → enlaces múltiples juntos → dobles enlaces → todos los prefijos → prefijo citado primero en orden alfabético → nombre completo en orden alfanumérico',
+    'Prefijos en orden alfabético (sin multiplicadores ni terc-), di/tri/tetra… y bis/tris para prefijos sustituidos; paréntesis para prefijos con localizadores',
+    'E/Z con prioridades CIP (número atómico, con átomos duplicados para enlaces múltiples)',
+  ],
+  initialConditions: ['Cadena de 5 carbonos con un metilo en la posición 2 (2-metilpentano).'],
+  assumptions: [
+    'Se aplican las Recomendaciones IUPAC 2013 (Favre y Powell, 2014), incluidos sus cambios: la cadena más larga manda sobre las insaturaciones y el anillo sobre la cadena.',
+    'Los nombres en español siguen la forma de las Recomendaciones (prefijos sin «o» final: metil, etil; terminaciones -ano, -eno, -ino) y se alfabetizan con los nombres en español.',
+    'La geometría 3D se toma de confórmeros calculados por PubChem (incluidos o descargados en vivo); el laboratorio no calcula geometrías propias.',
+  ],
+  limits: [
+    'Fuera de alcance: grupos funcionales con O, N o S, iones, anillos fusionados o puenteados (salvo el naftaleno sin sustituir), centros quirales (R/S) y cis/trans en anillos.',
+    'Con un solo descriptor E/Z se escribe sin localizador («(E)-but-2-eno»), como en PubChem.',
+    'En cicloalquenos sustituidos el laboratorio cita el localizador del doble enlace («3-metilciclohex-1-eno»); PubChem lo omite («3-methylcyclohexene»). Es una diferencia de convención.',
+  ],
+  testCases: [
+    '188 estructuras distintas comparadas con el IUPACName de PubChem (LexiChem TK): 173 idénticas, 4 que solo difieren en paréntesis (2013), 8 nombres retenidos de uso general y 3 por el localizador del cicloalqueno; 0 sin clasificar.',
+    '30 nombres en español escritos a mano (2-metilbutano, pent-1-en-4-ino, 4-(propan-2-il)heptano, 2-metil-1-yodobutano, 1-bromo-4-clorobenceno…).',
+    '«2-etilbutano» construido en el constructor → 3-metilpentano; (Z)/(E)-but-2-eno desde cis/trans de la cadena dibujada.',
+    'Cada uno de los 188 confórmeros 3D incluidos se alinea átomo a átomo con su estructura (isomorfismo de grafos).',
+  ],
+};
+
+export const nomenclaturaOrganica: PracticeDef = {
+  id: 'nomenclatura-organica',
+  title: 'Nomenclatura orgánica IUPAC',
+  grade: 11,
+  area: 'quimica',
+  topic: 'Nomenclatura IUPAC (Recomendaciones 2013) de alcanos, alquenos, alquinos, cicloalcanos, bencenos sustituidos y haloalcanos: cadena principal, numeración, localizadores, orden alfabético, prefijos multiplicadores, sustituyentes ramificados e isomería E/Z',
+  durationMin: 90,
+  status: 'disponible',
+  summary: 'Construye moléculas eligiendo el esqueleto, los enlaces y los sustituyentes, y obtén al instante su nombre IUPAC con la cadena principal resaltada, sus localizadores y la explicación de cada regla, en 2D y sobre el confórmero 3D de PubChem. Luego haz el camino inverso (del nombre a la estructura) con retroalimentación, corrige errores frecuentes y compara el motor del laboratorio con los nombres que calcula PubChem para 188 estructuras.',
+  problemQuestion: 'Un mismo hidrocarburo puede dibujarse de muchas maneras y recibir nombres distintos en la calle (isooctano, acetileno, xileno). ¿Qué reglas permiten que cualquier químico del mundo escriba un solo nombre para una estructura y reconstruya la estructura a partir del nombre, y qué tan bien sigue esas reglas un programa de computador?',
+  objectives: [
+    'Identificar la cadena o el anillo principal de un hidrocarburo según las Recomendaciones IUPAC 2013 y numerarlo con los localizadores más bajos.',
+    'Escribir el nombre completo: sustituyentes en orden alfabético, prefijos multiplicadores, localizadores y terminaciones -ano, -eno, -ino, incluidos E/Z.',
+    'Dibujar la estructura que corresponde a un nombre y detectar errores frecuentes de nomenclatura.',
+    'Evaluar críticamente un resultado computacional comparando dos programas que aplican reglas de nomenclatura y explicando sus diferencias.',
+  ],
+  competencies: ['uso', 'explicacion', 'indagacion'],
+  curricularLink: {
+    standards: 'EBC (MEN, 2006), grados 10.º–11.º, entorno físico (procesos químicos): relacionar la estructura del carbono con la formación de moléculas orgánicas y usar la nomenclatura para comunicar resultados (paráfrasis; validar con el documento oficial).',
+    dba: 'Propuesta: DBA de Ciencias Naturales de 11.º relacionado con la representación y nomenclatura de compuestos orgánicos y la relación entre su estructura y sus propiedades. Validar número y enunciado con el documento oficial del MEN.',
+    note: 'Va con «Hidrocarburos: alcanos, alquenos y alquinos» y «Hidrocarburos aromáticos». El motor está preparado para ampliarse a grupos funcionales (alcoholes, aldehídos, cetonas, ácidos, ésteres, éteres, aminas y amidas).',
+  },
+  materials: [
+    'Constructor de moléculas y motor de nomenclatura IUPAC 2013 del laboratorio (cálculo en el navegador, sin conexión)',
+    '188 confórmeros 3D de PubChem de las estructuras de validación (se cargan al pedir la vista 3D)',
+    'Opcional: conexión a internet para buscar en PubChem el confórmero de una estructura que no esté incluida',
+    'Tabla de comparación con los nombres de PubChem (LexiChem TK)',
+  ],
+  background: [
+    'La IUPAC (Unión Internacional de Química Pura y Aplicada) publica las reglas de nomenclatura. Las Recomendaciones de 2013 definen, entre los nombres posibles, un «nombre preferido IUPAC». Este laboratorio las sigue y lo dice cuando difieren de reglas anteriores (1979 y 1993) que aún aparecen en algunos textos.',
+    'Paso 1, el progenitor: si la molécula tiene un anillo, el anillo es el progenitor (ciclohexano, benceno) y las cadenas son sustituyentes. Si no, se elige la cadena más larga; si hay varias igual de largas, la de más enlaces múltiples, luego la de más dobles enlaces y luego la de más sustituyentes. Cambio de 2013: antes se elegía primero la cadena con más enlaces múltiples; ahora manda la longitud («3-metilidenhexano», no «2-propilpent-1-eno»).',
+    'Paso 2, la numeración: se numera desde el extremo que da los localizadores más bajos, en este orden: primero a los enlaces múltiples (dobles y triples juntos), luego a los dobles, luego a todos los sustituyentes y, si aún empatan, al sustituyente que se cita primero en orden alfabético. «Más bajos» se decide en el primer punto de diferencia: {2,3,5} es menor que {2,4,4}.',
+    'Paso 3, el nombre: los sustituyentes se escriben en orden alfabético (metil, etil y cloro se ordenan por su nombre: cloro, etil, metil), cada uno con su localizador; los repetidos llevan di-, tri-, tetra- (que no cuentan para el orden alfabético, igual que «terc-»). Números entre sí con comas, números y letras con guiones. Las terminaciones son -ano, -eno (C=C) e -ino (C≡C) con sus localizadores: but-2-eno, buta-1,3-dieno, pent-1-en-4-ino.',
+    'Los sustituyentes ramificados se nombran como cadenas propias numeradas desde el punto de unión (propan-2-il, 2-metilpropil, terc-butil) y van entre paréntesis si llevan localizadores: 4-(propan-2-il)heptano. Los nombres comunes isopropil, isobutil y sec-butil se aceptan solo en la nomenclatura general.',
+    'Si un doble enlace tiene dos grupos distintos en cada carbono hay dos isómeros geométricos. Con las reglas de prioridad CIP (mayor número atómico) se comparan los grupos de cada carbono: si los de mayor prioridad quedan del mismo lado es Z (zusammen); si quedan opuestos, E (entgegen). Los nombres de este laboratorio se comparan con los que PubChem calcula con el programa LexiChem: coinciden en la gran mayoría y las diferencias son de convención, no de reglas.',
+  ],
+  relations: [
+    { x: 'carbonos', y: 'carbonosPrincipal', xLabel: 'el número total de carbonos de la molécula construida', yLabel: 'los carbonos de la cadena o anillo principal', datasetId: 'nombres', allowVary: ['nombre', 'sustituyentes'] },
+  ],
+  variables: {
+    independent: ['Esqueleto (cadena, anillo o benceno) y su tamaño', 'Orden de los enlaces y configuración cis/trans', 'Sustituyentes y sus posiciones'],
+    dependent: ['Cadena o anillo principal elegido', 'Localizadores y nombre IUPAC', 'Criterio que decidió cada empate'],
+    controlled: ['Reglas: Recomendaciones IUPAC 2013', 'Idioma del nombre (español, con su orden alfabético)', 'Fuente de la geometría 3D (PubChem)'],
+  },
+  procedure: [
+    'En «Constructor», arma una cadena de 5 carbonos con un metilo en el carbono 2 y lee el nombre, la cadena resaltada y el paso a paso. Cambia el metilo al carbono 4: ¿cambia el nombre? ¿Por qué?',
+    'Pon un etilo en el carbono 2 de una cadena de 4 carbonos. Compara la cadena que dibujaste con la que elige el motor (alterna «Posiciones del constructor» y «Localizadores IUPAC»). Pulsa «Ver en 3D» y ubica los localizadores sobre el confórmero.',
+    'Construye but-2-eno, márcalo cis y luego trans, y lee E/Z. Arma un alqueno y un alquino ramificados y guarda cada nombre.',
+    'Construye ciclohexanos y bencenos con dos sustituyentes (por ejemplo cloro y metilo) y explica qué regla decide la numeración en cada caso.',
+    'En «Del nombre a la estructura», construye al menos cinco de los nombres pedidos y lee la retroalimentación de cada intento.',
+    'En «Errores frecuentes» revisa los nueve nombres incorrectos; en «Comparación con PubChem» filtra las diferencias y explica dos de ellas.',
+  ],
+  interpretation: [
+    '¿Por qué «2-etilbutano» no es un nombre correcto aunque describa un dibujo posible? ¿Qué regla se incumple?',
+    '¿Qué decide la numeración cuando dos sentidos dan los mismos localizadores? Da un ejemplo de tu tabla.',
+    'El motor y PubChem no siempre escriben igual el nombre. ¿Significa eso que uno de los dos está mal? Usa la tabla de comparación.',
+  ],
+  assessment: [
+    {
+      id: 'nom-1', grade: 11, topic: 'Cadena principal', competency: 'uso', component: 'quimico', skill: 'Elegir la cadena principal', difficulty: 'baja',
+      stem: 'Un estudiante dibuja una cadena de 4 carbonos con un etilo en el carbono 2 y la llama «2-etilbutano». ¿Cuál es el nombre correcto?',
+      options: [
+        { id: 'a', text: '2-etilbutano, porque así está dibujada.', feedback: 'La cadena principal es la más larga posible, no la que está dibujada en línea recta.' },
+        { id: 'b', text: '3-metilpentano.', feedback: 'Correcto: al incluir el etilo, la cadena más larga tiene 5 carbonos y queda un metilo en el carbono 3.' },
+        { id: 'c', text: '2-metilpentano.', feedback: 'La rama queda en el carbono central de la cadena de 5: desde cualquier extremo es el 3.' },
+        { id: 'd', text: 'Hexano, porque tiene seis carbonos.', feedback: 'Tiene seis carbonos, pero no están todos en una cadena continua.' },
+      ],
+      correct: 'b',
+      explanation: 'Se busca la cadena continua más larga: CH₃–CH₂–CH(CH₃)–CH₂–CH₃ tiene 5 carbonos con un metilo en el C3.',
+      review: 'Constructor: pon un etilo en el carbono 2 de una cadena de 4 y compara la cadena resaltada.',
+    },
+    {
+      id: 'nom-2', grade: 11, topic: 'Orden alfabético', competency: 'uso', component: 'quimico', skill: 'Escribir los sustituyentes en orden alfabético', difficulty: 'media',
+      stem: 'Una cadena de 6 carbonos lleva un metilo en el C2 y un etilo en el C3 (numerada correctamente). ¿Cómo se escribe el nombre?',
+      options: [
+        { id: 'a', text: '2-metil-3-etilhexano', feedback: 'Los sustituyentes no se ordenan por su localizador sino alfabéticamente: etil antes que metil.' },
+        { id: 'b', text: '3-etil-2-metilhexano', feedback: 'Correcto: e (etil) va antes que m (metil).' },
+        { id: 'c', text: '3-etil-2-metil-hexano', feedback: 'El último prefijo se une sin guion al nombre del progenitor: …metilhexano.' },
+        { id: 'd', text: 'etil-metil-hexano', feedback: 'Faltan los localizadores: sin ellos el nombre no identifica una sola estructura.' },
+      ],
+      correct: 'b',
+      explanation: 'Orden alfabético de los nombres de los sustituyentes (los multiplicadores di-, tri- no cuentan), cada uno con su localizador, y el último prefijo pegado al nombre de la cadena.',
+      review: '«Errores frecuentes»: «2-metil-3-etilpentano».',
+    },
+    {
+      id: 'nom-3', grade: 11, topic: 'Numeración de alquenos y alquinos', competency: 'uso', component: 'quimico', skill: 'Numerar para dar los localizadores más bajos a las insaturaciones', difficulty: 'media',
+      stem: '¿Cuál es el nombre de CH₂=CH–CH₂–C≡CH?',
+      options: [
+        { id: 'a', text: 'pent-4-en-1-ino', feedback: 'Los dos sentidos dan {1,4} para el conjunto de enlaces múltiples; en el empate, el doble enlace recibe el número menor.' },
+        { id: 'b', text: 'pent-1-en-4-ino', feedback: 'Correcto: {1,4} en ambos sentidos y, al empatar, el doble enlace lleva el 1.' },
+        { id: 'c', text: 'pent-1-in-4-eno', feedback: 'En el nombre la terminación «eno» se cita antes que «ino».' },
+        { id: 'd', text: 'penta-1,4-dieno', feedback: 'Uno de los enlaces es triple: no es un dieno.' },
+      ],
+      correct: 'b',
+      explanation: 'Primero se busca el menor conjunto de localizadores para todos los enlaces múltiples juntos; si hay empate, los dobles enlaces reciben los números más bajos. El «eno» pierde la «o» antes de «ino».',
+      review: 'Constructor: cadena de 5 C con doble enlace 1–2 y triple 4–5.',
+    },
+    {
+      id: 'nom-4', grade: 11, topic: 'Isomería E/Z', competency: 'explicacion', component: 'quimico', skill: 'Asignar E o Z con prioridades CIP', difficulty: 'alta',
+      stem: 'En una molécula de but-2-eno los dos metilos quedan del mismo lado del doble enlace. ¿Qué descriptor corresponde?',
+      options: [
+        { id: 'a', text: '(E), porque los metilos son iguales.', feedback: 'E significa que los grupos de mayor prioridad quedan en lados opuestos.' },
+        { id: 'b', text: '(Z): en cada carbono el CH₃ tiene mayor prioridad que el H y ambos están del mismo lado.', feedback: 'Correcto: es el (Z)-but-2-eno, el isómero cis.' },
+        { id: 'c', text: 'No lleva descriptor porque los dos carbonos son iguales.', feedback: 'Cada carbono del doble enlace tiene dos grupos distintos (CH₃ y H): hay isomería geométrica.' },
+        { id: 'd', text: '(R), porque es el de mayor prioridad.', feedback: 'R/S describe centros quirales, no dobles enlaces.' },
+      ],
+      correct: 'b',
+      explanation: 'Se comparan los grupos de cada carbono por número atómico (C > H). Mismo lado = Z (zusammen, «juntos»); lados opuestos = E (entgegen).',
+      review: 'Constructor: but-2-eno con «Mismo lado (cis)» y «Lados opuestos (trans)».',
+    },
+    {
+      id: 'nom-5', grade: 11, topic: 'Lectura crítica de resultados computacionales', competency: 'indagacion', component: 'cts', skill: 'Comparar dos programas y explicar sus diferencias', difficulty: 'alta',
+      stem: 'Para la misma estructura, el motor del laboratorio da «4-(propan-2-yl)heptane» y PubChem «4-propan-2-ylheptane». ¿Qué conclusión es correcta?',
+      options: [
+        { id: 'a', text: 'Son estructuras diferentes, porque los nombres son distintos.', feedback: 'Los dos nombres tienen el mismo progenitor, sustituyente y localizador: describen la misma estructura.' },
+        { id: 'b', text: 'Uno de los dos programas tiene un error grave y no se puede confiar en ninguno.', feedback: 'Ambos aplican las mismas reglas de fondo; difieren en una convención de escritura.' },
+        { id: 'c', text: 'Es la misma estructura; difieren en una convención: las Recomendaciones 2013 encierran entre paréntesis los prefijos con localizadores, y LexiChem no lo hace.', feedback: 'Correcto: es una diferencia de convención documentada.' },
+        { id: 'd', text: 'PubChem siempre tiene la razón porque es una base de datos oficial.', feedback: 'El nombre de PubChem también lo calcula un programa (LexiChem): hay que saber qué convención usa.' },
+      ],
+      correct: 'c',
+      explanation: 'Comparar resultados de dos programas exige separar las diferencias de forma (paréntesis, nombres retenidos, localizadores omitidos) de las diferencias de fondo (otra estructura o una regla mal aplicada).',
+      review: '«Comparación con PubChem»: filtra «solo paréntesis» y «nombre retenido».',
+    },
+  ],
+  application: {
+    situation: 'La etiqueta de un aditivo para gasolina que se vende en una estación de servicio de Carepa dice «isooctano (2,2,4-trimetilpentano)», y la de un removedor de pintura, «xilol (mezcla de xilenos)».',
+    question: 'Dibuja el isooctano a partir de su nombre IUPAC, explica por qué es «2,2,4» y no «2,4,4», y escribe los nombres IUPAC de los tres xilenos. ¿Por qué un nombre común como «xilol» no basta en una ficha de seguridad?',
+    guidance: '2,2,4-trimetilpentano: cadena de 5 C con dos metilos en C2 y uno en C4; numerando desde el otro extremo sería {2,4,4}, y {2,2,4} es menor en el primer punto de diferencia. Xilenos: 1,2-, 1,3- y 1,4-dimetilbenceno. Un nombre común puede designar una mezcla o varios isómeros con propiedades distintas.',
+  },
+  transferQuestionIds: ['saber-nom-1'],
+  conclusionGuide: 'Responde la pregunta problema con tres ejemplos de tu tabla (uno de cadena, uno con insaturación y uno con anillo), la regla que decidió cada nombre y una frase sobre qué tanto coincide el motor con PubChem y por qué.',
+  model: nomenclatureModelSpec,
+  references: [
+    'Favre, H. A., y Powell, W. H. (2014). Nomenclature of Organic Chemistry: IUPAC Recommendations and Preferred Names 2013. Royal Society of Chemistry. https://doi.org/10.1039/9781849733069',
+    'Hellwich, K.-H., Hartshorn, R. M., Yerin, A., Damhus, T., y Hutton, A. T. (2020). Brief guide to the nomenclature of organic chemistry (IUPAC Technical Report). Pure and Applied Chemistry, 92(3), 527–539. https://doi.org/10.1515/pac-2019-0104',
+    'Cahn, R. S., Ingold, C., y Prelog, V. (1966). Specification of molecular chirality. Angewandte Chemie International Edition in English, 5(4), 385–415. https://doi.org/10.1002/anie.196603851',
+    'Kim, S., Chen, J., Cheng, T., et al. (2023). PubChem 2023 update. Nucleic Acids Research, 51(D1), D1373–D1380. https://doi.org/10.1093/nar/gkac956',
+    'PubChem (NCBI). PUG REST, propiedad IUPACName (calculada con LexiChem TK de OpenEye Scientific Software) de 189 SMILES de validación; descargada el 2026-10-19 con scripts/validacion/organica_pubchem.py (tests/fixtures/pubchem-nomenclatura.json).',
+    'Bolton, E. E., Chen, J., Kim, S., et al. (2011). PubChem3D: a new resource for scientists. Journal of Cheminformatics, 3, 32. https://doi.org/10.1186/1758-2946-3-32',
+  ],
+  keywords: ['nomenclatura', 'IUPAC', 'nombres', 'cadena principal', 'localizadores', 'orden alfabético', 'prefijos', 'alcanos', 'alquenos', 'alquinos', 'cicloalcanos', 'benceno', 'haloalcanos', 'E/Z', 'cis', 'trans', 'CIP', 'constructor de moléculas', 'PubChem', 'LexiChem', 'química orgánica'],
+};

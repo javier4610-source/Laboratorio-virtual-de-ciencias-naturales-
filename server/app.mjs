@@ -143,6 +143,7 @@ export function validateIncomingReport(r) {
 export const MAX_PROGRESS_BYTES = 64 * 1024;
 export const MAX_SYNC_TRIALS = 30;
 export const STUDENT_SESSION_DAYS = 120;
+// «hipotesis» ya no la envía el cliente (ADR 0006); se sigue aceptando para no rechazar avances de versiones anteriores.
 const STAGE_IDS = ['preparacion', 'hipotesis', 'experimento', 'analisis', 'evaluacion', 'modelo'];
 const MODES = ['guiada', 'libre', 'evaluacion'];
 const VERDICTS = ['', 'apoya', 'refuta', 'no concluyente'];
@@ -205,6 +206,7 @@ export function validateProgress(body, now = Date.now()) {
   if (typeof version !== 'number' || !Number.isFinite(version) || version <= 0) invalid('falta la versión');
   if (!isObj(body.score)) invalid('falta el puntaje');
   const sc = body.score;
+  // `hypothesis` y `comparison` son obsoletos (ADR 0006): el cliente actual no los envía; se validan si llegan de una versión anterior.
   const h = isObj(body.hypothesis) ? body.hypothesis : {};
   const cmp = isObj(body.comparison) ? body.comparison : {};
   const con = isObj(body.conclusion) ? body.conclusion : {};
@@ -565,15 +567,15 @@ export function createApp({ dbPath = 'laboratorio.db', registrationCode, allowed
   function courseCsv(c) {
     const { students } = analytics(c);
     const day = (ts) => (ts ? dayOf(ts, tzOffsetMinutes) : '');
-    const rows = [['Estudiante', 'Inscripción', 'Última actividad', 'Práctica', 'Avance (%)', 'Etapas completas', 'Ensayos', 'Respondidas', 'Aciertos 1.er intento', 'Puntaje (%)', 'Tiempo activo (min)', 'Hipótesis', 'Conclusión']];
+    const rows = [['Estudiante', 'Inscripción', 'Última actividad', 'Práctica', 'Avance (%)', 'Etapas completas', 'Ensayos', 'Respondidas', 'Aciertos 1.er intento', 'Puntaje (%)', 'Tiempo activo (min)', 'Conclusión']];
     for (const s of students) {
       const progress = q.progressOfStudent.all(s.id);
-      if (progress.length === 0) rows.push([s.name, day(s.createdAt), day(s.lastSeenAt), '', '', '', '', '', '', '', '', '', '']);
+      if (progress.length === 0) rows.push([s.name, day(s.createdAt), day(s.lastSeenAt), '', '', '', '', '', '', '', '', '']);
       for (const p of progress) {
         const b = JSON.parse(p.body);
         rows.push([s.name, day(s.createdAt), day(Math.max(s.lastSeenAt, b.lastActivity ?? 0)), p.practiceId, b.percent, (b.stages ?? []).join(', '), b.trialsCount,
           b.score.answered, b.score.correct, b.score.answered ? Math.round((b.score.correct / b.score.answered) * 100) : '',
-          Math.round((b.activeMs ?? 0) / 60000), b.hypothesis?.text ?? '', b.conclusion?.claim ?? '']);
+          Math.round((b.activeMs ?? 0) / 60000), b.conclusion?.claim ?? '']);
       }
     }
     return '﻿' + rows.map((r) => r.map(csvCell).join(';')).join('\r\n');

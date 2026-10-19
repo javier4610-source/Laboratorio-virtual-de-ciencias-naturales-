@@ -38,14 +38,11 @@ export const choques: PracticeDef = {
     'El centro de masa del sistema se mueve con velocidad constante v_cm = (m₁·v₁ + m₂·v₂)/(m₁ + m₂), antes, durante y después del choque. En un choque perfectamente inelástico ambos cuerpos terminan moviéndose justamente con esa velocidad. En una explosión que parte del reposo, p total es cero antes y después: los fragmentos salen en sentidos opuestos con rapideces inversamente proporcionales a sus masas.',
     'Una fotopuerta mide el tiempo Δt durante el cual la bandera de longitud L interrumpe el haz; la velocidad media en ese tramo es v = L/Δt. Con L = 0,100 m y una resolución de 0,1 ms, la incertidumbre relativa es muy pequeña para velocidades de laboratorio, pero crece cuando la bandera pasa muy rápido.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la energía cinética transformada al aumentar el coeficiente de restitución, cómo cambia la velocidad final del deslizador 1 al aumentar la masa del deslizador 2 y cómo cambia la cantidad de movimiento final al aumentar la velocidad inicial del deslizador 1.',
-    pairs: [
-      { x: 'e', y: 'ecPerdida', xLabel: 'el coeficiente de restitución', yLabel: 'la energía cinética transformada', datasetId: 'choques', allowVary: ['tipo'] },
-      { x: 'm2', y: 'v1f', xLabel: 'la masa del deslizador 2', yLabel: 'la velocidad final del deslizador 1', datasetId: 'choques', allowVary: [] },
-      { x: 'v1', y: 'pDespues', xLabel: 'la velocidad inicial del deslizador 1', yLabel: 'la cantidad de movimiento total después del choque', datasetId: 'choques', allowVary: [] },
-    ],
-  },
+  relations: [
+    { x: 'e', y: 'ecPerdida', xLabel: 'el coeficiente de restitución', yLabel: 'la energía cinética transformada', datasetId: 'choques', allowVary: ['tipo'] },
+    { x: 'm2', y: 'v1f', xLabel: 'la masa del deslizador 2', yLabel: 'la velocidad final del deslizador 1', datasetId: 'choques', allowVary: [] },
+    { x: 'v1', y: 'pDespues', xLabel: 'la velocidad inicial del deslizador 1', yLabel: 'la cantidad de movimiento total después del choque', datasetId: 'choques', allowVary: [] },
+  ],
   variables: {
     independent: ['Tipo de choque y coeficiente de restitución', 'Masas de los deslizadores', 'Velocidades iniciales'],
     dependent: ['Tiempos de paso y velocidades finales', 'Cantidad de movimiento total después', 'Energía cinética total después y energía transformada'],

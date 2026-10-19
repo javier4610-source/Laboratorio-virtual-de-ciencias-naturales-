@@ -38,13 +38,10 @@ export const expresion: PracticeDef = {
     'Las mutaciones puntuales en la región codificante pueden ser silenciosas (el codón nuevo codifica el mismo aminoácido), de sentido erróneo (cambia un aminoácido; importa si cambia su propiedad: hidrofóbico, polar o con carga), sin sentido (aparece un codón de terminación prematuro) o de corrimiento del marco (inserciones o deleciones que no son múltiplo de tres). Fuera de ella pueden afectar el empalme, el promotor o la poliadenilación.',
     'La anemia falciforme se debe a GAG → GTG en el codón 6 de la β-globina madura (Glu6Val; codón 7 si se cuenta la metionina inicial): un aminoácido con carga negativa se cambia por uno hidrofóbico que hace que la hemoglobina se agregue cuando hay poco oxígeno. Las talasemias β, en cambio, reducen o eliminan la β-globina: muchas son mutaciones sin sentido, de empalme o del promotor.',
   ],
-  hypothesis: {
-    prompt: 'Predice: si eliminas una sola base en distintos puntos de la región codificante de la β-globina, ¿qué pasará con la proteína a medida que la deleción está más lejos del codón de inicio?',
-    pairs: [
-      { x: 'posicion', y: 'identidad', xLabel: 'la posición de una deleción dentro de la región codificante', yLabel: 'el porcentaje de identidad con la proteína silvestre', datasetId: 'expresion', allowVary: ['cambio'] },
-      { x: 'posicion', y: 'aaCambiados', xLabel: 'la posición de una deleción dentro de la región codificante', yLabel: 'el número de aminoácidos que cambian', datasetId: 'expresion', allowVary: ['cambio'] },
-    ],
-  },
+  relations: [
+    { x: 'posicion', y: 'identidad', xLabel: 'la posición de una deleción dentro de la región codificante', yLabel: 'el porcentaje de identidad con la proteína silvestre', datasetId: 'expresion', allowVary: ['cambio'] },
+    { x: 'posicion', y: 'aaCambiados', xLabel: 'la posición de una deleción dentro de la región codificante', yLabel: 'el número de aminoácidos que cambian', datasetId: 'expresion', allowVary: ['cambio'] },
+  ],
   variables: {
     independent: ['Tipo de mutación (sustitución, inserción, deleción)', 'Posición de la base mutada', 'Base nueva', 'Modo de empalme de la célula'],
     dependent: ['Clase de mutación', 'Longitud del ARNm maduro', 'Longitud de la proteína', 'Identidad con la proteína silvestre', 'Expresión relativa', 'Propiedad del aminoácido cambiado'],

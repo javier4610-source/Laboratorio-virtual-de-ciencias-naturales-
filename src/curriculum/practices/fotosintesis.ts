@@ -31,15 +31,12 @@ export const fotosintesis: PracticeDef = {
     'Principio del factor limitante: la velocidad de un proceso con varios requisitos la determina el que está en menor disponibilidad relativa. Con mucha luz, el CO₂ o las enzimas (que dependen de la temperatura) limitan la fotosíntesis.',
     'La clorofila absorbe sobre todo luz roja y azul; refleja más la verde, aunque las hojas aprovechan parte de ella.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambiarán las burbujas por minuto al acercar la lámpara. ¿Crecerán sin límite?',
-    pairs: [
-      { x: 'irradiancia', y: 'burbujas', xLabel: 'la intensidad de la luz', yLabel: 'las burbujas por minuto', datasetId: 'ensayos', allowVary: ['distancia'] },
-      { x: 'distancia', y: 'burbujas', xLabel: 'la distancia de la lámpara', yLabel: 'las burbujas por minuto', datasetId: 'ensayos' },
-      { x: 'bicarbonato', y: 'burbujas', xLabel: 'el CO₂ disponible (bicarbonato)', yLabel: 'las burbujas por minuto', datasetId: 'ensayos' },
-      { x: 'temperatura', y: 'burbujas', xLabel: 'la temperatura', yLabel: 'las burbujas por minuto', datasetId: 'ensayos' },
-    ],
-  },
+  relations: [
+    { x: 'irradiancia', y: 'burbujas', xLabel: 'la intensidad de la luz', yLabel: 'las burbujas por minuto', datasetId: 'ensayos', allowVary: ['distancia'] },
+    { x: 'distancia', y: 'burbujas', xLabel: 'la distancia de la lámpara', yLabel: 'las burbujas por minuto', datasetId: 'ensayos' },
+    { x: 'bicarbonato', y: 'burbujas', xLabel: 'el CO₂ disponible (bicarbonato)', yLabel: 'las burbujas por minuto', datasetId: 'ensayos' },
+    { x: 'temperatura', y: 'burbujas', xLabel: 'la temperatura', yLabel: 'las burbujas por minuto', datasetId: 'ensayos' },
+  ],
   variables: {
     independent: ['Distancia de la lámpara (intensidad de luz)', 'Bicarbonato (CO₂)', 'Temperatura', 'Color de la luz'],
     dependent: ['Burbujas de O₂ por minuto', 'Fotosíntesis neta'],

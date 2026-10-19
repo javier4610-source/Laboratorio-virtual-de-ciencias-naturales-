@@ -39,14 +39,11 @@ export const respiracion: PracticeDef = {
     'El cociente respiratorio CR = CO₂ producido / O₂ consumido depende del sustrato que se oxida. Los carbohidratos ya contienen mucho oxígeno y dan CR = 1,0; los lípidos tienen muchos hidrógenos y poco oxígeno, así que necesitan más O₂ por cada CO₂ (trioleína: 57 CO₂/80 O₂ ≈ 0,71); las proteínas dan cerca de 0,8. Un CR mayor que 1 indica que parte del CO₂ viene de la fermentación (o de la síntesis de lípidos a partir de azúcares). Las semillas de maíz guardan almidón y las de maní, aceite.',
     'En el respirómetro, el KOH absorbe el CO₂, de modo que el gas del tubo disminuye exactamente en el O₂ consumido y la gota del capilar avanza hacia el tubo: V = π·r²·d. En un tubo con agua, la gota mide O₂ − CO₂, y de ambos se obtiene el CR = (d_KOH − d_agua)/d_KOH. Un tercer tubo con semillas hervidas (termobarómetro) registra los cambios por temperatura y presión, que se restan. La tasa respiratoria crece con la temperatura con un Q₁₀ cercano a 2 (se duplica cada 10 °C) hasta un óptimo; por encima de unos 40 °C las enzimas se desnaturalizan y la tasa cae.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la tasa de consumo de O₂ de las semillas al aumentar la temperatura del baño, cómo cambia el O₂ consumido al aumentar la masa de semillas y cómo cambia el cociente respiratorio al aumentar la temperatura.',
-    pairs: [
-      { x: 'temp', y: 'tasaO2', xLabel: 'la temperatura del baño', yLabel: 'la tasa de consumo de O₂', datasetId: 'respiracion', allowVary: [] },
-      { x: 'masa', y: 'o2', xLabel: 'la masa de semillas', yLabel: 'el O₂ consumido', datasetId: 'respiracion', allowVary: [] },
-      { x: 'temp', y: 'cr', xLabel: 'la temperatura del baño', yLabel: 'el cociente respiratorio', datasetId: 'respiracion', allowVary: ['masa', 'tiempo'] },
-    ],
-  },
+  relations: [
+    { x: 'temp', y: 'tasaO2', xLabel: 'la temperatura del baño', yLabel: 'la tasa de consumo de O₂', datasetId: 'respiracion', allowVary: [] },
+    { x: 'masa', y: 'o2', xLabel: 'la masa de semillas', yLabel: 'el O₂ consumido', datasetId: 'respiracion', allowVary: [] },
+    { x: 'temp', y: 'cr', xLabel: 'la temperatura del baño', yLabel: 'el cociente respiratorio', datasetId: 'respiracion', allowVary: ['masa', 'tiempo'] },
+  ],
   variables: {
     independent: ['Tipo de semilla (reserva de almidón o de aceite; viva o hervida)', 'Atmósfera (aire o nitrógeno)', 'Temperatura del baño', 'Masa de semillas y duración de la medición'],
     dependent: ['Desplazamiento de las gotas de los capilares', 'O₂ consumido, CO₂ producido y tasa de consumo de O₂', 'Cociente respiratorio y ATP producido'],

@@ -7,6 +7,37 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+Cambio **MAYOR** (se publicará como 2.0.0): cambia el flujo de todas las prácticas y contratos existentes — el formato
+de las fichas `PracticeDef`, los identificadores de etapa y el esquema del registro de experimento —, aunque los datos
+guardados siguen siendo legibles. Decisión y consecuencias en [ADR 0006](docs/v2/adr/0006-retiro-etapa-hipotesis.md).
+
+### Eliminado
+- Etapa «Hipótesis» de las 56 prácticas, a pedido del docente. Las etapas quedan Preparación → Experimento →
+  Análisis y conclusión → Evaluación → Modelo y referencias (1 a 5); la práctica abre en Preparación y su botón lleva al
+  Experimento. La «Práctica guiada» ya no exige una hipótesis antes de medir (solo ensayos antes de analizar).
+- En «Análisis y conclusión»: «Compara tus resultados con tu hipótesis», la predicción y el veredicto «apoya / refuta /
+  no concluyente». Se conservan la tendencia detectada en los datos, el control de variables, las preguntas de
+  interpretación y la conclusión afirmación-evidencia-razonamiento.
+- La hipótesis y la comparación en el informe, en el detalle y la línea de tiempo del seguimiento del curso y en los CSV
+  del panel docente y del servidor (columna «Hipótesis»); el criterio «Formulación de hipótesis» de la rúbrica.
+- La actividad «Mi hipótesis» y la pregunta «¿Tus datos apoyan o refutan tu hipótesis?» de las guías en PDF.
+
+### Cambiado
+- Fichas: `hypothesis: { prompt, pairs }` se reemplaza por `relations?: RelationPair[]` (mismo formato que los `pairs`).
+  Es opcional: sin relaciones, el análisis muestra solo la interpretación y la conclusión.
+- El progreso se calcula sobre cuatro etapas principales (25 % cada una).
+- Textos del inicio, la ayuda, el modo guiado, los procedimientos (metabolismo, proteínas, reto, secuencias), el banco
+  de preguntas y las guías, sin la etapa de hipótesis.
+- Registro `lvcn-registro-experimento/1`: `hipotesis` pasa a opcional y obsoleta; los registros nuevos no la incluyen.
+
+### Compatibilidad
+- Las sesiones guardadas con hipótesis se siguen cargando (campos `hypothesis` y `comparison` opcionales y obsoletos;
+  no se muestran).
+- El servidor no cambia su contrato: acepta la etapa `hipotesis` y los campos antiguos de clientes anteriores; el
+  cliente actual ya no los envía.
+- El informe `lvcn-informe-v1` conserva los campos vacíos para que paneles de versiones anteriores lo abran.
+- Los registros de experimento antiguos con `hipotesis` se siguen importando.
+
 ## [1.7.0] · 2026-10-19
 
 ### Añadido

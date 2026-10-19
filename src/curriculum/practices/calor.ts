@@ -39,14 +39,11 @@ export const calor: PracticeDef = {
     'Ningún calorímetro real es perfecto: mientras la mezcla está más caliente que el salón, el vaso le entrega calor al aire, y si está más fría, lo recibe. Según la ley de enfriamiento de Newton, ese flujo es proporcional a la diferencia de temperatura con el aire, de modo que la temperatura se acerca a la del salón (unos 28 °C en Apartadó) cada vez más despacio, siguiendo una curva exponencial. El icopor es un buen aislante (tiene muchas burbujas de aire atrapado): pierde unas tres veces menos calor que el vidrio o la lata, y por eso la curva de temperatura cae más lentamente.',
     'El mismo método sirve para identificar materiales. Si se sumerge un metal caliente de masa conocida en agua y se mide la temperatura de equilibrio, el calor que ganó el agua (y el vaso) es el que cedió el metal, y su calor específico es c = (m_agua·4,18 + C_vaso)·(T_e − T_agua)/(m_metal·(T_metal − T_e)). Comparando ese valor con una tabla se reconoce el metal. Como el termómetro solo lee décimas de grado y siempre hay algo de pérdida, el resultado tiene una incertidumbre de algunos por ciento.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la temperatura de equilibrio al aumentar la temperatura inicial del agua caliente (o del metal), cómo cambia al aumentar su masa, y cómo cambia el aumento de temperatura del agua del calorímetro al poner más agua en él.',
-    pairs: [
-      { x: 'tMuestra', y: 'te', xLabel: 'la temperatura inicial del agua caliente o del metal', yLabel: 'la temperatura de equilibrio', datasetId: 'calor', allowVary: [] },
-      { x: 'mMuestra', y: 'te', xLabel: 'la masa del agua caliente o del metal', yLabel: 'la temperatura de equilibrio', datasetId: 'calor', allowVary: [] },
-      { x: 'mAgua', y: 'dtAgua', xLabel: 'la masa de agua del calorímetro', yLabel: 'el aumento de temperatura del agua del calorímetro', datasetId: 'calor', allowVary: [] },
-    ],
-  },
+  relations: [
+    { x: 'tMuestra', y: 'te', xLabel: 'la temperatura inicial del agua caliente o del metal', yLabel: 'la temperatura de equilibrio', datasetId: 'calor', allowVary: [] },
+    { x: 'mMuestra', y: 'te', xLabel: 'la masa del agua caliente o del metal', yLabel: 'la temperatura de equilibrio', datasetId: 'calor', allowVary: [] },
+    { x: 'mAgua', y: 'dtAgua', xLabel: 'la masa de agua del calorímetro', yLabel: 'el aumento de temperatura del agua del calorímetro', datasetId: 'calor', allowVary: [] },
+  ],
   variables: {
     independent: ['Lo que se agrega: agua caliente o metal (aluminio, cobre, hierro, plomo o muestra X)', 'Masa y temperatura inicial de la muestra', 'Masa y temperatura inicial del agua del calorímetro', 'Recipiente del calorímetro (icopor, vidrio o lata)'],
     dependent: ['Temperatura de equilibrio y temperatura a los 10 min', 'Calor cedido por la muestra y calor ganado por el agua y el vaso', 'Calor específico calculado del metal y capacidad calorífica calculada del vaso'],

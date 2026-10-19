@@ -38,14 +38,11 @@ export const seleccion: PracticeDef = {
     'Cuando el color medio coincide con el del fondo, la selección deja de empujar en una dirección y la población se estabiliza. Si el ambiente cambia, por ejemplo cuando el hollín oscurece la corteza, la población vuelve a cambiar, siempre con algún retraso respecto al ambiente.',
     'Un caso clásico es el de la polilla del abedul (Biston betularia) en Inglaterra: durante la Revolución Industrial aumentaron las formas oscuras en los bosques ennegrecidos por el hollín, y disminuyeron cuando el aire se limpió. En Colombia, la ceniza de volcanes como el Nevado del Ruiz o el Galeras cambia el color del suelo de los ecosistemas cercanos.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el color medio de la población en un fondo oscuro cuando aumentas la heredabilidad, cuando aumentas la intensidad de depredación y a medida que pasan las generaciones.',
-    pairs: [
-      { x: 'heredabilidad', y: 'cambio', xLabel: 'la heredabilidad del color (h²)', yLabel: 'el cambio del color medio', datasetId: 'generaciones' },
-      { x: 'depredacion', y: 'cambio', xLabel: 'la intensidad de depredación', yLabel: 'el cambio del color medio', datasetId: 'generaciones' },
-      { x: 'generaciones', y: 'colorMedio', xLabel: 'el número de generaciones', yLabel: 'el color medio de la población', datasetId: 'generaciones' },
-    ],
-  },
+  relations: [
+    { x: 'heredabilidad', y: 'cambio', xLabel: 'la heredabilidad del color (h²)', yLabel: 'el cambio del color medio', datasetId: 'generaciones' },
+    { x: 'depredacion', y: 'cambio', xLabel: 'la intensidad de depredación', yLabel: 'el cambio del color medio', datasetId: 'generaciones' },
+    { x: 'generaciones', y: 'colorMedio', xLabel: 'el número de generaciones', yLabel: 'el color medio de la población', datasetId: 'generaciones' },
+  ],
   variables: {
     independent: ['Ambiente (color del fondo)', 'Intensidad de depredación', 'Heredabilidad h²', 'Variación del color σ', 'Número de generaciones'],
     dependent: ['Color medio de la población', 'Cambio del color medio', 'Supervivencia media por generación', 'Diferencial S y respuesta R'],

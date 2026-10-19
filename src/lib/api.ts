@@ -92,8 +92,13 @@ export interface SyncSummary {
   percent: number;
   trialsCount: number;
   trials: { id: string; d: string; t: number; v: Record<string, number | string | null>; n?: string }[];
-  hypothesis: { text: string; trend: string; pairIndex: number; savedAt?: number };
-  comparison: { verdict: string; justification: string };
+  /**
+   * @deprecated Etapa de hipótesis retirada (ADR 0006). El cliente ya no la envía; puede llegar
+   * del servidor en resúmenes guardados por versiones anteriores (el servidor la sigue validando).
+   */
+  hypothesis?: { text: string; trend: string; pairIndex: number; savedAt?: number };
+  /** @deprecated Comparación con la hipótesis retirada (ADR 0006); solo en resúmenes antiguos. */
+  comparison?: { verdict: string; justification: string };
   conclusion: { claim: string; evidence: string; reasoning: string };
   interpretations: Record<string, string>;
   answers: Record<string, { chosen: string; correct: boolean; firstTryCorrect: boolean; attempts: number; firstChosen?: string; at?: number }>;

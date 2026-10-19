@@ -33,11 +33,21 @@ export interface Question {
 
 export interface Variables { independent: string[]; dependent: string[]; controlled: string[]; }
 
-/** Predicción estructurada que el estudiante hace antes de experimentar. */
-export interface HypothesisFrame {
-  /** Variables (claves de columnas numéricas) entre las que se predice una relación. */
-  pairs: { x: string; y: string; xLabel: string; yLabel: string; datasetId: string; /** Columnas de entrada que pueden variar junto con x sin romper el control (p. ej., la arista cuando x es el volumen). */ allowVary?: string[] }[];
-  prompt: string;
+/**
+ * Relación entre dos variables numéricas que el estudiante puede analizar en «Análisis y conclusión»
+ * (elige la relación y el sistema detecta la tendencia en sus datos y revisa el control de variables).
+ */
+export interface RelationPair {
+  /** Clave de la columna de la variable independiente (eje x). */
+  x: string;
+  /** Clave de la columna de la variable dependiente (eje y). */
+  y: string;
+  xLabel: string;
+  yLabel: string;
+  /** Conjunto de datos donde están las dos columnas. */
+  datasetId: string;
+  /** Columnas de entrada que pueden variar junto con x sin romper el control (p. ej., la arista cuando x es el volumen). */
+  allowVary?: string[];
 }
 
 export interface PracticeDef {
@@ -55,7 +65,12 @@ export interface PracticeDef {
   curricularLink: { standards: string; dba: string; note: string };
   materials: string[];
   background: string[];
-  hypothesis: HypothesisFrame;
+  /**
+   * Relaciones numéricas que se pueden analizar. Es opcional: una práctica sin relaciones
+   * (p. ej., de nomenclatura) muestra en el análisis solo la interpretación y la conclusión.
+   * Reemplaza al antiguo `hypothesis.pairs` (ADR 0006: se retiró la etapa de hipótesis).
+   */
+  relations?: RelationPair[];
   variables: Variables;
   procedure: string[];
   interpretation: string[];
@@ -108,7 +123,7 @@ export interface DatasetAnalysis {
 
 export type Mode = 'guiada' | 'libre' | 'evaluacion';
 
-/** Tendencias que el estudiante puede predecir y que el sistema puede detectar en los datos. */
+/** Tendencias que el sistema puede detectar en los datos (y que las sesiones antiguas guardaban como predicción). */
 export type Trend = '' | 'aumenta' | 'disminuye' | 'no cambia' | 'máximo' | 'se estabiliza';
 
 export interface AnswerRecord { chosen: string; correct: boolean; attempts: number; firstTryCorrect: boolean; /** Opción elegida en el primer intento (análisis de errores del docente). */ firstChosen?: string; /** Fecha de la primera respuesta. */ at?: number; }
@@ -116,11 +131,19 @@ export interface AnswerRecord { chosen: string; correct: boolean; attempts: numb
 export interface PracticeSession {
   practiceId: string;
   mode: Mode;
-  hypothesis: { text: string; pairIndex: number; trend: Trend; savedAt?: number };
+  /**
+   * @deprecated Etapa de hipótesis retirada (ADR 0006). Se conserva opcional solo para leer sesiones
+   * antiguas y respetar el contrato del servidor; la interfaz ya no la muestra ni la escribe.
+   */
+  hypothesis?: { text: string; pairIndex: number; trend: Trend; savedAt?: number };
   trials: Trial[];
   stepsDone: number[];
   interpretations: Record<string, string>;
-  comparison: { verdict: '' | 'apoya' | 'refuta' | 'no concluyente'; justification: string };
+  /**
+   * @deprecated Comparación con la hipótesis retirada (ADR 0006). Opcional solo por compatibilidad
+   * con sesiones antiguas y con el servidor; la interfaz ya no la muestra ni la escribe.
+   */
+  comparison?: { verdict: '' | 'apoya' | 'refuta' | 'no concluyente'; justification: string };
   conclusion: { claim: string; evidence: string; reasoning: string };
   application: string;
   answers: Record<string, AnswerRecord>;

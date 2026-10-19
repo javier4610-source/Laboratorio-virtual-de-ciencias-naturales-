@@ -293,7 +293,7 @@ function PracticesTable({ practices }: { practices: CourseTracking['summary']['p
 }
 
 /* --------------------------------------------------------------- detalle del estudiante */
-type TimelineItem = { at: number; text: string; icon: 'inicio' | 'experimento' | 'hipotesis' | 'check' | 'evaluacion' | 'docente' };
+type TimelineItem = { at: number; text: string; icon: 'inicio' | 'experimento' | 'check' | 'evaluacion' | 'docente' };
 const STAGE_LABEL = Object.fromEntries(STAGES.map((s) => [s.id, s.label]));
 
 function buildTimeline(d: StudentDetail): TimelineItem[] {
@@ -302,12 +302,12 @@ function buildTimeline(d: StudentDetail): TimelineItem[] {
     const pt = e.practiceId ? `«${practiceTitle(e.practiceId)}»` : '';
     if (e.kind === 'ingreso') items.push({ at: e.at, icon: e.detail === 'inscripcion' ? 'docente' : 'inicio', text: e.detail === 'inscripcion' ? 'Se unió al curso' : 'Ingresó al laboratorio' });
     else if (e.kind === 'practica') items.push({ at: e.at, icon: 'experimento', text: `Abrió la práctica ${pt}` });
-    else if (e.kind === 'etapa') items.push({ at: e.at, icon: 'check', text: `Completó la etapa «${STAGE_LABEL[e.detail ?? ''] ?? e.detail}» en ${pt}` });
+    // La etapa «hipotesis» se retiró (ADR 0006): sus eventos antiguos no se muestran.
+    else if (e.kind === 'etapa' && e.detail !== 'hipotesis') items.push({ at: e.at, icon: 'check', text: `Completó la etapa «${STAGE_LABEL[e.detail ?? ''] ?? e.detail}» en ${pt}` });
     else if (e.kind === 'respuestas') items.push({ at: e.at, icon: 'evaluacion', text: `Respondió preguntas en ${pt} (${(e.detail ?? '').replace('/', ' de ')})` });
   }
   for (const p of d.practices) {
     const pt = `«${practiceTitle(p.practiceId)}»`;
-    if (p.hypothesis.savedAt) items.push({ at: p.hypothesis.savedAt, icon: 'hipotesis', text: `Guardó su hipótesis en ${pt}` });
     for (const t of p.trials) items.push({ at: t.t, icon: 'experimento', text: `Registró un ensayo en ${pt}` });
   }
   return items.sort((a, b) => b.at - a.at);
@@ -340,12 +340,8 @@ function TrialsTable({ practiceId, trials }: { practiceId: string; trials: Stude
   );
 }
 
-const VERDICT_TEXT: Record<string, string> = { apoya: 'Los datos apoyan la hipótesis', refuta: 'Los datos refutan la hipótesis', 'no concluyente': 'Resultado no concluyente' };
-
 function PracticeDetail({ p, open }: { p: StudentDetail['practices'][number]; open: boolean }) {
-  const def = practiceById(p.practiceId);
   const sc = pct(p.score.correct, p.score.answered);
-  const pair = def?.hypothesis.pairs[p.hypothesis.pairIndex];
   const colLabel = (key: string) => DATASETS[p.practiceId]?.flatMap((d) => d.columns).find((c) => c.key === key)?.label ?? key;
   const answers = Object.entries(p.answers);
   return (
@@ -368,17 +364,6 @@ function PracticeDetail({ p, open }: { p: StudentDetail['practices'][number]; op
         <p className="small muted" style={{ margin: 0 }}>
           Modo {p.mode === 'guiada' ? 'práctica guiada' : p.mode === 'libre' ? 'exploración libre' : 'evaluación'} · tiempo activo aproximado {minutes(p.activeMs)} · última actividad {fmtDate(p.lastActivity)}
         </p>
-        <div className="grid-2">
-          <div className="text-block">
-            <h4>Hipótesis</h4>
-            {p.hypothesis.text.trim() ? <p>{p.hypothesis.text}</p> : <p className="muted">Sin hipótesis guardada.</p>}
-            {p.hypothesis.trend && pair && <p className="small muted">Predicción: si aumenta {pair.xLabel.toLowerCase()}, {pair.yLabel.toLowerCase()} {p.hypothesis.trend}.</p>}
-          </div>
-          <div className="text-block">
-            <h4>Comparación con los datos</h4>
-            {p.comparison.verdict ? <p><strong>{VERDICT_TEXT[p.comparison.verdict]}.</strong> {p.comparison.justification}</p> : <p className="muted">Aún no compara su hipótesis con los datos.</p>}
-          </div>
-        </div>
         <div className="text-block">
           <h4>Conclusión (afirmación, evidencia y razonamiento)</h4>
           {p.conclusion.claim.trim() ? (
@@ -552,7 +537,7 @@ export function TrackingTab({ initialCourseId, onGoServer }: { initialCourseId?:
         <section className="card stack tracking-empty">
           <Icon name="analisis" size={32} />
           <h2>Sigue el proceso de tus estudiantes</h2>
-          <p>Con el servidor del colegio, cada estudiante se une a tu curso con el código y un PIN, y su avance llega aquí automáticamente: quién ingresa, qué etapas completa, sus datos, hipótesis, conclusiones y respuestas.</p>
+          <p>Con el servidor del colegio, cada estudiante se une a tu curso con el código y un PIN, y su avance llega aquí automáticamente: quién ingresa, qué etapas completa, sus datos, interpretaciones, conclusiones y respuestas.</p>
           <div className="btn-row"><button type="button" className="btn primary" onClick={onGoServer}>Iniciar sesión en el servidor</button></div>
         </section>
       </div>

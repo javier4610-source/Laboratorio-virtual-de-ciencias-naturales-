@@ -40,13 +40,10 @@ export const conservacion: PracticeDef = {
     'Las cantidades de producto dependen del reactivo limitante, el que se acaba primero. Con las masas molares se calculan los moles: por ejemplo, 2,00 g de bicarbonato son 2,00 ÷ 84,007 = 0,0238 mol, que producen 0,0238 mol de CO₂, es decir, 0,0238 × 44,01 ≈ 1,05 g. A 25 °C y 1 atm, un mol de gas ocupa unos 24,5 L.',
     'Un detalle fino: el globo inflado desplaza aire, y el aire empuja hacia arriba con una fuerza E = ρ_aire·V·g (principio de Arquímedes). Por eso la balanza marca un poco menos (≈ 1,18 mg por cada mL de globo) aunque la masa se conserve. Un buen científico distingue entre lo que cambia de verdad y lo que cambia en la lectura.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la diferencia de masa (final − inicial) y la masa de gas producido al aumentar la masa de reactivo sólido. Piensa si tu predicción depende de que el sistema sea abierto o cerrado.',
-    pairs: [
-      { x: 'masaReactivo', y: 'diferencia', xLabel: 'la masa de reactivo sólido', yLabel: 'la diferencia de masa (final − inicial)', datasetId: 'pesadas' },
-      { x: 'masaReactivo', y: 'gasProducido', xLabel: 'la masa de reactivo sólido', yLabel: 'la masa de gas producido', datasetId: 'pesadas' },
-    ],
-  },
+  relations: [
+    { x: 'masaReactivo', y: 'diferencia', xLabel: 'la masa de reactivo sólido', yLabel: 'la diferencia de masa (final − inicial)', datasetId: 'pesadas' },
+    { x: 'masaReactivo', y: 'gasProducido', xLabel: 'la masa de reactivo sólido', yLabel: 'la masa de gas producido', datasetId: 'pesadas' },
+  ],
   variables: {
     independent: ['Masa de reactivo sólido', 'Tipo de sistema (abierto o cerrado)', 'Reacción química'],
     dependent: ['Masa final medida en la balanza', 'Diferencia de masa', 'Masa de gas producido'],

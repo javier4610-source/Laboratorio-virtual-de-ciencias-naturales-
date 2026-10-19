@@ -16,6 +16,7 @@ estado «reemplazada por NNNN».
 | [0003](0003-registro-de-experimentos.md) | Registro de experimentos reproducible en el dispositivo | Aceptada | 2026-10-18 |
 | [0004](0004-privacidad-alias.md) | Privacidad: alias o códigos en lugar de nombres reales | Aceptada | 2026-10-18 |
 | [0005](0005-bibliotecas-webassembly.md) | Bibliotecas de visualización molecular y WebAssembly | Propuesta | 2026-10-18 |
+| [0006](0006-retiro-etapa-hipotesis.md) | Retiro de la etapa de hipótesis | Aceptada | 2026-10-19 |
 
 ## Estados permitidos
 

@@ -50,7 +50,10 @@ export function buildReport(p: PracticeDef, s: PracticeSession, student: Student
   return {
     format: REPORT_FORMAT, generatedAt: Date.now(), student,
     practice: { id: p.id, title: p.title, grade: p.grade, area: p.area },
-    session: s, score: scoreSession(p, s),
+    // La hipótesis y la comparación se retiraron (ADR 0006). Se envían vacías, no omitidas, para que un panel docente
+    // de una versión anterior (≤ 1.7.0, que las lee sin comprobar) pueda abrir el informe; la versión actual no las muestra.
+    session: { ...s, hypothesis: { text: '', pairIndex: 0, trend: '' }, comparison: { verdict: '', justification: '' } },
+    score: scoreSession(p, s),
   };
 }
 

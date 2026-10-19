@@ -36,7 +36,7 @@ export function ExperimentRecordCard({ practice, api }: { practice: PracticeDef;
     <section className="card stack-sm no-print" aria-labelledby={`${id}-t`}>
       <h3 id={`${id}-t`}>Registro reproducible del experimento</h3>
       <p className="small muted">
-        Guarda en un archivo JSON la pregunta, la hipótesis, el modelo con su versión, el modo de medición con su semilla y cada
+        Guarda en un archivo JSON la pregunta, el modelo con su versión, el modo de medición con su semilla y cada
         ensayo con su estatus. No incluye datos personales. Puedes importarlo en otro equipo para continuar o comparar.
       </p>
       <div className="btn-row">

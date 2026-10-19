@@ -8,9 +8,7 @@ export function emptySession(practiceId: string, mode: Mode = 'guiada'): Practic
   const now = Date.now();
   return {
     practiceId, mode,
-    hypothesis: { text: '', pairIndex: 0, trend: '' },
     trials: [], stepsDone: [], interpretations: {},
-    comparison: { verdict: '', justification: '' },
     conclusion: { claim: '', evidence: '', reasoning: '' },
     application: '', answers: {}, visited: [], startedAt: now, updatedAt: now,
   };

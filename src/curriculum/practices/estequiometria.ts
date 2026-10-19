@@ -30,13 +30,10 @@ export const estequiometria: PracticeDef = {
     'El reactivo limitante es el que se agota primero y determina la cantidad máxima de producto (rendimiento teórico). El otro reactivo queda en exceso.',
     'En la práctica se obtiene menos producto que el teórico por reacciones incompletas, pérdidas y reacciones secundarias. El rendimiento porcentual es (real / teórico) × 100.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué ocurre con la masa de producto si aumentas solo la masa de uno de los reactivos y mantienes el otro constante.',
-    pairs: [
-      { x: 'masaA', y: 'producto', xLabel: 'la masa del reactivo A (con B constante)', yLabel: 'la masa de producto', datasetId: 'ensayos' },
-      { x: 'masaA', y: 'exceso', xLabel: 'la masa del reactivo A (con B constante)', yLabel: 'la masa de reactivo sobrante', datasetId: 'ensayos' },
-    ],
-  },
+  relations: [
+    { x: 'masaA', y: 'producto', xLabel: 'la masa del reactivo A (con B constante)', yLabel: 'la masa de producto', datasetId: 'ensayos' },
+    { x: 'masaA', y: 'exceso', xLabel: 'la masa del reactivo A (con B constante)', yLabel: 'la masa de reactivo sobrante', datasetId: 'ensayos' },
+  ],
   variables: {
     independent: ['Reacción química', 'Masa del reactivo A', 'Masa del reactivo B', 'Rendimiento porcentual'],
     dependent: ['Reactivo limitante', 'Masa de producto', 'Masa de reactivo sobrante'],

@@ -31,12 +31,9 @@ export const mendel: PracticeDef = {
     'En la dominancia incompleta, el heterocigoto tiene un fenotipo intermedio: en la boca de dragón, RR es roja, Rr rosada y rr blanca.',
     'Las proporciones son probabilidades. En sus datos reales, Mendel obtuvo 5474 semillas lisas y 1850 rugosas (2,96 : 1), muy cerca de 3:1 porque contó miles de semillas.',
   ],
-  hypothesis: {
-    prompt: '¿Qué crees que pasará con la diferencia entre lo observado y lo esperado si siembras más semillas? Escribe tu hipótesis.',
-    pairs: [
-      { x: 'n', y: 'desviacion', xLabel: 'el número de descendientes', yLabel: 'la diferencia entre el porcentaje observado y el esperado', datasetId: 'cruces' },
-    ],
-  },
+  relations: [
+    { x: 'n', y: 'desviacion', xLabel: 'el número de descendientes', yLabel: 'la diferencia entre el porcentaje observado y el esperado', datasetId: 'cruces' },
+  ],
   variables: {
     independent: ['Genotipos de los progenitores', 'Número de descendientes (N)'],
     dependent: ['Frecuencia de cada fenotipo', 'Desviación respecto a lo esperado', 'χ² y valor p'],

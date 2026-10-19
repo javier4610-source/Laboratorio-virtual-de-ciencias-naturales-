@@ -43,11 +43,11 @@ describe('integridad del currículo', () => {
     }
   });
 
-  it('cada práctica tiene un conjunto de datos y sus hipótesis apuntan a columnas numéricas existentes', () => {
+  it('cada práctica tiene un conjunto de datos y sus relaciones de análisis apuntan a columnas numéricas existentes', () => {
     for (const p of PRACTICES) {
       const ds = DATASETS[p.id];
       expect(ds, p.id).toBeDefined();
-      for (const pair of p.hypothesis.pairs) {
+      for (const pair of p.relations ?? []) {
         const d = ds.find((x) => x.id === pair.datasetId);
         expect(d, `${p.id}:${pair.datasetId}`).toBeDefined();
         for (const key of [pair.x, pair.y]) {

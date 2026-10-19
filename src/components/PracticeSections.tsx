@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { PracticeDef, Trend } from '../core/types';
+import type { PracticeDef, RelationPair, Trend } from '../core/types';
 import type { SessionApi } from '../lib/session';
 import { AREA_LABEL, COMPETENCY_LABEL } from '../curriculum/grades';
 import { DATASETS } from '../labs/datasets';
@@ -12,8 +12,6 @@ import { Notice } from './ui';
 import { scoreSession } from '../lib/report';
 import type { ModelSpec } from '../models/types';
 import { loadValidations } from '../lib/validation';
-
-const TRENDS: Exclude<Trend, ''>[] = ['aumenta', 'disminuye', 'no cambia', 'máximo', 'se estabiliza'];
 
 /* ------------------------------ Preparación ------------------------------ */
 export function PreparationSection({ practice: p, api, onNext }: { practice: PracticeDef; api: SessionApi; onNext: () => void }) {
@@ -46,7 +44,7 @@ export function PreparationSection({ practice: p, api, onNext }: { practice: Pra
       </section>
       <div className="btn-row">
         <button type="button" className="btn primary" onClick={() => { if (!s.visited.includes('preparacion')) api.update((x) => ({ ...x, visited: [...x.visited, 'preparacion'] })); onNext(); }}>
-          Entendido: formular mi hipótesis
+          Entendido: ir al experimento
         </button>
       </div>
     </div>
@@ -100,76 +98,65 @@ function VariablesActivity({ practice: p, api }: { practice: PracticeDef; api: S
   );
 }
 
-/* ------------------------------- Hipótesis ------------------------------- */
-export function HypothesisSection({ practice: p, api, onNext }: { practice: PracticeDef; api: SessionApi; onNext: () => void }) {
-  const h = api.session.hypothesis;
-  const pair = p.hypothesis.pairs[h.pairIndex] ?? p.hypothesis.pairs[0];
-  const set = (patch: Partial<typeof h>) => api.update((s) => ({ ...s, hypothesis: { ...s.hypothesis, ...patch, savedAt: undefined } }));
-  const text = h.text.toLowerCase();
-  const checks = [
-    { ok: /\bsi\b/.test(text), msg: 'Incluye la condición: «Si…» (qué cambias).' },
-    { ok: text.includes('entonces'), msg: 'Incluye la predicción: «…entonces…» (qué esperas medir).' },
-    { ok: text.includes('porque'), msg: 'Incluye la justificación: «…porque…» (por qué lo esperas).' },
-  ];
-  const canSave = h.text.trim().length >= 15 && !!h.trend;
-  return (
-    <div className="stack">
-      <section className="card stack">
-        <h3>Formula tu hipótesis</h3>
-        <p>{p.hypothesis.prompt}</p>
-        <div className="grid-2">
-          <div className="field">
-            <label htmlFor="hyp-pair">¿Qué relación vas a investigar?</label>
-            <select id="hyp-pair" value={h.pairIndex} onChange={(e) => set({ pairIndex: Number(e.target.value) })}>
-              {p.hypothesis.pairs.map((pp, i) => <option key={i} value={i}>Si cambio {pp.xLabel}, ¿qué pasa con {pp.yLabel}?</option>)}
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="hyp-trend">Mi predicción: cuando aumenta {pair.xLabel}, {pair.yLabel}…</label>
-            <select id="hyp-trend" value={h.trend} onChange={(e) => set({ trend: e.target.value as Trend })}>
-              <option value="">Elegir…</option>
-              {TRENDS.map((t) => <option key={t} value={t}>{TREND_LABEL[t]}</option>)}
-            </select>
-          </div>
-        </div>
-        <div className="field">
-          <label htmlFor="hyp-text">Hipótesis completa</label>
-          <textarea id="hyp-text" value={h.text} onChange={(e) => set({ text: e.target.value })} placeholder="Si aumento…, entonces…, porque…" />
-        </div>
-        {h.text.length > 0 && (
-          <ul className="list small" aria-live="polite">
-            {checks.map((c) => <li key={c.msg} style={{ color: c.ok ? 'var(--ok)' : 'var(--ink-2)' }}>{c.ok ? '✓ ' : '○ '}{c.msg}</li>)}
-          </ul>
-        )}
-        <div className="btn-row">
-          <button type="button" className="btn primary" disabled={!canSave} onClick={() => { api.update((s) => ({ ...s, hypothesis: { ...s.hypothesis, savedAt: Date.now() } })); onNext(); }}>Guardar hipótesis e ir al experimento</button>
-          {h.savedAt && <span className="chip ok">Hipótesis guardada</span>}
-          {!canSave && <span className="small muted">Escribe tu hipótesis (al menos 15 caracteres) y elige una predicción.</span>}
-        </div>
-        <p className="small muted">Una hipótesis no tiene que ser correcta: debe poder ponerse a prueba con un experimento.</p>
-      </section>
-    </div>
-  );
-}
-
 /* -------------------------------- Análisis ------------------------------- */
-export function AnalysisSection({ practice: p, api }: { practice: PracticeDef; api: SessionApi }) {
+/** Lo que muestran los datos: relación elegida, ensayos incluidos, control de variables y tendencia detectada. */
+function TrendAnalysis({ practice: p, relations, api }: { practice: PracticeDef; relations: RelationPair[]; api: SessionApi }) {
   const s = api.session;
-  const h = s.hypothesis;
-  const [pairIndex, setPairIndex] = useState(h.pairIndex);
-  const pair = p.hypothesis.pairs[pairIndex];
-  const ds = DATASETS[p.id].find((d) => d.id === pair.datasetId)!;
-  const trials = s.trials.filter((t) => t.datasetId === ds.id);
+  const [pairIndex, setPairIndex] = useState(0);
+  const pair = relations[pairIndex] ?? relations[0];
+  const ds = (DATASETS[p.id] ?? []).find((d) => d.id === pair.datasetId);
+  const trials = ds ? s.trials.filter((t) => t.datasetId === ds.id) : [];
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
   const used = trials.filter((t) => !excluded.has(t.id));
   const points = used.map((t) => ({ x: t.values[pair.x], y: t.values[pair.y] })).filter((pt): pt is { x: number; y: number } => typeof pt.x === 'number' && typeof pt.y === 'number');
   const analysis = detectTrend(points);
   // Control de variables: ¿cambiaron otras variables de entrada en los ensayos usados?
-  const varied = ds.columns.filter((c) => c.input && c.key !== pair.x && !(pair.allowVary ?? []).includes(c.key))
+  const varied = (ds?.columns ?? []).filter((c) => c.input && c.key !== pair.x && !(pair.allowVary ?? []).includes(c.key))
     .filter((c) => new Set(used.map((t) => String(t.values[c.key]))).size > 1);
-  const predicted = pairIndex === h.pairIndex ? h.trend : '';
-  const match = predicted && analysis.trend ? predicted === analysis.trend : null;
+  if (!ds) return null;
 
+  return (
+    <section className="card stack">
+      <h3>¿Qué muestran tus datos?</h3>
+      <div className="field">
+        <label htmlFor="an-pair">Relación que analizas</label>
+        <select id="an-pair" value={pairIndex} onChange={(e) => { setPairIndex(Number(e.target.value)); setExcluded(new Set()); }}>
+          {relations.map((pp, i) => <option key={i} value={i}>{pp.yLabel} en función de {pp.xLabel}</option>)}
+        </select>
+      </div>
+      {trials.length === 0 ? <Notice kind="warn">Aún no hay ensayos en «{ds.label}». Vuelve al experimento y guarda al menos tres.</Notice> : (
+        <>
+          <details>
+            <summary>Elegir qué ensayos incluir en el análisis ({used.length} de {trials.length})</summary>
+            <div className="stack-sm">
+              {trials.map((t, i) => (
+                <label key={t.id} className="check">
+                  <input type="checkbox" checked={!excluded.has(t.id)} onChange={(e) => setExcluded((ex) => { const n = new Set(ex); if (e.target.checked) n.delete(t.id); else n.add(t.id); return n; })} />
+                  Ensayo {i + 1}: {ds.columns.filter((c) => c.input).map((c) => `${c.label} ${cellText(t.values[c.key], c.decimals)}${c.unit ? ' ' + c.unit : ''}`).join(' · ')}
+                </label>
+              ))}
+            </div>
+          </details>
+          {varied.length > 0 && (
+            <Notice kind="warn">
+              <strong>Control de variables:</strong> en los ensayos elegidos también cambió {varied.map((c) => c.label.toLowerCase()).join(', ')}. Para atribuir el efecto a {pair.xLabel}, deja fijas las demás variables o excluye los ensayos que no correspondan.
+            </Notice>
+          )}
+          <div className="readout" aria-live="polite">
+            <div className="item"><div className="k">Tendencia en tus datos</div><div className="v data">{analysis.trend ? TREND_LABEL[analysis.trend as Exclude<Trend, ''>] : 'no determinada'}</div></div>
+            <div className="item"><div className="k">Valores distintos de x</div><div className="v">{analysis.n}</div></div>
+            <div className="item"><div className="k">Correlación r</div><div className="v">{analysis.r === null ? '—' : fmt(analysis.r, 2)}</div></div>
+          </div>
+          <p className="small">{analysis.detail}</p>
+          <p className="small muted">La tendencia se detecta con reglas explícitas (correlación y forma de la curva) y depende de los ensayos que incluyas. Úsala como apoyo, no como verdad absoluta: tu conclusión debe citar los datos que la respaldan.</p>
+        </>
+      )}
+    </section>
+  );
+}
+
+export function AnalysisSection({ practice: p, api }: { practice: PracticeDef; api: SessionApi }) {
+  const s = api.session;
   const setI = (k: string, v: string) => api.update((x) => ({ ...x, interpretations: { ...x.interpretations, [k]: v } }));
   const setC = (patch: Partial<typeof s.conclusion>) => api.update((x) => ({ ...x, conclusion: { ...x.conclusion, ...patch } }));
 
@@ -183,66 +170,7 @@ export function AnalysisSection({ practice: p, api }: { practice: PracticeDef; a
 
   return (
     <div className="stack">
-      <section className="card stack">
-        <h3>Compara tus resultados con tu hipótesis</h3>
-        {!h.savedAt && <Notice kind="warn">No guardaste una hipótesis. Puedes analizar los datos igualmente, pero en el modo guiado conviene formularla antes.</Notice>}
-        {h.savedAt && <p><strong>Tu hipótesis:</strong> {h.text} <span className="chip">predicción: {h.trend ? TREND_LABEL[h.trend as Exclude<Trend, ''>] : '—'}</span></p>}
-        <div className="field">
-          <label htmlFor="an-pair">Relación que analizas</label>
-          <select id="an-pair" value={pairIndex} onChange={(e) => { setPairIndex(Number(e.target.value)); setExcluded(new Set()); }}>
-            {p.hypothesis.pairs.map((pp, i) => <option key={i} value={i}>{pp.yLabel} en función de {pp.xLabel}</option>)}
-          </select>
-        </div>
-        {trials.length === 0 ? <Notice kind="warn">Aún no hay ensayos en «{ds.label}». Vuelve al experimento y guarda al menos tres.</Notice> : (
-          <>
-            <details>
-              <summary>Elegir qué ensayos incluir en el análisis ({used.length} de {trials.length})</summary>
-              <div className="stack-sm">
-                {trials.map((t, i) => (
-                  <label key={t.id} className="check">
-                    <input type="checkbox" checked={!excluded.has(t.id)} onChange={(e) => setExcluded((ex) => { const n = new Set(ex); if (e.target.checked) n.delete(t.id); else n.add(t.id); return n; })} />
-                    Ensayo {i + 1}: {ds.columns.filter((c) => c.input).map((c) => `${c.label} ${cellText(t.values[c.key], c.decimals)}${c.unit ? ' ' + c.unit : ''}`).join(' · ')}
-                  </label>
-                ))}
-              </div>
-            </details>
-            {varied.length > 0 && (
-              <Notice kind="warn">
-                <strong>Control de variables:</strong> en los ensayos elegidos también cambió {varied.map((c) => c.label.toLowerCase()).join(', ')}. Para atribuir el efecto a {pair.xLabel}, deja fijas las demás variables o excluye los ensayos que no correspondan.
-              </Notice>
-            )}
-            <div className="readout" aria-live="polite">
-              <div className="item"><div className="k">Tendencia en tus datos</div><div className="v data">{analysis.trend ? TREND_LABEL[analysis.trend as Exclude<Trend, ''>] : 'no determinada'}</div></div>
-              <div className="item"><div className="k">Valores distintos de x</div><div className="v">{analysis.n}</div></div>
-              <div className="item"><div className="k">Correlación r</div><div className="v">{analysis.r === null ? '—' : fmt(analysis.r, 2)}</div></div>
-            </div>
-            <p className="small">{analysis.detail}</p>
-            {match !== null && (
-              <Notice kind={match ? 'ok' : 'info'}>
-                {match
-                  ? 'Tus datos muestran la tendencia que predijiste. Revisa si tu justificación («porque…») explica por qué ocurre.'
-                  : 'Tus datos no muestran la tendencia que predijiste. Esto no es un error: es información. Revisa el fundamento científico, piensa por qué el resultado fue distinto y si controlaste las demás variables.'}
-              </Notice>
-            )}
-            <p className="small muted">La tendencia se detecta con reglas explícitas (correlación y forma de la curva) y depende de los ensayos que incluyas. Úsala como apoyo, no como verdad absoluta.</p>
-          </>
-        )}
-        <div className="grid-2">
-          <div className="field">
-            <label htmlFor="cmp-verdict">Mis datos…</label>
-            <select id="cmp-verdict" value={s.comparison.verdict} onChange={(e) => api.update((x) => ({ ...x, comparison: { ...x.comparison, verdict: e.target.value as typeof s.comparison.verdict } }))}>
-              <option value="">Elegir…</option>
-              <option value="apoya">apoyan mi hipótesis</option>
-              <option value="refuta">no apoyan mi hipótesis</option>
-              <option value="no concluyente">no son suficientes para decidir</option>
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="cmp-just">Justificación con evidencia</label>
-            <textarea id="cmp-just" value={s.comparison.justification} onChange={(e) => api.update((x) => ({ ...x, comparison: { ...x.comparison, justification: e.target.value } }))} placeholder="Según los ensayos…" />
-          </div>
-        </div>
-      </section>
+      {p.relations && p.relations.length > 0 && <TrendAnalysis practice={p} relations={p.relations} api={api} />}
 
       <section className="card stack">
         <h3>Preguntas de interpretación</h3>

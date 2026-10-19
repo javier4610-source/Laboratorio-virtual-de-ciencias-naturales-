@@ -39,14 +39,11 @@ export const trabajo: PracticeDef = {
     'La potencia indica qué tan rápido se hace un trabajo: P = W/t, en vatios (1 W = 1 J/s). Si la fuerza es constante y el objeto avanza con rapidez v, P = F·v. Subir el mismo bloque en la mitad del tiempo requiere el mismo trabajo pero el doble de potencia. Un torno eléctrico de potencia fija sube más despacio una carga que exige más fuerza (v = P/F). Una persona que sube 3 m de escalera en unos 9 s desarrolla del orden de 150 a 200 W útiles; sus músculos gastan cerca de cuatro veces más, porque su eficiencia es de alrededor del 25 %.',
     'Los resultados son lecturas de instrumentos: el dinamómetro tiene resolución de 0,1 N, la regla de 1 mm y el cronómetro de 0,01 s, aunque el tiempo de reacción al pulsarlo es de unas décimas de segundo. Con el modo «Instrumento real» puedes repetir las mediciones y estimar la incertidumbre. El modelo supone velocidad constante, rozamiento cinético con μ constante y g = 9,8 m/s²; no incluye el arranque (rozamiento estático) ni la resistencia del aire.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la fuerza que marca el dinamómetro al hacer la rampa más empinada (misma masa y misma superficie), cómo cambia la eficiencia de la rampa cuando la superficie roza más (mayor μ) y cómo cambia la potencia cuando jalas el bloque más rápido.',
-    pairs: [
-      { x: 'angulo', y: 'fuerza', xLabel: 'el ángulo de la rampa', yLabel: 'la fuerza paralela que marca el dinamómetro', datasetId: 'rampa', allowVary: [] },
-      { x: 'mu', y: 'eficiencia', xLabel: 'el coeficiente de rozamiento μ de la superficie', yLabel: 'la eficiencia de la rampa', datasetId: 'rampa', allowVary: ['superficie'] },
-      { x: 'rapidez', y: 'potencia', xLabel: 'la rapidez con que se jala el bloque', yLabel: 'la potencia (trabajo ÷ tiempo)', datasetId: 'rampa', allowVary: [] },
-    ],
-  },
+  relations: [
+    { x: 'angulo', y: 'fuerza', xLabel: 'el ángulo de la rampa', yLabel: 'la fuerza paralela que marca el dinamómetro', datasetId: 'rampa', allowVary: [] },
+    { x: 'mu', y: 'eficiencia', xLabel: 'el coeficiente de rozamiento μ de la superficie', yLabel: 'la eficiencia de la rampa', datasetId: 'rampa', allowVary: ['superficie'] },
+    { x: 'rapidez', y: 'potencia', xLabel: 'la rapidez con que se jala el bloque', yLabel: 'la potencia (trabajo ÷ tiempo)', datasetId: 'rampa', allowVary: [] },
+  ],
   variables: {
     independent: ['Ángulo de la rampa', 'Superficie (coeficiente de rozamiento μ)', 'Masa del bloque con sus pesas', 'Rapidez con que se jala o potencia del torno'],
     dependent: ['Fuerza paralela a la rampa', 'Altura ganada y tiempo de subida', 'Trabajo de entrada, energía potencial, calor, eficiencia y potencia'],

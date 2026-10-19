@@ -261,7 +261,7 @@ const RAW_BANK: Question[] = [
     ],
     correct: 'b',
     explanation: 'Una correlación puede deberse a una variable común. Para establecer causalidad se necesitan experimentos controlados o análisis que consideren otras variables.',
-    review: 'Al comparar tus datos con tu hipótesis, distingue la tendencia observada de su explicación.',
+    review: 'Al analizar tus datos, distingue la tendencia observada de su explicación.',
   },
   {
     id: 'saber-ind-3', grade: 9, topic: 'Análisis de datos', competency: 'indagacion', component: 'cts', skill: 'Reconocer la importancia de la repetición', difficulty: 'media',

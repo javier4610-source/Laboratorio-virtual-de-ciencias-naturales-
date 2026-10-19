@@ -39,13 +39,10 @@ export const movimiento: PracticeDef = {
     'Toda medición tiene incertidumbre. Al cronometrar a mano, la persona tarda en reaccionar unos 0,2 s después de la señal de salida, y en la llegada a veces se adelanta porque ve venir al móvil. Por eso los tiempos de mano suelen ser un poco más cortos que los reales y cambian al repetirlos. Las fotopuertas, que se activan cuando el móvil corta un haz de luz, eliminan el tiempo de reacción.',
     'Para que una comparación sea justa hay que controlar variables: medir a todos los móviles en la misma distancia, con el mismo instrumento, y repetir varias veces cada medición para calcular un promedio.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el tiempo cuando aumentas la distancia entre el cono y la meta para un mismo móvil, y si la rapidez media cambia o se mantiene al alargar la distancia.',
-    pairs: [
-      { x: 'distancia', y: 'tiempo', xLabel: 'la distancia entre la salida y la meta', yLabel: 'el tiempo del recorrido', datasetId: 'tramos', allowVary: ['inicio', 'meta'] },
-      { x: 'distancia', y: 'rapidez', xLabel: 'la distancia entre la salida y la meta', yLabel: 'la rapidez media', datasetId: 'tramos', allowVary: ['inicio', 'meta'] },
-    ],
-  },
+  relations: [
+    { x: 'distancia', y: 'tiempo', xLabel: 'la distancia entre la salida y la meta', yLabel: 'el tiempo del recorrido', datasetId: 'tramos', allowVary: ['inicio', 'meta'] },
+    { x: 'distancia', y: 'rapidez', xLabel: 'la distancia entre la salida y la meta', yLabel: 'la rapidez media', datasetId: 'tramos', allowVary: ['inicio', 'meta'] },
+  ],
   variables: {
     independent: ['Distancia entre el cono de salida y la bandera de meta', 'Móvil', 'Tipo de recorrido (ida, o ida y vuelta)', 'Forma de cronometrar (fotopuertas, tu cronómetro o el de un compañero)'],
     dependent: ['Tiempo del recorrido', 'Rapidez media (m/s y km/h)', 'Desplazamiento'],

@@ -41,14 +41,11 @@ export const celulas: PracticeDef = {
     'Con mayor aumento la profundidad de campo es menor: a 40× hay que enfocar con mucho cuidado usando el tornillo micrométrico. Una imagen borrosa no permite ver detalles ni contar células.',
     'Las células vegetales tienen pared celular de celulosa y, si reciben luz, cloroplastos; las animales solo tienen membrana celular y suelen tener forma irregular; las de los hongos, como la levadura, tienen pared celular pero no cloroplastos. Las células de la epidermis del bulbo de cebolla son vegetales aunque no tengan cloroplastos, porque crecen bajo tierra, sin luz.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué le pasa al diámetro del campo visual, al número de estructuras que puedes ver y al número de células que caben en el diámetro cuando cambias a un objetivo de mayor aumento.',
-    pairs: [
-      { x: 'aumento', y: 'campo', xLabel: 'el aumento total', yLabel: 'el diámetro del campo visual', datasetId: 'observaciones', allowVary: ['objetivo'] },
-      { x: 'aumento', y: 'estructuras', xLabel: 'el aumento total', yLabel: 'el número de estructuras visibles', datasetId: 'observaciones', allowVary: ['objetivo'] },
-      { x: 'aumento', y: 'celulas', xLabel: 'el aumento total', yLabel: 'el número de células en el diámetro', datasetId: 'observaciones', allowVary: ['objetivo'] },
-    ],
-  },
+  relations: [
+    { x: 'aumento', y: 'campo', xLabel: 'el aumento total', yLabel: 'el diámetro del campo visual', datasetId: 'observaciones', allowVary: ['objetivo'] },
+    { x: 'aumento', y: 'estructuras', xLabel: 'el aumento total', yLabel: 'el número de estructuras visibles', datasetId: 'observaciones', allowVary: ['objetivo'] },
+    { x: 'aumento', y: 'celulas', xLabel: 'el aumento total', yLabel: 'el número de células en el diámetro', datasetId: 'observaciones', allowVary: ['objetivo'] },
+  ],
   variables: {
     independent: ['Aumento total (objetivo)', 'Tinción aplicada', 'Muestra observada'],
     dependent: ['Diámetro del campo visual', 'Células contadas en el diámetro', 'Tamaño estimado de la célula', 'Estructuras visibles'],

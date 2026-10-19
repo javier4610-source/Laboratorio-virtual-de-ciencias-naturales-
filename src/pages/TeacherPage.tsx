@@ -327,10 +327,10 @@ function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Te
   }, [reports]);
 
   const exportSummary = () => {
-    const rows: (string | number | null)[][] = [['Estudiante', 'Curso', 'Práctica', 'Grado', 'Progreso (%)', 'Ensayos', 'Respondidas', 'Aciertos 1.er intento', 'Porcentaje', 'Hipótesis', 'Conclusión', 'Fecha']];
+    const rows: (string | number | null)[][] = [['Estudiante', 'Curso', 'Práctica', 'Grado', 'Progreso (%)', 'Ensayos', 'Respondidas', 'Aciertos 1.er intento', 'Porcentaje', 'Conclusión', 'Fecha']];
     for (const r of reports) {
       const p = practiceById(r.practice.id)!;
-      rows.push([r.student.name, r.student.course, p.title, p.grade, progressPercent(p, r.session), r.session.trials.length, r.score.answered, r.score.firstTryCorrect, Math.round(r.score.percent), r.session.hypothesis.text, r.session.conclusion.claim, fmtDate(r.generatedAt)]);
+      rows.push([r.student.name, r.student.course, p.title, p.grade, progressPercent(p, r.session), r.session.trials.length, r.score.answered, r.score.firstTryCorrect, Math.round(r.score.percent), r.session.conclusion.claim, fmtDate(r.generatedAt)]);
     }
     const ok = downloadText('resumen-informes.csv', toCSV(rows), 'text/csv');
     setMsgs([ok ? 'Resumen exportado (CSV).' : 'Este entorno no permite descargas.']);
@@ -553,11 +553,6 @@ function ServerTab({ data, setData, onTrack }: { data: TeacherData; setData: (fn
 
 /* -------------------------------- Rúbrica -------------------------------- */
 export const RUBRIC: { criterion: string; levels: [string, string, string, string] }[] = [
-  { criterion: 'Formulación de hipótesis', levels: [
-    'Formula una hipótesis contrastable que relaciona variables con una justificación científica pertinente.',
-    'Formula una hipótesis contrastable con una justificación parcial.',
-    'Formula una predicción sin justificación o poco contrastable.',
-    'No formula hipótesis o esta no se relaciona con el experimento.'] },
   { criterion: 'Diseño y control de variables', levels: [
     'Identifica correctamente las variables y realiza ensayos cambiando una sola variable, con repeticiones o rangos adecuados.',
     'Identifica las variables y controla la mayoría de ellas en sus ensayos.',

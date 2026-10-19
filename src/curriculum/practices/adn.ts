@@ -31,13 +31,10 @@ export const adn: PracticeDef = {
     'En la traducción, los ribosomas leen el ARNm de tres en tres nucleótidos (codones). La traducción empieza en AUG (metionina) y termina en UAA, UAG o UGA. Varios codones codifican el mismo aminoácido: el código es redundante.',
     'Una mutación es un cambio en la secuencia del ADN. En la anemia falciforme, el cambio de A por T en el codón 7 del gen HBB (GAG → GTG) reemplaza ácido glutámico por valina en la β-globina.',
   ],
-  hypothesis: {
-    prompt: 'Predice: ¿qué tipo de mutación cambiará más la proteína, una sustitución o una deleción? ¿Importa dónde ocurra la deleción?',
-    pairs: [
-      { x: 'posicion', y: 'identidad', xLabel: 'la posición de una deleción dentro del gen', yLabel: 'el porcentaje de identidad de la proteína', datasetId: 'mutaciones', allowVary: ['cambio'] },
-      { x: 'posicion', y: 'aaCambiados', xLabel: 'la posición de una deleción dentro del gen', yLabel: 'el número de aminoácidos que cambian', datasetId: 'mutaciones', allowVary: ['cambio'] },
-    ],
-  },
+  relations: [
+    { x: 'posicion', y: 'identidad', xLabel: 'la posición de una deleción dentro del gen', yLabel: 'el porcentaje de identidad de la proteína', datasetId: 'mutaciones', allowVary: ['cambio'] },
+    { x: 'posicion', y: 'aaCambiados', xLabel: 'la posición de una deleción dentro del gen', yLabel: 'el número de aminoácidos que cambian', datasetId: 'mutaciones', allowVary: ['cambio'] },
+  ],
   variables: {
     independent: ['Tipo de mutación (sustitución, inserción, deleción)', 'Posición de la mutación', 'Base introducida'],
     dependent: ['Secuencia de aminoácidos', 'Número de aminoácidos distintos', 'Porcentaje de identidad', 'Longitud de la proteína'],

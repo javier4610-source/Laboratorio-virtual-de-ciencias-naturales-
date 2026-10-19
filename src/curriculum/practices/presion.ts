@@ -39,14 +39,11 @@ export const presion: PracticeDef = {
     'Como la presión aumenta con la profundidad, el agua sale con más rapidez por un agujero más bajo de una botella. Evangelista Torricelli mostró que esa rapidez es la misma que tendría el agua al caer libremente desde la superficie: v = √(2·g·h), con h la altura de agua sobre el agujero. Pero el chorro que sale más rápido no siempre llega más lejos: el alcance también depende de cuánto tiempo cae el chorro hasta la bandeja, que es mayor si el agujero está más alto. Con el nivel constante, el chorro que llega más lejos es el del agujero a la mitad de la altura del agua.',
     'Vivimos en el fondo de un «océano» de aire. Torricelli también inventó el barómetro: al nivel del mar el aire sostiene una columna de 760 mm de mercurio (o de 10,3 m de agua), es decir, 1013,25 hPa. Al subir hay menos aire encima y además ese aire es menos denso, así que la presión baja cada vez más despacio: según la atmósfera estándar internacional (que supone 15 °C al nivel del mar y una temperatura que baja 6,5 °C por kilómetro), en Apartadó (≈ 30 m) hay unos 1010 hPa; en Medellín (≈ 1495 m), unos 846 hPa, y en Bogotá (≈ 2640 m), unos 734 hPa, casi tres cuartas partes de la del mar. La fórmula isotérmica, p = p₀·e^(−z/H) con H ≈ 8,4 km, supone que el aire no se enfría al subir y da valores algo mayores. Como la atmósfera tropical es más cálida que la estándar, en Bogotá se miden en realidad cerca de 750 hPa.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la presión manométrica al bajar la sonda, cómo cambia al usar un líquido más denso a la misma profundidad, y cómo cambia la presión atmosférica que marca el barómetro al llevar el laboratorio a lugares más altos.',
-    pairs: [
-      { x: 'profundidad', y: 'pMan', xLabel: 'la profundidad de la membrana', yLabel: 'la presión manométrica', datasetId: 'presion', allowVary: [] },
-      { x: 'densidad', y: 'pMan', xLabel: 'la densidad del líquido', yLabel: 'la presión manométrica', datasetId: 'presion', allowVary: ['liquido'] },
-      { x: 'altitud', y: 'pAtm', xLabel: 'la altitud del lugar', yLabel: 'la presión atmosférica', datasetId: 'presion', allowVary: ['lugar'] },
-    ],
-  },
+  relations: [
+    { x: 'profundidad', y: 'pMan', xLabel: 'la profundidad de la membrana', yLabel: 'la presión manométrica', datasetId: 'presion', allowVary: [] },
+    { x: 'densidad', y: 'pMan', xLabel: 'la densidad del líquido', yLabel: 'la presión manométrica', datasetId: 'presion', allowVary: ['liquido'] },
+    { x: 'altitud', y: 'pAtm', xLabel: 'la altitud del lugar', yLabel: 'la presión atmosférica', datasetId: 'presion', allowVary: ['lugar'] },
+  ],
   variables: {
     independent: ['Profundidad de la membrana de la sonda (o altura del líquido en el vaso de Pascal)', 'Líquido (densidad)', 'Orientación de la membrana', 'Forma del vaso de Pascal', 'Lugar (altitud)', 'Altura de los agujeros y nivel del agua de la botella'],
     dependent: ['Desnivel del manómetro en U y presión manométrica', 'Presión atmosférica (barómetro) y presión absoluta', 'Alcance de los chorros y rapidez de salida calculada'],

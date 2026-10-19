@@ -40,14 +40,11 @@ export const interferencia: PracticeDef = {
     'Un agujero circular de diámetro D produce el patrón de Airy: un disco brillante rodeado de anillos, con el primer anillo oscuro donde D·sen θ = 1,22·λ. Este límite explica por qué ningún telescopio, microscopio o cámara puede separar detalles arbitrariamente pequeños (criterio de Rayleigh) y por qué los lectores de DVD y Blu-ray usan láseres de menor longitud de onda.',
     'Todo el modelo supone campo lejano (régimen de Fraunhofer): la pantalla debe estar lejos comparada con a²/λ. Los colores en pantalla se calculan con las funciones de igualación de color de la CIE: un láser de 650 nm se ve rojo, uno de 532 nm verde y uno de 405 nm violeta. Los colores de una pompa de jabón también son interferencia, entre la luz reflejada en sus dos caras.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la posición de un mismo orden de interferencia en la pantalla cuando alejas la pantalla, cuando cambias el color del láser y cuando acercas las rendijas entre sí.',
-    pairs: [
-      { x: 'L', y: 'y', xLabel: 'la distancia rendija–pantalla L', yLabel: 'la posición y del orden m', datasetId: 'franjas' },
-      { x: 'lambda', y: 'y', xLabel: 'la longitud de onda del láser', yLabel: 'la posición y del orden m', datasetId: 'franjas' },
-      { x: 'd', y: 'y', xLabel: 'la separación entre las rendijas d', yLabel: 'la posición y del orden m', datasetId: 'franjas' },
-    ],
-  },
+  relations: [
+    { x: 'L', y: 'y', xLabel: 'la distancia rendija–pantalla L', yLabel: 'la posición y del orden m', datasetId: 'franjas' },
+    { x: 'lambda', y: 'y', xLabel: 'la longitud de onda del láser', yLabel: 'la posición y del orden m', datasetId: 'franjas' },
+    { x: 'd', y: 'y', xLabel: 'la separación entre las rendijas d', yLabel: 'la posición y del orden m', datasetId: 'franjas' },
+  ],
   variables: {
     independent: ['Longitud de onda (color) de la fuente', 'Tipo de diapositiva y sus dimensiones (a, d, líneas/mm, D)', 'Distancia rendija–pantalla L'],
     dependent: ['Posición y de los máximos y mínimos', 'Separación entre franjas Δy', 'Intensidad relativa en el sensor', 'Longitud de onda o periodo calculados'],

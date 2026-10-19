@@ -42,6 +42,10 @@ for (const scheme of ['light', 'dark'] as const) {
         await page.getByRole('tab', { name: /Evaluación/ }).click();
         found.push(...(await audit(page, `${id}/evaluación`)));
       }
+      await page.goto('/#/practica/densidad');
+      await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
+      await page.getByRole('tab', { name: /Análisis y conclusión/ }).click();
+      found.push(...(await audit(page, 'densidad/análisis')));
       await page.goto('/#/practica/densidad/informe');
       found.push(...(await audit(page, 'informe')));
       expect(found, found.join('\n')).toEqual([]);

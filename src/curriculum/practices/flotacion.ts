@@ -39,14 +39,11 @@ export const flotacion: PracticeDef = {
     'La densidad que cuenta es la densidad media: masa total dividida entre el volumen exterior. Una bola de plastilina (1,6 g/cm³) se hunde, pero la misma plastilina moldeada como barco encierra aire y ocupa un volumen exterior mucho mayor, así que puede desalojar su propio peso de agua antes de que el agua pase el borde. Así flotan las lanchas de acero y fibra de vidrio del golfo de Urabá: su casco hueco desaloja toneladas de agua. Si se cargan demasiado, el agua llega a la borda, entra al casco y la lancha se hunde.',
     'La densidad del líquido también cambia el empuje. Al disolver sal en agua aumenta su densidad: un huevo fresco (≈ 1,07 g/cm³) se hunde en agua dulce y en agua de mar (≈ 1,02 g/cm³), pero flota si se disuelven unos 120 g de sal en un litro. Una lancha que pasa del golfo (agua salada) al río Atrato (agua dulce) se hunde unos centímetros más. El densímetro aprovecha esta idea: es un flotador de vidrio con un tallo graduado que se hunde más en los líquidos menos densos; la marca que queda a ras de la superficie da la densidad del líquido.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la lectura del dinamómetro mientras bajas el objeto dentro del líquido (y después de que queda totalmente sumergido), cómo se relaciona el empuje con el volumen de líquido desalojado y qué le pasa al empuje sobre el mismo objeto sumergido si el líquido es más denso.',
-    pairs: [
-      { x: 'descenso', y: 'aparente', xLabel: 'el descenso del objeto dentro del líquido', yLabel: 'el peso aparente (lectura del dinamómetro)', datasetId: 'empuje', allowVary: [] },
-      { x: 'vDesalojado', y: 'empuje', xLabel: 'el volumen de líquido desalojado', yLabel: 'el empuje', datasetId: 'empuje', allowVary: ['descenso', 'objeto'] },
-      { x: 'densimetro', y: 'empuje', xLabel: 'la densidad del líquido (densímetro)', yLabel: 'el empuje sobre el objeto sumergido', datasetId: 'empuje', allowVary: ['liquido', 'sal'] },
-    ],
-  },
+  relations: [
+    { x: 'descenso', y: 'aparente', xLabel: 'el descenso del objeto dentro del líquido', yLabel: 'el peso aparente (lectura del dinamómetro)', datasetId: 'empuje', allowVary: [] },
+    { x: 'vDesalojado', y: 'empuje', xLabel: 'el volumen de líquido desalojado', yLabel: 'el empuje', datasetId: 'empuje', allowVary: ['descenso', 'objeto'] },
+    { x: 'densimetro', y: 'empuje', xLabel: 'la densidad del líquido (densímetro)', yLabel: 'el empuje sobre el objeto sumergido', datasetId: 'empuje', allowVary: ['liquido', 'sal'] },
+  ],
   variables: {
     independent: ['Descenso del objeto dentro del líquido (altura del dinamómetro)', 'Objeto (material, forma y volumen)', 'Líquido y cantidad de sal disuelta', 'Montaje: vaso de rebose o vaso sobre la balanza'],
     dependent: ['Peso aparente (dinamómetro) y empuje P − P_ap', 'Masa del líquido desalojado (balanza) y su peso', 'Densidad del líquido (densímetro)', 'Flota o se hunde; fracción sumergida'],

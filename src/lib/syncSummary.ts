@@ -37,8 +37,6 @@ export function buildSyncSummary(p: PracticeDef, s: PracticeSession, activeMs: n
       v: pickMap(t.values, 24, (v) => (typeof v === 'number' ? (Number.isFinite(v) ? v : null) : typeof v === 'string' ? clip(v, 80) : null)),
       ...(t.note ? { n: clip(t.note, 300) } : {}),
     })),
-    hypothesis: { text: clip(s.hypothesis.text, 2000), trend: s.hypothesis.trend, pairIndex: Math.min(20, Math.max(0, s.hypothesis.pairIndex || 0)), ...(s.hypothesis.savedAt ? { savedAt: s.hypothesis.savedAt } : {}) },
-    comparison: { verdict: s.comparison.verdict, justification: clip(s.comparison.justification, 2000) },
     conclusion: { claim: clip(s.conclusion.claim, 2000), evidence: clip(s.conclusion.evidence, 2000), reasoning: clip(s.conclusion.reasoning, 2000) },
     interpretations: pickMap(s.interpretations, 12, (v) => (v.trim() ? clip(v, 2000) : null)),
     answers: pickMap(s.answers, 60, (a) => (OPTION_RE.test(a.chosen) ? {

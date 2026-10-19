@@ -39,14 +39,11 @@ export const proteinas: PracticeDef = {
     'Una predicción no es una medición. Un pLDDT muy bajo suele indicar una región desordenada o que no se pudo predecir, cuya forma no debe interpretarse; AlphaFold DB modela una cadena sola, sin ligandos (no trae el hemo ni iones), sin el complejo que la proteína forma en la célula y en una sola conformación. La proteína OCA2 (P protein, UniProt Q04671), relacionada con la pigmentación de ojos y piel, no tiene estructura experimental referenciada en UniProt: su modelo es una hipótesis útil, con unos 150 residuos iniciales de confianza muy baja.',
     'En el laboratorio todas las cifras salen del archivo: los conteos de cadenas, residuos y átomos y las distancias se validaron contra Biopython 1.85 con una tolerancia de 0,001 Å. Las distancias típicas son: un enlace covalente C–C ≈ 1,5 Å, un puente disulfuro S–S ≈ 2,0 Å, el enlace del hierro del hemo con su histidina proximal ≈ 2,1 Å y dos Cα consecutivos ≈ 3,8 Å.',
   ],
-  hypothesis: {
-    prompt: 'Predice: si dos residuos están cada vez más separados en la secuencia, ¿estarán cada vez más lejos en el espacio? Y si un residuo está lejos del centro de la proteína, ¿cómo cambiarán su factor B (estructura experimental) y su pLDDT (predicción)?',
-    pairs: [
-      { x: 'separacion', y: 'distancia', xLabel: 'la separación de los dos residuos en la secuencia', yLabel: 'la distancia entre sus átomos en el espacio', datasetId: 'distancias', allowVary: ['atomoA', 'atomoB'] },
-      { x: 'distanciaCentro', y: 'factorB', xLabel: 'la distancia del Cα del residuo al centroide de la proteína (estructura experimental)', yLabel: 'el factor B del Cα', datasetId: 'residuos', allowVary: ['cadena', 'posicion', 'residuo'] },
-      { x: 'distanciaCentro', y: 'plddt', xLabel: 'la distancia del Cα del residuo al centroide de la proteína (modelo de AlphaFold)', yLabel: 'el pLDDT del residuo', datasetId: 'residuos', allowVary: ['cadena', 'posicion', 'residuo'] },
-    ],
-  },
+  relations: [
+    { x: 'separacion', y: 'distancia', xLabel: 'la separación de los dos residuos en la secuencia', yLabel: 'la distancia entre sus átomos en el espacio', datasetId: 'distancias', allowVary: ['atomoA', 'atomoB'] },
+    { x: 'distanciaCentro', y: 'factorB', xLabel: 'la distancia del Cα del residuo al centroide de la proteína (estructura experimental)', yLabel: 'el factor B del Cα', datasetId: 'residuos', allowVary: ['cadena', 'posicion', 'residuo'] },
+    { x: 'distanciaCentro', y: 'plddt', xLabel: 'la distancia del Cα del residuo al centroide de la proteína (modelo de AlphaFold)', yLabel: 'el pLDDT del residuo', datasetId: 'residuos', allowVary: ['cadena', 'posicion', 'residuo'] },
+  ],
   variables: {
     independent: ['Estructura y su origen (experimental o predicha)', 'Átomos elegidos para medir', 'Residuo analizado (posición y distancia al centroide)'],
     dependent: ['Distancia entre átomos', 'Separación en la secuencia', 'Factor B o pLDDT del residuo', 'Estructura secundaria del residuo'],
@@ -54,7 +51,7 @@ export const proteinas: PracticeDef = {
   },
   procedure: [
     'Con la insulina (PDB 3I40) elegida, lee la tarjeta «¿De dónde sale esta estructura?»: anota el método, la resolución, la fecha y la licencia. Gira el modelo y cambia el estilo entre cinta, superficie, esferas y palitos.',
-    'Antes de medir, escribe tu hipótesis. Pulsa «Medir distancia» con los átomos iniciales A/CYS6/SG y A/CYS11/SG (un puente disulfuro) y guarda la distancia. Mide también A/CYS7/SG con B/CYS7/SG y explica qué une ese puente.',
+    'Pulsa «Medir distancia» con los átomos iniciales A/CYS6/SG y A/CYS11/SG (un puente disulfuro) y guarda la distancia. Mide también A/CYS7/SG con B/CYS7/SG y explica qué une ese puente.',
     'Elige la lisozima (2LZM). Mide distancias entre Cα con separaciones crecientes en la secuencia (1, 10, 50, 100 y la de los extremos 1 y 164) y guarda cada una. Grafica la distancia contra la separación.',
     'En la lisozima, colorea por «Factor B», analiza al menos ocho residuos del núcleo y de la superficie con «Analizar residuo» y guárdalos. Compara el factor B con la distancia al centroide.',
     'Elige el modelo de AlphaFold de OCA2 y colorea por «Confianza de la predicción (pLDDT)». Analiza y guarda residuos del extremo inicial (1–150) y del núcleo, lee la leyenda de pLDDT y el resumen de la PAE, y anota qué partes del modelo se pueden interpretar.',
@@ -63,7 +60,7 @@ export const proteinas: PracticeDef = {
   interpretation: [
     '¿Dos residuos muy separados en la secuencia están necesariamente lejos en el espacio? Usa tu gráfica de distancia contra separación y la lisozima (residuos 1 y 164) para responder.',
     '¿Por qué una estructura de 1,7 Å de resolución tiene residuos con factor B mucho mayor que otros? ¿Qué te dice eso sobre si la proteína es rígida?',
-    '¿Qué partes del modelo de OCA2 podrías usar para formular una hipótesis sobre su función y cuáles no? Justifica con el pLDDT, la PAE y lo que AlphaFold no modela.',
+    '¿Qué partes del modelo de OCA2 podrías usar para proponer ideas comprobables sobre su función y cuáles no? Justifica con el pLDDT, la PAE y lo que AlphaFold no modela.',
   ],
   assessment: [
     {

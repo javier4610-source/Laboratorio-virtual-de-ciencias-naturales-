@@ -261,8 +261,8 @@ RUBRICA = [
      'Completa parte de las actividades; pocos ensayos, datos sin unidades o gráfica incompleta.',
      'Deja la mayoría de las actividades sin desarrollar.'),
     ('Análisis y pensamiento crítico', '20 %',
-     'Contrasta la hipótesis con los datos, identifica tendencias y límites del modelo, y concluye con afirmación, evidencia y razonamiento.',
-     'Compara hipótesis y datos y concluye con evidencia, aunque el razonamiento es parcial.',
+     'Identifica la tendencia de los datos, revisa el control de variables y los límites del modelo, y concluye con afirmación, evidencia y razonamiento.',
+     'Identifica la tendencia de los datos y concluye con evidencia, aunque el razonamiento es parcial.',
      'Describe los datos, pero no los usa para justificar la conclusión.',
      'No analiza los datos o concluye sin relación con ellos.'),
     ('Participación y actitud', '15 %',
@@ -359,12 +359,8 @@ def guia_estudiante(p, est, ruta):
     h.append(Paragraph('<b>Materiales del laboratorio virtual:</b> ' + t('; '.join(p['materials'])) + '.', est['peq']))
     h.append(Spacer(1, 8))
 
-    # Actividad 1: hipótesis y variables
-    h += [CondPageBreak(6 * cm), barra_seccion('ACTIVIDAD 1 · ANTES DE EXPERIMENTAR: HIPÓTESIS Y VARIABLES', est), Spacer(1, 4),
-          Paragraph(t(p['hypothesis']['prompt']), est['normal']),
-          Paragraph('<b>Mi hipótesis</b> (completa): «Si aumenta ________________________, entonces ________________________ '
-                    '(aumenta / disminuye / no cambia), porque ________________________».', est['normal']),
-          Renglones(3), Spacer(1, 6),
+    # Actividad 1: variables (la etapa de hipótesis se retiró: ADR 0006)
+    h += [CondPageBreak(6 * cm), barra_seccion('ACTIVIDAD 1 · ANTES DE EXPERIMENTAR: VARIABLES', est), Spacer(1, 4),
           Paragraph('Clasifica estas variables en la tabla: ' + t(' · '.join(sorted(p['variables']['independent'] + p['variables']['dependent'] + p['variables']['controlled']))) + '.', est['normal']),
           Spacer(1, 3),
           tabla_variables(est),
@@ -394,8 +390,11 @@ def guia_estudiante(p, est, ruta):
     h += [CondPageBreak(6 * cm), barra_seccion('ACTIVIDAD 4 · ANÁLISIS Y CONCLUSIÓN', est), Spacer(1, 4)]
     for i, preg in enumerate(p['interpretation'], 1):
         h += [KeepTogether([Paragraph(f'{i}. {t(preg)}', est['pregunta']), Renglones(3)]), Spacer(1, 4)]
-    h += [KeepTogether([Paragraph(f'{len(p["interpretation"]) + 1}. ¿Tus datos apoyan o refutan tu hipótesis? Justifica con valores de tu tabla.', est['pregunta']), Renglones(3)]),
-          Spacer(1, 6)]
+    if p['relations']:
+        rel = p['relations'][0]
+        h += [KeepTogether([Paragraph(f'{len(p["interpretation"]) + 1}. ¿Qué tendencia muestran tus datos? Describe qué le pasa a {t(rel["yLabel"])} cuando aumenta {t(rel["xLabel"])}, '
+                                      'indica si las demás variables se mantuvieron fijas y justifica con valores de tu tabla.', est['pregunta']), Renglones(3)]),
+              Spacer(1, 6)]
     concl = [['Afirmación (respuesta a la pregunta problema)', ''], ['Evidencia (datos que la sostienen)', ''], ['Razonamiento (concepto científico que conecta)', '']]
     tc = tabla_simple(concl, [5.2 * cm, 12.6 * cm], est, cabecera=False)
     tc.setStyle(TableStyle([('TOPPADDING', (0, 0), (-1, -1), 20), ('BOTTOMPADDING', (0, 0), (-1, -1), 20), ('BACKGROUND', (0, 0), (0, -1), VERDE_SUAVE)]))
@@ -456,8 +455,11 @@ def clave_docente(p, est, ruta):
                 h.append(Paragraph(f'<b>{i}{o["id"].upper()}.</b> {t(o["feedback"])}', est['peq']))
     h.append(Spacer(1, 8))
 
-    h += [barra_seccion('RELACIONES QUE DEBEN APARECER EN LOS DATOS', est), Spacer(1, 4)]
-    h += [Paragraph(f'• {t(par["yLabel"]).capitalize()} en función de {t(par["xLabel"])}.', est['normal']) for par in p['hypothesis']['pairs']]
+    if p['relations']:
+        h += [barra_seccion('RELACIONES QUE DEBEN APARECER EN LOS DATOS', est), Spacer(1, 4)]
+        h += [Paragraph(f'• {t(par["yLabel"]).capitalize()} en función de {t(par["xLabel"])}.', est['normal']) for par in p['relations']]
+    else:
+        h += [barra_seccion('MODELO DE LA PRÁCTICA', est), Spacer(1, 4)]
     h += [Paragraph('Ecuaciones del modelo:', est['pregunta'])] + [Paragraph(f'• {t(e)}', est['normal']) for e in p['model']['equations']]
     h += [Paragraph('Supuestos:', est['pregunta'])] + [Paragraph(f'• {t(e)}', est['peq']) for e in p['model']['assumptions']]
     h += [Paragraph('Límites del modelo (para discutir con el grupo):', est['pregunta'])] + [Paragraph(f'• {t(e)}', est['peq']) for e in p['model']['limits']]

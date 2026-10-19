@@ -9,6 +9,7 @@ import { readFileSync } from 'node:fs';
 
 function sessionWithTrials(): PracticeSession {
   const s = emptySession('newton', 'libre');
+  // Sesión de una versión anterior: todavía trae la hipótesis (obsoleta desde el ADR 0006).
   s.hypothesis = { text: 'Si aumento la fuerza, la aceleración aumenta.', pairIndex: 0, trend: 'aumenta' };
   s.measurement = { mode: 'real', counts: { tiempo: 2 } };
   s.trials = [
@@ -65,11 +66,11 @@ describe('registro reproducible del experimento', () => {
   const s = sessionWithTrials();
   const rec = buildExperimentRecord(newton, s, Date.UTC(2026, 9, 18, 12));
 
-  it('contiene pregunta, hipótesis, modelo, versión, semilla y ensayos con estatus', () => {
+  it('contiene pregunta, modelo, versión, semilla y ensayos con estatus (sin hipótesis: ADR 0006)', () => {
     expect(rec.formato).toBe(RECORD_FORMAT);
     expect(rec.software.version).toMatch(/^\d+\.\d+\.\d+$/);
     expect(rec.pregunta).toBe(newton.problemQuestion);
-    expect(rec.hipotesis.texto).toMatch(/aceleración/);
+    expect(rec).not.toHaveProperty('hipotesis');
     expect(rec.modelo.ecuaciones.length).toBeGreaterThan(0);
     expect(rec.medicion).toMatchObject({ modo: 'real', lecturas: { tiempo: 2 } });
     expect(rec.medicion.semilla).toMatch(/Determinista/);
@@ -93,6 +94,12 @@ describe('registro reproducible del experimento', () => {
     expect(importExperimentRecord(roundTrip, session).added).toBe(0);
   });
 
+  it('sigue importando registros antiguos que traen la hipótesis (formato /1, campo opcional)', () => {
+    const old = { ...JSON.parse(JSON.stringify(rec)), hipotesis: { texto: 'Si aumento la fuerza, la aceleración aumenta.', tendencia: 'aumenta' } };
+    expect(validateExperimentRecord(old, 'newton')).toBeNull();
+    expect(importExperimentRecord(old, emptySession('newton')).added).toBe(2);
+  });
+
   it('rechaza archivos de otro formato, de otra práctica o con columnas o valores inválidos', () => {
     expect(validateExperimentRecord({ formato: 'otro' }, 'newton')).toMatch(/formato desconocido/);
     expect(validateExperimentRecord(rec, 'densidad')).toMatch(/otra práctica/);
@@ -102,9 +109,10 @@ describe('registro reproducible del experimento', () => {
     expect(validateExperimentRecord(badVal, 'newton')).toMatch(/Valor no válido/);
   });
 
-  it('coincide con el esquema documentado: mismas propiedades de primer nivel, todas obligatorias', () => {
+  it('coincide con el esquema documentado: mismas propiedades de primer nivel, todas obligatorias salvo la hipótesis obsoleta', () => {
     const schema = JSON.parse(readFileSync(new URL('../../docs/v2/esquema-registro-experimento.json', import.meta.url), 'utf8'));
-    expect(Object.keys(rec).sort()).toEqual(Object.keys(schema.properties).sort());
+    expect(schema.properties.hipotesis.deprecated).toBe(true);
+    expect(Object.keys(rec).sort()).toEqual(Object.keys(schema.properties).filter((k) => k !== 'hipotesis').sort());
     expect([...schema.required].sort()).toEqual(Object.keys(rec).sort());
     expect(schema.properties.formato.const).toBe(RECORD_FORMAT);
   });

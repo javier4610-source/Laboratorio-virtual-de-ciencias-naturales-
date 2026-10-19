@@ -39,14 +39,11 @@ export const conductores: PracticeDef = {
     'El agua pura conduce muy poco; el agua de la llave conduce algo porque lleva minerales disueltos, y el agua con sal conduce mucho más. Por eso el cuerpo húmedo y el agua de una inundación son peligrosos cerca de la electricidad: el agua con sales (como el sudor) ofrece un camino para la corriente.',
     'El grafito de la mina de lápiz es un caso especial: no es metal, pero sus capas de carbono tienen electrones que se mueven con facilidad. Conduce bien, aunque menos que los metales. Los semiconductores (como el silicio de los paneles solares) tienen una conductividad intermedia que cambia mucho con la temperatura y la luz.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la corriente al usar materiales de mayor resistividad (con el mismo voltaje) y al duplicar el voltaje (con la misma muestra).',
-    pairs: [
-      { x: 'log10Resistividad', y: 'corriente', xLabel: 'la resistividad del material (log₁₀ ρ)', yLabel: 'la corriente', datasetId: 'pruebas', allowVary: ['muestra'] },
-      { x: 'voltaje', y: 'corriente', xLabel: 'el voltaje de la fuente', yLabel: 'la corriente', datasetId: 'pruebas', allowVary: [] },
-      { x: 'log10Resistividad', y: 'brillo', xLabel: 'la resistividad del material (log₁₀ ρ)', yLabel: 'el brillo del bombillo', datasetId: 'pruebas', allowVary: ['muestra'] },
-    ],
-  },
+  relations: [
+    { x: 'log10Resistividad', y: 'corriente', xLabel: 'la resistividad del material (log₁₀ ρ)', yLabel: 'la corriente', datasetId: 'pruebas', allowVary: ['muestra'] },
+    { x: 'voltaje', y: 'corriente', xLabel: 'el voltaje de la fuente', yLabel: 'la corriente', datasetId: 'pruebas', allowVary: [] },
+    { x: 'log10Resistividad', y: 'brillo', xLabel: 'la resistividad del material (log₁₀ ρ)', yLabel: 'el brillo del bombillo', datasetId: 'pruebas', allowVary: ['muestra'] },
+  ],
   variables: {
     independent: ['Material de la muestra (resistividad)', 'Voltaje de la fuente (1 o 2 pilas)'],
     dependent: ['Corriente medida por el amperímetro', 'Brillo del bombillo'],

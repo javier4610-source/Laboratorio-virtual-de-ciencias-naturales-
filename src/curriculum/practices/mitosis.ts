@@ -31,13 +31,10 @@ export const mitosis: PracticeDef = {
     'Si las células se dividen de forma asincrónica, la fracción que vemos en cada fase es aproximadamente proporcional a lo que dura esa fase. El índice mitótico es el porcentaje de células en mitosis.',
     'La colchicina impide que se forme el huso mitótico: las células no pueden pasar de metafase y se acumulan en ella.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué pasará con el porcentaje de células en metafase si las raíces se tratan durante más tiempo con colchicina.',
-    pairs: [
-      { x: 'colchicina', y: 'metafasePct', xLabel: 'el tiempo con colchicina', yLabel: 'el porcentaje de células en metafase', datasetId: 'conteos' },
-      { x: 'total', y: 'indice', xLabel: 'el número de células contadas', yLabel: 'el índice mitótico calculado', datasetId: 'conteos' },
-    ],
-  },
+  relations: [
+    { x: 'colchicina', y: 'metafasePct', xLabel: 'el tiempo con colchicina', yLabel: 'el porcentaje de células en metafase', datasetId: 'conteos' },
+    { x: 'total', y: 'indice', xLabel: 'el número de células contadas', yLabel: 'el índice mitótico calculado', datasetId: 'conteos' },
+  ],
   variables: {
     independent: ['Tejido observado (meristemo o zona de elongación)', 'Tiempo de exposición a colchicina', 'Número de células contadas'],
     dependent: ['Índice mitótico', 'Número de células en cada fase', 'Duración estimada de cada fase'],

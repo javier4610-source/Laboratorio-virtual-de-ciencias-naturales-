@@ -4,7 +4,7 @@ import { practiceProvenance, STATUS_LABEL, trialStatusText } from './provenance'
 
 /**
  * Registro reproducible de un experimento (programa v2, sección 12; ADR 0003). Formato abierto en JSON, sin datos
- * personales: identifica la práctica, la pregunta, la hipótesis, el modelo con su versión, el modo de medición y su
+ * personales: identifica la práctica, la pregunta, el modelo con su versión, el modo de medición y su
  * semilla, y cada ensayo con su estatus. Se puede importar en otro equipo para continuar, duplicar o comparar.
  * Esquema documentado en docs/v2/esquema-registro-experimento.json.
  */
@@ -21,7 +21,11 @@ export interface ExperimentRecord {
   software: { nombre: string; version: string };
   practica: { id: string; titulo: string; grado: number; area: string };
   pregunta: string;
-  hipotesis: { texto: string; tendencia: string };
+  /**
+   * @deprecated Opcional desde el retiro de la etapa de hipótesis (ADR 0006): los registros nuevos no la incluyen;
+   * los registros antiguos que la traen se siguen importando (el formato sigue siendo `/1`, el campo se ignora).
+   */
+  hipotesis?: { texto: string; tendencia: string };
   modelo: { nombre: string; ecuaciones: string[]; supuestos: string[]; limites: string[]; referencias: string[] };
   procedencia: { datos: string; escena: string; detalle: string };
   medicion: { modo: 'ideal' | 'real'; semilla: string; lecturas: Record<string, number> };
@@ -56,7 +60,6 @@ export function buildExperimentRecord(p: PracticeDef, s: PracticeSession, now = 
     software: { nombre: 'Laboratorio Virtual de Ciencias Naturales', version: __APP_VERSION__ },
     practica: { id: p.id, titulo: p.title, grado: p.grade, area: p.area },
     pregunta: p.problemQuestion,
-    hipotesis: { texto: s.hypothesis.text, tendencia: s.hypothesis.trend },
     modelo: { nombre: p.model.name, ecuaciones: p.model.equations, supuestos: p.model.assumptions, limites: p.model.limits, referencias: p.references },
     procedencia: { datos: STATUS_LABEL[prov.data], escena: STATUS_LABEL[prov.scene], detalle: prov.detail },
     medicion: { modo: mode, semilla: SEED_RULE, lecturas: { ...(s.measurement?.counts ?? {}) } },

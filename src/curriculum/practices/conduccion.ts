@@ -39,14 +39,11 @@ export const conduccion: PracticeDef = {
     'Cuando tocamos un objeto, la piel no mide su temperatura sino qué tan rápido pierde o gana calor. En el primer instante, la piel y el objeto quedan en contacto a una temperatura intermedia, T_c = (e_piel·T_piel + e_obj·T_obj)/(e_piel + e_obj), donde e = √(k·ρ·c) es la efusividad térmica. El cobre tiene una efusividad unas 30 veces mayor que la piel: la superficie de contacto queda casi a la temperatura del metal (28 °C), y lo sentimos frío. La madera tiene una efusividad menor que la piel: el contacto queda cerca de 32 °C y la sentimos tibia, aunque las dos estén a 28 °C.',
     'El icopor es un buen aislante porque es más del 95 % aire atrapado en pequeñas burbujas. El aire quieto conduce aún peor que el icopor, pero el aire libre se mueve (convección) y así transporta mucho calor; las burbujas del icopor impiden ese movimiento. Lo mismo hacen la lana, las plumas, la ropa holgada y las neveras de icopor que se usan en Urabá para llevar pescado, bocachico o jugo frío.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la distancia hasta la que cae la cera al usar materiales de mayor conductividad, cómo cambia el tiempo de caída de la primera tachuela (a 3 cm) al aumentar la difusividad del material, y cómo cambia esa distancia al subir la temperatura del baño.',
-    pairs: [
-      { x: 'k', y: 'xFrente', xLabel: 'la conductividad térmica del material de la varilla', yLabel: 'la distancia de la tachuela más lejana que cae en 30 min', datasetId: 'conduccion', allowVary: ['material', 'alfa'] },
-      { x: 'alfa', y: 'tCaida', xLabel: 'la difusividad térmica del material', yLabel: 'el tiempo de caída de la tachuela a 3 cm', datasetId: 'conduccion', allowVary: ['material', 'k'] },
-      { x: 'tBano', y: 'xFrente', xLabel: 'la temperatura del baño', yLabel: 'la distancia de la tachuela más lejana que cae en 30 min', datasetId: 'conduccion', allowVary: [] },
-    ],
-  },
+  relations: [
+    { x: 'k', y: 'xFrente', xLabel: 'la conductividad térmica del material de la varilla', yLabel: 'la distancia de la tachuela más lejana que cae en 30 min', datasetId: 'conduccion', allowVary: ['material', 'alfa'] },
+    { x: 'alfa', y: 'tCaida', xLabel: 'la difusividad térmica del material', yLabel: 'el tiempo de caída de la tachuela a 3 cm', datasetId: 'conduccion', allowVary: ['material', 'k'] },
+    { x: 'tBano', y: 'xFrente', xLabel: 'la temperatura del baño', yLabel: 'la distancia de la tachuela más lejana que cae en 30 min', datasetId: 'conduccion', allowVary: [] },
+  ],
   variables: {
     independent: ['Material de la varilla (cobre, aluminio, latón, hierro, acero inoxidable, vidrio o madera)', 'Temperatura del baño (perilla del mechero)', 'Recubrimiento: varilla desnuda (aire) o con funda de icopor', 'Posición de los termopares a lo largo de la varilla'],
     dependent: ['Tiempo de caída de cada tachuela y distancia de la más lejana que cae', 'Temperaturas de los termopares a los 30 min y perfil T(x)', 'Gradiente de temperatura y flujo de calor estimado con la ley de Fourier', 'Temperatura de contacto piel–objeto (actividad de tacto)'],

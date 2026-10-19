@@ -31,14 +31,11 @@ export const newton: PracticeDef = {
     'La fricción se opone al deslizamiento. La fricción estática impide que un objeto empiece a moverse hasta un valor máximo μs·N; en movimiento actúa la fricción cinética μk·N, que suele ser menor.',
     'Si el carrito parte del reposo con aceleración constante, la distancia es d = ½·a·t², de modo que a = 2d/t².',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la aceleración al aumentar la fuerza (con la misma masa) y al aumentar la masa (con la misma fuerza).',
-    pairs: [
-      { x: 'fuerza', y: 'aMedida', xLabel: 'la fuerza aplicada', yLabel: 'la aceleración', datasetId: 'carrito' },
-      { x: 'masa', y: 'aMedida', xLabel: 'la masa del carrito', yLabel: 'la aceleración', datasetId: 'carrito', allowVary: [] },
-      { x: 'inversoMasa', y: 'aMedida', xLabel: 'el inverso de la masa (1/m)', yLabel: 'la aceleración', datasetId: 'carrito', allowVary: ['masa'] },
-    ],
-  },
+  relations: [
+    { x: 'fuerza', y: 'aMedida', xLabel: 'la fuerza aplicada', yLabel: 'la aceleración', datasetId: 'carrito' },
+    { x: 'masa', y: 'aMedida', xLabel: 'la masa del carrito', yLabel: 'la aceleración', datasetId: 'carrito', allowVary: [] },
+    { x: 'inversoMasa', y: 'aMedida', xLabel: 'el inverso de la masa (1/m)', yLabel: 'la aceleración', datasetId: 'carrito', allowVary: ['masa'] },
+  ],
   variables: {
     independent: ['Fuerza aplicada', 'Masa del carrito', 'Superficie'],
     dependent: ['Tiempo en recorrer 1,00 m', 'Aceleración medida'],

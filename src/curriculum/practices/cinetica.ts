@@ -40,14 +40,11 @@ export const cinetica: PracticeDef = {
     'Un catalizador ofrece un camino de reacción con menor energía de activación y no se consume. El dióxido de manganeso y la catalasa (una enzima presente en la papa y en el hígado) descomponen el agua oxigenada: 2 H₂O₂ → 2 H₂O + O₂. Como toda proteína, la catalasa se desnaturaliza al calentarla demasiado y deja de funcionar.',
     'La velocidad no es lo mismo que la cantidad de producto. El volumen total de gas lo fija el reactivo limitante: 0,40 g de CaCO₃ (4,0 × 10⁻³ mol) producen como máximo 4,0 × 10⁻³ mol de CO₂, unos 98 mL a 25 °C y 101,3 kPa, sin importar si el mármol está en trozos o en polvo.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la velocidad inicial (mL de gas por segundo) al aumentar la concentración del ácido, la temperatura y la superficie de contacto del mármol.',
-    pairs: [
-      { x: 'concentracion', y: 'velocidad', xLabel: 'la concentración del reactivo', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
-      { x: 'temperatura', y: 'velocidad', xLabel: 'la temperatura', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
-      { x: 'area', y: 'velocidad', xLabel: 'la superficie de contacto (factor de área)', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
-    ],
-  },
+  relations: [
+    { x: 'concentracion', y: 'velocidad', xLabel: 'la concentración del reactivo', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
+    { x: 'temperatura', y: 'velocidad', xLabel: 'la temperatura', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
+    { x: 'area', y: 'velocidad', xLabel: 'la superficie de contacto (factor de área)', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
+  ],
   variables: {
     independent: ['Concentración de HCl o de H₂O₂', 'Temperatura del baño', 'Tamaño de partícula del mármol', 'Catalizador'],
     dependent: ['Volumen de gas a 30 s y a 180 s', 'Velocidad inicial (mL/s)', 'Tiempo para recoger 20 mL'],

@@ -31,13 +31,10 @@ export const popgen: PracticeDef = {
     'Si el heterocigoto tiene más eficacia que ambos homocigotos, se mantiene un equilibrio con los dos alelos. Así ocurre con el alelo de la hemoglobina S en zonas con malaria: los heterocigotos resisten mejor la malaria.',
     'La deriva génica es el cambio aleatorio de las frecuencias por el muestreo de gametos de una generación a otra; es más fuerte en poblaciones pequeñas y puede fijar o eliminar alelos.',
   ],
-  hypothesis: {
-    prompt: 'Predice: sin selección, ¿qué ocurre con la variación genética (heterocigosidad) en poblaciones pequeñas comparadas con grandes?',
-    pairs: [
-      { x: 'n', y: 'heterocigosidad', xLabel: 'el tamaño de la población', yLabel: 'la heterocigosidad final', datasetId: 'simulaciones' },
-      { x: 'waa', y: 'pFinal', xLabel: 'la eficacia del genotipo aa', yLabel: 'la frecuencia final del alelo A', datasetId: 'simulaciones' },
-    ],
-  },
+  relations: [
+    { x: 'n', y: 'heterocigosidad', xLabel: 'el tamaño de la población', yLabel: 'la heterocigosidad final', datasetId: 'simulaciones' },
+    { x: 'waa', y: 'pFinal', xLabel: 'la eficacia del genotipo aa', yLabel: 'la frecuencia final del alelo A', datasetId: 'simulaciones' },
+  ],
   variables: {
     independent: ['Tamaño de la población (N)', 'Eficacia de cada genotipo', 'Mutación', 'Migración', 'Frecuencia inicial'],
     dependent: ['Frecuencia del alelo A en el tiempo', 'Heterocigosidad', 'Número de réplicas con un alelo fijado o perdido'],

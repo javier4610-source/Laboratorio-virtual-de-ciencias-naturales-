@@ -30,13 +30,10 @@ export const densidad: PracticeDef = {
     'El volumen de un cuerpo regular se calcula con su forma (un cubo: V = a³). El de cualquier sólido se mide por desplazamiento: al sumergirlo, el nivel del agua sube un volumen igual al de la parte sumergida (principio de Arquímedes).',
     'Un objeto menos denso que el agua flota. Para medir su volumen completo hay que hundirlo totalmente, por ejemplo con un alfiler.',
   ],
-  hypothesis: {
-    prompt: 'Antes de medir, escribe qué crees que pasará. Usa la forma "Si…, entonces…, porque…".',
-    pairs: [
-      { x: 'vdesp', y: 'masa', xLabel: 'el volumen de la muestra (mismo material)', yLabel: 'la masa', datasetId: 'medidas', allowVary: ['lado'] },
-      { x: 'vdesp', y: 'densidad', xLabel: 'el volumen de la muestra (mismo material)', yLabel: 'la densidad', datasetId: 'medidas', allowVary: ['lado'] },
-    ],
-  },
+  relations: [
+    { x: 'vdesp', y: 'masa', xLabel: 'el volumen de la muestra (mismo material)', yLabel: 'la masa', datasetId: 'medidas', allowVary: ['lado'] },
+    { x: 'vdesp', y: 'densidad', xLabel: 'el volumen de la muestra (mismo material)', yLabel: 'la densidad', datasetId: 'medidas', allowVary: ['lado'] },
+  ],
   variables: {
     independent: ['Tamaño de la muestra (arista del cubo)', 'Material de la muestra'],
     dependent: ['Masa', 'Volumen desplazado', 'Densidad calculada'],

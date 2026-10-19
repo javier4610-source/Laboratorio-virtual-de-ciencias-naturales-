@@ -191,7 +191,7 @@ export function startClassroomSync() {
 /* ------------------------------------------------------------------ inscripción */
 
 const isEmptySession = (s: PracticeSession | null) =>
-  !s || (s.trials.length === 0 && !s.hypothesis.savedAt && Object.keys(s.answers).length === 0 && !s.conclusion.claim.trim());
+  !s || (s.trials.length === 0 && !s.hypothesis?.savedAt && Object.keys(s.answers).length === 0 && !s.conclusion.claim.trim());
 
 /** Reconstruye una sesión local a partir del resumen guardado en el servidor (otro equipo). */
 export function sessionFromSummary(practiceId: string, x: SyncSummary): PracticeSession {
@@ -199,10 +199,8 @@ export function sessionFromSummary(practiceId: string, x: SyncSummary): Practice
   for (const f of x.fits) analysis[f.d] = { x: f.x, y: f.y, group: '', model: f.model, ...(f.xT ? { xT: f.xT } : {}), ...(f.yT ? { yT: f.yT } : {}) };
   return {
     practiceId, mode: x.mode,
-    hypothesis: { text: x.hypothesis.text, pairIndex: x.hypothesis.pairIndex, trend: x.hypothesis.trend as PracticeSession['hypothesis']['trend'], ...(x.hypothesis.savedAt ? { savedAt: x.hypothesis.savedAt } : {}) },
     trials: x.trials.map((t, i) => ({ id: t.id || `r${i}-${t.t}`, datasetId: t.d, createdAt: t.t, values: t.v, ...(t.n ? { note: t.n } : {}) })),
     stepsDone: x.stepsDone, interpretations: x.interpretations,
-    comparison: { verdict: x.comparison.verdict as PracticeSession['comparison']['verdict'], justification: x.comparison.justification },
     conclusion: x.conclusion, application: '', answers: x.answers, visited: x.visited,
     ...(Object.keys(analysis).length ? { analysis } : {}),
     startedAt: x.trials[0]?.t ?? x.version, updatedAt: x.version,

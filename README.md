@@ -1,6 +1,6 @@
 # Laboratorio Virtual de Ciencias Naturales
 
-Aplicación web interactiva para estudiantes colombianos de **6.º a 11.º**. Cada práctica permite formular hipótesis, cambiar variables, ejecutar ensayos, registrar datos, graficarlos, compararlos con la hipótesis, concluir con evidencia y responder preguntas por competencias con retroalimentación formativa.
+Aplicación web interactiva para estudiantes colombianos de **6.º a 11.º**. Cada práctica permite preparar el experimento, cambiar variables, ejecutar ensayos, registrar datos, graficarlos, analizar su tendencia, concluir con evidencia y responder preguntas por competencias con retroalimentación formativa.
 
 Los resultados se **calculan con modelos científicos explícitos** (ecuaciones y reglas documentadas, con supuestos y límites). No hay resultados aleatorios sin justificación: el único azar es el de la segregación genética en la práctica de Mendel, con semilla reproducible.
 
@@ -69,7 +69,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 Todas las prácticas de la malla propuesta están implementadas.
 
-Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, hipótesis, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, preguntas de interpretación, comparación con la hipótesis, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
+Cada práctica sigue la misma estructura: título, grado y área, tema, pregunta problema, objetivos, competencias, materiales, fundamento, variables (con actividad de clasificación), procedimiento, área interactiva, controles, resultados en tiempo real, tabla de datos, gráficas configurables, análisis de la tendencia con control de variables, preguntas de interpretación, conclusión (afirmación-evidencia-razonamiento), evaluación por competencias, aplicación cotidiana, preguntas de transferencia tipo Saber 11 y ficha del modelo con referencias.
 
 ## Ejecutar
 
@@ -144,7 +144,7 @@ Módulos del enunciado → código: A navegación (`App.tsx`, `lib/router.ts`), 
 3. Define las columnas de la tabla en `src/labs/datasets.ts` (marca con `input: true` las variables que controla el estudiante).
 4. Crea el componente `src/labs/MiLab.tsx` (recibe `api` y llama `api.addTrial(datasetId, valores)`), y regístralo en `src/labs/registry.ts`.
 5. Escribe el contenido en `src/curriculum/practices/mi-practica.ts` (estructura `PracticeDef`), agrégalo a `PRACTICES` en `src/curriculum/index.ts` y a `LOADERS` en `src/curriculum/loader.ts`, y regenera el catálogo liviano con `node scripts/gen-catalog.mjs`.
-6. Las pruebas de `tests/unit/curriculum.test.ts` comprobarán que la práctica tiene todas las secciones y que sus hipótesis apuntan a columnas existentes.
+6. Si la práctica tiene variables numéricas para analizar, decláralas en `relations` (variable x, variable y y conjunto de datos); es opcional. Las pruebas de `tests/unit/curriculum.test.ts` comprobarán que la práctica tiene todas las secciones y que sus relaciones apuntan a columnas numéricas existentes.
 
 ## Almacenamiento, panel docente y servidor opcional
 
@@ -157,7 +157,7 @@ Módulos del enunciado → código: A navegación (`App.tsx`, `lib/router.ts`), 
 |---|---|---|---|
 | Sin servidor | Navegador del estudiante (`localStorage`) | Informes que importa en **Informes** | Archivo `.json` o texto copiado |
 | Servidor · informe | Servidor del colegio (SQLite) | Informes en **Servidor → Traer informes** | El estudiante pulsa «Enviar informe» con el código del curso |
-| Servidor · seguimiento | Servidor del colegio (SQLite) + cola local sin conexión | Inscritos, activos hoy y en 7 días, ingresos por día, mapa de calor estudiantes × prácticas, detalle por estudiante (etapas, datos, hipótesis, conclusión, respuestas, línea de tiempo), análisis por pregunta y competencia, alertas y CSV | Automático: resumen de cada práctica con antirrebote; si no hay red, se envía al volver |
+| Servidor · seguimiento | Servidor del colegio (SQLite) + cola local sin conexión | Inscritos, activos hoy y en 7 días, ingresos por día, mapa de calor estudiantes × prácticas, detalle por estudiante (etapas, datos, conclusión, respuestas, línea de tiempo), análisis por pregunta y competencia, alertas y CSV | Automático: resumen de cada práctica con antirrebote; si no hay red, se envía al volver |
 
 - **Validación curricular:** pestaña del panel docente para registrar, por práctica, el DBA y el estándar verificados en los documentos oficiales, exportable para el equipo de área.
 - **Usabilidad:** cada práctica incluye una encuesta breve de opinión que viaja en el informe; el protocolo para pruebas con estudiantes está en [docs/PROTOCOLO-USABILIDAD.md](docs/PROTOCOLO-USABILIDAD.md).

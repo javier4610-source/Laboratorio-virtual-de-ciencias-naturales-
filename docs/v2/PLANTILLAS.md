@@ -42,11 +42,10 @@ Cada práctica o módulo nuevo se describe con esta plantilla antes de programar
 | Etapa | Qué hace el estudiante | Apoyo existente |
 |---|---|---|
 | Pregunta | Lee la pregunta problema | `problemQuestion` |
-| Hipótesis | Predice una relación entre dos variables **antes** de medir | `hypothesis` (`HypothesisFrame`); obligatoria en «Práctica guiada» |
 | Diseño | Clasifica variables independiente, dependiente y controladas; planea los ensayos | `variables`, actividad de clasificación; `procedure` |
 | Recolección | Ejecuta ensayos y los guarda en el cuaderno | Área interactiva, `api.addTrial` |
-| Análisis | Grafica, linealiza, ajusta un modelo, calcula incertidumbre | Cuaderno de datos (`DataPanel`), `interpretation` |
-| Conclusión | Afirmación, evidencia y razonamiento; contraste con la hipótesis | `conclusionGuide` |
+| Análisis | Grafica, linealiza, ajusta un modelo, calcula incertidumbre; revisa la tendencia detectada y el control de variables | Cuaderno de datos (`DataPanel`), `relations` (`RelationPair`, opcional), `interpretation` |
+| Conclusión | Afirmación, evidencia y razonamiento | `conclusionGuide` |
 | Comunicación | Informe para el docente; registro de experimento exportable (ADR 0003) | `src/lib/report.ts` |
 
 ### A.4 Tres niveles de mediación (guiado, semiguiado, abierto)
@@ -55,9 +54,9 @@ Correspondencia con los modos que ya tiene la aplicación (`Mode = 'guiada' | 'l
 
 | Nivel del prompt | Modo actual | Correspondencia | Qué falta |
 |---|---|---|---|
-| Guiado | **Práctica guiada** | Completa: etapas en orden, hipótesis obligatoria antes de experimentar y ensayos antes de analizar | — |
-| Semiguiado | No existe | — | Un modo intermedio: etapas abiertas, pero con hipótesis obligatoria y pistas; o un procedimiento con pasos que el estudiante completa. **Por diseñar** |
-| Abierto | **Exploración libre** (parcial) | Todas las etapas abiertas, sin hipótesis obligatoria, sin calificación | Es exploración, no indagación abierta: el estudiante no formula su propia pregunta ni diseña el experimento. La práctica `reto` sí lo hace (diseño con niveles, réplicas, presupuesto y semilla) y es el modelo a seguir |
+| Guiado | **Práctica guiada** | Completa: etapas en orden y ensayos antes de analizar | — |
+| Semiguiado | No existe | — | Un modo intermedio: etapas abiertas, pero con pistas; o un procedimiento con pasos que el estudiante completa. **Por diseñar** |
+| Abierto | **Exploración libre** (parcial) | Todas las etapas abiertas, sin calificación | Es exploración, no indagación abierta: el estudiante no formula su propia pregunta ni diseña el experimento. La práctica `reto` sí lo hace (diseño con niveles, réplicas, presupuesto y semilla) y es el modelo a seguir |
 | — | **Evaluación** | No es un nivel de mediación: cambia la forma de calificar (cuenta solo el primer intento de cada pregunta) | Se mantiene como modo aparte |
 
 ### A.5 Tres capas de profundidad (básica, media, avanzada)
@@ -221,6 +220,6 @@ una salida observable calculada por el modelo (Z). Si no se puede, se descarta.
 
 | Concepción | Dónde |
 |---|---|
-| «Una esfera más pesada llega más rápido» | Hipótesis masa → rapidez; opción `d` de `ene-1`; opción `b` de `ene-2` |
+| «Una esfera más pesada llega más rápido» | Relación masa → rapidez en el análisis; opción `d` de `ene-1`; opción `b` de `ene-2` |
 | «La rapidez es proporcional a la altura» | Opción `a` de `ene-3` (v² ∝ h₀, no v ∝ h₀) |
 | «La energía se destruye por la fricción» | Opción `a` de `ene-4` |

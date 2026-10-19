@@ -39,14 +39,11 @@ export const ecosistema: PracticeDef = {
     'Un frasco sellado es un modelo pequeño y frágil. Si se deja a oscuras, nadie produce oxígeno y en pocos días mueren los animales. Si se agregan muchos animales o demasiado alimento, la respiración y la descomposición gastan más oxígeno del que producen las plantas. El exceso de alimento, además, libera nutrientes que hacen crecer muchísimas algas: el agua se pone verde, de día hay oxígeno de sobra, pero de madrugada falta. Esto se llama eutrofización y es lo que ocurre cuando llegan aguas residuales a las ciénagas.',
     'En el golfo de Urabá, los manglares (mangle rojo, negro y blanco) y las ciénagas del delta del Atrato funcionan igual pero a gran escala: las hojas del mangle caen al agua, los hongos y bacterias las descomponen y los detritos alimentan a cangrejos, camarones y peces jóvenes, que luego comen las garzas, los martín pescadores y las personas. Allí la marea y los ríos renuevan el agua y el aire, algo que el frasco no tiene. Cuando se tala el manglar o llegan vertimientos con mucha materia orgánica, el oxígeno disuelto de madrugada puede caer tanto que mueren los peces.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el oxígeno disuelto al amanecer del día 7 si aumentas las horas de luz, si cierras el frasco con más caracoles y si agregas más alimento cada día.',
-    pairs: [
-      { x: 'horasLuz', y: 'od', xLabel: 'las horas de luz por día', yLabel: 'el oxígeno disuelto', datasetId: 'frasco', allowVary: [] },
-      { x: 'caracoles0', y: 'od', xLabel: 'el número de caracoles al cerrar el frasco', yLabel: 'el oxígeno disuelto', datasetId: 'frasco', allowVary: [] },
-      { x: 'alimentoMg', y: 'od', xLabel: 'el alimento agregado cada día', yLabel: 'el oxígeno disuelto', datasetId: 'frasco', allowVary: ['alimento'] },
-    ],
-  },
+  relations: [
+    { x: 'horasLuz', y: 'od', xLabel: 'las horas de luz por día', yLabel: 'el oxígeno disuelto', datasetId: 'frasco', allowVary: [] },
+    { x: 'caracoles0', y: 'od', xLabel: 'el número de caracoles al cerrar el frasco', yLabel: 'el oxígeno disuelto', datasetId: 'frasco', allowVary: [] },
+    { x: 'alimentoMg', y: 'od', xLabel: 'el alimento agregado cada día', yLabel: 'el oxígeno disuelto', datasetId: 'frasco', allowVary: ['alimento'] },
+  ],
   variables: {
     independent: ['Horas de luz por día', 'Intensidad de la lámpara (atenuador) y distancia al frasco', 'Ramitas de elodea, caracoles y peces al cerrar el frasco', 'Alimento agregado cada día', 'Presencia de descomponedores en el sedimento', 'Día y hora de la medición'],
     dependent: ['Oxígeno disuelto (oxímetro)', 'pH (color del azul de bromotimol)', 'Número de caracoles y peces vivos', 'Biomasa de elodea', 'Aspecto del agua (algas)'],

@@ -39,14 +39,11 @@ export const extraccionAdn: PracticeDef = {
     'En 1953, James Watson y Francis Crick propusieron, con datos de difracción de rayos X de Rosalind Franklin y Maurice Wilkins, que el ADN es una doble hélice: dos hebras de nucleótidos (azúcar desoxirribosa, fosfato y una base) unidas por pares de bases. La adenina (A) se aparea con la timina (T) mediante 2 puentes de hidrógeno, y la guanina (G) con la citosina (C) mediante 3. Las dos hebras son antiparalelas: si una va en sentido 5\'→3\', la otra va 3\'→5\'. Por eso, conociendo una hebra, se puede deducir la otra; es la base de la replicación del ADN.',
     'Erwin Chargaff había encontrado antes que, en el ADN de muchas especies, la cantidad de A es casi igual a la de T y la de G casi igual a la de C, aunque la proporción de G + C (%GC) cambia de una especie a otra. Como los pares G–C tienen 3 puentes de hidrógeno (y además se apilan con más estabilidad), las moléculas con más %GC suelen necesitar más temperatura para separar sus hebras (temperatura de fusión, Tm). Para oligonucleótidos cortos (de menos de 14 nucleótidos) se usa una estimación empírica, la regla de Wallace: Tm ≈ 2·(A + T) + 4·(G + C) °C. Para hebras más largas, o con otras concentraciones de sal, esta regla deja de ser confiable.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el índice de rendimiento de la extracción al aumentar la sal del tampón y al enfriar el alcohol (cambiando una sola variable a la vez), y cómo cambia la temperatura de fusión estimada de una doble hebra de la misma longitud al aumentar su %GC.',
-    pairs: [
-      { x: 'sal', y: 'rendimiento', xLabel: 'la sal del tampón de lisis', yLabel: 'el índice de rendimiento de la extracción', datasetId: 'extraccion', allowVary: [] },
-      { x: 'tEtanol', y: 'rendimiento', xLabel: 'la temperatura del alcohol', yLabel: 'el índice de rendimiento de la extracción', datasetId: 'extraccion', allowVary: [] },
-      { x: 'gc', y: 'tm', xLabel: 'el porcentaje de G + C de la doble hebra', yLabel: 'la temperatura de fusión estimada (regla de Wallace)', datasetId: 'complementariedad', allowVary: ['secuencia'] },
-    ],
-  },
+  relations: [
+    { x: 'sal', y: 'rendimiento', xLabel: 'la sal del tampón de lisis', yLabel: 'el índice de rendimiento de la extracción', datasetId: 'extraccion', allowVary: [] },
+    { x: 'tEtanol', y: 'rendimiento', xLabel: 'la temperatura del alcohol', yLabel: 'el índice de rendimiento de la extracción', datasetId: 'extraccion', allowVary: [] },
+    { x: 'gc', y: 'tm', xLabel: 'el porcentaje de G + C de la doble hebra', yLabel: 'la temperatura de fusión estimada (regla de Wallace)', datasetId: 'complementariedad', allowVary: ['secuencia'] },
+  ],
   variables: {
     independent: ['Fruta (fresa, banano, cebolla)', 'Sal en el tampón (g en 100 mL)', 'Detergente en el tampón (mL en 100 mL)', 'Temperatura del alcohol (°C)', 'Tiempo de machacado (min)', 'Secuencia de la hebra molde y orientación de la hebra nueva'],
     dependent: ['Índice de rendimiento relativo (modelo calculado, u.a.) y aspecto del precipitado', 'Pares correctos y puentes de hidrógeno', '%GC, temperatura de fusión de Wallace y razones de Chargaff'],

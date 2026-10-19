@@ -30,14 +30,11 @@ export const energia: PracticeDef = {
     'Con fricción, parte de la energía mecánica se transforma en energía térmica: la energía total se conserva, pero la mecánica disminuye.',
     'Una esfera que rueda reparte su energía cinética entre traslación y rotación; por eso baja más despacio que un objeto que se desliza sin fricción.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la rapidez en el valle al aumentar la altura de salida, y si una esfera más pesada llega más rápido.',
-    pairs: [
-      { x: 'altura', y: 'vValle', xLabel: 'la altura de salida', yLabel: 'la rapidez en el valle', datasetId: 'recorridos' },
-      { x: 'masa', y: 'vValle', xLabel: 'la masa de la esfera', yLabel: 'la rapidez en el valle', datasetId: 'recorridos' },
-      { x: 'mu', y: 'disipada', xLabel: 'la fricción', yLabel: 'la energía disipada', datasetId: 'recorridos' },
-    ],
-  },
+  relations: [
+    { x: 'altura', y: 'vValle', xLabel: 'la altura de salida', yLabel: 'la rapidez en el valle', datasetId: 'recorridos' },
+    { x: 'masa', y: 'vValle', xLabel: 'la masa de la esfera', yLabel: 'la rapidez en el valle', datasetId: 'recorridos' },
+    { x: 'mu', y: 'disipada', xLabel: 'la fricción', yLabel: 'la energía disipada', datasetId: 'recorridos' },
+  ],
   variables: {
     independent: ['Altura de salida', 'Masa', 'Altura de la colina', 'Fricción', 'Rodadura'],
     dependent: ['Rapidez en el valle', 'Si supera la colina', 'Energía disipada'],

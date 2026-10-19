@@ -10,7 +10,7 @@ export function contenido() {
     area: p.area, topic: p.topic, durationMin: p.durationMin, summary: p.summary,
     problemQuestion: p.problemQuestion, objectives: p.objectives, competencies: p.competencies,
     curricularLink: p.curricularLink, materials: p.materials, background: p.background,
-    hypothesis: p.hypothesis, variables: p.variables, procedure: p.procedure, interpretation: p.interpretation,
+    relations: p.relations ?? [], variables: p.variables, procedure: p.procedure, interpretation: p.interpretation,
     assessment: p.assessment, application: p.application, conclusionGuide: p.conclusionGuide,
     transfer: p.transferQuestionIds.map((id) => SABER_BANK.find((q) => q.id === id)).filter(Boolean),
     datasets: DATASETS[p.id] ?? [],

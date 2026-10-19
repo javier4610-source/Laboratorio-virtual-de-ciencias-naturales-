@@ -181,14 +181,14 @@ function CodeEntry() {
 
 const STAGES: { icon: IconName; name: string; text: string }[] = [
   { icon: 'preparacion', name: 'Preparación', text: 'Pregunta problema, objetivos, fundamento y variables.' },
-  { icon: 'hipotesis', name: 'Hipótesis', text: 'Predices antes de experimentar.' },
   { icon: 'experimento', name: 'Experimento', text: 'Cambias variables y guardas ensayos en la tabla.' },
-  { icon: 'analisis', name: 'Análisis', text: 'Gráficas, comparación con tu hipótesis y conclusión con evidencia.' },
+  { icon: 'analisis', name: 'Análisis y conclusión', text: 'Gráficas, tendencia de tus datos, control de variables y conclusión con evidencia.' },
   { icon: 'evaluacion', name: 'Evaluación', text: 'Preguntas por competencias con retroalimentación y reintentos.' },
+  { icon: 'modelo', name: 'Modelo y referencias', text: 'Ecuaciones, supuestos, límites y fuentes del modelo.' },
 ];
 
 const MODES: { icon: IconName; name: string; text: string }[] = [
-  { icon: 'guiada', name: 'Práctica guiada', text: 'Paso a paso, con la hipótesis obligatoria antes de medir.' },
+  { icon: 'guiada', name: 'Práctica guiada', text: 'Paso a paso: primero te preparas y guardas ensayos antes de analizar.' },
   { icon: 'libre', name: 'Exploración libre', text: 'Todos los controles abiertos para indagar a tu ritmo.' },
   { icon: 'evaluacion', name: 'Evaluación', text: 'Preguntas tipo Saber 11 con retroalimentación por opción.' },
 ];
@@ -210,7 +210,7 @@ export function HomePage() {
         <div className="hero-copy">
           <span className="eyebrow hero-eyebrow"><span className="pulse" aria-hidden="true" />Grados 6.º a 11.º · Biología · Química · Física · Ambiente</span>
           <h1 id="hero-h">Laboratorio Virtual de <span className="hero-accent">Ciencias Naturales</span></h1>
-          <p className="lead">Formula hipótesis, cambia variables, mide, grafica y concluye. Cada práctica calcula sus resultados con un modelo científico declarado, con sus supuestos y sus límites.</p>
+          <p className="lead">Cambia variables, mide, grafica y concluye con evidencia. Cada práctica calcula sus resultados con un modelo científico declarado, con sus supuestos y sus límites.</p>
           <div className="btn-row hero-actions">
             <button type="button" className="btn primary large" onClick={() => { const el = document.getElementById('grados'); el?.scrollIntoView({ behavior: 'smooth' }); el?.focus({ preventScroll: true }); }}>Elegir mi grado</button>
             <a className="btn large" href={href('catalogo')}>Ver todas las prácticas</a>

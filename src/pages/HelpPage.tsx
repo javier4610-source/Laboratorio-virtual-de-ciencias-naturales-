@@ -21,10 +21,10 @@ export function AccessibilityPanel({ prefs, setPrefs }: { prefs: Prefs; setPrefs
 
 const IMPLEMENTED = [
   'Navegación por grados (6.º a 11.º), asignaturas, catálogo con buscador y filtros.',
-  `${PRACTICES.length} prácticas completas con modelos científicos calculados, controles, tabla de datos, gráficas configurables, hipótesis, análisis, conclusión y evaluación.`,
+  `${PRACTICES.length} prácticas completas con modelos científicos calculados, controles, tabla de datos, gráficas configurables, análisis, conclusión y evaluación.`,
   'Modos de práctica guiada, exploración libre y evaluación.',
   'Funciona sin conexión después de la primera visita e instalable como aplicación (escritorio, Android e iPhone).',
-  'Detección de tendencias en los datos y advertencias de control de variables al comparar con la hipótesis.',
+  'Detección de tendencias en los datos y advertencias de control de variables en el análisis.',
   'Preguntas de selección múltiple con retroalimentación por opción, explicación, repaso y transferencia; reintentos.',
   'Banco de preguntas originales tipo Saber 11 con filtros por grado, competencia, componente y dificultad.',
   'Informe de práctica imprimible, descargable (JSON y CSV), copiable y, si el colegio instala el servidor, enviable por internet con un código de curso.',
@@ -55,9 +55,8 @@ export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Pref
           <ol className="list">
             <li>Elige tu grado en la página de inicio o busca una práctica en el catálogo.</li>
             <li>Lee la preparación: pregunta problema, fundamento y variables.</li>
-            <li>Escribe tu hipótesis (en el modo guiado es obligatoria antes de experimentar).</li>
             <li>Cambia las variables, ejecuta el experimento y pulsa «Guardar ensayo» para registrar cada resultado.</li>
-            <li>Elige los ejes de la gráfica, analiza la tendencia y escribe tu conclusión.</li>
+            <li>Elige los ejes de la gráfica, analiza la tendencia de tus datos y escribe tu conclusión con afirmación, evidencia y razonamiento.</li>
             <li>Responde las preguntas y lee la retroalimentación. Puedes reintentar.</li>
             <li>Abre «Ver informe» para imprimirlo o enviarlo a tu docente.</li>
           </ol>

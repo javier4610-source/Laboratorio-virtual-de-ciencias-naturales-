@@ -31,13 +31,10 @@ export const soluciones: PracticeDef = {
     'Las soluciones coloreadas absorben luz. Según la ley de Beer-Lambert, la absorbancia es proporcional a la concentración: A = ε·l·c. Esta relación lineal permite construir una curva de calibración.',
     'Cada soluto tiene un límite de solubilidad. Por encima de él, el soluto adicional queda sin disolver y la concentración no aumenta.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo se relacionan la concentración y la absorbancia de una solución coloreada, y qué pasa con la molaridad si disuelves la misma masa en un balón más grande.',
-    pairs: [
-      { x: 'cfinal', y: 'absorbancia', xLabel: 'la concentración de la solución', yLabel: 'la absorbancia', datasetId: 'soluciones', allowVary: ['masa', 'volumen', 'factor'] },
-      { x: 'volumen', y: 'molaridad', xLabel: 'el volumen del balón (con la misma masa de soluto)', yLabel: 'la molaridad', datasetId: 'soluciones' },
-    ],
-  },
+  relations: [
+    { x: 'cfinal', y: 'absorbancia', xLabel: 'la concentración de la solución', yLabel: 'la absorbancia', datasetId: 'soluciones', allowVary: ['masa', 'volumen', 'factor'] },
+    { x: 'volumen', y: 'molaridad', xLabel: 'el volumen del balón (con la misma masa de soluto)', yLabel: 'la molaridad', datasetId: 'soluciones' },
+  ],
   variables: {
     independent: ['Masa de soluto', 'Volumen del balón', 'Volumen de la alícuota y del balón de dilución'],
     dependent: ['Molaridad', '% m/v', 'Absorbancia'],

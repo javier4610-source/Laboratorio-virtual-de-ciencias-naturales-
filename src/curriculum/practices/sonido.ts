@@ -39,14 +39,11 @@ export const sonido: PracticeDef = {
     'La resonancia no es infinitamente aguda: parte de la energía se pierde por la boca y por el rozamiento del aire con las paredes. El pico de la amplitud tiene un ancho que se mide con el factor de calidad Q (cuanto mayor Q, más angosto el pico); en un tubo escolar el pico de la primera resonancia mide unos pocos milímetros. Un osciloscopio dibuja la señal del micrófono en una pantalla con divisiones: el periodo se obtiene contando divisiones horizontales y multiplicando por el tiempo por división (f = 1/T); la amplitud, contando divisiones verticales desde el centro y multiplicando por los volts por división.',
     'Lejos del parlante, la misma energía se reparte sobre una esfera cada vez más grande, de área 4π·d². Por eso la intensidad es I = P/(4π·d²): al duplicar la distancia, la intensidad se reduce a la cuarta parte. El oído percibe la intensidad de forma logarítmica, así que se usa el nivel sonoro en decibeles, L = 10·log₁₀(I/10⁻¹² W/m²); reducir la intensidad a la cuarta parte resta unos 6 dB. Una conversación está cerca de 60 dB y la exposición prolongada por encima de 85 dB daña el oído.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la longitud de onda que obtienes de las resonancias al usar un diapasón de mayor frecuencia, cómo cambia la rapidez del sonido al calentar el aire, y cómo cambia el nivel sonoro al alejar el sonómetro del parlante.',
-    pairs: [
-      { x: 'frecuencia', y: 'lambda', xLabel: 'la frecuencia del diapasón', yLabel: 'la longitud de onda λ = 2·(L₂ − L₁)', datasetId: 'resonancias', allowVary: [] },
-      { x: 'temperatura', y: 'rapidez', xLabel: 'la temperatura del aire', yLabel: 'la rapidez del sonido v = λ·f', datasetId: 'resonancias', allowVary: [] },
-      { x: 'distancia', y: 'nivel', xLabel: 'la distancia al parlante', yLabel: 'el nivel sonoro', datasetId: 'distancia', allowVary: [] },
-    ],
-  },
+  relations: [
+    { x: 'frecuencia', y: 'lambda', xLabel: 'la frecuencia del diapasón', yLabel: 'la longitud de onda λ = 2·(L₂ − L₁)', datasetId: 'resonancias', allowVary: [] },
+    { x: 'temperatura', y: 'rapidez', xLabel: 'la temperatura del aire', yLabel: 'la rapidez del sonido v = λ·f', datasetId: 'resonancias', allowVary: [] },
+    { x: 'distancia', y: 'nivel', xLabel: 'la distancia al parlante', yLabel: 'el nivel sonoro', datasetId: 'distancia', allowVary: [] },
+  ],
   variables: {
     independent: ['Longitud de la columna de aire (nivel del agua o tubo deslizante)', 'Frecuencia del diapasón o del generador', 'Temperatura del aire', 'Diámetro del tubo', 'Tipo de tubo (cerrado o abierto)', 'Distancia del sonómetro al parlante'],
     dependent: ['Amplitud de la señal del micrófono', 'Longitudes de resonancia L₁ y L₂', 'Longitud de onda y rapidez del sonido calculadas', 'Periodo y frecuencia leídos en el osciloscopio', 'Nivel sonoro (dB)'],

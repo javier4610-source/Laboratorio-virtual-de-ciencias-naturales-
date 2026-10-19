@@ -41,16 +41,13 @@ export const cineticaPotencial: PracticeDef = {
     'Si se suelta el objeto y el aire no lo frena, la energía potencial se transforma en cinética: m·g·h = ½·m·v², así que v = √(2·g·h). La masa se cancela: un objeto pesado y uno liviano soltados desde la misma altura llegan con la misma rapidez (Galileo). Desde 10 m en la Tierra, v = √(2 · 9,81 · 10) = √196,2 ≈ 14,0 m/s. Con aire, el objeto liviano se frena relativamente más, y parte de la energía se transforma en energía térmica del aire y del objeto.',
     'Un resorte comprimido una distancia x guarda energía potencial elástica: Ep = ½·k·x², donde k es la constante del resorte (en N/m), que indica qué tan duro es. La fuerza que hace el resorte comprimido es F = k·x (ley de Hooke), así que la energía es también ½·F·x. Al soltarlo, esa energía pasa al carrito: ½·m·v² = ½·k·x². En todos los casos la energía no se crea ni se destruye: si hay rozamiento o aire, la energía mecánica disminuye, pero aparece la misma cantidad como energía térmica (y sonido). La suma Ec + Ep + E_térmica se mantiene constante.',
   ],
-  hypothesis: {
-    prompt: 'Antes de medir: si lanzas el carrito al doble de rapidez, ¿cuántas veces más energía cinética crees que tendrá? Y si sueltas un objeto desde el doble de altura, ¿llegará con el doble de rapidez? ¿Influye su masa?',
-    pairs: [
-      { x: 'rapidez', y: 'ec', xLabel: 'la rapidez medida del carrito', yLabel: 'su energía cinética', datasetId: 'cinetica' },
-      { x: 'masa', y: 'ec', xLabel: 'la masa del carrito', yLabel: 'su energía cinética', datasetId: 'cinetica' },
-      { x: 'altura', y: 'ep', xLabel: 'la altura desde la que se suelta', yLabel: 'la energía potencial gravitatoria', datasetId: 'gravitatoria' },
-      { x: 'masa', y: 'rapidez', xLabel: 'la masa del objeto que cae', yLabel: 'la rapidez en la fotopuerta', datasetId: 'gravitatoria' },
-      { x: 'compresion', y: 'ec', xLabel: 'la compresión del resorte', yLabel: 'la energía cinética del carrito', datasetId: 'elastica' },
-    ],
-  },
+  relations: [
+    { x: 'rapidez', y: 'ec', xLabel: 'la rapidez medida del carrito', yLabel: 'su energía cinética', datasetId: 'cinetica' },
+    { x: 'masa', y: 'ec', xLabel: 'la masa del carrito', yLabel: 'su energía cinética', datasetId: 'cinetica' },
+    { x: 'altura', y: 'ep', xLabel: 'la altura desde la que se suelta', yLabel: 'la energía potencial gravitatoria', datasetId: 'gravitatoria' },
+    { x: 'masa', y: 'rapidez', xLabel: 'la masa del objeto que cae', yLabel: 'la rapidez en la fotopuerta', datasetId: 'gravitatoria' },
+    { x: 'compresion', y: 'ec', xLabel: 'la compresión del resorte', yLabel: 'la energía cinética del carrito', datasetId: 'elastica' },
+  ],
   variables: {
     independent: ['Masa del carrito o del objeto (kg)', 'Rapidez de lanzamiento (m/s)', 'Altura h sobre la fotopuerta (m)', 'Gravedad del lugar (Tierra, Luna, Marte)', 'Constante k y compresión x del resorte'],
     dependent: ['Tiempo de bloqueo Δt (ms) y rapidez v = L/Δt (m/s)', 'Energía cinética ½·m·v² (J)', 'Fuerza del torno F y trabajo F·h (J)', 'Energía potencial gravitatoria m·g·h y elástica ½·k·x² (J)'],

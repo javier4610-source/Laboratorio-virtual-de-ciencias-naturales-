@@ -35,7 +35,7 @@ export function PrivacyNote() {
       <Icon name="escudo" size={18} />
       <p>
         <strong>Qué se envía y a quién.</strong> Al unirte, el servidor de tu colegio guarda tu nombre, el código del curso y el avance de cada práctica
-        (etapas, ensayos, hipótesis, conclusión, respuestas, puntaje y tiempo aproximado). Solo lo ve el docente de tu curso. Tu PIN se guarda cifrado.
+        (etapas, ensayos, interpretaciones, conclusión, respuestas, puntaje y tiempo aproximado). Solo lo ve el docente de tu curso. Tu PIN se guarda cifrado.
         Puedes salir cuando quieras; para borrar tus datos, pídeselo a tu docente.
       </p>
     </div>

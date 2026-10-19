@@ -35,7 +35,7 @@
 | `fecha` | Fecha y hora de exportación (ISO 8601); cada ensayo lleva además su propia `fecha` | fecha |
 | `software` | Nombre y versión de la aplicación (`__APP_VERSION__`) | versión del software |
 | `practica` | Identificador, título, grado y área | — |
-| `pregunta`, `hipotesis` | Pregunta problema de la práctica; hipótesis y tendencia del estudiante | pregunta científica |
+| `pregunta`, `hipotesis` | Pregunta problema de la práctica; hipótesis y tendencia del estudiante (`hipotesis` es opcional y obsoleta desde el ADR 0006: los registros nuevos no la incluyen) | pregunta científica |
 | `modelo` | Nombre (`ModelSpec.name`), ecuaciones, supuestos, límites y referencias | método, fuentes |
 | `procedencia` | Estatus de los datos y de la escena, y frase explicativa (ADR 0002) | estatus |
 | `medicion` | Modo (ideal o real), regla de la semilla y número de lecturas por clave | parámetros, semilla |

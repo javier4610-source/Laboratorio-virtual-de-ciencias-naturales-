@@ -40,14 +40,11 @@ export const descomposicion: PracticeDef = {
     'También importa la composición del material: la cáscara de banano tiene azúcares y nitrógeno y se degrada rápido; el aserrín es rico en lignina, una sustancia dura que pocos organismos pueden romper; el plástico es un polímero sintético que los descomponedores del suelo no degradan en semanas, por eso sirve como control.',
     'Un modelo sencillo (Olson, 1963) supone que cada semana se pierde la misma fracción de lo que queda: M(t) = M₀·e^(−k·t). La constante k resume qué tan rápido se descompone un material en unas condiciones dadas, y la vida media ln 2/k es el tiempo en que se pierde la mitad de la masa.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el porcentaje de masa perdida al pasar más semanas, al aumentar la temperatura de la compostera y al aumentar la humedad del material.',
-    pairs: [
-      { x: 'semana', y: 'perdida', xLabel: 'las semanas enterrada', yLabel: 'el porcentaje de masa perdida', datasetId: 'bolsas' },
-      { x: 'temperatura', y: 'perdida', xLabel: 'la temperatura de la compostera', yLabel: 'el porcentaje de masa perdida', datasetId: 'bolsas' },
-      { x: 'humedad', y: 'perdida', xLabel: 'la humedad del material', yLabel: 'el porcentaje de masa perdida', datasetId: 'bolsas' },
-    ],
-  },
+  relations: [
+    { x: 'semana', y: 'perdida', xLabel: 'las semanas enterrada', yLabel: 'el porcentaje de masa perdida', datasetId: 'bolsas' },
+    { x: 'temperatura', y: 'perdida', xLabel: 'la temperatura de la compostera', yLabel: 'el porcentaje de masa perdida', datasetId: 'bolsas' },
+    { x: 'humedad', y: 'perdida', xLabel: 'la humedad del material', yLabel: 'el porcentaje de masa perdida', datasetId: 'bolsas' },
+  ],
   variables: {
     independent: ['Material', 'Semanas enterrada', 'Temperatura de la compostera', 'Humedad del material', 'Aireación (volteo)', 'Tamaño de los trozos'],
     dependent: ['Masa restante (g)', 'Porcentaje de masa perdida', 'Observaciones: hongos, olor, lombrices, temperatura de la pila'],

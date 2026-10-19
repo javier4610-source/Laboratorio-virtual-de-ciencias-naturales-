@@ -14,6 +14,7 @@ async function post(request: APIRequestContext, method: 'post' | 'put', path: st
   return res.json();
 }
 
+/** Resumen con el formato de versiones anteriores (incluye la etapa y los campos de hipótesis, hoy obsoletos: ADR 0006). */
 function summary(over: Record<string, unknown>) {
   const now = Date.now();
   return {
@@ -80,6 +81,8 @@ for (const scheme of ['light', 'dark'] as const) {
         await page.getByRole('row', { name: /Sofía Rojas Mena/ }).getByRole('button', { name: /Sofía Rojas Mena/ }).click();
         await expect(page.getByRole('heading', { name: 'Sofía Rojas Mena' })).toBeVisible();
         await expect(page.getByText('Primero eligió')).toBeVisible();
+        // Los datos antiguos de hipótesis se aceptan pero ya no se muestran (ADR 0006).
+        await expect(page.getByText(/hipótesis|hipotesis/i)).toHaveCount(0);
         found.push(...(await audit(page, `detalle ${width}`)));
         await noOverflow(page, `detalle ${width}`);
         if (SHOTS) await page.screenshot({ path: `${SHOTS}/detalle-${scheme}-${width}.png`, fullPage: true });

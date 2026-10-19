@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { SERVER } from './env';
+import { CATALOG } from '../../src/curriculum/catalog';
 
 /** Abre una práctica en modo libre y va a la etapa de experimento. */
 async function openFree(page: Page, id: string) {
@@ -39,14 +40,17 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(11);
 });
 
-test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y análisis', async ({ page }) => {
+test('densidad (guiada): preparación, experimento sin hipótesis, cálculo, tabla y análisis de la tendencia', async ({ page }) => {
   await page.goto('/#/practica/densidad');
-  await page.getByRole('tab', { name: /Experimento/ }).click();
-  await expect(page.getByRole('heading', { name: 'Antes de experimentar, formula tu hipótesis' })).toBeVisible();
-  await page.getByRole('button', { name: 'Formular mi hipótesis' }).click();
-  await page.getByLabel('Mi predicción', { exact: false }).selectOption('aumenta');
-  await page.getByLabel('Hipótesis completa').fill('Si aumento el volumen, entonces la masa aumenta, porque hay más material.');
-  await page.getByRole('button', { name: /Guardar hipótesis/ }).click();
+  // Cinco etapas, numeradas de 1 a 5 (el Análisis muestra un candado en vez del 3 hasta guardar un ensayo), y se empieza en Preparación.
+  const tabs = page.getByRole('tablist', { name: 'Etapas de la práctica' }).getByRole('tab');
+  await expect(tabs).toHaveText([/^1\s*Preparación/, /^2\s*Experimento/, /^Análisis y conclusión \(requiere un paso previo/, /^4\s*Evaluación/, /^5\s*Modelo y referencias/]);
+  await expect(page.getByRole('tab', { name: /Preparación/ })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('progressbar', { name: 'Progreso de la práctica' })).toHaveAttribute('aria-valuenow', '0');
+  // El botón de Preparación lleva directamente al experimento (el modo guiado no exige hipótesis).
+  await page.getByRole('button', { name: 'Entendido: ir al experimento' }).click();
+  await expect(page.getByRole('tab', { name: /Experimento/ })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('progressbar', { name: 'Progreso de la práctica' })).toHaveAttribute('aria-valuenow', '25');
   await expect(page.getByRole('button', { name: '1. Pesar en la balanza' })).toBeVisible();
   for (const side of ['1,5', '2,0', '2,5', '3,0']) {
     const input = page.getByLabel('Arista del cubo (valor exacto en cm)');
@@ -61,8 +65,13 @@ test('densidad (guiada): hipótesis obligatoria, medición, cálculo, tabla y an
   await page.getByRole('button', { name: 'Comprobar cálculo' }).click();
   await expect(page.getByText(/¡Bien!/)).toBeVisible();
   await page.getByRole('button', { name: 'Ir al análisis' }).click();
+  await expect(page.getByRole('heading', { name: '¿Qué muestran tus datos?' })).toBeVisible();
   await expect(page.locator('.readout .v.data').first()).toHaveText('aumenta');
-  await expect(page.getByText('Tus datos muestran la tendencia que predijiste.', { exact: false })).toBeVisible();
+  // Sin comparación con una hipótesis ni veredicto apoya/refuta.
+  await expect(page.getByText(/hipótesis|predijiste/i)).toHaveCount(0);
+  await expect(page.getByLabel('Mis datos…')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Preguntas de interpretación' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Conclusión científica' })).toBeVisible();
 });
 
 test('ósmosis: agua destilada produce lisis y se registra', async ({ page }) => {
@@ -883,8 +892,8 @@ test('teclado: las pestañas de etapas se recorren con flechas', async ({ page }
   await page.getByLabel('Modo de trabajo').getByRole('button', { name: 'Exploración libre' }).click();
   await page.getByRole('tab', { name: /Preparación/ }).focus();
   await page.keyboard.press('ArrowRight');
-  await expect(page.getByRole('tab', { name: /Hipótesis/ })).toHaveAttribute('aria-selected', 'true');
-  await expect(page.getByRole('tab', { name: /Hipótesis/ })).toBeFocused();
+  await expect(page.getByRole('tab', { name: /Experimento/ })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: /Experimento/ })).toBeFocused();
   await page.keyboard.press('End');
   await expect(page.getByRole('tab', { name: /Modelo y referencias/ })).toHaveAttribute('aria-selected', 'true');
 });
@@ -962,4 +971,16 @@ test('seguimiento: el estudiante se une con código y PIN, y el docente ve su av
   await expect(page.getByRole('heading', { name: '11A-07' })).toBeVisible();
   await expect(page.getByText('Acierto al 1.er intento')).toBeVisible();
   await expect(page.getByText('Se unió al curso')).toBeVisible();
+});
+
+test('ninguna práctica muestra la etapa de hipótesis', async ({ page }) => {
+  test.setTimeout(180_000);
+  for (const { id } of CATALOG) {
+    await page.goto(`/#/practica/${id}`);
+    const tabs = page.getByRole('tablist', { name: 'Etapas de la práctica' }).getByRole('tab');
+    await expect(tabs, id).toHaveCount(5);
+    await expect(page.getByRole('tab', { name: /hip[oó]tesis/i }), id).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /hip[oó]tesis/i }), id).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Entendido: ir al experimento' }), id).toBeVisible();
+  }
 });

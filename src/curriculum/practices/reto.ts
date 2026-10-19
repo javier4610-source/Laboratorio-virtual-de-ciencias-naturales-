@@ -37,21 +37,18 @@ export const reto: PracticeDef = {
     'Correlación no es causalidad. Una asociación fuerte puede deberse a una variable de confusión, al azar o a una causa en sentido contrario. Hill (1965) propuso considerar, entre otros criterios, la fuerza y consistencia de la asociación, la relación dosis-respuesta, la plausibilidad del mecanismo y la evidencia experimental. En ciencias ambientales casi nunca se «demuestra» una causa con un solo estudio: se acumula evidencia y se expresa la conclusión con lenguaje probabilístico («es probable que…», «los datos son compatibles con…»).',
     'En este reto los datos son sintéticos: los produce un modelo calculado (Streeter–Phelps con saturación de Benson–Krause para el río, un balance simple de radiación para el suelo y un decaimiento exponencial de la turbidez para la quebrada) más un ruido gaussiano con desviación típica declarada. La semilla del generador pseudoaleatorio hace los datos reproducibles. Los parámetros son ilustrativos y no corresponden a mediciones de ningún lugar ni de ninguna entidad.',
   ],
-  hypothesis: {
-    prompt: 'Elige el sistema que vas a estudiar y predice la tendencia: ¿cómo cambia el oxígeno disuelto al alejarte del vertimiento, la temperatura del suelo al aumentar la sombra o la turbidez al aumentar la lluvia? Justifica con un mecanismo y menciona qué variable podría confundir tu resultado.',
-    pairs: [
-      { x: 'distancia', y: 'od', xLabel: 'la distancia aguas abajo del vertimiento', yLabel: 'el oxígeno disuelto', datasetId: 'rio' },
-      { x: 'sombra', y: 'tempSuelo', xLabel: 'la cobertura de sombra', yLabel: 'la temperatura del suelo a 5 cm', datasetId: 'suelo' },
-      { x: 'lluvia', y: 'turbidez', xLabel: 'la lluvia acumulada en 24 h', yLabel: 'la turbidez de la quebrada', datasetId: 'lluvia' },
-    ],
-  },
+  relations: [
+    { x: 'distancia', y: 'od', xLabel: 'la distancia aguas abajo del vertimiento', yLabel: 'el oxígeno disuelto', datasetId: 'rio' },
+    { x: 'sombra', y: 'tempSuelo', xLabel: 'la cobertura de sombra', yLabel: 'la temperatura del suelo a 5 cm', datasetId: 'suelo' },
+    { x: 'lluvia', y: 'turbidez', xLabel: 'la lluvia acumulada en 24 h', yLabel: 'la turbidez de la quebrada', datasetId: 'lluvia' },
+  ],
   variables: {
     independent: ['Distancia aguas abajo del vertimiento (río)', 'Cobertura de sombra (suelo)', 'Lluvia acumulada en 24 h (quebrada)'],
     dependent: ['Oxígeno disuelto', 'Temperatura del suelo a 5 cm', 'Turbidez'],
     controlled: ['Número de réplicas y de niveles elegidos', 'Manejo de la variable de confusión (temperatura del agua, hora de lectura o tiempo desde la lluvia)', 'Instrumento y procedimiento de medición', 'Semilla del generador (para reproducir los datos)'],
   },
   procedure: [
-    'Elige el «Sistema de estudio», lee la pregunta y escribe tu hipótesis. Identifica la variable de confusión del sistema y explica por qué podría cambiar junto con x.',
+    'Elige el «Sistema de estudio», lee la pregunta e identifica la variable de confusión del sistema y explica por qué podría cambiar junto con x.',
     'Con el diseño inicial (3 niveles de 0 a 10 km, 2 réplicas, «No controlar», semilla 123) pulsa «Recolectar datos». Lee la estadística por nivel, el ajuste lineal y la crítica de tu diseño.',
     'Pulsa «Rediseñar» y mejora el diseño sin pasar de 20 muestras: amplía el rango (incluye un nivel de referencia), usa al menos 3 réplicas y elige «Mantener constante» o «Aleatorizar». Recolecta de nuevo y compara la pendiente y su intervalo de 95 %.',
     'Cambia el «Eje horizontal de la gráfica» a «Orden de muestreo» y busca si y cambió con el orden. Verifica a mano la media, la DE y el EE de un nivel y compáralos con la tabla.',

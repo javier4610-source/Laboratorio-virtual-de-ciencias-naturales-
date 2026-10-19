@@ -4,7 +4,7 @@
   "title": "Registro reproducible de un experimento del Laboratorio Virtual de Ciencias Naturales",
   "description": "Generado por src/lib/experimentRecord.ts (buildExperimentRecord). Sin datos personales. Ver ADR 0003.",
   "type": "object",
-  "required": ["formato", "id", "fecha", "software", "practica", "pregunta", "hipotesis", "modelo", "procedencia", "medicion", "conjuntos", "advertencias", "estado"],
+  "required": ["formato", "id", "fecha", "software", "practica", "pregunta", "modelo", "procedencia", "medicion", "conjuntos", "advertencias", "estado"],
   "properties": {
     "formato": { "const": "lvcn-registro-experimento/1" },
     "id": { "type": "string", "description": "Identificador del registro: <práctica>-<marca de tiempo en base 36>" },
@@ -18,7 +18,7 @@
       "properties": { "id": { "type": "string" }, "titulo": { "type": "string" }, "grado": { "type": "integer", "minimum": 6, "maximum": 11 }, "area": { "type": "string" } }
     },
     "pregunta": { "type": "string", "description": "Pregunta problema de la práctica" },
-    "hipotesis": { "type": "object", "properties": { "texto": { "type": "string" }, "tendencia": { "type": "string" } } },
+    "hipotesis": { "type": "object", "deprecated": true, "description": "Obsoleto y opcional (ADR 0006): solo aparece en registros generados antes de retirar la etapa de hipótesis; al importar se ignora.", "properties": { "texto": { "type": "string" }, "tendencia": { "type": "string" } } },
     "modelo": {
       "type": "object", "required": ["nombre", "ecuaciones", "supuestos", "limites", "referencias"],
       "properties": {

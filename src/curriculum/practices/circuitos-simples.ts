@@ -40,14 +40,11 @@ export const circuitosSimples: PracticeDef = {
     'Algunos receptores tienen polaridad: un LED solo conduce y se enciende si su patica larga (ánodo) va hacia el lado positivo, y además necesita un resistor en serie para no dañarse; un motor de imán permanente cambia de sentido de giro si se invierte la conexión, y su rapidez crece con el voltaje.',
     'Un cortocircuito ocurre cuando los bornes de la pila quedan unidos por un camino casi sin resistencia (por ejemplo, un cable o un amperímetro conectado en paralelo). La corriente se hace muy grande, solo limitada por la resistencia interna: la pila se calienta, se descarga rápidamente y puede dañarse. El amperímetro se conecta siempre en serie y el voltímetro en paralelo.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambian la corriente y el brillo de los bombillos cuando agregas pilas en serie o cuando agregas bombillos en serie o en paralelo.',
-    pairs: [
-      { x: 'pilas', y: 'corriente', xLabel: 'el número de pilas en serie', yLabel: 'la corriente del circuito', datasetId: 'montajes' },
-      { x: 'bombillos', y: 'brillo', xLabel: 'el número de bombillos (todos en serie o todos en paralelo)', yLabel: 'el brillo promedio de los bombillos', datasetId: 'montajes' },
-      { x: 'bombillos', y: 'corriente', xLabel: 'el número de bombillos (todos en serie o todos en paralelo)', yLabel: 'la corriente que entrega la pila', datasetId: 'montajes' },
-    ],
-  },
+  relations: [
+    { x: 'pilas', y: 'corriente', xLabel: 'el número de pilas en serie', yLabel: 'la corriente del circuito', datasetId: 'montajes' },
+    { x: 'bombillos', y: 'brillo', xLabel: 'el número de bombillos (todos en serie o todos en paralelo)', yLabel: 'el brillo promedio de los bombillos', datasetId: 'montajes' },
+    { x: 'bombillos', y: 'corriente', xLabel: 'el número de bombillos (todos en serie o todos en paralelo)', yLabel: 'la corriente que entrega la pila', datasetId: 'montajes' },
+  ],
   variables: {
     independent: ['Número de pilas y su conexión', 'Número de bombillos y su conexión (serie o paralelo)', 'Material colocado entre las pinzas', 'Polaridad del LED y del motor'],
     dependent: ['Corriente medida con el amperímetro', 'Voltaje medido con el voltímetro', 'Brillo de los bombillos, giro del motor y sonido del zumbador'],

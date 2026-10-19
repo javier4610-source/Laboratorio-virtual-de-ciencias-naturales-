@@ -31,13 +31,10 @@ export const ph: PracticeDef = {
     'En una neutralización, H⁺ + OH⁻ → H₂O. En el punto de equivalencia los moles de base añadidos igualan los moles de ácido: C_A·V_A = C_B·V_eq. Para un ácido fuerte el pH ahí es 7; para uno débil es mayor que 7.',
     'Un indicador cambia de color en un intervalo de pH; debe elegirse uno que vire cerca del pH de equivalencia.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el pH al ir agregando base, y qué pasa con el pH de un ácido cuando lo diluyes muchas veces.',
-    pairs: [
-      { x: 'vbase', y: 'ph', xLabel: 'el volumen de NaOH añadido', yLabel: 'el pH', datasetId: 'titulacion' },
-      { x: 'logFactor', y: 'ph', xLabel: 'la dilución del ácido', yLabel: 'el pH', datasetId: 'dilucion' },
-    ],
-  },
+  relations: [
+    { x: 'vbase', y: 'ph', xLabel: 'el volumen de NaOH añadido', yLabel: 'el pH', datasetId: 'titulacion' },
+    { x: 'logFactor', y: 'ph', xLabel: 'la dilución del ácido', yLabel: 'el pH', datasetId: 'dilucion' },
+  ],
   variables: {
     independent: ['Volumen de NaOH añadido', 'Tipo de ácido', 'Factor de dilución', 'Indicador'],
     dependent: ['pH', 'Color del indicador', 'Volumen de equivalencia'],

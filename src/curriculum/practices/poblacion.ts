@@ -29,13 +29,10 @@ export const poblacion: PracticeDef = {
     'En la realidad, el alimento, el espacio y el oxígeno son limitados. La capacidad de carga (K) es el tamaño máximo que el ambiente puede sostener. El modelo logístico, dN/dt = r·N·(1 − N/K), describe un crecimiento que se frena al acercarse a K.',
     'La pesca o la mortalidad causada por contaminación agregan una pérdida proporcional a la población (h·N). El nuevo equilibrio es K·(1 − h/r): si h ≥ r, la población disminuye hasta desaparecer.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué ocurre con la población final al aumentar la tasa de pesca y al aumentar la capacidad de carga.',
-    pairs: [
-      { x: 'h', y: 'nfinal', xLabel: 'la tasa de pesca', yLabel: 'la población final', datasetId: 'escenarios' },
-      { x: 'k', y: 'nfinal', xLabel: 'la capacidad de carga', yLabel: 'la población final', datasetId: 'escenarios' },
-    ],
-  },
+  relations: [
+    { x: 'h', y: 'nfinal', xLabel: 'la tasa de pesca', yLabel: 'la población final', datasetId: 'escenarios' },
+    { x: 'k', y: 'nfinal', xLabel: 'la capacidad de carga', yLabel: 'la población final', datasetId: 'escenarios' },
+  ],
   variables: {
     independent: ['Modelo (exponencial o logístico)', 'Tasa de crecimiento r', 'Capacidad de carga K', 'Tasa de pesca h'],
     dependent: ['Tamaño de la población en el tiempo', 'Población de equilibrio'],

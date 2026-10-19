@@ -30,13 +30,10 @@ export const mezclas: PracticeDef = {
     'La sal se disuelve en el agua y atraviesa el papel filtro; la arena no se disuelve y queda retenida. El aceite no se mezcla con el agua y flota porque es menos denso.',
     'Para evaporar el agua hay que darle energía: calentarla hasta 100 °C y luego vaporizarla. A mayor potencia del mechero, menos tiempo.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué ocurre con el tiempo de evaporación si usas un mechero más potente, y qué pasará si evaporas antes de filtrar.',
-    pairs: [
-      { x: 'potencia', y: 'minutos', xLabel: 'la potencia del mechero', yLabel: 'el tiempo total del procedimiento', datasetId: 'separaciones' },
-      { x: 'agua', y: 'minutos', xLabel: 'el agua agregada', yLabel: 'el tiempo total del procedimiento', datasetId: 'separaciones' },
-    ],
-  },
+  relations: [
+    { x: 'potencia', y: 'minutos', xLabel: 'la potencia del mechero', yLabel: 'el tiempo total del procedimiento', datasetId: 'separaciones' },
+    { x: 'agua', y: 'minutos', xLabel: 'el agua agregada', yLabel: 'el tiempo total del procedimiento', datasetId: 'separaciones' },
+  ],
   variables: {
     independent: ['Orden de los métodos', 'Cantidad de agua agregada', 'Potencia del mechero'],
     dependent: ['Masa recuperada de cada componente', 'Pureza de cada fracción', 'Tiempo total'],

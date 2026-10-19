@@ -31,13 +31,10 @@ export const circuitos: PracticeDef = {
     'Leyes de Kirchhoff: la suma de las caídas de voltaje en una malla cerrada es igual a la fem (conservación de la energía); la suma de corrientes que entran a un nodo es igual a la suma de las que salen (conservación de la carga).',
     'Una batería real tiene resistencia interna r: el voltaje en sus bornes es V = ε − I·r, menor cuanto mayor sea la corriente.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la corriente total al aumentar el voltaje de la fuente y al aumentar la resistencia equivalente.',
-    pairs: [
-      { x: 'emf', y: 'itotal', xLabel: 'el voltaje de la fuente (fem)', yLabel: 'la corriente total', datasetId: 'medidas' },
-      { x: 'req', y: 'itotal', xLabel: 'la resistencia equivalente', yLabel: 'la corriente total', datasetId: 'medidas', allowVary: ['r1', 'r2', 'r3', 'config'] },
-    ],
-  },
+  relations: [
+    { x: 'emf', y: 'itotal', xLabel: 'el voltaje de la fuente (fem)', yLabel: 'la corriente total', datasetId: 'medidas' },
+    { x: 'req', y: 'itotal', xLabel: 'la resistencia equivalente', yLabel: 'la corriente total', datasetId: 'medidas', allowVary: ['r1', 'r2', 'r3', 'config'] },
+  ],
   variables: {
     independent: ['fem de la fuente', 'Valores de resistencia', 'Configuración (serie, paralelo, mixta)', 'Estado de los interruptores'],
     dependent: ['Corriente total y por elemento', 'Voltaje en cada elemento', 'Potencia disipada (brillo)'],

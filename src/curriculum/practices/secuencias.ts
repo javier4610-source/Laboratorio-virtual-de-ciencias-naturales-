@@ -38,14 +38,11 @@ export const secuencias: PracticeDef = {
     'Alinear dos secuencias es ponerlas una sobre otra, insertando huecos («-»), para que queden juntas las posiciones que probablemente provienen de un ancestro común. El algoritmo de Needleman–Wunsch encuentra el mejor alineamiento global (de extremo a extremo) y el de Smith–Waterman, el mejor alineamiento local (la región más parecida). Ambos maximizan un puntaje: se suman los valores de una matriz de sustitución (para ADN, +1 si coinciden y −1 si no; para proteínas, BLOSUM62, que premia los cambios entre aminoácidos parecidos observados en proteínas emparentadas) y se restan las penalizaciones de los huecos: abrir un hueco cuesta más que alargarlo.',
     'El resultado depende de las reglas elegidas: con huecos baratos el alineamiento usa muchos huecos y la identidad puede subir; con huecos caros, casi no los usa. Por eso un porcentaje de identidad siempre debe reportarse con el método, la matriz y las penalizaciones. Y, sobre todo, una identidad alta no garantiza la misma función (la β- y la δ-globina comparten más del 90 % de su secuencia codificante, pero la δ-globina se produce en mucha menor cantidad), ni una identidad baja implica funciones distintas (las globinas α y β comparten menos de la mitad de sus aminoácidos y ambas transportan oxígeno).',
   ],
-  hypothesis: {
-    prompt: 'Antes de alinear: si aumentas la penalización por abrir un hueco y dejas igual todo lo demás, ¿qué crees que pasará con el número de huecos del alineamiento óptimo, con la identidad y con el puntaje?',
-    pairs: [
-      { x: 'apertura', y: 'aperturas', xLabel: 'la penalización por abrir un hueco', yLabel: 'el número de huecos del alineamiento', datasetId: 'comparaciones' },
-      { x: 'apertura', y: 'identidad', xLabel: 'la penalización por abrir un hueco', yLabel: 'el porcentaje de identidad', datasetId: 'comparaciones' },
-      { x: 'apertura', y: 'puntaje', xLabel: 'la penalización por abrir un hueco', yLabel: 'el puntaje del alineamiento óptimo', datasetId: 'comparaciones' },
-    ],
-  },
+  relations: [
+    { x: 'apertura', y: 'aperturas', xLabel: 'la penalización por abrir un hueco', yLabel: 'el número de huecos del alineamiento', datasetId: 'comparaciones' },
+    { x: 'apertura', y: 'identidad', xLabel: 'la penalización por abrir un hueco', yLabel: 'el porcentaje de identidad', datasetId: 'comparaciones' },
+    { x: 'apertura', y: 'puntaje', xLabel: 'la penalización por abrir un hueco', yLabel: 'el puntaje del alineamiento óptimo', datasetId: 'comparaciones' },
+  ],
   variables: {
     independent: ['Penalización por abrir un hueco', 'Penalización por extender un hueco', 'Tipo de alineamiento (global o local)', 'Matriz de sustitución', 'Código genético (tabla 1, 2 u 11)'],
     dependent: ['Puntaje del alineamiento', 'Identidad (%)', 'Similitud (%)', 'Número de huecos', 'Proteína traducida y ORF encontrados'],
@@ -55,9 +52,9 @@ export const secuencias: PracticeDef = {
     'Con el ejemplo «β-globina humana (HBB), ARNm» (NM_000518.5), lee en la pestaña «Composición» la longitud y el %GC; genera el reverso complementario y expórtalo como FASTA.',
     'En «Traducción y ORF», busca los ORF con la tabla 1 y una longitud mínima de 30 aminoácidos. Comprueba que el más largo coincide con la CDS anotada (bases 51 a 494) y mira cómo cambian los codones en el visor al pasar de un marco a otro.',
     'Carga el gen mitocondrial MT-ATP8 y tradúcelo con la tabla 1 y con la tabla 2. Cuenta los codones de terminación internos en cada caso. Repite con el gen lacI de E. coli usando «Solo ATG» y «Todos los de la tabla» con la tabla 11.',
-    'En «Alineamiento», elige «Insulina humana frente a bovina», escribe tu hipótesis y pulsa «Alinear» con BLOSUM62 (apertura 11, extensión 1). Guarda la comparación en la tabla.',
+    'En «Alineamiento», elige «Insulina humana frente a bovina» y pulsa «Alinear» con BLOSUM62 (apertura 11, extensión 1). Guarda la comparación en la tabla.',
     'Con el par «β-globina frente a α-globina», cambia solo la penalización por abrir un hueco (por ejemplo 1, 2, 5, 11 y 20), alinea y guarda cada comparación. Luego compara el modo global con el local.',
-    'En el cuaderno, grafica el número de huecos y la identidad contra la penalización de apertura; compara con tu hipótesis y escribe por qué un porcentaje de identidad debe reportarse siempre con su método.',
+    'En el cuaderno, grafica el número de huecos y la identidad contra la penalización de apertura; describe la tendencia y escribe por qué un porcentaje de identidad debe reportarse siempre con su método.',
   ],
   interpretation: [
     '¿Por qué el gen MT-ATP8 parece tener terminaciones prematuras con la tabla 1 y no con la tabla 2? ¿Qué te dice esto sobre la universalidad del código genético?',

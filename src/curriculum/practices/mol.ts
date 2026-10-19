@@ -41,14 +41,11 @@ export const mol: PracticeDef = {
     'Los coeficientes de una ecuación balanceada se leen como moles. En NaHCO₃ + CH₃COOH → CH₃COONa + H₂O + CO₂, cada mol de bicarbonato (84,01 g) que reacciona con ácido acético libera un mol de CO₂ (44,01 g). Como la masa se conserva, la masa de los reactivos que reaccionan es igual a la de los productos; pero en un vaso abierto el CO₂ escapa al aire y la balanza marca menos: la masa perdida es la del gas. Al calentar el bicarbonato, 2 NaHCO₃ → Na₂CO₃ + H₂O + CO₂, salen el vapor de agua y el CO₂, y el sólido pierde el 36,92 % de su masa.',
     'Un mol de cualquier gas que se comporte como ideal ocupa 22,414 L a 0 °C y 101,325 kPa (V = n·R·T/P), y unos 24,47 L a 25 °C. En la práctica real es probable que la pérdida medida sea algo menor que la calculada, porque parte del CO₂ queda disuelto en el vinagre, y que un crisol aún caliente marque menos de lo que pesa por las corrientes de aire que sube. Por eso el modelo del simulador declara sus supuestos y, en el modo «Instrumento real», agrega a la balanza un error aleatorio típico.',
   ],
-  hypothesis: {
-    prompt: 'Antes de pesar, predice cómo cambia la cantidad de sustancia (mol) cuando duplicas la masa de una misma sustancia, y cómo cambia la masa que se pierde en la balanza cuando aumentas el bicarbonato o el vinagre de la reacción.',
-    pairs: [
-      { x: 'masa', y: 'moles', xLabel: 'la masa de la muestra (de una misma sustancia)', yLabel: 'la cantidad de sustancia n', datasetId: 'muestras', allowVary: ['porciones'] },
-      { x: 'masaBicarbonato', y: 'perdida', xLabel: 'la masa de bicarbonato (con el mismo volumen de vinagre)', yLabel: 'la masa perdida en la balanza', datasetId: 'reaccion' },
-      { x: 'vinagre', y: 'perdida', xLabel: 'el volumen de vinagre (con la misma masa de bicarbonato)', yLabel: 'la masa perdida en la balanza', datasetId: 'reaccion' },
-    ],
-  },
+  relations: [
+    { x: 'masa', y: 'moles', xLabel: 'la masa de la muestra (de una misma sustancia)', yLabel: 'la cantidad de sustancia n', datasetId: 'muestras', allowVary: ['porciones'] },
+    { x: 'masaBicarbonato', y: 'perdida', xLabel: 'la masa de bicarbonato (con el mismo volumen de vinagre)', yLabel: 'la masa perdida en la balanza', datasetId: 'reaccion' },
+    { x: 'vinagre', y: 'perdida', xLabel: 'el volumen de vinagre (con la misma masa de bicarbonato)', yLabel: 'la masa perdida en la balanza', datasetId: 'reaccion' },
+  ],
   variables: {
     independent: ['Sustancia de la muestra', 'Número de porciones (masa de la muestra)', 'Masa de bicarbonato', 'Volumen de vinagre', 'Tipo de reacción (vinagre o calentamiento)'],
     dependent: ['Lectura de la balanza', 'Cantidad de sustancia n', 'Número de entidades y de átomos', 'Masa perdida en la reacción'],

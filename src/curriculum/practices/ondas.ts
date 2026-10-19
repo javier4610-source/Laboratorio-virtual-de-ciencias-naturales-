@@ -30,15 +30,12 @@ export const ondas: PracticeDef = {
     'La rapidez de propagación es v = λ·f. Esta rapidez la fija el medio: en una cuerda depende de la tensión y de su masa por unidad de longitud (v = √(T/μ)). Si aumenta la frecuencia en el mismo medio, la longitud de onda disminuye.',
     'El sonido es una onda longitudinal. En el aire seco a 20 °C viaja a unos 343 m/s, y más rápido cuanto mayor es la temperatura. Los humanos oímos aproximadamente entre 20 Hz y 20 000 Hz.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué ocurre con la longitud de onda cuando aumentas la frecuencia, sin cambiar la cuerda ni la tensión.',
-    pairs: [
-      { x: 'frecuencia', y: 'lambda', xLabel: 'la frecuencia', yLabel: 'la longitud de onda', datasetId: 'cuerda' },
-      { x: 'frecuencia', y: 'rapidez', xLabel: 'la frecuencia', yLabel: 'la rapidez de la onda', datasetId: 'cuerda' },
-      { x: 'tension', y: 'rapidez', xLabel: 'la tensión de la cuerda', yLabel: 'la rapidez de la onda', datasetId: 'cuerda' },
-      { x: 'temperatura', y: 'rapidez', xLabel: 'la temperatura del aire', yLabel: 'la rapidez del sonido', datasetId: 'sonido' },
-    ],
-  },
+  relations: [
+    { x: 'frecuencia', y: 'lambda', xLabel: 'la frecuencia', yLabel: 'la longitud de onda', datasetId: 'cuerda' },
+    { x: 'frecuencia', y: 'rapidez', xLabel: 'la frecuencia', yLabel: 'la rapidez de la onda', datasetId: 'cuerda' },
+    { x: 'tension', y: 'rapidez', xLabel: 'la tensión de la cuerda', yLabel: 'la rapidez de la onda', datasetId: 'cuerda' },
+    { x: 'temperatura', y: 'rapidez', xLabel: 'la temperatura del aire', yLabel: 'la rapidez del sonido', datasetId: 'sonido' },
+  ],
   variables: {
     independent: ['Frecuencia', 'Amplitud', 'Tensión', 'Tipo de cuerda', 'Temperatura del aire'],
     dependent: ['Longitud de onda', 'Periodo', 'Rapidez de propagación'],

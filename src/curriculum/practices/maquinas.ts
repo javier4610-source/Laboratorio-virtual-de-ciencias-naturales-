@@ -39,14 +39,11 @@ export const maquinas: PracticeDef = {
     'Una polea es una rueda con un canal por donde pasa una cuerda. La polea fija (como la del pozo de una finca) no ahorra fuerza (VM = 1), pero cambia la dirección: es más cómodo jalar hacia abajo. En la polea móvil la carga cuelga de dos tramos de cuerda y cada uno sostiene la mitad. Un polipasto o aparejo combina varias poleas: si n tramos sostienen el bloque móvil, la fuerza ideal es F = R/n, pero hay que jalar n veces más cuerda de la que sube la carga (h = s/n). Así funcionan las garruchas con las que se suben racimos de banano.',
     'En las máquinas reales parte del trabajo se gasta en levantar la barra o la polea móvil y en vencer el rozamiento de los ejes. Por eso el trabajo de entrada es un poco mayor que el de salida y la eficiencia (trabajo de salida ÷ trabajo de entrada) es menor que 1. Además, el dinamómetro mide con resolución de 0,1 N y la regla con resolución de 1 mm, así que los cálculos con las lecturas difieren un poco de los valores teóricos.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la fuerza que marca el dinamómetro al alejarlo del fulcro (misma carga y misma distancia de la carga), cómo cambia la fuerza al aumentar el número de tramos de cuerda que sostienen la carga y cuánto sube la carga con más tramos si siempre jalas la misma longitud de cuerda.',
-    pairs: [
-      { x: 'dF', y: 'fuerza', xLabel: 'la distancia de la fuerza al fulcro', yLabel: 'la fuerza que marca el dinamómetro', datasetId: 'palancas', allowVary: [] },
-      { x: 'cuerdas', y: 'fuerza', xLabel: 'el número de tramos de cuerda que sostienen la carga', yLabel: 'la fuerza que marca el dinamómetro', datasetId: 'poleas', allowVary: ['montaje'] },
-      { x: 'cuerdas', y: 'subida', xLabel: 'el número de tramos de cuerda que sostienen la carga', yLabel: 'la subida de la carga (jalando siempre la misma cuerda)', datasetId: 'poleas', allowVary: ['montaje'] },
-    ],
-  },
+  relations: [
+    { x: 'dF', y: 'fuerza', xLabel: 'la distancia de la fuerza al fulcro', yLabel: 'la fuerza que marca el dinamómetro', datasetId: 'palancas', allowVary: [] },
+    { x: 'cuerdas', y: 'fuerza', xLabel: 'el número de tramos de cuerda que sostienen la carga', yLabel: 'la fuerza que marca el dinamómetro', datasetId: 'poleas', allowVary: ['montaje'] },
+    { x: 'cuerdas', y: 'subida', xLabel: 'el número de tramos de cuerda que sostienen la carga', yLabel: 'la subida de la carga (jalando siempre la misma cuerda)', datasetId: 'poleas', allowVary: ['montaje'] },
+  ],
   variables: {
     independent: ['Género de la palanca y distancias de la carga y de la fuerza al fulcro', 'Montaje de poleas y número de tramos de cuerda', 'Masa de la carga'],
     dependent: ['Fuerza que marca el dinamómetro', 'Recorrido de la fuerza y subida de la carga', 'Ventaja mecánica, trabajo de entrada y de salida'],

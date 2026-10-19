@@ -31,15 +31,12 @@ export const osmosis: PracticeDef = {
     'La célula vegetal tiene pared celular: en agua se vuelve turgente sin romperse; en medio hipertónico su protoplasto se separa de la pared (plasmólisis). Un glóbulo rojo no tiene pared: en agua puede romperse (lisis) y en medio hipertónico se arruga (crenación).',
     'En la difusión, las partículas se mueven desde donde están más concentradas hacia donde lo están menos. Su rapidez aumenta con la temperatura y con el área de contacto.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué ocurrirá antes de experimentar. Usa la forma "Si…, entonces…, porque…".',
-    pairs: [
-      { x: 'nacl', y: 'cambio', xLabel: 'la concentración de NaCl del medio', yLabel: 'el cambio de volumen de la célula', datasetId: 'osmosis' },
-      { x: 'temp', y: 'rapidez', xLabel: 'la temperatura', yLabel: 'la rapidez inicial del cambio de volumen', datasetId: 'osmosis' },
-      { x: 'temp', y: 'tmedio', xLabel: 'la temperatura', yLabel: 'el tiempo para que la glucosa alcance la mitad del equilibrio', datasetId: 'difusion' },
-      { x: 'area', y: 'tmedio', xLabel: 'el área de la membrana', yLabel: 'el tiempo para que la glucosa alcance la mitad del equilibrio', datasetId: 'difusion' },
-    ],
-  },
+  relations: [
+    { x: 'nacl', y: 'cambio', xLabel: 'la concentración de NaCl del medio', yLabel: 'el cambio de volumen de la célula', datasetId: 'osmosis' },
+    { x: 'temp', y: 'rapidez', xLabel: 'la temperatura', yLabel: 'la rapidez inicial del cambio de volumen', datasetId: 'osmosis' },
+    { x: 'temp', y: 'tmedio', xLabel: 'la temperatura', yLabel: 'el tiempo para que la glucosa alcance la mitad del equilibrio', datasetId: 'difusion' },
+    { x: 'area', y: 'tmedio', xLabel: 'el área de la membrana', yLabel: 'el tiempo para que la glucosa alcance la mitad del equilibrio', datasetId: 'difusion' },
+  ],
   variables: {
     independent: ['Concentración de NaCl del medio (%)', 'Tipo de célula', 'Temperatura', 'Área de la membrana (difusión)'],
     dependent: ['Cambio de volumen celular (%)', 'Estado de la célula (lisis, crenación, plasmólisis, turgencia)', 'Concentración de glucosa y yodo a ambos lados de la bolsa'],

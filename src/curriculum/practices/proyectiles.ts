@@ -40,14 +40,11 @@ export const proyectiles: PracticeDef = {
     'El aire ejerce una fuerza de arrastre opuesta a la velocidad. A las rapideces de esta práctica es aproximadamente F = ½·ρ·C_d·A·v², con ρ ≈ 1,2 kg/m³ y C_d ≈ 0,47 para una esfera. Su efecto sobre la aceleración es F/m: para esferas del mismo tamaño, cuanto menor es la masa, mayor es el frenado. El acero casi no lo nota, pero el icopor alcanza su rapidez terminal (≈ 3,7 m/s) en fracciones de segundo y su alcance se reduce mucho. Con arrastre, el ángulo de máximo alcance también baja de 45°.',
     'Sin aire, la energía mecánica E = ½·m·v² + m·g·y se conserva: la esfera llega al piso con rapidez √(v₀² + 2gh) sin importar el ángulo. Con aire, parte de la energía se transfiere al aire y la esfera llega más lenta. Las ecuaciones con arrastre no tienen solución sencilla y se resuelven numéricamente (aquí, con el método de Runge-Kutta de orden 4).',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el alcance al aumentar el ángulo (con v₀ y h fijas), al aumentar la rapidez de salida y al subir la mesa.',
-    pairs: [
-      { x: 'angulo', y: 'alcance', xLabel: 'el ángulo de lanzamiento', yLabel: 'el alcance', datasetId: 'disparos' },
-      { x: 'v0', y: 'alcance', xLabel: 'la rapidez de salida', yLabel: 'el alcance', datasetId: 'disparos' },
-      { x: 'altura', y: 'alcance', xLabel: 'la altura de lanzamiento', yLabel: 'el alcance', datasetId: 'disparos' },
-    ],
-  },
+  relations: [
+    { x: 'angulo', y: 'alcance', xLabel: 'el ángulo de lanzamiento', yLabel: 'el alcance', datasetId: 'disparos' },
+    { x: 'v0', y: 'alcance', xLabel: 'la rapidez de salida', yLabel: 'el alcance', datasetId: 'disparos' },
+    { x: 'altura', y: 'alcance', xLabel: 'la altura de lanzamiento', yLabel: 'el alcance', datasetId: 'disparos' },
+  ],
   variables: {
     independent: ['Ángulo de lanzamiento', 'Rapidez de salida (nivel del resorte)', 'Altura de la mesa', 'Esfera y resistencia del aire'],
     dependent: ['Alcance horizontal', 'Altura máxima', 'Tiempo de vuelo'],

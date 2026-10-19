@@ -38,14 +38,11 @@ export const metabolismo: PracticeDef = {
     'El FBA tiene límites importantes. Es un modelo basado en restricciones: no representa la regulación de los genes, la cinética de las enzimas, las concentraciones de los metabolitos ni el espacio dentro de la célula, y no describe cómo cambian las cosas con el tiempo. Supone que la célula maximiza su crecimiento, lo cual es una hipótesis, no un hecho. Por eso predice un óptimo posible, no lo que la célula necesariamente hace: el crecimiento calculado no es una medición. Además, a menudo hay óptimos alternativos: varios vectores de flujo dan el mismo crecimiento. El análisis de variabilidad de flujos (FVA) calcula el mínimo y el máximo de cada flujo compatibles con ese óptimo.',
     'Un buen uso del modelo es formular hipótesis comprobables: «sin el gen pgi, la bacteria debería desviar la glucosa por la vía de las pentosas y crecer casi igual con oxígeno, pero no podría crecer sin él». Esas hipótesis se contrastan después con experimentos. Cuando un gen no tiene efecto en el modelo puede ser porque el modelo incluye una isoenzima que en la célula real no se expresa en esa condición, o porque el gen cumple funciones fuera del metabolismo central que el modelo no incluye.',
   ],
-  hypothesis: {
-    prompt: 'Antes de calcular: si dejas la glucosa en 10 mmol/gDW/h y vas aumentando el oxígeno disponible desde 0, ¿qué crees que pasará con el crecimiento óptimo y con el acetato que la bacteria expulsa al medio? ¿Y si aumentas la glucosa con el oxígeno sin límite?',
-    pairs: [
-      { x: 'oxigeno', y: 'crecimiento', xLabel: 'la captación máxima de oxígeno', yLabel: 'el crecimiento óptimo estimado', datasetId: 'condiciones' },
-      { x: 'oxigeno', y: 'acetato', xLabel: 'la captación máxima de oxígeno', yLabel: 'el acetato secretado en la solución óptima', datasetId: 'condiciones' },
-      { x: 'captacion', y: 'crecimiento', xLabel: 'la captación máxima de la fuente de carbono', yLabel: 'el crecimiento óptimo estimado', datasetId: 'condiciones' },
-    ],
-  },
+  relations: [
+    { x: 'oxigeno', y: 'crecimiento', xLabel: 'la captación máxima de oxígeno', yLabel: 'el crecimiento óptimo estimado', datasetId: 'condiciones' },
+    { x: 'oxigeno', y: 'acetato', xLabel: 'la captación máxima de oxígeno', yLabel: 'el acetato secretado en la solución óptima', datasetId: 'condiciones' },
+    { x: 'captacion', y: 'crecimiento', xLabel: 'la captación máxima de la fuente de carbono', yLabel: 'el crecimiento óptimo estimado', datasetId: 'condiciones' },
+  ],
   variables: {
     independent: ['Fuente de carbono', 'Captación máxima de la fuente de carbono (mmol/gDW/h)', 'Captación máxima de oxígeno (mmol/gDW/h)', 'Gen o reacción eliminados'],
     dependent: ['Crecimiento óptimo estimado (h⁻¹)', 'Crecimiento relativo a la referencia (%)', 'Flujos de intercambio: O₂, CO₂, acetato, etanol, formiato, lactato y succinato (mmol/gDW/h)', 'Flujos internos del mapa'],
@@ -53,11 +50,11 @@ export const metabolismo: PracticeDef = {
   },
   procedure: [
     'Sin cambiar los controles (glucosa 10 mmol/gDW/h, oxígeno sin límite, sin eliminaciones), pulsa «Calcular el óptimo». Anota el crecimiento, el consumo de O₂ y el CO₂ producido; recorre el mapa y ubica la glucólisis, la vía de las pentosas y el ciclo de Krebs. Guarda la condición en la tabla.',
-    'Escribe tu hipótesis. Elige «Oxígeno disponible: Limitado» y calcula con 0, 5, 10, 15, 20 y 25 mmol/gDW/h; guarda cada condición. Luego elige «Sin oxígeno» y observa en el mapa qué productos de fermentación aparecen.',
+    'Elige «Oxígeno disponible: Limitado» y calcula con 0, 5, 10, 15, 20 y 25 mmol/gDW/h; guarda cada condición. Luego elige «Sin oxígeno» y observa en el mapa qué productos de fermentación aparecen.',
     'Vuelve al oxígeno sin límite y cambia la captación de glucosa (por ejemplo 2, 5, 10, 15 y 20). Después prueba otras fuentes de carbono (fructosa, acetato, succinato) con 10 mmol/gDW/h, con y sin oxígeno. Guarda cada condición.',
     'Con glucosa y oxígeno sin límite, busca y elimina el gen pgi (b4025). Calcula, compara con la referencia en la tabla y observa en el mapa por dónde va ahora la glucosa. Repite sin oxígeno.',
     'Pulsa «Buscar genes esenciales» con oxígeno y sin oxígeno. Compara las dos listas y elimina un gen que el modelo prediga sin efecto (por ejemplo adhE, b1241) para leer qué reacciones se apagan y por qué.',
-    'En el cuaderno, grafica el crecimiento y el acetato contra el oxígeno, compáralos con tu hipótesis y escribe qué parte de tus conclusiones es una predicción del modelo y qué haría falta medir en un cultivo real.',
+    'En el cuaderno, grafica el crecimiento y el acetato contra el oxígeno, describe la tendencia de tus datos y escribe qué parte de tus conclusiones es una predicción del modelo y qué haría falta medir en un cultivo real.',
   ],
   interpretation: [
     '¿Por qué el crecimiento aumenta con el oxígeno disponible y deja de aumentar alrededor de 22 mmol/gDW/h? ¿Qué restricción limita el crecimiento antes y después de ese punto?',

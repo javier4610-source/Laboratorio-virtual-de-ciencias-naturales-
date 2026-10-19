@@ -38,13 +38,10 @@ export const balanceo: PracticeDef = {
     'Por convención se usan los menores enteros posibles: 4 H₂ + 2 O₂ → 4 H₂O está balanceada, pero todos los coeficientes se pueden dividir entre 2 (su máximo común divisor), así que la forma correcta es 2 H₂ + O₂ → 2 H₂O.',
     'El método algebraico convierte el balanceo en un sistema de ecuaciones: se asigna una letra a cada coeficiente y se escribe una ecuación por elemento (para el agua, H: 2a = 2c y O: 2b = c). Resolverlo con fracciones exactas equivale a hallar el espacio nulo de la matriz de composición; si ese espacio tiene una sola dimensión, la respuesta es única salvo un factor común, y al escoger enteros con mcd 1 se obtiene la ecuación convencional.',
   ],
-  hypothesis: {
-    prompt: 'Antes de balancear, predice qué ocurre con la diferencia de masa entre los dos platos de la balanza cuando hay más átomos desbalanceados, y qué ocurre con la masa de los reactivos cuando aumentas los coeficientes. Ten en cuenta la ley de Lavoisier.',
-    pairs: [
-      { x: 'desbalance', y: 'difMasaAbs', xLabel: 'el número de átomos desbalanceados', yLabel: 'la diferencia de masa entre productos y reactivos (valor absoluto)', datasetId: 'intentos', allowVary: ['sumaCoef'] },
-      { x: 'sumaCoef', y: 'masaReactivos', xLabel: 'la suma de los coeficientes (con la misma reacción)', yLabel: 'la masa de los reactivos', datasetId: 'intentos' },
-    ],
-  },
+  relations: [
+    { x: 'desbalance', y: 'difMasaAbs', xLabel: 'el número de átomos desbalanceados', yLabel: 'la diferencia de masa entre productos y reactivos (valor absoluto)', datasetId: 'intentos', allowVary: ['sumaCoef'] },
+    { x: 'sumaCoef', y: 'masaReactivos', xLabel: 'la suma de los coeficientes (con la misma reacción)', yLabel: 'la masa de los reactivos', datasetId: 'intentos' },
+  ],
   variables: {
     independent: ['Reacción química', 'Coeficiente de cada sustancia (entero entre 1 y 12)'],
     dependent: ['Átomos de cada elemento en reactivos y productos', 'Masa de reactivos y de productos (Σ ν·M)', 'Diferencia de masa', 'Máximo común divisor de los coeficientes'],

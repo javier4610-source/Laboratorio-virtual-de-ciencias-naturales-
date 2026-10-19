@@ -30,14 +30,11 @@ export const optica: PracticeDef = {
     'Refracción: la luz cambia de dirección al pasar a un medio donde viaja con distinta rapidez. El índice de refracción es n = c/v. Ley de Snell: n₁·sen θ₁ = n₂·sen θ₂. Al pasar a un medio de mayor n, el rayo se acerca a la normal.',
     'Si la luz va de un medio de mayor n a uno de menor n y el ángulo supera el ángulo crítico, toda la luz se refleja: es la reflexión total interna, que permite que la luz viaje por las fibras ópticas.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el ángulo de refracción al aumentar el ángulo de incidencia cuando la luz pasa del aire al agua.',
-    pairs: [
-      { x: 'incidencia', y: 'refraccion', xLabel: 'el ángulo de incidencia', yLabel: 'el ángulo de refracción', datasetId: 'rayos' },
-      { x: 'senoI', y: 'senoT', xLabel: 'el seno del ángulo de incidencia', yLabel: 'el seno del ángulo de refracción', datasetId: 'rayos', allowVary: ['incidencia'] },
-      { x: 'incidencia', y: 'reflejada', xLabel: 'el ángulo de incidencia', yLabel: 'el porcentaje de luz reflejada', datasetId: 'rayos' },
-    ],
-  },
+  relations: [
+    { x: 'incidencia', y: 'refraccion', xLabel: 'el ángulo de incidencia', yLabel: 'el ángulo de refracción', datasetId: 'rayos' },
+    { x: 'senoI', y: 'senoT', xLabel: 'el seno del ángulo de incidencia', yLabel: 'el seno del ángulo de refracción', datasetId: 'rayos', allowVary: ['incidencia'] },
+    { x: 'incidencia', y: 'reflejada', xLabel: 'el ángulo de incidencia', yLabel: 'el porcentaje de luz reflejada', datasetId: 'rayos' },
+  ],
   variables: {
     independent: ['Ángulo de incidencia', 'Medio de llegada', 'Medio de salida'],
     dependent: ['Ángulo de reflexión', 'Ángulo de refracción', 'Porcentaje de luz reflejada'],

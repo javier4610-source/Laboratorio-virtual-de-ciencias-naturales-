@@ -39,14 +39,11 @@ export const agua: PracticeDef = {
     'Los macroinvertebrados acuáticos (larvas de insectos, caracoles, gusanos, crustáceos) son bioindicadores: integran lo que ha pasado en el río durante semanas. En el índice BMWP/Col, adaptado para Colombia por Gabriel Roldán (2003), cada familia tiene un puntaje de 1 (muy tolerante, como los gusanos Tubificidae) a 10 (muy sensible, como las moscas de piedra Perlidae); el BMWP/Col es la suma, y se clasifica de I (aguas limpias, > 100) a V (fuertemente contaminadas, ≤ 15).',
     'Un índice de calidad del agua (ICA) resume varios parámetros en un número de 0 a 100. El índice de la Fundación Nacional de Saneamiento de EE. UU. (NSF) pondera nueve subíndices; el IDEAM usa en Colombia un ICA con otras variables y cortes de clase parecidos. La normativa colombiana fija criterios distintos según el uso: la Resolución 2115 de 2007 para el agua potable (ya tratada), los criterios compilados en el Decreto 1076 de 2015 para los usos de una fuente, y la Resolución 631 de 2015 para los vertimientos. Todos los datos de este laboratorio son simulados.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el oxígeno disuelto al alejarte del vertimiento, cómo cambia la DBO₅ en un mismo punto al aumentar el caudal del vertimiento y cómo cambia el índice de calidad al aumentar el caudal del río. Justifica con la idea de consumo y reposición de oxígeno y con la dilución.',
-    pairs: [
-      { x: 'distancia', y: 'od', xLabel: 'la distancia aguas abajo del vertimiento', yLabel: 'el oxígeno disuelto', datasetId: 'muestras' },
-      { x: 'caudalVertimiento', y: 'dbo5', xLabel: 'el caudal del vertimiento', yLabel: 'la DBO₅ en el punto de muestreo', datasetId: 'muestras' },
-      { x: 'caudalRio', y: 'ica', xLabel: 'el caudal del río', yLabel: 'el índice de calidad del agua (ICA)', datasetId: 'muestras' },
-    ],
-  },
+  relations: [
+    { x: 'distancia', y: 'od', xLabel: 'la distancia aguas abajo del vertimiento', yLabel: 'el oxígeno disuelto', datasetId: 'muestras' },
+    { x: 'caudalVertimiento', y: 'dbo5', xLabel: 'el caudal del vertimiento', yLabel: 'la DBO₅ en el punto de muestreo', datasetId: 'muestras' },
+    { x: 'caudalRio', y: 'ica', xLabel: 'el caudal del río', yLabel: 'el índice de calidad del agua (ICA)', datasetId: 'muestras' },
+  ],
   variables: {
     independent: ['Distancia del punto de muestreo al vertimiento', 'Caudal del vertimiento', 'Caudal del río', 'Tipo de vertimiento', 'Temperatura del río'],
     dependent: ['Oxígeno disuelto y porcentaje de saturación', 'DBO₅', 'Coliformes fecales', 'Turbidez, conductividad, nitratos y fosfatos', 'BMWP/Col', 'Índice de calidad del agua'],

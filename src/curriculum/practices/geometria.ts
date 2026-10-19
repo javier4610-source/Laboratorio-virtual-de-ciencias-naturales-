@@ -38,14 +38,11 @@ export const geometria: PracticeDef = {
     'Las coordenadas del laboratorio son confórmeros 3D calculados por PubChem (PubChem3D) con el programa OMEGA y el campo de fuerza MMFF94s: son una predicción computacional, no una medición. Una estructura experimental se obtiene, por ejemplo, por espectroscopia de microondas, difracción de electrones o difracción de rayos X, y se publica con su método e incertidumbre. PubChem advierte que sus confórmeros no están en un mínimo de energía, y no calcula confórmeros para moléculas con elementos fuera de H, C, N, O, F, Si, P, S, Cl, Br e I: por eso BF₃, PCl₅ y SF₆ no aparecen.',
     'Las moléculas del laboratorio también muestran límites del modelo: en H₂S y PH₃ los ángulos calculados quedan cerca de 90°, muy por debajo de lo que sugiere un tetraedro, algo que VSEPR por sí solo no explica. Comparar datos con un modelo y reconocer dónde falla es parte del trabajo científico.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el ángulo de enlace alrededor del átomo central cuando aumenta el número de pares libres y cuando cambia el número de dominios electrónicos.',
-    pairs: [
-      { x: 'paresLibres', y: 'angulo', xLabel: 'el número de pares libres del átomo central (CH₄, NH₃, H₂O)', yLabel: 'el ángulo de enlace calculado', datasetId: 'mediciones', allowVary: ['molecula', 'atomos'] },
-      { x: 'dominios', y: 'angulo', xLabel: 'el número de dominios electrónicos sin pares libres (CO₂, H₂CO, CH₄)', yLabel: 'el ángulo de enlace calculado', datasetId: 'mediciones', allowVary: ['molecula', 'atomos'] },
-      { x: 'paresLibres', y: 'diferencia', xLabel: 'el número de pares libres del átomo central', yLabel: 'la diferencia entre el ángulo calculado y el ideal', datasetId: 'mediciones', allowVary: ['molecula', 'atomos'] },
-    ],
-  },
+  relations: [
+    { x: 'paresLibres', y: 'angulo', xLabel: 'el número de pares libres del átomo central (CH₄, NH₃, H₂O)', yLabel: 'el ángulo de enlace calculado', datasetId: 'mediciones', allowVary: ['molecula', 'atomos'] },
+    { x: 'dominios', y: 'angulo', xLabel: 'el número de dominios electrónicos sin pares libres (CO₂, H₂CO, CH₄)', yLabel: 'el ángulo de enlace calculado', datasetId: 'mediciones', allowVary: ['molecula', 'atomos'] },
+    { x: 'paresLibres', y: 'diferencia', xLabel: 'el número de pares libres del átomo central', yLabel: 'la diferencia entre el ángulo calculado y el ideal', datasetId: 'mediciones', allowVary: ['molecula', 'atomos'] },
+  ],
   variables: {
     independent: ['Molécula (número de átomos unidos y de pares libres del átomo central)', 'Átomos elegidos para medir'],
     dependent: ['Ángulo de enlace calculado', 'Longitud de enlace calculada', 'Diferencia con el ángulo ideal VSEPR'],

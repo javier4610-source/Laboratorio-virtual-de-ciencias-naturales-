@@ -38,14 +38,11 @@ export const cinematica: PracticeDef = {
     'El área bajo la gráfica v–t es el desplazamiento. Por eso, si el móvil parte del reposo, d = ½·a·t² (el área de un triángulo), y si frena desde v₀ con aceleración negativa se detiene en t = v₀/|a| tras recorrer d = v₀²/(2|a|): duplicar la velocidad inicial cuadruplica la distancia de frenado.',
     'En una fotografía estroboscópica el objeto aparece varias veces, a intervalos de tiempo iguales. Si las imágenes quedan igualmente espaciadas, la velocidad es constante; si la separación crece, acelera; si disminuye, frena.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia la distancia recorrida al aumentar la duración del recorrido o la velocidad inicial, y cómo cambia la velocidad final al aumentar la aceleración.',
-    pairs: [
-      { x: 'tiempo', y: 'distancia', xLabel: 'la duración del recorrido', yLabel: 'la distancia recorrida', datasetId: 'recorridos' },
-      { x: 'aceleracion', y: 'vFinal', xLabel: 'la aceleración', yLabel: 'la velocidad final', datasetId: 'recorridos' },
-      { x: 'v0', y: 'distancia', xLabel: 'la velocidad inicial', yLabel: 'la distancia recorrida', datasetId: 'recorridos' },
-    ],
-  },
+  relations: [
+    { x: 'tiempo', y: 'distancia', xLabel: 'la duración del recorrido', yLabel: 'la distancia recorrida', datasetId: 'recorridos' },
+    { x: 'aceleracion', y: 'vFinal', xLabel: 'la aceleración', yLabel: 'la velocidad final', datasetId: 'recorridos' },
+    { x: 'v0', y: 'distancia', xLabel: 'la velocidad inicial', yLabel: 'la distancia recorrida', datasetId: 'recorridos' },
+  ],
   variables: {
     independent: ['Velocidad inicial', 'Aceleración', 'Duración del recorrido'],
     dependent: ['Distancia recorrida', 'Velocidad final', 'Velocidad media'],

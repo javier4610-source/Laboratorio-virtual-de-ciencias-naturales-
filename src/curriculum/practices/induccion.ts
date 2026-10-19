@@ -39,14 +39,11 @@ export const induccion: PracticeDef = {
     'Un generador hace girar una bobina de N vueltas y área A con rapidez angular ω dentro de un campo B: el flujo varía como B·A·cos ωt y la fem es ε = N·B·A·ω·sen ωt, una corriente alterna de frecuencia f = ω/2π. Girar más rápido aumenta a la vez la amplitud y la frecuencia. En Colombia la red trabaja a 60 Hz: un generador de dos polos debe girar a 3 600 rpm; las turbinas de las hidroeléctricas como Urrá o Hidroituango giran mucho más despacio y por eso sus generadores tienen muchos pares de polos (n = 120·f/p).',
     'Un transformador tiene dos bobinas en un mismo núcleo de hierro. La corriente alterna del primario produce un flujo que cambia sin parar y que induce en el secundario V₂ = V₁·N₂/N₁. Si no hay pérdidas, la potencia se conserva: V₁·I₁ = V₂·I₂, así que lo que se gana en voltaje se pierde en corriente. Las subestaciones elevan el voltaje para transmitir con poca corriente (las pérdidas en los cables son I²·R) y luego lo bajan a 120 V. Los transformadores reales tienen eficiencias del 95 % al 99 %. Con corriente continua el flujo no cambia y el transformador no funciona.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el pico de la fem cuando metes el imán más rápido en la bobina, cómo cambia el área bajo la curva ε(t) con esa misma rapidez y cómo cambia la fem pico del generador cuando giras la manivela más rápido.',
-    pairs: [
-      { x: 'rapidez', y: 'picoAbs', xLabel: 'la rapidez con que se introduce el imán', yLabel: 'el valor del pico de la fem (en valor absoluto)', datasetId: 'faraday', allowVary: [] },
-      { x: 'rapidez', y: 'area', xLabel: 'la rapidez con que se introduce el imán', yLabel: 'el área bajo la curva ∫ε dt', datasetId: 'faraday', allowVary: [] },
-      { x: 'rpm', y: 'femPico', xLabel: 'la rapidez de giro del generador', yLabel: 'la fem pico del generador', datasetId: 'generador', allowVary: [] },
-    ],
-  },
+  relations: [
+    { x: 'rapidez', y: 'picoAbs', xLabel: 'la rapidez con que se introduce el imán', yLabel: 'el valor del pico de la fem (en valor absoluto)', datasetId: 'faraday', allowVary: [] },
+    { x: 'rapidez', y: 'area', xLabel: 'la rapidez con que se introduce el imán', yLabel: 'el área bajo la curva ∫ε dt', datasetId: 'faraday', allowVary: [] },
+    { x: 'rpm', y: 'femPico', xLabel: 'la rapidez de giro del generador', yLabel: 'la fem pico del generador', datasetId: 'generador', allowVary: [] },
+  ],
   variables: {
     independent: ['Posición de la sonda y corriente del solenoide', 'Rapidez, sentido del movimiento y polo del imán; número de vueltas de la bobina', 'Rapidez de giro, vueltas y campo del generador', 'Vueltas del primario y del secundario; tipo de fuente (CA o CC)'],
     dependent: ['Campo magnético medido con el teslámetro', 'Pico de la fem, su signo y el área bajo la curva ε(t)', 'fem pico, eficaz y frecuencia del generador; brillo del bombillo', 'Voltaje y corriente del secundario'],

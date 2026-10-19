@@ -40,15 +40,12 @@ export const pendulo: PracticeDef = {
     'Toda medición manual con cronómetro tiene un error por el tiempo de reacción de quien lo opera (aquí, hasta ±0,15 s por intervalo). Si se cronometran 10 oscilaciones y se divide entre 10, ese error se reparte y el error en el período baja a ±0,015 s. Una fotopuerta, que detecta electrónicamente el paso de la lenteja, mide el período con 1 ms de resolución.',
     'En un péndulo real el aire (y más aún una aleta sumergida en aceite) disipa energía: la amplitud disminuye de forma exponencial, θ_máx ≈ θ₀·e^(−b·t/2), mientras el período casi no cambia. Sin amortiguamiento, la energía mecánica (cinética + potencial gravitacional) se conserva.',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambia el período del péndulo al aumentar la longitud del hilo, la masa de la lenteja o la amplitud con que lo sueltas. ¿Qué forma tendrá la gráfica de T² contra L?',
-    pairs: [
-      { x: 'longitud', y: 'periodo', xLabel: 'la longitud del péndulo', yLabel: 'el período', datasetId: 'oscilaciones' },
-      { x: 'masa', y: 'periodo', xLabel: 'la masa de la lenteja', yLabel: 'el período', datasetId: 'oscilaciones', allowVary: ['lenteja'] },
-      { x: 'amplitud', y: 'periodo', xLabel: 'la amplitud angular', yLabel: 'el período', datasetId: 'oscilaciones' },
-      { x: 'longitud', y: 'periodo2', xLabel: 'la longitud del péndulo', yLabel: 'el cuadrado del período (T²)', datasetId: 'oscilaciones' },
-    ],
-  },
+  relations: [
+    { x: 'longitud', y: 'periodo', xLabel: 'la longitud del péndulo', yLabel: 'el período', datasetId: 'oscilaciones' },
+    { x: 'masa', y: 'periodo', xLabel: 'la masa de la lenteja', yLabel: 'el período', datasetId: 'oscilaciones', allowVary: ['lenteja'] },
+    { x: 'amplitud', y: 'periodo', xLabel: 'la amplitud angular', yLabel: 'el período', datasetId: 'oscilaciones' },
+    { x: 'longitud', y: 'periodo2', xLabel: 'la longitud del péndulo', yLabel: 'el cuadrado del período (T²)', datasetId: 'oscilaciones' },
+  ],
   variables: {
     independent: ['Longitud del péndulo', 'Masa y material de la lenteja', 'Amplitud angular inicial', 'Lugar (gravedad)'],
     dependent: ['Tiempo de 10 oscilaciones', 'Período', 'Frecuencia', 'Gravedad calculada'],

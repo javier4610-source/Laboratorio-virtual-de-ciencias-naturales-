@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getEnrollment } from '../lib/classroom';
-import type { PracticeDef, PracticeSession, Trend } from '../core/types';
+import type { PracticeDef, PracticeSession } from '../core/types';
 import { loadSession } from '../lib/session';
 import { loadJSON, saveJSON } from '../lib/storage';
 import { buildReport, copyText, downloadText, practiceQuestions, slug, type StudentInfo, type StudentReport } from '../lib/report';
@@ -10,7 +10,6 @@ import { DataPanel } from '../components/DataPanel';
 import { fmt, fmtDate } from '../lib/format';
 import { buildAnalysis } from '../lib/analysis';
 import { FIT_LABEL, FIT_MODELS, equationWithValues, formatWithUncertainty } from '../lib/fit';
-import { TREND_LABEL } from '../lib/trend';
 import { href } from '../lib/router';
 import { Notice } from '../components/ui';
 import { progressPercent } from '../lib/progress';
@@ -61,20 +60,18 @@ export function ReportBody({ practice: p, session: s, report }: { practice: Prac
         <p><strong>Pregunta problema:</strong> {p.problemQuestion}</p>
         <p><strong>Modo de trabajo:</strong> {s.mode} · <strong>Progreso:</strong> {progressPercent(p, s)} % · <strong>Ensayos:</strong> {s.trials.length}</p>
       </section>
-      <section className="card stack-sm">
-        <h3>Hipótesis</h3>
-        <p>{s.hypothesis.text || <em className="muted">No registrada.</em>}</p>
-        {s.hypothesis.trend && <p className="small">Predicción: {p.hypothesis.pairs[s.hypothesis.pairIndex]?.yLabel} {TREND_LABEL[s.hypothesis.trend as Exclude<Trend, ''>]} cuando aumenta {p.hypothesis.pairs[s.hypothesis.pairIndex]?.xLabel}.</p>}
-        {s.variablesCheck && <p className="small">Clasificación de variables: {s.variablesCheck.correct} de {s.variablesCheck.total} correctas.</p>}
-      </section>
+      {s.variablesCheck && (
+        <section className="card stack-sm">
+          <h3>Preparación</h3>
+          <p className="small">Clasificación de variables: {s.variablesCheck.correct} de {s.variablesCheck.total} correctas.</p>
+        </section>
+      )}
       {DATASETS[p.id].filter((d) => s.trials.some((t) => t.datasetId === d.id)).length > 0
         ? <DataPanel practiceId={p.id} datasets={DATASETS[p.id].filter((d) => s.trials.some((t) => t.datasetId === d.id))} readOnly={s} />
         : <Notice kind="warn">No hay datos experimentales registrados.</Notice>}
       <FitReport practice={p} session={s} />
       <section className="card stack-sm">
         <h3>Análisis</h3>
-        <p><strong>Comparación con la hipótesis:</strong> {s.comparison.verdict ? `mis datos ${s.comparison.verdict === 'apoya' ? 'apoyan' : s.comparison.verdict === 'refuta' ? 'no apoyan' : 'no son suficientes para decidir sobre'} la hipótesis.` : '—'}</p>
-        {s.comparison.justification && <p>{s.comparison.justification}</p>}
         {p.interpretation.map((q, i) => (
           <div key={q}><p className="small" style={{ fontWeight: 700, margin: 0 }}>{i + 1}. {q}</p><p>{s.interpretations[String(i)] || <em className="muted">Sin respuesta.</em>}</p></div>
         ))}

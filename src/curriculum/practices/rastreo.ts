@@ -39,14 +39,11 @@ export const rastreo: PracticeDef = {
     'Cada afirmación de un registro tiene un tipo de evidencia. UniProt y RefSeq usan la ontología ECO: ECO:0000269 indica evidencia experimental (por ejemplo, un ensayo publicado), mientras que ECO:0000250 indica que se dedujo por similitud con otra proteína y ECO:0000305, que es una inferencia del curador. Una ruta de Reactome enlazada desde UniProt o una función escrita sin código no traen el tipo de evidencia. Una estructura del PDB es experimental (difracción de rayos X, RMN o criomicroscopía, con su resolución), mientras que un modelo de AlphaFold es una predicción computacional.',
     'Del gen al fenotipo hay muchos pasos y en cada uno intervienen otros genes y el ambiente. Que una proteína participe en una ruta o que un gen esté asociado con un rasgo no quiere decir que lo determine por sí solo, ni que el efecto sea el mismo en todos los organismos, tejidos o personas. Por eso, en este laboratorio las perturbaciones («¿qué pasaría si el gen no funcionara?») se rotulan como hipótesis conceptuales y nunca como resultados.',
   ],
-  hypothesis: {
-    prompt: 'Predice: si una variante sin sentido o de cambio del marco aparece cada vez más lejos del inicio de la región codificante de HBB, ¿qué pasará con la longitud y la identidad de la proteína resultante? Y, entre los cinco genes, ¿cómo crees que se relaciona el número de exones con la fracción del gen que llega al ARNm?',
-    pairs: [
-      { x: 'posicion', y: 'longitudProteina', xLabel: 'la posición (c.) de la variante en la región codificante', yLabel: 'la longitud de la proteína resultante', datasetId: 'variantes', allowVary: ['base'] },
-      { x: 'posicion', y: 'identidad', xLabel: 'la posición (c.) de la variante en la región codificante', yLabel: 'la identidad con la proteína de referencia', datasetId: 'variantes', allowVary: ['base'] },
-      { x: 'exones', y: 'fraccionExonica', xLabel: 'el número de exones del gen', yLabel: 'la fracción exónica del gen', datasetId: 'genes' },
-    ],
-  },
+  relations: [
+    { x: 'posicion', y: 'longitudProteina', xLabel: 'la posición (c.) de la variante en la región codificante', yLabel: 'la longitud de la proteína resultante', datasetId: 'variantes', allowVary: ['base'] },
+    { x: 'posicion', y: 'identidad', xLabel: 'la posición (c.) de la variante en la región codificante', yLabel: 'la identidad con la proteína de referencia', datasetId: 'variantes', allowVary: ['base'] },
+    { x: 'exones', y: 'fraccionExonica', xLabel: 'el número de exones del gen', yLabel: 'la fracción exónica del gen', datasetId: 'genes' },
+  ],
   variables: {
     independent: ['Gen del conjunto curado', 'Tipo de variante (sustitución, deleción, inserción o duplicación de una base)', 'Posición de la variante en la región codificante (c.)', 'Base nueva'],
     dependent: ['Número de exones e intrones y sus longitudes', 'Fracción exónica del gen', 'Consecuencia de la variante', 'Cambio en la proteína (notación p.)', 'Longitud de la proteína resultante', 'Identidad con la proteína de referencia'],

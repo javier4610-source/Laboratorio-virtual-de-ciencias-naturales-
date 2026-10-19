@@ -41,14 +41,11 @@ export const equilibrio: PracticeDef = {
     'La temperatura sí cambia K (ecuación de Van \'t Hoff). En una reacción exotérmica (ΔH < 0), como las dos de esta práctica, calentar disminuye K y desplaza el equilibrio hacia los reactivos: el tubo se aclara y la jeringa se vuelve más marrón.',
     'Al comprimir la jeringa, todas las presiones parciales aumentan y el color marrón se intensifica al instante; luego Q < K y el sistema se desplaza hacia el lado con menos moles de gas (N₂O₄), aclarándose un poco. De forma análoga, al diluir una disolución el sistema se desplaza hacia el lado con más partículas disueltas.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué pasa con la absorbancia (el color rojo) al agregar gotas de Fe³⁺, qué pasa con K al calentar, y cómo cambia la fracción de NO₂ al reducir el volumen de la jeringa.',
-    pairs: [
-      { x: 'gotasFe', y: 'absorbancia', xLabel: 'las gotas de Fe³⁺ agregadas', yLabel: 'la absorbancia a 450 nm', datasetId: 'estados' },
-      { x: 'temperatura', y: 'K', xLabel: 'la temperatura del baño', yLabel: 'la constante de equilibrio K', datasetId: 'estados', allowVary: ['gotasFe', 'gotasSCN', 'gotasAg', 'agua', 'volumen'] },
-      { x: 'volumen', y: 'fraccionNO2', xLabel: 'el volumen de la jeringa', yLabel: 'la fracción de NO₂ en la mezcla', datasetId: 'estados' },
-    ],
-  },
+  relations: [
+    { x: 'gotasFe', y: 'absorbancia', xLabel: 'las gotas de Fe³⁺ agregadas', yLabel: 'la absorbancia a 450 nm', datasetId: 'estados' },
+    { x: 'temperatura', y: 'K', xLabel: 'la temperatura del baño', yLabel: 'la constante de equilibrio K', datasetId: 'estados', allowVary: ['gotasFe', 'gotasSCN', 'gotasAg', 'agua', 'volumen'] },
+    { x: 'volumen', y: 'fraccionNO2', xLabel: 'el volumen de la jeringa', yLabel: 'la fracción de NO₂ en la mezcla', datasetId: 'estados' },
+  ],
   variables: {
     independent: ['Gotas de Fe³⁺, SCN⁻ o Ag⁺ agregadas', 'Agua agregada (dilución)', 'Temperatura del baño', 'Volumen de la jeringa (presión)'],
     dependent: ['Absorbancia a 450 nm (concentración de FeSCN²⁺)', 'Intensidad del color marrón (concentración de NO₂)', 'Cociente de reacción Q y constante K'],

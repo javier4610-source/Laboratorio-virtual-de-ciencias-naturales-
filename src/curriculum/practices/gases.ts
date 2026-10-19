@@ -30,14 +30,11 @@ export const gases: PracticeDef = {
     'Ley de Charles: a presión constante, V/T es constante (T en kelvin). Ley de Gay-Lussac: a volumen constante, P/T es constante.',
     'Las tres leyes se resumen en la ecuación del gas ideal: P·V = n·R·T. La escala kelvin parte del cero absoluto (−273,15 °C), la temperatura a la que un gas ideal tendría volumen cero.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué ocurre con la presión al comprimir la jeringa, y con el volumen al calentar el gas a presión constante.',
-    pairs: [
-      { x: 'volumen', y: 'presion', xLabel: 'el volumen (temperatura constante)', yLabel: 'la presión', datasetId: 'mediciones' },
-      { x: 'temperatura', y: 'volumen', xLabel: 'la temperatura (presión constante)', yLabel: 'el volumen', datasetId: 'mediciones', allowVary: ['volumen'] },
-      { x: 'temperatura', y: 'presion', xLabel: 'la temperatura (volumen constante)', yLabel: 'la presión', datasetId: 'mediciones', allowVary: [] },
-    ],
-  },
+  relations: [
+    { x: 'volumen', y: 'presion', xLabel: 'el volumen (temperatura constante)', yLabel: 'la presión', datasetId: 'mediciones' },
+    { x: 'temperatura', y: 'volumen', xLabel: 'la temperatura (presión constante)', yLabel: 'el volumen', datasetId: 'mediciones', allowVary: ['volumen'] },
+    { x: 'temperatura', y: 'presion', xLabel: 'la temperatura (volumen constante)', yLabel: 'la presión', datasetId: 'mediciones', allowVary: [] },
+  ],
   variables: {
     independent: ['Volumen (Boyle)', 'Temperatura (Charles y Gay-Lussac)'],
     dependent: ['Presión', 'Volumen'],

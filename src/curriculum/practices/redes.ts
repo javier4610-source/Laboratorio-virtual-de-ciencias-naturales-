@@ -37,14 +37,11 @@ export const redes: PracticeDef = {
     'Cuando el alimento preferido escasea, algunos depredadores cambian de presa. En el modelo, las serpientes comen ranas y ratones: si las ranas disminuyen, las serpientes dedican más tiempo a cazar ratones y sufren menos. Las ranas, en cambio, dependen solo de los insectos.',
     'El modelo de esta práctica calcula, año a año, la biomasa de cada grupo: el pasto crece según la lluvia (más lluvia, más capacidad de carga) y cada consumidor gana biomasa con el 10 % de lo que come y la pierde por respiración, muerte natural, competencia entre individuos de su misma especie, depredación, caza o pesticidas. Los números son ilustrativos, no mediciones de un potrero real.',
   ],
-  hypothesis: {
-    prompt: 'Predice qué pasa con los ratones si aumenta la caza de gavilanes, con las ranas si aumenta el pesticida contra los saltamontes y con los gavilanes si llueve más.',
-    pairs: [
-      { x: 'caza', y: 'ratones', xLabel: 'la caza de gavilanes', yLabel: 'la biomasa final de ratones', datasetId: 'escenarios' },
-      { x: 'pesticida', y: 'ranas', xLabel: 'el pesticida sobre los saltamontes', yLabel: 'la biomasa final de ranas', datasetId: 'escenarios' },
-      { x: 'lluvia', y: 'gavilanes', xLabel: 'la lluvia', yLabel: 'la biomasa final de gavilanes', datasetId: 'escenarios' },
-    ],
-  },
+  relations: [
+    { x: 'caza', y: 'ratones', xLabel: 'la caza de gavilanes', yLabel: 'la biomasa final de ratones', datasetId: 'escenarios' },
+    { x: 'pesticida', y: 'ranas', xLabel: 'el pesticida sobre los saltamontes', yLabel: 'la biomasa final de ranas', datasetId: 'escenarios' },
+    { x: 'lluvia', y: 'gavilanes', xLabel: 'la lluvia', yLabel: 'la biomasa final de gavilanes', datasetId: 'escenarios' },
+  ],
   variables: {
     independent: ['Lluvia (% de lo normal)', 'Caza de gavilanes (% por año)', 'Pesticida sobre insectos (% por año)'],
     dependent: ['Biomasa final de cada especie (kg/ha)', 'Cambio porcentual frente al escenario base'],

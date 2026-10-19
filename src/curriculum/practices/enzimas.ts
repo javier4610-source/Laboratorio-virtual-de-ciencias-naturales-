@@ -30,15 +30,12 @@ export const enzimas: PracticeDef = {
     'Al aumentar la temperatura, las moléculas chocan con más energía y la reacción se acelera; pero por encima de cierto valor la proteína se desnaturaliza y pierde su forma. Por eso existe una temperatura óptima.',
     'El pH cambia la carga eléctrica de los grupos del sitio activo. Cada enzima tiene un pH óptimo relacionado con su ambiente: la pepsina actúa en el estómago (pH ≈ 2) y la amilasa salival en la boca (pH ≈ 7).',
   ],
-  hypothesis: {
-    prompt: 'Predice cómo cambiará la velocidad inicial al variar cada factor. Recuerda que una relación puede tener un máximo.',
-    pairs: [
-      { x: 'temp', y: 'v0', xLabel: 'la temperatura', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
-      { x: 'ph', y: 'v0', xLabel: 'el pH', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
-      { x: 'sustrato', y: 'v0', xLabel: 'la concentración de sustrato', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
-      { x: 'enzimaRel', y: 'v0', xLabel: 'la concentración de enzima', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
-    ],
-  },
+  relations: [
+    { x: 'temp', y: 'v0', xLabel: 'la temperatura', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
+    { x: 'ph', y: 'v0', xLabel: 'el pH', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
+    { x: 'sustrato', y: 'v0', xLabel: 'la concentración de sustrato', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
+    { x: 'enzimaRel', y: 'v0', xLabel: 'la concentración de enzima', yLabel: 'la velocidad inicial', datasetId: 'ensayos' },
+  ],
   variables: {
     independent: ['Temperatura', 'pH', 'Concentración de sustrato', 'Concentración de enzima', 'Tipo de enzima'],
     dependent: ['Velocidad inicial (v₀)', 'Producto formado'],

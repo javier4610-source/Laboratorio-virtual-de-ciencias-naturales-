@@ -9,7 +9,7 @@ import { AREA_LABEL, COMPETENCY_SHORT, gradeInfo } from '../curriculum/grades';
 import { LAB_COMPONENTS } from '../labs/registry';
 import { DATASETS } from '../labs/datasets';
 import { DataPanel } from '../components/DataPanel';
-import { AnalysisSection, EvaluationSection, HypothesisSection, ModelSection, PreparationSection } from '../components/PracticeSections';
+import { AnalysisSection, EvaluationSection, ModelSection, PreparationSection } from '../components/PracticeSections';
 import { ConfirmButton, Segmented } from '../components/ui';
 import { ProcedureCoach, SavedToast, useFullscreen } from '../components/Workspace';
 import { href } from '../lib/router';
@@ -32,8 +32,8 @@ function LabHost({ Lab, api, practice }: { Lab: ComponentType<LabProps>; api: Se
 }
 
 const MODE_HELP: Record<Mode, string> = {
-  guiada: 'Práctica guiada: avanzas por etapas. Debes formular una hipótesis antes de experimentar y guardar ensayos antes de analizar.',
-  libre: 'Exploración libre: todas las etapas están abiertas y puedes experimentar sin hipótesis. Nada se califica.',
+  guiada: 'Práctica guiada: avanzas por etapas. Empieza por la preparación y guarda ensayos antes de analizar.',
+  libre: 'Exploración libre: todas las etapas están abiertas y puedes experimentar a tu ritmo. Nada se califica.',
   evaluacion: 'Modo evaluación: las preguntas cuentan solo el primer intento. Puedes reintentar para aprender.',
 };
 
@@ -59,7 +59,7 @@ function StageGate({ title, text, primary, secondary }: { title: string; text: s
 export function PracticePage({ practice: p }: { practice: PracticeDef }) {
   const api = usePracticeSession(p.id);
   const s = api.session;
-  const [stage, setStage] = useState<StageId>(() => (s.hypothesis.savedAt ? 'experimento' : 'preparacion'));
+  const [stage, setStage] = useState<StageId>('preparacion');
   const done = stageDone(p, s);
   const progress = progressPercent(p, s);
   const Lab = LAB_COMPONENTS[p.id];
@@ -85,7 +85,6 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
 
   const locked = (id: StageId): string | null => {
     if (s.mode !== 'guiada') return null;
-    if (id === 'experimento' && !done.hipotesis) return 'Primero guarda tu hipótesis.';
     if (id === 'analisis' && s.trials.length === 0) return 'Primero guarda al menos un ensayo.';
     return null;
   };
@@ -123,7 +122,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
               <SyncChip />
               <a className="btn" href={href('practica', p.id, 'informe')}>Ver informe</a>
               {flag('qrPracticas') && <ShareQrButton practiceId={p.id} title={p.title} />}
-              <ConfirmButton label="Reiniciar práctica" confirmLabel="¿Borrar hipótesis, datos y respuestas de esta práctica?" onConfirm={() => { api.reset(); setStage('preparacion'); }} />
+              <ConfirmButton label="Reiniciar práctica" confirmLabel="¿Borrar datos, análisis y respuestas de esta práctica?" onConfirm={() => { api.reset(); setStage('preparacion'); }} />
             </div>
           </div>
         </div>
@@ -152,16 +151,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
       </div>
 
       <div role="tabpanel" id={`panel-${stage}`} aria-labelledby={`tab-${stage}`}>
-        {stage === 'preparacion' && <PreparationSection practice={p} api={api} onNext={() => go('hipotesis')} />}
-        {stage === 'hipotesis' && <HypothesisSection practice={p} api={api} onNext={() => { setStage('experimento'); window.scrollTo({ top: 0 }); }} />}
-        {stage === 'experimento' && locked('experimento') && (
-          <StageGate
-            title="Antes de experimentar, formula tu hipótesis"
-            text="En la práctica guiada, el experimento se abre cuando guardas tu predicción: así podrás comparar lo que esperabas con lo que mides. Toma un minuto."
-            primary={{ label: 'Formular mi hipótesis', onClick: () => go('hipotesis') }}
-            secondary={{ label: 'Explorar sin hipótesis', onClick: () => api.update((x) => ({ ...x, mode: 'libre' })) }}
-          />
-        )}
+        {stage === 'preparacion' && <PreparationSection practice={p} api={api} onNext={() => go('experimento')} />}
         {stage === 'analisis' && locked('analisis') && (
           <StageGate
             title="Primero guarda al menos un ensayo"
@@ -169,7 +159,7 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
             primary={{ label: 'Ir al experimento', onClick: () => go('experimento') }}
           />
         )}
-        {stage === 'experimento' && !locked('experimento') && (
+        {stage === 'experimento' && (
           <div className="stack">
             <div ref={fs.ref} className={`workspace stack${fs.active ? ' is-fullscreen' : ''}`}>
               <ProcedureCoach

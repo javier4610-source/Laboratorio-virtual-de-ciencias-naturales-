@@ -22,7 +22,6 @@ const PATHS = {
   evaluacion: <><rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4V3h6v1M9 12l2 2 4-4M9 17h6" /></>,
   /* Etapas */
   preparacion: <><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z" /><path d="M7 8h1.5M15.5 8H17M7 11.5h1.5M15.5 11.5H17" /></>,
-  hipotesis: <><path d="M9 17.5h6M10 21h4" /><path d="M12 3a6 6 0 0 0-3.5 10.9c.4.3.5.8.5 1.3v.3h5v-.3c0-.5.2-1 .5-1.3A6 6 0 0 0 12 3z" /></>,
   experimento: <><path d="M9 3h6M10 3v5.5L5 18a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9.5V3" /><circle cx="10.5" cy="15.5" r="0.9" /><circle cx="13.8" cy="17.5" r="0.9" /></>,
   analisis: <><path d="M4 4v16h16" /><path d="m7.5 15 3.5-4 3 2.5L19 7" /><circle cx="11" cy="11" r="0.9" /><circle cx="14" cy="13.5" r="0.9" /></>,
   modelo: <><path d="M17 4H7l6 8-6 8h10" /></>,

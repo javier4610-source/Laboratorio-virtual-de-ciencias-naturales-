@@ -1039,7 +1039,10 @@ details.measure-sheet { min-width: 0; max-width: 100%; }
   font-size: 0.75rem; font-weight: 600; line-height: 1.3; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.12s 0.25s; z-index: 30;
 }
 .tip.tip-left::after { left: auto; right: 0; transform: none; }
-.tip:hover::after, .tip:focus-visible::after { opacity: 1; visibility: visible; }
+/* Oculto con display: none (no solo invisible) para que la burbuja no ensanche la página cerca del borde derecho. */
+.tip:not(:hover):not(:focus-visible)::after { display: none; }
+.tip:hover::after, .tip:focus-visible::after { opacity: 1; visibility: visible; animation: tip-in 0.12s 0.25s both; }
+@keyframes tip-in { from { opacity: 0; } to { opacity: 1; } }
 @media (hover: none) { .tip::after { display: none; } }
 
 /* Residuos y cuadro de resultados del ajuste (estilo Logger Pro) */

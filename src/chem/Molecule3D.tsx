@@ -3,24 +3,21 @@ import type { GLViewer } from '3dmol';
 import { fmt } from '../lib/format';
 import { StatusChip } from '../components/Provenance';
 import { Segmented, Select } from '../components/ui';
-import { drawRadius } from './elements';
+import { ballRadius, drawRadius } from './elements';
+import { applyMolStyle, type MolStyle } from './molStyle';
 import { ProjectedSvg } from './ProjectedSvg';
 import { atomAngle, atomDistance, describeSpecies, toSdf, type Species3D } from './species';
 import { cssVar, reducedMotion, use3DViewer, useThemeVersion } from './engine3d';
 
-export type MolStyle = 'bs' | 'esf' | 'pal';
+export type { MolStyle };
 const STYLE_OPTIONS: { value: MolStyle; label: string }[] = [
   { value: 'bs', label: 'Esferas y palitos' },
   { value: 'esf', label: 'Espacio lleno' },
   { value: 'pal', label: 'Palitos' },
 ];
-const STYLE_SPEC: Record<MolStyle, Record<string, unknown>> = {
-  bs: { stick: { radius: 0.14 }, sphere: { scale: 0.28 } },
-  esf: { sphere: { scale: 1 } },
-  pal: { stick: { radius: 0.2 } },
-};
+/** Radios de la vista de respaldo en SVG: los mismos de «esferas y palitos» que en 3Dmol (src/chem/molStyle.ts). */
 const SVG_R: Record<MolStyle, (el: string) => number> = {
-  bs: (el) => drawRadius(el) * 0.45,
+  bs: (el) => ballRadius(el),
   esf: (el) => drawRadius(el) * 1.6,
   pal: () => 0.14,
 };
@@ -79,7 +76,7 @@ export function Molecule3D({ species, idPrefix, height = 300, defaultStyle = 'bs
     try {
       v.removeAllModels(); v.removeAllShapes(); v.removeAllLabels();
       v.addModel(sdf, 'sdf');
-      v.setStyle({}, STYLE_SPEC[style]);
+      applyMolStyle(v, style, species.atoms.map((a) => a.el));
       if (measure) v.setClickable({}, true, (atom: { index?: number }) => { if (typeof atom?.index === 'number') pickRef.current(atom.index); });
       const ink = cssVar('--ink', '#12201e'), surface = cssVar('--surface', '#ffffff'), data = cssVar('--data', '#b23a0a');
       const P = (i: number) => ({ x: species.atoms[i].x, y: species.atoms[i].y, z: species.atoms[i].z });

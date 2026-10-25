@@ -55,6 +55,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] v2.5.0 · Palitos visibles en todos los visores 3D (esferas proporcionales al radio covalente) y taller ampliado a 77 elementos (3329 compuestos registrados en PubChem o rotulados como formales).
 - [x] v2.4.0 · Taller de formación de compuestos (pedido del docente) en óxidos e hidróxidos, ácidos y sales y nomenclatura inorgánica: elementos a elección, 9 rutas, validación explicada, registro en PubChem precalculado (1066 compuestos: 583 registrados por nombre, 337 solo por fórmula, 146 formales), retos y cuaderno.
 
 - [x] U6 · Modo avanzado: ecuaciones del modelo con los valores actuales (MathML) en 13 laboratorios, constantes del modelo editables en 6 y curva del modelo con residuos en el cuaderno (11 prácticas).

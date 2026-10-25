@@ -75,7 +75,7 @@ describe('kit de química 3D · biblioteca de moléculas', () => {
   });
 
   it('no inventa radios: un enlace sin radio tabulado lanza un error', () => {
-    expect(() => covalentBondLength('Xe', 'O', 2)).toThrow(/Pyykkö/);
+    expect(() => covalentBondLength('Fr', 'O', 3)).toThrow(/Pyykkö/);
   });
 });
 

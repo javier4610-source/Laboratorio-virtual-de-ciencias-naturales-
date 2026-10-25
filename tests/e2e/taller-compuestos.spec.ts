@@ -114,6 +114,78 @@ test('nomenclatura-inorganica: el helio se rechaza con explicación; 2 Na + Cl�
   await expect(element(page, 'aluminio', 'Al')).toHaveAttribute('aria-pressed', 'true');
 });
 
+test('taller ampliado (v2.5.0): 77 elementos; Ba, Sn(IV) «óxido estánnico», Ti(IV), Ce(IV), HIO₄, KMnO₄, Zn(OH)₂, Na₂SeO₄ y el uranio explicado', async ({ page }) => {
+  test.setTimeout(240_000);
+  await openForge(page, 'oxidos-hidroxidos');
+  await expect(forgeRoot(page).getByText(/Elementos del taller: 77 \(resaltados\)/)).toBeVisible();
+  // Antes fuera del taller; ahora habilitados (sin la marca «fuera del taller»).
+  for (const [n, s] of [['titanio', 'Ti'], ['estroncio', 'Sr'], ['wolframio', 'W'], ['selenio', 'Se'], ['cerio', 'Ce'], ['bismuto', 'Bi']]) {
+    await expect(element(page, n, s)).not.toHaveAccessibleName(/fuera del taller/);
+  }
+  await expect(element(page, 'uranio', 'U')).toHaveAccessibleName(/fuera del taller/);
+  await expect(element(page, 'neón', 'Ne')).toHaveAccessibleName(/fuera del taller/);
+
+  const ox = (name: string) => forgeRoot(page).getByLabel(`Número de oxidación del ${name} (casilla 1)`);
+  await element(page, 'bario', 'Ba').click();
+  await formar(page);
+  await expect(ro(page, '2 Ba + O₂ → 2 BaO')).toBeVisible();
+  await element(page, 'estaño', 'Sn').click();
+  await ox('estaño').selectOption('4');
+  await formar(page);
+  await expect(ro(page, 'SnO₂')).toBeVisible();
+  await expect(forgeRoot(page).getByRole('cell', { name: 'óxido estánnico', exact: true }).first()).toBeVisible();
+  await element(page, 'titanio', 'Ti').click();
+  await ox('titanio').selectOption('4');
+  await formar(page);
+  await expect(ro(page, 'Ti + O₂ → TiO₂')).toBeVisible();
+  await expect(forgeRoot(page).getByRole('cell', { name: 'óxido de titanio(IV)', exact: true }).first()).toBeVisible();
+  await expect(forgeRoot(page).getByRole('cell', { name: 'óxido titánico', exact: true }).first()).toBeVisible();
+  await element(page, 'cerio', 'Ce').click();
+  await ox('cerio').selectOption('4');
+  await formar(page);
+  await expect(ro(page, 'CeO₂')).toBeVisible();
+  await expect(forgeRoot(page).getByRole('cell', { name: 'óxido cérico', exact: true }).first()).toBeVisible();
+  // Estado que el titanio no presenta: explicación por grupo.
+  await element(page, 'titanio', 'Ti').click();
+  await ox('titanio').selectOption('5');
+  await formar(page);
+  await expect(forgeRoot(page).getByText(/En los grupos 4 a 7 el número de oxidación máximo es el número del grupo/)).toBeVisible();
+
+  await route(page, 'oxido-agua');
+  await element(page, 'cinc', 'Zn').click();
+  await formar(page);
+  await expect(ro(page, 'ZnO + H₂O → Zn(OH)₂')).toBeVisible();
+
+  await route(page, 'anhidrido-agua');
+  await element(page, 'yodo', 'I').click();
+  await ox('yodo').selectOption('7');
+  await formar(page);
+  await expect(ro(page, 'HIO₄')).toBeVisible();
+  await expect(forgeRoot(page).getByRole('cell', { name: 'ácido peryódico', exact: true }).first()).toBeVisible();
+
+  await route(page, 'neutralizacion');
+  await forgeRoot(page).getByRole('button', { name: '1 · Metal del hidróxido', exact: true }).click();
+  await element(page, 'potasio', 'K').click();
+  await element(page, 'manganeso', 'Mn').click();
+  await forgeRoot(page).getByLabel('Número de oxidación del manganeso (casilla 2)').selectOption('7');
+  await formar(page);
+  await expect(ro(page, 'KMnO₄')).toBeVisible();
+  await forgeRoot(page).getByRole('button', { name: '1 · Metal del hidróxido', exact: true }).click();
+  await element(page, 'sodio', 'Na').click();
+  await element(page, 'selenio', 'Se').click();
+  await forgeRoot(page).getByLabel('Número de oxidación del selenio (casilla 2)').selectOption('6');
+  await formar(page);
+  await expect(ro(page, 'H₂SeO₄ + 2 NaOH → Na₂SeO₄ + 2 H₂O')).toBeVisible();
+  await expect(forgeRoot(page).getByRole('cell', { name: 'seleniato de sodio', exact: true }).first()).toBeVisible();
+
+  // Elemento que sigue fuera: explicación concreta.
+  await route(page, 'metal-o2');
+  await element(page, 'uranio', 'U').click();
+  await formar(page);
+  await expect(forgeRoot(page).getByText(/uranilo/)).toBeVisible();
+  await expect(ro(page, 'combinación no válida')).toBeVisible();
+});
+
 const FLOWS: Record<string, (page: Page) => Promise<void>> = {
   'oxidos-hidroxidos': async (page) => {
     await element(page, 'calcio', 'Ca').click();

@@ -12,6 +12,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select } from '../components/ui';
+import { applyMolStyle } from '../chem/molStyle';
 import { StatusChip } from '../components/Provenance';
 import type { LabProps } from './registry';
 
@@ -52,11 +53,6 @@ const STYLE_OPTIONS: { value: Style3D; label: string }[] = [
   { value: 'esf', label: 'Esferas' },
   { value: 'pal', label: 'Palitos' },
 ];
-const STYLE_SPEC: Record<Style3D, Record<string, unknown>> = {
-  bs: { stick: { radius: 0.14 }, sphere: { scale: 0.28 } },
-  esf: { sphere: { scale: 0.9 } },
-  pal: { stick: { radius: 0.2 } },
-};
 const STYLE_NAME: Record<Style3D, string> = { bs: 'palitos y esferas', esf: 'esferas', pal: 'palitos' };
 
 /** Fórmulas como se escriben en clase (la de PubChem está en orden de Hill: H3N, O2S, CH4O…). */
@@ -384,7 +380,7 @@ export default function GeometryLab({ api }: LabProps) {
     if (engine !== 'disponible' || !v) return;
     try {
       const ink = cssVar('--ink', '#1d2327'), surface = cssVar('--surface', '#ffffff'), data = cssVar('--data', '#1971c2');
-      v.setStyle({}, STYLE_SPEC[style]);
+      applyMolStyle(v, style, mol.atoms.map((a) => a.element), 0.9);
       v.removeAllShapes();
       v.removeAllLabels();
       v.setClickable({}, true, (atom: { index?: number }) => { if (typeof atom?.index === 'number') pickRef.current(atom.index); });

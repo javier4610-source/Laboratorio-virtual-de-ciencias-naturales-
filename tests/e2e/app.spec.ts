@@ -474,7 +474,7 @@ test('conservación: en sistema abierto la balanza pierde 1,05 g (el CO₂ que e
   await page.getByRole('button', { name: '1. Pesar el sistema inicial' }).click();
   await expect(page.locator('.readout').getByText('218,50 g')).toBeVisible();
   await page.getByRole('button', { name: '2. Mezclar los reactivos' }).click();
-  await expect(page.locator('.readout').getByText('217,45 g')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('.readout').getByText('217,45 g').first()).toBeVisible({ timeout: 10_000 });
   await expect(page.locator('.readout').getByText('CO₂: 1,048 g')).toBeVisible();
   await expect(save(page)).toBeEnabled();
   await save(page).click();

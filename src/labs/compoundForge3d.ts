@@ -38,9 +38,22 @@ function indices() {
 
 /* ------------------------------------------------------------------ geometrías VSEPR generadas */
 
-/** Electrones de valencia del átomo central (grupos principales). En Cr y Mn los electrones d no cuentan como pares VSEPR. */
-const VALENCE: Record<string, number> = { B: 3, Si: 4, P: 5, S: 6, Cl: 7, Br: 7, I: 7 };
-const TRANSITION = new Set(['Cr', 'Mn']);
+/** Electrones de valencia del átomo central (grupos principales). En los metales de transición (d⁰ en sus oxoaniones:
+ * Cr(VI), Mn(VII), V(V), Mo(VI), W(VI), Re(VII)) los electrones d no cuentan como pares VSEPR. */
+const VALENCE: Record<string, number> = { B: 3, Si: 4, P: 5, S: 6, Cl: 7, Br: 7, I: 7, As: 5, Se: 6, Te: 6 };
+const TRANSITION = new Set(['Cr', 'Mn', 'V', 'Mo', 'W', 'Re']);
+/**
+ * Oxoácidos sin molécula aislada que dibujar: el ácido real es otra especie (H₆TeO₆, H[Sb(OH)₆]) o un óxido hidratado
+ * polimérico (MoO₃·H₂O, WO₃·H₂O, vanádico), así que no se calcula una geometría VSEPR de una fórmula formal.
+ */
+const ACID_NO_3D: Record<string, string> = {
+  'Te:6': 'El ácido telúrico real es H₆TeO₆ = Te(OH)₆ (octaédrico), no la molécula H₂TeO₄: el kit no la dibuja.',
+  'Sb:5': 'El «ácido antimónico» H₃SbO₄ no existe como molécula (en agua es H[Sb(OH)₆]): no se dibuja.',
+  'Mo:6': 'El ácido molíbdico es MoO₃ hidratado, un sólido en capas (no una molécula aislada): no se dibuja.',
+  'W:6': 'El ácido wolfrámico es WO₃ hidratado, un sólido (no una molécula aislada): no se dibuja.',
+  'V:5': 'El ácido vanádico no se aísla (solo existen sus sales, los vanadatos): no se dibuja una molécula formal.',
+  'Re:7': 'El ácido perrénico solo existe en disolución (como iones H₃O⁺ y ReO₄⁻): el kit dibuja el ion perrenato en sus sales, no una molécula HReO₄.',
+};
 
 /**
  * Oxoácido u oxoanión con UN átomo central X: h grupos O–H, (−carga) O con carga −1 y el resto O con doble enlace
@@ -72,12 +85,15 @@ function oxoSpecies(x: string, ox: number, h: number, o: number, charge: number,
 /** Hidruros no metálicos sin confórmero en la biblioteca (un átomo central). */
 const HYDRIDE_VSEPR: Record<string, { lp: number; label: string; name: string }> = {
   P: { lp: 1, label: 'PH₃', name: 'Fosfano (fosfina)' }, Si: { lp: 0, label: 'SiH₄', name: 'Silano' }, B: { lp: 0, label: 'BH₃', name: 'Borano (monómero)' },
+  As: { lp: 1, label: 'AsH₃', name: 'Arsano (arsina)' },
 };
 
 /** Ion poliatómico de un oxoácido (para las sales y el modelo iónico). */
 function oxoanion(acid: { el: string; ox: number; form?: 'normal' | 'meta' | 'di' }, hLeft: number): Species3D | null {
   const a = oxoacid(acid.el, acid.ox, acid.form ?? 'normal');
   if (a.x !== 1 || (acid.form && acid.form !== 'normal') || (acid.el === 'P' && acid.ox === 3)) return null;
+  // Los teluratos (Te(VI)) del sólido tienen Te octaédrico: no hay un ion TeO₄²⁻ tetraédrico que dibujar.
+  if (acid.el === 'Te' && acid.ox === 6) return null;
   const q = -(a.h - hLeft);
   const formula = `${hLeft ? `H${hLeft > 1 ? hLeft : ''}` : ''}${acid.el}O${a.o > 1 ? a.o : ''}`;
   const comp: Record<string, number> = { O: a.o, [acid.el]: 1, ...(hLeft ? { H: hLeft } : {}) };
@@ -118,7 +134,7 @@ function molecularSpecies(c: Compound): { species: Species3D; formula3d: string;
   const s = c.spec;
   if (s.kind === 'oxacido') {
     const a = oxoacid(s.el, s.ox, s.form ?? 'normal');
-    if (a.x !== 1 || (s.form && s.form !== 'normal') || (s.el === 'P' && s.ox === 3)) return null;
+    if (a.x !== 1 || (s.form && s.form !== 'normal') || (s.el === 'P' && s.ox === 3) || ACID_NO_3D[`${s.el}:${s.ox}`]) return null;
     const sp = oxoSpecies(s.el, s.ox, a.h, a.o, 0, `acido-${c.formula}`, c.names.tradicional ? c.names.tradicional[0].toUpperCase() + c.names.tradicional.slice(1) : c.formula, c.formulaPretty);
     return sp ? { species: sp, formula3d: c.formula } : null;
   }
@@ -139,6 +155,10 @@ function noGeometryReason(c: Compound): string {
   if (c.spec.kind === 'oxacido' && (c.spec.form === 'meta')) return 'Los metaácidos forman cadenas o anillos (polímeros), no moléculas sueltas: no hay geometría fiable. Solo se muestra el modelo 2D.';
   if (c.spec.kind === 'oxacido' && c.spec.el === 'P' && c.spec.ox === 3) return 'El H₃PO₃ tiene un H unido al P (es HPO(OH)₂): el kit no tiene su confórmero ni una geometría VSEPR fiable. Solo se muestra el modelo 2D.';
   if (c.key === 'oxido:Cl7') return 'PubChem no tiene confórmero 3D del Cl₂O₇ y el kit no calcula geometrías con dos átomos centrales. Solo se muestra el modelo 2D.';
+  if (c.spec.kind === 'oxacido' && ACID_NO_3D[`${c.spec.el}:${c.spec.ox}`]) return `${ACID_NO_3D[`${c.spec.el}:${c.spec.ox}`]} Solo se muestra el modelo 2D.`;
+  if (c.spec.kind === 'oxido' && engineEl(c.spec.el).kind === 'metal' && k !== 'oxido:Mn7') return `El ${c.formulaPretty} es un sólido formado por una red extendida (no hay una molécula aislada que dibujar) y el kit no incluye su red. Solo se muestra el modelo 2D.`;
+  if (k === 'oxido:As3') return 'La molécula real es As₄O₆ (dos o más átomos centrales): el kit no tiene su confórmero ni calcula esa geometría. Solo se muestra el modelo 2D.';
+  if (k === 'oxido:Se4' || k === 'oxido:Te4') return `El ${c.formulaPretty} sólido es un polímero (cadenas o red): no hay una molécula aislada que dibujar. Solo se muestra el modelo 2D.`;
   return 'No hay confórmero 3D de PubChem en el kit ni una geometría VSEPR fiable (especie con dos o más átomos centrales): no se dibuja a mano. Solo se muestra el modelo 2D.';
 }
 

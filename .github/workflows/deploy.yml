@@ -5,6 +5,9 @@ on:
     branches: [main, 'claude/**']
   pull_request:
   workflow_dispatch:
+  # Ejecución semanal (lunes 06:17 UTC): detecta cambios del entorno de GitHub que rompan la publicación aunque no haya cambios en el código.
+  schedule:
+    - cron: '17 6 * * 1'
 
 permissions:
   contents: read
@@ -17,7 +20,8 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Versión fija del sistema: ubuntu-latest pasó a 26.04 y Playwright 1.56 no instala Chromium allí (falló la publicación de la 2.3.0).
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -43,7 +47,7 @@ jobs:
   deploy:
     if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

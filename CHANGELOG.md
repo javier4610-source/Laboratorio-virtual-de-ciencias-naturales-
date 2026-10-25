@@ -7,8 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
-Propuesta de versión **2.5.0 (MENOR)**: corrección de los visores 3D y ampliación del taller, sin cambiar rutas,
-identificadores ni el formato de los datos guardados (el `package.json` lo sube el integrador).
+## [2.5.0] · 2026-10-26
+
+Versión MENOR: corrección de los visores 3D y ampliación del taller, sin cambiar rutas, identificadores ni el formato
+de los datos guardados.
 
 ### Corregido
 - **Palitos (enlaces) que no se veían en los visores 3D** (pedido del docente). Causa raíz: los visores 3Dmol

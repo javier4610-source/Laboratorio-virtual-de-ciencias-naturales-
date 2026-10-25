@@ -7,6 +7,43 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+Versión **MENOR** prevista (2.5.0): rediseño integral de la interfaz sin cambiar rutas, identificadores de práctica,
+formato de los datos guardados, contrato del servidor ni modelos científicos (los valores dorados no cambian).
+
+### Añadido
+- **Sistema de diseño formal** (`src/tokens.css`, `docs/v2/SISTEMA-DE-DISENO.md`, ADR 0007): primario institucional
+  azul petróleo, secundario pizarra, semánticos (éxito, advertencia, error, información), foco propio, escala de datos
+  de 8 series distinguible con protanopía, deuteranopía y tritanopía (ΔE2000 mínimo 6,2 en claro y 6,9 en oscuro;
+  antes 0,9 y 2,7), tipografía modular, espaciado, radios, elevación, movimiento y capas; verificador
+  `scripts/diseno/verificar_paleta.py`.
+- **Inicio orientado a tareas** por perfil (estudiante, docente, investigador o curioso) con «Continuar mi práctica».
+- **Catálogo** con filtros en la dirección, filtro por avance, orden, chips de filtros activos y estado vacío con salida.
+- **Espacio de trabajo de la práctica**: encabezado compacto con migas de grado y área, franja única de ajustes del
+  banco, práctica anterior y siguiente del grado, etapa activa siempre visible en teléfonos.
+- **Atajos de teclado** (`?`, `/`, `1`–`5`, `C`, `F`, `I`, `N`, `P`) con lista accesible y opción para desactivarlos.
+- **Componentes experimentales compartidos**: `SimControls` (ósmosis y ondas), `ConditionAlert` (todas las
+  advertencias del modelo y el control de variables), `Readout` con resolución y estado, explicación de la relación
+  entre variables con gráfica en el análisis, **comparación de ensayos** y **Descargar JSON** (`lvcn-datos-v1`) en el
+  cuaderno.
+- Marcadores con forma distinta por serie en todas las gráficas.
+- Panel docente con pestaña «Inicio» de tareas y enlaces directos `#/docente?seccion=…`; banco Saber en tandas de 10.
+- Miniaturas propias para las 28 prácticas que usaban la ilustración genérica de su área.
+- Estados de carga con esqueleto y mensajes de error que explican qué hacer.
+- Pruebas: `tests/unit/plataforma.test.ts` (tokens, preguntas de transferencia, filtros, comparación, JSON, atajos) y
+  `tests/e2e/plataforma.spec.ts` (inicio, catálogo, atajos, paginador, cuaderno, simulación, análisis con axe).
+
+### Cambiado
+- Abrir una práctica ya no descarga las 65 fichas: las preguntas de transferencia se resuelven desde el banco.
+- JavaScript inicial de 407,86 kB a 391,3 kB (126,50 → 123,5 kB comprimido): catálogo, grado, escena del héroe y
+  definiciones del kit bajo demanda. El CSS crece de 115,1 a 130,6 kB (22,4 → 25,4 kB comprimido).
+- Colores de interfaz y de series en ambos temas (nuevos tokens); las escenas de los laboratorios no cambian de forma.
+- `styles.css` y `theme-2026.css` ya no declaran valores: los consumen de `tokens.css`.
+
+### Corregido
+- La fila recién guardada del cuaderno parpadeaba en amarillo o rojo intenso (interpolación de colores).
+- `@keyframes pulse` estaba definida dos veces y anulaba el pulso del héroe.
+- «en función de el volumen» → «en función del volumen» en el análisis.
+
 ## [2.4.0] · 2026-10-25
 
 Versión **MENOR**: se agrega una estación nueva sin cambiar rutas, identificadores ni datos guardados.

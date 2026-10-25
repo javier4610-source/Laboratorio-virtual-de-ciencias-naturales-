@@ -50,10 +50,19 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       `docs/DESPLIEGUE-SERVIDOR.md` están listos. Falta que el docente cree la cuenta y entregue la dirección para
       configurar la variable `API_URL`; política de privacidad y autorización de acudientes (Ley 1581).
 - [ ] **Taller de compuestos, siguiente paso:** redes cristalinas de más sólidos iónicos con parámetro publicado (CaSO₄, Na₂O, Al₂O₃…), sales de amonio y binarios no metálicos en el taller, y revisión manual de los registros de PubChem hallados solo por fórmula.
+- [ ] **Rediseño, siguiente paso** (ADR 0007): adoptar `SimControls` en las demás prácticas con dinámica temporal
+      (proyectiles, péndulo, choques, cinemática, energía, cinética, conducción…), `Readout.resolution`/`state` en los
+      instrumentos y `ConditionAlert` con «cómo corregirlo» en las advertencias propias de cada modelo; medir con
+      Lighthouse cuando haya red para instalarlo; revisar con estudiantes los atajos y el inicio por perfiles.
 - [ ] **Mejoras:** pistas contextuales al cambiar dos variables a la vez; auditoría de rendimiento en equipos
       modestos; exportación para Google Classroom y Moodle; pruebas de regresión visual.
 
 ## Hecho
+
+- [x] v2.5.0 (sin publicar) · Rediseño integral de la plataforma (pedido del docente, ADR 0007): sistema de diseño con
+  tokens y escala de datos distinguible con daltonismo, inicio por perfiles, catálogo con filtros en la dirección,
+  espacio de trabajo de la práctica, atajos de teclado, componentes experimentales compartidos (simulación, condiciones,
+  lecturas, relaciones, comparación de ensayos, JSON) y carga más liviana.
 
 - [x] v2.4.0 · Taller de formación de compuestos (pedido del docente) en óxidos e hidróxidos, ácidos y sales y nomenclatura inorgánica: elementos a elección, 9 rutas, validación explicada, registro en PubChem precalculado (1066 compuestos: 583 registrados por nombre, 337 solo por fórmula, 146 formales), retos y cuaderno.
 
@@ -95,6 +104,8 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
 - [x] **Química inorgánica** (versión 2.1.0): kit 3D, óxidos e hidróxidos, ácidos y sales, nomenclatura inorgánica.
 - [x] **Química orgánica, parte 1** (versión 2.2.0): hidrocarburos, aromáticos y nomenclatura IUPAC.
 - [x] **Química orgánica, parte 2** (versión 2.3.0): grupos funcionales oxigenados y nitrogenados, reacciones orgánicas en 3D.
+- [x] **Rediseño integral de la plataforma** (versión 2.5.0, sin publicar): diagnóstico en `docs/v2/REDISENO-2026-10.md`,
+      sistema de diseño en `docs/v2/SISTEMA-DE-DISENO.md`, ADR 0007.
 - [ ] **v2 · Fase 7 (en pausa por decisión del docente):** fármacos con RDKit.js; trabajo guardado fuera del repositorio, listo para retomar.
 - [ ] **v2 · Fases 7–10:** fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por

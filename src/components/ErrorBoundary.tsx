@@ -14,7 +14,8 @@ export class ErrorBoundary extends Component<{ children: ReactNode; resetKey?: s
     return (
       <div className="notice bad stack-sm" role="alert">
         <strong>Ocurrió un error inesperado en esta sección.</strong>
-        <span className="small">Detalle técnico: {this.state.error.message}</span>
+        <span className="small">Tu trabajo guardado no se perdió: los datos están en este navegador. Intenta de nuevo; si el error se repite, recarga la página o abre la sección desde el inicio.</span>
+        <span className="small muted">Detalle técnico (para tu docente): {this.state.error.message}</span>
         <div className="btn-row">
           <button type="button" className="btn" onClick={() => this.setState({ error: null })}>Intentar de nuevo</button>
           <a className="btn" href="#/">Volver al inicio</a>

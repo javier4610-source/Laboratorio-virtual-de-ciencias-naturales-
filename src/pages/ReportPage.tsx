@@ -157,8 +157,16 @@ export function ReportPage({ practice: p }: { practice: PracticeDef }) {
 
   return (
     <div className="stack">
-      <nav aria-label="Ruta de navegación" className="small muted no-print"><a href={href()}>Inicio</a> / <a href={href('practica', p.id)}>{p.title}</a> / Informe</nav>
-      <h1>Informe de práctica</h1>
+      <header className="page-head">
+        <nav aria-label="Ruta de navegación" className="crumbs small no-print">
+          <a href={href()}>Inicio</a><span aria-hidden="true">/</span>
+          <a href={href('grado', p.grade)}>{p.grade}.º</a><span aria-hidden="true">/</span>
+          <a href={href('practica', p.id)}>{p.title}</a><span aria-hidden="true">/</span>
+          <span aria-current="page">Informe</span>
+        </nav>
+        <h1>Informe de práctica</h1>
+        <p className="lead muted no-print">Escribe tu nombre o alias, revisa el contenido y entrégalo impreso, en PDF o como archivo para tu docente.</p>
+      </header>
       <div className="card stack no-print">
         <div className="grid-2">
           <div className="field"><label htmlFor="st-name">Nombre o alias del estudiante</label><input id="st-name" type="text" value={student.name} onChange={(e) => setStudent({ ...student, name: e.target.value })} autoComplete="name" /></div>

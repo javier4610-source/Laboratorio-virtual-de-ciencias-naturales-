@@ -134,7 +134,10 @@ src/
   curriculum/              Grados, malla, prácticas (contenido pedagógico) e índice
   assessment/bank.ts       Banco de preguntas originales tipo Saber 11
   labs/                    Componentes interactivos por práctica, registro y estructura de tablas
-  components/              Gráficas SVG, tablas de datos, preguntas, etapas de la práctica, controles
+  components/              Gráficas SVG, tablas de datos, preguntas, etapas de la práctica, controles,
+                           componentes experimentales (Experiment.tsx, ConditionAlert.tsx) y atajos (Shortcuts.tsx)
+  tokens.css, styles.css,  Sistema de diseño: tokens → estructura → acabado → cascarón y espacio de trabajo
+  theme-2026.css, plataforma.css
   pages/                   Inicio, grado, catálogo, práctica, informe, banco, panel docente, ayuda
   lib/                     Sesión y progreso, almacenamiento local, tendencias, informes, códigos, API del servidor, validación curricular
 server/                    Servidor institucional opcional (Node.js sin dependencias)
@@ -171,9 +174,32 @@ Módulos del enunciado → código: A navegación (`App.tsx`, `lib/router.ts`), 
 - **Validación curricular:** pestaña del panel docente para registrar, por práctica, el DBA y el estándar verificados en los documentos oficiales, exportable para el equipo de área.
 - **Usabilidad:** cada práctica incluye una encuesta breve de opinión que viaja en el informe; el protocolo para pruebas con estudiantes está en [docs/PROTOCOLO-USABILIDAD.md](docs/PROTOCOLO-USABILIDAD.md).
 
+## Interfaz y sistema de diseño
+
+La interfaz (rediseño 2.5.0, [ADR 0007](docs/v2/adr/0007-sistema-de-diseno-y-espacio-de-trabajo.md)) se organiza por
+tareas y alrededor del espacio de trabajo de cada práctica:
+
+- **Inicio por perfil**: estudiante, docente o investigador/curioso; cada perfil muestra cuatro tareas («Continuar mi
+  práctica», «Asignar una práctica», «Prácticas de indagación»…), luego grados, asignaturas y una práctica por grado.
+- **Catálogo** con búsqueda (tecla `/`), filtros por grado, asignatura, competencia y avance, orden, chips de filtros
+  activos y filtros en la dirección para compartir (`#/catalogo?area=quimica&grado=10`).
+- **Práctica**: encabezado compacto con migas (grado y área), barra de etapas fija, paso del procedimiento, una sola
+  franja de ajustes del instrumento (medición ideal/real, modo avanzado, procedencia), laboratorio, cuaderno de datos y
+  navegación a la práctica anterior y siguiente del grado.
+- **Componentes experimentales compartidos**: barra de simulación iniciar/pausar/reanudar/reiniciar con estado y avance,
+  avisos de condición no válida con causa y cómo corregirla, lecturas con unidad, resolución y estado, explicación de la
+  relación entre variables a partir de los datos, comparación de ensayos y exportación CSV, JSON (`lvcn-datos-v1`), PNG y
+  SVG.
+- **Atajos de teclado**: `?` (lista), `/` (buscar), `1`–`5` (etapas), `C` (cuaderno), `F` (pantalla completa), `I`
+  (informe), `N`/`P` (práctica siguiente/anterior). Se desactivan en «Ayuda y accesibilidad».
+- **Sistema de diseño** en [docs/v2/SISTEMA-DE-DISENO.md](docs/v2/SISTEMA-DE-DISENO.md): tokens en `src/tokens.css`
+  (primario institucional azul petróleo, secundario pizarra, semánticos, escala de 8 series de datos distinguible con
+  daltonismo, tipografía modular, espaciado, radios, elevación, movimiento), capas `styles.css` → `theme-2026.css` →
+  `plataforma.css`, y verificación de contraste con `python3 scripts/diseno/verificar_paleta.py`.
+
 ## Accesibilidad
 
-Navegación completa por teclado (incluidas flechas en las pestañas), enlace «Saltar al contenido», foco visible, etiquetas en todos los controles, regiones `aria-live` para resultados, descripciones textuales y tabla equivalente para cada gráfica, tema claro/oscuro, alto contraste, tamaño de texto ajustable, reducción de animaciones, diseño adaptable desde 360 px y fuente Atkinson Hyperlegible. Una auditoría automática con axe-core (WCAG 2.1 A/AA) recorre todas las páginas y prácticas en tema claro y oscuro.
+Navegación completa por teclado (incluidas flechas en las pestañas), enlace «Saltar al contenido», foco visible, etiquetas en todos los controles, regiones `aria-live` para resultados, descripciones textuales y tabla equivalente para cada gráfica, tema claro/oscuro, alto contraste, tamaño de texto ajustable, reducción de animaciones, diseño adaptable desde 360 px y fuente Atkinson Hyperlegible. Las series de las gráficas se distinguen por color (verificado con simulación de daltonismo) y por la forma del marcador; los estados se dicen en texto. Una auditoría automática con axe-core (WCAG 2.2 A/AA) recorre todas las páginas y prácticas en tema claro, oscuro y en teléfono.
 
 ## Referentes
 

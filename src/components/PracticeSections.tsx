@@ -147,6 +147,8 @@ function TrendAnalysis({ practice: p, relations, api }: { practice: PracticeDef;
               cause={<>En los ensayos elegidos también cambió {varied.map((c) => c.label.toLowerCase()).join(', ')}.</>}
               fix={<>Para atribuir el efecto a {pair.xLabel}, deja fijas las demás variables o excluye los ensayos que no correspondan.</>} />
           )}
+          <div className="trend-grid">
+          <div className="trend-main stack-sm">
           <div className="readout" aria-live="polite">
             <div className="item"><div className="k">Tendencia en tus datos</div><div className="v data">{analysis.trend ? TREND_LABEL[analysis.trend as Exclude<Trend, ''>] : 'no determinada'}</div></div>
             <div className="item"><div className="k">Valores distintos de x</div><div className="v">{analysis.n}</div></div>
@@ -154,6 +156,7 @@ function TrendAnalysis({ practice: p, relations, api }: { practice: PracticeDef;
           </div>
           <p className="small">{analysis.detail}</p>
           <RelationExplainer xLabel={pair.xLabel} yLabel={pair.yLabel} trendText={analysis.trend ? TREND_LABEL[analysis.trend as Exclude<Trend, ''>] : null} r={analysis.r} n={analysis.n} />
+          </div>
           {points.length > 0 && (() => {
             const xc = ds.columns.find((c) => c.key === pair.x);
             const yc = ds.columns.find((c) => c.key === pair.y);
@@ -167,6 +170,7 @@ function TrendAnalysis({ practice: p, relations, api }: { practice: PracticeDef;
               </div>
             );
           })()}
+          </div>
           <p className="small muted">La tendencia se detecta con reglas explícitas (correlación y forma de la curva) y depende de los ensayos que incluyas. Úsala como apoyo, no como verdad absoluta: tu conclusión debe citar los datos que la respaldan.</p>
         </>
       )}

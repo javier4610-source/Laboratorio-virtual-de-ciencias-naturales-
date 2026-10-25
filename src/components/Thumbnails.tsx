@@ -536,6 +536,284 @@ const SCENES: Record<string, () => ReactNode> = {
       {[[244, 46, '#fbc02d'], [270, 46, '#fbc02d'], [296, 46, '#7cb342'], [244, 76, '#fbc02d'], [270, 76, '#7cb342'], [296, 76, '#fbc02d'], [244, 106, '#fbc02d'], [270, 106, '#fbc02d'], [296, 106, '#7cb342']].map(([x, y, c]) => <circle key={`${x}${y}`} cx={x as number} cy={y as number} r={10} fill={c as string} stroke="#5d4037" strokeOpacity="0.4" />)}
     </>
   ),
+  /* ---- Miniaturas propias de las prácticas que antes usaban la ilustración genérica del área (rediseño 2026-10) ---- */
+  maquinas: () => (
+    <>
+      <Bench />
+      <path d="M160 140 L146 112 H174 Z" fill="url(#kit-metal)" stroke="#78909c" />
+      <rect x={40} y={104} width={240} height={8} rx={2} fill="url(#kit-wood)" stroke="#b8975a" transform="rotate(-6 160 108)" />
+      <g transform="rotate(-6 160 108)">
+        <rect x={56} y={80} width={30} height={24} rx={3} fill="#546e7a" /><text x={71} y={96} textAnchor="middle" style={{ fontSize: 10, fill: '#fff', fontWeight: 700 }}>400 g</text>
+        <path d="M250 104 V64" stroke={INK} strokeWidth="1.6" /><rect x={244} y={44} width={12} height={22} rx={2} fill="var(--surface)" stroke={INK} />
+      </g>
+      <Arrow x1={250} y1={40} x2={250} y2={14} color="var(--data)" w={2.4} />
+      {Array.from({ length: 9 }, (_, i) => <line key={i} x1={52 + i * 27} x2={52 + i * 27} y1={113 - (52 + i * 27 - 160) * Math.tan(-6 * Math.PI / 180) - 4} y2={113 - (52 + i * 27 - 160) * Math.tan(-6 * Math.PI / 180)} stroke="#4d3b1c" strokeWidth="0.8" />)}
+    </>
+  ),
+  calor: () => (
+    <>
+      <Bench />
+      <Beaker x={30} y={64} w={70} h={74} fill={0.6} liquid="#ef6c4a" liquidOpacity={0.45} />
+      <Beaker x={112} y={64} w={70} h={74} fill={0.6} liquid="#4f9fe0" liquidOpacity={0.45} />
+      <g transform="rotate(6 70 80)"><Thermometer x={66} y={20} h={96} min={0} max={100} value={60} /></g>
+      <g transform="rotate(-6 150 80)"><Thermometer x={146} y={20} h={96} min={0} max={100} value={20} /></g>
+      <MiniPlot x={200} y={20} w={108} h={84} d="M0 6 Q30 30 86 34" points={[[0, 6], [86, 34]]} color="#e53935" />
+      <path d="M212 90 Q242 66 298 62" transform="translate(0 -32)" fill="none" stroke="#1e88e5" strokeWidth="2.2" strokeLinecap="round" />
+    </>
+  ),
+  movimiento: () => (
+    <>
+      <path d="M10 124 H310" stroke="var(--bench-edge)" strokeWidth="3" />
+      {[30, 90, 150, 210, 270].map((x, i) => <g key={x}><path d={`M${x} 124 V100`} stroke={INK} strokeWidth="1.4" /><path d={`M${x} 100 l14 5 l-14 5 z`} fill={i === 0 ? 'var(--ok)' : i === 4 ? 'var(--bad)' : 'var(--fis)'} /><text x={x} y={140} textAnchor="middle" style={{ fontSize: 9, fill: INK, fontFamily: 'var(--font-data)' }}>{i * 5} m</text></g>)}
+      <g transform="translate(118 74)"><circle r={7} fill="var(--fis)" /><path d="M0 7 V28 M0 14 L-12 22 M0 14 L12 8 M0 28 L-10 44 M0 28 L12 42" stroke="var(--fis)" strokeWidth="4" strokeLinecap="round" fill="none" /></g>
+      <MiniPlot x={196} y={8} w={108} h={70} d="M0 50 L86 2" points={[[0, 50], [43, 26], [86, 2]]} />
+    </>
+  ),
+  ecosistema: () => (
+    <>
+      <Bench />
+      <path d="M96 38 h88 v-10 h-88 z" fill="#8d6e63" />
+      <path d="M100 38 Q90 40 90 54 V128 Q90 140 104 140 H176 Q190 140 190 128 V54 Q190 40 180 38 Z" fill="#9fd3ef" fillOpacity="0.35" stroke="var(--glass-edge)" strokeWidth="2" />
+      <path d="M92 110 H188 V128 Q188 138 176 138 H104 Q92 138 92 128 Z" fill="#8d6e63" opacity="0.7" />
+      {[112, 130, 150].map((x, i) => <path key={x} d={`M${x} 110 Q${x - 6} ${80 - i * 6} ${x + 4} ${60 + i * 4}`} stroke="var(--bio)" strokeWidth="3" fill="none" strokeLinecap="round" />)}
+      <g transform="translate(166 104)"><path d="M-8 4 Q0 -10 10 2 Z" fill="#a1887f" /><circle cx={2} cy={-2} r={6} fill="none" stroke="#6d4c41" strokeWidth="2" /></g>
+      <g transform="translate(250 30)"><path d="M-22 0 H22 L12 22 H-12 Z" fill="#ffca28" stroke="#f57f17" /><path d="M-10 32 L-24 56 M0 34 V60 M10 32 L24 56" stroke="#ffca28" strokeWidth="2" strokeDasharray="4 4" /></g>
+      <Bubbles pts={[[120, 92, 2.4], [140, 80, 2], [158, 70, 2.6]]} />
+    </>
+  ),
+  'circuitos-simples': () => (
+    <g fill="none" strokeLinejoin="round" strokeLinecap="round">
+      <path d="M60 120 V40 H260 V120 H200 M150 120 H60" stroke="var(--ink)" strokeWidth="2.4" />
+      <rect x={150} y={110} width={50} height={20} rx={4} fill="#37474f" stroke="none" /><rect x={196} y={115} width={6} height={10} fill="#b0bec5" stroke="none" />
+      <text x={175} y={124} textAnchor="middle" style={{ fontSize: 9, fill: '#fff', fontWeight: 700, fontFamily: 'var(--font-data)' }}>1,5 V</text>
+      <g transform="translate(160 40)"><circle r={18} fill="#fff59d" stroke="#f9a825" strokeWidth="2" /><path d="M-6 6 L-3 -6 L0 4 L3 -6 L6 6" stroke="#6d4c41" strokeWidth="1.4" />{[0, 1, 2, 3, 4].map((i) => { const a = -Math.PI * (0.1 + i * 0.2); return <line key={i} x1={26 * Math.cos(a)} y1={26 * Math.sin(a)} x2={34 * Math.cos(a)} y2={34 * Math.sin(a)} stroke="#f9a825" strokeWidth="2" />; })}</g>
+      <path d="M60 80 l18 -12" stroke="var(--ink)" strokeWidth="2.4" /><circle cx={60} cy={80} r={3} fill="var(--ink)" stroke="none" /><circle cx={60} cy={68} r={3} fill="var(--ink)" stroke="none" />
+    </g>
+  ),
+  presion: () => (
+    <>
+      <Bench />
+      <rect x={30} y={30} width={120} height={108} rx={4} fill="#9fd3ef" fillOpacity="0.45" stroke="var(--glass-edge)" strokeWidth="2" />
+      <path d="M100 30 V96" stroke="#455a64" strokeWidth="3" /><circle cx={100} cy={98} r={6} fill="#455a64" />
+      <path d="M100 30 V18 H200 V120 a16 16 0 0 0 32 0 V40" fill="none" stroke="var(--glass-edge)" strokeWidth="8" strokeLinecap="round" />
+      <path d="M200 70 V120 a16 16 0 0 0 32 0 V54" fill="none" stroke="#ef5350" strokeWidth="4" />
+      {[40, 60, 80, 100].map((y) => <line key={y} x1={240} x2={250} y1={y} y2={y} stroke={INK} />)}
+      <path d="M244 54 H252 M244 70 H252" stroke="var(--data)" strokeWidth="1.6" /><Arrow x1={262} y1={70} x2={262} y2={54} color="var(--data)" />
+    </>
+  ),
+  flotacion: () => (
+    <>
+      <Bench />
+      <rect x={60} y={6} width={130} height={6} rx={2} fill="#78909c" />
+      <rect x={116} y={12} width={18} height={44} rx={3} fill="var(--surface)" stroke={INK} />
+      {[20, 28, 36, 44].map((y) => <line key={y} x1={120} x2={130} y1={y} y2={y} stroke={INK} strokeWidth="0.8" />)}
+      <path d="M125 56 V74" stroke={INK} strokeWidth="1.4" />
+      <Beaker x={70} y={58} w={110} h={80} fill={0.6} liquid="#4f9fe0" liquidOpacity={0.45} />
+      <rect x={112} y={74} width={26} height={40} rx={3} fill="url(#kit-metal-h)" stroke="#78909c" />
+      <Arrow x1={125} y1={134} x2={125} y2={118} color="var(--fis)" w={2.4} />
+      <MiniPlot x={210} y={24} w={98} h={78} d="M0 6 L40 40 L76 40" points={[[0, 6], [20, 23], [40, 40], [76, 40]]} />
+    </>
+  ),
+  conduccion: () => (
+    <>
+      <Bench />
+      <rect x={34} y={70} width={250} height={10} rx={3} fill="url(#kit-metal)" stroke="#a1662f" />
+      <path d="M44 120 Q38 98 50 84 Q52 100 60 96 Q58 110 64 120 Z" fill="#ff7043" /><path d="M48 120 Q46 106 54 98 Q56 110 60 120 Z" fill="#ffca28" />
+      <rect x={40} y={120} width={30} height={20} rx={3} fill="#455a64" />
+      {[100, 140, 180, 220, 260].map((x, i) => <g key={x} opacity={i < 2 ? 0.35 : 1}><path d={`M${x} 80 v${i < 2 ? 50 : 10}`} stroke="#90a4ae" strokeWidth="2" /><circle cx={x} cy={i < 2 ? 132 : 92} r={3.5} fill="#cfd8dc" stroke="#78909c" /></g>)}
+      <Arrow x1={80} y1={56} x2={200} y2={56} color="var(--data)" w={2.2} />
+    </>
+  ),
+  sonido: () => (
+    <>
+      <Bench />
+      <path d="M50 140 V96 M42 96 V40 Q42 30 50 30 Q58 30 58 40 V96 Z" fill="none" stroke="url(#kit-metal-h)" strokeWidth="6" strokeLinejoin="round" />
+      <rect x={36} y={130} width={28} height={10} rx={2} fill="#6d4c41" />
+      {[1, 2, 3].map((i) => <path key={i} d={`M${66 + i * 10} ${60 - i * 6} q${10 + i * 2} ${16 + i * 6} 0 ${32 + i * 12}`} fill="none" stroke="var(--fis)" strokeWidth="2" opacity={1 - i * 0.22} />)}
+      <rect x={140} y={22} width={160} height={104} rx={8} fill="#1d2526" stroke="#455a64" />
+      {[0, 1, 2, 3].map((i) => <line key={i} x1={150} x2={290} y1={40 + i * 24} y2={40 + i * 24} stroke="#2e7d32" strokeOpacity="0.5" />)}
+      <path d={Array.from({ length: 71 }, (_, i) => `${i ? 'L' : 'M'}${(150 + i * 2).toFixed(1)} ${(74 + 26 * Math.sin(i / 70 * Math.PI * 6)).toFixed(1)}`).join('')} fill="none" stroke="#69f0ae" strokeWidth="2" />
+    </>
+  ),
+  trabajo: () => (
+    <>
+      <path d="M20 140 H300 V60 Z" fill="url(#kit-wood)" stroke="#b8975a" />
+      <path d="M268 140 A32 32 0 0 0 266 128" fill="none" stroke="var(--data)" strokeWidth="1.8" /><text x={248} y={134} style={{ fontSize: 10, fill: 'var(--data)', fontWeight: 700 }}>30°</text>
+      <g transform="translate(150 104) rotate(-16)"><rect x={-22} y={-20} width={44} height={20} rx={3} fill="#546e7a" /><text y={-6} textAnchor="middle" style={{ fontSize: 9, fill: '#fff', fontWeight: 700 }}>500 g</text></g>
+      <Arrow x1={176} y1={94} x2={232} y2={78} color="var(--data)" w={2.6} />
+      <path d="M150 104 V136" stroke={INK} strokeDasharray="3 3" /><Arrow x1={150} y1={110} x2={150} y2={134} color="var(--fis)" />
+    </>
+  ),
+  proyectiles: () => (
+    <>
+      <path d="M0 140 H320" stroke="var(--bench-edge)" strokeWidth="3" />
+      <rect x={20} y={100} width={30} height={40} fill="#78909c" />
+      <path d={Array.from({ length: 13 }, (_, i) => { const t = i / 12; return `${i ? 'L' : 'M'}${(50 + t * 240).toFixed(1)} ${(100 - 150 * t + 190 * t * t).toFixed(1)}`; }).join('')} fill="none" stroke="var(--fis)" strokeWidth="2" strokeDasharray="5 5" />
+      {[0.25, 0.5, 0.75].map((t) => <circle key={t} cx={50 + t * 240} cy={100 - 150 * t + 190 * t * t} r={6} fill="var(--fis)" opacity={0.35 + t * 0.5} />)}
+      <Arrow x1={50} y1={100} x2={86} y2={76} color="var(--data)" w={2.4} />
+      <path d="M286 140 v-8 M294 140 v-8" stroke="var(--data)" strokeWidth="2" />
+    </>
+  ),
+  pendulo: () => (
+    <>
+      <rect x={60} y={10} width={200} height={8} rx={2} fill="url(#kit-metal)" />
+      <path d="M160 18 L206 112" stroke={INK} strokeWidth="1.6" />
+      <path d="M160 18 L160 120" stroke={INK} strokeWidth="1" strokeDasharray="3 4" />
+      <path d="M118 108 A100 100 0 0 0 202 108" fill="none" stroke="var(--data)" strokeWidth="1.6" strokeDasharray="4 3" />
+      <circle cx={206} cy={112} r={11} fill="url(#kit-metal-h)" stroke="#546e7a" />
+      <path d="M160 52 A36 36 0 0 0 175 51" fill="none" stroke="var(--data)" strokeWidth="2" />
+      <MiniPlot x={234} y={38} w={78} h={60} d={Array.from({ length: 25 }, (_, i) => `${i ? 'L' : 'M'}${(i * 2.3).toFixed(1)} ${(20 + 16 * Math.cos(i / 24 * Math.PI * 4)).toFixed(1)}`).join('')} />
+    </>
+  ),
+  choques: () => (
+    <>
+      <rect x={10} y={112} width={300} height={8} rx={2} fill="url(#kit-metal)" stroke="#9aa5a9" />
+      <g filter="url(#kit-shadow-soft)"><rect x={60} y={86} width={64} height={26} rx={5} fill="#1e5fae" /><rect x={196} y={86} width={64} height={26} rx={5} fill="#c2410c" /></g>
+      {[74, 110, 210, 246].map((x) => <circle key={x} cx={x} cy={114} r={5} fill="#263238" />)}
+      <Arrow x1={70} y1={74} x2={130} y2={74} color="#1e5fae" w={2.6} />
+      <Arrow x1={250} y1={74} x2={210} y2={74} color="#c2410c" w={2.6} />
+      <text x={160} y={52} textAnchor="middle" style={{ fontSize: 13, fill: INK, fontWeight: 700, fontFamily: 'var(--font-data)' }}>p = m·v</text>
+    </>
+  ),
+  interferencia: () => (
+    <>
+      <rect x={14} y={70} width={30} height={20} rx={3} fill="#37474f" /><path d="M44 80 H96" stroke="#e53935" strokeWidth="3" />
+      <rect x={96} y={20} width={6} height={120} fill="#455a64" /><rect x={96} y={68} width={6} height={6} fill="var(--surface)" /><rect x={96} y={86} width={6} height={6} fill="var(--surface)" />
+      {[1, 2, 3].map((i) => <g key={i} opacity={1 - i * 0.25}><circle cx={102} cy={71} r={i * 18} fill="none" stroke="#e53935" strokeWidth="1" /><circle cx={102} cy={89} r={i * 18} fill="none" stroke="#e53935" strokeWidth="1" /></g>)}
+      <rect x={250} y={20} width={14} height={120} fill="#1d2526" />
+      {Array.from({ length: 11 }, (_, i) => <rect key={i} x={251} y={22 + i * 10.6} width={12} height={5} fill="#ff5252" opacity={1 - Math.abs(i - 5) * 0.16} />)}
+    </>
+  ),
+  induccion: () => (
+    <>
+      <Bench />
+      {Array.from({ length: 8 }, (_, i) => <ellipse key={i} cx={150 + i * 10} cy={96} rx={6} ry={28} fill="none" stroke="#b87333" strokeWidth="3.4" />)}
+      <g transform="translate(66 86)"><rect width={34} height={20} fill="#e53935" /><rect x={34} width={34} height={20} fill="#1e88e5" /><text x={17} y={14} textAnchor="middle" style={{ fontSize: 11, fill: '#fff', fontWeight: 700 }}>N</text><text x={51} y={14} textAnchor="middle" style={{ fontSize: 11, fill: '#fff', fontWeight: 700 }}>S</text></g>
+      <Arrow x1={60} y1={76} x2={118} y2={76} color="var(--data)" w={2.4} />
+      <path d="M150 124 V140 H260 M220 124 V134" stroke={INK} strokeWidth="1.4" fill="none" />
+      <g transform="translate(270 70)"><circle r={26} fill="var(--surface)" stroke={INK} strokeWidth="1.6" /><path d="M-18 6 A20 20 0 0 1 18 6" fill="none" stroke={INK} /><path d="M0 8 L10 -14" stroke="#e53935" strokeWidth="2" /></g>
+    </>
+  ),
+  'extraccion-adn': () => (
+    <>
+      <Bench />
+      <TestTube x={70} y={14} w={34} h={124} fill={0.75} liquid="#f8bbd0" liquidOpacity={0.6} />
+      <path d="M76 52 Q86 46 92 58 Q82 62 88 74 Q96 66 98 80" fill="none" stroke="#ffffff" strokeWidth="2.4" strokeLinecap="round" />
+      <rect x={70} y={40} width={34} height={24} fill="#e3f2fd" opacity="0.5" />
+      <path d="M130 140 L140 50" stroke="#8d6e63" strokeWidth="3" />
+      {Array.from({ length: 9 }, (_, i) => { const x = 180 + i * 14, a = (i / 8) * Math.PI * 2, y1 = 76 + 30 * Math.sin(a), y2 = 76 - 30 * Math.sin(a); return <line key={i} x1={x} x2={x} y1={y1} y2={y2} stroke={['#e53935', '#43a047', '#fbc02d', '#1e88e5'][i % 4]} strokeWidth="3" />; })}
+      {[1, -1].map((s) => <path key={s} d={Array.from({ length: 41 }, (_, i) => `${i ? 'L' : 'M'}${(180 + i * 2.8).toFixed(1)} ${(76 + s * 30 * Math.sin(i / 40 * Math.PI * 2)).toFixed(1)}`).join('')} fill="none" stroke="var(--bio)" strokeWidth="3.4" />)}
+    </>
+  ),
+  conservacion: () => (
+    <>
+      <Bench />
+      <DigitalBalance x={70} y={104} w={180} reading="152.34" />
+      <Erlenmeyer x={120} y={36} w={80} h={70} fill={0.4} liquid="#e0e0e0" liquidOpacity={0.6} />
+      <path d="M150 36 Q138 8 160 4 Q182 8 170 36 Z" fill="#ef5350" opacity="0.85" />
+      <Bubbles pts={[[150, 90, 2.2], [162, 84, 1.8], [170, 92, 2.4]]} />
+    </>
+  ),
+  balanceo: () => (
+    <>
+      {[['2', 'H₂', 40], ['', 'O₂', 120], ['2', 'H₂O', 220]].map(([c, f, x]) => <g key={f as string} transform={`translate(${x} 40)`}><rect width={62} height={34} rx={8} fill="var(--surface)" stroke="var(--qui)" strokeWidth="1.6" /><text x={31} y={23} textAnchor="middle" style={{ fontSize: 15, fill: 'var(--ink)', fontWeight: 700, fontFamily: 'var(--font-data)' }}>{c}{f}</text></g>)}
+      <text x={110} y={63} textAnchor="middle" style={{ fontSize: 16, fill: INK, fontWeight: 700 }}>+</text>
+      <Arrow x1={188} y1={57} x2={214} y2={57} color={INK} w={2} />
+      {[['H', 4, 4, 70], ['O', 2, 2, 110]].map(([el, l, r, y]) => <g key={el as string}><text x={34} y={(y as number) + 18} style={{ fontSize: 11, fill: INK, fontWeight: 700 }}>{el}</text><rect x={50} y={(y as number) + 8} width={(l as number) * 22} height={12} rx={3} fill="var(--fis)" /><rect x={200} y={(y as number) + 8} width={(r as number) * 22} height={12} rx={3} fill="var(--ok)" /></g>)}
+    </>
+  ),
+  mol: () => (
+    <>
+      <Bench />
+      <DigitalBalance x={30} y={104} w={160} reading="1.250" />
+      <path d="M80 104 Q110 76 140 104 Z" fill="#fafafa" stroke="#bdbdbd" />
+      <text x={248} y={66} textAnchor="middle" style={{ fontSize: 15, fill: 'var(--ink)', fontWeight: 700, fontFamily: 'var(--font-data)' }}>6,022×10²³</text>
+      <text x={248} y={88} textAnchor="middle" style={{ fontSize: 11, fill: INK, fontFamily: 'var(--font-data)' }}>partículas/mol</text>
+      <text x={248} y={116} textAnchor="middle" style={{ fontSize: 13, fill: 'var(--qui)', fontWeight: 700, fontFamily: 'var(--font-data)' }}>n = m / M</text>
+    </>
+  ),
+  geometria: () => {
+    const c: [number, number] = [160, 82];
+    const ends: [number, number][] = [[160, 22], [100, 116], [216, 122], [186, 64]];
+    return (
+      <>
+        {ends.map(([x, y], i) => <line key={i} x1={c[0]} y1={c[1]} x2={x} y2={y} stroke="#90a4ae" strokeWidth={i === 3 ? 4 : 7} strokeDasharray={i === 3 ? '4 4' : undefined} />)}
+        <circle cx={c[0]} cy={c[1]} r={20} fill="#455a64" />
+        {ends.map(([x, y], i) => <circle key={i} cx={x} cy={y} r={i === 3 ? 10 : 13} fill="#eceff1" stroke="#90a4ae" />)}
+        <path d="M144 58 A26 26 0 0 0 138 96" fill="none" stroke="var(--data)" strokeWidth="1.8" />
+        <text x={96} y={70} style={{ fontSize: 12, fill: 'var(--data)', fontWeight: 700, fontFamily: 'var(--font-data)' }}>109,5°</text>
+      </>
+    );
+  },
+  respiracion: () => (
+    <>
+      <Bench />
+      <TestTube x={60} y={30} w={40} h={108} fill={0.3} liquid="#c5e1a5" liquidOpacity={0.7} />
+      {[[72, 118], [84, 124], [78, 110], [90, 114]].map(([x, y]) => <ellipse key={`${x}${y}`} cx={x} cy={y} rx={5} ry={4} fill="#f9a825" stroke="#8d6e63" />)}
+      <path d="M80 30 V20 H270 V60" fill="none" stroke="var(--glass-edge)" strokeWidth="5" />
+      {Array.from({ length: 10 }, (_, i) => <line key={i} x1={110 + i * 16} x2={110 + i * 16} y1={14} y2={i % 5 ? 18 : 22} stroke={INK} />)}
+      <circle cx={196} cy={20} r={4} fill="#1e88e5" /><Arrow x1={196} y1={34} x2={150} y2={34} color="var(--data)" />
+    </>
+  ),
+  agua: () => (
+    <>
+      <path d="M0 96 Q80 70 160 96 T320 92 V160 H0 Z" fill="#4f9fe0" fillOpacity="0.35" />
+      <path d="M0 96 Q80 70 160 96 T320 92" fill="none" stroke="#1e88e5" strokeWidth="2" />
+      <rect x={90} y={50} width={16} height={36} fill="#8d6e63" /><path d="M106 60 H126 V82" stroke="#6d4c41" strokeWidth="4" fill="none" />
+      {[50, 180, 260].map((x, i) => <TestTube key={x} x={x} y={20} w={16} h={58} fill={0.7} liquid={['#81d4fa', '#a1887f', '#90caf9'][i]} liquidOpacity={0.7} />)}
+      <text x={140} y={140} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink)', fontWeight: 700, fontFamily: 'var(--font-data)' }}>O₂ disuelto</text>
+    </>
+  ),
+  expresion: () => (
+    <>
+      <path d="M10 104 H310" stroke="var(--fis)" strokeWidth="4" strokeLinecap="round" />
+      {Array.from({ length: 20 }, (_, i) => <line key={i} x1={20 + i * 15} x2={20 + i * 15} y1={104} y2={92} stroke={['#e53935', '#43a047', '#fbc02d', '#1e88e5'][i % 4]} strokeWidth="3" />)}
+      <ellipse cx={170} cy={92} rx={40} ry={18} fill="#9575cd" opacity="0.8" /><ellipse cx={170} cy={116} rx={46} ry={14} fill="#7e57c2" opacity="0.8" />
+      {[0, 1, 2, 3, 4].map((i) => <circle key={i} cx={164 - i * 14} cy={56 - i * 8} r={8} fill={['#ffb74d', '#81c784', '#64b5f6', '#e57373', '#ba68c8'][i]} stroke="#fff" />)}
+      <text x={250} y={60} style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700, fontFamily: 'var(--font-data)' }}>AUG</text>
+    </>
+  ),
+  secuencias: () => (
+    <g style={{ fontFamily: 'var(--font-data)', fontWeight: 700 }}>
+      {['ATGGTGCACCTGACT', 'ATGGTGCATCTGACT'].map((seq, r) => seq.split('').map((b, i) => <g key={`${r}${i}`}><rect x={24 + i * 18} y={42 + r * 40} width={16} height={24} rx={3} fill={{ A: '#e5737333', T: '#fbc02d33', G: '#43a04733', C: '#1e88e533' }[b]} /><text x={32 + i * 18} y={59 + r * 40} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink)' }}>{b}</text></g>))}
+      {Array.from({ length: 15 }, (_, i) => <text key={i} x={32 + i * 18} y={78} textAnchor="middle" style={{ fontSize: 11, fill: i === 8 ? 'var(--bad)' : INK }}>{i === 8 ? '×' : '|'}</text>)}
+      <text x={24} y={134} style={{ fontSize: 11, fill: INK }}>identidad 93 % · GC 53 %</text>
+    </g>
+  ),
+  rastreo: () => (
+    <>
+      <path d="M20 60 H300" stroke={INK} strokeWidth="2" />
+      {[[40, 50, 'var(--fis)'], [110, 40, 'var(--bio)'], [170, 70, 'var(--data)'], [262, 30, 'var(--qui)']].map(([x, w, c]) => <rect key={x as number} x={x as number} y={50} width={w as number} height={20} rx={4} fill={c as string} />)}
+      <Arrow x1={205} y1={86} x2={205} y2={120} color={INK} w={2} />
+      <rect x={150} y={122} width={110} height={24} rx={6} fill="var(--surface)" stroke="var(--line)" />
+      <text x={205} y={139} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink)', fontWeight: 700, fontFamily: 'var(--font-data)' }}>proteína</text>
+      <text x={40} y={40} style={{ fontSize: 10, fill: INK, fontFamily: 'var(--font-data)' }}>cromosoma 11</text>
+    </>
+  ),
+  proteinas: () => (
+    <>
+      <path d={Array.from({ length: 121 }, (_, i) => `${i ? 'L' : 'M'}${(30 + i * 1.4 + 14 * Math.cos(i / 6)).toFixed(1)} ${(80 + 30 * Math.sin(i / 6)).toFixed(1)}`).join('')} fill="none" stroke="var(--bio)" strokeWidth="5" strokeLinecap="round" />
+      <path d="M210 120 L240 40 L270 120 L300 40" fill="none" stroke="var(--fis)" strokeWidth="9" strokeLinejoin="round" opacity="0.8" />
+      <path d="M296 32 l10 14 l-16 2 z" fill="var(--fis)" />
+    </>
+  ),
+  metabolismo: () => {
+    const nodes: [number, number][] = [[40, 40], [110, 40], [180, 40], [250, 40], [110, 110], [180, 110], [280, 110]];
+    const edges: [number, number][] = [[0, 1], [1, 2], [2, 3], [1, 4], [4, 5], [5, 2], [3, 6], [5, 6]];
+    return (
+      <>
+        {edges.map(([a, b], i) => <Arrow key={i} x1={nodes[a][0] + (nodes[b][0] - nodes[a][0]) * 0.18} y1={nodes[a][1] + (nodes[b][1] - nodes[a][1]) * 0.18} x2={nodes[a][0] + (nodes[b][0] - nodes[a][0]) * 0.82} y2={nodes[a][1] + (nodes[b][1] - nodes[a][1]) * 0.82} color={i % 3 ? INK : 'var(--data)'} w={i % 3 ? 1.4 : 3} />)}
+        {nodes.map(([x, y], i) => <circle key={i} cx={x} cy={y} r={10} fill="var(--surface)" stroke="var(--bio)" strokeWidth="2.4" />)}
+      </>
+    );
+  },
+  reto: () => (
+    <>
+      <path d="M10 30 Q120 60 160 90 T310 130" fill="none" stroke="#4f9fe0" strokeWidth="14" strokeOpacity="0.45" strokeLinecap="round" />
+      {[[60, 44], [130, 72], [200, 104], [270, 124]].map(([x, y], i) => <g key={x}><circle cx={x} cy={y} r={7} fill="var(--data)" stroke="#fff" strokeWidth="2" /><text x={x} y={y - 12} textAnchor="middle" style={{ fontSize: 10, fill: INK, fontWeight: 700, fontFamily: 'var(--font-data)' }}>P{i + 1}</text></g>)}
+      <MiniPlot x={196} y={8} w={110} h={66} d="M0 4 L86 40" points={[[0, 4], [28, 16], [58, 26], [86, 40]]} color="var(--amb)" />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

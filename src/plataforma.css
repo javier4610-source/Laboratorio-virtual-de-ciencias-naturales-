@@ -35,8 +35,8 @@
 .stage-nav button { scroll-snap-align: start; }
 @media (max-width: 719px) {
   .stage-bar { flex-wrap: wrap; gap: 0; }
-  .stage-nav { flex: 1 1 100%; order: 1; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); padding-right: 24px; }
-  .stage-progress { order: 0; flex: 1 1 100%; padding: 6px 0 2px; }
+  .stage-bar .stage-nav { flex: 1 1 100%; order: 1; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); padding-right: 24px; }
+  .stage-bar .stage-progress { order: 0; flex: 1 1 100%; padding: 6px 0 2px; }
   .stage-progress .track { flex: 1; width: auto; }
 }
 
@@ -224,3 +224,29 @@ kbd { min-width: 1.6em; text-align: center; display: inline-block; color: var(--
   .pcard-body { gap: 8px; padding: 12px 14px; }
 }
 .hero-scene-placeholder { aspect-ratio: 614 / 340; width: 100%; }
+
+/* ---------- Inicio en teléfono: perfiles en tres columnas iguales ---------- */
+@media (max-width: 559px) {
+  .tasks .section-head.row { display: grid; }
+  .profile-switch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+  .profile-switch button { flex-direction: column; justify-content: center; gap: 2px; padding: 6px 4px; font-size: var(--fs-xs); line-height: 1.2; white-space: normal; text-align: center; }
+  .task { min-height: 0; padding: 12px 14px; }
+  .task-icon { width: 38px; height: 38px; }
+}
+
+/* ---------- Carga ---------- */
+.loading-state { display: grid; gap: var(--sp-4); padding-block: var(--sp-4); }
+.loading-text { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--ink-2); font-weight: var(--fw-medium); }
+.spinner { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid var(--surface-3); border-top-color: var(--accent); animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.skeleton { display: grid; gap: 12px; }
+.sk-line, .sk-block { display: block; border-radius: var(--radius-sm); background: linear-gradient(90deg, var(--surface-2), var(--surface-3), var(--surface-2)); background-size: 200% 100%; animation: shimmer 1.4s ease-in-out infinite; }
+.sk-line { height: 18px; } .sk-line.w40 { width: 40%; } .sk-line.w70 { width: 70%; height: 34px; }
+.sk-block { height: 320px; border-radius: var(--radius-lg); }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+
+/* ---------- Análisis: resumen y gráfica lado a lado en pantallas anchas ---------- */
+.trend-grid { display: grid; gap: var(--sp-4); grid-template-columns: minmax(0, 1fr); align-items: start; }
+.trend-main .readout { grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr)); }
+.trend-main > p { margin: 0; }
+@media (min-width: 1000px) { .trend-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }

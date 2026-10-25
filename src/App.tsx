@@ -26,8 +26,14 @@ const GradePage = lazy(() => import('./pages/CatalogPages').then((m) => ({ defau
 const KitDefs = lazy(() => import('./labs/kit').then((m) => ({ default: m.KitDefs })));
 const HelpPage = lazy(() => import('./pages/HelpPage').then((m) => ({ default: m.HelpPage })));
 
+/** Estado de carga: texto anunciado y un esqueleto que reserva el espacio (sin saltos al aparecer el contenido). */
 function Loading({ text = 'Cargando…' }: { text?: string }) {
-  return <p role="status" className="muted">{text}</p>;
+  return (
+    <div className="loading-state">
+      <p role="status" className="loading-text"><span className="spinner" aria-hidden="true" />{text}</p>
+      <div className="skeleton" aria-hidden="true"><span className="sk-line w40" /><span className="sk-line w70" /><span className="sk-block" /></div>
+    </div>
+  );
 }
 
 function PracticeRoute({ id, report }: { id: string; report: boolean }) {
@@ -37,7 +43,7 @@ function PracticeRoute({ id, report }: { id: string; report: boolean }) {
     return (
       <div className="notice bad stack-sm" role="alert">
         <strong>No se pudo cargar la práctica.</strong>
-        <span className="small">{state.message} Revisa tu conexión a internet.</span>
+        <span className="small">{state.message} Revisa tu conexión a internet: si ya abriste esta práctica antes, funciona sin conexión; si es la primera vez, necesita descargarse una vez.</span>
         <div className="btn-row"><button type="button" className="btn" onClick={state.retry}>Reintentar</button></div>
       </div>
     );

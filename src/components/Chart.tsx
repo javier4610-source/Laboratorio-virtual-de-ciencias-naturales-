@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent as RPointerEvent } from 'react';
+import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent as RPointerEvent, type ReactNode } from 'react';
 import { fmt, fmtSig } from '../lib/format';
 import { FIT_LABEL, FIT_MODELS, equationWithValues, fitModel, formatWithUncertainty, type FitModel, type FitOutcome } from '../lib/fit';
 import { copyText, downloadBlob, slug } from '../lib/report';
@@ -60,6 +60,24 @@ type Domain = [number, number];
 interface View { x: Domain; y: Domain; }
 
 /** Calcula marcas "redondas" (1, 2, 5 × 10ⁿ) para un eje. */
+/**
+ * Marcador de una serie: la forma cambia con el índice (círculo, cuadrado, triángulo, rombo, triángulo invertido,
+ * hexágono) para que las series se distingan sin depender solo del color (WCAG 1.4.1; daltonismo).
+ */
+export function SeriesMarker({ index, cx, cy, r, fill, stroke = 'var(--surface)', strokeWidth = 1.5, children }: {
+  index: number; cx: number; cy: number; r: number; fill: string; stroke?: string; strokeWidth?: number; children?: ReactNode;
+}) {
+  const k = index % 6;
+  const common = { fill, stroke, strokeWidth };
+  if (k === 0) return <circle cx={cx} cy={cy} r={r} {...common}>{children}</circle>;
+  if (k === 1) { const a = r * 0.9; return <rect x={cx - a} y={cy - a} width={2 * a} height={2 * a} rx={1} {...common}>{children}</rect>; }
+  const poly = (pts: [number, number][]) => <polygon points={pts.map(([x, y]) => `${(cx + x * r).toFixed(2)},${(cy + y * r).toFixed(2)}`).join(' ')} {...common}>{children}</polygon>;
+  if (k === 2) return poly([[0, -1.2], [1.1, 0.85], [-1.1, 0.85]]);
+  if (k === 3) return poly([[0, -1.25], [1.15, 0], [0, 1.25], [-1.15, 0]]);
+  if (k === 4) return poly([[0, 1.2], [1.1, -0.85], [-1.1, -0.85]]);
+  return poly([[1.05, 0], [0.52, 0.92], [-0.52, 0.92], [-1.05, 0], [-0.52, -0.92], [0.52, -0.92]]);
+}
+
 export function niceTicks(min: number, max: number, count = 5): number[] {
   if (!Number.isFinite(min) || !Number.isFinite(max)) return [0, 1];
   if (min === max) { const d = Math.abs(min) || 1; min -= d * 0.5; max += d * 0.5; }
@@ -424,9 +442,9 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
   const fitLabel = fitted ? FIT_LABEL[fitted.model] : '';
   const legendItems = hasData && (showTitle || series.length > 1 || fitted || modelCurve)
     ? [
-        ...series.map((s, si) => ({ key: `s${si}`, label: s.label, color: colorOf(s, si), kind: s.kind ?? 'scatter', dashed: s.dashed })),
-        ...(fitted ? [{ key: 'fit', label: `Ajuste ${fitLabel}`, color: 'var(--ink-2)', kind: 'line' as const, dashed: true }] : []),
-        ...(modelCurve ? [{ key: 'model', label: `Modelo: ${modelCurve.label}`, color: 'var(--model-curve)', kind: 'line' as const, dashed: false }] : []),
+        ...series.map((s, si) => ({ key: `s${si}`, index: si, label: s.label, color: colorOf(s, si), kind: s.kind ?? 'scatter', dashed: s.dashed })),
+        ...(fitted ? [{ key: 'fit', index: 0, label: `Ajuste ${fitLabel}`, color: 'var(--ink-2)', kind: 'line' as const, dashed: true }] : []),
+        ...(modelCurve ? [{ key: 'model', index: 0, label: `Modelo: ${modelCurve.label}`, color: 'var(--model-curve)', kind: 'line' as const, dashed: false }] : []),
       ]
     : [];
   const tableId = `${id}-tabla`;
@@ -457,7 +475,7 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
                   <li key={it.key}>
                     <svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" focusable="false">
                       {it.kind !== 'scatter' && <line x1="1" x2="21" y1="6" y2="6" stroke={it.color} strokeWidth={2.2} strokeDasharray={it.dashed ? '5 3' : undefined} />}
-                      {it.kind !== 'line' && <circle cx="11" cy="6" r="4.2" fill={it.color} />}
+                      {it.kind !== 'line' && <SeriesMarker index={it.index} cx={11} cy={6} r={4} fill={it.color} strokeWidth={1} />}
                     </svg>
                     {it.label}
                   </li>
@@ -530,9 +548,9 @@ export function Chart({ series, xLabel, yLabel, title, xUnit, yUnit, xDomain, yD
                   </g>
                 ))}
                 {(kind === 'scatter' || kind === 'both') && pts.map(({ p, pi }) => (
-                  <circle key={pi} cx={sx(p.x)} cy={sy(p.y)} r={cur && cur.si === si && cur.pi === pi ? 7 : 5} fill={color} stroke="var(--surface)" strokeWidth={1.5}>
+                  <SeriesMarker key={pi} index={si} cx={sx(p.x)} cy={sy(p.y)} r={cur && cur.si === si && cur.pi === pi ? 7 : 5} fill={color}>
                     <title>{`${p.label ? p.label + ': ' : ''}(${fmtSig(p.x, 4)}; ${fmtSig(p.y, 4)})`}</title>
-                  </circle>
+                  </SeriesMarker>
                 ))}
               </g>
             );

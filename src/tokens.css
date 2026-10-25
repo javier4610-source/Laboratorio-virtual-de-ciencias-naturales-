@@ -1,0 +1,259 @@
+/* ======================================================================
+   Tokens del sistema de diseño · Laboratorio Virtual de Ciencias Naturales
+   Única fuente de verdad de color, tipografía, espaciado, radios, elevación,
+   movimiento y capas. Documentación: docs/v2/SISTEMA-DE-DISENO.md · ADR 0007.
+
+   Reglas
+   · Los componentes usan tokens SEMÁNTICOS (--surface, --accent, --data…), nunca
+     valores sueltos. Los laboratorios ya los consumen: no se renombran.
+   · El tema oscuro se declara dos veces (preferencia del sistema y elección manual)
+     con el MISMO contenido; tests/unit/plataforma.test.ts verifica que coinciden.
+   · Contrastes y escala de datos verificados (WCAG 2.2 AA; ΔE2000 bajo protanopía,
+     deuteranopía y tritanopía): ver la tabla del documento del sistema de diseño.
+   ====================================================================== */
+
+:root {
+  /* ---------- Tipografía ---------- */
+  --font-scale: 1;
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --font-data: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  /* Escala modular de razón 1,2 (tercera menor) sobre 1 rem; los títulos grandes son fluidos. */
+  --fs-xs: 0.75rem;      /* rótulos de eje, notas de pie (mínimo legible) */
+  --fs-sm: 0.875rem;     /* texto auxiliar, chips, tablas densas */
+  --fs-base: 1rem;       /* texto de lectura */
+  --fs-md: 1.2rem;       /* subtítulos de tarjeta */
+  --fs-lg: 1.44rem;      /* h2 */
+  --fs-xl: 1.728rem;     /* h1 compacto */
+  --fs-2xl: clamp(1.85rem, 1.25rem + 2.2vw, 2.488rem);  /* h1 de página */
+  --fs-3xl: clamp(2.15rem, 1.2rem + 3.4vw, 3.583rem);   /* titular del inicio */
+  --lh-tight: 1.1;
+  --lh-snug: 1.3;
+  --lh-body: 1.55;
+  --fw-regular: 400; --fw-medium: 600; --fw-bold: 700; --fw-black: 800;
+  --tracking-tight: -0.025em;
+  --tracking-caps: 0.1em;
+  --measure: 72ch;
+
+  /* ---------- Espaciado (base 4 px) ---------- */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-7: 28px; --sp-8: 32px; --sp-10: 40px; --sp-12: 56px; --sp-16: 72px;
+
+  /* ---------- Radios ---------- */
+  --radius-xs: 6px; --radius-sm: 8px; --radius: 12px; --radius-lg: 16px; --radius-xl: 24px; --radius-pill: 999px;
+
+  /* ---------- Movimiento (todas las duraciones pasan a 0 con «reducir movimiento») ---------- */
+  --dur-1: 120ms;   /* respuesta inmediata: color, borde */
+  --dur-2: 200ms;   /* elevación, desplazamientos cortos */
+  --dur-3: 320ms;   /* entradas de paneles y avisos */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---------- Capas ---------- */
+  --z-stage: 15; --z-header: 20; --z-popover: 30; --z-toast: 40; --z-dialog: 50; --z-skip: 100;
+
+  /* ---------- Estructura ---------- */
+  --content-max: 1240px;
+  --header-h: 65px;
+  --control-h: 42px;
+  --control-h-sm: 34px;
+
+  /* ---------- Neutros: gris frío con sesgo azul (superficies diferenciadas por luminosidad) ---------- */
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --surface-3: #e2e8ef;
+  --surface-sunken: #e9eef4;
+  --ink: #0f1b2d;
+  --ink-2: #4a586b;
+  --ink-3: #66758a;
+  --line: #d5dde6;
+  --line-strong: #8796a8;
+  --grid: rgba(15, 60, 90, 0.07);
+
+  /* ---------- Primario institucional: azul petróleo (confianza, precisión) ---------- */
+  --accent: #0a5a73;
+  --accent-hover: #084a5f;
+  --accent-ink: #ffffff;
+  --accent-soft: #e1eff4;
+  --accent-2: #1d4f9a;
+
+  /* ---------- Secundario: pizarra (acciones secundarias y navegación) ---------- */
+  --secondary: #26405f;
+  --secondary-soft: #e6ecf4;
+
+  /* ---------- Semánticos ---------- */
+  --ok: #13703c;      --ok-soft: #e0f2e7;
+  --warn: #8a5300;    --warn-soft: #fbf0d9;
+  --bad: #b42318;     --bad-soft: #fde6e3;
+  --info: #1d4fa8;    --info-soft: #e5eefb;
+
+  /* ---------- Dato medido (lecturas, botón «Guardar ensayo», paso actual) ---------- */
+  --data: #b23a0a;
+  --data-ink: #ffffff;
+  --data-soft: #fdebe1;
+
+  /* ---------- Foco: color propio, distinto del dato y del primario ---------- */
+  --focus: #1a56db;
+
+  /* ---------- Áreas ---------- */
+  --bio: #256d2a;
+  --qui: #8b3aa3;
+  --fis: #1e5fae;
+  --amb: #7a5800;
+
+  /* ---------- Escala de datos experimentales (≥ 4,1:1 sobre la superficie; ΔE2000 ≥ 6,2 con daltonismo) ---------- */
+  --series-1: #c2410c;
+  --series-2: #2554c7;
+  --series-3: #117a4b;
+  --series-4: #99307d;
+  --series-5: #0b87a8;
+  --series-6: #6b4200;
+  --series-7: #1b2b4d;
+  --series-8: #64748b;
+  --model-curve: var(--series-4);
+
+  /* ---------- Elevación ---------- */
+  --shadow-1: 0 1px 2px rgba(15, 27, 45, 0.06), 0 1px 3px -1px rgba(15, 27, 45, 0.08);
+  --shadow-2: 0 1px 2px rgba(15, 27, 45, 0.05), 0 6px 12px -4px rgba(15, 27, 45, 0.08), 0 20px 36px -12px rgba(15, 27, 45, 0.16);
+  --shadow-3: 0 2px 6px rgba(15, 27, 45, 0.08), 0 16px 32px -8px rgba(15, 27, 45, 0.18), 0 44px 72px -20px rgba(15, 27, 45, 0.3);
+  --shadow: var(--shadow-1);
+  --edge-hi: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --inset-field: inset 0 1px 2px rgba(15, 27, 45, 0.06);
+
+  /* ---------- Degradados e identidad ---------- */
+  --grad-accent: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 60%, var(--accent-2)) 100%);
+  --grad-text: linear-gradient(100deg, #0a5a73 0%, #1d4f9a 55%, #5b3a96 100%);
+  --spectrum: linear-gradient(90deg, var(--bio), var(--accent) 28%, var(--fis) 55%, var(--qui) 80%, var(--amb));
+  --page-glow: radial-gradient(1100px 520px at 85% -160px, rgba(10, 90, 115, 0.08), transparent 70%), radial-gradient(900px 480px at -10% -120px, rgba(29, 79, 154, 0.05), transparent 70%);
+  --hero-glow: radial-gradient(60% 80% at 85% 20%, rgba(10, 90, 115, 0.12), transparent 70%), radial-gradient(50% 70% at 10% 100%, rgba(178, 58, 10, 0.06), transparent 70%);
+  --mesh-1: rgba(14, 165, 200, 0.14); --mesh-2: rgba(59, 110, 246, 0.12); --mesh-3: rgba(140, 90, 220, 0.08); --mesh-4: rgba(249, 115, 22, 0.06);
+  --hero-nucleus-hi: #a5e3f2;
+
+  /* ---------- Escenas de los laboratorios (vidrio, mesada) ---------- */
+  --glass-edge: #7f99aa; --glass-print: #24424f; --bench-top: #ccd5dd; --bench-edge: #9eabb6;
+  --bench-light: rgba(255, 255, 255, 0.75); --bench-vignette: rgba(15, 45, 70, 0.06); --scene-halo: var(--surface);
+  --scrim: rgba(8, 15, 26, 0.5);
+  color-scheme: light;
+}
+
+/* Tema oscuro según el sistema (si la persona no eligió el claro). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d131c;
+    --surface: #141c28;
+    --surface-2: #1b2534;
+    --surface-3: #243042;
+    --surface-sunken: #10171f;
+    --ink: #e8eef6;
+    --ink-2: #a7b3c4;
+    --ink-3: #8794a8;
+    --line: #2a3647;
+    --line-strong: #5f718a;
+    --grid: rgba(140, 190, 230, 0.06);
+    --accent: #5cc6dc;
+    --accent-hover: #82d6e8;
+    --accent-ink: #04222b;
+    --accent-soft: #12323d;
+    --accent-2: #8ab4ff;
+    --secondary: #c9d6e8;
+    --secondary-soft: #1e2a3b;
+    --ok: #5bd389;      --ok-soft: #11301f;
+    --warn: #f5c35b;    --warn-soft: #352a10;
+    --bad: #ff8a80;     --bad-soft: #3a1815;
+    --info: #8ab4ff;    --info-soft: #172a46;
+    --data: #fb923c;
+    --data-ink: #1f0d02;
+    --data-soft: #3a2416;
+    --focus: #8ab4ff;
+    --bio: #7bc97f;
+    --qui: #d29be3;
+    --fis: #7fb2f0;
+    --amb: #e0b44f;
+    --series-1: #ff9a4d;
+    --series-2: #6fa8ff;
+    --series-3: #2fbf85;
+    --series-4: #f7a6dc;
+    --series-5: #9fe3ff;
+    --series-6: #f0d264;
+    --series-7: #8b7cf6;
+    --series-8: #8d9bb0;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.3), 0 12px 28px -6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(140, 190, 230, 0.05);
+    --shadow-3: 0 6px 14px rgba(0, 0, 0, 0.35), 0 28px 56px -12px rgba(0, 0, 0, 0.65);
+    --edge-hi: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --inset-field: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+    --grad-text: linear-gradient(100deg, #6fd3e6 0%, #8cb8ff 55%, #c9a8f0 100%);
+    --page-glow: radial-gradient(1100px 520px at 85% -160px, rgba(92, 198, 220, 0.09), transparent 70%), radial-gradient(900px 480px at -10% -120px, rgba(138, 180, 255, 0.06), transparent 70%);
+    --hero-glow: radial-gradient(60% 80% at 85% 20%, rgba(92, 198, 220, 0.12), transparent 70%), radial-gradient(50% 70% at 10% 100%, rgba(251, 146, 60, 0.05), transparent 70%);
+    --mesh-1: rgba(56, 189, 220, 0.12); --mesh-2: rgba(96, 140, 250, 0.11); --mesh-3: rgba(180, 140, 252, 0.08); --mesh-4: rgba(251, 146, 60, 0.05);
+    --hero-nucleus-hi: #d4f6ff;
+    --glass-edge: #9fbccc; --glass-print: #d7eaf2; --bench-top: #2b3746; --bench-edge: #1b2430;
+    --bench-light: rgba(140, 200, 230, 0.07); --bench-vignette: rgba(0, 0, 0, 0.28);
+    --scrim: rgba(2, 6, 12, 0.62);
+    color-scheme: dark;
+  }
+}
+
+/* Tema oscuro elegido en la aplicación. */
+:root[data-theme="dark"] {
+  --bg: #0d131c;
+  --surface: #141c28;
+  --surface-2: #1b2534;
+  --surface-3: #243042;
+  --surface-sunken: #10171f;
+  --ink: #e8eef6;
+  --ink-2: #a7b3c4;
+  --ink-3: #8794a8;
+  --line: #2a3647;
+  --line-strong: #5f718a;
+  --grid: rgba(140, 190, 230, 0.06);
+  --accent: #5cc6dc;
+  --accent-hover: #82d6e8;
+  --accent-ink: #04222b;
+  --accent-soft: #12323d;
+  --accent-2: #8ab4ff;
+  --secondary: #c9d6e8;
+  --secondary-soft: #1e2a3b;
+  --ok: #5bd389;      --ok-soft: #11301f;
+  --warn: #f5c35b;    --warn-soft: #352a10;
+  --bad: #ff8a80;     --bad-soft: #3a1815;
+  --info: #8ab4ff;    --info-soft: #172a46;
+  --data: #fb923c;
+  --data-ink: #1f0d02;
+  --data-soft: #3a2416;
+  --focus: #8ab4ff;
+  --bio: #7bc97f;
+  --qui: #d29be3;
+  --fis: #7fb2f0;
+  --amb: #e0b44f;
+  --series-1: #ff9a4d;
+  --series-2: #6fa8ff;
+  --series-3: #2fbf85;
+  --series-4: #f7a6dc;
+  --series-5: #9fe3ff;
+  --series-6: #f0d264;
+  --series-7: #8b7cf6;
+  --series-8: #8d9bb0;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.3), 0 12px 28px -6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(140, 190, 230, 0.05);
+  --shadow-3: 0 6px 14px rgba(0, 0, 0, 0.35), 0 28px 56px -12px rgba(0, 0, 0, 0.65);
+  --edge-hi: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --inset-field: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+  --grad-text: linear-gradient(100deg, #6fd3e6 0%, #8cb8ff 55%, #c9a8f0 100%);
+  --page-glow: radial-gradient(1100px 520px at 85% -160px, rgba(92, 198, 220, 0.09), transparent 70%), radial-gradient(900px 480px at -10% -120px, rgba(138, 180, 255, 0.06), transparent 70%);
+  --hero-glow: radial-gradient(60% 80% at 85% 20%, rgba(92, 198, 220, 0.12), transparent 70%), radial-gradient(50% 70% at 10% 100%, rgba(251, 146, 60, 0.05), transparent 70%);
+  --mesh-1: rgba(56, 189, 220, 0.12); --mesh-2: rgba(96, 140, 250, 0.11); --mesh-3: rgba(180, 140, 252, 0.08); --mesh-4: rgba(251, 146, 60, 0.05);
+  --hero-nucleus-hi: #d4f6ff;
+  --glass-edge: #9fbccc; --glass-print: #d7eaf2; --bench-top: #2b3746; --bench-edge: #1b2430;
+  --bench-light: rgba(140, 200, 230, 0.07); --bench-vignette: rgba(0, 0, 0, 0.28);
+  --scrim: rgba(2, 6, 12, 0.62);
+  color-scheme: dark;
+}
+
+/* Alto contraste: refuerza bordes y texto secundario. */
+:root[data-contrast] { --ink-2: var(--ink); --ink-3: var(--ink); --line: var(--ink); --line-strong: var(--ink); --grid: transparent; }
+
+/* Movimiento reducido: las duraciones del sistema pasan a 0 (las animaciones decorativas se apagan en styles.css). */
+@media (prefers-reduced-motion: reduce) { :root { --dur-1: 0ms; --dur-2: 0ms; --dur-3: 0ms; } }
+:root[data-reduce-motion] { --dur-1: 0ms; --dur-2: 0ms; --dur-3: 0ms; }

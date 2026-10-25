@@ -1,7 +1,7 @@
 import type { Competency, PracticeDef, PracticeSession, Question } from '../core/types';
 import { DATASETS } from '../labs/datasets';
 import { trialStatusText } from './provenance';
-import { questionById } from '../curriculum';
+import { transferQuestions } from '../assessment/lookup';
 
 export const REPORT_FORMAT = 'lvcn-informe-v1';
 
@@ -26,8 +26,7 @@ export interface ScoreSummary {
 
 /** Preguntas que se evalúan en una práctica: las propias y las de transferencia. */
 export function practiceQuestions(p: PracticeDef): Question[] {
-  const transfer = p.transferQuestionIds.map((id) => questionById(id)).filter((q): q is Question => !!q);
-  return [...p.assessment, ...transfer];
+  return [...p.assessment, ...transferQuestions(p)];
 }
 
 export function scoreSession(p: PracticeDef, s: PracticeSession): ScoreSummary {

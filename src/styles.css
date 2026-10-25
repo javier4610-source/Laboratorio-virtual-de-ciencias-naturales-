@@ -1,185 +1,8 @@
 /*
-  Laboratorio Virtual de Ciencias Naturales — sistema visual
-  Concepto: instrumento científico sobre papel milimetrado. Neutros fríos con sesgo
-  verde-azulado, un acento petróleo para la interacción y naranja de seguridad para
-  datos y pasos activos. Cada área tiene su color de pestaña e ícono.
-
-  Escalas
-  · Tipografía: 0.75 · 0.82 · 0.88 · 1 · 1.125 · 1.25 · 1.5 · 2 · 2.75 rem (display con clamp).
-  · Espaciado: múltiplos de 4 px (--sp-1 … --sp-10).
-  · Radios: --radius-sm 8 · --radius 12 · --radius-lg 16 · --radius-xl 24.
-  · Elevación en capas: --shadow-1 (reposo) · --shadow-2 (hover/flotante) · --shadow-3 (diálogos/avisos);
-    --edge-hi añade el brillo de borde superior que da volumen a superficies y botones.
-  · Rediseño 2026 (src/theme-2026.css, cargado después de este archivo): degradados de marca (--grad-accent), espectro de
-    las cuatro áreas (--spectrum) como motivo, héroe con malla de color y motivo científico en SVG.
+  Laboratorio Virtual de Ciencias Naturales — estilos de la aplicación.
+  Los valores (color, tipografía, espaciado, radios, elevación, movimiento, capas) viven en src/tokens.css;
+  aquí solo se componen. Capa de acabado: src/theme-2026.css (cargada después). Ver docs/v2/SISTEMA-DE-DISENO.md.
 */
-:root {
-  --font-scale: 1;
-  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
-  --font-data: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
-
-  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px; --sp-12: 56px;
-  --radius-sm: 8px; --radius: 12px; --radius-lg: 16px; --radius-xl: 24px;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-
-  --bg: #f3f6f5;
-  --surface: #ffffff;
-  --surface-2: #eaf0ee;
-  --surface-3: #dfe8e5;
-  --ink: #12201e;
-  --ink-2: #44524f;
-  --line: #cfd9d6;
-  --line-strong: #aebcb8;
-  --grid: rgba(16, 92, 88, 0.07);
-  --accent: #0b6762;
-  --accent-hover: #095753;
-  --accent-ink: #ffffff;
-  --accent-soft: #d8ece9;
-  --data: #b23a0a;
-  --data-ink: #ffffff;
-  --data-soft: #fde7da;
-  --ok: #17703a;
-  --ok-soft: #dcf2e3;
-  --bad: #b42318;
-  --bad-soft: #fde4e1;
-  --warn: #8a5a00;
-  --warn-soft: #fbefd2;
-  --bio: #256d2a;
-  --qui: #8b3aa3;
-  --fis: #1e5fae;
-  --amb: #7a5800;
-  --series-1: #c2410c;
-  --series-2: #1e5fae;
-  --series-3: #2e7d32;
-  --series-4: #8b3aa3;
-  --series-5: #0f766e;
-  --series-6: #a16207;
-  --series-7: #be185d;
-  --series-8: #4b5563;
-  /* Curva del modelo (modo avanzado): sigue a --series-4 en ambos temas. */
-  --model-curve: var(--series-4);
-  --shadow-1: 0 1px 2px rgba(14, 38, 36, 0.06), 0 1px 3px -1px rgba(14, 38, 36, 0.06);
-  --shadow-2: 0 1px 2px rgba(14, 38, 36, 0.05), 0 6px 12px -4px rgba(14, 38, 36, 0.08), 0 20px 36px -12px rgba(14, 38, 36, 0.16);
-  --shadow-3: 0 2px 6px rgba(14, 38, 36, 0.08), 0 16px 32px -8px rgba(14, 38, 36, 0.16), 0 44px 72px -20px rgba(14, 38, 36, 0.3);
-  --edge-hi: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  --accent-2: #1d5a9e;
-  --grad-accent: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 55%, var(--accent-2)) 100%);
-  --grad-text: linear-gradient(100deg, #0b6762 0%, #155e86 50%, #6d2f86 100%);
-  --spectrum: linear-gradient(90deg, var(--bio), var(--accent) 28%, var(--fis) 55%, var(--qui) 80%, var(--amb));
-  --hero-nucleus-hi: #9ae6dc;
-  --page-glow: radial-gradient(1100px 520px at 85% -160px, rgba(11, 103, 98, 0.09), transparent 70%), radial-gradient(900px 480px at -10% -120px, rgba(30, 95, 174, 0.06), transparent 70%);
-  --shadow: 0 1px 2px rgba(10, 30, 28, 0.06), 0 4px 14px rgba(10, 30, 28, 0.06);
-  --hero-glow: radial-gradient(60% 80% at 85% 20%, rgba(11, 103, 98, 0.12), transparent 70%), radial-gradient(50% 70% at 10% 100%, rgba(178, 58, 10, 0.07), transparent 70%);
-  --glass-edge: #7f9ba5; --glass-print: #24454a; --bench-top: #c9d3d1; --bench-edge: #9eaaa8;
-  --focus: #c2410c;
-  --ring: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
-  --header-h: 65px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0c1413;
-    --surface: #142120;
-    --surface-2: #1c2b29;
-    --surface-3: #243633;
-    --ink: #e6efed;
-    --ink-2: #a8b8b4;
-    --line: #2d3f3c;
-    --line-strong: #44605b;
-    --grid: rgba(120, 210, 200, 0.06);
-    --accent: #5cc3b9;
-    --accent-hover: #7dd3ca;
-    --accent-ink: #062321;
-    --accent-soft: #173936;
-    --data: #fb923c;
-    --data-ink: #1f0d02;
-    --data-soft: #3b2415;
-    --ok: #5bd389;
-    --ok-soft: #12321f;
-    --bad: #ff8a80;
-    --bad-soft: #3a1714;
-    --warn: #f5c35b;
-    --warn-soft: #362a0e;
-    --bio: #7bc97f;
-    --qui: #d29be3;
-    --fis: #7fb2f0;
-    --amb: #e0b44f;
-    --series-1: #fb923c;
-    --series-2: #7fb2f0;
-    --series-3: #7bc97f;
-    --series-4: #d29be3;
-    --series-5: #5eead4;
-    --series-6: #facc15;
-    --series-7: #f9a8d4;
-    --series-8: #cbd5e1;
-    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px -2px rgba(0, 0, 0, 0.3);
-    --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.3), 0 12px 28px -6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(120, 210, 200, 0.05);
-    --shadow-3: 0 6px 14px rgba(0, 0, 0, 0.35), 0 28px 56px -12px rgba(0, 0, 0, 0.65);
-    --edge-hi: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    --accent-2: #7fb2f0;
-    --grad-text: linear-gradient(100deg, #6fd6cb 0%, #8cbcf5 50%, #d9abe8 100%);
-    --hero-nucleus-hi: #d4fff9;
-    --page-glow: radial-gradient(1100px 520px at 85% -160px, rgba(92, 195, 185, 0.1), transparent 70%), radial-gradient(900px 480px at -10% -120px, rgba(127, 178, 240, 0.06), transparent 70%);
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
-    --hero-glow: radial-gradient(60% 80% at 85% 20%, rgba(92, 195, 185, 0.13), transparent 70%), radial-gradient(50% 70% at 10% 100%, rgba(251, 146, 60, 0.06), transparent 70%);
-    --glass-edge: #9fc0ca; --glass-print: #d7eef2; --bench-top: #2c3a38; --bench-edge: #1c2523;
-    --focus: #fb923c;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0c1413;
-  --surface: #142120;
-  --surface-2: #1c2b29;
-  --surface-3: #243633;
-  --ink: #e6efed;
-  --ink-2: #a8b8b4;
-  --line: #2d3f3c;
-  --line-strong: #44605b;
-  --grid: rgba(120, 210, 200, 0.06);
-  --accent: #5cc3b9;
-  --accent-hover: #7dd3ca;
-  --accent-ink: #062321;
-  --accent-soft: #173936;
-  --data: #fb923c;
-  --data-ink: #1f0d02;
-  --data-soft: #3b2415;
-  --ok: #5bd389;
-  --ok-soft: #12321f;
-  --bad: #ff8a80;
-  --bad-soft: #3a1714;
-  --warn: #f5c35b;
-  --warn-soft: #362a0e;
-  --bio: #7bc97f;
-  --qui: #d29be3;
-  --fis: #7fb2f0;
-  --amb: #e0b44f;
-  --series-1: #fb923c;
-  --series-2: #7fb2f0;
-  --series-3: #7bc97f;
-  --series-4: #d29be3;
-  --series-5: #5eead4;
-  --series-6: #facc15;
-  --series-7: #f9a8d4;
-  --series-8: #cbd5e1;
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px -2px rgba(0, 0, 0, 0.3);
-  --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.3), 0 12px 28px -6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(120, 210, 200, 0.05);
-  --shadow-3: 0 6px 14px rgba(0, 0, 0, 0.35), 0 28px 56px -12px rgba(0, 0, 0, 0.65);
-  --edge-hi: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  --accent-2: #7fb2f0;
-  --grad-text: linear-gradient(100deg, #6fd6cb 0%, #8cbcf5 50%, #d9abe8 100%);
-  --hero-nucleus-hi: #d4fff9;
-  --page-glow: radial-gradient(1100px 520px at 85% -160px, rgba(92, 195, 185, 0.1), transparent 70%), radial-gradient(900px 480px at -10% -120px, rgba(127, 178, 240, 0.06), transparent 70%);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
-  --hero-glow: radial-gradient(60% 80% at 85% 20%, rgba(92, 195, 185, 0.13), transparent 70%), radial-gradient(50% 70% at 10% 100%, rgba(251, 146, 60, 0.06), transparent 70%);
-  --glass-edge: #9fc0ca; --glass-print: #d7eef2; --bench-top: #2c3a38; --bench-edge: #1c2523;
-  --focus: #fb923c;
-  color-scheme: dark;
-}
-/* Alto contraste: refuerza bordes y texto secundario. */
-:root[data-contrast] { --ink-2: var(--ink); --line: var(--ink); --line-strong: var(--ink); --grid: transparent; }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { font-size: calc(100% * var(--font-scale)); -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 12px); }
@@ -845,8 +668,8 @@ details.sensor-card[open] > summary::after { transform: rotate(-135deg); }
 .sync-chip.ok { background: var(--ok-soft); color: var(--ok); }
 .sync-chip.warn { background: var(--warn-soft); color: var(--warn); }
 .sync-chip.bad { background: var(--bad-soft); color: var(--bad); }
-.sync-chip.info .sync-dot { animation: pulse 1.4s ease-in-out infinite; }
-@keyframes pulse { 50% { opacity: 0.35; } }
+.sync-chip.info .sync-dot { animation: blink-soft 1.4s ease-in-out infinite; }
+@keyframes blink-soft { 50% { opacity: 0.35; } }
 @media (max-width: 1000px) {
   .course-btn { order: 1; margin-left: auto; padding: 4px; min-width: 40px; justify-content: center; }
   .course-btn.joined { padding: 3px; }
@@ -1139,9 +962,9 @@ table.sheet { width: max-content; min-width: 100%; border-collapse: separate; bo
 .cell-input[type="text"] { min-height: 32px; padding: 3px 8px; font-size: 0.86rem; border-radius: 6px; border-color: var(--line); background: transparent; box-shadow: none; }
 .cell-input[type="text"]:hover { border-color: var(--line-strong); background: var(--surface); }
 .cell-input[type="text"]:focus-visible { background: var(--surface); }
-.sheet tr.fresh td { animation: row-fresh 3s ease-out; }
+.sheet tr.fresh td { animation: row-fresh 2.4s var(--ease-out); }
 .sheet tr.fresh td.col-idx { box-shadow: inset 3px 0 0 var(--ok), inset -1px 0 0 var(--line-strong); }
-@keyframes row-fresh { from { background: var(--ok-soft); } }
+@keyframes row-fresh { from { background-color: var(--ok-soft); } to { background-color: transparent; } }
 .icon-btn {
   position: relative; display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 7px;
   border: 1px solid transparent; background: transparent; color: var(--ink-2); cursor: pointer; transition: background-color 0.15s, color 0.15s;
@@ -1262,9 +1085,6 @@ details.nb-panel > summary:has(.nb-pill)::after { margin-left: 4px; }
 /* ---------------------------------------------------------------- acabado de escenas y espacio de práctica (U5b)
    Luz cenital suave sobre la mesa, tipografía uniforme de los rótulos de la escena, transiciones suaves
    (solo sin «reducir movimiento») y realce de la pieza manipulable que tiene el foco o se arrastra. */
-:root { --bench-light: rgba(255, 255, 255, 0.75); --bench-vignette: rgba(16, 60, 56, 0.06); --scene-halo: var(--surface); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bench-light: rgba(120, 210, 200, 0.07); --bench-vignette: rgba(0, 0, 0, 0.28); } }
-:root[data-theme="dark"] { --bench-light: rgba(120, 210, 200, 0.07); --bench-vignette: rgba(0, 0, 0, 0.28); }
 
 .bench {
   background-image:

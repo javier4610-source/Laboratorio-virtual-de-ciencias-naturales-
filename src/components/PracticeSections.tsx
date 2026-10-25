@@ -5,7 +5,7 @@ import { AREA_LABEL, COMPETENCY_LABEL } from '../curriculum/grades';
 import { DATASETS } from '../labs/datasets';
 import { detectTrend, TREND_LABEL } from '../lib/trend';
 import { fmt } from '../lib/format';
-import { questionById } from '../curriculum';
+import { transferQuestions } from '../assessment/lookup';
 import { QuestionCard } from './QuestionCard';
 import { cellText } from './DataPanel';
 import { Notice } from './ui';
@@ -210,7 +210,7 @@ export function EvaluationSection({ practice: p, api, mode }: { practice: Practi
     api.update((x) => ({ ...x, answers: { ...x.answers, [id]: x.answers[id]
       ? { ...rec, firstTryCorrect: x.answers[id].firstTryCorrect, ...(x.answers[id].firstChosen ? { firstChosen: x.answers[id].firstChosen } : {}), ...(x.answers[id].at ? { at: x.answers[id].at } : {}) }
       : { ...rec, firstChosen: rec.chosen, at: Date.now() } } }));
-  const transfer = p.transferQuestionIds.map((id) => questionById(id)).filter((q): q is NonNullable<typeof q> => !!q);
+  const transfer = transferQuestions(p);
   return (
     <div className="stack">
       <div className="kpis">

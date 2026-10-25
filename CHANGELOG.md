@@ -7,6 +7,15 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.3.0] · 2026-10-25
+
+### Añadido
+- Prácticas 63 a 65 (química, 11.º): funciones orgánicas oxigenadas; aminas y amidas; reacciones orgánicas en 3D
+  (24 reacciones con estequiometría, ley de Hess y equilibrio de esterificación).
+- Motor de nomenclatura de grupos funcionales validado contra PubChem en 176 estructuras (156 idénticas y 20 diferencias
+  de convención clasificadas). Propiedades con fuente: Tₑb de 96 compuestos, solubilidad de 102, pKa/pKb de 57 y ΔcH° de 42.
+- Procedencia propia para las tres prácticas.
+
 ## [2.2.0] · 2026-10-19
 
 ### Añadido

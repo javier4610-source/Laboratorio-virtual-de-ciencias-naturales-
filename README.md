@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (62)
+## Prácticas implementadas (65)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -72,6 +72,9 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Hidrocarburos: alcanos, alquenos y alquinos | Química | Series homólogas con propiedades experimentales citadas (PubChem/HSDB), hibridación y geometría medidas en confórmeros 3D, isomería y cis/trans, conformaciones (ilustración), combustión con ΔcH° y CO₂ por energía, pruebas de insaturación y halogenación estadística; reacciones en 3D |
 | 11.º | Hidrocarburos aromáticos | Química | Benceno con seis C–C iguales (1,395 Å) frente al ciclohexano y el ciclohexeno, regla de Hückel con orbitales calculados, derivados (o-/m-/p-) y sustitución electrofílica en 3D |
 | 11.º | Nomenclatura orgánica IUPAC | Química | Constructor de moléculas con nombre IUPAC 2013 al instante (español e inglés), explicación paso a paso, del nombre a la estructura y errores frecuentes; motor validado contra 188 estructuras de PubChem |
+| 11.º | Funciones orgánicas oxigenadas | Química | Alcoholes, fenoles, éteres, aldehídos, cetonas, ácidos carboxílicos y ésteres: grupo resaltado en 3D, nombres IUPAC con prioridad de grupos, puentes de hidrógeno y propiedades experimentales citadas (Tₑb, solubilidad), acidez con pKa reales y pruebas clásicas (Tollens, Fehling, FeCl₃, Lucas, bicarbonato) como ilustración |
+| 11.º | Funciones orgánicas nitrogenadas: aminas y amidas | Química | Clasificación, nombres, basicidad con pKaH reales y pH calculado, amida plana frente a amina piramidal medidas en 3D, propiedades y enlace peptídico |
+| 11.º | Reacciones orgánicas en 3D | Química | 24 reacciones balanceadas con átomos mapeados en 3D (ilustración), estequiometría, entalpías por la ley de Hess con datos citados, equilibrio de esterificación (K ≈ 4), regla de Markovnikov y oxidación de alcoholes |
 
 Todas las prácticas de la malla propuesta están implementadas.
 

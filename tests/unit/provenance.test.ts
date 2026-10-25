@@ -123,4 +123,10 @@ describe('registro reproducible del experimento', () => {
       expect(pr.detail).toMatch(/HSDB/);
     }
   });
+  it('funciones orgánicas con propiedades publicadas; reacciones orgánicas como modelo e ilustración', () => {
+    for (const id of ['grupos-oxigenados', 'grupos-nitrogenados']) expect(practiceProvenance(id, 'ideal').data).toBe('experimental');
+    const r = practiceProvenance('reacciones-organicas', 'ideal');
+    expect([r.data, r.scene]).toEqual(['modelo', 'ilustracion']);
+    expect(r.detail).toMatch(/no el mecanismo/);
+  });
 });

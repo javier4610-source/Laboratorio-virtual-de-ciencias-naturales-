@@ -20,6 +20,9 @@ import { ph } from './practices/ph';
 import { fotosintesis } from './practices/fotosintesis';
 import { ondas } from './practices/ondas';
 import { mitosis } from './practices/mitosis';
+import { reaccionesOrganicas } from './practices/reacciones-organicas';
+import { gruposNitrogenados } from './practices/grupos-nitrogenados';
+import { gruposOxigenados } from './practices/grupos-oxigenados';
 import { nomenclaturaOrganica } from './practices/nomenclatura-organica';
 import { aromaticos } from './practices/aromaticos';
 import { hidrocarburos } from './practices/hidrocarburos';
@@ -65,7 +68,7 @@ import { cinematica } from './practices/cinematica';
 import { celulas } from './practices/celulas';
 
 /** Catálogo de prácticas implementadas. Para agregar una nueva: definirla aquí y registrar su componente en labs/registry.ts. */
-export const PRACTICES: PracticeDef[] = ([densidad, mezclas, celulas, redes, maquinas, calor, movimiento, ecosistema, circuitosSimples, osmosis, presion, flotacion, conduccion, mitosis, conductores, descomposicion, mendel, cineticaPotencial, ondas, sonido, optica, adn, extraccionAdn, conservacion, balanceo, newton, cinematica, trabajo, mol, seleccion, soluciones, geometria, oxidosHidroxidos, acidosSales, nomenclaturaInorganica, enzimas, fotosintesis, gases, cinetica, energia, proyectiles, pendulo, choques, respiracion, circuitos, estequiometria, equilibrio, nomenclaturaOrganica, aromaticos, hidrocarburos, ph, poblacion, popgen, agua, expresion, secuencias, rastreo, proteinas, metabolismo, interferencia, induccion, reto] as PracticeDef[]).map(balancePractice);
+export const PRACTICES: PracticeDef[] = ([densidad, mezclas, celulas, redes, maquinas, calor, movimiento, ecosistema, circuitosSimples, osmosis, presion, flotacion, conduccion, mitosis, conductores, descomposicion, mendel, cineticaPotencial, ondas, sonido, optica, adn, extraccionAdn, conservacion, balanceo, newton, cinematica, trabajo, mol, seleccion, soluciones, geometria, oxidosHidroxidos, acidosSales, nomenclaturaInorganica, enzimas, fotosintesis, gases, cinetica, energia, proyectiles, pendulo, choques, respiracion, circuitos, estequiometria, equilibrio, nomenclaturaOrganica, aromaticos, hidrocarburos, gruposOxigenados, gruposNitrogenados, reaccionesOrganicas, ph, poblacion, popgen, agua, expresion, secuencias, rastreo, proteinas, metabolismo, interferencia, induccion, reto] as PracticeDef[]).map(balancePractice);
 
 export function practiceById(id: string): PracticeDef | undefined {
   return PRACTICES.find((p) => p.id === id);

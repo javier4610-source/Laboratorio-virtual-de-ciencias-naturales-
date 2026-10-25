@@ -1172,10 +1172,12 @@
       "organicBuilder"
     ],
     "tests": [
+      "functionalNomenclature.test.ts",
+      "organicFunctions.test.ts",
       "organicModels.test.ts",
       "organicNomenclature.test.ts"
     ],
-    "nTests": 30,
+    "nTests": 60,
     "e2e": true,
     "a11y": false,
     "loc": 319,
@@ -1295,6 +1297,69 @@
     "illustrative": false
   },
   {
+    "id": "grupos-nitrogenados",
+    "title": "Funciones orgánicas nitrogenadas: aminas y amidas",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "NitrogenGroupsLab",
+    "models": [
+      "functionalGroups",
+      "functionalProperties",
+      "functionalNomenclature",
+      "organicGraph",
+      "organicReactions"
+    ],
+    "tests": [
+      "functionalNomenclature.test.ts",
+      "organicFunctions.test.ts",
+      "organicModels.test.ts",
+      "organicNomenclature.test.ts"
+    ],
+    "nTests": 60,
+    "e2e": true,
+    "a11y": false,
+    "loc": 389,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "grupos-oxigenados",
+    "title": "Funciones orgánicas oxigenadas: alcoholes, fenoles, éteres, aldehídos, cetonas, ácidos carboxílicos y ésteres",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "OxygenatedGroupsLab",
+    "models": [
+      "functionalGroups",
+      "functionalProperties",
+      "functionalNomenclature",
+      "organicGraph"
+    ],
+    "tests": [
+      "functionalNomenclature.test.ts",
+      "organicFunctions.test.ts",
+      "organicModels.test.ts",
+      "organicNomenclature.test.ts"
+    ],
+    "nTests": 60,
+    "e2e": true,
+    "a11y": false,
+    "loc": 342,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "hidrocarburos",
     "title": "Hidrocarburos: alcanos, alquenos y alquinos",
     "grade": 11,
@@ -1306,10 +1371,12 @@
       "organicNomenclature"
     ],
     "tests": [
+      "functionalNomenclature.test.ts",
+      "organicFunctions.test.ts",
       "organicModels.test.ts",
       "organicNomenclature.test.ts"
     ],
-    "nTests": 30,
+    "nTests": 60,
     "e2e": true,
     "a11y": false,
     "loc": 522,
@@ -1409,10 +1476,12 @@
       "organicNomenclature"
     ],
     "tests": [
+      "functionalNomenclature.test.ts",
+      "organicFunctions.test.ts",
       "organicModels.test.ts",
       "organicNomenclature.test.ts"
     ],
-    "nTests": 30,
+    "nTests": 60,
     "e2e": true,
     "a11y": false,
     "loc": 437,
@@ -1551,6 +1620,37 @@
     "instr": false,
     "manip": false,
     "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "reacciones-organicas",
+    "title": "Reacciones orgánicas en 3D",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "OrganicReactionsLab",
+    "models": [
+      "functionalProperties",
+      "functionalNomenclature",
+      "organicGraph",
+      "organicReactions"
+    ],
+    "tests": [
+      "functionalNomenclature.test.ts",
+      "organicFunctions.test.ts",
+      "organicModels.test.ts",
+      "organicNomenclature.test.ts"
+    ],
+    "nTests": 60,
+    "e2e": true,
+    "a11y": false,
+    "loc": 350,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
     "datasets": true,
     "illustrative": true
   },

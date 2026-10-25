@@ -35,6 +35,14 @@ const SYNTHETIC_SAMPLES = new Set(['reto']);
 
 /** Procedencia de una práctica según el modo de medición elegido. */
 export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'real' = 'ideal'): Provenance {
+  if (practiceId === 'grupos-oxigenados' || practiceId === 'grupos-nitrogenados') {
+    return { data: 'experimental', scene: 'modelo',
+      detail: 'Propiedades (Tₑb, solubilidad, pKa, ΔcH°) tomadas de PubChem (PUG View, sobre todo HSDB con la obra que cita) el 2026-10-19; nombres, fracciones ionizadas y pH: modelo calculado; coordenadas 3D: confórmeros de PubChem3D (MMFF94s), no estructuras medidas; resultados de las pruebas de laboratorio: ilustración del resultado esperado según la bibliografía.' };
+  }
+  if (practiceId === 'reacciones-organicas') {
+    return { data: 'modelo', scene: 'ilustracion',
+      detail: 'Ecuaciones balanceadas por el método algebraico, masas con masas atómicas estándar y equilibrio con K ≈ 4 (Berthelot y Péan de Saint-Gilles, 1862): modelo calculado; entalpías de combustión: datos de PubChem/HSDB (2026-10-19); animaciones 3D: ilustración (interpolación entre confórmeros de PubChem, no el mecanismo).' };
+  }
   if (practiceId === 'hidrocarburos' || practiceId === 'aromaticos') {
     return { data: 'experimental', scene: 'modelo',
       detail: 'Propiedades (temperaturas, densidades, entalpías de combustión): evidencia experimental publicada, tomada de PubChem (HSDB) con la obra que cita cada dato. Longitudes y ángulos: modelo calculado sobre confórmeros 3D de PubChem (MMFF94s). Conformaciones, tubos de ensayo y reacciones en 3D: ilustración educativa (rotulada en cada vista).' };

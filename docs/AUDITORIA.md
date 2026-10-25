@@ -371,3 +371,14 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Geometría | C–C 1,512 / C=C 1,334 / C≡C 1,200 Å; benceno 6 × 1,395 Å; Hückel del benceno 2, 1, 1, −1, −1, −2 β | Correcto | El confórmero del tropilio de PubChem no es plano | Se muestran los dos veredictos con nota | Correcto |
 | Prácticas | Valores dorados; 12 E2E con axe en ambos temas, 390 y 1280 px; visor con WebGL y sin WebGL; capturas revisadas | Correcto | — | — | Correcto |
 | Regresión | 1039 pruebas unitarias y E2E completo | Todas pasan | Las pruebas que recorren todas las prácticas superaban 10 min | Tiempo máximo de 15 min | Corregido |
+
+# Química orgánica, parte 2 (versión 2.3.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Nomenclatura de grupos funcionales | 176 estructuras frente al IUPACName de PubChem: 156 idénticas; 20 diferencias de convención clasificadas (localizadores implícitos, nombres retenidos, paréntesis); 0 sin clasificar | Correcto | — | — | Correcto |
+| Propiedades | Tₑb (96), solubilidad (102), pKa/pKb (57), ΔcH° (42) de PubChem/HSDB con su obra citada; huecos «Sin información» | Correcto | El ΔcH° del etanol de PubChem queda 30,5 kJ/mol fuera de la serie de los alcoholes | Se usa tal cual, marcado en la interfaz y en una prueba | Parcial (dato a revisar con otra fuente) |
+| Reacciones | 24 reacciones balanceadas y con átomos conservados; Hess con ΔcH° citados (metano −890,8 kJ; hidrogenación del ciclohexeno −117,9 kJ); esterificación con K = 4: 2/3 y 0,9028 | Correcto | K ≈ 4 (Berthelot y Péan de Saint-Gilles, 1862) no verificable en línea desde el entorno | Rotulado y documentado | Parcial (fuente por verificar) |
+| Geometría | Acetamida C–N 1,375 Å, Σθ(N) = 360,0° (plana); metanamina 1,431 Å, 326,0° (piramidal) | Correcto | — | — | Correcto |
+| Prácticas | Valores dorados; E2E de las tres con axe en ambos temas, 390 y 1280 px; respaldo sin WebGL; 62 capturas revisadas | Correcto | Barras fuera del gráfico, «O» sin H en fórmulas 2D, rótulos genéricos | Corregidos | Correcto |
+| Regresión | 1110 pruebas unitarias y E2E completo | Todas pasan | — | — | Correcto |

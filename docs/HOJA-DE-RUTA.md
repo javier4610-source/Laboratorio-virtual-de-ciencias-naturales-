@@ -91,7 +91,8 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
 - [x] **Etapa de hipótesis retirada** de todas las prácticas por decisión del docente (versión 2.0.0, ADR 0006).
 - [x] **Química inorgánica** (versión 2.1.0): kit 3D, óxidos e hidróxidos, ácidos y sales, nomenclatura inorgánica.
 - [x] **Química orgánica, parte 1** (versión 2.2.0): hidrocarburos, aromáticos y nomenclatura IUPAC.
-- [ ] **Química orgánica, parte 2:** grupos funcionales oxigenados y nitrogenados, reacciones orgánicas en 3D (en curso).
+- [x] **Química orgánica, parte 2** (versión 2.3.0): grupos funcionales oxigenados y nitrogenados, reacciones orgánicas en 3D.
+- [ ] **v2 · Fase 7 (en pausa por decisión del docente):** fármacos con RDKit.js; trabajo guardado fuera del repositorio, listo para retomar.
 - [ ] **v2 · Fases 7–10:** fármacos, genómica, dinámica molecular,
       cuadernos, validación final (ver la tabla del diagnóstico; lo que exige servidor queda bloqueado por
       infraestructura hasta decisión del docente).

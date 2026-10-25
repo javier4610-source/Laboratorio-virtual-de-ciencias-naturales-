@@ -36,6 +36,12 @@ import { getOrganic } from '../../src/data/quimica/organica';
 import { huckelAnalysis, symmetricEigenvalues } from '../../src/models/aromaticity';
 import { parseSmiles } from '../../src/models/organicGraph';
 import { nameSmiles } from '../../src/models/organicNomenclature';
+import { weakAcidPH, ionizedFraction } from '../../src/models/functionalProperties';
+import { nameFunctionalSmiles } from '../../src/models/functionalNomenclature';
+import { detectGroups } from '../../src/models/functionalGroups';
+import { weakBasePH, pKaH, amideGeometry, amineGeometry } from '../../src/models/functionalProperties';
+import { funcSpecies, getFunc } from '../../src/data/quimica/funcionales';
+import { esterEquilibrium, equationOf, hessEnthalpy, reactionById } from '../../src/models/organicReactions';
 import { kineticEnergy, simulateDrop } from '../../src/models/kineticPotential';
 import { REFERENCE_CONDITION, runFba } from '../../src/models/metabolism';
 import { heat } from '../../src/models/heat';
@@ -326,6 +332,20 @@ export const GOLDEN: GoldenCase[] = [
     expect(n('C/C=C/C').en).toBe('(E)-but-2-ene');
     expect(n('CC(C)CC(C)(C)C').es).toBe('2,2,4-trimetilpentano');
     expect(n('CCC(C)CI').es).toBe('2-metil-1-yodobutano');
+  } },
+  { id: 'grupos-oxigenados', origin: 'referencia', what: 'ácido acético 0,100 M con pKa 4,76 (PubChem/HSDB) → pH 2,88; α(pH = pKa) = 0,5; CC(O)C(O)=O → ácido 2-hidroxipropanoico; (CH₃)₃COH es terciario', run: () => {
+    close(weakAcidPH(4.76, 0.1).pH, 2.88, 0.005); close(ionizedFraction(4.76, 4.76), 0.5, 1e-12);
+    const n = nameFunctionalSmiles('CC(O)C(O)=O'); expect(n.ok && n.es).toBe('ácido 2-hidroxipropanoico');
+    expect(detectGroups(parseSmiles('CC(C)(C)O'))[0].degree).toBe('terciario');
+  } },
+  { id: 'grupos-nitrogenados', origin: 'referencia', what: 'metanamina 0,10 M (pKaH 10,66, PubChem/HSDB) → pH 11,82; amoníaco pKb 4,751 → pKaH 9,249; acetamida plana (Σθ(N) = 360°) frente a metanamina piramidal (326°) en los confórmeros de PubChem', run: () => {
+    close(weakBasePH(10.66, 0.1).pH, 11.82, 0.005); close(pKaH(getFunc('amoniaco'))!.value, 9.249, 1e-9);
+    expect(amideGeometry(funcSpecies('acetamida'))!.sumN).toBeGreaterThan(359); expect(amineGeometry(funcSpecies('metanamina'))!.sumN).toBeLessThan(330);
+  } },
+  { id: 'reacciones-organicas', origin: 'referencia', what: 'esterificación K = 4: 1 + 1 mol → X = 2/3, 1 + 3 mol → 0,9028; C₂H₆O + 3 O₂ → 2 CO₂ + 3 H₂O (balanceo algebraico); ΔrH°(ciclohexeno + H₂) = −(3751,7 + 285,8) + 3919,6 = −117,9 kJ con ΔcH° de PubChem/HSDB', run: () => {
+    close(esterEquilibrium(1, 1).conversion, 2 / 3, 1e-10); close(esterEquilibrium(1, 3).conversion, (16 - Math.sqrt(112)) / 6, 1e-10);
+    expect(equationOf(reactionById('combustion-etanol'))).toBe('C₂H₆O + 3 O₂ → 2 CO₂ + 3 H₂O');
+    close(hessEnthalpy(reactionById('hidrogenacion-ciclohexeno')).dH!, -117.9, 1e-9);
   } },
   { id: 'metabolismo', origin: 'referencia', what: 'FBA de E. coli core (glucosa 10 mmol/gDW/h): crecimiento 0,8739 h⁻¹ con O₂ sin límite y 0,2117 h⁻¹ sin O₂, iguales a COBRApy 0.32.1 con GLPK (tolerancia relativa 10⁻⁶)', run: () => {
     close(runFba(REFERENCE_CONDITION).growth, 0.873921506968, 1e-6);

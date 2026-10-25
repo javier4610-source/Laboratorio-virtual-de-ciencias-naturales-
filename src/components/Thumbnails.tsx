@@ -426,6 +426,35 @@ const SCENES: Record<string, () => ReactNode> = {
       <text x={253} y={67} textAnchor="middle" style={{ fontSize: 12, fill: 'var(--ink)', fontWeight: 700 }}>3-metil…ano</text>
     </>
   ),
+  'grupos-oxigenados': () => (
+    <>
+      <Bench />
+      <TestTube x={70} y={40} w={20} h={96} fill={0.4} liquid="#6b3f9e" />
+      <TestTube x={104} y={40} w={20} h={96} fill={0.4} liquid="#d9dee0" />
+      <TestTube x={138} y={40} w={20} h={96} fill={0.4} liquid="#5b8fd1" />
+      <g transform="translate(200 26)" fontFamily="var(--font-data)" fontSize="15" fontWeight="700" fill="var(--ink)">
+        <text x="0" y="20">R–OH</text><text x="0" y="46">R–CHO</text><text x="0" y="72">R–COOH</text><text x="0" y="98">R–COO–R′</text>
+      </g>
+    </>
+  ),
+  'grupos-nitrogenados': () => (
+    <>
+      <Bench />
+      <g transform="translate(40 30)" fontFamily="var(--font-data)" fontWeight="700" fontSize="18" fill="var(--ink)">
+        <text x="0" y="30">R–NH₂</text><text x="0" y="62">R–CO–NH–R′</text>
+      </g>
+      <MiniPlot x={200} y={30} d="M0 40 C 20 40, 30 2, 74 2" />
+    </>
+  ),
+  'reacciones-organicas': () => (
+    <>
+      <Bench />
+      <Erlenmeyer x={52} y={46} w={70} h={92} fill={0.45} liquid="#e9c46a" />
+      <g transform="translate(150 50)" fontFamily="var(--font-data)" fontSize="15" fontWeight="700" fill="var(--ink)">
+        <text x="0" y="20">RCOOH + R′OH</text><text x="34" y="44" fill="var(--accent)">⇌</text><text x="0" y="68">RCOOR′ + H₂O</text>
+      </g>
+    </>
+  ),
   energia: () => (
     <>
       <path d="M20 30 Q60 30 90 100 Q120 150 160 140 Q200 130 228 90 Q250 62 300 62" fill="none" stroke="#78909c" strokeWidth="5" strokeLinecap="round" />

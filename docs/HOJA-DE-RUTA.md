@@ -49,10 +49,13 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 - [ ] **T2 · Publicación del servidor:** el docente eligió Render; `Dockerfile`, `render.yaml` y la guía
       `docs/DESPLIEGUE-SERVIDOR.md` están listos. Falta que el docente cree la cuenta y entregue la dirección para
       configurar la variable `API_URL`; política de privacidad y autorización de acudientes (Ley 1581).
+- [ ] **Taller de compuestos, siguiente paso:** redes cristalinas de más sólidos iónicos con parámetro publicado (CaSO₄, Na₂O, Al₂O₃…), sales de amonio y binarios no metálicos en el taller, y revisión manual de los registros de PubChem hallados solo por fórmula.
 - [ ] **Mejoras:** pistas contextuales al cambiar dos variables a la vez; auditoría de rendimiento en equipos
       modestos; exportación para Google Classroom y Moodle; pruebas de regresión visual.
 
 ## Hecho
+
+- [x] v2.4.0 · Taller de formación de compuestos (pedido del docente) en óxidos e hidróxidos, ácidos y sales y nomenclatura inorgánica: elementos a elección, 9 rutas, validación explicada, registro en PubChem precalculado (1066 compuestos: 583 registrados por nombre, 337 solo por fórmula, 146 formales), retos y cuaderno.
 
 - [x] U6 · Modo avanzado: ecuaciones del modelo con los valores actuales (MathML) en 13 laboratorios, constantes del modelo editables en 6 y curva del modelo con residuos en el cuaderno (11 prácticas).
 - [x] Sonidos realistas sintetizados (22 laboratorios) y manipulación directa en 17 laboratorios con acabado visual de la escena.

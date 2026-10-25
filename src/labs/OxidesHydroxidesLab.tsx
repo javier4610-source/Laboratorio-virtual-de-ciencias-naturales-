@@ -8,6 +8,7 @@ import { burn, dissolve, LIMITS, molar, substanceById, SUBSTANCES, type BurnResu
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import { StatusChip } from '../components/Provenance';
 import type { LabProps } from './registry';
+import { ForgeStation } from './forgeStation';
 import { BenchTop, Beaker, DigitalBalance } from './kit';
 import { Burner, IdeasPanel, IndicatorRack, NamesCard, PhMeter, type Idea } from './inorganicShared';
 import { inorganicReaction } from './inorganicReactions3d';
@@ -39,7 +40,7 @@ const IDEAS: Idea[] = [
 
 type Phase = 'listo' | 'ardiendo' | 'quemado' | 'medido';
 
-export default function OxidesHydroxidesLab({ api }: LabProps) {
+function OxidesHydroxidesBench({ api }: LabProps) {
   const [subId, setSubId] = useState('mg');
   const [mass, setMass] = useState(0.5);
   const [water, setWater] = useState(100);
@@ -246,5 +247,14 @@ export default function OxidesHydroxidesLab({ api }: LabProps) {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Práctica con dos estaciones: el banco original y el Taller de formación de compuestos (ruta inicial: metal-o2). */
+export default function OxidesHydroxidesLab(props: LabProps) {
+  return (
+    <ForgeStation {...props} initialRoute="metal-o2" idPrefix="oxh-tf" benchLabel="Banco de trabajo">
+      <OxidesHydroxidesBench {...props} />
+    </ForgeStation>
   );
 }

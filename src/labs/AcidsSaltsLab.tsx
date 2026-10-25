@@ -11,6 +11,7 @@ import { buildCompound, type Spec } from '../models/inorganicNomenclature';
 import { litmus, phenolphthalein, universal } from '../models/oxidesHydroxides';
 import { roundToResolution } from '../models/math';
 import type { LabProps } from './registry';
+import { ForgeStation } from './forgeStation';
 import { BenchTop, Beaker, Burette, Erlenmeyer } from './kit';
 import { IdeasPanel, IndicatorRack, NamesCard, PhMeter, type Idea } from './inorganicShared';
 import { inorganicReaction } from './inorganicReactions3d';
@@ -36,7 +37,7 @@ const IDEAS: Idea[] = [
 
 const flaskTint = (pH: number) => (pH < 8.2 ? '#e9f2f6' : pH >= 10 ? '#d63384' : '#efb2cf');
 
-export default function AcidsSaltsLab({ api }: LabProps) {
+function AcidsSaltsBench({ api }: LabProps) {
   const [station, setStation] = useState<Station>('acidos');
 
   /* ---------- estación 1: formación de ácidos */
@@ -280,5 +281,14 @@ export default function AcidsSaltsLab({ api }: LabProps) {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Práctica con dos estaciones: el banco original y el Taller de formación de compuestos (ruta inicial: neutralizacion). */
+export default function AcidsSaltsLab(props: LabProps) {
+  return (
+    <ForgeStation {...props} initialRoute="neutralizacion" idPrefix="acs-tf" benchLabel="Banco de trabajo">
+      <AcidsSaltsBench {...props} />
+    </ForgeStation>
   );
 }

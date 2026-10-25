@@ -415,9 +415,10 @@
     ],
     "tests": [
       "balancing.test.ts",
+      "compoundForge.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 34,
+    "nTests": 49,
     "e2e": true,
     "a11y": false,
     "loc": 607,
@@ -669,9 +670,10 @@
     ],
     "tests": [
       "balancing.test.ts",
+      "compoundForge.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 34,
+    "nTests": 49,
     "e2e": true,
     "a11y": false,
     "loc": 744,
@@ -773,13 +775,14 @@
       "oxidesHydroxides"
     ],
     "tests": [
+      "compoundForge.test.ts",
       "inorganicChemistry.test.ts",
       "inorganicNomenclature.test.ts"
     ],
-    "nTests": 24,
+    "nTests": 39,
     "e2e": true,
     "a11y": false,
-    "loc": 285,
+    "loc": 295,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -958,10 +961,11 @@
     "tests": [
       "balancing.test.ts",
       "chemKit.test.ts",
+      "compoundForge.test.ts",
       "geometry.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 68,
+    "nTests": 83,
     "e2e": true,
     "a11y": false,
     "loc": 704,
@@ -986,13 +990,14 @@
     ],
     "tests": [
       "chemKit.test.ts",
+      "compoundForge.test.ts",
       "geometry.test.ts",
       "inorganicNomenclature.test.ts"
     ],
-    "nTests": 45,
+    "nTests": 60,
     "e2e": true,
     "a11y": false,
-    "loc": 264,
+    "loc": 274,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1013,13 +1018,14 @@
       "oxidesHydroxides"
     ],
     "tests": [
+      "compoundForge.test.ts",
       "inorganicChemistry.test.ts",
       "inorganicNomenclature.test.ts"
     ],
-    "nTests": 24,
+    "nTests": 39,
     "e2e": true,
     "a11y": false,
-    "loc": 251,
+    "loc": 261,
     "measure": false,
     "advanced": false,
     "params": false,

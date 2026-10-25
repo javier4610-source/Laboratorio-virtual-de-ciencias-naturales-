@@ -1,5 +1,38 @@
 import type { Dataset } from '../core/types';
 
+/** Tablas del Taller de formación de compuestos (compartidas por las tres prácticas de química inorgánica). */
+const FORGE_DATASETS: Dataset[] = [
+  {
+    id: 'taller', label: 'Taller de compuestos', defaultX: 'elementosN', defaultY: 'atomos',
+    columns: [
+      { key: 'ruta', label: 'Ruta de formación', numeric: false, input: true },
+      { key: 'elementos', label: 'Elementos elegidos (número de oxidación)', numeric: false, input: true },
+      { key: 'ecuacion', label: 'Ecuación balanceada', numeric: false },
+      { key: 'formula', label: 'Fórmula', numeric: false },
+      { key: 'funcion', label: 'Función química', numeric: false },
+      { key: 'sistematica', label: 'Nombre sistemático', numeric: false },
+      { key: 'stock', label: 'Nombre Stock', numeric: false },
+      { key: 'tradicional', label: 'Nombre tradicional', numeric: false },
+      { key: 'registrado', label: '¿Registrado en PubChem?', numeric: false },
+      { key: 'cid', label: 'CID de PubChem', numeric: true, decimals: 0 },
+      { key: 'via', label: 'Vía de obtención', numeric: false },
+      { key: 'elementosN', label: 'Número de elementos', numeric: true, decimals: 0 },
+      { key: 'atomos', label: 'Átomos por unidad fórmula', numeric: true, decimals: 0 },
+    ],
+  },
+  {
+    id: 'retos-taller', label: 'Retos del taller', defaultX: 'reto', defaultY: 'intentos',
+    columns: [
+      { key: 'reto', label: 'Reto', numeric: true, decimals: 0, input: true },
+      { key: 'descripcion', label: 'Reto propuesto', numeric: false },
+      { key: 'compuesto', label: 'Compuesto formado', numeric: false },
+      { key: 'ruta', label: 'Ruta usada', numeric: false },
+      { key: 'intentos', label: 'Compuestos formados hasta lograrlo', numeric: true, decimals: 0 },
+      { key: 'logrado', label: 'Logrado (1 = sí)', numeric: true, decimals: 0 },
+    ],
+  },
+];
+
 /**
  * Estructura de las tablas de datos de cada laboratorio. Es información pura
  * (sin React) para que el currículo, los informes y el panel docente la compartan.
@@ -1270,6 +1303,7 @@ export const DATASETS: Record<string, Dataset[]> = {
         { key: 'producto', label: 'Producto con el agua', numeric: false },
       ],
     },
+    ...FORGE_DATASETS,
   ],
   'acidos-sales': [
     {
@@ -1305,6 +1339,7 @@ export const DATASETS: Record<string, Dataset[]> = {
         { key: 'origen', label: 'Origen (ácido + base)', numeric: false },
       ],
     },
+    ...FORGE_DATASETS,
   ],
   'nomenclatura-inorganica': [
     {
@@ -1332,6 +1367,7 @@ export const DATASETS: Record<string, Dataset[]> = {
         { key: 'aciertos', label: 'Aciertos acumulados', numeric: true, decimals: 0 },
       ],
     },
+    ...FORGE_DATASETS,
   ],
   hidrocarburos: [
     {

@@ -7,6 +7,33 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.4.0] · 2026-10-25
+
+Versión **MENOR**: se agrega una estación nueva sin cambiar rutas, identificadores ni datos guardados.
+
+### Añadido
+- **Taller de formación de compuestos** (pedido del docente), estación nueva en las prácticas `oxidos-hidroxidos`,
+  `acidos-sales` y `nomenclatura-inorganica` (cada una abre con su ruta: metal + O₂, ácido + hidróxido y metal + no
+  metal; las nueve rutas están disponibles en las tres). El estudiante elige los elementos en una tabla periódica
+  completa de 118 elementos (accesible con teclado: foco itinerante con flechas, Inicio y Fin) y su número de oxidación;
+  el taller calcula la fórmula por neutralidad de cargas (motor de nomenclatura existente), balancea la ecuación con el
+  método algebraico de `balancing.ts`, clasifica la función, da los nombres sistemático, Stock y tradicional, rotula la
+  vía de obtención (reacción directa, condiciones especiales o relación formal) y muestra el modelo 2D de cargas, el
+  compuesto en 3D (confórmero de PubChem, VSEPR rotulada, red cristalina o «sin geometría fiable») y la reacción en 3D.
+- Validación pedagógica de combinaciones imposibles: gases nobles, elementos fuera del taller, estados de oxidación que
+  el elemento no presenta (o solo en compuestos raros), metales que no forman oxácidos (salvo Cr y Mn en estados altos),
+  óxidos neutros, dos metales (aleación), dos no metales, etc.
+- Registro en PubChem de las 1066 sustancias que puede generar el taller (1196 combinaciones):
+  `scripts/validacion/compuestos_pubchem.mjs` → `src/data/quimica/compuestos-pubchem.json` (2026-10-25): 583 halladas por su nombre
+  con su CID, 337 con un registro de la misma fórmula pero sin coincidencia de nombre (rotuladas aparte: pueden ser otra
+  estructura) y 146 fórmulas formales. La interfaz dice «Compuesto registrado en PubChem (CID …)», «Fórmula registrada en
+  PubChem (CID …), sin coincidencia de nombre» o «Fórmula formal por neutralidad de cargas…».
+- Tablas nuevas del cuaderno en las tres prácticas: «Taller de compuestos» y «Retos del taller» (10 retos opcionales).
+- `tests/unit/compoundForge.test.ts`, valor dorado del taller y `tests/e2e/taller-compuestos.spec.ts`.
+
+### Cambiado
+- `ATOMIC_MASS` de `balancing.ts` incluye Au y Hg (para balancear los compuestos de oro y mercurio del taller).
+
 ## [2.3.0] · 2026-10-25
 
 ### Añadido

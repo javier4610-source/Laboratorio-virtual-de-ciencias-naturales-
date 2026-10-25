@@ -382,3 +382,18 @@ Alcance: espacio de trabajo de la práctica y calidad visual de los 24 laborator
 | Geometría | Acetamida C–N 1,375 Å, Σθ(N) = 360,0° (plana); metanamina 1,431 Å, 326,0° (piramidal) | Correcto | — | — | Correcto |
 | Prácticas | Valores dorados; E2E de las tres con axe en ambos temas, 390 y 1280 px; respaldo sin WebGL; 62 capturas revisadas | Correcto | Barras fuera del gráfico, «O» sin H en fórmulas 2D, rótulos genéricos | Corregidos | Correcto |
 | Regresión | 1110 pruebas unitarias y E2E completo | Todas pasan | — | — | Correcto |
+
+# Taller de formación de compuestos (versión 2.4.0)
+
+Pedido del docente: formar óxidos, hidróxidos, ácidos y sales a partir de elementos elegidos por el estudiante, en las
+prácticas `oxidos-hidroxidos`, `acidos-sales` y `nomenclatura-inorganica`.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Modelo del taller | 38 360 entradas (31 elementos × estados × 9 rutas × formas) → 1196 combinaciones válidas y 1066 compuestos; Σ n·q = 0 en todos; ecuaciones balanceadas con coeficientes mínimos (mcd 1); búsqueda exhaustiva (118 elementos × 11 estados) sin compuestos fuera del conjunto | Correcto | Sales de Cr(III)/Mn(II) con anión del mismo metal rompían el modelo de cargas | Se rechazan con explicación | Correcto |
+| Nombres | 135 de los 149 casos de referencia los forma también el taller: 0 diferencias en sistemática, Stock y tradicional | Correcto | — | — | Correcto |
+| Rechazos | 27 casos con código y explicación (gases nobles, estados inexistentes o raros, metal sin oxácido, óxidos neutros, dos metales, dos no metales, fuera del taller…); los 87 elementos fuera del taller se rechazan en las 9 rutas | Correcto | F con +2 caía en «estado inexistente» antes que en «el flúor no forma óxidos» | Se prueban los dos casos | Correcto |
+| Registro en PubChem | `compuestos_pubchem.mjs` (2026-10-25): 583 por nombre con la misma fórmula, 337 solo por fórmula exacta, 146 sin registro (fórmula formal); CID de CaO 14778, Ca(OH)₂ 6093208, SO₃ 24682, H₂SO₄ 1118, CaSO₄ 24497, H₂O 962, NaCl 5234 | Correcto | Las coincidencias solo por fórmula pueden ser otro isómero (Cl₂O₅ → «Chloroperoxyperoxy hypochlorite») | Tercer rótulo: «Fórmula registrada en PubChem… sin coincidencia de nombre» | Correcto (revisión manual pendiente de las 337) |
+| 3D | Reacción 3D en 1025 de 1196 combinaciones (el resto explica por qué no); CaO red, H₂SO₄ confórmero, HBrO₃ VSEPR, CaSO₄ ion poliatómico, Cl₂O₅ y SiO₂ sin geometría; P₂O₅ se anima como P₄O₁₀ | Correcto | — | — | Correcto |
+| Interfaz | E2E del taller en las tres prácticas (recorrido Ca → CaO → Ca(OH)₂; S(+6) → SO₃ → H₂SO₄ → CaSO₄; He rechazado; teclado en la tabla) y axe WCAG 2.2 AA en ambos temas (resultado, reacción 3D y rechazo); 390 y 1280 px sin desbordamiento; capturas revisadas | Correcto | Ecuación partida entre coeficiente y fórmula a 390 px; tabla de nombres apretada | Términos sin salto interno; tabla con ancho mínimo y desplazamiento | Corregido |
+| Regresión | `tsc -b` sin errores; 1152 pruebas unitarias (66 archivos, 42 del taller); `npm run build`; E2E completo 151 de 151 (9 nuevas del taller) | Todas pasan | — | — | Correcto |

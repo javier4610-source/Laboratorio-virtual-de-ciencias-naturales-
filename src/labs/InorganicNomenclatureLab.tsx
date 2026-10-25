@@ -8,6 +8,7 @@ import {
   buildCompound, checkFormula, checkName, el, ELEMENTS, FUNCTION_LABEL, hillFormula, makeChallenges, oxoacid, roman, SYSTEM_LABEL, type AcidForm, type Compound, type Spec,
 } from '../models/inorganicNomenclature';
 import type { LabProps } from './registry';
+import { ForgeStation } from './forgeStation';
 import { IdeasPanel, NamesCard, type Idea } from './inorganicShared';
 
 type Fn = 'oxido' | 'peroxido' | 'hidroxido' | 'hidruro' | 'hidracido' | 'oxacido' | 'sal-binaria' | 'oxisal' | 'sal-acida' | 'sal-basica';
@@ -70,7 +71,7 @@ const IDEAS: Idea[] = [
 const SEED0 = 7;
 type ChallengeLog = { n: number; correct: boolean; attempts: number };
 
-export default function InorganicNomenclatureLab({ api }: LabProps) {
+function InorganicNomenclatureBench({ api }: LabProps) {
   const [fn, setFn] = useState<Fn>('oxido');
   const [sym, setSym] = useState('Fe');
   const [ox, setOx] = useState(3);
@@ -259,5 +260,14 @@ export default function InorganicNomenclatureLab({ api }: LabProps) {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Práctica con dos estaciones: el banco original y el Taller de formación de compuestos (ruta inicial: metal-nometal). */
+export default function InorganicNomenclatureLab(props: LabProps) {
+  return (
+    <ForgeStation {...props} initialRoute="metal-nometal" idPrefix="nmi-tf" benchLabel="Constructor y retos">
+      <InorganicNomenclatureBench {...props} />
+    </ForgeStation>
   );
 }

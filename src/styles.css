@@ -1370,3 +1370,52 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 .qr-svg, .qr-svg svg { display: block; width: 100%; height: 100%; }
 .qr-box .muted { color: #44504b; }
 .qr-url { margin: 0; overflow-wrap: anywhere; font-family: var(--font-data); font-size: 0.85rem; }
+
+/* ---------------------------------------------------------------- Taller de formación de compuestos (v2.4.0) */
+.forge-switch .seg button { white-space: normal; text-align: center; }
+.forge-pt-wrap { padding: 8px 6px 4px; }
+.forge-pt { display: grid; grid-template-columns: repeat(18, minmax(30px, 1fr)); gap: 3px; min-width: 600px; }
+.forge-el { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 40px; padding: 2px 0; border-radius: 7px; border: 1px solid var(--line); color: var(--ink); font-family: var(--font-data); cursor: pointer; line-height: 1.1; transition: transform 0.12s var(--ease), box-shadow 0.12s var(--ease); }
+.forge-el .z { font-size: 0.6rem; color: var(--ink-2); }
+.forge-el .s { font-size: 0.92rem; font-weight: 700; }
+.forge-el.k-metal { background: color-mix(in srgb, var(--fis) 20%, var(--surface)); }
+.forge-el.k-nometal { background: color-mix(in srgb, var(--qui) 20%, var(--surface)); }
+.forge-el.k-metaloide { background: color-mix(in srgb, var(--amb) 22%, var(--surface)); }
+.forge-el.k-noble { background: color-mix(in srgb, var(--bio) 16%, var(--surface)); }
+.forge-el.out { background: var(--surface-2); border-style: dashed; color: var(--ink-2); }
+.forge-el.out .s { font-weight: 600; }
+.forge-el.sug { box-shadow: inset 0 -3px 0 var(--accent); }
+.forge-el:hover { transform: translateY(-1px); border-color: var(--line-strong); }
+.forge-el[aria-pressed="true"] { border: 2px solid var(--data); box-shadow: 0 0 0 2px color-mix(in srgb, var(--data) 25%, transparent); }
+.forge-el:focus-visible { z-index: 1; }
+.forge-el .slot { position: absolute; top: -6px; right: -5px; min-width: 16px; height: 16px; padding: 0 3px; border-radius: 999px; background: var(--data); color: var(--data-ink); font-size: 0.66rem; font-weight: 700; display: grid; place-items: center; }
+.forge-el-ph { display: grid; place-items: center; font-size: 0.6rem; color: var(--ink-2); border: 1px dotted var(--line); border-radius: 7px; font-family: var(--font-data); }
+.forge-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--ink-2); }
+.forge-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.forge-legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--line); }
+.forge-legend .sw.k-metal { background: color-mix(in srgb, var(--fis) 20%, var(--surface)); }
+.forge-legend .sw.k-nometal { background: color-mix(in srgb, var(--qui) 20%, var(--surface)); }
+.forge-legend .sw.k-metaloide { background: color-mix(in srgb, var(--amb) 22%, var(--surface)); }
+.forge-legend .sw.k-noble { background: color-mix(in srgb, var(--bio) 16%, var(--surface)); }
+.forge-legend .sw.out { background: var(--surface-2); border-style: dashed; }
+.forge-legend .sw.sug { background: var(--surface); box-shadow: inset 0 -3px 0 var(--accent); }
+.forge-eq { margin: 0; font-family: var(--font-data); font-size: clamp(1.05rem, 0.9rem + 0.9vw, 1.45rem); font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+.forge-badge { border-radius: var(--radius); padding: 10px 14px; border: 1px solid var(--line); font-size: 0.92rem; }
+.forge-badge.ok { background: var(--ok-soft); border-color: color-mix(in srgb, var(--ok) 30%, transparent); }
+.forge-badge.warn { background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 30%, transparent); }
+.forge-badge.bad { background: var(--bad-soft); border-color: color-mix(in srgb, var(--bad) 30%, transparent); }
+.forge-tiles { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-end; }
+.forge-tilegroup { display: grid; gap: 4px; justify-items: start; }
+.forge-tilegroup .tiles { display: flex; flex-wrap: wrap; gap: 6px; }
+.forge-tile { display: inline-grid; place-items: center; min-width: 46px; min-height: 40px; padding: 4px 8px; border-radius: 10px; font-family: var(--font-data); font-weight: 700; border: 1.5px solid; }
+.forge-tile.pos { background: color-mix(in srgb, var(--fis) 14%, var(--surface)); border-color: color-mix(in srgb, var(--fis) 55%, transparent); color: var(--ink); }
+.forge-tile.neg { background: color-mix(in srgb, var(--data) 12%, var(--surface)); border-color: color-mix(in srgb, var(--data) 55%, transparent); color: var(--ink); }
+.forge-tile.more { border-style: dashed; border-color: var(--line-strong); background: var(--surface-2); color: var(--ink-2); }
+.forge-challenges li { line-height: 1.5; }
+.forge-challenges details { margin-top: 2px; }
+.forge-status { display: inline-block; border-radius: 999px; padding: 0 9px; font-size: 0.78rem; font-weight: 700; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line); margin-right: 4px; }
+.forge-status.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+.forge-slot { padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+@media (prefers-reduced-motion: reduce) { .forge-el { transition: none; } .forge-el:hover { transform: none; } }
+.forge-eq .t { white-space: nowrap; }
+.forge-panel .table-wrap > table { min-width: 540px; }

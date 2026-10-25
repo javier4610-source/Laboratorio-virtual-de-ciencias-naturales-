@@ -8,6 +8,7 @@
  *    actual del modelo con una instantánea. Si cambia, la prueba falla y el cambio debe justificarse.
  * La última prueba exige que toda práctica del catálogo tenga su caso.
  */
+import { forge, type ForgeInput } from '../../src/models/compoundForge';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -306,11 +307,15 @@ export const GOLDEN: GoldenCase[] = [
     close(saltSolution('nahco3', 0.1).pH, (6.351 + 10.329) / 2, 0.01);
     close(saltSolution('nh4cl', 0.1).pH, (9.245 + 1) / 2, 0.01);
   } },
-  { id: 'nomenclatura-inorganica', origin: 'independiente', what: 'neutralidad de cargas Fe³⁺/O²⁻ → Fe₂O₃ (trióxido de dihierro, óxido de hierro(III), óxido férrico); Hg₂²⁺/Cl⁻ → Hg₂Cl₂; H₂SO₄ = dihidrogeno(tetraoxidosulfato) (IUPAC 2005)', run: () => {
+  { id: 'nomenclatura-inorganica', origin: 'independiente', what: 'neutralidad de cargas Fe³⁺/O²⁻ → Fe₂O₃ (trióxido de dihierro, óxido de hierro(III), óxido férrico); Hg₂²⁺/Cl⁻ → Hg₂Cl₂; H₂SO₄ = dihidrogeno(tetraoxidosulfato) (IUPAC 2005); taller: 2 Ca + O₂ → 2 CaO, CaO + H₂O → Ca(OH)₂, 2 S + 3 O₂ → 2 SO₃, SO₃ + H₂O → H₂SO₄, H₂SO₄ + Ca(OH)₂ → CaSO₄ + 2 H₂O', run: () => {
     const fe = buildCompound({ kind: 'oxido', el: 'Fe', ox: 3 });
     expect([fe.formula, fe.names.sistematica, fe.names.stock, fe.names.tradicional]).toEqual(['Fe2O3', 'trióxido de dihierro', 'óxido de hierro(III)', 'óxido férrico']);
     expect(buildCompound({ kind: 'sal-binaria', cation: { el: 'Hg', ox: 1 }, anion: 'Cl' }).formula).toBe('Hg2Cl2');
     expect(buildCompound({ kind: 'oxacido', el: 'S', ox: 6 }).names.sistematica).toBe('dihidrogeno(tetraoxidosulfato)');
+    // Taller de formación de compuestos (v2.4.0): ecuaciones balanceadas por el método algebraico.
+    const eq = (i: ForgeInput) => { const r = forge(i); if (!r.ok) throw new Error(r.message); return r.equation; };
+    expect([eq({ route: 'metal-o2', a: 'Ca', oxA: 2 }), eq({ route: 'oxido-agua', a: 'Ca', oxA: 2 }), eq({ route: 'nometal-o2', a: 'S', oxA: 6 }), eq({ route: 'anhidrido-agua', a: 'S', oxA: 6 }), eq({ route: 'neutralizacion', a: 'Ca', oxA: 2, b: 'S', oxB: 6 })])
+      .toEqual(['2 Ca + O₂ → 2 CaO', 'CaO + H₂O → Ca(OH)₂', '2 S + 3 O₂ → 2 SO₃', 'SO₃ + H₂O → H₂SO₄', 'H₂SO₄ + Ca(OH)₂ → CaSO₄ + 2 H₂O']);
   } },
   { id: 'hidrocarburos', origin: 'referencia', what: 'CH₄ + 2 O₂ → CO₂ + 2 H₂O; ΔcH° del metano 890,8 kJ/mol (CRC 94.ª ed. vía HSDB/PubChem) → 890,8/16,043 = 55,53 kJ/g; cloración estadística del propano 6 H : 2 H = 75 % : 25 %', run: () => {
     expect(combustionEquation('CH₄', 1, 4, 'completa')).toBe('CH₄ + 2 O₂ → CO₂ + 2 H₂O');

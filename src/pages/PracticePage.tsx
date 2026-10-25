@@ -12,7 +12,12 @@ import { DataPanel } from '../components/DataPanel';
 import { AnalysisSection, EvaluationSection, ModelSection, PreparationSection } from '../components/PracticeSections';
 import { ConfirmButton, Segmented } from '../components/ui';
 import { ProcedureCoach, SavedToast, useFullscreen } from '../components/Workspace';
-import { href } from '../lib/router';
+import { href, navigate } from '../lib/router';
+import { CATALOG } from '../curriculum/catalog';
+import { useShortcuts } from '../lib/shortcuts';
+import { ShortcutsButton } from '../components/Shortcuts';
+import { AreaChip } from '../components/PracticeCard';
+import { Icon } from '../components/icons';
 import { flag } from '../lib/flags';
 import { ShareQrButton } from '../components/ShareQr';
 import { onTabListKeyDown } from '../lib/a11y';
@@ -53,6 +58,34 @@ function StageGate({ title, text, primary, secondary }: { title: string; text: s
         {secondary && <button type="button" className="btn" onClick={secondary.onClick}>{secondary.label}</button>}
       </div>
     </section>
+  );
+}
+
+/** Práctica anterior y siguiente dentro del mismo grado (orden del catálogo). */
+function neighbours(id: string) {
+  const me = CATALOG.find((x) => x.id === id);
+  const list = CATALOG.filter((x) => x.grade === me?.grade);
+  const i = list.findIndex((x) => x.id === id);
+  return { prev: i > 0 ? list[i - 1] : null, next: i >= 0 && i < list.length - 1 ? list[i + 1] : null, index: i, total: list.length };
+}
+
+function PracticePager({ id, gradeName }: { id: string; gradeName: string }) {
+  const { prev, next, index, total } = neighbours(id);
+  if (index < 0) return null;
+  return (
+    <nav className="practice-pager no-print" aria-label="Otras prácticas del grado">
+      {prev ? (
+        <a className="pager-link prev" href={href('practica', prev.id)} rel="prev">
+          <Icon name="anterior" size={18} /><span><small>Anterior</small>{prev.title}</span>
+        </a>
+      ) : <span />}
+      <span className="pager-pos small muted">Práctica {index + 1} de {total} · {gradeName}</span>
+      {next ? (
+        <a className="pager-link next" href={href('practica', next.id)} rel="next">
+          <span><small>Siguiente</small>{next.title}</span><Icon name="flecha" size={18} />
+        </a>
+      ) : <span />}
+    </nav>
   );
 }
 
@@ -98,17 +131,47 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
     el?.focus({ preventScroll: true });
   };
 
+  // La etapa activa queda siempre visible en la barra (en teléfonos la barra se desplaza a lo ancho).
+  const stageNav = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const tab = stageNav.current?.querySelector<HTMLElement>('[aria-selected="true"]');
+    if (tab && typeof tab.scrollIntoView === 'function') tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, [stage]);
+
+  // Atajos de una tecla (lista completa con «?»; se desactivan en Ayuda).
+  const nb = neighbours(p.id);
+  useShortcuts({
+    ...Object.fromEntries(STAGES.map((st, i) => [String(i + 1), () => go(st.id)])),
+    c: () => { if (stage === 'experimento') showNotebook(); },
+    f: () => { if (stage === 'experimento' && fs.supported) fs.toggle(); },
+    i: () => navigate(href('practica', p.id, 'informe')),
+    n: () => { if (nb.next) navigate(href('practica', nb.next.id)); },
+    p: () => { if (nb.prev) navigate(href('practica', nb.prev.id)); },
+  });
+
   return (
     <AdvancedProvider key={p.id} practiceId={p.id}>
     <div className="practice">
       <header className={`practice-head${compact ? ' compact' : ''}`}>
-        <nav aria-label="Ruta de navegación" className="small muted crumbs">
-          <a href={href()}>Inicio</a> / <a href={href('grado', p.grade)}>{grade.name}</a> / <span>{p.title}</span>
-        </nav>
+        <div className="ph-top">
+          <nav aria-label="Ruta de navegación" className="small crumbs">
+            <a href={href()}>Inicio</a><span aria-hidden="true">/</span>
+            <a href={href('grado', p.grade)}>{p.grade}.º · {grade.name}</a><span aria-hidden="true">/</span>
+            <a href={`${href('catalogo')}?area=${p.area}`}>{AREA_LABEL[p.area]}</a><span aria-hidden="true">/</span>
+            <span aria-current="page" className="crumb-current">{p.title}</span>
+          </nav>
+          <div className="ph-tools no-print" role="group" aria-label="Acciones de la práctica">
+            <SyncChip />
+            <a className="btn small" href={href('practica', p.id, 'informe')}><Icon name="informe" size={17} />Ver informe</a>
+            {flag('qrPracticas') && <ShareQrButton practiceId={p.id} title={p.title} />}
+            <ShortcutsButton />
+            <ConfirmButton label="Reiniciar práctica" icon={<Icon name="reiniciar" size={16} />} confirmLabel="¿Borrar datos, análisis y respuestas de esta práctica?" onConfirm={() => { api.reset(); setStage('preparacion'); }} />
+          </div>
+        </div>
         <div className="title-row">
           <div className="title-block">
             <div className="chips" hidden={compact}>
-              <span className={`chip area-${p.area}`}>{AREA_LABEL[p.area]}</span>
+              <AreaChip area={p.area} />
               <span className="chip">Grado {p.grade}.º</span>
               <span className="chip">{p.durationMin} min</span>
               {p.competencies.map((c) => <span key={c} className="chip">{COMPETENCY_SHORT[c]}</span>)}
@@ -118,21 +181,19 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
           <div className="head-actions no-print">
             <Segmented<Mode> label="Modo de trabajo" value={s.mode} onChange={(m) => api.update((x) => ({ ...x, mode: m }))}
               options={[{ value: 'guiada', label: 'Práctica guiada' }, { value: 'libre', label: 'Exploración libre' }, { value: 'evaluacion', label: 'Evaluación' }]} />
-            <div className="btn-row">
-              <SyncChip />
-              <a className="btn" href={href('practica', p.id, 'informe')}>Ver informe</a>
-              {flag('qrPracticas') && <ShareQrButton practiceId={p.id} title={p.title} />}
-              <ConfirmButton label="Reiniciar práctica" confirmLabel="¿Borrar datos, análisis y respuestas de esta práctica?" onConfirm={() => { api.reset(); setStage('preparacion'); }} />
-            </div>
           </div>
         </div>
-        {!compact && <p className="muted topic"><strong>Tema curricular:</strong> {p.topic}</p>}
         <p className="problem"><span className="problem-label">Pregunta problema</span>{p.problemQuestion}</p>
-        {!compact && <p className="small muted mode-help">{MODE_HELP[s.mode]}</p>}
+        {!compact && (
+          <div className="ph-context">
+            <p className="muted topic small"><strong>Tema curricular:</strong> {p.topic}</p>
+            <p className="small muted mode-help">{MODE_HELP[s.mode]}</p>
+          </div>
+        )}
       </header>
 
       <div className="stage-bar">
-        <div className="stage-nav" role="tablist" aria-label="Etapas de la práctica" onKeyDown={onTabListKeyDown}>
+        <div ref={stageNav} className="stage-nav" role="tablist" aria-label="Etapas de la práctica" onKeyDown={onTabListKeyDown}>
           {STAGES.map((st, i) => {
             const lock = locked(st.id);
             return (
@@ -167,9 +228,11 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
                 onToggle={(i, checked) => api.update((x) => ({ ...x, stepsDone: checked ? [...new Set([...x.stepsDone, i])] : x.stepsDone.filter((k) => k !== i) }))}
                 extra={fs.supported && <button type="button" className="btn small ghost" onClick={fs.toggle} aria-pressed={fs.active}>{fs.active ? 'Salir de pantalla completa' : 'Pantalla completa'}</button>}
               />
-              <MeasurementPanel api={api} practiceId={p.id} />
-              <AdvancedToggle />
-              <ProvenanceStrip prov={practiceProvenance(p.id, s.measurement?.mode)} />
+              <div className="bench-settings no-print">
+                <MeasurementPanel api={api} practiceId={p.id} />
+                <AdvancedToggle />
+                <ProvenanceStrip prov={practiceProvenance(p.id, s.measurement?.mode)} />
+              </div>
               <MeasurementProvider api={api} practiceId={p.id}>
                 <Suspense fallback={<p role="status">Cargando el laboratorio…</p>}>
                   <LabHost Lab={Lab} api={api} practice={p} />
@@ -190,7 +253,8 @@ export function PracticePage({ practice: p }: { practice: PracticeDef }) {
         {stage === 'evaluacion' && <EvaluationSection practice={p} api={api} mode={s.mode} />}
         {stage === 'modelo' && <ModelSection practice={p} />}
       </div>
-      <p className="small muted no-print">Tu trabajo se guarda automáticamente en este navegador. Para entregarlo, abre «Ver informe» y descarga o copia el archivo para tu docente.</p>
+      <PracticePager id={p.id} gradeName={`${p.grade}.º · ${grade.name}`} />
+      <p className="small muted no-print save-note"><Icon name="escudo" size={16} />Tu trabajo se guarda automáticamente en este navegador. Para entregarlo, abre «Ver informe» y descarga o copia el archivo para tu docente.</p>
       <CourseNote />
     </div>
     </AdvancedProvider>

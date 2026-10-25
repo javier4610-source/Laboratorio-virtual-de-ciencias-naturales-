@@ -62,6 +62,18 @@ const PATHS = {
   incertidumbre: <><path d="M12 4v7M8.5 7.5h7M8.5 15.5h7" /><path d="M5 20h14" /></>,
   grafica: <><path d="M4 4v16h16" /><circle cx="8.5" cy="14.5" r="1.2" /><circle cx="12" cy="11.5" r="1.2" /><circle cx="15.5" cy="9" r="1.2" /><path d="m7 17 12-11" strokeDasharray="2 2.5" /></>,
   escudo: <><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" /><path d="m9 12 2 2 4-4" /></>,
+  /* Simulación, avisos y navegación (rediseño 2026-10) */
+  reproducir: <path d="M7.5 5.2v13.6a.8.8 0 0 0 1.2.7l10.6-6.8a.8.8 0 0 0 0-1.4L8.7 4.5a.8.8 0 0 0-1.2.7z" />,
+  pausa: <><rect x="6.5" y="5" width="3.5" height="14" rx="1" /><rect x="14" y="5" width="3.5" height="14" rx="1" /></>,
+  alerta: <><path d="M10.3 4.3 2.9 17.5A2 2 0 0 0 4.6 20.5h14.8a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z" /><path d="M12 9.5v4.5M12 17.2v.1" /></>,
+  info: <><circle cx="12" cy="12" r="8.5" /><path d="M12 11v5.5M12 7.8v.1" /></>,
+  teclado: <><rect x="2.5" y="6" width="19" height="12" rx="2" /><path d="M6 10h.01M9 10h.01M12 10h.01M15 10h.01M18 10h.01M7.5 14h9" /></>,
+  mas: <><circle cx="5.5" cy="12" r="1.2" /><circle cx="12" cy="12" r="1.2" /><circle cx="18.5" cy="12" r="1.2" /></>,
+  comparar: <><path d="M8 4v16M16 4v16" /><path d="M4 8h4M4 16h4M16 12h4" /></>,
+  anterior: <path d="M19 12H5M11 6l-6 6 6 6" />,
+  estudiante: <><path d="m2.5 9 9.5-5 9.5 5-9.5 5z" /><path d="M6.5 11.2V16c0 1.5 2.5 3 5.5 3s5.5-1.5 5.5-3v-4.8" /></>,
+  lupa: <><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5M8.5 11h5M11 8.5v5" /></>,
+  continuar: <><circle cx="12" cy="12" r="8.5" /><path d="m10.5 8.5 4 3.5-4 3.5" /></>,
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof PATHS;

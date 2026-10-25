@@ -6,7 +6,8 @@ import { loadJSON, saveJSON, storageAvailable } from '../lib/storage';
 import { copyText, downloadText, toCSV, validateReport, type StudentReport } from '../lib/report';
 import { encodeAssignment, encodeList, uid, type Assignment, type PracticeList } from '../lib/codes';
 import { fmt, fmtDate } from '../lib/format';
-import { href } from '../lib/router';
+import { href, parseHash } from '../lib/router';
+import { Icon, type IconName } from '../components/icons';
 import { onTabListKeyDown } from '../lib/a11y';
 import { ConfirmButton, Notice, Segmented, Select } from '../components/ui';
 import { ReportBody } from './ReportPage';
@@ -18,7 +19,7 @@ import { api, defaultServerUrl, loadTeacherSession, saveServerUrl, saveTeacherSe
 const KEY = 'lvcn:docente';
 interface TeacherData { assignments: Assignment[]; lists: PracticeList[]; reports: StudentReport[]; }
 
-type Tab = 'catalogo' | 'validacion' | 'asignaciones' | 'listas' | 'informes' | 'seguimiento' | 'servidor' | 'rubrica';
+type Tab = 'resumen' | 'catalogo' | 'validacion' | 'asignaciones' | 'listas' | 'informes' | 'seguimiento' | 'servidor' | 'rubrica';
 
 function useTeacherData() {
   const [data, setData] = useState<TeacherData>(() => ({ assignments: [], lists: [], reports: [], ...loadJSON<Partial<TeacherData>>(KEY, {}) }));
@@ -590,24 +591,69 @@ function RubricTab() {
   );
 }
 
+const TAB_IDS: Tab[] = ['resumen', 'catalogo', 'validacion', 'asignaciones', 'listas', 'informes', 'seguimiento', 'servidor', 'rubrica'];
+
+/** Pestaña inicial desde la dirección (#/docente?seccion=informes), para los accesos directos del inicio. */
+function initialTab(): Tab {
+  try {
+    const s = parseHash(window.location.hash).query.get('seccion') as Tab | null;
+    return s && TAB_IDS.includes(s) ? s : 'resumen';
+  } catch { return 'resumen'; }
+}
+
+/** Inicio del panel: las tareas frecuentes del docente con su estado, en lugar de abrir en una tabla de 65 filas. */
+function OverviewTab({ data, go }: { data: TeacherData; go: (t: Tab) => void }) {
+  const cards: { tab: Tab; icon: IconName; title: string; text: string; stat?: string }[] = [
+    { tab: 'asignaciones', icon: 'informe', title: 'Asignar una práctica', text: 'Crea un código con el curso, los objetivos y la fecha de entrega; el estudiante lo pega en el inicio.', stat: `${data.assignments.length} ${data.assignments.length === 1 ? 'asignación' : 'asignaciones'}` },
+    { tab: 'listas', icon: 'preparacion', title: 'Armar una lista por unidad', text: 'Reúne varias prácticas en un solo código para una unidad didáctica.', stat: `${data.lists.length} ${data.lists.length === 1 ? 'lista' : 'listas'}` },
+    { tab: 'informes', icon: 'datos', title: 'Recibir y revisar informes', text: 'Importa los archivos .json de los estudiantes, revisa respuestas y exporta la tabla de notas.', stat: `${data.reports.length} ${data.reports.length === 1 ? 'informe' : 'informes'}` },
+    { tab: 'seguimiento', icon: 'analisis', title: 'Seguir el avance del curso', text: 'Con el servidor del colegio: quién trabaja, en qué etapa va y qué preguntas fallan.' },
+    { tab: 'catalogo', icon: 'experimento', title: 'Explorar el catálogo docente', text: `Las ${PRACTICES.length} prácticas con tema, competencias, duración y DBA propuesto.` },
+    { tab: 'validacion', icon: 'escudo', title: 'Validar la alineación curricular', text: 'Marca cada DBA propuesto como validado, ajustado o pendiente, con observaciones.' },
+    { tab: 'rubrica', icon: 'evaluacion', title: 'Rúbrica de evaluación', text: 'Niveles de desempeño Superior, Alto, Básico y Bajo por criterio.' },
+    { tab: 'servidor', icon: 'sinConexion', title: 'Conectar el servidor del colegio', text: 'Cuentas de docente, cursos con código e informes enviados por internet.' },
+  ];
+  return (
+    <div className="teacher-overview">
+      {cards.map((c) => (
+        <button key={c.tab} type="button" className="task teacher-task" onClick={() => go(c.tab)}>
+          <span className="task-icon" aria-hidden="true"><Icon name={c.icon} size={22} /></span>
+          <span className="task-text"><strong>{c.title}</strong><span className="small muted">{c.text}</span>{c.stat && <span className="nb-pill">{c.stat}</span>}</span>
+          <Icon name="flecha" size={18} className="task-go" />
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export function TeacherPage() {
   const [data, setData] = useTeacherData();
-  const [tab, setTab] = useState<Tab>('catalogo');
+  const [tab, setTabState] = useState<Tab>(initialTab);
   const [trackCourse, setTrackCourse] = useState<number | null>(null);
   useEffect(() => { document.title = 'Panel docente · Laboratorio Virtual'; }, []);
+  const setTab = (t: Tab) => {
+    setTabState(t);
+    try { window.history.replaceState(null, '', `#/docente${t === 'resumen' ? '' : `?seccion=${t}`}`); } catch { /* sin historial */ }
+  };
+  const go = (t: Tab) => { setTab(t); requestAnimationFrame(() => document.getElementById(`tab-docente-${t}`)?.focus()); };
   const tabs: { id: Tab; label: string }[] = [
-    { id: 'catalogo', label: 'Catálogo' }, { id: 'validacion', label: 'Validación curricular' }, { id: 'asignaciones', label: `Asignaciones (${data.assignments.length})` },
+    { id: 'resumen', label: 'Inicio' }, { id: 'catalogo', label: 'Catálogo' }, { id: 'validacion', label: 'Validación curricular' }, { id: 'asignaciones', label: `Asignaciones (${data.assignments.length})` },
     { id: 'listas', label: `Listas por unidad (${data.lists.length})` }, { id: 'informes', label: `Informes (${data.reports.length})` }, { id: 'seguimiento', label: 'Seguimiento del curso' }, { id: 'servidor', label: 'Servidor' }, { id: 'rubrica', label: 'Rúbrica' },
   ];
   return (
-    <div className="stack">
-      <h1>Panel docente</h1>
+    <div className="stack teacher">
+      <header className="page-head">
+        <nav aria-label="Ruta de navegación" className="crumbs small"><a href={href()}>Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Panel docente</span></nav>
+        <h1>Panel docente</h1>
+        <p className="lead muted">Asigna prácticas, recibe informes y sigue el avance de tus cursos.</p>
+      </header>
       <Notice kind="warn">
         <strong>Funcionamiento sin servidor.</strong> Sin el servidor del colegio no hay cuentas ni base de datos: las asignaciones, listas e informes se guardan solo en este navegador{storageAvailable() ? '' : ' (y el almacenamiento local no está disponible: se perderán al cerrar la pestaña)'}. Los estudiantes entregan sus informes como archivo o texto, y las asignaciones se comparten con códigos. Con el servidor, «Seguimiento del curso» muestra el avance de cada estudiante en tiempo real.
       </Notice>
-      <div className="stage-nav" role="tablist" aria-label="Secciones del panel docente" onKeyDown={onTabListKeyDown}>
-        {tabs.map((t) => <button key={t.id} type="button" role="tab" aria-selected={tab === t.id} tabIndex={tab === t.id ? 0 : -1} onClick={() => setTab(t.id)}>{t.label}</button>)}
+      <div className="stage-nav teacher-tabs" role="tablist" aria-label="Secciones del panel docente" onKeyDown={onTabListKeyDown}>
+        {tabs.map((t) => <button key={t.id} id={`tab-docente-${t.id}`} type="button" role="tab" aria-selected={tab === t.id} tabIndex={tab === t.id ? 0 : -1} onClick={() => setTab(t.id)}>{t.label}</button>)}
       </div>
+      {tab === 'resumen' && <OverviewTab data={data} go={go} />}
       {tab === 'catalogo' && <CatalogTab />}
       {tab === 'validacion' && <ValidationTab />}
       {tab === 'asignaciones' && <AssignmentsTab data={data} setData={setData} />}

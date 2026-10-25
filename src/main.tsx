@@ -7,6 +7,7 @@ import './fonts';
 import './tokens.css';
 import './styles.css';
 import './theme-2026.css';
+import './plataforma.css';
 
 initPwa();
 initScrollRegionFocus();

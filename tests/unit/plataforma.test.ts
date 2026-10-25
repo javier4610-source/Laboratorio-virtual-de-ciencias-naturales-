@@ -3,6 +3,11 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { PRACTICES, questionById } from '../../src/curriculum';
 import { transferQuestions } from '../../src/assessment/lookup';
 import { practiceQuestions } from '../../src/lib/report';
+import { CATALOG } from '../../src/curriculum/catalog';
+import { filterCatalog, filtersFromQuery, filtersToQuery } from '../../src/pages/CatalogPages';
+import { changedInputs, compareTrials, trialsToJSON } from '../../src/lib/compare';
+import { shortcutKey } from '../../src/lib/shortcuts';
+import type { Dataset, Trial } from '../../src/core/types';
 
 describe('preguntas de transferencia sin el currículo completo', () => {
   it('cada práctica resuelve las mismas preguntas (mismo objeto) que questionById', () => {
@@ -44,7 +49,7 @@ describe('tokens del sistema de diseño (src/tokens.css)', () => {
   });
   it('los laboratorios y componentes encuentran todos los tokens que usan', () => {
     // Tokens globales más los locales de componente declarados en las hojas de estilo (p. ej. --logger-screen).
-    const local = ['styles.css', 'theme-2026.css'].map((f) => readFileSync(new URL(`../../src/${f}`, import.meta.url), 'utf8').split('\n'));
+    const local = ['styles.css', 'theme-2026.css', 'plataforma.css'].map((f) => readFileSync(new URL(`../../src/${f}`, import.meta.url), 'utf8').split('\n'));
     const defined = new Set([...names(light), ...local.flatMap((lines) => [...names(lines)])]);
     const used = new Map<string, string>();
     for (const dir of ['labs', 'components', 'pages']) {
@@ -55,5 +60,64 @@ describe('tokens del sistema de diseño (src/tokens.css)', () => {
     }
     const missing = [...used].filter(([n]) => !defined.has(n)).map(([n, f]) => `${n} (${f})`);
     expect(missing).toEqual([]);
+  });
+});
+
+describe('catálogo: filtros en la dirección, búsqueda y orden', () => {
+  it('lee y escribe los filtros válidos e ignora los desconocidos', () => {
+    const f = filtersFromQuery(new URLSearchParams('area=quimica&grado=10&competencia=uso&estado=en-curso&orden=titulo&q=ph'));
+    expect(f).toEqual({ q: 'ph', grado: '10', area: 'quimica', competencia: 'uso', estado: 'en-curso', orden: 'titulo' });
+    expect(filtersFromQuery(new URLSearchParams('area=magia&grado=13&estado=x&orden=y'))).toEqual({ q: '', grado: '', area: '', competencia: '', estado: '', orden: '' });
+    expect(filtersFromQuery(new URLSearchParams(filtersToQuery(f).slice(1)))).toEqual(f);
+  });
+  it('mantiene los conteos de siempre (adn → 3; química → 20) y filtra por avance', () => {
+    const base = { q: '', grado: '', area: '', competencia: '', estado: '', orden: '' };
+    expect(filterCatalog(CATALOG, { ...base, q: 'adn' }, {}).length).toBe(3);
+    expect(filterCatalog(CATALOG, { ...base, area: 'quimica' }, {}).length).toBe(20);
+    expect(filterCatalog(CATALOG, { ...base, estado: 'en-curso' }, { densidad: 50, mendel: 100 }).map((p) => p.id)).toEqual(['densidad']);
+    expect(filterCatalog(CATALOG, { ...base, estado: 'completada' }, { densidad: 50, mendel: 100 }).map((p) => p.id)).toEqual(['mendel']);
+    expect(filterCatalog(CATALOG, { ...base, estado: 'sin-iniciar' }, { densidad: 50 }).length).toBe(CATALOG.length - 1);
+    const byTitle = filterCatalog(CATALOG, { ...base, orden: 'titulo' }, {}).map((p) => p.title);
+    expect(byTitle).toEqual([...byTitle].sort((a, b) => a.localeCompare(b, 'es')));
+    // Varias palabras: basta con una (búsqueda amplia desde el inicio).
+    expect(filterCatalog(CATALOG, { ...base, q: 'secuencias proteínas metabolismo' }, {}).map((p) => p.id)).toEqual(expect.arrayContaining(['secuencias', 'proteinas', 'metabolismo']));
+  });
+});
+
+describe('comparación de ensayos y exportación JSON', () => {
+  const ds: Dataset = { id: 'd', label: 'D', defaultX: 'l', defaultY: 'm', columns: [
+    { key: 'mat', label: 'Material', numeric: false, input: true },
+    { key: 'l', label: 'Arista', unit: 'cm', numeric: true, input: true, decimals: 1 },
+    { key: 'm', label: 'Masa', unit: 'g', numeric: true, decimals: 1, resolution: 0.1 },
+  ] };
+  const t = (id: string, values: Trial['values']): Trial => ({ id, datasetId: 'd', createdAt: 0, values });
+  it('resta B − A, calcula la variación relativa y detecta las entradas que cambiaron', () => {
+    const rows = compareTrials(ds, t('a', { mat: 'Al', l: 2, m: 21.6 }), t('b', { mat: 'Al', l: 3, m: 72.9 }));
+    expect(rows.find((r) => r.key === 'm')!.diff).toBeCloseTo(51.3, 10);
+    expect(rows.find((r) => r.key === 'l')!.relPercent).toBeCloseTo(50, 10);
+    expect(rows.find((r) => r.key === 'mat')!.same).toBe(true);
+    expect(changedInputs(rows).map((r) => r.key)).toEqual(['l']);
+    const zero = compareTrials(ds, t('a', { mat: 'Al', l: 0, m: null }), t('b', { mat: 'Fe', l: 1, m: 3 }));
+    expect(zero.find((r) => r.key === 'l')!.relPercent).toBeNull();
+    expect(zero.find((r) => r.key === 'm')!.diff).toBeNull();
+  });
+  it('el JSON de datos lleva formato, columnas con unidad y ensayos numerados', () => {
+    const j = JSON.parse(trialsToJSON('densidad', 'Densidad', ds, [t('a', { mat: 'Al', l: 2, m: 21.6 })], '9.9.9'));
+    expect(j.formato).toBe('lvcn-datos-v1');
+    expect(j.columnas[2]).toEqual({ clave: 'm', nombre: 'Masa', unidad: 'g', numerica: true, entrada: false, resolucion: 0.1 });
+    expect(j.ensayos[0]).toMatchObject({ n: 1, valores: { mat: 'Al', l: 2, m: 21.6 }, medicion: 'ideal' });
+  });
+});
+
+describe('atajos de teclado', () => {
+  const ev = (key: string, target: unknown = null, mods: Partial<KeyboardEvent> = {}) => ({ key, ctrlKey: false, metaKey: false, altKey: false, target, ...mods }) as unknown as KeyboardEvent;
+  const el = (matches: boolean) => ({ closest: () => (matches ? {} : null) });
+  it('responde a una sola tecla fuera de campos y del laboratorio', () => {
+    expect(shortcutKey(ev('C'))).toBe('c');
+    expect(shortcutKey(ev('?'))).toBe('?');
+    expect(shortcutKey(ev('c', el(true)))).toBeNull();
+    expect(shortcutKey(ev('c', el(false)))).toBe('c');
+    expect(shortcutKey(ev('c', null, { ctrlKey: true }))).toBeNull();
+    expect(shortcutKey(ev('ArrowLeft'))).toBeNull();
   });
 });

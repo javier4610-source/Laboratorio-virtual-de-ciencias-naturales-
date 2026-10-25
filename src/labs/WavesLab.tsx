@@ -7,6 +7,7 @@ import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { BenchTop, ContactShadow } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
+import { SimControls } from '../components/Experiment';
 
 const VIEW_M = 12; // metros de cuerda visibles
 const WX0 = 74, WX1 = 590;
@@ -200,10 +201,9 @@ function RopePart({ api }: LabProps) {
           <Slider label="Tensión" value={tension} min={WAVE_LIMITS.tension[0]} max={WAVE_LIMITS.tension[1]} step={1} unit="N" decimals={0} onChange={setTension} />
           <Slider label="Frecuencia" value={f} min={WAVE_LIMITS.frequency[0]} max={WAVE_LIMITS.frequency[1]} step={0.25} unit="Hz" decimals={2} onChange={setF} />
           <Slider label="Amplitud" value={A} min={WAVE_LIMITS.amplitude[0]} max={WAVE_LIMITS.amplitude[1]} step={0.5} unit="cm" decimals={1} onChange={setA} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => setRunning((r) => !r)}>{running ? 'Pausar' : 'Reanudar'}</button>
-            <button type="button" className="btn" onClick={() => setT(0)}>Reiniciar tiempo</button>
-          </div>
+          <SimControls title="Generador de ondas" status={running ? 'en-curso' : t > 0 ? 'en-pausa' : 'listo'}
+            onStart={() => setRunning(true)} onPause={() => setRunning(false)} onResume={() => setRunning(true)}
+            onReset={() => setT(0)} resetLabel="Reiniciar tiempo" />
           <Select label="Velocidad de la animación" value={String(slow)} onChange={(v) => setSlow(Number(v))} options={[{ value: '1', label: 'Tiempo real' }, { value: '4', label: 'Cámara lenta ×4' }, { value: '10', label: 'Cámara lenta ×10' }]} />
           <RecordButton onRecord={record} />
         </div>

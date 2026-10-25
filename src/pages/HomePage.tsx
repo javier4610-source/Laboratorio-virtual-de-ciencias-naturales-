@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { CATALOG as PRACTICES, metaById as practiceById } from '../curriculum/catalog';
 import { AREA_LABEL, GRADES } from '../curriculum/grades';
 import type { Area } from '../core/types';
 import { href } from '../lib/router';
-import { storedProgress } from '../lib/progress';
+import { recentPractices, storedProgress } from '../lib/progress';
+import { onTabListKeyDown } from '../lib/a11y';
 import { decodeCode, type Decoded } from '../lib/codes';
 import { loadJSON, saveJSON } from '../lib/storage';
 import { PracticeCard } from '../components/PracticeCard';
 import { Notice } from '../components/ui';
 import { InstallButton } from '../components/PwaUi';
 import { AREA_ICON, Icon, type IconName } from '../components/icons';
-import { BenchTop, Beaker, Burette, Cube, DigitalBalance, Erlenmeyer, GraduatedCylinder, TestTube, Thermometer } from '../labs/kit';
+
+// La escena ilustrada del héroe usa el kit de instrumentos (34 kB): se descarga después del primer pintado.
+const HeroScene = lazy(() => import('./HeroScene'));
 
 const AREAS = Object.keys(AREA_LABEL) as Area[];
 const CODES_KEY = 'lvcn:codigos-recibidos';
@@ -21,63 +24,6 @@ const AREA_BLURB: Record<Area, string> = {
   fisica: 'Medición, ondas, fuerzas, energía y circuitos',
   ambiental: 'Ecosistemas, ciclos de la materia y poblaciones',
 };
-
-/** Escena de laboratorio de la portada: instrumentos del kit con burbujas y una gota en movimiento suave. */
-function HeroScene() {
-  const bubbles: [number, number, number][] = [[266, 0, 3.2], [280, 1.1, 2.4], [294, 2.2, 2.8], [272, 3.1, 2], [300, 0.6, 1.8], [286, 2.7, 2.2]];
-  return (
-    <svg viewBox="0 0 614 340" className="hero-scene" role="img" aria-label="Ilustración: mesa de laboratorio con probeta graduada, bureta sobre un matraz Erlenmeyer, vaso de precipitados con burbujas, termómetro, balanza digital, gradilla con tubos de ensayo y una gráfica de datos.">
-      <defs>
-        <linearGradient id="hero-screen" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="var(--surface)" /><stop offset="1" stopColor="var(--surface-2)" /></linearGradient>
-        <linearGradient id="hero-plot-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="var(--accent)" stopOpacity="0.28" /><stop offset="1" stopColor="var(--accent)" stopOpacity="0" /></linearGradient>
-      </defs>
-
-      {/* Tarjeta de datos flotante */}
-      <g transform="translate(392 22)"><g className="hero-float">
-        <rect width="206" height="128" rx="12" fill="url(#hero-screen)" stroke="var(--line)" filter="url(#kit-shadow)" />
-        <circle cx="16" cy="16" r="3.5" fill="var(--bad)" /><circle cx="28" cy="16" r="3.5" fill="var(--warn)" /><circle cx="40" cy="16" r="3.5" fill="var(--ok)" />
-        <rect x="132" y="10" width="62" height="13" rx="6.5" fill="var(--accent-soft)" />
-        <g transform="translate(18 34)">
-          {[0, 1, 2, 3].map((i) => <line key={i} x1="0" x2="170" y1={i * 22} y2={i * 22} stroke="var(--line)" />)}
-          <path d="M0 0V66H170" fill="none" stroke="var(--ink-2)" strokeWidth="1.2" />
-          <path d="M0 62 C30 60 50 52 70 38 S120 8 170 4 V66 H0Z" fill="url(#hero-plot-fill)" />
-          <path className="hero-trace" d="M0 62 C30 60 50 52 70 38 S120 8 170 4" fill="none" stroke="var(--accent)" strokeWidth="2.4" strokeLinecap="round" />
-          {[[14, 60], [42, 54], [70, 38], [100, 22], [134, 11], [164, 5]].map(([x, y]) => <circle key={x} cx={x} cy={y} r="3.2" fill="var(--data)" stroke="var(--surface)" strokeWidth="1.2" />)}
-        </g>
-      </g></g>
-
-      {/* Soporte universal con bureta sobre el matraz */}
-      <rect x="140" y="58" width="7" height="262" rx="2" fill="url(#kit-metal-h)" />
-      <rect x="118" y="314" width="76" height="10" rx="3" fill="url(#kit-body-dark)" />
-      <rect x="143" y="112" width="52" height="7" rx="2.5" fill="#78909c" />
-      <Burette x={182} y={78} h={162} capacity={50} level={14} major={10} />
-      <circle className="hero-drop" cx="191" cy="246" r="2.6" fill="#f48fb1" />
-      <Erlenmeyer x={150} y={242} w={84} h={82} fill={0.42} liquid="#ec407a" liquidOpacity={0.5} />
-
-      {/* Probeta graduada */}
-      <GraduatedCylinder x={46} y={134} w={38} h={190} capacity={100} level={62} major={20} minor={10} liquid="#4f9fe0" />
-
-      {/* Vaso con burbujas y termómetro */}
-      <Beaker x={252} y={214} w={76} h={110} fill={0.62} liquid="#7fc7a8" liquidOpacity={0.55}>
-        <g className="hero-bubbles">{bubbles.map(([x, d, r]) => <circle key={`${x}-${d}`} cx={x} cy={312} r={r} fill="#ffffff" fillOpacity="0.7" stroke="#2e7d5b" strokeOpacity="0.4" style={{ animationDelay: `${d}s` }} />)}</g>
-      </Beaker>
-      <g transform="rotate(8 312 260)"><Thermometer x={312} y={178} h={130} min={0} max={100} value={37} /></g>
-
-      {/* Gradilla con tubos de ensayo */}
-      <rect x="346" y="258" width="6" height="64" rx="1.5" fill="#c9a76a" />
-      <rect x="430" y="258" width="6" height="64" rx="1.5" fill="#c9a76a" />
-      {[['#fbc02d', 0.6], ['#7e57c2', 0.45], ['#26a69a', 0.7]].map(([c, f], i) => <TestTube key={i} x={358 + i * 26} y={232} w={16} h={82} fill={f as number} liquid={c as string} liquidOpacity={0.6} />)}
-      <rect x="340" y="256" width="102" height="9" rx="2.5" fill="url(#kit-wood)" stroke="#b8975a" />
-      <rect x="340" y="312" width="102" height="9" rx="2.5" fill="url(#kit-wood)" stroke="#b8975a" />
-
-      {/* Balanza con muestra */}
-      <DigitalBalance x={454} y={248} w={150} reading="21.60" />
-      <Cube x={517} y={248} size={24} color="#b9c3c9" finish="metal" />
-
-      <BenchTop y={324} width={614} />
-    </svg>
-  );
-}
 
 /**
  * Motivo científico decorativo del héroe: un átomo con tres órbitas (los electrones con los colores de las áreas),
@@ -181,7 +127,7 @@ function CodeEntry() {
 
 const STAGES: { icon: IconName; name: string; text: string }[] = [
   { icon: 'preparacion', name: 'Preparación', text: 'Pregunta problema, objetivos, fundamento y variables.' },
-  { icon: 'experimento', name: 'Experimento', text: 'Cambias variables y guardas ensayos en la tabla.' },
+  { icon: 'experimento', name: 'Experimento', text: 'Cambias variables, mides con instrumentos y guardas ensayos.' },
   { icon: 'analisis', name: 'Análisis y conclusión', text: 'Gráficas, tendencia de tus datos, control de variables y conclusión con evidencia.' },
   { icon: 'evaluacion', name: 'Evaluación', text: 'Preguntas por competencias con retroalimentación y reintentos.' },
   { icon: 'modelo', name: 'Modelo y referencias', text: 'Ecuaciones, supuestos, límites y fuentes del modelo.' },
@@ -193,10 +139,98 @@ const MODES: { icon: IconName; name: string; text: string }[] = [
   { icon: 'evaluacion', name: 'Evaluación', text: 'Preguntas tipo Saber 11 con retroalimentación por opción.' },
 ];
 
+type ProfileId = 'estudiante' | 'docente' | 'investigador';
+interface Task { icon: IconName; title: string; text: string; href?: string; onClick?: () => void }
+const PROFILE_KEY = 'lvcn:perfil-inicio';
+
+const focusCode = () => { const el = document.getElementById('code-in'); el?.scrollIntoView({ behavior: 'smooth', block: 'center' }); el?.focus({ preventScroll: true }); };
+const focusGrades = () => { const el = document.getElementById('grados'); el?.scrollIntoView({ behavior: 'smooth' }); el?.focus({ preventScroll: true }); };
+
+function profileTasks(id: ProfileId, recent: ReturnType<typeof recentPractices>): Task[] {
+  if (id === 'estudiante') {
+    const last = recent[0] && practiceById(recent[0].id);
+    return [
+      last
+        ? { icon: 'continuar', title: 'Continuar mi práctica', text: `${last.title} · ${recent[0].progress} % · ${recent[0].trials} ${recent[0].trials === 1 ? 'ensayo' : 'ensayos'}`, href: href('practica', last.id) }
+        : { icon: 'grado', title: 'Empezar por mi grado', text: 'Las prácticas de tu malla curricular, de 6.º a 11.º.', onClick: focusGrades },
+      { icon: 'buscar', title: 'Buscar una práctica', text: 'Por tema, instrumento o concepto (tecla /).', href: href('catalogo') },
+      { icon: 'codigo', title: 'Usar el código de mi docente', text: 'Asignaciones y listas de una unidad.', onClick: focusCode },
+      { icon: 'banco', title: 'Practicar para Saber 11', text: 'Preguntas por competencia con retroalimentación.', href: href('banco') },
+    ];
+  }
+  if (id === 'docente') {
+    return [
+      { icon: 'informe', title: 'Asignar una práctica', text: 'Crea un código con objetivos y fecha de entrega.', href: `${href('docente')}?seccion=asignaciones` },
+      { icon: 'datos', title: 'Recibir y revisar informes', text: 'Importa los archivos de tus estudiantes y exporta notas.', href: `${href('docente')}?seccion=informes` },
+      { icon: 'analisis', title: 'Seguir el avance del curso', text: 'Con el servidor del colegio, en tiempo real.', href: `${href('docente')}?seccion=seguimiento` },
+      { icon: 'escudo', title: 'Validar la alineación curricular', text: 'Revisa los DBA propuestos práctica por práctica.', href: `${href('docente')}?seccion=validacion` },
+    ];
+  }
+  return [
+    { icon: 'lupa', title: 'Prácticas de indagación', text: 'Diseña, mide y analiza con control de variables.', href: `${href('catalogo')}?competencia=indagacion` },
+    { icon: 'modelo', title: 'Modelos con supuestos declarados', text: 'Cada práctica muestra sus ecuaciones, límites y fuentes.', href: `${href('practica', 'cinetica-potencial')}` },
+    { icon: 'biologia', title: 'Bioinformática y biología de sistemas', text: 'Secuencias, BLAST, proteínas en 3D y metabolismo (FBA).', href: `${href('catalogo')}?q=secuencias proteínas metabolismo` },
+    { icon: 'descargar', title: 'Datos reproducibles', text: 'Exporta CSV, JSON y el registro del experimento con su semilla.', href: href('ayuda') },
+  ];
+}
+
+const PROFILES: { id: ProfileId; label: string; icon: IconName; lead: string }[] = [
+  { id: 'estudiante', label: 'Estudiante', icon: 'estudiante', lead: 'Experimenta, registra tus datos y entrega tu informe.' },
+  { id: 'docente', label: 'Docente', icon: 'docente', lead: 'Asigna prácticas, recibe informes y sigue el avance del curso.' },
+  { id: 'investigador', label: 'Investigador o curioso', icon: 'lupa', lead: 'Explora los modelos, cambia sus supuestos y exporta los datos.' },
+];
+
+/** Inicio orientado a tareas: la persona elige su perfil y ve lo que puede hacer ahora. */
+function ProfileTasks() {
+  const [profile, setProfile] = useState<ProfileId>(() => {
+    const v = loadJSON<string>(PROFILE_KEY, 'estudiante');
+    return v === 'docente' || v === 'investigador' ? v : 'estudiante';
+  });
+  const recent = recentPractices(3);
+  const tasks = profileTasks(profile, recent);
+  const choose = (id: ProfileId) => { setProfile(id); saveJSON(PROFILE_KEY, id); };
+  const current = PROFILES.find((x) => x.id === profile)!;
+  return (
+    <section className="home-section tasks" aria-labelledby="tareas-h">
+      <div className="section-head row">
+        <div>
+          <h2 id="tareas-h">¿Qué quieres hacer hoy?</h2>
+          <p className="muted">{current.lead}</p>
+        </div>
+        <div className="seg profile-switch" role="tablist" aria-label="Perfil" onKeyDown={onTabListKeyDown}>
+          {PROFILES.map((x) => (
+            <button key={x.id} type="button" role="tab" id={`perfil-${x.id}`} aria-controls="perfil-panel" aria-selected={profile === x.id} tabIndex={profile === x.id ? 0 : -1} onClick={() => choose(x.id)}>
+              <Icon name={x.icon} size={17} />{x.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div id="perfil-panel" role="tabpanel" aria-labelledby={`perfil-${profile}`} className="task-grid">
+        {tasks.map((t) => {
+          const body = (<><span className="task-icon" aria-hidden="true"><Icon name={t.icon} size={22} /></span><span className="task-text"><strong>{t.title}</strong><span className="small muted">{t.text}</span></span><Icon name="flecha" size={18} className="task-go" /></>);
+          return t.href
+            ? <a key={t.title} className="task" href={t.href}>{body}</a>
+            : <button key={t.title} type="button" className="task" onClick={t.onClick}>{body}</button>;
+        })}
+      </div>
+      {profile === 'estudiante' && recent.length > 1 && (
+        <div className="recent">
+          <h3 className="small eyebrow">También empezaste</h3>
+          <ul>
+            {recent.slice(1).map((r) => { const m = practiceById(r.id); return m ? <li key={r.id}><a href={href('practica', r.id)}>{m.title}</a><span className="progress-mini" aria-hidden="true"><span style={{ width: `${r.progress}%` }} /></span><span className="small muted">{r.progress} %</span></li> : null; })}
+          </ul>
+        </div>
+      )}
+    </section>
+  );
+}
+
+/** Una práctica destacada por grado (la primera de cada grado en el catálogo), para no repetir el catálogo entero. */
+const FEATURED = GRADES.map((g) => PRACTICES.find((p) => p.grade === g.id)).filter((p): p is NonNullable<typeof p> => !!p);
+
 export function HomePage() {
   const progress = storedProgress();
   useEffect(() => { document.title = 'Laboratorio Virtual de Ciencias Naturales'; }, []);
-  const started = Object.keys(progress).length;
   const stats: [string | number, string][] = [
     [PRACTICES.length, 'prácticas interactivas'],
     [GRADES.length, 'grados, de 6.º a 11.º'],
@@ -210,19 +244,20 @@ export function HomePage() {
         <div className="hero-copy">
           <span className="eyebrow hero-eyebrow"><span className="pulse" aria-hidden="true" />Grados 6.º a 11.º · Biología · Química · Física · Ambiente</span>
           <h1 id="hero-h">Laboratorio Virtual de <span className="hero-accent">Ciencias Naturales</span></h1>
-          <p className="lead">Cambia variables, mide, grafica y concluye con evidencia. Cada práctica calcula sus resultados con un modelo científico declarado, con sus supuestos y sus límites.</p>
+          <p className="lead">Cambia variables, mide con instrumentos, grafica y concluye con evidencia. Cada práctica calcula sus resultados con un modelo científico declarado, con sus supuestos y sus límites.</p>
           <div className="btn-row hero-actions">
-            <button type="button" className="btn primary large" onClick={() => { const el = document.getElementById('grados'); el?.scrollIntoView({ behavior: 'smooth' }); el?.focus({ preventScroll: true }); }}>Elegir mi grado</button>
-            <a className="btn large" href={href('catalogo')}>Ver todas las prácticas</a>
-            <a className="btn ghost large" href={href('docente')}><Icon name="docente" size={18} />Soy docente</a>
+            <a className="btn primary large" href={href('catalogo')}><Icon name="buscar" size={18} />Explorar prácticas</a>
+            <button type="button" className="btn large" onClick={focusGrades}>Elegir mi grado</button>
             <InstallButton className="btn ghost large" />
           </div>
           <dl className="stats">
             {stats.map(([v, k]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
           </dl>
         </div>
-        <div className="hero-figure"><div className="hero-stage"><HeroScene /></div></div>
+        <div className="hero-figure"><div className="hero-stage"><Suspense fallback={<div className="hero-scene-placeholder" aria-hidden="true" />}><HeroScene /></Suspense></div></div>
       </section>
+
+      <ProfileTasks />
 
       <section aria-labelledby="grados" className="home-section">
         <div className="section-head">
@@ -233,6 +268,7 @@ export function HomePage() {
           {GRADES.map((g) => {
             const list = PRACTICES.filter((p) => p.grade === g.id);
             const n = list.length;
+            const done = list.filter((p) => (progress[p.id] ?? 0) >= 100).length;
             return (
               <a key={g.id} className="grade-tile" href={href('grado', g.id)}>
                 <span className="g">{g.id}.º</span>
@@ -241,7 +277,7 @@ export function HomePage() {
                 <span className="grade-mix" aria-hidden="true">
                   {AREAS.map((a) => { const k = list.filter((p) => p.area === a).length; return k ? <i key={a} className={`area-${a}`} style={{ flexGrow: k }} /> : null; })}
                 </span>
-                <span className="d count">{n} {n === 1 ? 'práctica disponible' : 'prácticas disponibles'}<Icon name="flecha" size={16} /></span>
+                <span className="d count">{n} {n === 1 ? 'práctica disponible' : 'prácticas disponibles'}{done > 0 ? ` · ${done} completada${done === 1 ? '' : 's'}` : ''}<Icon name="flecha" size={16} /></span>
               </a>
             );
           })}
@@ -263,6 +299,19 @@ export function HomePage() {
               </a>
             );
           })}
+        </div>
+      </section>
+
+      <section aria-labelledby="destacadas" className="home-section">
+        <div className="section-head row">
+          <div>
+            <h2 id="destacadas">Una práctica para empezar en cada grado</h2>
+            <p className="muted">Tu progreso se guarda en este navegador. El catálogo completo tiene {PRACTICES.length} prácticas con búsqueda y filtros.</p>
+          </div>
+          <a className="btn" href={href('catalogo')}><Icon name="buscar" size={18} />Ver las {PRACTICES.length} prácticas</a>
+        </div>
+        <div className="practice-grid">
+          {FEATURED.map((p) => <PracticeCard key={p.id} p={p} progress={progress[p.id]} />)}
         </div>
       </section>
 
@@ -292,19 +341,6 @@ export function HomePage() {
             </ul>
           </section>
           <CodeEntry />
-        </div>
-      </section>
-
-      <section aria-labelledby="destacadas" className="home-section">
-        <div className="section-head row">
-          <div>
-            <h2 id="destacadas">Prácticas disponibles</h2>
-            <p className="muted">{started ? `Llevas ${started} ${started === 1 ? 'práctica iniciada' : 'prácticas iniciadas'} en este equipo.` : 'Tu progreso se guarda en este navegador.'}</p>
-          </div>
-          <a className="btn" href={href('catalogo')}><Icon name="buscar" size={18} />Buscar y filtrar</a>
-        </div>
-        <div className="practice-grid">
-          {PRACTICES.map((p) => <PracticeCard key={p.id} p={p} progress={progress[p.id]} />)}
         </div>
       </section>
 

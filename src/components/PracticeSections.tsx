@@ -9,6 +9,8 @@ import { transferQuestions } from '../assessment/lookup';
 import { QuestionCard } from './QuestionCard';
 import { cellText } from './DataPanel';
 import { Notice } from './ui';
+import { ConditionAlert, RelationExplainer } from './Experiment';
+import { Chart } from './Chart';
 import { scoreSession } from '../lib/report';
 import type { ModelSpec } from '../models/types';
 import { loadValidations } from '../lib/validation';
@@ -99,6 +101,9 @@ function VariablesActivity({ practice: p, api }: { practice: PracticeDef; api: S
 }
 
 /* -------------------------------- Análisis ------------------------------- */
+/** «en función de el volumen» → «en función del volumen» (contracción obligatoria en español). */
+const enFuncionDe = (x: string) => (/^el /i.test(x) ? `en función del ${x.slice(3)}` : `en función de ${x}`);
+
 /** Lo que muestran los datos: relación elegida, ensayos incluidos, control de variables y tendencia detectada. */
 function TrendAnalysis({ practice: p, relations, api }: { practice: PracticeDef; relations: RelationPair[]; api: SessionApi }) {
   const s = api.session;
@@ -121,7 +126,7 @@ function TrendAnalysis({ practice: p, relations, api }: { practice: PracticeDef;
       <div className="field">
         <label htmlFor="an-pair">Relación que analizas</label>
         <select id="an-pair" value={pairIndex} onChange={(e) => { setPairIndex(Number(e.target.value)); setExcluded(new Set()); }}>
-          {relations.map((pp, i) => <option key={i} value={i}>{pp.yLabel} en función de {pp.xLabel}</option>)}
+          {relations.map((pp, i) => <option key={i} value={i}>{pp.yLabel} {enFuncionDe(pp.xLabel)}</option>)}
         </select>
       </div>
       {trials.length === 0 ? <Notice kind="warn">Aún no hay ensayos en «{ds.label}». Vuelve al experimento y guarda al menos tres.</Notice> : (
@@ -138,9 +143,9 @@ function TrendAnalysis({ practice: p, relations, api }: { practice: PracticeDef;
             </div>
           </details>
           {varied.length > 0 && (
-            <Notice kind="warn">
-              <strong>Control de variables:</strong> en los ensayos elegidos también cambió {varied.map((c) => c.label.toLowerCase()).join(', ')}. Para atribuir el efecto a {pair.xLabel}, deja fijas las demás variables o excluye los ensayos que no correspondan.
-            </Notice>
+            <ConditionAlert level="advertencia" title="control de variables"
+              cause={<>En los ensayos elegidos también cambió {varied.map((c) => c.label.toLowerCase()).join(', ')}.</>}
+              fix={<>Para atribuir el efecto a {pair.xLabel}, deja fijas las demás variables o excluye los ensayos que no correspondan.</>} />
           )}
           <div className="readout" aria-live="polite">
             <div className="item"><div className="k">Tendencia en tus datos</div><div className="v data">{analysis.trend ? TREND_LABEL[analysis.trend as Exclude<Trend, ''>] : 'no determinada'}</div></div>
@@ -148,6 +153,20 @@ function TrendAnalysis({ practice: p, relations, api }: { practice: PracticeDef;
             <div className="item"><div className="k">Correlación r</div><div className="v">{analysis.r === null ? '—' : fmt(analysis.r, 2)}</div></div>
           </div>
           <p className="small">{analysis.detail}</p>
+          <RelationExplainer xLabel={pair.xLabel} yLabel={pair.yLabel} trendText={analysis.trend ? TREND_LABEL[analysis.trend as Exclude<Trend, ''>] : null} r={analysis.r} n={analysis.n} />
+          {points.length > 0 && (() => {
+            const xc = ds.columns.find((c) => c.key === pair.x);
+            const yc = ds.columns.find((c) => c.key === pair.y);
+            const ax = (label: string, unit?: string) => (unit ? `${label} (${unit})` : label);
+            return (
+              <div className="trend-chart">
+                <Chart title={`${pair.yLabel} ${enFuncionDe(pair.xLabel)}`} showTitle height={260}
+                  series={[{ label: 'Ensayos incluidos', kind: 'scatter', points }]}
+                  xLabel={ax(xc?.label ?? pair.xLabel, xc?.unit)} yLabel={ax(yc?.label ?? pair.yLabel, yc?.unit)} xUnit={xc?.unit} yUnit={yc?.unit}
+                  exportName={`${p.id}-${ds.id}-relacion`} errorNote="" />
+              </div>
+            );
+          })()}
           <p className="small muted">La tendencia se detecta con reglas explícitas (correlación y forma de la curva) y depende de los ensayos que incluyas. Úsala como apoyo, no como verdad absoluta: tu conclusión debe citar los datos que la respaldan.</p>
         </>
       )}

@@ -1,6 +1,7 @@
 import { useId, useState, type ReactNode } from 'react';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { playSound } from '../lib/sound';
+import { ConditionAlert } from './ConditionAlert';
 
 interface SliderProps {
   label: string;
@@ -91,13 +92,33 @@ export function Select({ label, value, options, onChange, id, hint }: SelectProp
   );
 }
 
-export function Readout({ items, live = true }: { items: { k: string; v: ReactNode; data?: boolean }[]; live?: boolean }) {
+export interface ReadoutItem {
+  k: string;
+  v: ReactNode;
+  /** Lectura directa de un instrumento o resultado medido (se resalta con el color de dato). */
+  data?: boolean;
+  /** Resolución o incertidumbre del instrumento, p. ej. «± 0,1 g» (se muestra bajo el valor). */
+  resolution?: string;
+  /** Estado de la lectura: dentro del rango esperado, en el límite o fuera de rango (se dice en texto, no solo con color). */
+  state?: 'ok' | 'warn' | 'bad';
+}
+
+const STATE_TEXT = { ok: 'en rango', warn: 'en el límite', bad: 'fuera de rango' } as const;
+
+/** Lecturas de instrumentos: rótulo, valor con unidad en tipografía de datos y, si se indica, la resolución y el estado. */
+export function Readout({ items, live = true }: { items: ReadoutItem[]; live?: boolean }) {
   return (
     <div className="readout" aria-live={live ? 'polite' : undefined}>
       {items.map((it) => (
-        <div className="item" key={it.k}>
+        <div className={`item${it.state ? ` state-${it.state}` : ''}`} key={it.k}>
           <div className="k">{it.k}</div>
           <div className={`v${it.data ? ' data' : ''}`}>{it.v}</div>
+          {(it.resolution || it.state) && (
+            <div className="r">
+              {it.state && <span className={`r-state ${it.state}`}>{STATE_TEXT[it.state]}</span>}
+              {it.resolution && <span className="r-res">{it.resolution}</span>}
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -108,13 +129,16 @@ export function Notice({ kind = 'info', children }: { kind?: 'info' | 'ok' | 'wa
   return <div className={`notice ${kind}`} role={kind === 'bad' || kind === 'warn' ? 'status' : undefined}>{children}</div>;
 }
 
-export function Warnings({ list }: { list: string[] }) {
+/**
+ * Advertencias del modelo sobre las condiciones elegidas (fuera de rango, supuestos que dejan de valer…).
+ * Usa el aviso de condición común (ConditionAlert) para que todas las prácticas las muestren igual.
+ */
+export function Warnings({ list, fix }: { list: string[]; fix?: ReactNode }) {
   if (list.length === 0) return null;
   return (
-    <div className="notice warn" role="status">
-      <strong>Atención:</strong>
+    <ConditionAlert level="advertencia" title={list.length === 1 ? 'revisa esta condición del experimento' : `revisa estas ${list.length} condiciones del experimento`} fix={fix}>
       <ul className="list">{list.map((w) => <li key={w}>{w}</li>)}</ul>
-    </div>
+    </ConditionAlert>
   );
 }
 

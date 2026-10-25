@@ -45,6 +45,20 @@ export function saveProgress(id: string, percent: number): void {
   saveJSON(PROGRESS_KEY, { ...all, [id]: percent });
 }
 
+/** Prácticas con trabajo guardado en este navegador, de la más reciente a la más antigua (para «Continuar»). */
+export function recentPractices(limit = 3): { id: string; progress: number; updatedAt: number; trials: number }[] {
+  const progress = loadJSON<Record<string, number>>(PROGRESS_KEY, {});
+  return keysWithPrefix(SESSION_PREFIX)
+    .map((key) => {
+      const s = loadJSON<Partial<PracticeSession> | null>(key, null);
+      const id = key.slice(SESSION_PREFIX.length);
+      return s && s.practiceId === id ? { id, progress: progress[id] ?? 0, updatedAt: s.updatedAt ?? 0, trials: s.trials?.length ?? 0 } : null;
+    })
+    .filter((x): x is { id: string; progress: number; updatedAt: number; trials: number } => !!x && x.progress < 100)
+    .sort((a, b) => b.updatedAt - a.updatedAt)
+    .slice(0, limit);
+}
+
 /** Progreso guardado en este navegador para cada práctica (sin servidor). */
 export function storedProgress(): Record<string, number> {
   const all = loadJSON<Record<string, number>>(PROGRESS_KEY, {});

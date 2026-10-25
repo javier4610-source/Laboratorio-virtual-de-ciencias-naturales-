@@ -16,6 +16,8 @@ import { modifiedSummary } from '../lib/advanced';
 import type { ModelCurveProp } from './Chart';
 import { StatusChip } from './Provenance';
 import { flag } from '../lib/flags';
+import { changedInputs, compareTrials, trialsToJSON } from '../lib/compare';
+import { metaById } from '../curriculum/catalog';
 
 export function cellText(v: Trial['values'][string], decimals = 2): string {
   if (v === null || v === undefined) return '—';
@@ -130,6 +132,65 @@ function EmptyNotebook({ dataset }: { dataset: Dataset }) {
   );
 }
 
+/** Comparación de dos ensayos: valores lado a lado, diferencia B − A y variación relativa. */
+function TrialCompare({ dataset: ds, trials }: { dataset: Dataset; trials: Trial[] }) {
+  const [ia, setIa] = useState(0);
+  const [ib, setIb] = useState(1);
+  if (trials.length < 2) return null;
+  const a = trials[Math.min(ia, trials.length - 1)];
+  const b = trials[Math.min(ib, trials.length - 1)];
+  const rows = compareTrials(ds, a, b);
+  const changed = changedInputs(rows);
+  const options = trials.map((t, i) => ({ value: String(i), label: `Ensayo ${i + 1}${t.note ? ` · ${t.note.slice(0, 30)}` : ''}` }));
+  const unit = (u?: string) => (u ? ` ${u}` : '');
+  return (
+    <details className="nb-panel trial-compare">
+      <summary>
+        <span className="nb-panel-icon" aria-hidden="true"><Icon name="comparar" size={18} /></span>
+        <span className="nb-panel-title">Comparar ensayos<span className="nb-panel-sub">Dos ensayos lado a lado: diferencia y variación relativa</span></span>
+        <span className="nb-pill">{trials.length} ensayos</span>
+      </summary>
+      <div className="compare-pick">
+        <Select label="Ensayo A (referencia)" value={String(Math.min(ia, trials.length - 1))} onChange={(v) => setIa(Number(v))} options={options} />
+        <Select label="Ensayo B" value={String(Math.min(ib, trials.length - 1))} onChange={(v) => setIb(Number(v))} options={options} />
+      </div>
+      {a === b ? <p className="small muted" style={{ margin: 0 }}>Elige dos ensayos distintos.</p> : (
+        <>
+          <p className="small" style={{ margin: 0 }} aria-live="polite">
+            {changed.length === 0
+              ? 'Las variables de entrada son iguales en los dos ensayos: es una repetición; las diferencias en las medidas muestran la dispersión.'
+              : changed.length === 1
+                ? `Solo cambió ${changed[0].label.toLowerCase()}: las diferencias en las medidas se pueden atribuir a esa variable.`
+                : `Cambiaron ${changed.length} variables de entrada (${changed.map((r) => r.label.toLowerCase()).join(', ')}): no se puede atribuir el efecto a una sola.`}
+          </p>
+          <div className="table-wrap" tabIndex={0} role="region" aria-label="Comparación de ensayos">
+            <table className="compare-table">
+              <caption className="sr-only">Ensayo {trials.indexOf(a) + 1} frente al ensayo {trials.indexOf(b) + 1}</caption>
+              <thead>
+                <tr><th scope="col">Magnitud</th><th scope="col" className="n">A · ensayo {trials.indexOf(a) + 1}</th><th scope="col" className="n">B · ensayo {trials.indexOf(b) + 1}</th><th scope="col" className="n">B − A</th><th scope="col" className="n">Variación</th></tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => {
+                  const c = ds.columns.find((x) => x.key === r.key)!;
+                  return (
+                    <tr key={r.key} className={r.same ? 'same' : 'changed'}>
+                      <th scope="row">{r.label}{r.unit ? <span className="muted"> ({r.unit})</span> : null}{r.input && <span className="chip tiny">entrada</span>}</th>
+                      <td className="n">{cellText(r.a, c.decimals)}</td>
+                      <td className="n">{cellText(r.b, c.decimals)}</td>
+                      <td className="n">{r.diff === null ? (r.same ? 'igual' : 'distinto') : `${r.diff > 0 ? '+' : r.diff < 0 ? '−' : ''}${fmt(Math.abs(r.diff), c.decimals ?? 2)}${unit(r.unit)}`}</td>
+                      <td className="n">{r.relPercent === null ? '—' : `${r.relPercent > 0 ? '+' : r.relPercent < 0 ? '−' : ''}${fmt(Math.abs(r.relPercent), 1)} %`}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+    </details>
+  );
+}
+
 /** Tabla de registro + gráfica configurable por el estudiante (ejes, linealización y modelo de ajuste). */
 export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId: string; datasets: Dataset[]; api?: SessionApi; readOnly?: PracticeSession }) {
   const session = api?.session ?? readOnly!;
@@ -195,6 +256,9 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
           <div className="nb-actions no-print" role="group" aria-label="Acciones del cuaderno">
             <button type="button" className="btn small" onClick={() => { const ok = downloadText(`${practiceId}-${ds.id}.csv`, csv(), 'text/csv'); setMsg(ok ? 'Archivo CSV descargado.' : 'Este entorno no permite descargas: usa «Copiar datos».'); }}>
               <Icon name="descargar" size={17} />Descargar CSV
+            </button>
+            <button type="button" className="btn small" onClick={() => { const ok = downloadText(`${practiceId}-${ds.id}.json`, trialsToJSON(practiceId, metaById(practiceId)?.title ?? practiceId, ds, trials, __APP_VERSION__), 'application/json'); setMsg(ok ? 'Archivo JSON descargado (formato lvcn-datos-v1).' : 'Este entorno no permite descargas: usa «Copiar datos».'); }}>
+              <Icon name="datos" size={17} />Descargar JSON
             </button>
             <button type="button" className="btn small" onClick={async () => setMsg((await copyText(csv())) ? 'Datos copiados: pégalos en una hoja de cálculo.' : 'No se pudo copiar automáticamente.')}>
               <Icon name="copiar" size={17} />Copiar datos
@@ -283,6 +347,7 @@ export function DataPanel({ practiceId, datasets, api, readOnly }: { practiceId:
           </div>
 
           <div className="nb-analysis">
+            <TrialCompare key={ds.id} dataset={ds} trials={trials} />
             <RepeatStats dataset={ds} trials={trials} />
             <UncertaintyCalculator key={ds.id} dataset={ds} trials={trials} />
           </div>

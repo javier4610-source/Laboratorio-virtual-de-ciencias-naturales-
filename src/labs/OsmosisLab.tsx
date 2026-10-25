@@ -9,6 +9,7 @@ import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { Beaker, BenchTop, Stopwatch } from './kit';
+import { SimControls } from '../components/Experiment';
 
 const STATE_TEXT: Record<string, string> = {
   'isotónica': 'Sin cambio apreciable de volumen',
@@ -299,11 +300,12 @@ function OsmosisPart({ api }: LabProps) {
             hint="0 % = agua destilada · 0,9 % = suero fisiológico" />
           <Slider label="Temperatura" value={temperature} min={OSMOSIS_LIMITS.temperature[0]} max={OSMOSIS_LIMITS.temperature[1]} step={1} unit="°C" decimals={0} onChange={setTemperature} />
           <Slider label="Tiempo de observación" value={duration} min={OSMOSIS_LIMITS.duration[0]} max={OSMOSIS_LIMITS.duration[1]} step={10} unit="s" decimals={0} onChange={setDuration} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { if (finished) setPlayhead(0); setRunning(true); }} disabled={running}>{finished ? 'Repetir' : idx > 0 ? 'Continuar' : 'Iniciar'}</button>
-            <button type="button" className="btn" onClick={() => setRunning(false)} disabled={!running}>Pausar</button>
-            <button type="button" className="btn" onClick={() => { setRunning(false); setPlayhead(0); }}>Reiniciar</button>
-          </div>
+          <SimControls title="Observación al microscopio"
+            status={running ? 'en-curso' : finished ? 'terminado' : idx > 0 ? 'en-pausa' : 'listo'}
+            onStart={() => { if (finished) setPlayhead(0); setRunning(true); }}
+            onPause={() => setRunning(false)} onResume={() => setRunning(true)}
+            onReset={() => { setRunning(false); setPlayhead(0); }}
+            progress={{ value: point.t, max: duration, unit: 's', label: 't' }} />
           <RecordButton onRecord={record} disabled={!finished} />
           {!finished && <p className="small muted">Ejecuta la observación completa para guardar el ensayo.</p>}
         </div>

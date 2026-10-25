@@ -22,7 +22,7 @@ for (const scheme of ['light', 'dark'] as const) {
         await page.waitForTimeout(400);
         found.push(...(await audit(page, route)));
       }
-      for (const tab of ['Validación curricular', 'Asignaciones', 'Listas por unidad', 'Informes', 'Servidor', 'Rúbrica']) {
+      for (const tab of ['Catálogo', 'Validación curricular', 'Asignaciones', 'Listas por unidad', 'Informes', 'Servidor', 'Rúbrica']) {
         await page.getByRole('tab', { name: new RegExp(tab) }).click();
         found.push(...(await audit(page, `docente/${tab}`)));
       }

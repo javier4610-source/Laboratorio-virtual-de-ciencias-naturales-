@@ -7,6 +7,7 @@ import { Segmented } from '../components/ui';
 import { storageAvailable } from '../lib/storage';
 import { InstallButton } from '../components/PwaUi';
 import { SoundSettingsPanel } from '../components/SoundUi';
+import { ShortcutList, ShortcutToggle } from '../components/Shortcuts';
 
 export function AccessibilityPanel({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Prefs) => void }) {
   return (
@@ -30,7 +31,7 @@ const IMPLEMENTED = [
   'Informe de práctica imprimible, descargable (JSON y CSV), copiable y, si el colegio instala el servidor, enviable por internet con un código de curso.',
   'Panel docente: catálogo, validación curricular de los DBA, asignaciones y listas por código, importación de informes, resultados agregados, preguntas con mayor error, opinión de los estudiantes, exportación CSV, rúbrica y conexión opcional al servidor institucional.',
   'Servidor institucional opcional (carpeta server/) con cuentas docentes, cursos y recepción de informes, sin cuentas de estudiantes.',
-  'Accesibilidad: navegación por teclado (incluidas flechas en las pestañas), enlace para saltar al contenido, textos alternativos y tablas equivalentes para las gráficas, tema claro/oscuro, alto contraste, tamaño de texto y reducción de animaciones. Auditoría automática WCAG 2.1 AA con axe-core.',
+  'Accesibilidad: navegación por teclado (incluidas flechas en las pestañas) y atajos de una tecla que se pueden desactivar, enlace para saltar al contenido, textos alternativos y tablas equivalentes para las gráficas, marcadores con forma distinta por serie, colores de datos distinguibles con daltonismo, tema claro/oscuro, alto contraste, tamaño de texto y reducción de animaciones. Auditoría automática WCAG 2.2 AA con axe-core en ambos temas y en teléfono.',
   'Sonidos realistas de laboratorio (vidrio, líquidos, efervescencia, balanza, fotopuertas, interruptores, soplador, choques…) sintetizados en el navegador, sin archivos de audio; se silencian con el botón «Sonido» y el volumen se ajusta en esta página.',
   'Carga bajo demanda: cada práctica se descarga solo al abrirla.',
   'Pruebas automatizadas de las fórmulas, del currículo, del servidor y de los flujos principales de la interfaz.',
@@ -48,7 +49,11 @@ export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Pref
   useEffect(() => { document.title = 'Ayuda y accesibilidad · Laboratorio Virtual'; }, []);
   return (
     <div className="stack">
-      <h1>Ayuda y accesibilidad</h1>
+      <header className="page-head">
+        <nav aria-label="Ruta de navegación" className="crumbs small"><a href={href()}>Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Ayuda y accesibilidad</span></nav>
+        <h1>Ayuda y accesibilidad</h1>
+        <p className="lead muted">Cómo trabajar en el laboratorio, ajustar la visualización, usar el teclado y llevarte tus datos.</p>
+      </header>
       <div className="grid-2">
         <section className="card stack-sm">
           <h2>Cómo usar el laboratorio</h2>
@@ -66,7 +71,7 @@ export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Pref
           <AccessibilityPanel prefs={prefs} setPrefs={setPrefs} />
           <h3>Sonido</h3>
           <SoundSettingsPanel />
-          <h3>Teclado</h3>
+          <h3 id="teclado">Teclado</h3>
           <ul className="list small">
             <li><kbd>Tab</kbd> y <kbd>Mayús + Tab</kbd>: moverse entre controles.</li>
             <li>Flechas: ajustar los controles deslizantes.</li>
@@ -75,6 +80,22 @@ export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Pref
           </ul>
         </section>
       </div>
+      <section className="card stack-sm" aria-labelledby="atajos-h">
+        <h2 id="atajos-h">Atajos de teclado</h2>
+        <p className="small">Teclas de una sola pulsación para moverte más rápido. Pulsa <kbd>?</kbd> en cualquier página para ver esta lista.</p>
+        <ShortcutList />
+        <ShortcutToggle />
+      </section>
+      <section className="card stack-sm" aria-labelledby="datos-h">
+        <h2 id="datos-h">Llevarte tus datos</h2>
+        <ul className="list small">
+          <li><strong>Cuaderno de laboratorio:</strong> «Descargar CSV» (hojas de cálculo, separado por punto y coma, decimales con coma), «Descargar JSON» (formato <code>lvcn-datos-v1</code> con columnas, unidades, resolución y ensayos) y «Copiar datos».</li>
+          <li><strong>Gráficas:</strong> exporta la imagen en PNG o SVG y consulta los puntos como tabla con el botón «Tabla».</li>
+          <li><strong>Comparar ensayos:</strong> en el cuaderno, elige dos ensayos y verás la diferencia B − A, la variación relativa y qué variables de entrada cambiaron.</li>
+          <li><strong>Registro reproducible:</strong> «Exportar registro (JSON)» guarda la pregunta, la versión del modelo, el modo de medición con su semilla y cada ensayo; se puede importar en otro equipo.</li>
+          <li><strong>Informe:</strong> se imprime o se guarda en PDF y se descarga como archivo para el docente.</li>
+        </ul>
+      </section>
       <section className="card stack-sm">
         <h2>Usar sin conexión e instalar</h2>
         <p>Después de abrir el laboratorio una vez con internet, queda guardado en este navegador y las prácticas funcionan sin conexión. Cuando hay una versión nueva, aparece un aviso para actualizar; tu trabajo se conserva.</p>

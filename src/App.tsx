@@ -6,21 +6,24 @@ import { usePractice } from './curriculum/loader';
 import { GRADES } from './curriculum/grades';
 import type { GradeId } from './core/types';
 import { HomePage } from './pages/HomePage';
-import { CatalogPage, GradePage } from './pages/CatalogPages';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { PwaNotices } from './components/PwaUi';
-import { KitDefs } from './labs/kit';
 import { Icon, Logo, type IconName } from './components/icons';
 import { CourseButton, JoinPage } from './components/ClassroomUi';
 import { startClassroomSync } from './lib/classroom';
 import { installSound } from './lib/sound';
 import { SoundToggle } from './components/SoundUi';
+import { GlobalShortcuts } from './components/Shortcuts';
 
 // Páginas pesadas cargadas bajo demanda: el inicio y el catálogo abren rápido en equipos modestos.
 const PracticePage = lazy(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
 const ReportPage = lazy(() => import('./pages/ReportPage').then((m) => ({ default: m.ReportPage })));
 const BankPage = lazy(() => import('./pages/BankPage').then((m) => ({ default: m.BankPage })));
 const TeacherPage = lazy(() => import('./pages/TeacherPage').then((m) => ({ default: m.TeacherPage })));
+const CatalogPage = lazy(() => import('./pages/CatalogPages').then((m) => ({ default: m.CatalogPage })));
+const GradePage = lazy(() => import('./pages/CatalogPages').then((m) => ({ default: m.GradePage })));
+// Definiciones SVG compartidas del kit de instrumentos (degradados, sombras): fuera del paquete inicial.
+const KitDefs = lazy(() => import('./labs/kit').then((m) => ({ default: m.KitDefs })));
 const HelpPage = lazy(() => import('./pages/HelpPage').then((m) => ({ default: m.HelpPage })));
 
 function Loading({ text = 'Cargando…' }: { text?: string }) {
@@ -71,7 +74,7 @@ export default function App() {
   let current = section ?? '';
   if (!section) page = <HomePage />;
   else if (section === 'grado' && GRADES.some((g) => String(g.id) === id)) page = <GradePage grade={Number(id) as GradeId} />;
-  else if (section === 'catalogo') page = <CatalogPage initialArea={route.query.get('area') ?? undefined} />;
+  else if (section === 'catalogo') page = <CatalogPage query={route.query} />;
   else if (section === 'practica' && id && metaById(id)) {
     page = <PracticeRoute id={id} report={sub === 'informe'} />;
     current = 'catalogo';
@@ -140,7 +143,8 @@ export default function App() {
         </div>
       </footer>
       <PwaNotices />
-      <KitDefs />
+      <GlobalShortcuts />
+      <Suspense fallback={null}><KitDefs /></Suspense>
     </>
   );
 }

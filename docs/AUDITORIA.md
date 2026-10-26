@@ -499,3 +499,5 @@ metales en el taller, y revisión de los registros de PubChem hallados solo por 
 
 No incluido (declarado en `CRYSTALS_NOT_INCLUDED`): CaSO₄ (sin acceso a un refinamiento publicado), SrO (sin densidad
 publicada en PubChem) y redes de sales de amonio (el NH₄⁺ se desordena en el cristal).
+
+| Parámetros de red de Li₂O, Na₂O, K₂O, BaO y ZnS (2.8.0) | Revisión de integridad del integrador | Parcial | Los valores se tomaron de Wyckoff (1963) sin poder consultar la obra desde el entorno (AMCSD, COD e ICSD bloqueados) | Marcados «por verificar» en la interfaz y en `src/chem/crystal.ts` (`WYCKOFF_PV`) | Pendiente: verificar contra la fuente |

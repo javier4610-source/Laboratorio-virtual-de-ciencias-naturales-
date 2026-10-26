@@ -9,6 +9,8 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [2.8.0] · 2026-10-26
 
+Nota de integridad: los parámetros de red de Li₂O, Na₂O, K₂O, BaO y ZnS se muestran «por verificar» contra Wyckoff (1963), porque la obra no se pudo consultar al incorporarlos.
+
 Taller de compuestos, siguiente paso (hoja de ruta): más redes cristalinas con estructura publicada, sales de amonio,
 binarios entre no metales y revisión de los registros de PubChem hallados solo por la fórmula. Versión **MENOR**
 (funciones nuevas; los identificadores, rutas y datos guardados no cambian).

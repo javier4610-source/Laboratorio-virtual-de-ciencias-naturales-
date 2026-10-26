@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
-  ECO_DEFAULT, ECO_INSTRUMENTS, ECO_LIMITS, FOODS, MAX_DAY, O2_CRIT_FISH, PH_CHART_RANGE, READ_TIME_LABEL, SPRIG_G, bromothymolColor, bromothymolName,
+  ECO_DEFAULT, ECO_INSTRUMENTS, ecosystemConditions, ECO_LIMITS, FOODS, MAX_DAY, O2_CRIT_FISH, PH_CHART_RANGE, READ_TIME_LABEL, SPRIG_G, bromothymolColor, bromothymolName,
   countOf, findFood, o2Saturation, phChartReading, simulateEcosystem, stateAt, waterLook, type EcoState, type FoodLevel, type ReadTime,
 } from '../models/ecosystem';
 import { fmt } from '../lib/format';
@@ -8,9 +8,10 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
-import { SimControls, simStatusOf } from '../components/Experiment';
+import { SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
+import type { ModelCondition } from '../models/conditions';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, Beaker, ContactShadow, Lcd, TestTube, shade } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene, Plunger, type Pt } from './manipulate';
@@ -439,10 +440,12 @@ export default function EcosystemLab({ api }: LabProps) {
 
   const events = useMemo(() => {
     if (!done) return [];
-    const list = [...sim.warnings];
-    if (sim.hypoxiaDay !== null && sim.hypoxiaDay <= day) list.push(`Desde el amanecer del día ${sim.hypoxiaDay} el oxígeno quedó por debajo de ${fmt(O2_CRIT_FISH, 1)} mg/L, el mínimo que tolera un pez.`);
-    if (fish > 0 && sim.fishGoneDay !== null && sim.fishGoneDay <= day) list.push(`El último pez murió durante el día ${sim.fishGoneDay - 1}.`);
-    if (snails > 0 && sim.snailsGoneDay !== null && sim.snailsGoneDay <= day) list.push(`Los caracoles desaparecieron durante el día ${sim.snailsGoneDay - 1}.`);
+    // Condiciones del montaje (con su corrección) y, como notas, los sucesos que ya ocurrieron hasta el día leído.
+    const list: ModelCondition[] = ecosystemConditions(sim);
+    const note = (text: string) => list.push({ text, level: 'nota' });
+    if (sim.hypoxiaDay !== null && sim.hypoxiaDay <= day) note(`Desde el amanecer del día ${sim.hypoxiaDay} el oxígeno quedó por debajo de ${fmt(O2_CRIT_FISH, 1)} mg/L, el mínimo que tolera un pez.`);
+    if (fish > 0 && sim.fishGoneDay !== null && sim.fishGoneDay <= day) note(`El último pez murió durante el día ${sim.fishGoneDay - 1}.`);
+    if (snails > 0 && sim.snailsGoneDay !== null && sim.snailsGoneDay <= day) note(`Los caracoles desaparecieron durante el día ${sim.snailsGoneDay - 1}.`);
     return list;
   }, [done, sim, day, fish, snails]);
 
@@ -621,18 +624,18 @@ export default function EcosystemLab({ api }: LabProps) {
             <h3>Mediciones del agua</h3>
             <Readout items={[
               { k: 'Día y hora de la lectura', v: `Día ${day} · ${READ_TIME_LABEL[time]}` },
-              { k: 'Oxígeno disuelto (oxímetro)', v: show(`${fmt(readings.od, 1)} mg/L`), data: true },
+              { k: 'Oxígeno disuelto (oxímetro)', v: show(`${fmt(readings.od, 1)} mg/L`), data: true, resolution: resolutionText(odSpec.resolution, 'mg/L'), state: done && fish > 0 ? (readings.od < O2_CRIT_FISH ? 'bad' : 'ok') : undefined },
               { k: 'Saturación de oxígeno', v: show(`${fmt(o2Saturation(readings.od), 0)} %`) },
               { k: 'Color del azul de bromotimol', v: show(bromothymolName(measured.pH)), data: true },
-              { k: 'pH (carta de colores)', v: show(fmt(readings.ph, 1)), data: true },
+              { k: 'pH (carta de colores)', v: show(fmt(readings.ph, 1)), data: true, resolution: resolutionText(phSpec.resolution, '') },
             ]} />
           </div>
           <div className="stack">
             <h3>Organismos contados</h3>
             <Readout items={[
-              { k: 'Caracoles vivos', v: show(String(readings.snails)), data: true },
+              { k: 'Caracoles vivos', v: show(String(readings.snails)), data: true, resolution: resolutionText(countSpec.resolution, 'individuo') },
               { k: 'Guppys vivos', v: show(String(readings.fish)), data: true },
-              { k: 'Biomasa de elodea (estimada)', v: show(`${fmt(readings.elodea, 1)} g`), data: true },
+              { k: 'Biomasa de elodea (estimada)', v: show(`${fmt(readings.elodea, 1)} g`), data: true, resolution: resolutionText(bioSpec.resolution, 'g') },
               { k: 'Aspecto del agua', v: show(waterLook(measured.algae)) },
             ]} />
           </div>

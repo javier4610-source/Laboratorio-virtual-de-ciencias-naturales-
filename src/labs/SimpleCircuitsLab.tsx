@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import {
-  PART_INFO, SC, SIMPLE_CIRCUIT_INSTRUMENTS, lampArrangement, solveSimpleCircuit,
+  PART_INFO, SC, SIMPLE_CIRCUIT_INSTRUMENTS, lampArrangement, solveSimpleCircuit, simpleCircuitConditions,
   type MeterMode, type NetPart, type PartKind, type PartResult,
 } from '../models/simpleCircuits';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Select, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { resolutionText } from '../components/Experiment';
 import { usePublishModel } from '../components/Advanced';
 import { useMeasure } from '../components/Measurement';
 import { BenchTop, Lcd } from './kit';
@@ -681,6 +682,9 @@ export default function SimpleCircuitsLab({ api }: LabProps) {
     ? measure(res.meter.value, { ...SIMPLE_CIRCUIT_INSTRUMENTS.voltimetro, key: 'V' })
     : measure(res.meter.value, { ...SIMPLE_CIRCUIT_INSTRUMENTS.amperimetro, key: 'A' })) : null;
   const readingText = !res.meter ? 'sin multímetro' : !meterOk ? 'puntas sin conectar' : res.meter.mode === 'V' ? `${fmt(reading, 2)} V` : `${fmt(reading, 3)} A`;
+  const meterResolution = res.meter && meterOk
+    ? resolutionText(res.meter.mode === 'V' ? SIMPLE_CIRCUIT_INSTRUMENTS.voltimetro.resolution : SIMPLE_CIRCUIT_INSTRUMENTS.amperimetro.resolution, res.meter.mode === 'V' ? 'V' : 'A')
+    : undefined;
   const lcdText = !res.meter || !meterOk || reading === null ? '- - -' : res.meter.mode === 'V' ? fmt(reading, 2) : fmt(reading, 3);
   const measuredWhat = (() => {
     if (!meterPart || !res.meter) return '—';
@@ -977,11 +981,11 @@ export default function SimpleCircuitsLab({ api }: LabProps) {
         <p className="sr-only" aria-live="polite">{announce}</p>
         <Readout items={[
           { k: 'Estado del circuito', v: statusText },
-          { k: 'Lectura del multímetro', v: readingText, data: true },
+          { k: 'Lectura del multímetro', v: readingText, data: true, resolution: meterResolution },
           { k: 'Bombillos encendidos', v: `${res.lampsOn} de ${lamps.length}` },
           { k: 'Conexión de los bombillos', v: arrangement },
         ]} />
-        <Warnings list={res.warnings} />
+        <Warnings list={simpleCircuitConditions(res.warnings)} />
         <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla de piezas en la mesa">
           <table>
             <caption>Piezas en la mesa ({board.preset})</caption>
@@ -1037,7 +1041,7 @@ export default function SimpleCircuitsLab({ api }: LabProps) {
           <h3>Multímetro</h3>
           <Segmented label="Función del multímetro" value={meterPart?.mode ?? 'V'} onChange={(m) => (meterPart ? setMeterMode(m) : say('Primero coloca el multímetro en la mesa.'))}
             options={[{ value: 'V', label: 'Voltímetro (en paralelo)' }, { value: 'A', label: 'Amperímetro (en serie)' }]} />
-          <Readout items={[{ k: meterPart?.mode === 'A' ? 'Amperímetro' : 'Voltímetro', v: readingText, data: true }, { k: 'Qué mide', v: measuredWhat }]} />
+          <Readout items={[{ k: meterPart?.mode === 'A' ? 'Amperímetro' : 'Voltímetro', v: readingText, data: true, resolution: meterResolution }, { k: 'Qué mide', v: measuredWhat }]} />
           <RecordButton onRecord={record} disabled={!meterOk} />
           {!meterOk && <p className="small muted">Coloca el multímetro con sus dos puntas tocando el circuito para poder guardar una medición.</p>}
         </div>

@@ -66,7 +66,7 @@ export default function OpticsLab({ api }: LabProps) {
   const [measured, setMeasured] = useState(false);
   const r = useMemo(() => refract(m1, m2, angle), [m1, m2, angle]);
   // Lecturas del transportador (el dibujo del rayo usa siempre los ángulos verdaderos del modelo).
-  const { measure, remeasure } = useMeasure();
+  const { measure, remeasure, real } = useMeasure();
   const read = useMemo(() => {
     const tp = instrument('optica', 'transportador');
     return {
@@ -74,6 +74,8 @@ export default function OpticsLab({ api }: LabProps) {
       refraction: r.refraction === null ? null : measure(r.refraction, { ...tp, key: 'refraccion' }),
     };
   }, [r, measure]);
+  // Resolución del transportador: solo en modo real (en modo ideal la lectura no se cuantiza).
+  const protractorRes = real ? `resolución ${fmt(instrument('optica', 'transportador').resolution, 0)}°` : undefined;
   usePublishModel(() => {
     const name = (id: string) => MEDIA.find((m) => m.id === id)!.name;
     return {
@@ -173,8 +175,8 @@ export default function OpticsLab({ api }: LabProps) {
         <ManipHint>Arrastra el puntero láser alrededor del disco para cambiar el ángulo de incidencia, o enfócalo con Tab y usa las flechas.</ManipHint>
         <Readout items={[
           { k: 'θ incidencia', v: `${fmt(angle, 1)}°` },
-          { k: 'θ reflexión', v: measured ? `${fmt(read.reflection, 1)}°` : 'mide', data: true },
-          { k: 'θ refracción', v: measured ? (read.refraction === null ? 'no hay (reflexión total)' : `${fmt(read.refraction, 1)}°`) : 'mide', data: true },
+          { k: 'θ reflexión', v: measured ? `${fmt(read.reflection, 1)}°` : 'mide', data: true, resolution: protractorRes },
+          { k: 'θ refracción', v: measured ? (read.refraction === null ? 'no hay (reflexión total)' : `${fmt(read.refraction, 1)}°`) : 'mide', data: true, resolution: protractorRes },
           { k: 'Luz reflejada', v: `${fmt(r.reflectance * 100, 1)} %` },
           { k: 'El rayo se acerca a…', v: measured ? r.bendsToward : '—' },
           { k: 'Ángulo crítico', v: r.criticalAngle === null ? 'no existe (n₁ < n₂)' : measured ? `${fmt(r.criticalAngle, 1)}°` : 'búscalo' },

@@ -1,5 +1,6 @@
 import { assertInRange, celsiusToKelvin, R_GAS, roundToResolution } from './math';
 import type { ModelSpec } from './types';
+import { ceilTo, classifyWarnings, floorTo, num, type ModelCondition } from './conditions';
 
 /**
  * Leyes de los gases (grado 10.º): gas ideal en una jeringa cerrada.
@@ -105,3 +106,25 @@ export const gasesModelSpec: ModelSpec = {
     'Cantidad de gas inicial ≈ 4,09 × 10⁻³ mol.',
   ],
 };
+
+/** Nivel y corrección de cada advertencia de `simulateGas`, con los mismos umbrales del modelo. */
+export function gasConditions(warnings: readonly string[], input: GasInput): ModelCondition[] {
+  const n = input.moles ?? molesInSyringe();
+  const pMax = GAS_LIMITS.pressure[1];
+  return classifyWarnings(warnings, [
+    {
+      match: 'La presión supera 300 kPa', level: 'invalido',
+      fix: () => {
+        if (input.law === 'boyle') {
+          // P = nRT/V ≤ P_máx  →  V ≥ nRT/P_máx
+          const vMin = ceilTo(((n * R_GAS * celsiusToKelvin(INITIAL.temperature)) / (pMax * 1000)) * 1e6, 10);
+          return `Sube el «Volumen de la jeringa» a ${num(Math.max(vMin, GAS_LIMITS.volume[0]))} mL o más: a temperatura constante, más volumen es menos presión y la lectura queda por debajo de ${num(pMax)} kPa.`;
+        }
+        // Volumen constante: P = nRT/V ≤ P_máx  →  T ≤ P_máx·V/(nR)
+        const tMax = floorTo((pMax * 1000 * INITIAL.volume * 1e-6) / (n * R_GAS) - 273.15, 5);
+        return `Baja la «Temperatura del baño» a ${num(tMax)} °C o menos: a volumen constante la presión baja con la temperatura y queda por debajo de ${num(pMax)} kPa.`;
+      },
+    },
+    { match: 'Por debajo de 0 °C', level: 'advertencia', fix: 'Sube la «Temperatura del baño» a 0 °C o más: así vale el supuesto de aire seco del modelo.' },
+  ]);
+}

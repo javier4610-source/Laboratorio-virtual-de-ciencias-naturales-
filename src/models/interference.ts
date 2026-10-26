@@ -1,6 +1,7 @@
 import { assertInRange, clamp, roundToResolution } from './math';
 import { C_LIGHT } from './optics';
 import type { ModelSpec } from './types';
+import { num, type ModelCondition } from './conditions';
 
 /**
  * Interferencia y difracción de la luz en campo lejano (Fraunhofer), grado 11.º.
@@ -470,3 +471,72 @@ export const interferenceModelSpec: ModelSpec = {
     'Cursores: con la pantalla a 1 m y el segundo máximo en ±5,20 mm, λ calculada ≈ 650 nm.',
   ],
 };
+
+/* ------------------------------------------------------------------ condiciones y correcciones */
+
+/** Número de Fresnel máximo con el que el patrón se trata como de Fraunhofer (campo lejano). */
+export const FRESNEL_MAX = 0.3;
+
+export interface InterferenceSetup {
+  ap: Aperture;
+  /** Longitud de onda de la fuente (nm); null para la luz blanca. */
+  wavelength: number | null;
+  /** Distancia rendija–pantalla (cm). */
+  L: number;
+  /** Separación d y ancho a de la doble rendija (µm). */
+  dUm: number;
+  aUm: number;
+}
+
+const L_LABEL = '«Distancia rendija–pantalla L»';
+
+/** Advertencias de la práctica con su nivel y su corrección, con los mismos umbrales del modelo. */
+export function interferenceConditions(s: InterferenceSetup): ModelCondition[] {
+  const { ap, L } = s;
+  const out: ModelCondition[] = [];
+  const lam = (s.wavelength ?? 550) * 1e-9;
+  if (ap.kind !== 'red' && fresnelNumber(ap, lam, L / 100) > FRESNEL_MAX) {
+    // N_F = (h²)/(λ·L) ≤ 0,3  →  L ≥ h²/(0,3·λ)
+    const half = ap.kind === 'circular' ? ap.D / 2 : ap.kind === 'simple' ? ap.a / 2 : (ap.d + ap.a) / 2;
+    const lMin = Math.ceil(((half * half) / (FRESNEL_MAX * lam)) * 100);
+    const control = ap.kind === 'circular' ? '«Diámetro del agujero D»' : ap.kind === 'simple' ? '«Ancho de la rendija a»' : '«Separación entre rendijas d»';
+    out.push({
+      text: 'La pantalla está muy cerca para esta abertura (número de Fresnel > 0,3): el patrón real se aparta del de Fraunhofer. Aleja la pantalla.', level: 'invalido',
+      fix: lMin <= INTERFERENCE_LIMITS.distance[1]
+        ? `Sube la ${L_LABEL} a ${num(lMin)} cm o más.`
+        : `Ni a ${num(INTERFERENCE_LIMITS.distance[1])} cm basta: baja el ${control} y aleja la pantalla.`,
+    });
+  }
+  if (ap.kind === 'red' && s.wavelength !== null) {
+    const s1 = (s.wavelength * 1e-9) / ap.d;
+    // Redes con periodo mayor que λ (sí tienen primer orden), de menos a más líneas por milímetro.
+    const ok = GRATINGS.filter((g) => !g.hidden && 1e-3 / g.linesPerMm > s.wavelength! * 1e-9).map((g) => g.name.toLowerCase());
+    const fewer = ok.length > 0 ? `elige la ${ok[0]}` : 'elige una red con menos líneas por milímetro';
+    if (s1 >= 1) {
+      out.push({
+        text: 'Con esta red y esta luz no existe el primer orden (d·sen θ = λ exigiría sen θ > 1).', level: 'invalido',
+        fix: `En «Red de difracción», ${fewer}: su periodo d debe ser mayor que la longitud de onda (${num(s.wavelength)} nm).`,
+      });
+    } else {
+      const tan = s1 / Math.sqrt(1 - s1 * s1);
+      if (Math.abs(L * 10 * tan) > INTERFERENCE_LIMITS.screenHalfWidth) {
+        // y = L·tan θ ≤ media pantalla  →  L ≤ (media pantalla)/tan θ
+        const lMax = Math.floor(INTERFERENCE_LIMITS.screenHalfWidth / (10 * tan));
+        out.push({
+          text: 'El primer orden cae fuera de la pantalla: acerca la pantalla a la red.', level: 'invalido',
+          fix: lMax >= INTERFERENCE_LIMITS.distance[0]
+            ? `Baja la ${L_LABEL} a ${num(lMax)} cm o menos.`
+            : `Ni con la pantalla a ${num(INTERFERENCE_LIMITS.distance[0])} cm cabe: en «Red de difracción», elige una red con menos líneas por milímetro.`,
+        });
+      }
+    }
+  }
+  if (ap.kind === 'doble' && Number.isInteger(s.dUm / s.aUm)) {
+    const k = num(s.dUm / s.aUm);
+    out.push({
+      text: `d/a = ${k} es entero: el máximo de orden ${k} coincide con un cero de la envolvente y desaparece (orden ausente).`, level: 'nota',
+      fix: 'Si quieres ver ese máximo, cambia el «Ancho de la rendija a» o la «Separación entre rendijas d» para que d/a no sea un número entero.',
+    });
+  }
+  return out;
+}

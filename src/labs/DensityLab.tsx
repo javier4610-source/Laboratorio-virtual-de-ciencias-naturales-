@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
-import { ALL_SAMPLES, CYLINDER_RESOLUTION, closestMaterial, LIMITS, MATERIALS, simulateDensity, WATER_DENSITY } from '../models/density';
+import { ALL_SAMPLES, CYLINDER_RESOLUTION, closestMaterial, LIMITS, MATERIALS, simulateDensity, WATER_DENSITY, densityConditions } from '../models/density';
 import { roundToResolution } from '../models/math';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
+import { resolutionText } from '../components/Experiment';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { Readout, RecordButton, Select, Slider, Warnings, Notice } from '../components/ui';
 import type { LabProps } from './registry';
@@ -179,14 +180,14 @@ export default function DensityLab({ api }: LabProps) {
         </div>
         <ManipHint>Arrastra el cubo a la balanza y luego a la probeta, o enfócalo con Tab y usa las flechas (→ avanza al siguiente instrumento).</ManipHint>
         <Readout items={[
-          { k: 'Arista (regla)', v: `${fmt(result.sideReading, 1)} cm` },
+          { k: 'Arista (regla)', v: `${fmt(result.sideReading, 1)} cm`, resolution: resolutionText(instrument('densidad', 'regla').resolution, 'cm') },
           { k: 'Volumen geométrico a³', v: `${fmt(result.geometricVolume, 2)} cm³` },
-          { k: 'Masa', v: weighed ? (result.massReading === null ? 'sobrecarga' : `${fmt(result.massReading, 1)} g`) : 'sin pesar', data: true },
-          { k: 'V inicial → V final', v: submerged ? `${fmt(initialWater, 1)} → ${result.finalWaterReading === null ? '—' : fmt(result.finalWaterReading, 1)} mL` : `${fmt(initialWater, 1)} mL`, data: true },
+          { k: 'Masa', v: weighed ? (result.massReading === null ? 'sobrecarga' : `${fmt(result.massReading, 1)} g`) : 'sin pesar', data: true, resolution: resolutionText(instrument('densidad', 'balanza').resolution, 'g'), state: weighed && result.massReading === null ? 'bad' : undefined },
+          { k: 'V inicial → V final', v: submerged ? `${fmt(initialWater, 1)} → ${result.finalWaterReading === null ? 'se desborda' : fmt(result.finalWaterReading, 1)} mL` : `${fmt(initialWater, 1)} mL`, data: true, resolution: resolutionText(instrument('densidad', 'probeta').resolution, 'mL'), state: submerged && result.finalWaterReading === null ? 'bad' : undefined },
           { k: 'V desplazado', v: submerged && result.displacedVolume !== null ? `${fmt(result.displacedVolume, 1)} mL` : '—' },
           { k: '¿Flota?', v: submerged ? (result.floats ? (pushUnder ? 'Sí (hundido con alfiler)' : `Sí: sumerge ${fmt(result.submergedFraction * 100, 0)} %`) : 'No, se hunde') : '—' },
         ]} />
-        <Warnings list={submerged ? result.warnings : result.warnings.filter((w) => w.includes('balanza'))} />
+        <Warnings list={densityConditions(submerged ? result.warnings : result.warnings.filter((w) => w.includes('balanza')), { materialId, side, initialWater, pushUnder })} />
         {weighed && submerged && result.massReading !== null && result.displacedVolume !== null && (
           <div className="card stack-sm">
             <label htmlFor="dens-guess">Calcula la densidad con tus mediciones (g/cm³)</label>

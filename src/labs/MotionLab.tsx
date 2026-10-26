@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as RKeyboardEvent } from 'react';
 import {
   MARK_SPACING, MIN_GAP, MOTION_INSTRUMENTS, MOTION_LIMITS, MOVERS, REACTION, TIMER_RES, TRACK_LENGTH,
-  findMover, handTiming, isUniform, pathLengthAt, positionAt, race, simulateMotion, toKmh, tripPosition,
+  findMover, handTiming, isUniform, pathLengthAt, positionAt, race, simulateMotion, toKmh, tripPosition, motionConditions,
   type Mover, type MoverId, type Trip,
 } from '../models/motion';
 import { roundToResolution } from '../models/math';
@@ -10,7 +10,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart, type Series } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
-import { SimControls, simStatusOf } from '../components/Experiment';
+import { SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import { useModelParams, usePublishModel } from '../components/Advanced';
 import type { LabProps } from './registry';
@@ -733,15 +733,15 @@ export default function MotionLab({ api }: LabProps) {
 
         {isRace ? (
           <Readout items={[
-            { k: 'Distancia de la carrera (cinta)', v: tapeReading !== null ? `${fmt(tapeReading, 2)} m` : '—', data: true },
-            { k: `Tiempo carril 1 (${lanes[0].short})`, v: done && raceReadings ? `${fmt(raceReadings[0], 2)} s` : '—', data: true },
-            { k: `Tiempo carril 2 (${lanes[1].short})`, v: done && raceReadings ? `${fmt(raceReadings[1], 2)} s` : '—', data: true },
+            { k: 'Distancia de la carrera (cinta)', v: tapeReading !== null ? `${fmt(tapeReading, 2)} m` : '—', data: true, resolution: resolutionText(tapeSpec.resolution, 'm') },
+            { k: `Tiempo carril 1 (${lanes[0].short})`, v: done && raceReadings ? `${fmt(raceReadings[0], 2)} s` : '—', data: true, resolution: resolutionText(gateSpec.resolution, 's') },
+            { k: `Tiempo carril 2 (${lanes[1].short})`, v: done && raceReadings ? `${fmt(raceReadings[1], 2)} s` : '—', data: true, resolution: resolutionText(gateSpec.resolution, 's') },
             { k: 'Llegó primero', v: done ? winnerText : '—', data: true },
           ]} />
         ) : (
           <Readout items={[
-            { k: trip === 'ida' ? 'Distancia (cinta métrica)' : 'Distancia recorrida (ida y vuelta)', v: pathReading !== null ? `${fmt(pathReading, 2)} m` : '—', data: true },
-            { k: 'Tiempo medido', v: timeReading !== null ? `${fmt(timeReading, 2)} s` : '—', data: true },
+            { k: trip === 'ida' ? 'Distancia (cinta métrica)' : 'Distancia recorrida (ida y vuelta)', v: pathReading !== null ? `${fmt(pathReading, 2)} m` : '—', data: true, resolution: resolutionText(tapeSpec.resolution, 'm') },
+            { k: 'Tiempo medido', v: timeReading !== null ? `${fmt(timeReading, 2)} s` : '—', data: true, resolution: resolutionText(TIMER_RES, 's') },
             { k: trip === 'ida' ? 'Rapidez media = d/t' : 'Rapidez media = distancia/t', v: speed !== null ? `${fmt(speed, 2)} m/s` : '—', data: true },
             { k: 'Rapidez media en km/h', v: speed !== null ? `${fmt(toKmh(speed), 1)} km/h` : '—', data: true },
             ...(trip === 'idavuelta' ? [
@@ -753,7 +753,7 @@ export default function MotionLab({ api }: LabProps) {
         )}
         {!aligned && <Notice kind="warn">La cinta métrica no llega a la bandera de meta: arrastra su extremo hasta la meta (o usa el control «Cinta métrica extendida») para medir la distancia.</Notice>}
         {missedWatch && <Notice kind="warn">No arrancaste el cronómetro. Da la salida otra vez y pulsa el cronómetro (o la barra espaciadora) cuando suene el pito.</Notice>}
-        {done && !isRace && <Warnings list={res.warnings} />}
+        {done && !isRace && <Warnings list={motionConditions(res.warnings)} />}
         {done && !isRace && effTiming !== 'fotopuerta' && timeReading !== null && (
           <Notice kind={Math.abs(timeReading - gateReading) <= 0.1 ? 'ok' : 'info'}>
             Tu tiempo difiere {fmt(Math.abs(timeReading - gateReading), 2)} s del de la fotopuerta ({timeReading < gateReading ? 'más corto' : timeReading > gateReading ? 'más largo' : 'igual'}).

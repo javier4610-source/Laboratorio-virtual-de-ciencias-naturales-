@@ -2,6 +2,7 @@ import { useId, useState, type ReactNode } from 'react';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { playSound } from '../lib/sound';
 import { ConditionAlert } from './ConditionAlert';
+import { sortConditions, type ModelCondition } from '../models/conditions';
 
 interface SliderProps {
   label: string;
@@ -129,16 +130,33 @@ export function Notice({ kind = 'info', children }: { kind?: 'info' | 'ok' | 'wa
   return <div className={`notice ${kind}`} role={kind === 'bad' || kind === 'warn' ? 'status' : undefined}>{children}</div>;
 }
 
+/** Advertencia para `Warnings`: texto simple (como antes) o condición del modelo con nivel y corrección. */
+export type WarningItem = string | ModelCondition;
+
 /**
  * Advertencias del modelo sobre las condiciones elegidas (fuera de rango, supuestos que dejan de valer…).
  * Usa el aviso de condición común (ConditionAlert) para que todas las prácticas las muestren igual.
+ * - Solo textos: un aviso «Atención» con la lista (comportamiento anterior; `fix` opcional común).
+ * - Con condiciones (`{ text, level, fix }`): un aviso por condición, cada causa junto a su «Cómo corregirlo»,
+ *   ordenados por gravedad (no válida, atención, nota) dentro de UNA sola región de estado, para que el lector de
+ *   pantalla los anuncie juntos y no como varias regiones que compiten.
  */
-export function Warnings({ list, fix }: { list: string[]; fix?: ReactNode }) {
+export function Warnings({ list, fix }: { list: WarningItem[]; fix?: ReactNode }) {
   if (list.length === 0) return null;
+  if (list.every((w) => typeof w === 'string')) {
+    const texts = list as string[];
+    return (
+      <ConditionAlert level="advertencia" title={texts.length === 1 ? 'revisa esta condición del experimento' : `revisa estas ${texts.length} condiciones del experimento`} fix={fix}>
+        <ul className="list">{texts.map((w) => <li key={w}>{w}</li>)}</ul>
+      </ConditionAlert>
+    );
+  }
+  const items = sortConditions(list.map((w): ModelCondition => (typeof w === 'string' ? { text: w, level: 'advertencia' } : w)));
+  const label = items.length === 1 ? 'Condición del experimento' : `${items.length} condiciones del experimento`;
   return (
-    <ConditionAlert level="advertencia" title={list.length === 1 ? 'revisa esta condición del experimento' : `revisa estas ${list.length} condiciones del experimento`} fix={fix}>
-      <ul className="list">{list.map((w) => <li key={w}>{w}</li>)}</ul>
-    </ConditionAlert>
+    <div className="conditions" role="status" aria-label={label}>
+      {items.map((c, i) => <ConditionAlert key={`${i}-${c.text}`} live={false} level={c.level} cause={c.text} fix={c.fix} />)}
+    </div>
   );
 }
 

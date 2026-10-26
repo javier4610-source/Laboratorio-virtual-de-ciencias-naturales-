@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  analyze, BUDGET, causalReflection, collect, CONFOUND_LABEL, critiqueDesign, DESIGN_LIMITS, designLevels, SYSTEM_IDS, SYSTEMS,
+  analyze, BUDGET, causalReflection, collect, CONFOUND_LABEL, critiqueDesign, DESIGN_LIMITS, designConditions, designLevels, SYSTEM_IDS, SYSTEMS,
   type ConfoundMode, type CritiqueItem, type Design, type Sample, type SystemDef, type SystemId,
 } from '../models/inquiry';
 import { fmt } from '../lib/format';
@@ -427,11 +427,7 @@ export default function InquiryLab({ api }: LabProps) {
             { k: 'Niveles planeados', v: plan.error ? '—' : `${levelText} ${xu}` },
             { k: 'Muestras planeadas', v: `${planned} de ${BUDGET}` },
           ]} />
-          <Warnings list={[
-            ...(plan.error ? [plan.error] : []),
-            ...(overBudget ? [`El diseño pide ${planned} muestras y el presupuesto es de ${BUDGET}: reduce niveles o réplicas.`] : []),
-            ...(!plan.error && plan.levels.length < levels ? [`Con ese rango y el paso de ${fmt(sys.x.step, sys.x.decimals)} ${xu}, algunos niveles coinciden: quedan ${plan.levels.length}.`] : []),
-          ]} />
+          <Warnings list={designConditions(design, plan.levels, plan.error)} />
         </div>
 
         <div className="card stack">

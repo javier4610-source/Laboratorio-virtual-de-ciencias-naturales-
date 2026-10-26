@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
-  airDensity, extentAt, reactionById, readingAt, REACTIONS, simulateConservation,
-  type ReactionId, type SystemId,
+  airDensity, extentAt, reactionById, readingAt, REACTIONS, simulateConservation, conservationConditions,
+  type ReactionId, type SystemId, type ConservationInput,
 } from '../models/massConservation';
 import { seededRandom } from '../models/math';
 import { fmt } from '../lib/format';
@@ -236,11 +236,12 @@ export default function ConservationLab({ api }: LabProps) {
 
   const rx = reactionById(reaction);
   const duration = DURATION[reaction];
-  const res = useMemo(() => {
+  const consInput = useMemo<ConservationInput>(() => {
     const m = Math.max(rx.massRange[0], Math.min(rx.massRange[1], mass));
     const v = rx.liquid ? Math.max(rx.volumeRange[0], Math.min(rx.volumeRange[1], volume)) : 0;
-    return simulateConservation({ reaction, system: rx.systems.includes(system) ? system : 'abierto', reactantMass: m, liquidVolume: v });
+    return { reaction, system: rx.systems.includes(system) ? system : 'abierto', reactantMass: m, liquidVolume: v };
   }, [reaction, system, mass, volume, rx]);
+  const res = useMemo(() => simulateConservation(consInput), [consInput]);
 
   // Fibras de la lana de acero, burbujas y chispas: posiciones fijas (semilla) para un dibujo estable.
   const fibers = useMemo(() => {
@@ -465,7 +466,7 @@ export default function ConservationLab({ api }: LabProps) {
           ...(sys === 'globo' ? [{ k: 'Volumen del globo', v: done ? `${fmt(res.balloonVolume, 0)} mL` : '—' }] : []),
           ...(res.jarPressure !== null ? [{ k: 'Presión en el frasco', v: done ? `${fmt(res.jarPressure, 0)} kPa` : '—' }] : []),
         ]} />
-        {done && <Warnings list={res.warnings} />}
+        {done && <Warnings list={conservationConditions(res.warnings, consInput)} />}
         {balloonDone && (
           <div className="card stack-sm">
             <h3>Pensamiento crítico: ¿se perdió masa en el sistema cerrado?</h3>

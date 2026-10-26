@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  CATALYSTS, DURATION, EA_MARBLE, K_MARBLE_25, T_REF_C, findCatalyst, findParticle, KINETICS_LIMITS, PARTICLES, SETUP, simulateKinetics, SYRINGE_RES, TARGET_VOLUME, volumeAt,
+  CATALYSTS, DURATION, EA_MARBLE, K_MARBLE_25, T_REF_C, findCatalyst, findParticle, KINETICS_LIMITS, PARTICLES, SETUP, simulateKinetics, SYRINGE_RES, TARGET_VOLUME, volumeAt, kineticsConditions,
   type Catalyst, type Particle, type Reaction,
 } from '../models/kinetics';
 import { R_GAS, roundToResolution } from '../models/math';
@@ -282,7 +282,7 @@ export default function KineticsLab({ api }: LabProps) {
           { k: 'Velocidad inicial (0–30 s)', v: done ? `${fmt(res.initialRate, 2)} mL/s` : 'mide', data: true },
           { k: `Tiempo para recoger ${TARGET_VOLUME} mL`, v: done ? (res.t20 === null ? 'no se alcanzó' : `${fmt(res.t20, 0)} s`) : 'mide', data: true },
         ]} />
-        {done && <Warnings list={res.warnings} />}
+        {done && <Warnings list={kineticsConditions(res.warnings)} />}
         <Chart title="Volumen de gas recogido en función del tiempo" xLabel="Tiempo (s)" yLabel="Volumen de gas (mL)" height={240}
           xDomain={[0, DURATION]} yDomain={[0, SETUP.syringeMax]} hLines={done ? [{ y: TARGET_VOLUME, label: '20 mL' }] : undefined}
           series={done ? [{ label: 'Lecturas de la jeringa (cada 10 s)', kind: 'both', points: res.readings.map((p) => ({ x: p.t, y: p.v })) }] : []}

@@ -1,6 +1,7 @@
 import { assertInRange, roundToResolution } from './math';
 import { molarMass } from './chemistry';
 import type { ModelSpec } from './types';
+import { classifyWarnings, num, type ModelCondition } from './conditions';
 
 /**
  * Preparación de soluciones, dilución y colorimetría (grado 10.º).
@@ -38,6 +39,7 @@ export const PIPETTE_VOLUMES = [1, 2, 5, 10, 25]; // mL (pipetas aforadas)
 export const BALANCE_RES = 0.001; // g (balanza analítica escolar)
 export const PATH_LENGTH_CM = 1;
 export const ABSORBANCE_MAX = 2; // límite de lectura confiable del colorímetro escolar
+export const COLORIMETER_RES = 0.001; // resolución del colorímetro (unidades de absorbancia)
 
 export const SOLUTION_LIMITS = { mass: [0.001, 200] as [number, number] };
 
@@ -114,7 +116,7 @@ export function prepareSolution(input: SolutionInput): SolutionResult {
       reading = `> ${ABSORBANCE_MAX.toFixed(2)} (fuera de rango: diluye la muestra)`;
       warnings.push('La absorbancia supera el rango lineal del colorímetro. Diluye la solución para medir con confianza.');
     } else {
-      reading = roundToResolution(abs, 0.001).toFixed(3);
+      reading = roundToResolution(abs, COLORIMETER_RES).toFixed(3);
     }
   }
   return {
@@ -185,3 +187,33 @@ export const solutionsModelSpec: ModelSpec = {
     'La masa molar de CuSO₄·5H₂O ≈ 249,7 g/mol.',
   ],
 };
+
+/** Nivel y corrección de cada advertencia de `prepareSolution`, con los mismos umbrales del modelo. */
+export function solutionConditions(warnings: readonly string[], input: SolutionInput, result: SolutionResult): ModelCondition[] {
+  const s = result.solute;
+  return classifyWarnings(warnings, [
+    {
+      match: 'Se superó la solubilidad', level: 'advertencia',
+      fix: () => {
+        // Masa máxima que se disuelve: solubilidad (g/100 mL) × volumen del balón / 100.
+        const max = (s.solubility * input.flaskVolume) / 100;
+        const bigger = FLASK_VOLUMES.find((v) => (s.solubility * v) / 100 >= result.massReading);
+        return `Baja la masa de soluto a ${num(Math.floor(max * 1000) / 1000, 3)} g o menos${bigger ? `, o usa el balón aforado de ${num(bigger)} mL` : ''}: así todo el soluto se disuelve y la molaridad corresponde a la masa pesada.`;
+      },
+    },
+    {
+      match: 'La absorbancia supera el rango lineal del colorímetro', level: 'invalido',
+      fix: () => {
+        if (s.epsilon === null) return undefined;
+        // A = ε·l·c ≤ A_máx  →  factor de dilución ≥ A(madre)/A_máx
+        const need = absorbance(s.epsilon, result.molarity) / ABSORBANCE_MAX;
+        const pairs = PIPETTE_VOLUMES.flatMap((a) => FLASK_VOLUMES.filter((f) => f >= a).map((f) => ({ a, f, k: f / a })))
+          .filter((p) => p.k >= need).sort((x, y) => x.k - y.k);
+        const p = pairs[0];
+        return p
+          ? `Marca «Hacer una dilución» con un factor de al menos ${num(Math.ceil(need * 10) / 10, 1)}: por ejemplo, pipeta de ${num(p.a)} mL en el balón de dilución de ${num(p.f)} mL (factor ${num(p.k, 1)}). También puedes pesar menos soluto.`
+          : 'Pesa menos soluto: ni la mayor dilución disponible deja la absorbancia dentro del rango del colorímetro.';
+      },
+    },
+  ]);
+}

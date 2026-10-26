@@ -1,5 +1,6 @@
 import { assertInRange, roundToResolution } from './math';
 import type { ModelSpec } from './types';
+import { classifyWarnings, floorTo, num, type ModelCondition } from './conditions';
 
 /**
  * Cinemática en una dimensión (grado 9.º): un ciclista en una ciclorruta recta de 0 a 50 m.
@@ -224,3 +225,30 @@ export const kinematicsModelSpec: ModelSpec = {
     'El error del reto es 0 cuando los parámetros coinciden con el objetivo.',
   ],
 };
+
+/** Nivel y corrección de cada advertencia de `simulateRun`, con los mismos umbrales del modelo. */
+export function kinematicsConditions(warnings: readonly string[], input: KinInput): ModelCondition[] {
+  const tEnd = trackEndTime(input.v0, input.acceleration);
+  const tStop = brakingStopTime(input.v0, input.acceleration);
+  const shorter = (t: number | null) => {
+    const d = t === null ? null : floorTo(t, 0.5);
+    return d !== null && d >= KIN_LIMITS.duration[0] ? `baja la «Duración del recorrido» a ${num(d, 1)} s o menos` : null;
+  };
+  return classifyWarnings(warnings, [
+    {
+      match: 'El ciclista llegó al final de la pista', level: 'advertencia',
+      fix: () => {
+        const d = shorter(tEnd);
+        return `Para que el cronómetro corra toda la duración elegida, ${d ? `${d}, o ` : ''}baja la «Velocidad inicial» o la «Aceleración»: así el ciclista no alcanza los ${num(TRACK_LENGTH)} m.`;
+      },
+    },
+    {
+      match: 'El ciclista se detuvo a los', level: 'advertencia',
+      fix: () => {
+        const d = shorter(tStop);
+        return `Para registrar solo el tramo en movimiento, ${d ? `${d}, o ` : ''}usa una «Aceleración» menos negativa (o 0).`;
+      },
+    },
+    { match: 'Con velocidad inicial 0 y sin aceleración positiva', level: 'invalido', fix: 'Sube la «Velocidad inicial» por encima de 0 m/s o pon una «Aceleración» positiva.' },
+  ]);
+}

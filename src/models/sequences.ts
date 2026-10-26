@@ -1,6 +1,7 @@
 import type { ModelSpec } from './types';
 import { assertInRange, roundToResolution } from './math';
 import type { EpistemicStatus } from '../lib/provenance';
+import { classifyWarnings, type ModelCondition } from './conditions';
 
 /**
  * Secuencias biológicas (11.º; programa v2, sección 10.1, nivel 0: todo en el navegador).
@@ -1031,3 +1032,34 @@ export const sequencesModelSpec: ModelSpec = {
     'Puntajes global y local (ADN con coincidencia/no coincidencia, proteína con BLOSUM62) iguales a PairwiseAligner de Biopython 1.85; BLOSUM62 simétrica con W/W = 11.',
   ],
 };
+
+/* ------------------------------------------------------------------ condiciones y correcciones */
+
+/** Nivel y corrección de cada advertencia de `parseSequenceText` (no impiden analizar el registro). */
+export function parseConditions(warnings: readonly string[]): ModelCondition[] {
+  return classifyWarnings(warnings, [
+    { match: /código\(s\) ambiguo\(s\)/, level: 'nota' },
+    { match: /Hay un «\*» \(terminación\) dentro de la proteína/, level: 'advertencia', fix: 'Revisa el registro: en una proteína el «*» solo debería ir al final; si pegaste varias proteínas juntas, sepáralas en registros FASTA distintos.' },
+    { match: /: CDS con ubicación/, level: 'nota' },
+    { match: /: CDS .* sale de la secuencia/, level: 'advertencia', fix: 'Revisa que el registro GenBank esté completo: la secuencia (ORIGIN) debe incluir todas las posiciones de la CDS.' },
+  ]);
+}
+
+export const ALIGN_MATRIX_LABEL = { simple: 'Simple: coincidencia / no coincidencia (ADN)', blosum62: 'BLOSUM62 (proteínas)' } as const;
+
+/** Avisos sobre la matriz de sustitución elegida para el tipo de secuencia, con su corrección. */
+export function alignConditions(kind: SeqKind, matrix: 'simple' | 'blosum62'): ModelCondition[] {
+  if (kind === 'proteina' && matrix === 'simple') {
+    return [{
+      text: 'Para proteínas conviene BLOSUM62: la matriz simple trata igual un cambio entre aminoácidos parecidos que entre muy distintos.',
+      level: 'advertencia', fix: `En «Matriz de sustitución», elige «${ALIGN_MATRIX_LABEL.blosum62}».`,
+    }];
+  }
+  if (kind !== 'proteina' && matrix === 'blosum62') {
+    return [{
+      text: 'BLOSUM62 es una matriz de aminoácidos: para ADN usa la matriz simple de coincidencia y no coincidencia.',
+      level: 'invalido', fix: `En «Matriz de sustitución», elige «${ALIGN_MATRIX_LABEL.simple}».`,
+    }];
+  }
+  return [];
+}

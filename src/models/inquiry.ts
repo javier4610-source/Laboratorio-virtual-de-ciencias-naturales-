@@ -4,6 +4,7 @@ import { describe as describeStats, type Stats } from '../lib/measurement';
 import { fitModel, type FitResult } from '../lib/fit';
 import { fmt } from '../lib/format';
 import type { ModelSpec } from './types';
+import type { ModelCondition } from './conditions';
 
 /**
  * Reto de indagación con interpretación de datos (grado 11.º, ambiental).
@@ -505,3 +506,37 @@ export const inquiryModelSpec: ModelSpec = {
     'Validación de rangos y del presupuesto de 20 muestras.',
   ],
 };
+
+/* ------------------------------------------------------------------ avisos del diseño */
+
+/**
+ * Avisos del diseño planeado (antes de recolectar) con su nivel y su corrección.
+ * `planLevels` son los niveles distintos de `designLevels`; `error`, el mensaje si el diseño no es válido.
+ */
+export function designConditions(d: Design, planLevels: number[], error: string): ModelCondition[] {
+  const sys = SYSTEMS[d.system];
+  const xu = sys.x.unit;
+  const out: ModelCondition[] = [];
+  if (error) {
+    out.push({
+      text: error, level: 'invalido',
+      fix: d.max > d.min ? undefined : 'Sube el «Nivel máximo» o baja el «Nivel mínimo» hasta que el máximo sea mayor que el mínimo.',
+    });
+  }
+  const planned = planLevels.length * d.replicates;
+  if (planned > BUDGET) {
+    out.push({
+      text: `El diseño pide ${planned} muestras y el presupuesto es de ${BUDGET}: reduce niveles o réplicas.`, level: 'invalido',
+      fix: `Niveles × réplicas debe ser ${BUDGET} o menos: con ${planLevels.length} niveles caben hasta ${Math.floor(BUDGET / planLevels.length)} réplicas por nivel; con ${d.replicates} réplicas, hasta ${Math.floor(BUDGET / d.replicates)} niveles.`,
+    });
+  }
+  if (!error && planLevels.length < d.levels) {
+    // Niveles distintos que caben en el rango con el paso del instrumento: (máx − mín)/paso + 1.
+    const fit = Math.floor((d.max - d.min) / sys.x.step + 1e-9) + 1;
+    out.push({
+      text: `Con ese rango y el paso de ${fmt(sys.x.step, sys.x.decimals)} ${xu}, algunos niveles coinciden: quedan ${planLevels.length}.`, level: 'advertencia',
+      fix: `Amplía el rango entre «Nivel mínimo» y «Nivel máximo», o baja el «Número de niveles» a ${fit} o menos.`,
+    });
+  }
+  return out;
+}

@@ -1,5 +1,6 @@
 import { assertInRange, roundToResolution } from './math';
 import type { ModelSpec } from './types';
+import { ceilTo, classifyWarnings, floorTo, num, type ModelCondition } from './conditions';
 
 /**
  * Contaminación del agua e indicadores fisicoquímicos y biológicos (grado 11.º).
@@ -720,3 +721,43 @@ export const waterModelSpec: ModelSpec = {
     'Validación de rangos de entrada.',
   ],
 };
+
+/** Mayor caudal del vertimiento (múltiplo de 10 L/s, el paso del control) que cumple la condición, o null. */
+function maxDischarge(input: WaterInput, ok: (r: WaterResult) => boolean): number | null {
+  for (let q = floorTo(input.dischargeFlow, 10); q >= RANGES.dischargeFlow[0]; q -= 10) {
+    if (ok(simulateRiver({ ...input, dischargeFlow: q }))) return q;
+  }
+  return null;
+}
+
+/** Nivel y corrección de cada advertencia de `simulateRiver`, con los mismos umbrales del modelo. */
+export function waterConditions(warnings: readonly string[], input: WaterInput): ModelCondition[] {
+  const dischargeFix = (ok: (r: WaterResult) => boolean, goal: string) => () => {
+    const q = maxDischarge(input, ok);
+    return q !== null && q > 0
+      ? `Baja el «Caudal del vertimiento» a ${num(q)} L/s o menos, o sube el «Caudal del río»: así ${goal}.`
+      : `Sube el «Caudal del río» o baja el «Caudal del vertimiento»: así ${goal}.`;
+  };
+  return classifyWarnings(warnings, [
+    {
+      match: 'El oxígeno disuelto se agota', level: 'invalido',
+      fix: dischargeFix((r) => !r.anoxic, 'el oxígeno no se agota en ningún punto y el modelo de Streeter–Phelps vuelve a ser válido'),
+    },
+    {
+      match: 'En el punto crítico el oxígeno baja de 4 mg/L', level: 'advertencia',
+      fix: dischargeFix((r) => !r.anoxic && r.odMin >= 4, 'el oxígeno mínimo del tramo queda en 4 mg/L o más'),
+    },
+    {
+      match: 'El vertimiento aporta más de la cuarta parte del caudal', level: 'advertencia',
+      fix: () => {
+        // q_v/(q_r + q_v) ≤ 1/4  →  q_v ≤ q_r/3
+        const q = floorTo((input.riverFlow * 1000) / 3, 10);
+        return `Baja el «Caudal del vertimiento» a ${num(q)} L/s o menos, o sube el «Caudal del río» a ${num(ceilTo((3 * input.dischargeFlow) / 1000, 0.5), 1)} m³/s o más: así el vertimiento aporta como máximo la cuarta parte del caudal.`;
+      },
+    },
+    {
+      match: 'El drenaje bananero real puede llevar plaguicidas', level: 'nota',
+      fix: 'No depende de un control: tenlo en cuenta al interpretar el BMWP/Col, porque los macroinvertebrados reales podrían estar peor de lo que calcula el simulador.',
+    },
+  ]);
+}

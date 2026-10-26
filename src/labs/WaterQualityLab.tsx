@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   complies, NORMS, oxygenProfile, PROBE, RANGES, RIVERS, roundSig, saturationReading, simulateRiver, SOURCES,
-  wqiFromReadings, type Family, type NormRef, type Readings, type RiverId, type SourceId, type TaxonGroup,
+  waterConditions, wqiFromReadings, type Family, type NormRef, type Readings, type RiverId, type SourceId, type TaxonGroup,
 } from '../models/waterQuality';
 import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Select, Slider, Warnings } from '../components/ui';
+import { resolutionText } from '../components/Experiment';
 import { Chart } from '../components/Chart';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
@@ -17,6 +18,11 @@ import { DragHandle, ManipHint, ManipScene } from './manipulate';
 
 type Phase = 'listo' | 'midiendo' | 'medido';
 const DURATION = 2.4; // s
+
+/** Resolución de una sonda de la ficha (PROBE) en el texto común de las lecturas. */
+const probeRes = (spec: { resolution: number; unit: string }, unit = spec.unit === '—' ? '' : spec.unit) => resolutionText(spec.resolution, unit);
+/** Estado de una lectura frente a un criterio de calidad (NORMS) del modelo: dentro o fuera del intervalo. */
+const normState = (id: string, value: number): 'ok' | 'bad' => (complies(NORMS.find((n) => n.id === id)!, value) ? 'ok' : 'bad');
 
 function hexToRgb(hex: string): number[] {
   const n = parseInt(hex.slice(1), 16);
@@ -521,20 +527,20 @@ export default function WaterQualityLab({ api }: LabProps) {
         <ManipHint>Arrastra el punto de muestreo (amarillo) a lo largo del río, o enfócalo con Tab y usa las flechas.</ManipHint>
 
         <Readout items={[
-          { k: 'Temperatura', v: measured ? `${fmt(readings.temp, 1)} °C` : '—', data: true },
-          { k: 'pH', v: measured ? fmt(readings.pH, 2) : '—', data: true },
-          { k: 'Oxígeno disuelto', v: measured ? `${fmt(readings.od, 2)} mg/L` : '—', data: true },
+          { k: 'Temperatura', v: measured ? `${fmt(readings.temp, 1)} °C` : '—', data: true, resolution: probeRes(PROBE.temp) },
+          { k: 'pH', v: measured ? fmt(readings.pH, 2) : '—', data: true, resolution: probeRes(PROBE.pH), state: measured ? normState('ph-fauna', readings.pH) : undefined },
+          { k: 'Oxígeno disuelto', v: measured ? `${fmt(readings.od, 2)} mg/L` : '—', data: true, resolution: probeRes(PROBE.od), state: measured ? normState('od-fauna', readings.od) : undefined },
           { k: 'Saturación de oxígeno', v: measured ? `${fmt(readings.doSat, 1)} %` : '—', data: true },
-          { k: 'Conductividad', v: measured ? `${fmt(readings.ec, 0)} µS/cm` : '—', data: true },
-          { k: 'Turbidez', v: measured ? `${fmt(readings.turbidity, 1)} UNT` : '—', data: true },
-          { k: 'Nitratos (NO₃⁻)', v: measured ? `${fmt(readings.nitrate, 1)} mg/L` : '—', data: true },
-          { k: 'Fosfatos (PO₄³⁻)', v: measured ? `${fmt(readings.phosphate, 2)} mg/L` : '—', data: true },
-          { k: 'DBO₅', v: measured ? `${fmt(readings.bod5, 1)} mg/L` : '—', data: true },
-          { k: 'Coliformes fecales', v: measured ? `${fmtCf(readings.coliforms)} NMP/100 mL` : '—', data: true },
+          { k: 'Conductividad', v: measured ? `${fmt(readings.ec, 0)} µS/cm` : '—', data: true, resolution: probeRes(PROBE.ec) },
+          { k: 'Turbidez', v: measured ? `${fmt(readings.turbidity, 1)} UNT` : '—', data: true, resolution: probeRes(PROBE.turb) },
+          { k: 'Nitratos (NO₃⁻)', v: measured ? `${fmt(readings.nitrate, 1)} mg/L` : '—', data: true, resolution: probeRes(PROBE.no3, 'mg/L') },
+          { k: 'Fosfatos (PO₄³⁻)', v: measured ? `${fmt(readings.phosphate, 2)} mg/L` : '—', data: true, resolution: probeRes(PROBE.po4, 'mg/L') },
+          { k: 'DBO₅', v: measured ? `${fmt(readings.bod5, 1)} mg/L` : '—', data: true, resolution: probeRes(PROBE.dbo) },
+          { k: 'Coliformes fecales', v: measured ? `${fmtCf(readings.coliforms)} NMP/100 mL` : '—', data: true, resolution: probeRes(PROBE.cf) },
           { k: 'BMWP/Col', v: measured ? `${bmwp.score} · clase ${bmwp.cls.roman} (${bmwp.cls.quality})` : '—', data: true },
           { k: 'Índice de calidad (ICA tipo NSF)', v: measured ? `${fmt(wqi.value, 0)} · ${wqi.cls.quality}` : '—', data: true },
         ]} />
-        {measured && <Warnings list={res.warnings} />}
+        {measured && <Warnings list={waterConditions(res.warnings, { river, source, riverFlow, dischargeFlow, riverTemp, distance })} />}
 
         {measured && (
           <div className="card stack-sm">

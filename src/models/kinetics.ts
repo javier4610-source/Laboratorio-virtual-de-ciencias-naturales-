@@ -1,6 +1,7 @@
 import { assertInRange, celsiusToKelvin, R_GAS, roundToResolution } from './math';
 import { findEnzyme, temperatureFactor } from './enzyme';
 import type { ModelSpec } from './types';
+import { ceilTo, classifyWarnings, num, type ModelCondition } from './conditions';
 
 /**
  * Factores que afectan la velocidad de reacción (grado 10.º).
@@ -286,3 +287,28 @@ export const kineticsModelSpec: ModelSpec = {
     'La curva volumen–tiempo es creciente y se aplana; las entradas fuera de rango producen error.',
   ],
 };
+
+/** Nivel y corrección de cada advertencia de `simulateKinetics`, con los mismos umbrales del modelo. */
+export function kineticsConditions(warnings: readonly string[]): ModelCondition[] {
+  const tm = findEnzyme('catalasa').tm;
+  const others = CATALYSTS.filter((c) => c.id !== 'ninguno').map((c) => `«${c.name.replace(/ \(.*\)$/, '')}»`);
+  return classifyWarnings(warnings, [
+    { match: 'Sin catalizador el agua oxigenada', level: 'advertencia', fix: `En «Catalizador», elige ${others.join(' o ')} para que se recoja gas en los 3 minutos.` },
+    { match: /^A .* °C la catalasa de la papa se desnaturaliza/, level: 'advertencia', fix: `Baja la «Temperatura del baño» a ${num(tm)} °C o menos para que la catalasa conserve su actividad.` },
+    {
+      match: 'La reacción casi termina antes de 30 s', level: 'advertencia',
+      fix: `Haz la reacción más lenta para que dure más de 30 s: baja la «Concentración de HCl» o la «Temperatura del baño», o usa una «Partícula» más gruesa (${PARTICLES[0].name.toLowerCase()}).`,
+    },
+    {
+      match: /^Con .* % de H₂O₂ solo se pueden producir/, level: 'invalido',
+      fix: () => {
+        // El O₂ total es proporcional a la concentración: V_total = n(H₂O₂)/2 · V_m.
+        const perPercent = (molesH2O2(1) / 2) * molarVolume(SETUP.gasTemperature);
+        const cMin = ceilTo(TARGET_VOLUME / perPercent, 0.5);
+        return cMin <= KINETICS_LIMITS.h2o2[1]
+          ? `Sube la «Concentración de H₂O₂» a ${num(cMin, 1)} % o más: así se producen al menos ${num(TARGET_VOLUME)} mL de O₂ y se puede medir t₂₀.`
+          : `Con el agua oxigenada disponible no se llega a ${num(TARGET_VOLUME)} mL: compara las velocidades con el volumen recogido a los 30 s.`;
+      },
+    },
+  ]);
+}

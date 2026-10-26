@@ -10,6 +10,7 @@ import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { resolutionText } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import { usePublishModel } from '../components/Advanced';
 import type { ModelQuantity } from '../lib/advanced';
@@ -626,7 +627,7 @@ export default function MoleLab({ api }: LabProps) {
         {activity === 'contar' ? (
           <>
             <Readout items={[
-              { k: 'Lectura de la balanza', v: read ? `${fmt(lcdValue, 3)} g` : '—', data: true },
+              { k: 'Lectura de la balanza', v: read ? `${fmt(lcdValue, 3)} g` : '—', data: true, resolution: resolutionText(spec.resolution, 'g') },
               { k: `Masa molar M de ${prettyFormula(s.formula)}`, v: showC(`${fmt(massInfo.value, massInfo.decimals)} g/mol`) },
               { k: 'Cantidad de sustancia n = m/M', v: showC(`${fmtSig(counted?.moles ?? 0, sig)} mol`) },
               { k: `Número de ${entityText} N = n·N_A`, v: showC(`${fmtSig(counted?.entities ?? 0, sig)} ${entityText}`) },
@@ -660,8 +661,8 @@ export default function MoleLab({ api }: LabProps) {
         ) : (
           <>
             <Readout items={[
-              { k: 'Masa antes (balanza)', v: phase === 'montaje' ? '—' : `${fmt(readAntes, 3)} g`, data: true },
-              { k: 'Masa después (balanza)', v: phase === 'despues' ? `${fmt(readDespues, 3)} g` : '—', data: true },
+              { k: 'Masa antes (balanza)', v: phase === 'montaje' ? '—' : `${fmt(readAntes, 3)} g`, data: true, resolution: resolutionText(spec.resolution, 'g') },
+              { k: 'Masa después (balanza)', v: phase === 'despues' ? `${fmt(readDespues, 3)} g` : '—', data: true, resolution: resolutionText(spec.resolution, 'g') },
               { k: 'Masa perdida medida', v: phase === 'despues' ? `${fmt(lostMeasured, 3)} g` : '—' },
               { k: 'Gases que salen (calculado)', v: phase === 'despues' ? (isVinegar ? `CO₂: ${fmt(rx.co2Mass, 3)} g` : `H₂O: ${fmt(rx.vaporMass, 3)} g + CO₂: ${fmt(rx.co2Mass, 3)} g`) : '—' },
               isVinegar

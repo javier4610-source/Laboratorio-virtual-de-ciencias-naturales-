@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
-  applyFePerturbation, compareText, DIRECTION_TEXT, FE_INITIAL, FE_LIMITS, FE_PERTURBATION_TEXT, FE_SETUP, feResponse,
-  NO2_INITIAL, NO2_LIMITS, no2Intensity, no2Q, no2Response, relaxProgress, solveFeSCN, solveNO2,
+  ABS_MAX, ABS_RES, applyFePerturbation, compareText, INTENSITY_RES, NO2_MAX_PRESSURE, DIRECTION_TEXT, FE_INITIAL, FE_LIMITS, FE_PERTURBATION_TEXT, FE_SETUP, feResponse,
+  NO2_INITIAL, NO2_LIMITS, no2Intensity, no2Q, no2Response, relaxProgress, solveFeSCN, solveNO2, feConditions, no2Conditions,
   type FePerturbation, type FeState, type No2State,
 } from '../models/equilibrium';
 import { seededRandom } from '../models/math';
@@ -9,6 +9,7 @@ import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
+import { resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { Beaker, BenchTop, GasSyringe, Lcd, TestTube, Thermometer } from './kit';
 
@@ -284,10 +285,10 @@ function FePart({ api }: LabProps) {
           { k: 'Q justo después', v: qText(qImm) },
           { k: `K a ${fmt(st.temperatura, 0)} °C`, v: `${fmtSig(eq.K, 3)} L/mol` },
           { k: 'Sentido del desplazamiento', v: resp ? DIRECTION_TEXT[direction] : 'en equilibrio' },
-          { k: 'Absorbancia (450 nm)', v: measured ? (eq.absorbanceReading === null ? 'fuera de rango (> 3)' : fmt(eq.absorbanceReading, 3)) : 'mide', data: true },
+          { k: 'Absorbancia (450 nm)', v: measured ? (eq.absorbanceReading === null ? `> ${fmt(ABS_MAX, 0)}` : fmt(eq.absorbanceReading, 3)) : 'mide', data: true, resolution: resolutionText(ABS_RES, ''), state: measured ? (eq.absorbanceReading === null ? 'bad' : 'ok') : undefined },
           { k: 'Volumen del tubo', v: `${fmt(eq.volumeML, 2)} mL` },
         ]} />
-        <Warnings list={eq.warnings} />
+        <Warnings list={feConditions(eq.warnings)} />
       </div>
       <div className="controls">
         <div className="card stack">
@@ -427,11 +428,11 @@ function No2Part({ api }: LabProps) {
           { k: 'Q justo después', v: `${qText(qImm)} bar⁻¹` },
           { k: `Kp a ${fmt(st.temperatura, 0)} °C`, v: `${fmtSig(eq.K, 3)} bar⁻¹` },
           { k: 'Sentido del desplazamiento', v: resp ? DIRECTION_TEXT[direction] : 'en equilibrio' },
-          { k: 'Intensidad del color', v: measured ? fmt(eq.intensityReading, 0) : 'mide', data: true },
+          { k: 'Intensidad del color', v: measured ? fmt(eq.intensityReading, 0) : 'mide', data: true, resolution: resolutionText(INTENSITY_RES, '') },
           { k: 'Fracción de NO₂', v: measured ? fmt(eq.fractionNO2, 3) : 'mide', data: true },
-          { k: 'Presión total', v: `${fmt(eq.pTotal, 2)} bar` },
+          { k: 'Presión total', v: `${fmt(eq.pTotal, 2)} bar`, state: eq.pTotal > NO2_MAX_PRESSURE ? 'bad' : 'ok' },
         ]} />
-        <Warnings list={eq.warnings} />
+        <Warnings list={no2Conditions(eq.warnings, st)} />
       </div>
       <div className="controls">
         <div className="card stack">

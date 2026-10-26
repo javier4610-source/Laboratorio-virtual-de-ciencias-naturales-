@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { GAS_LIMITS, INITIAL, simulateGas, type GasLaw } from '../models/gases';
+import { GAS_LIMITS, INITIAL, simulateGas, gasConditions, type GasLaw } from '../models/gases';
 import { R_GAS, seededRandom } from '../models/math';
 import { useModelParams, usePublishModel } from '../components/Advanced';
 import { useMeasure } from '../components/Measurement';
@@ -8,7 +8,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
-import { SimControls } from '../components/Experiment';
+import { SimControls, resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, GasSyringe, Lcd, Thermometer } from './kit';
 import { Knob, ManipHint, ManipScene, Plunger } from './manipulate';
@@ -74,7 +74,8 @@ export default function GasLab({ api }: LabProps) {
   // Animación continua: se puede pausar (WCAG 2.2.2) y arranca detenida con movimiento reducido.
   const [animOn, setAnimOn] = useState(() => !prefersReducedMotion());
   const P = useModelParams();
-  const model = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure, externalPressure: P.pext, moles: P.n !== undefined ? P.n / 1000 : undefined }), [law, volume, temperature, P.n, P.pext]);
+  const gasInput = useMemo(() => ({ law, volume, temperature, pressure: INITIAL.pressure, externalPressure: P.pext, moles: P.n !== undefined ? P.n / 1000 : undefined }), [law, volume, temperature, P.n, P.pext]);
+  const model = useMemo(() => simulateGas(gasInput), [gasInput]);
   // Lecturas de los instrumentos. En modo real: el émbolo queda un poco desalineado de la marca de la escala
   // (el volumen real del gas difiere del indicado y la presión sigue P ∝ 1/V del modelo) y el manómetro suma su ruido.
   const { measure, remeasure, deviation } = useMeasure();
@@ -186,12 +187,12 @@ export default function GasLab({ api }: LabProps) {
           ? 'Arrastra el émbolo de la jeringa para cambiar el volumen, o enfócalo con Tab y usa las flechas.'
           : 'Gira la perilla del termostato (arriba a la derecha) para cambiar la temperatura del baño, o enfócala con Tab y usa las flechas.'}</ManipHint>
         <Readout items={[
-          { k: 'Presión (manómetro)', v: `${fmt(res.pressureReading, 1)} kPa`, data: true },
-          { k: 'Volumen (escala)', v: `${fmt(res.volumeReading, 0)} mL`, data: true },
+          { k: 'Presión (manómetro)', v: `${fmt(res.pressureReading, 1)} kPa`, data: true, resolution: resolutionText(instrument('gases', 'manometro').resolution, 'kPa'), state: res.pressure > GAS_LIMITS.pressure[1] ? 'bad' : 'ok' },
+          { k: 'Volumen (escala)', v: `${fmt(res.volumeReading, 0)} mL`, data: true, resolution: resolutionText(instrument('gases', 'jeringa').resolution, 'mL') },
           { k: 'Temperatura', v: `${fmt(res.temperatureC, 1)} °C = ${fmt(res.temperatureK, 1)} K` },
           { k: law === 'boyle' ? 'P·V' : law === 'charles' ? 'V/T' : 'P/T', v: law === 'boyle' ? `${fmt(res.pv, 0)} kPa·mL` : law === 'charles' ? `${fmt(res.vOverT, 4)} mL/K` : `${fmt(res.pOverT, 4)} kPa/K` },
         ]} />
-        <Warnings list={res.warnings} />
+        <Warnings list={gasConditions(res.warnings, gasInput)} />
       </div>
       <div className="controls">
         <div className="card stack">

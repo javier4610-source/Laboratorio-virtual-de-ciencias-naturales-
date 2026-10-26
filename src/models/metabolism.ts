@@ -1,6 +1,7 @@
 import { assertInRange, roundToResolution } from './math';
 import type { ModelSpec } from './types';
 import coreJson from '../data/ecoli_core.json';
+import type { ModelCondition } from './conditions';
 
 /**
  * Metabolismo celular: análisis de balance de flujos (FBA) del modelo E. coli core en el navegador
@@ -729,3 +730,32 @@ export const metabolismModelSpec: ModelSpec = {
     'Balance de masa |S·v| < 1e-9 y límites respetados en toda solución; casos de prueba del símplex: infactible, no acotado, degenerado, variables libres.',
   ],
 };
+
+/* ------------------------------------------------------------------ condiciones y correcciones */
+
+/** Avisos del resultado del FBA con su nivel y su corrección. */
+export function metabolismConditions(s: { infeasible: boolean; alternativeOptima: boolean; carbon: CarbonId; knockouts: number }): ModelCondition[] {
+  const out: ModelCondition[] = [];
+  if (s.infeasible) {
+    out.push({
+      text: 'El problema no es factible: con estas restricciones no existe ningún vector de flujos que cumpla el balance de masa, los límites y el mantenimiento mínimo (ATPM ≥ 8,39 mmol/gDW/h). El modelo predice que no hay crecimiento.',
+      level: 'invalido',
+      fix: `Afloja las restricciones: sube la «Captación máxima de la fuente de carbono» o el oxígeno disponible${s.carbon === 'for' ? ', elige otra «Fuente de carbono»' : ''}${s.knockouts > 0 ? ' o quita eliminaciones (botones ✕)' : ''}, y vuelve a pulsar «Calcular el óptimo».`,
+    });
+  }
+  if (s.alternativeOptima) {
+    out.push({
+      text: 'Hay óptimos alternativos: algunos flujos de intercambio pueden tomar distintos valores con el mismo crecimiento máximo. La tabla muestra el intervalo (FVA); el valor puntual es solo una de las soluciones.',
+      level: 'nota',
+      fix: 'No hace falta corregirlo: compara los intervalos mínimo–máximo de la tabla, no solo el valor puntual.',
+    });
+  }
+  if (s.carbon === 'for') {
+    out.push({
+      text: 'El formiato no aporta carbono para la biomasa en este modelo: espera un problema no factible.',
+      level: 'advertencia',
+      fix: `En «Fuente de carbono», elige una que sí aporte carbono, por ejemplo ${CARBON_SOURCES[0].label.toLowerCase()}.`,
+    });
+  }
+  return out;
+}

@@ -1,5 +1,6 @@
 import { assertInRange, roundToResolution } from './math';
 import type { ModelSpec } from './types';
+import { classifyWarnings, type ModelCondition } from './conditions';
 
 /**
  * Extracción casera de ADN de frutas y modelo de complementariedad de la doble hebra (grado 8.º).
@@ -384,3 +385,15 @@ export const dnaExtractionModelSpec: ModelSpec = {
     'Las entradas fuera de rango y las secuencias con letras distintas de A, T, G y C se rechazan.',
   ],
 };
+
+/* ------------------------------------------------------------------ condiciones y correcciones */
+
+/** Nivel y corrección de cada advertencia de `simulateExtraction`: son límites del modelo didáctico. */
+export function extractionConditions(warnings: readonly string[]): ModelCondition[] {
+  return classifyWarnings(warnings, [
+    { match: 'Con tanto detergente se forma mucha espuma', level: 'advertencia', fix: 'Baja el «Detergente lavaloza en el tampón» a 12 mL o menos.' },
+    { match: 'La sal en exceso puede precipitar', level: 'advertencia', fix: 'Baja la «Sal en el tampón (100 mL)» a 3 g o menos.' },
+    { match: 'El alcohol a temperatura ambiente precipita menos ADN', level: 'advertencia', fix: 'Baja la «Temperatura del alcohol» a 20 °C o menos (en la práctica, alcohol de la nevera o en hielo).' },
+    { match: 'Sin machacar, las paredes celulares quedan casi enteras', level: 'advertencia', fix: 'Sube el «Tiempo de machacado» por encima de 0 min.' },
+  ]);
+}

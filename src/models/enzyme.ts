@@ -1,5 +1,6 @@
 import { assertInRange, celsiusToKelvin, R_GAS } from './math';
 import type { ModelSpec } from './types';
+import { classifyWarnings, num, type ModelCondition } from './conditions';
 
 /**
  * Actividad enzimática (grado 10.º): Michaelis-Menten modulado por temperatura y pH.
@@ -175,3 +176,27 @@ export const enzymeModelSpec: ModelSpec = {
     'Duplicar la concentración de enzima duplica la velocidad inicial.',
   ],
 };
+
+/** Intervalo de pH (en pasos de 0,5, como el control) en el que la enzima conserva al menos el 20 % de su actividad. */
+export function activePHRange(e: EnzymeInfo): [number, number] {
+  const ok: number[] = [];
+  for (let pH = ENZYME_LIMITS.pH[0]; pH <= ENZYME_LIMITS.pH[1] + 1e-9; pH += 0.5) if (pHFactor(e, pH) >= 0.2) ok.push(pH);
+  return [ok[0], ok[ok.length - 1]];
+}
+
+/** Nivel y corrección de cada advertencia de `simulateEnzyme`, con los mismos umbrales del modelo. */
+export function enzymeConditions(warnings: readonly string[], input: EnzymeInput): ModelCondition[] {
+  const e = findEnzyme(input.enzymeId);
+  const [lo, hi] = activePHRange(e);
+  return classifyWarnings(warnings, [
+    {
+      match: /^A .* °C la mayor parte de la .* está desnaturalizada\.$/, level: 'advertencia',
+      fix: `Para medir la enzima activa, baja la «Temperatura» a ${num(Math.floor(e.tm))} °C o menos (temperatura óptima del modelo: ${num(optimalTemperature(e), 1)} °C).`,
+    },
+    {
+      match: /^El pH .* está lejos del óptimo/, level: 'advertencia',
+      fix: `Ajusta el «pH» del tubo entre ${num(lo, 1)} y ${num(hi, 1)}; el óptimo de la ${e.name.toLowerCase()} es ${num(e.pHopt, 1)}.`,
+    },
+    { match: 'Sin sustrato no hay producto', level: 'invalido', fix: 'Sube la «Concentración de sustrato» por encima de 0 mmol/L.' },
+  ]);
+}

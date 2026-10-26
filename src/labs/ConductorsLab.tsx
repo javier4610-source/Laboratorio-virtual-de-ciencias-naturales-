@@ -4,6 +4,7 @@ import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select } from '../components/ui';
+import { resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
@@ -366,7 +367,7 @@ export default function ConductorsLab({ api }: LabProps) {
         </div>
         <Readout items={[
           { k: 'Voltaje de la fuente', v: `${fmt(res.voltage, 1)} V` },
-          { k: 'Corriente (amperímetro)', v: measured ? (res.currentReading === null ? 'fuera de rango' : `${fmt(res.currentReading, 1)} mA`) : '—', data: true },
+          { k: 'Corriente (amperímetro)', v: measured ? (res.currentReading === null ? 'fuera de rango' : `${fmt(res.currentReading, 1)} mA`) : '—', data: true, resolution: resolutionText(instrument('conductores', 'amperimetro').resolution, 'mA') },
           { k: 'Brillo del bombillo', v: measured ? `${fmt(res.brightness, 1)} %${res.visible ? '' : ' (no se ve)'}` : '—', data: true },
           { k: 'Resistencia de la muestra', v: measured ? `${fmtSig(res.sampleR, 2)} Ω` : '—' },
           { k: 'Clasificación según la medición', v: measured ? CLASS_LABELS[res.classification] : '—' },

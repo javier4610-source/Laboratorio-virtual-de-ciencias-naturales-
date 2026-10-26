@@ -29,6 +29,7 @@
  */
 import type { ModelSpec } from './types';
 import { assertInRange, clamp, roundToResolution } from './math';
+import { classifyWarnings, num, type ModelCondition } from './conditions';
 
 /* ------------------------------------------------------------------ constantes */
 
@@ -492,3 +493,29 @@ export const ecosystemModelSpec: ModelSpec = {
     'Las entradas fuera de rango se rechazan.',
   ],
 };
+
+/* ------------------------------------------------------------------ condiciones y correcciones */
+
+/** Nivel y corrección de cada advertencia de `simulateEcosystem`, con los mismos umbrales del modelo. */
+export function ecosystemConditions(sim: EcoResult): ModelCondition[] {
+  const d0 = sim.days[0];
+  // Umbral del modelo: más de 1,2·K caracoles o una respiración mayor que 1,25 veces la producción del primer día.
+  const maxSnails = Math.floor(d0.snailK * 1.2 + 1e-9);
+  return classifyWarnings(sim.warnings, [
+    {
+      match: 'Oscuridad', level: 'advertencia',
+      fix: sim.input.lightHours === 0
+        ? 'Sube las «Horas de luz por día» por encima de 0 h para que la elodea haga fotosíntesis.'
+        : 'Sube la «Intensidad de la lámpara» por encima de 0 % para que la elodea haga fotosíntesis.',
+    },
+    { match: 'Sin elodea', level: 'advertencia', fix: 'Agrega al menos una ramita en «Ramitas de elodea» (o arrástrala al frasco).' },
+    {
+      match: 'Sobrepoblación', level: 'advertencia',
+      fix: sim.input.snails > maxSnails
+        ? `Baja el «Número de caracoles» a ${num(maxSnails)} o menos (lo que sostiene el alimento elegido), o agrega elodea y luz para producir más oxígeno.`
+        : 'Saca guppys o caracoles, o agrega elodea y luz: la respiración del primer día debe quedar por debajo de 1,25 veces la producción de oxígeno.',
+    },
+    { match: 'Sin descomponedores', level: 'advertencia', fix: 'En «Descomponedores en el sedimento», elige «Sí (lodo de ciénaga)».' },
+    { match: 'Exceso de alimento', level: 'advertencia', fix: `En «Alimento cada día», elige «${FOODS.find((f) => f.id === 'normal')!.name}» o menos.` },
+  ]);
+}

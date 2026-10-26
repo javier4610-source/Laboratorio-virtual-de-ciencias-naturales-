@@ -8,6 +8,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { resolutionText } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { useModelParams, usePublishModel } from '../components/Advanced';
@@ -913,7 +914,7 @@ export default function PressureLab({ api }: LabProps) {
               <h3>{exp === 'pascal' ? 'Presión en el fondo del vaso' : 'Presión en la membrana'}</h3>
               <Readout items={[
                 { k: exp === 'pascal' ? 'Altura del líquido sobre la membrana' : 'Profundidad de la membrana', v: `${fmt(exp === 'pascal' ? height : depth, 1)} cm` },
-                { k: 'Desnivel del manómetro (Δh)', v: show(`${fmt(readings.rise, 0)} mm`), data: true },
+                { k: 'Desnivel del manómetro (Δh)', v: show(`${fmt(readings.rise, 0)} mm`), data: true, resolution: resolutionText(manoSpec.resolution, 'mm') },
                 { k: 'Presión manométrica (ρ_m·g·Δh)', v: show(`${fmt(analysis.gauge, 0)} Pa`), data: true },
                 { k: 'Presión absoluta (p_atm + p_man)', v: show(`${fmt(analysis.pAbs, 1)} hPa`), data: true },
               ]} />
@@ -932,7 +933,7 @@ export default function PressureLab({ api }: LabProps) {
               <h3>Presión atmosférica</h3>
               <Readout items={[
                 { k: 'Lugar', v: `${place.name} (≈ ${fmt(place.altitude, 0)} m)` },
-                { k: 'Presión atmosférica (barómetro)', v: atmText, data: true },
+                { k: 'Presión atmosférica (barómetro)', v: atmText, data: true, resolution: resolutionText(baroSpec.resolution, 'hPa') },
                 { k: 'Columna de mercurio equivalente', v: `${fmt(mercuryColumnMm(readings.pAtm), 0)} mmHg` },
                 { k: atm === 'estandar' ? 'Con la fórmula isotérmica (15 °C)' : 'Con la atmósfera estándar (ISA)', v: `${fmt(otherAtm, 1)} hPa` },
               ]} />
@@ -949,6 +950,7 @@ export default function PressureLab({ api }: LabProps) {
                 k: `Alcance del chorro del agujero a ${y} cm`,
                 v: !holes[i] ? 'sin agujero' : !jets[i].flows ? 'no sale agua' : show(`${fmt(readings.ranges[i], 1)} cm`),
                 data: true,
+                resolution: holes[i] && jets[i].flows ? resolutionText(tapeSpec.resolution, 'cm') : undefined,
               }))} />
             </div>
             <div className="stack">

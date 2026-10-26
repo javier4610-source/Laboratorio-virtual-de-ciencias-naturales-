@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { LIGHT_COLORS, PHOTO_LIMITS, simulatePhotosynthesis, type LightColor } from '../models/photosynthesis';
+import { LIGHT_COLORS, PHOTO_LIMITS, photoConditions, simulatePhotosynthesis, type LightColor } from '../models/photosynthesis';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Select, Slider, Warnings } from '../components/ui';
@@ -93,9 +93,7 @@ export default function PhotoLab({ api }: LabProps) {
   const conditions = `Luz ${LIGHT_COLORS.find((c) => c.id === color)!.name.toLowerCase()} ${lampOn ? `a ${distance} cm` : 'apagada'}, ${fmt(bicarbonate, 2)} g/L de bicarbonato, ${temperature} °C`;
   const sensorSlope = sensorRun ? rangeStats(sensorRun.samples, 0)?.slope ?? null : null;
 
-  const warnings: string[] = [];
-  if (temperature >= 40) warnings.push('A esta temperatura las enzimas de la fotosíntesis empiezan a desnaturalizarse.');
-  if (lampOn && res.net <= 0) warnings.push('La respiración supera a la fotosíntesis: no se liberan burbujas (por debajo del punto de compensación).');
+  const warnings = photoConditions({ distance, bicarbonate, temperature, color, lampOn }, res);
 
   return (
     <div className="lab-layout">

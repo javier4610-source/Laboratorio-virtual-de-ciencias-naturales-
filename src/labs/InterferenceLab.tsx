@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   AIRY_ZEROS, CALIPER_RES, GRATINGS, INTERFERENCE_INSTRUMENTS, INTERFERENCE_LIMITS, SCREEN_RULER_RES, SOURCES, analyzeCursors, apertureFor,
-  findGrating, findSource, fresnelNumber, intensity, lightFrequency, screenColor, sensorIntensity, sinThetaOnScreen, srgbEncode,
+  findGrating, findSource, intensity, interferenceConditions, lightFrequency, screenColor, sensorIntensity, sinThetaOnScreen, srgbEncode,
   thinFilmColor, thinFilmConstructive, wavelengthToHex, type Aperture, type ElementKind, type LightSource, type SourceId,
 } from '../models/interference';
 import { fmt } from '../lib/format';
@@ -13,6 +13,7 @@ import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
+import { resolutionText } from '../components/Experiment';
 import { ContactShadow, Lcd } from './kit';
 import { ManipHint, ManipScene, Plunger } from './manipulate';
 
@@ -318,15 +319,7 @@ export default function InterferenceLab({ api }: LabProps) {
   }, [calRead, analysis, kind, knownDim, Lread]);
 
   /* ---------------- avisos */
-  const warnings: string[] = [];
-  const lamForCheck = (source.wavelength ?? 550) * 1e-9;
-  if (kind !== 'red' && fresnelNumber(ap, lamForCheck, L / 100) > 0.3) warnings.push('La pantalla está muy cerca para esta abertura (número de Fresnel > 0,3): el patrón real se aparta del de Fraunhofer. Aleja la pantalla.');
-  if (kind === 'red' && source.wavelength !== null) {
-    const s1 = (source.wavelength * 1e-9) / ap.d;
-    if (s1 >= 1) warnings.push('Con esta red y esta luz no existe el primer orden (d·sen θ = λ exigiría sen θ > 1).');
-    else if (Math.abs((L * 10 * s1) / Math.sqrt(1 - s1 * s1)) > INTERFERENCE_LIMITS.screenHalfWidth) warnings.push('El primer orden cae fuera de la pantalla: acerca la pantalla a la red.');
-  }
-  if (kind === 'doble' && Number.isInteger(dUm / aUm)) warnings.push(`d/a = ${fmt(dUm / aUm, 0)} es entero: el máximo de orden ${fmt(dUm / aUm, 0)} coincide con un cero de la envolvente y desaparece (orden ausente).`);
+  const warnings = interferenceConditions({ ap, wavelength: source.wavelength, L, dUm, aUm });
 
   /* ---------------- dibujo */
   const color = source.wavelength === null ? '#fff6dc' : wavelengthToHex(source.wavelength);
@@ -501,13 +494,13 @@ export default function InterferenceLab({ api }: LabProps) {
         <ManipHint>Arrastra la pantalla por el riel, y los cursores A y B y el sensor sobre la pantalla; o enfócalos con Tab y usa las flechas (RePág/AvPág para pasos grandes).</ManipHint>
 
         <Readout items={[
-          { k: 'Distancia L (escala del riel)', v: `${fmt(Lread, 1)} cm`, data: true },
+          { k: 'Distancia L (escala del riel)', v: `${fmt(Lread, 1)} cm`, data: true, resolution: resolutionText(spec('riel').resolution, 'cm') },
           { k: 'Longitud de onda de la fuente', v: source.wavelength === null ? '400 a 700 nm (blanca)' : source.hidden ? 'desconocida' : `${fmt(source.wavelength, 0)} nm` },
           { k: 'Posición del sensor', v: `${fmt(sensorY, 2)} mm` },
-          { k: 'Intensidad en el sensor', v: on ? `${fmt(sensorRead, 1)} %` : 'fuente apagada', data: true },
+          { k: 'Intensidad en el sensor', v: on ? `${fmt(sensorRead, 1)} %` : 'fuente apagada', data: true, resolution: resolutionText(spec('sensor').resolution, '%') },
         ]} />
         <Readout items={[
-          { k: 'Separación entre cursores Δy', v: calRead && analysis ? `${fmt(analysis.dy, view === 'amplia' ? 0 : 2)} mm` : '—', data: true },
+          { k: 'Separación entre cursores Δy', v: calRead && analysis ? `${fmt(analysis.dy, view === 'amplia' ? 0 : 2)} mm` : '—', data: true, resolution: resolutionText(spec(scaleId).resolution, 'mm') },
           { k: 'y = Δy/2', v: calRead && analysis ? `${fmt(analysis.y, 3)} mm` : '—' },
           { k: 'sen θ = y/√(y² + L²)', v: calRead && analysis ? fmt(analysis.sinTheta, 5) : '—' },
           { k: 'Ángulo θ', v: calRead && analysis ? `${fmt(analysis.thetaDeg, 3)}°` : '—' },

@@ -1,6 +1,7 @@
 import { assertInRange, celsiusToKelvin, R_GAS, roundToResolution } from './math';
 import type { ModelSpec } from './types';
 import { fmt } from '../lib/format';
+import { classifyWarnings, num, type ModelCondition } from './conditions';
 
 /**
  * Conservación de la masa (grado 8.º): Lavoisier en el aula.
@@ -353,3 +354,39 @@ export const conservationModelSpec: ModelSpec = {
     'Validación de rangos de entrada.',
   ],
 };
+
+/** Mayor masa de sólido (paso de 0,1 g, como el control) con la que la reacción cumple la condición, o null. */
+function maxReactantMass(input: ConservationInput, ok: (r: ConservationResult) => boolean): number | null {
+  const r = reactionById(input.reaction);
+  for (let m = Math.round(input.reactantMass * 10) / 10; m >= r.massRange[0] - 1e-9; m = Math.round((m - 0.1) * 10) / 10) {
+    if (ok(simulateConservation({ ...input, reactantMass: m }))) return m;
+  }
+  return null;
+}
+
+/** Nivel y corrección de cada advertencia de `simulateConservation`, con los mismos umbrales del modelo. */
+export function conservationConditions(warnings: readonly string[], input: ConservationInput): ModelCondition[] {
+  const r = reactionById(input.reaction);
+  const solid = r.solid.toLowerCase().replace(/ \(.*\)$/, '');
+  const lessSolid = (ok: (x: ConservationResult) => boolean, goal: string, otherwise: string) => () => {
+    const m = maxReactantMass(input, ok);
+    return m !== null ? `Baja la masa de ${solid} a ${num(m, 1)} g o menos: así ${goal}.` : otherwise;
+  };
+  return classifyWarnings(warnings, [
+    {
+      match: 'El oxígeno del frasco se agota', level: 'nota',
+      fix: 'Para comprobar la conservación de la masa no hace falta corregirlo. Si quieres que reaccione todo el hierro, usa menos lana de acero.',
+    },
+    {
+      match: 'La presión dentro del frasco supera 200 kPa', level: 'invalido',
+      fix: lessSolid((x) => (x.jarPressure ?? 0) <= 200, 'la presión final queda en 200 kPa o menos',
+        'Cambia el «Tipo de sistema» a «Cerrado con globo»: el globo se infla y la presión no sube tanto.'),
+    },
+    {
+      match: 'El globo superaría 3 L', level: 'invalido',
+      fix: lessSolid((x) => x.balloonVolume <= 3000, 'el globo no pasa de 3 L', 'Usa menos reactivo: el gas producido no cabe en un globo escolar.'),
+    },
+    { match: 'La lana de acero arde con chispas', level: 'nota' },
+    { match: /^Sobra /, level: 'nota', fix: 'No hace falta corregirlo: el reactivo que sobra sigue en el recipiente y también se pesa, así que la masa total se conserva igual.' },
+  ]);
+}

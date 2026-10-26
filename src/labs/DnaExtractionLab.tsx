@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   BASES, BASE_NAME, DNA_EXTRACTION_INSTRUMENTS, EXTRACTION_LIMITS, FACTOR_LABEL, FRUITS, MAX_STRAND, MIN_STRAND, WALLACE_MAX_VALID,
-  appearanceOf, baseCounts, checkDuplex, findFruit, gcPercent, normalizeSequence, simulateExtraction, wallaceTm,
+  appearanceOf, baseCounts, checkDuplex, findFruit, gcPercent, normalizeSequence, simulateExtraction, wallaceTm, extractionConditions,
   type Base, type DuplexCheck, type FactorKey, type Fruit, type FruitId, type Orientation,
 } from '../models/dnaExtraction';
 import { fmt } from '../lib/format';
@@ -12,6 +12,7 @@ import { useMeasure } from '../components/Measurement';
 import { usePublishModel } from '../components/Advanced';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
+import { resolutionText } from '../components/Experiment';
 import { BenchTop, Beaker, ContactShadow, Stopwatch, TestTube, Thermometer, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene, useSvgDrag, type Pt } from './manipulate';
 
@@ -498,12 +499,12 @@ function ExtractionActivity({ api, top }: { api: LabProps['api']; top: ReactNode
         <ManipHint>Arrastra el vaso del tampón hasta la bolsa, pasa el rodillo sobre la bolsa para machacar, lleva la bolsa al embudo, vierte el alcohol frío en el tubo y lleva la varilla al tubo para enrollar el ADN. Con el teclado: Tab para elegir la pieza y flechas (o los botones del panel).</ManipHint>
         <Readout items={[
           { k: 'Etapa', v: STAGE_TEXT[stage] },
-          { k: 'Índice de rendimiento (modelo calculado)', v: show(`${fmt(reading, 0)} u.a.`), data: true },
+          { k: 'Índice de rendimiento (modelo calculado)', v: show(`${fmt(reading, 0)} u.a.`), data: true, resolution: done ? resolutionText(spec.resolution, 'u.a.') : undefined },
           { k: 'Aspecto del precipitado', v: show(appearanceOf(reading)) },
           { k: 'Paso más limitante (modelo)', v: show(FACTOR_LABEL[model.limiting]) },
         ]} />
         {msg && <Notice kind="warn">{msg}</Notice>}
-        {done && <Warnings list={model.warnings} />}
+        {done && <Warnings list={extractionConditions(model.warnings)} />}
         <Notice>
           <strong>Modelo calculado (semicuantitativo):</strong> Y = 100 · k_fruta · f_det · f_mach · f_sal · f_alc. Cada factor está entre 0 y 1 y sus constantes
           (2 mL de detergente y 0,5 g de sal para la mitad del efecto, transición del alcohol alrededor de 10 °C, fragmentación por machacado excesivo)
@@ -817,7 +818,7 @@ function ComplementActivity({ api, top }: { api: LabProps['api']; top: ReactNode
           { k: 'Puentes de hidrógeno', v: show(check ? `${check.hBonds}` : ''), data: true },
           { k: "Hebra nueva leída 5'→3'", v: show(check ? check.newStrand53 : '') },
           { k: '%GC', v: show(`${fmt(gc, 1)} %`), data: true },
-          { k: 'Tm (regla de Wallace)', v: show(check && check.tm !== null ? `${fmt(check.tm, 0)} °C${check.tmInRange ? '' : ' (fuera de rango)'}` : 'No calculada: doble hebra no válida'), data: true },
+          { k: 'Tm (regla de Wallace)', v: show(check && check.tm !== null ? `${fmt(check.tm, 0)} °C` : 'No calculada: doble hebra no válida'), data: true, state: check && check.tm !== null ? (check.tmInRange ? 'ok' : 'bad') : undefined },
           { k: 'A/T y G/C en la doble hebra', v: show(check?.chargaff ? `${fmt(check.chargaff.ratioAT, 2)} y ${fmt(check.chargaff.ratioGC, 2)}` : 'Completa la doble hebra sin errores') },
           { k: 'A/T y G/C en la molde sola', v: show(`${singleText(counts.T ? counts.A / counts.T : counts.A ? Infinity : 1)} y ${singleText(counts.C ? counts.G / counts.C : counts.G ? Infinity : 1)}`) },
         ]} />

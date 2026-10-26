@@ -246,9 +246,9 @@ animación = 65.
 ### `ConditionAlert` (`src/components/ConditionAlert.tsx`)
 
 Aviso de condición experimental con nivel (`invalido`, `advertencia`, `nota`), título, causa y **cómo corregirlo**.
-`Warnings` (lista de advertencias del modelo, usada por 19 laboratorios) ya lo usa, así que todas las prácticas las
-muestran igual. El análisis lo usa para el control de variables y los choques, para la condición imposible «los
-deslizadores no se alcanzan» (nivel `invalido`, con el inicio bloqueado).
+El análisis lo usa para el control de variables y los choques, para la condición imposible «los deslizadores no se
+alcanzan» (nivel `invalido`, con el inicio bloqueado). Con `live={false}` no crea su propia región de estado (lo usa
+`Warnings` para agrupar varios avisos en una sola).
 
 ```tsx
 <ConditionAlert level="invalido" title="la muestra flota"
@@ -256,13 +256,89 @@ deslizadores no se alcanzan» (nivel `invalido`, con el inicio bloqueado).
   fix="Marca «Hundir la muestra con un alfiler» y vuelve a sumergir." />
 ```
 
+### `Warnings` con una corrección por advertencia (`src/components/ui.tsx`, `src/models/conditions.ts`)
+
+`Warnings` recibe textos simples (como antes: un aviso «Atención» con la lista) o condiciones del modelo
+`{ text, level, fix }`. Con condiciones dibuja **un aviso por causa**, cada uno con su «Cómo corregirlo» al lado,
+ordenados por gravedad (no válida → atención → nota) y **dentro de una sola región `role="status"`**, para que el
+lector de pantalla los anuncie juntos y no como regiones que compiten (las notas conservan `role="note"`).
+
+- **Los modelos no cambian sus textos**: siguen devolviendo `warnings: string[]` (pruebas, registros y valores
+  dorados dependen de ellos). Cada modelo exporta una función pura `…Conditions` que asocia a cada texto su nivel y su
+  corrección con `classifyWarnings(textos, reglas)`; donde la práctica armaba los avisos (fotosíntesis, interferencia,
+  metabolismo, secuencias, indagación), la función del modelo los arma ya con nivel y corrección.
+- **La corrección sale del umbral del modelo**, no de un número inventado: el volumen mínimo de Boyle con
+  P_máx = 300 kPa, ε/I_máx en el circuito, la arista máxima con la capacidad de la balanza, el caudal de vertimiento
+  (búsqueda sobre el mismo modelo de Streeter–Phelps), la distancia de la lámpara con el punto de compensación, la L
+  mínima con el número de Fresnel 0,3, la dilución con A_máx del colorímetro… Las pruebas unitarias
+  (`tests/unit/conditions.test.ts`) aplican la corrección propuesta y comprueban que la advertencia desaparece.
+- **Niveles**: `invalido` si la medición no vale con esas condiciones (fuera del intervalo del modelo o del
+  instrumento, o el montaje real fallaría); `advertencia` si vale pero conviene revisarla; `nota` para interpretar el
+  resultado (puede no tener corrección: seguridad, límites declarados del simulador, sucesos de la simulación).
+
+```tsx
+<Warnings list={gasConditions(res.warnings, gasInput)} />
+// → «Condición no válida · La presión supera 300 kPa… · Cómo corregirlo: Sube el «Volumen de la jeringa» a 40 mL o más…»
+```
+
+#### Avisos por práctica (sin publicar)
+
+| Práctica | Función | Avisos (nivel) |
+|---|---|---|
+| Circuitos | `circuitConditions` | Circuito abierto (atención: qué interruptores cerrar según serie, paralelo o mixto); corriente > 3 A (no válida: R equivalente + r mínima = ε/3 A) |
+| Circuitos simples | `simpleCircuitConditions` | Cortocircuito, bombillo sobre 1,3 × 2,5 V, LED sobre 30 mA, amperímetro en paralelo (no válida); LED, zumbador o pila al revés («Girar … (invertir polaridad)»), circuito abierto (atención); cálculo sin converger (nota) |
+| Leyes de los gases | `gasConditions` | Presión > 300 kPa (no válida: volumen mínimo o temperatura máxima); bajo 0 °C (atención) |
+| Enzimas | `enzymeConditions` | Desnaturalización (atención: T ≤ T_m de la enzima); pH lejano (atención: intervalo con ≥ 20 % de actividad); sin sustrato (no válida) |
+| Densidad | `densityConditions` | Balanza sobrecargada, probeta desbordada (agua inicial máxima), muestra que flota (todas no válidas) |
+| Calidad del agua | `waterConditions` | Oxígeno agotado (no válida: caudal de vertimiento máximo); OD < 4 mg/L y dilución < 4:1 (atención); plaguicidas del drenaje bananero (nota) |
+| Cinemática | `kinematicsConditions` | Fin de pista y frenado (atención: duración máxima); sin movimiento (no válida) |
+| Movimiento | `motionConditions` | Balón que frena, ida y vuelta (notas con la alternativa) |
+| Cinética química | `kineticsConditions` | Sin catalizador, catalasa desnaturalizada, reacción de mármol que termina antes de 30 s (atención); H₂O₂ que no llega a 20 mL (no válida: concentración mínima) |
+| Conservación de la masa | `conservationConditions` | Presión del frasco > 200 kPa y globo > 3 L (no válida: masa máxima); oxígeno agotado, reactivo sobrante y seguridad (notas) |
+| Equilibrio químico | `feConditions`, `no2Conditions` | Absorbancia > 3, presión > 2,5 bar, condensación del N₂O₄ (no válida: volumen o temperatura mínimos); todo el SCN⁻ precipitado (atención); precipitado parcial (nota) |
+| Ecosistema | `ecosystemConditions` | Oscuridad, sin elodea, sobrepoblación (caracoles máximos = 1,2·K), sin descomponedores, exceso de alimento (atención); hipoxia y muertes (notas) |
+| Soluciones | `solutionConditions` | Solubilidad superada (atención: masa máxima o balón mayor); absorbancia > 2 (no válida: pipeta y balón con el factor de dilución necesario) |
+| Fotosíntesis | `photoConditions` | Desnaturalización desde 40 °C y bajo el punto de compensación (atención: distancia máxima de la lámpara) |
+| Interferencia | `interferenceConditions` | Fresnel > 0,3, sin primer orden, primer orden fuera de la pantalla (no válida); orden ausente (nota) |
+| Extracción de ADN | `extractionConditions` | Espuma, sal en exceso, alcohol tibio, sin machacar (atención) |
+| Metabolismo | `metabolismConditions` | No factible (no válida); formiato (atención); óptimos alternativos (nota) |
+| Secuencias | `parseConditions`, `alignConditions` | BLOSUM62 con ADN (no válida); matriz simple con proteínas, «*» interno, CDS fuera de la secuencia (atención); códigos ambiguos (nota) |
+| Reto de indagación | `designConditions` | Diseño imposible y presupuesto superado (no válida); niveles que coinciden (atención: niveles máximos en el rango) |
+
 ### `Readout` con resolución y estado (`src/components/ui.tsx`)
 
 Cada lectura admite `resolution` y `state` (`ok`, `warn`, `bad`, dicho en texto: «en rango», «en el límite», «fuera
 de rango»). Retrocompatible: los 65 laboratorios siguen funcionando sin cambios. La resolución se escribe con
-`resolutionText(paso, unidad)` («resolución 0,01 s»), tomando el paso de la constante del modelo cuando existe
-(`TIMER_RES`, `TAPE_RES`, `BALANCE_RES`…). Con resolución: proyectiles, péndulo, choques, cinemática, conservación de
-la masa y cinética química.
+`resolutionText(paso, unidad)` («resolución 0,01 s»), tomando el paso de la ficha del instrumento
+(`src/labs/instruments.ts`, `PROBE`, `…_INSTRUMENTS`) o de la constante del modelo (`TIMER_RES`, `ABS_RES`,
+`COLORIMETER_RES`…); nunca un número nuevo. `state` solo donde el modelo define un intervalo real; si el valor ya dice
+«fuera de rango», el estado lo reemplaza en vez de repetirlo.
+
+#### Adopción por práctica (sin publicar)
+
+| Práctica | Lecturas con resolución | Estado (intervalo del modelo) |
+|---|---|---|
+| Proyectiles, péndulo, choques, cinemática, conservación de la masa, cinética química | (v2.7.0) | — |
+| Leyes de los gases | Manómetro 0,1 kPa, escala de la jeringa 1 mL | Presión: en rango hasta 300 kPa |
+| Densidad | Regla 0,1 cm, balanza 0,1 g, probeta 0,5 mL | Masa y volumen final: fuera de rango si se supera la capacidad (600 g, 100 mL) |
+| Circuitos | Voltímetro 0,01 V, amperímetro 0,001 A | Corriente total: en rango hasta 3 A |
+| Circuitos simples | Multímetro 0,01 V o 0,001 A según el modo | — |
+| Calidad del agua | Las 9 sondas y ensayos de la ficha (0,1 °C, 0,01 de pH, 0,01 mg/L de OD…) | OD ≥ 4,0 mg/L y pH 4,5 a 9,0 (Decreto 1076 de 2015, preservación de fauna) |
+| Equilibrio químico | Colorímetro 0,001, comparador de color 1 | Absorbancia hasta 3; presión total hasta 2,5 bar |
+| Soluciones | Colorímetro 0,001 | Absorbancia hasta 2 |
+| Extracción de ADN | Escala del precipitado 1 u.a. | Tm de Wallace: válida hasta 13 nucleótidos |
+| Ecosistema | Oxímetro 0,1 mg/L, carta de pH 0,2, conteo 1, biomasa 0,5 g | OD frente al mínimo que tolera un pez (si hay peces) |
+| Movimiento | Cinta 0,01 m, fotopuertas y cronómetro 0,01 s | — |
+| Interferencia | Riel 0,1 cm, sensor 0,1 %, calibrador 0,05 mm o regla 1 mm según la escala | — |
+| Máquinas simples | Dinamómetro 0,1 N, regla 0,1 cm | — |
+| Presión | Manómetro en U 1 mm, barómetro 0,1 hPa, cinta 0,5 cm | — |
+| Flotación | Dinamómetro 0,05 N, balanza 0,1 g, densímetro 0,002 g/cm³ | — |
+| Conductores | Amperímetro 0,1 mA | — |
+| Mol | Balanza de precisión 0,001 g | — |
+| Óptica | Transportador 1° (solo en modo real: en modo ideal la lectura no se cuantiza) | — |
+
+Sin resolución por no tener instrumento de lectura directa (el valor es del modelo): enzimas, fotosíntesis (las
+lecturas del registrador ya llevan su resolución), metabolismo, secuencias e indagación.
 
 ### `RelationExplainer` (análisis)
 

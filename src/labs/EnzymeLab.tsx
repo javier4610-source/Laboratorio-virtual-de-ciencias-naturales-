@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ENZYME_LIMITS, ENZYMES, initialRate, simulateEnzyme, findEnzyme, temperatureFactor } from '../models/enzyme';
+import { ENZYME_LIMITS, ENZYMES, initialRate, simulateEnzyme, findEnzyme, temperatureFactor, enzymeConditions } from '../models/enzyme';
 import { fmt } from '../lib/format';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
@@ -236,7 +236,7 @@ export default function EnzymeLab({ api }: LabProps) {
           { k: 'Sustrato transformado', v: ran ? `${fmt(res.percentConverted, 1)} %` : '—' },
           { k: 'Km de la enzima', v: `${fmt(e.km, 1)} mmol/L` },
         ]} />
-        {ran && <Warnings list={res.warnings} />}
+        {ran && <Warnings list={enzymeConditions(res.warnings, { enzymeId, temperature, pH, substrate, enzyme, duration })} />}
         <div className="grid-2">
           <div className="card">
             <Chart title="Producto formado en el tiempo" xLabel="Tiempo (min)" yLabel="Producto (mmol/L)" height={240}

@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { useMeasure } from '../components/Measurement';
 import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/ui';
+import { resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop } from './kit';
@@ -716,8 +717,8 @@ export default function MachinesLab({ api }: LabProps) {
           <div className="stack">
             <h3>Dinamómetro (0,1 N)</h3>
             <Readout items={[
-              { k: 'Peso de la carga R', v: show(lr ? N(lr.load) : '—'), data: true },
-              { k: 'Fuerza F', v: show(effortText), data: true },
+              { k: 'Peso de la carga R', v: show(lr ? N(lr.load) : '—'), data: true, resolution: resolutionText(instrumentSpec('dinamometro').resolution, 'N') },
+              { k: 'Fuerza F', v: show(effortText), data: true, resolution: resolutionText(instrumentSpec('dinamometro').resolution, 'N') },
               { k: 'Sentido de la fuerza', v: show(lr ? dirText : '—') },
               { k: 'Ventaja mecánica R/F', v: show(derived ? fmt(derived.vm, 2) : '—'), data: true },
             ]} />
@@ -734,8 +735,8 @@ export default function MachinesLab({ api }: LabProps) {
           <div className="stack">
             <h3>Reglas (1 mm)</h3>
             <Readout items={[
-              { k: machine === 'palanca' ? 'Recorrido de la fuerza' : 'Cuerda jalada s', v: show(lr && !lr.overload ? `${fmt(lr.sEffort, 1)} cm` : '—'), data: true },
-              { k: 'Subida de la carga', v: show(lr && !lr.overload ? `${fmt(lr.sLoad, 1)} cm` : '—'), data: true },
+              { k: machine === 'palanca' ? 'Recorrido de la fuerza' : 'Cuerda jalada s', v: show(lr && !lr.overload ? `${fmt(lr.sEffort, 1)} cm` : '—'), data: true, resolution: resolutionText(instrumentSpec('regla').resolution, 'cm') },
+              { k: 'Subida de la carga', v: show(lr && !lr.overload ? `${fmt(lr.sLoad, 1)} cm` : '—'), data: true, resolution: resolutionText(instrumentSpec('regla').resolution, 'cm') },
               { k: 'Relación de recorridos', v: show(derived && derived.ratio !== null ? fmt(derived.ratio, 2) : '—') },
             ]} />
             <h3>Trabajo</h3>

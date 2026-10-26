@@ -1,5 +1,6 @@
 import { assertInRange, celsiusToKelvin, R_GAS } from './math';
 import type { ModelSpec } from './types';
+import { num, orList, type ModelCondition } from './conditions';
 
 /**
  * Fotosíntesis en una planta acuática (Elodea) — grado 10.º.
@@ -147,3 +148,32 @@ export const photosynthesisModelSpec: ModelSpec = {
     'Existe un punto de compensación lumínico positivo.',
   ],
 };
+
+/** Temperatura (°C) desde la que el modelo considera que las enzimas de la fotosíntesis se desnaturalizan (vmaxAt). */
+export const PHOTO_DENATURE_T = 40;
+
+/** Advertencias de la práctica con su nivel y su corrección, con los mismos umbrales del modelo. */
+export function photoConditions(input: PhotoInput, res: PhotoResult): ModelCondition[] {
+  const out: ModelCondition[] = [];
+  if (input.temperature >= PHOTO_DENATURE_T) {
+    out.push({
+      text: 'A esta temperatura las enzimas de la fotosíntesis empiezan a desnaturalizarse.', level: 'advertencia',
+      fix: `Baja la «Temperatura del agua» por debajo de ${num(PHOTO_DENATURE_T)} °C.`,
+    });
+  }
+  if (input.lampOn && res.net <= 0) {
+    // Hay burbujas si la luz que llega supera el punto de compensación: I₀·(d₀/d)² > I_c  →  d < d₀·√(I₀/I_c).
+    const comp = res.compensationIrradiance;
+    const dMax = comp === null ? null : Math.ceil(LAMP_D0 * Math.sqrt(LAMP_I0 / comp)) - 1;
+    const current = LIGHT_COLORS.find((c) => c.id === input.color)!;
+    const better = LIGHT_COLORS.filter((c) => c.factor > current.factor).map((c) => c.name.replace(/ \(.*\)$/, '').toLowerCase());
+    const color = better.length > 0 ? `, o usa luz ${orList(better)}` : '';
+    out.push({
+      text: 'La respiración supera a la fotosíntesis: no se liberan burbujas (por debajo del punto de compensación).', level: 'advertencia',
+      fix: dMax !== null && dMax >= PHOTO_LIMITS.distance[0]
+        ? `Acerca la lámpara: baja la «Distancia de la lámpara» a ${num(dMax)} cm o menos${color}, para que la luz supere el punto de compensación.`
+        : `Ni con la lámpara a ${num(PHOTO_LIMITS.distance[0])} cm se supera el punto de compensación: sube el «Bicarbonato de sodio (CO₂)»${color}.`,
+    });
+  }
+  return out;
+}

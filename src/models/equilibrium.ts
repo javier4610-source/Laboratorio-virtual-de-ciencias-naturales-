@@ -1,5 +1,6 @@
 import { assertInRange, celsiusToKelvin, R_GAS, roundToResolution } from './math';
 import type { ModelSpec } from './types';
+import { classifyWarnings, num, type ModelCondition } from './conditions';
 
 /**
  * Equilibrio químico y principio de Le Châtelier (grado 11.º).
@@ -42,6 +43,8 @@ export const KP_NO2_25 = 6.7;
 export const DH_NO2 = -57200;
 /** Resolución del comparador de color para el sistema B (intensidad relativa). */
 export const INTENSITY_RES = 1;
+/** Presión total (bar) que soporta el émbolo de una jeringa escolar sin fugar. */
+export const NO2_MAX_PRESSURE = 2.5;
 
 /** Preparación del tubo del sistema A. */
 export const FE_SETUP = {
@@ -312,7 +315,7 @@ export function solveNO2(s: No2State): No2Equilibrium {
   const intensity = no2Intensity(cNO2);
   const pTotal = pNO2 + pN2O4 + NO2_SETUP.airMmol * c;
   const warnings: string[] = [];
-  if (pTotal > 2.5) warnings.push('La presión supera 2,5 bar: el émbolo de una jeringa escolar podría fugar. Trabaja con volúmenes mayores.');
+  if (pTotal > NO2_MAX_PRESSURE) warnings.push('La presión supera 2,5 bar: el émbolo de una jeringa escolar podría fugar. Trabaja con volúmenes mayores.');
   if (pN2O4 > n2o4VaporPressure(s.temperatura)) warnings.push('La presión parcial del N₂O₄ supera su presión de vapor: en una jeringa real se condensarían gotitas de N₂O₄ líquido. El modelo supone que todo sigue en fase gaseosa.');
   return {
     state: s, K, nNO2: y, nN2O4: x, pNO2, pN2O4, pTotal, cNO2,
@@ -411,3 +414,50 @@ export const equilibriumModelSpec: ModelSpec = {
     'Validación de rangos de todas las entradas.',
   ],
 };
+
+/* ------------------------------------------------------------------ condiciones y correcciones */
+
+/** Nivel y corrección de cada advertencia de `solveFeSCN`, con los mismos umbrales del modelo. */
+export function feConditions(warnings: readonly string[]): ModelCondition[] {
+  return classifyWarnings(warnings, [
+    { match: 'Todo el SCN⁻ precipitó como AgSCN', level: 'advertencia', fix: 'Pulsa «Preparar tubo nuevo»: el Ag⁺ que sobra precipitaría también el SCN⁻ que agregues.' },
+    { match: 'Se formó un precipitado blanco de AgSCN', level: 'nota' },
+    {
+      match: 'La absorbancia supera 3', level: 'invalido',
+      fix: `Diluye con «Agregar ${num(FE_SETUP.waterStepML)} mL de agua» hasta que la absorbancia baje de ${num(ABS_MAX)}, o pulsa «Preparar tubo nuevo» y agrega menos gotas de Fe³⁺ y SCN⁻.`,
+    },
+  ]);
+}
+
+/** Nivel y corrección de cada advertencia de `solveNO2`, con los mismos umbrales del modelo. */
+export function no2Conditions(warnings: readonly string[], s: No2State): ModelCondition[] {
+  const volumes: number[] = [];
+  for (let v = s.volumen; v <= NO2_LIMITS.volume[1] + 1e-9; v += 10) volumes.push(v);
+  const temps: number[] = [];
+  for (let t = s.temperatura; t <= NO2_LIMITS.temperature[1] + 1e-9; t += 5) temps.push(t);
+  const condenses = (x: No2Equilibrium) => x.pN2O4 > n2o4VaporPressure(x.state.temperatura);
+  return classifyWarnings(warnings, [
+    {
+      match: 'La presión supera 2,5 bar', level: 'invalido',
+      fix: () => {
+        const v = volumes.find((vol) => solveNO2({ ...s, volumen: vol }).pTotal <= NO2_MAX_PRESSURE);
+        return v !== undefined
+          ? `Sube el «Volumen de la jeringa» a ${num(v)} mL o más: así la presión total queda en 2,5 bar o menos.`
+          : 'Sube el «Volumen de la jeringa» o baja la «Temperatura del baño de la jeringa» para que la presión total baje de 2,5 bar.';
+      },
+    },
+    {
+      match: 'La presión parcial del N₂O₄ supera su presión de vapor', level: 'invalido',
+      fix: () => {
+        const t = temps.find((temp) => !condenses(solveNO2({ ...s, temperatura: temp })));
+        const v = volumes.find((vol) => !condenses(solveNO2({ ...s, volumen: vol })));
+        const parts = [
+          t !== undefined ? `sube la «Temperatura del baño de la jeringa» a ${num(t)} °C o más` : null,
+          v !== undefined ? `sube el «Volumen de la jeringa» a ${num(v)} mL o más` : null,
+        ].filter((x): x is string => x !== null);
+        const what = parts.length > 0 ? parts.join(', o ') : 'sube la temperatura o el volumen';
+        return `${what.charAt(0).toUpperCase()}${what.slice(1)}: así el N₂O₄ no se condensa y vale el supuesto de fase gaseosa.`;
+      },
+    },
+  ]);
+}

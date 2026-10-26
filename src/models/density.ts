@@ -1,5 +1,6 @@
 import { assertInRange, roundToResolution } from './math';
 import type { ModelSpec } from './types';
+import { classifyWarnings, floorTo, num, type ModelCondition } from './conditions';
 
 /**
  * Modelo de medición de masa, volumen y densidad (grado 6.º).
@@ -164,3 +165,31 @@ export const densityModelSpec: ModelSpec = {
     'Se detecta el desbordamiento de la probeta y la sobrecarga de la balanza.',
   ],
 };
+
+/** Nivel y corrección de cada advertencia de `simulateDensity`, con los mismos umbrales del modelo. */
+export function densityConditions(warnings: readonly string[], input: DensityInput): ModelCondition[] {
+  const material = findSample(input.materialId);
+  const floats = material.density < WATER_DENSITY;
+  const fraction = floats && !input.pushUnder ? material.density / WATER_DENSITY : 1;
+  return classifyWarnings(warnings, [
+    {
+      match: 'La masa supera la capacidad de la balanza', level: 'invalido',
+      fix: () => {
+        // m = ρ·a³ ≤ capacidad  →  a ≤ ∛(capacidad/ρ)
+        const side = floorTo(Math.cbrt(BALANCE_CAPACITY / material.density), 0.1);
+        return `Baja la «Arista del cubo» a ${num(side, 1)} cm o menos: así la masa queda por debajo de ${num(BALANCE_CAPACITY)} g.`;
+      },
+    },
+    {
+      match: 'El agua se desborda de la probeta', level: 'invalido',
+      fix: () => {
+        // V_inicial + V_sumergido ≤ capacidad de la probeta
+        const maxWater = Math.floor(CYLINDER_CAPACITY - input.side ** 3 * fraction);
+        return maxWater >= LIMITS.initialWater[0]
+          ? `Baja el «Agua inicial en la probeta» a ${num(maxWater)} mL o menos, o reduce la «Arista del cubo».`
+          : `Reduce la «Arista del cubo»: esta muestra desplaza tanta agua que no cabe ni con ${num(LIMITS.initialWater[0])} mL iniciales.`;
+      },
+    },
+    { match: 'La muestra flota', level: 'invalido', fix: 'Marca «Hundir la muestra con un alfiler si flota» y vuelve a sumergirla: así el agua desplazada es el volumen completo del cubo.' },
+  ]);
+}

@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CHALLENGES, KIN_LIMITS, MATCH_TOLERANCE, STROBE_INTERVAL, TRACK_LENGTH,
-  challengeError, observationTime, sampleCurve, simulateRun, stateAt,
+  challengeError, observationTime, sampleCurve, simulateRun, stateAt, kinematicsConditions,
 } from '../models/kinematics';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -248,7 +248,7 @@ export default function KinematicsLab({ api }: LabProps) {
           { k: 'Velocidad media = d/t', v: done ? `${fmt(res.meanSpeed, 2)} m/s` : '—', data: true },
           ...(challenge ? [{ k: 'Error frente al reto', v: done && error !== null ? `${fmt(error, 2)} m` : '—', data: true }] : []),
         ]} />
-        {done && <Warnings list={res.warnings} />}
+        {done && <Warnings list={kinematicsConditions(res.warnings, input)} />}
         {done && challenge && error !== null && (
           error < MATCH_TOLERANCE
             ? <Notice kind="ok"><strong>¡Coincide!</strong> Tu curva x–t se separa en promedio {fmt(error, 2)} m de la del reto (tolerancia: {fmt(MATCH_TOLERANCE, 1)} m).</Notice>

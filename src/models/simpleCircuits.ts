@@ -2,6 +2,7 @@ import { assertInRange, roundToResolution } from './math';
 import { MAX_SAFE_CURRENT } from './circuits';
 import { fmt } from '../lib/format';
 import type { ModelSpec } from './types';
+import { classifyWarnings, num, type ModelCondition } from './conditions';
 
 /**
  * Circuitos simples (grado 7.º): pilas AA, interruptores, bombillos, LED, resistor, motor, zumbador,
@@ -472,3 +473,37 @@ export const simpleCircuitModelSpec: ModelSpec = {
     'Ley de nodos: la suma de corrientes en cada borne es cero.',
   ],
 };
+
+/* ------------------------------------------------------------------ condiciones y correcciones */
+
+/** Nivel y corrección de cada advertencia de `solveSimpleCircuit`, con los mismos umbrales del modelo. */
+export function simpleCircuitConditions(warnings: readonly string[]): ModelCondition[] {
+  const id = (text: string, re: RegExp) => re.exec(text)?.[1] ?? '';
+  const flip = (pid: string) => `Selecciona el ${pid} en la mesa y pulsa «Girar ${pid} (invertir polaridad)».`;
+  return classifyWarnings(warnings, [
+    {
+      match: /^¡Cortocircuito!/, level: 'invalido',
+      fix: 'Quita el cable que une directamente los bornes de la pila, o pon en ese camino un bombillo, un resistor u otro elemento que limite la corriente.',
+    },
+    {
+      match: /^El bombillo (\S+) recibe/, level: 'invalido',
+      fix: (t) => `Quita una pila o conecta otro bombillo en serie con el ${id(t, /^El bombillo (\S+)/)}: así recibe como máximo ${num(SC.lamp.vRated * 1.3, 2)} V (nominal ${num(SC.lamp.vRated, 1)} V).`,
+    },
+    {
+      match: /^Por el (\S+) pasan .* mA \(máximo 30 mA\)/, level: 'invalido',
+      fix: (t) => `Conecta un resistor en serie con el ${id(t, /^Por el (\S+)/)} (o quita una pila) hasta que pasen ${num(SC.led.iMax * 1000)} mA o menos.`,
+    },
+    { match: /^El (\S+) está conectado al revés/, level: 'advertencia', fix: (t) => flip(id(t, /^El (\S+)/)) },
+    { match: /^El zumbador (\S+) está al revés/, level: 'advertencia', fix: (t) => flip(id(t, /^El zumbador (\S+)/)) },
+    {
+      match: /^La pila (\S+) está siendo forzada/, level: 'advertencia',
+      fix: (t) => `${flip(id(t, /^La pila (\S+)/))} Así su borne + queda del mismo lado que el de las demás pilas.`,
+    },
+    {
+      match: 'El amperímetro está conectado en paralelo', level: 'invalido',
+      fix: 'Pon el multímetro en serie: abre el circuito en un punto y conecta sus dos puntas allí, para que toda la corriente pase por él. Para medir voltaje entre dos puntos, cambia el modo a voltímetro.',
+    },
+    { match: 'El circuito está abierto', level: 'advertencia', fix: 'Cierra el interruptor y revisa que los cables formen un camino continuo de un borne de la pila al otro.' },
+    { match: 'El cálculo no terminó de converger', level: 'nota' },
+  ]);
+}

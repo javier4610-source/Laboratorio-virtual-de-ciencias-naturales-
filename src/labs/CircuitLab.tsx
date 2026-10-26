@@ -1,11 +1,12 @@
 import { useMemo, useState, type KeyboardEvent } from 'react';
-import { brightness, CIRCUIT_LIMITS, solveCircuit, type Topology } from '../models/circuits';
+import { brightness, CIRCUIT_LIMITS, MAX_SAFE_CURRENT, solveCircuit, circuitConditions, type Topology } from '../models/circuits';
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
+import { resolutionText } from '../components/Experiment';
 import { Knob, ManipHint } from './manipulate';
 import { playSound, useSoundLoop } from '../lib/sound';
 
@@ -171,7 +172,8 @@ export default function CircuitLab({ api }: LabProps) {
   const [closed, setClosed] = useState<[boolean, boolean, boolean]>([true, true, true]);
   const [main, setMain] = useState(true);
   const [meter, setMeter] = useState<'1' | '2' | '3' | 'fuente'>('1');
-  const res = useMemo(() => solveCircuit({ topology, emf, internalResistance: r, resistances: R, closed, mainSwitch: main }), [topology, emf, r, R, closed, main]);
+  const circuitInput = useMemo(() => ({ topology, emf, internalResistance: r, resistances: R, closed, mainSwitch: main }), [topology, emf, r, R, closed, main]);
+  const res = useMemo(() => solveCircuit(circuitInput), [circuitInput]);
   usePublishModel(() => {
     const allClosed = closed.every(Boolean) && main;
     const reqExpr = topology === 'serie' ? '[R1] + [R2] + [R3]'
@@ -295,12 +297,12 @@ export default function CircuitLab({ api }: LabProps) {
         <ManipHint>Gira la perilla de la fuente (abajo a la izquierda) para cambiar la fem, o enfócala con Tab y usa las flechas.</ManipHint>
         <Readout items={[
           { k: 'Resistencia equivalente', v: res.equivalentResistance === null ? 'circuito abierto' : `${fmt(res.equivalentResistance, 2)} Ω` },
-          { k: 'Corriente total', v: `${fmt(totalCurrent, 3)} A`, data: true },
+          { k: 'Corriente total', v: `${fmt(totalCurrent, 3)} A`, data: true, state: res.open ? undefined : res.totalCurrent > MAX_SAFE_CURRENT ? 'bad' : 'ok' },
           { k: 'Voltaje en bornes', v: `${fmt(res.terminalVoltage, 2)} V` },
           { k: 'Potencia en resistores', v: `${fmt(res.totalPower, 2)} W` },
           { k: 'Pérdida en la batería', v: `${fmt(res.internalLoss, 3)} W` },
         ]} />
-        <Warnings list={res.warnings} />
+        <Warnings list={circuitConditions(res.warnings, circuitInput, res)} />
         <div className="table-wrap">
           <table>
             <caption>Mediciones por elemento (instrumentos ideales)</caption>
@@ -331,7 +333,10 @@ export default function CircuitLab({ api }: LabProps) {
         <div className="card stack-sm">
           <h3>Multímetro</h3>
           <Segmented label="Conectar a" value={meter} onChange={(v) => { remeasure(`V-${v}`, `I-${v}`); setMeter(v); }} options={[{ value: '1', label: 'R1' }, { value: '2', label: 'R2' }, { value: '3', label: 'R3' }, { value: 'fuente', label: 'Batería' }]} />
-          <Readout items={[{ k: `Voltímetro (${meterReading.label})`, v: `${fmt(meterReading.v, 2)} V`, data: true }, { k: `Amperímetro (${meterReading.label})`, v: `${fmt(meterReading.i, 3)} A`, data: true }]} />
+          <Readout items={[
+            { k: `Voltímetro (${meterReading.label})`, v: `${fmt(meterReading.v, 2)} V`, data: true, resolution: resolutionText(instrument('circuitos', 'voltimetro').resolution, 'V') },
+            { k: `Amperímetro (${meterReading.label})`, v: `${fmt(meterReading.i, 3)} A`, data: true, resolution: resolutionText(instrument('circuitos', 'amperimetro').resolution, 'A') },
+          ]} />
           <RecordButton onRecord={record} />
         </div>
         <Notice>Resistores óhmicos{real ? '; multímetro real (ficha de incertidumbre)' : ' e instrumentos ideales'}. El brillo se estima a partir de la potencia; un filamento real cambia su resistencia al calentarse.</Notice>

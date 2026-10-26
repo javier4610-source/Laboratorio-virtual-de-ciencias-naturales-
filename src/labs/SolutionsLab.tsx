@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { FLASK_VOLUMES, PIPETTE_VOLUMES, prepareSolution, SOLUTES, solutionColor, unknownAbsorbance, SOLUTION_LIMITS, ABSORBANCE_MAX } from '../models/solutions';
+import { FLASK_VOLUMES, PIPETTE_VOLUMES, prepareSolution, SOLUTES, solutionColor, unknownAbsorbance, SOLUTION_LIMITS, ABSORBANCE_MAX, COLORIMETER_RES, solutionConditions } from '../models/solutions';
+import { resolutionText } from '../components/Experiment';
 import { prettyFormula } from '../models/chemistry';
 import { fmt, fmtSig, parseLocaleNumber } from '../lib/format';
 import { Notice, Readout, RecordButton, Select, Warnings } from '../components/ui';
@@ -228,11 +229,11 @@ export default function SolutionsLab({ api }: LabProps) {
             { k: 'ppm (mg/L)', v: fmtSig(ok.ppm, 4) },
             { k: 'Factor de dilución', v: fmt(ok.dilutionFactor, 1) },
             { k: 'Concentración final', v: `${fmtSig(ok.finalMolarity, 4)} mol/L`, data: true },
-            { k: 'Absorbancia', v: measured ? ok.absorbanceReading : 'sin medir' },
+            { k: 'Absorbancia', v: measured ? (ok.absorbance !== null && ok.absorbance > ABSORBANCE_MAX ? `> ${fmt(ABSORBANCE_MAX, 2)}` : ok.absorbanceReading) : 'sin medir', resolution: ok.absorbance !== null ? resolutionText(COLORIMETER_RES, '') : undefined, state: measured && ok.absorbance !== null ? (ok.absorbance > ABSORBANCE_MAX ? 'bad' : 'ok') : undefined },
             { k: 'Transmitancia', v: measured && ok.transmittance !== null ? `${fmt(ok.transmittance, 1)} %` : '—' },
           ]} />
         )}
-        {ok && <Warnings list={ok.warnings.filter((w) => measured || !w.includes('absorbancia'))} />}
+        {ok && <Warnings list={solutionConditions(ok.warnings.filter((w) => measured || !w.includes('absorbancia')), { soluteId, mass, flaskVolume: flask }, ok)} />}
         {ok && (
           <div className="card stack-sm">
             <label htmlFor="sol-guess">Antes de mirar el resultado, calcula la molaridad de la solución madre (mol/L)</label>

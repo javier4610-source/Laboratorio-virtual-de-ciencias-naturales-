@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
-  BIOMASS_ID, CARBON_SOURCES, ECOLI_CORE, ESSENTIAL_THRESHOLD, FBA_LIMITS, KEY_EXCHANGES, KEY_REACTIONS, MAP_EDGES, MAP_NODES, MODEL_PROVENANCE,
+  BIOMASS_ID, CARBON_SOURCES, ECOLI_CORE, metabolismConditions, ESSENTIAL_THRESHOLD, FBA_LIMITS, KEY_EXCHANGES, KEY_REACTIONS, MAP_EDGES, MAP_NODES, MODEL_PROVENANCE,
   PATHWAY_LABEL, REFERENCE_CONDITION, UNLIMITED, conditionBounds, fluxVariability, geneKnockoutScan, oxygenSeries, pathwayOf, roundFlux, roundGrowth, runFba,
   type CarbonId, type FbaCondition, type FbaResult, type KnockoutRow, type MapEdge,
 } from '../models/metabolism';
@@ -281,10 +281,12 @@ export default function MetabolismLab({ api }: LabProps) {
   const essential = scan ? scan.rows.filter((r) => r.essential) : [];
   const reduced = scan ? scan.rows.filter((r) => !r.essential && r.ratio < 0.999) : [];
 
-  const warn: string[] = [];
-  if (result && result.fba.status !== 'optimal') warn.push('El problema no es factible: con estas restricciones no existe ningún vector de flujos que cumpla el balance de masa, los límites y el mantenimiento mínimo (ATPM ≥ 8,39 mmol/gDW/h). El modelo predice que no hay crecimiento.');
-  if (result && result.fva && KEY_EXCHANGES.some((e) => result.fva![e.id][1] - result.fva![e.id][0] > 0.01)) warn.push('Hay óptimos alternativos: algunos flujos de intercambio pueden tomar distintos valores con el mismo crecimiento máximo. La tabla muestra el intervalo (FVA); el valor puntual es solo una de las soluciones.');
-  if (carbon === 'for') warn.push('El formiato no aporta carbono para la biomasa en este modelo: espera un problema no factible.');
+  const warn = metabolismConditions({
+    infeasible: !!result && result.fba.status !== 'optimal',
+    alternativeOptima: !!result?.fva && KEY_EXCHANGES.some((e) => result.fva![e.id][1] - result.fva![e.id][0] > 0.01),
+    carbon,
+    knockouts: totalKo,
+  });
 
   const series = [
     ...(ref ? [{ label: 'Referencia (glucosa 10, sin eliminaciones)', color: 'var(--series-2)', kind: 'line' as const, dashed: true, points: ref.series.map((p) => ({ x: p.oxygen, y: p.growth })) }] : []),

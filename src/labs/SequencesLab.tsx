@@ -2,7 +2,7 @@ import { useMemo, useState, type ChangeEvent } from 'react';
 import {
   FRAMES, GENETIC_CODES, KIND_LABEL, SEQ_LIMITS, SEQUENCE_EXAMPLES, TABLE_IDS, align, alignmentText, comparisonPresets, complementSeq,
   composition, exampleCds, findExample, findOrfs, frameCodons, frameLabel, gcWindows, isStartCodon, parseSequenceText, reverseComplementSeq,
-  roundPercent, sourceStatus, toFasta, transcribeCoding, translateCodon, translateSeq,
+  alignConditions, parseConditions, roundPercent, sourceStatus, toFasta, transcribeCoding, translateCodon, translateSeq,
   type Alignment, type Frame, type Orf, type Scoring, type SeqKind, type SeqRecord, type TableId,
 } from '../models/sequences';
 import { AMINO_ACIDS } from '../models/dna';
@@ -323,12 +323,7 @@ export default function SequencesLab({ api }: LabProps) {
       setResult({ al, nameA: A.name, nameB: B.name, scoring });
     } catch (e) { setResult(null); setAlignError((e as Error).message); }
   };
-  const alignWarn: string[] = [];
-  {
-    const A = findCand(keyA);
-    if (A.kind === 'proteina' && scoring.matrix === 'simple') alignWarn.push('Para proteínas conviene BLOSUM62: la matriz simple trata igual un cambio entre aminoácidos parecidos que entre muy distintos.');
-    if (A.kind !== 'proteina' && scoring.matrix === 'blosum62') alignWarn.push('BLOSUM62 es una matriz de aminoácidos: para ADN usa la matriz simple de coincidencia y no coincidencia.');
-  }
+  const alignWarn = alignConditions(findCand(keyA).kind, scoring.matrix);
 
   const runOrfs = () => {
     try { setOrfs(findOrfs(dna, { table, minAa, starts, includePartial: false })); setViewFrom(0); }
@@ -536,7 +531,7 @@ export default function SequencesLab({ api }: LabProps) {
             <input id="sqb-file" type="file" accept=".fa,.fasta,.fna,.faa,.ffn,.gb,.gbk,.genbank,.txt,text/plain" onChange={onFile} />
           </div>
           {errors.length > 0 && <Notice kind="bad"><strong>No se pudo leer:</strong><ul className="list">{errors.slice(0, 6).map((e) => <li key={e}>{e}</li>)}</ul></Notice>}
-          <Warnings list={warnings.slice(0, 6)} />
+          <Warnings list={parseConditions(warnings.slice(0, 6))} />
           {!example && (
             <div className="small stack-sm">
               <div><StatusChip status={src.status} prefix="Secuencia" /></div>

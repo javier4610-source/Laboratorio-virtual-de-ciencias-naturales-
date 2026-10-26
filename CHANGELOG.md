@@ -7,6 +7,47 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+Rediseño, paso siguiente (ADR 0007): cada aviso de condición dice su causa y cómo corregirla, y las lecturas directas
+de instrumentos muestran su resolución. Los textos de las advertencias de los modelos, las rutas, los datos guardados y
+los valores dorados no cambian.
+
+### Añadido
+- **«Cómo corregirlo» propio en cada advertencia de 19 prácticas** (circuitos, circuitos simples, gases, enzimas,
+  densidad, calidad del agua, cinemática, movimiento, cinética química, conservación de la masa, equilibrio químico,
+  ecosistema, soluciones, fotosíntesis, interferencia, extracción de ADN, metabolismo, secuencias y reto de
+  indagación): qué control cambiar y en qué sentido («Sube el «Volumen de la jeringa» a 40 mL o más», «Baja la
+  «Distancia de la lámpara» a 19 cm o menos»), calculado con el mismo umbral del modelo que produjo la advertencia.
+  Cada aviso tiene su nivel: **Condición no válida** (la medición no vale así), **Atención** (vale, pero conviene
+  revisarla) o **Nota** (para interpretar el resultado).
+- `src/models/conditions.ts` (`classifyWarnings`, `sortConditions`) y una función `…Conditions` por modelo, pura y
+  probada; `Warnings` acepta textos (como antes) o condiciones `{ text, level, fix }`.
+- **Resolución del instrumento** en las lecturas directas de 17 prácticas más, tomada de la ficha de incertidumbre
+  (`src/labs/instruments.ts`) o de la constante del modelo: gases, densidad, circuitos, circuitos simples, calidad del
+  agua, equilibrio químico, soluciones, extracción de ADN, ecosistema, movimiento, interferencia, máquinas simples,
+  presión, flotación, conductores, mol y óptica (en modo real). **Estado** («en rango» o «fuera de rango») solo donde
+  el modelo define el intervalo: presión de la jeringa (300 kPa), capacidad de la balanza y de la probeta, corriente
+  del fusible (3 A), OD y pH frente al Decreto 1076 de 2015, absorbancia de los colorímetros, presión de la jeringa de
+  NO₂ (2,5 bar), validez de la regla de Wallace y OD mínimo para los peces.
+- Pruebas: `tests/unit/conditions.test.ts` (34 casos: cada advertencia tiene nivel y corrección, y la corrección
+  propuesta, aplicada al modelo, hace desaparecer la advertencia; render de `Warnings`) y `tests/e2e/avisos.spec.ts`
+  (gases, enzimas, densidad y circuitos en claro y oscuro: aviso con su corrección, una sola región de estado, axe
+  WCAG 2.2 AA y sin desbordamiento a 390 px).
+
+### Cambiado
+- Con condiciones, `Warnings` muestra un aviso por causa (ordenados: no válida, atención, nota) en lugar de una lista
+  con un aviso común. Los avisos de fotosíntesis, interferencia, metabolismo, secuencias y reto de indagación se arman
+  ahora en el modelo, con los mismos textos.
+- Densidad: el volumen final dice «se desborda» en lugar de «—» cuando el agua no cabe en la probeta. Equilibrio
+  químico y soluciones: la absorbancia fuera del intervalo se lee «> 3» o «> 2,00» con el estado «fuera de rango»; la
+  Tm de Wallace fuera de su intervalo, igual.
+- `NO2_MAX_PRESSURE` (equilibrio) y `COLORIMETER_RES` (soluciones) nombran umbrales que antes estaban escritos como
+  números sueltos; los valores no cambian.
+
+### Accesibilidad
+- Todos los avisos de una práctica van en **una sola región `role="status"`** (`ConditionAlert` con `live={false}`
+  dentro de `Warnings`): el lector de pantalla no anuncia varias regiones a la vez. El nivel se dice en texto, no solo
+  con color.
+
 ## [2.8.0] · 2026-10-26
 
 Nota de integridad: los parámetros de red de Li₂O, Na₂O, K₂O, BaO y ZnS se muestran «por verificar» contra Wyckoff (1963), porque la obra no se pudo consultar al incorporarlos.

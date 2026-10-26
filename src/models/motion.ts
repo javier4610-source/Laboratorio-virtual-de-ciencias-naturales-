@@ -1,5 +1,6 @@
 import { assertInRange, roundToResolution, seededRandom } from './math';
 import type { ModelSpec } from './types';
+import { classifyWarnings, orList, type ModelCondition } from './conditions';
 
 /**
  * Movimiento y distancia recorrida (grado 6.º) en la cancha de la I.E. Campo Alegre (Apartadó).
@@ -355,3 +356,15 @@ export const motionModelSpec: ModelSpec = {
     'Las entradas fuera de rango y la meta a menos de 5 m de la salida se rechazan.',
   ],
 };
+
+/** Nivel y corrección de cada advertencia de `simulateMotion`: son notas para interpretar la rapidez media. */
+export function motionConditions(warnings: readonly string[]): ModelCondition[] {
+  const uniform = MOVERS.filter(isUniform).map((m) => m.short.toLowerCase());
+  return classifyWarnings(warnings, [
+    {
+      match: 'El balón frena', level: 'nota',
+      fix: `Si quieres que la rapidez media coincida con la rapidez en cada instante, elige un móvil de rapidez constante (${orList(uniform)}).`,
+    },
+    { match: 'En ida y vuelta el móvil regresa', level: 'nota', fix: 'Si quieres que la distancia recorrida y el desplazamiento coincidan, elige la actividad «Medir un tramo» (solo ida).' },
+  ]);
+}

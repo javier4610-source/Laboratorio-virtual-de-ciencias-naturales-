@@ -1,5 +1,6 @@
 import { assertInRange } from './math';
 import type { ModelSpec } from './types';
+import { classifyWarnings, num, type ModelCondition } from './conditions';
 
 /**
  * Circuitos de corriente continua (grado 11.º): ley de Ohm y leyes de Kirchhoff.
@@ -144,3 +145,24 @@ export const circuitModelSpec: ModelSpec = {
     'Al abrir un interruptor en serie la corriente es cero; en paralelo, las otras ramas siguen funcionando.',
   ],
 };
+
+/** Nivel y corrección de cada advertencia de `solveCircuit`, con los mismos umbrales del modelo. */
+export function circuitConditions(warnings: readonly string[], input: CircuitInput, result: CircuitResult): ModelCondition[] {
+  const closeWhat = input.topology === 'serie'
+    ? 'el interruptor general y los de R1, R2 y R3 (en serie, uno abierto corta todo el circuito)'
+    : input.topology === 'paralelo'
+      ? 'el interruptor general y al menos uno de los interruptores de R1, R2 o R3'
+      : 'el interruptor general, el de R1 y al menos uno de los de R2 o R3';
+  return classifyWarnings(warnings, [
+    { match: 'El circuito está abierto', level: 'advertencia', fix: `Cierra ${closeWhat}.` },
+    {
+      match: /^La corriente total .* supera/, level: 'invalido',
+      fix: () => {
+        // I = ε/(R_eq + r) ≤ I_máx  →  R_eq + r ≥ ε/I_máx
+        const rMin = input.emf / MAX_SAFE_CURRENT;
+        const now = (result.equivalentResistance ?? 0) + input.internalResistance;
+        return `Baja la «fem de la batería (ε)» o sube las resistencias: con ε = ${num(input.emf, 1)} V, R equivalente + r debe superar ${num(rMin, 1)} Ω (ahora es ${num(now, 1)} Ω) para que la corriente quede por debajo de ${num(MAX_SAFE_CURRENT)} A.`;
+      },
+    },
+  ]);
+}

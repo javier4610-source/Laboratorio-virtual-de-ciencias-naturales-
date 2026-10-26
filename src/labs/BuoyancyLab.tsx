@@ -8,6 +8,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { resolutionText } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
@@ -562,12 +563,12 @@ export default function BuoyancyLab({ api }: LabProps) {
         </div>
         <ManipHint>Arrastra el dinamómetro hacia abajo para meter el objeto en el líquido, lleva otro objeto del estante al gancho, echa cucharadas de sal al vaso y arrastra la plastilina hacia un lado para moldearla. Con el teclado: Tab para elegir la pieza y flechas (↑ o → baja el dinamómetro y echa sal).</ManipHint>
         <Readout items={[
-          { k: 'Peso en el aire P', v: show(`${fmt(readings.weight, 2)} N`), data: true },
-          { k: 'Peso aparente (dinamómetro)', v: show(`${fmt(readings.apparent, 2)} N`), data: true },
+          { k: 'Peso en el aire P', v: show(`${fmt(readings.weight, 2)} N`), data: true, resolution: resolutionText(dynSpec.resolution, 'N') },
+          { k: 'Peso aparente (dinamómetro)', v: show(`${fmt(readings.apparent, 2)} N`), data: true, resolution: resolutionText(dynSpec.resolution, 'N') },
           { k: 'Empuje E = P − P_ap', v: show(`${fmt(readings.buoyancy, 2)} N`) },
-          { k: setup === 'rebose' ? 'Líquido en el colector (balanza)' : 'Aumento en la balanza', v: show(`${fmt(readings.balance, 1)} g`), data: true },
+          { k: setup === 'rebose' ? 'Líquido en el colector (balanza)' : 'Aumento en la balanza', v: show(`${fmt(readings.balance, 1)} g`), data: true, resolution: resolutionText(balSpec.resolution, 'g') },
           { k: 'Peso del líquido desalojado m·g', v: show(`${fmt(readings.displacedWeight, 3)} N`) },
-          { k: 'Densímetro', v: show(`${fmt(readings.rho, 3)} g/cm³`), data: true },
+          { k: 'Densímetro', v: show(`${fmt(readings.rho, 3)} g/cm³`), data: true, resolution: resolutionText(hydSpec.resolution, 'g/cm³') },
           { k: '¿Flota?', v: show(floatText) },
         ]} />
         {objectId === 'icopor' && <Notice kind="warn">El icopor pesa unos 3 g (≈ 0,03 N): menos que la mitad de una división del dinamómetro. Para él, la medida útil es la de la balanza.</Notice>}

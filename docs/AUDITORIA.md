@@ -441,6 +441,7 @@ ADR 0007; sistema de diseño: `docs/v2/SISTEMA-DE-DISENO.md`. Capturas antes y d
 | Panel docente, banco, ayuda, informe | axe en todas las pestañas (ahora también «Catálogo»); capturas | Correcto; panel 9 838 → ~1 250 px al abrir; banco 52 474 → ~6 450 px | — | — | Correcto |
 | Impresión | Captura con `media: print` del experimento y del informe | Sin barras de herramientas, paginador ni ajustes | — | — | Correcto |
 | Regresión | `tsc -b`; 1162 pruebas unitarias (67 archivos); `npm run build`; E2E completo 158 de 158 (7 nuevas en plataforma.spec.ts) | Todas pasan | — | — | Correcto |
+| Regresión tras integrar la versión 2.5.0 | `tsc -b`; 1197 pruebas unitarias (68 archivos); `npm run build`; E2E completo 162 de 162 | Todas pasan | — | — | Correcto |
 
 | Ruta (390 px) | FCP antes → después | LCP antes → después | Bloqueo (> 50 ms) antes → después | JS transferido antes → después |
 |---|---|---|---|---|

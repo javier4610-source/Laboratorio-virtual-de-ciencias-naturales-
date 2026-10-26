@@ -666,7 +666,7 @@ export default function MotionLab({ api }: LabProps) {
 
   const desc = (() => {
     const where = `Cono de salida en ${fmt(start, 0)} m y bandera de meta en ${fmt(finish, 0)} m de la cancha; la cinta métrica está tendida ${fmt(tape, 1)} m desde el cono${aligned ? ' y llega a la bandera' : ' y no llega exactamente a la bandera'}.`;
-    if (isRace) return `${where} Carrera: carril 1 ${lanes[0].name.toLowerCase()}, carril 2 ${lanes[1].name.toLowerCase()}. ${done ? `Llegó primero: ${winnerText}.` : running ? 'Los móviles avanzan.' : 'Los móviles esperan antes de la salida.'}`;
+    if (isRace) return `${where} Carrera: carril 1 ${lanes[0].name.toLowerCase()}, carril 2 ${lanes[1].name.toLowerCase()}. ${done ? `Llegó primero: ${winnerText}.` : running ? 'Los móviles avanzan.' : phase === 'pausa' ? 'La carrera está en pausa.' : 'Los móviles esperan antes de la salida.'}`;
     const state = done
       ? (timeReading !== null ? `Recorrido terminado; el cronómetro marca ${fmt(timeReading, 2)} s.` : 'Recorrido terminado sin cronometrar.')
       : running ? `${mover.name} en movimiento; cronómetro en ${fmt(watchValue, 2)} s.`

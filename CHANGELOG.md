@@ -7,6 +7,8 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.7.0] · 2026-10-26
+
 Rediseño, siguiente paso (ADR 0007): la barra común de simulación llega a todas las prácticas con dinámica temporal.
 Sin cambios en rutas, datos guardados ni modelos científicos (los valores dorados no cambian).
 

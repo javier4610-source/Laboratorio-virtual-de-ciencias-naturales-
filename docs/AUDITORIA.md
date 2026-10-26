@@ -477,3 +477,25 @@ discretas o una fuente controlada por la propia práctica (tabla con el motivo e
 
 No verificado: lectores de pantalla reales (NVDA, VoiceOver) leyendo el cambio de estado, Firefox y Safari, equipos
 escolares modestos y uso con estudiantes de la pausa en clase.
+
+# Taller de compuestos, siguiente paso (versión 2.8.0)
+
+Elemento de la hoja de ruta: redes de más sólidos con estructura publicada, sales de amonio y binarios entre no
+metales en el taller, y revisión de los registros de PubChem hallados solo por la fórmula. Capturas de revisión
+(visor 3D y tarjeta de resultado, claro y oscuro, 1280 y 390 px) en el directorio temporal del agente.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Fuentes de las estructuras | AMCSD, COD, ICSD y Wikipedia bloqueados por el proxy; solo PubChem y PyPI accesibles | Corindón: CIF real de la AMCSD 0009325 (Lewis y otros, 1982) leído del paquete Dans_Diffraction 3.4.0; rutilo: a y c del CRC 60.ª ed. en el texto de la HSDB (PubChem); cuarzo: Levien y otros (1980), mismos valores que xrayutilities 1.8.0; cúbicas: Wyckoff (1963) | Los parámetros de Wyckoff de Li₂O, Na₂O, K₂O, BaO y ZnS no se pudieron releer en la fuente | Se comprueban con la densidad publicada y con la suma de radios de Shannon (≤ 0,02 Å) | Correcto, con la limitación declarada |
+| Generador de redes | Operaciones de simetría de los CIF y de las Tablas Internacionales; Z por celda; celdas neutras | Rutilo 2 Ti + 4 O; corindón 12 Al + 18 O (V = 254,977 Å³ como el CIF); cuarzo 3 Si + 6 O | Con Si en (x, 0, 0) el cuarzo daba 6 Si por celda (otro origen) | Si en 3a = (x, 0, ⅔) y z(O) + ⅔, documentado | Correcto |
+| Distancias y coordinación | `tests/unit/crystals.test.ts` | Ti–O 1,950 Å ×4 y 1,980 Å ×2; Al–O 1,855 Å ×3 y 1,972 Å ×3; Si–O 1,605 y 1,614 Å, Si–O–Si 143,7° (Levien: 1,605, 1,614 y 143,73°); antifluoritas 4:8, blenda 4:4, rutilo 6:3, corindón 6:4, cuarzo 4:2 | La ventana de 1 % no contaba los octaedros distorsionados | Ventana común de 1,10 × la distancia mínima | Correcto |
+| Densidad calculada frente a publicada | 14 cristales; densidades leídas de PubChem con su fuente (`cristales_pubchem.mjs`) | 12 a menos de 2,1 %; las 6 densidades que ya tenía el kit coinciden con las de PubChem | Na₂O (+6,1 %) y BaO (+5,7 %): la densidad tabulada es menor que la de la red | Nota visible (medición macroscópica; posible porosidad o reacción con el aire, no comprobada) | Correcto, con nota |
+| Visor de redes | Capturas con WebGL (SwiftShader) claro/oscuro, 1280 y 390 px | Eje c vertical en celdas no cúbicas; poliedro completo; red covalente con palitos (`applyMolStyle`) | Visto desde arriba, el octaedro del rutilo se veía plano; en la celda estrecha del corindón el poliedro quedaba con 3 de 6 vecinos; la columna de rótulos ocupaba media pantalla a 390 px | Orientación inicial fija por cuaternión; `periodicShell` dibuja los vecinos de la celda contigua; columna `fit-content(40%)` | Corregido |
+| Sales de amonio | Unitarias: NH₃ + HCl → NH₄Cl, nitrato, sulfato, carbonato, DAP, MAP; rechazos | Correcto; NH₄⁺ con 4 enlaces N–H y el oxoanión en dos visores | Neutralidad del NH₄NO₃: contaba 2 aniones y 0 cationes | Oxoaniones contados por el O | Corregido |
+| Binarios entre no metales | Unitarias: PCl₃, PCl₅, CCl₄, CS₂ (S=C=S), SF₆, BF₃, NF₃; orden de electronegatividad; S + Cl fuera del taller | Correcto | El PCl₅ se veía como una molécula plana (axiales de frente) | Giro rígido de presentación para 4 o más dominios | Corregido |
+| Nomenclatura | 316 casos (22 nuevos); `nomenclatura_pubchem.mjs` 2026-10-26 | 312 con CID de la misma fórmula y en todos algún nombre del motor entre los sinónimos; 314 los forma el taller, 0 diferencias | — | — | Correcto |
+| Registro en PubChem | `compuestos_pubchem.mjs` 2026-10-26 con la regla de `pubchemNameMatch.ts` | 3397 compuestos: 1449 por nombre, 546 por fórmula + sinónimo, 587 fórmulas registradas sin coincidencia de nombre, 815 formales; 9 con descartes (Rb₂O «Rubidium(1+),hydroxide», Cl₂O₅ «Chloroperoxyperoxy hypochlorite», V(OH)₃ «Hydroxy(oxo)vanadium;hydrate», NH₄BrO «Hydroxylammonium bromide»…) | De los 1129 de la v2.5.0 hallados solo por la fórmula, 545 eran la misma sustancia con otra notación y 5 eran otra estructura | Reclasificados por la regla; muestra de 25 revisada a mano sin falsos positivos | Correcto; los 587 restantes requieren revisión humana |
+| Regresión | `tsc -b`; pruebas unitarias; `npm run build`; E2E completo tras el merge de la 2.7.0 | `tsc -b` sin errores; 1230 pruebas unitarias (71 archivos); `npm run build`; E2E completo tras el merge: 180 pasan y 1 se omite por diseño (capturas de `simulacion.spec.ts`, solo con SIMC_SHOTS); 8 nuevas en `taller-compuestos.spec.ts` | — | — | Correcto |
+
+No incluido (declarado en `CRYSTALS_NOT_INCLUDED`): CaSO₄ (sin acceso a un refinamiento publicado), SrO (sin densidad
+publicada en PubChem) y redes de sales de amonio (el NH₄⁺ se desordena en el cristal).

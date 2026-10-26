@@ -7,6 +7,64 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.8.0] · 2026-10-26
+
+Taller de compuestos, siguiente paso (hoja de ruta): más redes cristalinas con estructura publicada, sales de amonio,
+binarios entre no metales y revisión de los registros de PubChem hallados solo por la fórmula. Versión **MENOR**
+(funciones nuevas; los identificadores, rutas y datos guardados no cambian).
+
+### Añadido
+- **Redes cristalinas de 8 sólidos más** (`src/chem/crystal.ts`): Li₂O, Na₂O y K₂O (antifluorita), BaO (halita),
+  ZnS (blenda), TiO₂ (rutilo), α-Al₂O₃ (corindón) y el cuarzo α (SiO₂, **red covalente**, dibujada con todos sus
+  enlaces y el estilo común de palitos, `applyMolStyle`). El generador es general: aplica las operaciones de simetría
+  del grupo espacial (escritas como en los CIF) a la unidad asimétrica, en celdas cúbicas, tetragonales y hexagonales.
+  Fuentes: Wyckoff (1963) para las cúbicas; CRC Handbook 60.ª ed. (a y c del rutilo, texto citado en PubChem) y
+  Abrahams y Bernstein (1971) para x(O); CIF de la AMCSD 0009325 (Lewis, Schwarzenbach y Flack, 1982) para el corindón;
+  Levien, Prewitt y Weidner (1980) para el cuarzo.
+- **Densidades publicadas con su fuente original** (`scripts/validacion/cristales_pubchem.mjs` →
+  `src/data/quimica/cristales-pubchem.json`): CRC Handbook (vía la HSDB), base PAC del DOE, fichas ICSC o IARC, todas
+  leídas de PubChem con una regla de elección declarada. Confirma también las 6 densidades que ya tenía el kit.
+- **Visor de redes** (`Crystal3D`): grupo espacial, parámetros a y c, todas las distancias del poliedro de coordinación
+  con su multiplicidad (Ti–O 1,950 Å ×4 y 1,980 Å ×2; Al–O 1,855 Å ×3 y 1,972 Å ×3), ángulo Si–O–Si, nota cuando la
+  densidad medida difiere más de 3 % y panel «Fuentes de la estructura y de la densidad». Las celdas no cúbicas se
+  muestran con el eje c vertical.
+- **Taller: ruta «NH₃ + ácido → sal de amonio»** (cloruro, fluoruro, bromuro, yoduro, sulfuro, nitrato, nitrito,
+  sulfato, hidrogenosulfato, carbonato, hidrogenocarbonato, fosfatos DAP y MAP, perclorato, dicromato…) con su vía de
+  obtención y notas de seguridad; el ion **NH₄⁺ se dibuja con sus cuatro enlaces N–H** junto al oxoanión.
+- **Taller: ruta «No metal + no metal → compuesto molecular»** (BF₃, BCl₃, BBr₃, CF₄, CCl₄, CBr₄, CS₂, SiF₄, SiCl₄,
+  NF₃, NCl₃, PF₃, PF₅, PCl₃, PCl₅, PBr₃, PBr₅, SF₄, SF₆) con orden de electronegatividad explicado, vía de obtención
+  y molécula VSEPR; los óxidos de los no metales (CO, CO₂, NO, N₂O, SO₂…) siguen en «No metal + O₂», ahora con la vía
+  real del N₂O (NH₄NO₃), del NO₂, del N₂O₃ y del N₂O₅.
+- 3 retos nuevos (humo blanco de NH₄Cl, nitrato de amonio, PCl₃) y 22 casos de nomenclatura de referencia nuevos
+  (316 en total), validados con los sinónimos de PubChem (`nomenclatura_pubchem.mjs`, 2026-10-26: 312 de 316 con CID de
+  la misma fórmula y en todos algún nombre del motor entre los sinónimos).
+- **Revisión de los registros de PubChem hallados solo por la fórmula** con una regla documentada y probada
+  (`src/models/pubchemNameMatch.ts`): se comparan el título, el nombre IUPAC y los sinónimos de los 10 CID de menor
+  número con los nombres del motor en forma canónica; los registros que describen otra clase de sustancia (hidróxido,
+  peróxido, hidrato, hidruro) se descartan.
+- Pruebas: `tests/unit/crystals.test.ts`, `tests/unit/pubchemNameMatch.test.ts`, bloques nuevos en
+  `compoundForge.test.ts` y 8 pruebas E2E nuevas (amonio, PCl₃, corindón y cuarzo, claro y oscuro, axe y 390 px).
+
+### Cambiado
+- Registro del taller regenerado con el script existente (`scripts/validacion/compuestos_pubchem.mjs`, 2026-10-26):
+  3397 compuestos (68 nuevos): **1995 registrados** (1449 hallados por su nombre y 546 por la fórmula con un sinónimo
+  que coincide), **587 fórmulas registradas sin coincidencia de nombre** y 815 fórmulas formales. De los 1129 que en la
+  v2.5.0 se habían hallado solo por la fórmula, 545 pasan a «registrado», 5 quedan como fórmula formal (todos sus CID
+  describían otra sustancia) y 579 siguen sin coincidencia de nombre; 9 compuestos tienen registros descartados.
+- La práctica de óxidos e hidróxidos ofrece 9 redes (antes 2) y la de ácidos y sales suma la blenda (ZnS).
+- El SiO₂ ya no queda «sin geometría» en el taller: se dibuja la red covalente del cuarzo.
+
+### Corregido
+- Neutralidad de cargas de las sales de amonio con N en el anión (NH₄NO₃, NH₄NO₂): el conteo de oxoaniones se hace
+  por el oxígeno (antes contaba 2 aniones y 0 cationes).
+- La práctica de nomenclatura inorgánica solo encontraba la red de los compuestos 1:1 y 1:2 (calculaba la fórmula de la
+  red con una regla fija); ahora usa la composición de cada cristal.
+
+### No incluido (declarado)
+- CaSO₄ (anhidrita): su estructura necesita las coordenadas de un refinamiento que no se pudo consultar (AMCSD, COD e
+  ICSD no accesibles desde el entorno); no se construye de memoria. SrO: PubChem no trae una densidad publicada.
+  Sales de amonio como red: el NH₄⁺ gira o se desordena en el cristal.
+
 ## [2.7.0] · 2026-10-26
 
 Rediseño, siguiente paso (ADR 0007): la barra común de simulación llega a todas las prácticas con dinámica temporal.

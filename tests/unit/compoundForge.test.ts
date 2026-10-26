@@ -185,7 +185,7 @@ describe('taller · conjunto finito: neutralidad, balanceo y nombres', () => {
   it('enumera las combinaciones válidas y reúne los compuestos de todas las ecuaciones', () => {
     console.log(`[taller] ${enumerateForgeInputs().length} entradas probadas → ${results.length} combinaciones válidas → ${compounds.length} compuestos distintos`);
     // v2.4.0 (31 elementos): 1196 combinaciones y 1066 compuestos; v2.5.0 (77 elementos): 3756 y 3329;
-    // v2.6.x (rutas «NH₃ + ácido» y «No metal + no metal»):
+    // v2.8.0 (rutas «NH₃ + ácido» y «No metal + no metal»):
     expect(results.length).toBe(3824);
     expect(compounds.length).toBe(3397);
     // Cada elemento habilitado aparece en algún compuesto del taller.
@@ -328,7 +328,7 @@ describe('taller · vistas 3D sin coordenadas a mano', () => {
     expect(hbro3.kind === 'molecula' && hbro3.species.geometry).toBe('vsepr');
     expect(view({ kind: 'oxisal', cation: { el: 'Ca', ox: 2 }, acid: { el: 'S', ox: 6 } }).kind).toBe('ionico');
     expect(view({ kind: 'oxido', el: 'Cl', ox: 5 }).kind).toBe('sin-geometria');
-    // v2.6.x: el SiO₂ ya no queda «sin geometría»: se dibuja la red covalente del cuarzo α (estructura publicada).
+    // v2.8.0: el SiO₂ ya no queda «sin geometría»: se dibuja la red covalente del cuarzo α (estructura publicada).
     const si = view({ kind: 'oxido', el: 'Si', ox: 4 });
     expect(si.kind === 'cristal' && si.crystal.id).toBe('sio2');
     const p = view({ kind: 'oxido', el: 'P', ox: 5 });

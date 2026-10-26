@@ -240,7 +240,7 @@ for (const id of Object.keys(FLOWS)) {
   }
 }
 
-/* ---------------------------------------------------------------- siguiente paso del taller (v2.6.x) */
+/* ---------------------------------------------------------------- siguiente paso del taller (v2.8.0) */
 
 const NEW_FLOWS: Record<string, { lab: string; run: (page: Page) => Promise<void> }> = {
   'nitrato-amonio': {
@@ -295,7 +295,7 @@ const NEW_FLOWS: Record<string, { lab: string; run: (page: Page) => Promise<void
 
 for (const [name, flow] of Object.entries(NEW_FLOWS)) {
   for (const scheme of ['light', 'dark'] as const) {
-    test(`taller v2.6.x · ${name}: resultado, axe WCAG 2.2 AA y sin desbordamiento a 390 px (${scheme})`, async ({ page }) => {
+    test(`taller v2.8.0 · ${name}: resultado, axe WCAG 2.2 AA y sin desbordamiento a 390 px (${scheme})`, async ({ page }) => {
       test.setTimeout(240_000);
       await page.emulateMedia({ colorScheme: scheme });
       await openForge(page, flow.lab);

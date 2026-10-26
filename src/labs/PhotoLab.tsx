@@ -3,6 +3,7 @@ import { LIGHT_COLORS, PHOTO_LIMITS, simulatePhotosynthesis, type LightColor } f
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Select, Slider, Warnings } from '../components/ui';
+import { SimControls } from '../components/Experiment';
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import { rangeStats, type LoggerChannel, type LoggerRun } from '../lib/logger';
 import type { LabProps } from './registry';
@@ -52,17 +53,19 @@ export default function PhotoLab({ api }: LabProps) {
   const [lampOn, setLampOn] = useState(true);
   const [counted, setCounted] = useState<number | null>(null);
   const [phase, setPhase] = useState(0);
+  // Animación continua de las burbujas: se puede pausar (WCAG 2.2.2) y arranca detenida con movimiento reducido.
+  const [animOn, setAnimOn] = useState(() => !prefersReducedMotion());
   const res = useMemo(() => simulatePhotosynthesis({ distance, bicarbonate, temperature, color, lampOn }), [distance, bicarbonate, temperature, color, lampOn]);
   const change = <T,>(set: (v: T) => void) => (v: T) => { set(v); setCounted(null); };
 
   // Animación de burbujas: su ritmo es proporcional a las burbujas por minuto (acelerado 10× para verlas).
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    if (!animOn) return;
     let raf = 0, last = performance.now();
     const tick = (now: number) => { setPhase((p) => p + ((now - last) / 1000) * (res.bubblesPerMin / 6)); last = now; raf = requestAnimationFrame(tick); };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [res.bubblesPerMin]);
+  }, [res.bubblesPerMin, animOn]);
 
   const lampColor = LIGHT_COLORS.find((c) => c.id === color)!.color;
   const waterColor = bicarbonate > 0 ? '#9fd3e6' : '#bfe3f0';
@@ -187,6 +190,9 @@ export default function PhotoLab({ api }: LabProps) {
           <Slider label="Temperatura del agua" value={temperature} min={PHOTO_LIMITS.temperature[0]} max={PHOTO_LIMITS.temperature[1]} step={1} unit="°C" decimals={0} onChange={change(setTemperature)} />
           <Select label="Color de la luz" value={color} onChange={(v) => change(setColor)(v as LightColor)} options={LIGHT_COLORS.map((c) => ({ value: c.id, label: c.name }))} />
           <label className="check"><input type="checkbox" checked={lampOn} onChange={(e) => change(setLampOn)(e.target.checked)} /> Lámpara encendida</label>
+          {/* Solo la animación de las burbujas: el conteo usa la tasa del modelo, no el tiempo de la animación. */}
+          <SimControls title="Burbujeo de la elodea" status={animOn ? 'en-curso' : phase > 0 ? 'en-pausa' : 'listo'} startLabel="Animar las burbujas"
+            onStart={() => setAnimOn(true)} onPause={() => setAnimOn(false)} onResume={() => setAnimOn(true)} />
           <button type="button" className="btn primary" onClick={() => setCounted(Math.round(res.bubblesPerMin))}>Contar burbujas durante 1 minuto</button>
           <RecordButton onRecord={record} disabled={counted === null} />
           {counted === null && <p className="small muted">Cuenta las burbujas antes de guardar el ensayo.</p>}

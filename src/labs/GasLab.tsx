@@ -8,6 +8,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
+import { SimControls } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, GasSyringe, Lcd, Thermometer } from './kit';
 import { Knob, ManipHint, ManipScene, Plunger } from './manipulate';
@@ -70,6 +71,8 @@ export default function GasLab({ api }: LabProps) {
   const setVolume = (v: number) => { setVolumeState(v); if (v !== volume) playSound('squeak', { intensity: Math.min(1, 40 / Math.max(10, v)) }); };
   const setTemperature = (v: number) => { setTemperatureState(v); if (v !== temperature) playSound('knob'); };
   const [tick, setTick] = useState(0);
+  // Animación continua: se puede pausar (WCAG 2.2.2) y arranca detenida con movimiento reducido.
+  const [animOn, setAnimOn] = useState(() => !prefersReducedMotion());
   const P = useModelParams();
   const model = useMemo(() => simulateGas({ law, volume, temperature, pressure: INITIAL.pressure, externalPressure: P.pext, moles: P.n !== undefined ? P.n / 1000 : undefined }), [law, volume, temperature, P.n, P.pext]);
   // Lecturas de los instrumentos. En modo real: el émbolo queda un poco desalineado de la marca de la escala
@@ -117,12 +120,12 @@ export default function GasLab({ api }: LabProps) {
 
   // Partículas: su rapidez de animación ∝ √T (energía cinética media ∝ T).
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    if (!animOn) return;
     let raf = 0;
     const loop = () => { setTick((x) => x + 1); raf = requestAnimationFrame(loop); };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [animOn]);
   const particles = useMemo(() => { const r = seededRandom(3); return Array.from({ length: 40 }, () => ({ x: r(), y: r(), vx: r() - 0.5, vy: r() - 0.5 })); }, []);
   const speed = Math.sqrt(res.temperatureK / 298) * 0.004;
   const cylLen = (res.volume / 200) * 380; // px de gas dentro de la jeringa
@@ -197,6 +200,9 @@ export default function GasLab({ api }: LabProps) {
           {law === 'boyle'
             ? <Slider label="Volumen de la jeringa" value={volume} min={GAS_LIMITS.volume[0]} max={GAS_LIMITS.volume[1]} step={10} unit="mL" decimals={0} onChange={setVolume} />
             : <Slider label="Temperatura del baño" value={temperature} min={GAS_LIMITS.temperature[0]} max={GAS_LIMITS.temperature[1]} step={5} unit="°C" decimals={0} onChange={setTemperature} />}
+          {/* Solo la animación de las partículas: las lecturas no dependen del tiempo. */}
+          <SimControls title="Movimiento de las partículas" status={animOn ? 'en-curso' : tick > 0 ? 'en-pausa' : 'listo'} startLabel="Animar las partículas"
+            onStart={() => setAnimOn(true)} onPause={() => setAnimOn(false)} onResume={() => setAnimOn(true)} />
           <RecordButton onRecord={record} />
           <p className="small muted">Para Charles, grafica volumen contra temperatura (°C) y prolonga la recta de ajuste hasta volumen cero.</p>
         </div>

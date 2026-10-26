@@ -11,7 +11,8 @@ import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
-import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
+import { Notice, Readout, RecordButton, Segmented, Slider, Warnings, resolutionText } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, GasSyringe, Stopwatch, Thermometer } from './kit';
 import { Knob, ManipHint, ManipScene } from './manipulate';
@@ -126,7 +127,8 @@ export default function KineticsLab({ api }: LabProps) {
   useEffect(() => {
     if (!running) return;
     if (prefersReducedMotion()) { setSimT(DURATION); setRunning(false); setDone(true); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, el cronómetro sigue desde el tiempo ya simulado.
+    const start = performance.now() - (simT / SPEED) * 1000;
     const tick = (now: number) => {
       const el = Math.max(0, (now - start) / 1000) * SPEED;
       if (el >= DURATION) { setSimT(DURATION); setRunning(false); setDone(true); return; }
@@ -148,8 +150,9 @@ export default function KineticsLab({ api }: LabProps) {
   const tb = Math.max(0, Math.min(1, temp / 60));
   const bathColor = `rgba(${Math.round(90 + 150 * tb)},${Math.round(165 - 45 * tb)},${Math.round(230 - 150 * tb)},${(0.2 + 0.12 * tb).toFixed(2)})`;
 
+  const paused = !running && !done && simT > 0;
   const bubbles = useMemo(() => {
-    if (!running) return [];
+    if (!running && !paused) return [];
     const visible: { j: number; age: number }[] = [];
     for (let j = emissions.length - 1; j >= 0 && visible.length < MAX_BUBBLES; j--) {
       const age = simT - emissions[j];
@@ -158,7 +161,7 @@ export default function KineticsLab({ api }: LabProps) {
       visible.push({ j, age });
     }
     return visible;
-  }, [running, simT, emissions]);
+  }, [running, paused, simT, emissions]);
 
   const catalystName = findCatalyst(catalyst).name;
 
@@ -199,7 +202,7 @@ export default function KineticsLab({ api }: LabProps) {
 
   const status = done
     ? `Reacción terminada a los ${fmt(DURATION, 0)} s: ${fmt(res.vFinalReading, 0)} mL de gas en la jeringa.`
-    : running ? 'La reacción está en curso.' : 'Montaje listo: la reacción no ha comenzado.';
+    : running ? 'La reacción está en curso.' : paused ? `Reacción en pausa a los ${fmt(Math.floor(simT), 0)} s.` : 'Montaje listo: la reacción no ha comenzado.';
 
   return (
     <div className="lab-layout">
@@ -272,8 +275,8 @@ export default function KineticsLab({ api }: LabProps) {
         </div>
         <ManipHint>Gira la perilla del termostato (junto al baño) para fijar la temperatura, o enfócala con Tab y usa las flechas.</ManipHint>
         <Readout items={[
-          { k: 'Cronómetro', v: `${fmt(Math.floor(simT), 0)} s` },
-          { k: 'Volumen en la jeringa', v: `${fmt(reading, 0)} mL` },
+          { k: 'Cronómetro', v: `${fmt(Math.floor(simT), 0)} s`, resolution: resolutionText(1, 's') },
+          { k: 'Volumen en la jeringa', v: `${fmt(reading, 0)} mL`, resolution: resolutionText(1, 'mL') },
           { k: 'Volumen a 30 s', v: done ? `${fmt(res.v30Reading, 0)} mL` : 'mide', data: true },
           { k: 'Volumen a 180 s', v: done ? `${fmt(res.vFinalReading, 0)} mL` : 'mide', data: true },
           { k: 'Velocidad inicial (0–30 s)', v: done ? `${fmt(res.initialRate, 2)} mL/s` : 'mide', data: true },
@@ -316,10 +319,10 @@ export default function KineticsLab({ api }: LabProps) {
             </>
           )}
           <Slider label="Temperatura del baño" value={Math.min(temp, tLimits[1])} min={tLimits[0]} max={tLimits[1]} step={1} unit="°C" decimals={0} onChange={setTemp} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { setSimT(0); setDone(false); setRunning(true); playSound('pour', { duration: 0.5, intensity: 0.5 }); playSound('click', { intensity: 0.8 }); }} disabled={running}>Iniciar reacción y cronómetro</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          <SimControls title="Reacción y cronómetro" status={simStatusOf(running, simT > 0, done)} startLabel="Iniciar reacción y cronómetro" repeatLabel="Repetir la reacción"
+            onStart={() => { setSimT(0); setDone(false); setRunning(true); playSound('pour', { duration: 0.5, intensity: 0.5 }); playSound('click', { intensity: 0.8 }); }}
+            onPause={() => setRunning(false)} onResume={() => setRunning(true)} onReset={reset}
+            progress={{ value: Math.floor(simT), max: DURATION, unit: 's', label: 't' }} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>

@@ -7,6 +7,36 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+Rediseño, siguiente paso (ADR 0007): la barra común de simulación llega a todas las prácticas con dinámica temporal.
+Sin cambios en rutas, datos guardados ni modelos científicos (los valores dorados no cambian).
+
+### Añadido
+- **`SimControls` en 21 prácticas más** (23 en total con ósmosis y ondas): proyectiles, péndulo, choques, energía
+  mecánica (pista y caída), cinemática, movimiento, leyes de Newton, cinética y potencial (tres estaciones),
+  conducción, calor, ecosistema, redes tróficas, respiración, reto de indagación, expresión génica, conservación de la
+  masa, cinética química, trabajo y potencia, inducción (Faraday), leyes de los gases y fotosíntesis. Todas tienen
+  **pausa real**: Iniciar → Pausar → Reanudar, Reiniciar y Repetir, con el estado anunciado (`role="status"`) y,
+  cuando el total no es la respuesta, la barra de avance («Tiempo simulado = 12,0 de 30,0 min»).
+- `simStatusOf`, `simPrimaryAction`, `simStatusText` y `resolutionText` (`src/components/Experiment.tsx`), y las
+  opciones `repeatLabel` y `resetDisabled` de `SimControls`.
+- `Readout.resolution` en proyectiles, péndulo, choques, cinemática, conservación de la masa y cinética química;
+  `ConditionAlert` con «cómo corregirlo» cuando los deslizadores de los choques no se alcanzan.
+- Pruebas: `tests/unit/simControls.test.ts` (estados, acciones, marcado accesible, avance, adopción) y
+  `tests/e2e/simulacion.spec.ts` (iniciar → pausar → reanudar → reiniciar con axe en 6 prácticas, teclado, resultado
+  igual tras pausar, animaciones continuas y movimiento reducido).
+
+### Cambiado
+- Los botones de inicio conservan su nombre («Disparar», «Soltar el péndulo», «Lanzar»…) y al terminar ofrecen
+  repetir («Disparar de nuevo», «Lanzar de nuevo»…). Los pasos de preparación (pesar el sistema, subir con el torno)
+  quedan como botón aparte antes de la barra.
+- Al cambiar la velocidad de la animación a mitad de una corrida (péndulo, cinemática, caída), el reloj sigue desde el
+  tiempo ya recorrido en lugar de reiniciarse.
+
+### Accesibilidad
+- Las animaciones continuas de gases y fotosíntesis ya se pueden pausar (WCAG 2.2.2) y, con movimiento reducido,
+  arrancan detenidas; el estudiante puede iniciarlas a voluntad.
+- El botón principal es el mismo elemento en todos los estados: el foco no se pierde al pasar de «Iniciar» a «Pausar».
+
 ## [2.6.0] · 2026-10-26
 
 Versión **MENOR**: rediseño integral de la interfaz sin cambiar rutas, identificadores de práctica,

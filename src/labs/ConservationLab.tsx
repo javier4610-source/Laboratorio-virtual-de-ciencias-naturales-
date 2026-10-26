@@ -7,8 +7,8 @@ import { seededRandom } from '../models/math';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
-import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings, resolutionText } from '../components/ui';
-import { SimControls, simStatusOf } from '../components/Experiment';
+import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
+import { SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, Beaker, DigitalBalance, Erlenmeyer, shade, TestTube } from './kit';
 

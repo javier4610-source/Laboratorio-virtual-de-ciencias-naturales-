@@ -50,15 +50,19 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       `docs/DESPLIEGUE-SERVIDOR.md` están listos. Falta que el docente cree la cuenta y entregue la dirección para
       configurar la variable `API_URL`; política de privacidad y autorización de acudientes (Ley 1581).
 - [ ] **Taller de compuestos, siguiente paso:** redes cristalinas de más sólidos iónicos con parámetro publicado (CaSO₄, Na₂O, Al₂O₃…), sales de amonio y binarios no metálicos en el taller, y revisión manual de los registros de PubChem hallados solo por fórmula.
-- [ ] **Rediseño, siguiente paso** (ADR 0007): adoptar `SimControls` en las demás prácticas con dinámica temporal
-      (proyectiles, péndulo, choques, cinemática, energía, cinética, conducción…), `Readout.resolution`/`state` en los
-      instrumentos y `ConditionAlert` con «cómo corregirlo» en las advertencias propias de cada modelo; medir con
-      Lighthouse cuando haya red para instalarlo; revisar con estudiantes los atajos y el inicio por perfiles.
+- [ ] **Rediseño, paso siguiente** (ADR 0007): `Readout.resolution`/`state` en los instrumentos de las prácticas sin
+      dinámica temporal y `ConditionAlert` con «cómo corregirlo» propio en las advertencias de cada modelo (hoy las
+      muestra `Warnings` con un aviso genérico); medir con Lighthouse cuando haya red para instalarlo; revisar con
+      estudiantes la barra de simulación, los atajos y el inicio por perfiles.
 - [ ] **Mejoras:** pistas contextuales al cambiar dos variables a la vez; auditoría de rendimiento en equipos
       modestos; exportación para Google Classroom y Moodle; pruebas de regresión visual.
 
 ## Hecho
 
+- [x] (sin publicar) · Rediseño, siguiente paso (ADR 0007): `SimControls` con pausa real en las 23 prácticas con
+  dinámica temporal (21 nuevas), `Readout.resolution` en seis de ellas, `ConditionAlert` en choques, animaciones
+  continuas de gases y fotosíntesis que ya se pueden pausar (WCAG 2.2.2) y tabla de adopción por práctica (con el
+  motivo de las 19 que tienen animación sin dinámica que pausar) en `docs/v2/SISTEMA-DE-DISENO.md`.
 - [x] v2.6.0 (sin publicar) · Rediseño integral de la plataforma (pedido del docente, ADR 0007): sistema de diseño con
   tokens y escala de datos distinguible con daltonismo, inicio por perfiles, catálogo con filtros en la dirección,
   espacio de trabajo de la práctica, atajos de teclado, componentes experimentales compartidos (simulación, condiciones,

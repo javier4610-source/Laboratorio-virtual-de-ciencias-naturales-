@@ -746,7 +746,7 @@ export default function ConductionLab({ api }: LabProps) {
           ))}
           <SimControls title="Calentamiento de la varilla" status={simStatusOf(running, phase === 'pausa', done)} startLabel="Encender y medir" repeatLabel="Medir de nuevo"
             onStart={start} onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => setPhase('midiendo')} onReset={reset}
-            progress={{ value: simT / 60, max: RUN_S / 60, unit: 'min', label: 'Tiempo simulado' }} />
+            progress={{ value: simT / 60, max: RUN_S / 60, unit: 'min', decimals: 1, label: 'Tiempo simulado' }} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>

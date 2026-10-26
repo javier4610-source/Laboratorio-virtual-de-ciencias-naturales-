@@ -7,11 +7,11 @@ import {
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { impactIntensity, playSound } from '../lib/sound';
-import { Notice, Readout, RecordButton, Segmented, Select, Slider, resolutionText } from '../components/ui';
+import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import { Chart } from '../components/Chart';
 import type { LabProps } from './registry';
 import { useModelParams, usePublishModel } from '../components/Advanced';
-import { SimControls, simStatusOf } from '../components/Experiment';
+import { SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import { BenchTop, Lcd, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
 

@@ -121,6 +121,15 @@ export function SimControls({ status, onStart, onPause, onResume, onReset, start
 
 export { ConditionAlert, type ConditionLevel } from './ConditionAlert';
 
+/**
+ * Texto uniforme de la resolución de un instrumento para `ReadoutItem.resolution`: «resolución 0,01 s».
+ * Vive aquí (y no en ui.tsx) para no sumar bytes al paquete inicial.
+ */
+export function resolutionText(step: number, unit: string): string {
+  const decimals = Math.max(0, Math.ceil(-Math.log10(step) - 1e-9));
+  return `resolución ${fmt(step, decimals)}${unit ? ` ${unit}` : ''}`;
+}
+
 /* ------------------------------------------------------------- relaciones */
 
 /**

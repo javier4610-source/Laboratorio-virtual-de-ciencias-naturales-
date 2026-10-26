@@ -6,8 +6,8 @@ import {
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
-import { Notice, Readout, RecordButton, Segmented, Select, Slider, resolutionText } from '../components/ui';
-import { SimControls, simStatusOf } from '../components/Experiment';
+import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { BenchTop, Lcd, shade, Stopwatch } from './kit';

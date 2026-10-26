@@ -259,7 +259,8 @@ export function ionAssembly(id: string, name: string, label: string, parts: Spec
   };
 }
 
-/** ¿La escena tiene sólidos iónicos (iones en fila o fragmento de red), que no llevan palitos entre iones? */
-export const hasIonicSpecies = (species: Species3D[]): boolean => species.some((s) => s.geometry === 'cristal' || s.geometryLabel === ION_ASSEMBLY_LABEL);
+/** ¿La escena tiene sólidos iónicos (iones en fila o fragmento de red iónica), que no llevan palitos entre iones? Los
+ * fragmentos de una red covalente (cuarzo) no tienen cargas y sí llevan sus enlaces. */
+export const hasIonicSpecies = (species: Species3D[]): boolean => species.some((s) => (s.geometry === 'cristal' && s.atoms.some((a) => a.charge)) || s.geometryLabel === ION_ASSEMBLY_LABEL);
 /** Leyenda: por qué no hay palitos entre iones y sí dentro de los iones poliatómicos. */
 export const IONIC_STICKS_NOTE = 'Sin palitos entre iones: en un compuesto iónico (Na⁺, Ca²⁺, O²⁻, Cl⁻…) cada ion atrae a los de carga contraria en todas las direcciones, no a un átomo concreto, así que no hay un enlace que dibujar entre dos iones. Dentro de los iones poliatómicos (OH⁻, SO₄²⁻, NO₃⁻, CO₃²⁻…) sí hay palitos: sus átomos están unidos por enlaces covalentes.';

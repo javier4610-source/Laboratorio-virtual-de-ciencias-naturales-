@@ -6,6 +6,7 @@ import {
   type ForgeError, type ForgeInput, type ForgeOk,
 } from '../../src/models/compoundForge';
 import { REGISTRY_META, registryEntries, registryStatus, registryText } from '../../src/models/compoundForgeRegistry';
+import { canonName, otherStructure } from '../../src/models/pubchemNameMatch';
 import { buildCompound, hillFormula, parseFormula, specKey, type Spec } from '../../src/models/inorganicNomenclature';
 import { PT_ELEMENTS } from '../../src/models/periodicTable';
 import { forgeReaction3D, staticView } from '../../src/labs/compoundForge3d';
@@ -183,9 +184,10 @@ describe('taller · rechazos con explicación pedagógica', () => {
 describe('taller · conjunto finito: neutralidad, balanceo y nombres', () => {
   it('enumera las combinaciones válidas y reúne los compuestos de todas las ecuaciones', () => {
     console.log(`[taller] ${enumerateForgeInputs().length} entradas probadas → ${results.length} combinaciones válidas → ${compounds.length} compuestos distintos`);
-    // v2.4.0 (31 elementos): 1196 combinaciones y 1066 compuestos; v2.5.0 (77 elementos):
-    expect(results.length).toBe(3756);
-    expect(compounds.length).toBe(3329);
+    // v2.4.0 (31 elementos): 1196 combinaciones y 1066 compuestos; v2.5.0 (77 elementos): 3756 y 3329;
+    // v2.6.x (rutas «NH₃ + ácido» y «No metal + no metal»):
+    expect(results.length).toBe(3824);
+    expect(compounds.length).toBe(3397);
     // Cada elemento habilitado aparece en algún compuesto del taller.
     const used = new Set(compounds.flatMap((c) => Object.keys(c.composition)));
     expect(ENGINE_SYMBOLS.filter((x) => !used.has(x))).toEqual([]);
@@ -232,9 +234,9 @@ describe('taller · conjunto finito: neutralidad, balanceo y nombres', () => {
   it('la búsqueda exhaustiva (todos los elementos × todos los estados de la interfaz) no produce compuestos fuera del conjunto enumerado', () => {
     const keys = new Set(compounds.map((c) => c.key));
     const single = ROUTES.filter((r) => r.slots === 1);
-    for (const r of single) for (const e of PT_ELEMENTS) for (const oxA of STATE_CHOICES) for (const form of ['normal', 'meta', 'di'] as const) {
-      const out = forge({ route: r.id, a: e.sym, oxA, form });
-      if (out.ok) expect(keys.has(out.product.key), `${r.id} ${e.sym} ${oxA} ${form}`).toBe(true);
+    for (const r of single) for (const e of PT_ELEMENTS) for (const oxA of STATE_CHOICES) for (const form of ['normal', 'meta', 'di'] as const) for (const hLeft of r.id === 'amoniaco-acido' ? [0, 1, 2] : [0]) {
+      const out = forge({ route: r.id, a: e.sym, oxA, form, hLeft });
+      if (out.ok) expect(keys.has(out.product.key), `${r.id} ${e.sym} ${oxA} ${form} H${hLeft}`).toBe(true);
     }
     // Rutas de dos casillas: un estado que el elemento no presenta se rechaza siempre (stateGate), así que basta con
     // recorrer sus estados conocidos más uno inexistente, para las dos casillas.
@@ -242,6 +244,8 @@ describe('taller · conjunto finito: neutralidad, balanceo y nombres', () => {
     for (const a of Object.keys(KNOWN_STATES)) for (const oxA of states(a)) for (const b of Object.keys(KNOWN_STATES)) for (const oxB of states(b)) {
       const s = forge({ route: 'metal-nometal', a, oxA, b, oxB });
       if (s.ok) expect(keys.has(s.product.key)).toBe(true);
+      const nn = forge({ route: 'nometal-nometal', a, oxA, b, oxB });
+      if (nn.ok) expect(keys.has(nn.product.key), `nometal-nometal ${a}${oxA} ${b}${oxB}`).toBe(true);
       for (const hLeft of [0, 1, 2]) for (const form of ['normal', 'meta', 'di'] as const) {
         const n = forge({ route: 'neutralizacion', a, oxA, b, oxB, hLeft, form });
         if (n.ok) expect(keys.has(n.product.key), `${a}${oxA} ${b}${oxB} H${hLeft} ${form}`).toBe(true);
@@ -265,7 +269,13 @@ describe('taller · registro en PubChem (archivo precalculado con consultas real
     expect(REGISTRY_META.registrados).toBe(reg);
     expect(REGISTRY_META.formales).toBe(compounds.length - reg);
     expect(REGISTRY_META.total).toBe(compounds.length);
-    console.log(`[taller] PubChem ${REGISTRY_META.fecha}: ${REGISTRY_META.porNombre} registrados por nombre, ${reg - REGISTRY_META.porNombre} solo por la fórmula y ${compounds.length - reg} fórmulas formales de ${compounds.length}`);
+    const vals = Object.values(entries);
+    expect(REGISTRY_META.porNombre).toBe(vals.filter((e) => e.via === 'nombre').length);
+    expect(REGISTRY_META.porSinonimo).toBe(vals.filter((e) => e.via === 'formula-sinonimo').length);
+    expect(REGISTRY_META.soloFormula).toBe(vals.filter((e) => e.via === 'formula').length);
+    expect(REGISTRY_META.porNombre + REGISTRY_META.porSinonimo + REGISTRY_META.soloFormula).toBe(reg);
+    expect(REGISTRY_META.conDescartes).toBe(vals.filter((e) => e.descartados?.length).length);
+    console.log(`[taller] PubChem ${REGISTRY_META.fecha}: ${REGISTRY_META.porNombre + REGISTRY_META.porSinonimo} registrados (${REGISTRY_META.porNombre} por nombre y ${REGISTRY_META.porSinonimo} por fórmula + sinónimo), ${REGISTRY_META.soloFormula} fórmulas registradas sin coincidencia de nombre, ${compounds.length - reg} fórmulas formales de ${compounds.length}; ${REGISTRY_META.conDescartes} con registros descartados por ser otra estructura`);
   });
 
   it('cada CID es un entero positivo con la misma fórmula de Hill (o un múltiplo entero) y los formales no tienen CID', () => {
@@ -282,15 +292,20 @@ describe('taller · registro en PubChem (archivo precalculado con consultas real
         expect(Number.isInteger(k) && k > 1, key).toBe(true);
         for (const [el, n] of Object.entries(c.composition)) expect(p[el], key).toBe(n * k);
       }
-      expect(['nombre', 'formula']).toContain(e.via);
+      expect(['nombre', 'formula-sinonimo', 'formula']).toContain(e.via);
+      // Regla de pubchemNameMatch.ts: el sinónimo guardado coincide en forma canónica con el nombre del motor, y ningún
+      // CID aceptado por la fórmula describe otra clase de sustancia.
+      if (e.via === 'formula-sinonimo') expect(canonName(e.sinonimo!), key).toBe(canonName(e.nombreMotor!));
+      if (e.via !== 'nombre') expect(otherStructure(c.fn, e.titulo ?? '', e.iupac ?? ''), key).toBeNull();
     }
+    for (const [key, e] of Object.entries(entries)) for (const d of e.descartados ?? []) expect(otherStructure(byKey.get(key)!.fn, d.titulo, d.iupac ?? ''), key).not.toBeNull();
   });
 
   it('la marca de la interfaz es coherente con el archivo («registrado (CID …)» o «fórmula formal»)', () => {
     for (const c of compounds) {
       const st = registryStatus(c.key);
       const t = registryText(c.key);
-      if (st.status === 'registrado') { expect(st.entry.via).toBe('nombre'); expect(t.title).toBe(`Compuesto registrado en PubChem (CID ${st.entry.cid})`); }
+      if (st.status === 'registrado') { expect(['nombre', 'formula-sinonimo']).toContain(st.entry.via); expect(t.title).toBe(`Compuesto registrado en PubChem (CID ${st.entry.cid})`); }
       else if (st.status === 'misma-formula') { expect(st.entry.via).toBe('formula'); expect(t.title).toMatch(/^Fórmula registrada en PubChem \(CID \d+\), sin coincidencia de nombre$/); }
       else { expect(st.status).toBe('formal'); expect(t.title).toMatch(/^Fórmula formal por neutralidad de cargas: no se encontró como sustancia registrada; puede no existir o ser inestable/); }
     }
@@ -313,7 +328,9 @@ describe('taller · vistas 3D sin coordenadas a mano', () => {
     expect(hbro3.kind === 'molecula' && hbro3.species.geometry).toBe('vsepr');
     expect(view({ kind: 'oxisal', cation: { el: 'Ca', ox: 2 }, acid: { el: 'S', ox: 6 } }).kind).toBe('ionico');
     expect(view({ kind: 'oxido', el: 'Cl', ox: 5 }).kind).toBe('sin-geometria');
-    expect(view({ kind: 'oxido', el: 'Si', ox: 4 }).kind).toBe('sin-geometria');
+    // v2.6.x: el SiO₂ ya no queda «sin geometría»: se dibuja la red covalente del cuarzo α (estructura publicada).
+    const si = view({ kind: 'oxido', el: 'Si', ox: 4 });
+    expect(si.kind === 'cristal' && si.crystal.id).toBe('sio2');
     const p = view({ kind: 'oxido', el: 'P', ox: 5 });
     expect(p.kind === 'molecula' && p.species.label).toBe('P₄O₁₀');
   });
@@ -338,5 +355,114 @@ describe('taller · vistas 3D sin coordenadas a mano', () => {
     }
     console.log(`[taller] reacción 3D disponible en ${animated} de ${results.length} combinaciones`);
     expect(animated).toBeGreaterThan(100);
+  });
+});
+
+describe('taller · sales de amonio (ruta «NH₃ + ácido»)', () => {
+  it('cloruro, nitrato, sulfato y carbonato de amonio: ecuación, nombres y vía de obtención', () => {
+    const cl = ok({ route: 'amoniaco-acido', a: 'Cl', oxA: -1 });
+    expect(cl.equation).toBe('NH₃ + HCl → NH₄Cl');
+    expect([cl.product.names.stock, cl.product.names.tradicional]).toEqual(['cloruro de amonio', 'cloruro amónico']);
+    expect(cl.pathway).toBe('directa');
+    expect(cl.pathwayNote).toMatch(/humo blanco/);
+    const no3 = ok({ route: 'amoniaco-acido', a: 'N', oxA: 5 });
+    expect(no3.equation).toBe('NH₃ + HNO₃ → NH₄NO₃');
+    expect(no3.product.names.stock).toBe('nitrato de amonio');
+    const so4 = ok({ route: 'amoniaco-acido', a: 'S', oxA: 6 });
+    expect(so4.equation).toBe('2 NH₃ + H₂SO₄ → (NH₄)₂SO₄');
+    expect([so4.product.names.sistematica, so4.product.names.stock]).toEqual(['sulfato de diamonio', 'sulfato de amonio']);
+    const co3 = ok({ route: 'amoniaco-acido', a: 'C', oxA: 4 });
+    expect(co3.equation).toBe('2 NH₃ + H₂CO₃ → (NH₄)₂CO₃');
+    expect(co3.pathway).toBe('condiciones');
+    expect(co3.notes.join(' ')).toMatch(/carbamato de amonio/);
+    // Sales ácidas: bicarbonato de amonio y los fertilizantes DAP y MAP.
+    expect(ok({ route: 'amoniaco-acido', a: 'C', oxA: 4, hLeft: 1 }).product.formula).toBe('NH4HCO3');
+    expect(ok({ route: 'amoniaco-acido', a: 'P', oxA: 5, hLeft: 1 }).product.formula).toBe('(NH4)2HPO4');
+    expect(ok({ route: 'amoniaco-acido', a: 'P', oxA: 5, hLeft: 2 }).product.formula).toBe('NH4H2PO4');
+  });
+
+  it('neutralidad con el NH₄⁺ (también cuando el N está en el catión y en el anión: NH₄NO₃, NH₄NO₂)', () => {
+    const parts = (i: ForgeInput) => chargeParts(ok(i).product).map((p) => `${p.count}×${p.label}`).join(' ');
+    expect(parts({ route: 'amoniaco-acido', a: 'N', oxA: 5 })).toBe('1×NH₄⁺ 1×NO₃⁻');
+    expect(parts({ route: 'amoniaco-acido', a: 'N', oxA: 3 })).toBe('1×NH₄⁺ 1×NO₂⁻');
+    expect(parts({ route: 'amoniaco-acido', a: 'S', oxA: 6 })).toBe('2×NH₄⁺ 1×SO₄²⁻');
+    expect(parts({ route: 'amoniaco-acido', a: 'Cl', oxA: -1 })).toBe('1×NH₄⁺ 1×Cl⁻');
+  });
+
+  it('el NH₄⁺ se dibuja con sus cuatro enlaces N–H (biblioteca del kit) y la reacción 3D conserva los átomos', () => {
+    for (const i of [{ route: 'amoniaco-acido', a: 'Cl', oxA: -1 }, { route: 'amoniaco-acido', a: 'N', oxA: 5 }, { route: 'amoniaco-acido', a: 'S', oxA: 6 }, { route: 'amoniaco-acido', a: 'C', oxA: 4 }] as ForgeInput[]) {
+      const r = ok(i);
+      const v = staticView(r.product);
+      expect(v.kind, JSON.stringify(i)).toBe('ionico');
+      if (v.kind !== 'ionico') continue;
+      const nh4 = v.ions.find((x) => x.id === 'amonio')!;
+      expect(nh4.atoms.map((a) => a.el).sort()).toEqual(['H', 'H', 'H', 'H', 'N']);
+      expect(nh4.bonds).toHaveLength(4);
+      expect(v.note).toMatch(/gira o se desordena/);
+      expect('def' in forgeReaction3D(r), JSON.stringify(i)).toBe(true);
+    }
+    // Con un oxoanión se dibujan los dos iones poliatómicos (NH₄⁺ y NO₃⁻).
+    const n = staticView(ok({ route: 'amoniaco-acido', a: 'N', oxA: 5 }).product);
+    expect(n.kind === 'ionico' && n.ions.map((x) => x.label)).toEqual(['NH₄⁺', 'NO₃⁻']);
+  });
+
+  it('rechaza con explicación: metales, el propio NH₃, el oxígeno, óxidos neutros y sales ácidas de hidrácidos', () => {
+    expect(bad({ route: 'amoniaco-acido', a: 'Na', oxA: 1 }).code).toBe('dos-metales');
+    expect(bad({ route: 'amoniaco-acido', a: 'N', oxA: -3 }).title).toMatch(/no es un ácido/);
+    expect(bad({ route: 'amoniaco-acido', a: 'O', oxA: -2 }).code).toBe('papel');
+    expect(bad({ route: 'amoniaco-acido', a: 'C', oxA: 2 }).code).toBe('oxido-neutro');
+    expect(bad({ route: 'amoniaco-acido', a: 'Cl', oxA: -1, hLeft: 1 }).title).toMatch(/Sal ácida/);
+    // Un metal en estado alto sí forma ácido: permanganato de amonio, con su nota de inestabilidad.
+    const mn = ok({ route: 'amoniaco-acido', a: 'Mn', oxA: 7 });
+    expect(mn.product.formula).toBe('NH4MnO4');
+    expect(mn.notes.join(' ')).toMatch(/explosiva/);
+  });
+});
+
+describe('taller · compuestos binarios entre no metales (ruta «No metal + no metal»)', () => {
+  it('PCl₃, PCl₅, CCl₄, CS₂, SF₆, BF₃ y NF₃: ecuación, nombres, vía y molécula VSEPR', () => {
+    const cases: [ForgeInput, string, string, string][] = [
+      [{ route: 'nometal-nometal', a: 'P', oxA: 3, b: 'Cl', oxB: -1 }, '2 P + 3 Cl₂ → 2 PCl₃', 'tricloruro de fósforo', 'directa'],
+      [{ route: 'nometal-nometal', a: 'P', oxA: 5, b: 'Cl', oxB: -1 }, '2 P + 5 Cl₂ → 2 PCl₅', 'pentacloruro de fósforo', 'directa'],
+      [{ route: 'nometal-nometal', a: 'C', oxA: 4, b: 'Cl', oxB: -1 }, 'C + 2 Cl₂ → CCl₄', 'tetracloruro de carbono', 'formal'],
+      [{ route: 'nometal-nometal', a: 'C', oxA: 4, b: 'S', oxB: -2 }, 'C + 2 S → CS₂', 'disulfuro de carbono', 'condiciones'],
+      [{ route: 'nometal-nometal', a: 'S', oxA: 6, b: 'F', oxB: -1 }, 'S + 3 F₂ → SF₆', 'hexafluoruro de azufre', 'directa'],
+      [{ route: 'nometal-nometal', a: 'B', oxA: 3, b: 'F', oxB: -1 }, '2 B + 3 F₂ → 2 BF₃', 'trifluoruro de boro', 'directa'],
+      [{ route: 'nometal-nometal', a: 'N', oxA: 3, b: 'F', oxB: -1 }, 'N₂ + 3 F₂ → 2 NF₃', 'trifluoruro de nitrógeno', 'formal'],
+    ];
+    for (const [i, eq, name, path] of cases) {
+      const r = ok(i);
+      expect([r.equation, r.product.names.sistematica, r.pathway], JSON.stringify(i)).toEqual([eq, name, path]);
+      expect(r.product.fn).toBe('binario-no-metalico');
+    }
+    // Geometría VSEPR: número de dominios = enlaces + pares libres del átomo central.
+    const shape = (i: ForgeInput) => { const v = staticView(ok(i).product); return v.kind === 'molecula' ? [v.species.geometry, v.species.atoms.length, v.species.bonds.length] : v.kind; };
+    expect(shape(cases[0][0])).toEqual(['vsepr', 4, 3]); // PCl₃ piramidal (1 par libre)
+    expect(shape(cases[1][0])).toEqual(['vsepr', 6, 5]); // PCl₅ bipirámide trigonal
+    expect(shape(cases[4][0])).toEqual(['vsepr', 7, 6]); // SF₆ octaédrica
+    const cs2 = staticView(ok(cases[3][0]).product);
+    expect(cs2.kind === 'molecula' && cs2.species.bonds.map((b) => b.order)).toEqual([2, 2]); // S=C=S
+  });
+
+  it('rechaza con explicación: orden de electronegatividad, metales, oxígeno, hidrógeno y combinaciones fuera del taller', () => {
+    expect(bad({ route: 'nometal-nometal', a: 'Cl', oxA: -1, b: 'P', oxB: 3 }).title).toMatch(/menos electronegativo va en la casilla 1/);
+    expect(bad({ route: 'nometal-nometal', a: 'Na', oxA: 1, b: 'Cl', oxB: -1 }).code).toBe('no-es-no-metal');
+    expect(bad({ route: 'nometal-nometal', a: 'C', oxA: 4, b: 'O', oxB: -2 }).hint).toMatch(/No metal \+ O₂/);
+    expect(bad({ route: 'nometal-nometal', a: 'H', oxA: 1, b: 'Cl', oxB: -1 }).hint).toMatch(/H₂ \+ halógeno/);
+    expect(bad({ route: 'nometal-nometal', a: 'S', oxA: 4, b: 'Cl', oxB: -1 }).message).toMatch(/S₂Cl₂/);
+    expect(bad({ route: 'nometal-nometal', a: 'P', oxA: 4, b: 'Cl', oxB: -1 }).code).toBe('estado-inexistente');
+    expect(bad({ route: 'nometal-nometal', a: 'P', oxA: -3, b: 'Cl', oxB: -1 }).title).toMatch(/actúa con \+3, \+5/);
+    // La ruta «Metal + no metal» con dos no metales remite a la ruta nueva.
+    expect(bad({ route: 'metal-nometal', a: 'C', oxA: 4, b: 'Cl', oxB: -1 }).hint).toMatch(/No metal \+ no metal/);
+  });
+
+  it('óxidos de los no metales (CO, CO₂, NO, N₂O, SO₂): siguen en «No metal + O₂», con su vía de obtención', () => {
+    expect(ok({ route: 'nometal-o2', a: 'N', oxA: 1 }).pathwayNote).toMatch(/NH₄NO₃ → N₂O \+ 2 H₂O/);
+    expect(ok({ route: 'nometal-o2', a: 'N', oxA: 4 }).pathway).toBe('condiciones');
+    for (const [a, oxA, f] of [['C', 2, 'CO'], ['C', 4, 'CO2'], ['N', 2, 'NO'], ['N', 1, 'N2O'], ['S', 4, 'SO2']] as const) {
+      const r = ok({ route: 'nometal-o2', a, oxA });
+      expect(r.product.formula).toBe(f);
+      expect(staticView(r.product).kind).toBe('molecula');
+    }
   });
 });

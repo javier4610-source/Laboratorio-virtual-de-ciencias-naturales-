@@ -93,11 +93,17 @@ export function covalentBondLength(a: string, b: string, order: 1 | 1.5 | 2 | 3 
 export const SHANNON: Record<string, { charge: number; cn: number; r: number }[]> = {
   Li: [{ charge: 1, cn: 4, r: 0.59 }, { charge: 1, cn: 6, r: 0.76 }],
   Na: [{ charge: 1, cn: 4, r: 0.99 }, { charge: 1, cn: 6, r: 1.02 }],
-  K: [{ charge: 1, cn: 6, r: 1.38 }, { charge: 1, cn: 8, r: 1.51 }],
+  K: [{ charge: 1, cn: 4, r: 1.37 }, { charge: 1, cn: 6, r: 1.38 }, { charge: 1, cn: 8, r: 1.51 }],
   Cs: [{ charge: 1, cn: 6, r: 1.67 }, { charge: 1, cn: 8, r: 1.74 }],
   Mg: [{ charge: 2, cn: 6, r: 0.72 }],
   Ca: [{ charge: 2, cn: 6, r: 1.0 }, { charge: 2, cn: 8, r: 1.12 }],
-  O: [{ charge: -2, cn: 4, r: 1.38 }, { charge: -2, cn: 6, r: 1.4 }],
+  Ba: [{ charge: 2, cn: 6, r: 1.35 }],
+  Zn: [{ charge: 2, cn: 4, r: 0.6 }],
+  Ti: [{ charge: 4, cn: 6, r: 0.605 }],
+  Al: [{ charge: 3, cn: 6, r: 0.535 }],
+  O: [{ charge: -2, cn: 2, r: 1.35 }, { charge: -2, cn: 3, r: 1.36 }, { charge: -2, cn: 4, r: 1.38 }, { charge: -2, cn: 6, r: 1.4 }, { charge: -2, cn: 8, r: 1.42 }],
+  /** Shannon solo tabula el S²⁻ con coordinación 6. */
+  S: [{ charge: -2, cn: 6, r: 1.84 }],
   F: [{ charge: -1, cn: 4, r: 1.31 }, { charge: -1, cn: 6, r: 1.33 }],
   Cl: [{ charge: -1, cn: 6, r: 1.81 }],
 };

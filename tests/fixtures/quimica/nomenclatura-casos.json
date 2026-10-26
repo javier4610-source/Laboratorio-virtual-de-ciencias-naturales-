@@ -5209,5 +5209,429 @@
    "stock": "selenito de bario",
    "tradicional": "selenito bárico"
   }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "ammonium carbonate"
+  ],
+  "es": {
+   "sistematica": "carbonato de diamonio",
+   "stock": "carbonato de amonio",
+   "tradicional": "carbonato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4,
+    "form": "normal"
+   },
+   "hLeft": 1
+  },
+  "queries": [
+   "ammonium bicarbonate",
+   "ammonium hydrogen carbonate"
+  ],
+  "es": {
+   "sistematica": "hidrogenocarbonato de amonio",
+   "stock": "hidrogenocarbonato de amonio",
+   "tradicional": "bicarbonato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "P",
+    "ox": 5,
+    "form": "normal"
+   },
+   "hLeft": 1
+  },
+  "queries": [
+   "diammonium hydrogen phosphate",
+   "diammonium phosphate"
+  ],
+  "es": {
+   "sistematica": "hidrogenofosfato de diamonio",
+   "stock": "hidrogenofosfato de amonio",
+   "tradicional": "fosfato monoácido amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6,
+    "form": "normal"
+   },
+   "hLeft": 1
+  },
+  "queries": [
+   "ammonium bisulfate",
+   "ammonium hydrogen sulfate"
+  ],
+  "es": {
+   "sistematica": "hidrogenosulfato de amonio",
+   "stock": "hidrogenosulfato de amonio",
+   "tradicional": "bisulfato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "Cl",
+    "ox": 7,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "ammonium perchlorate"
+  ],
+  "es": {
+   "sistematica": "perclorato de amonio",
+   "stock": "perclorato de amonio",
+   "tradicional": "perclorato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "N",
+    "ox": 3,
+    "form": "normal"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "ammonium nitrite"
+  ],
+  "es": {
+   "sistematica": "nitrito de amonio",
+   "stock": "nitrito de amonio",
+   "tradicional": "nitrito amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "Cr",
+    "ox": 6,
+    "form": "di"
+   },
+   "hLeft": 0
+  },
+  "queries": [
+   "ammonium dichromate"
+  ],
+  "es": {
+   "sistematica": "dicromato de diamonio",
+   "stock": "dicromato de amonio",
+   "tradicional": "dicromato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "NH4"
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "ammonium fluoride"
+  ],
+  "es": {
+   "sistematica": "fluoruro de amonio",
+   "stock": "fluoruro de amonio",
+   "tradicional": "fluoruro amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "NH4"
+   },
+   "anion": "Br"
+  },
+  "queries": [
+   "ammonium bromide"
+  ],
+  "es": {
+   "sistematica": "bromuro de amonio",
+   "stock": "bromuro de amonio",
+   "tradicional": "bromuro amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "NH4"
+   },
+   "anion": "I"
+  },
+  "queries": [
+   "ammonium iodide"
+  ],
+  "es": {
+   "sistematica": "yoduro de amonio",
+   "stock": "yoduro de amonio",
+   "tradicional": "yoduro amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "NH4"
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "ammonium sulfide"
+  ],
+  "es": {
+   "sistematica": "sulfuro de diamonio",
+   "stock": "sulfuro de amonio",
+   "tradicional": "sulfuro amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "P",
+    "ox": 3
+   },
+   "anion": "Br"
+  },
+  "queries": [
+   "phosphorus tribromide"
+  ],
+  "es": {
+   "sistematica": "tribromuro de fósforo",
+   "stock": "bromuro de fósforo(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "P",
+    "ox": 3
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "phosphorus trifluoride"
+  ],
+  "es": {
+   "sistematica": "trifluoruro de fósforo",
+   "stock": "fluoruro de fósforo(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "P",
+    "ox": 5
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "phosphorus pentafluoride"
+  ],
+  "es": {
+   "sistematica": "pentafluoruro de fósforo",
+   "stock": "fluoruro de fósforo(V)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "P",
+    "ox": 5
+   },
+   "anion": "Br"
+  },
+  "queries": [
+   "phosphorus pentabromide"
+  ],
+  "es": {
+   "sistematica": "pentabromuro de fósforo",
+   "stock": "bromuro de fósforo(V)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "S",
+    "ox": 4
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "sulfur tetrafluoride"
+  ],
+  "es": {
+   "sistematica": "tetrafluoruro de azufre",
+   "stock": "fluoruro de azufre(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "N",
+    "ox": 3
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "nitrogen trifluoride"
+  ],
+  "es": {
+   "sistematica": "trifluoruro de nitrógeno",
+   "stock": "fluoruro de nitrógeno(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Si",
+    "ox": 4
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "silicon tetrafluoride"
+  ],
+  "es": {
+   "sistematica": "tetrafluoruro de silicio",
+   "stock": "fluoruro de silicio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "C",
+    "ox": 4
+   },
+   "anion": "F"
+  },
+  "queries": [
+   "carbon tetrafluoride",
+   "tetrafluoromethane"
+  ],
+  "es": {
+   "sistematica": "tetrafluoruro de carbono",
+   "stock": "fluoruro de carbono(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "C",
+    "ox": 4
+   },
+   "anion": "Br"
+  },
+  "queries": [
+   "carbon tetrabromide"
+  ],
+  "es": {
+   "sistematica": "tetrabromuro de carbono",
+   "stock": "bromuro de carbono(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "B",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "boron trichloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de boro",
+   "stock": "cloruro de boro",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "B",
+    "ox": 3
+   },
+   "anion": "Br"
+  },
+  "queries": [
+   "boron tribromide"
+  ],
+  "es": {
+   "sistematica": "tribromuro de boro",
+   "stock": "bromuro de boro",
+   "tradicional": null
+  }
  }
 ]

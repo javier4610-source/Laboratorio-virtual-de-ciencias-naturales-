@@ -149,7 +149,7 @@ export const ELEMENTS: ElementInfo[] = [
  * Compuestos de referencia con los que se valida el motor (tests/fixtures/quimica/nomenclatura-casos.json): nombres en
  * español esperados y nombres en inglés que deben aparecer entre los sinónimos del CID de PubChem con la misma fórmula.
  */
-export const REFERENCE_CASES = 294;
+export const REFERENCE_CASES = 316;
 
 export function el(sym: string): ElementInfo {
   const e = ELEMENTS.find((x) => x.sym === sym);
@@ -496,7 +496,7 @@ const NONMETAL_HYDRIDES: Record<string, { formula: string; es: string; iupac: st
   As: { formula: 'AsH3', es: 'arsina', iupac: 'arsano', sistAntigua: 'trihidruro de arsénico', en: 'arsine', note: 'La IUPAC 2005 recomienda «arsano»; «arsina» ya no se recomienda. Es un gas muy tóxico.' },
 };
 /** No metales que pueden actuar como «catión» (elemento menos electronegativo) frente a halógenos o S. */
-const NONMETAL_CATIONS: Record<string, { ox: number[]; with: string[] }> = {
+export const NONMETAL_CATIONS: Record<string, { ox: number[]; with: string[] }> = {
   B: { ox: [3], with: ['F', 'Cl', 'Br'] },
   C: { ox: [4], with: ['F', 'Cl', 'Br', 'S'] },
   Si: { ox: [4], with: ['F', 'Cl'] },

@@ -204,9 +204,16 @@ function OxidesHydroxidesBench({ api }: LabProps) {
           )}
           {view3d === 'cristal' && (
             <>
-              <Select label="Óxido iónico" value={crystalId} options={[{ value: 'mgo', label: 'MgO · óxido de magnesio (periclasa)' }, { value: 'cao', label: 'CaO · óxido de calcio (cal viva)' }]} onChange={setCrystalId} />
+              <Select label="Óxido iónico" value={crystalId} options={[
+                { value: 'mgo', label: 'MgO · óxido de magnesio (periclasa)' }, { value: 'cao', label: 'CaO · óxido de calcio (cal viva)' },
+                { value: 'bao', label: 'BaO · óxido de bario' }, { value: 'li2o', label: 'Li₂O · óxido de litio (antifluorita)' },
+                { value: 'na2o', label: 'Na₂O · óxido de sodio (antifluorita)' }, { value: 'k2o', label: 'K₂O · óxido de potasio (antifluorita)' },
+                { value: 'al2o3', label: 'Al₂O₃ · corindón' }, { value: 'tio2', label: 'TiO₂ · rutilo' }, { value: 'sio2', label: 'SiO₂ · cuarzo α (red covalente)' },
+              ]} onChange={setCrystalId} />
               <Crystal3D crystal={crystal} idPrefix="oxh" height={300} />
-              <p className="small muted" style={{ margin: 0 }}>Los óxidos de metales son sólidos iónicos: no forman moléculas sino redes de cationes y aniones O²⁻. Por eso «MgO» es una fórmula de proporción, no una molécula.</p>
+              <p className="small muted" style={{ margin: 0 }}>{crystal.bonding === 'covalente'
+                ? 'El SiO₂ es un óxido de un no metal, pero no forma moléculas: es una red covalente en la que cada Si se une a 4 O y cada O a 2 Si. Por eso «SiO₂» es una fórmula de proporción.'
+                : `Los óxidos de metales son sólidos iónicos: no forman moléculas sino redes de cationes y aniones O²⁻. Por eso «${crystal.formula}» es una fórmula de proporción, no una molécula.`}</p>
             </>
           )}
           {view3d === 'molecula' && (

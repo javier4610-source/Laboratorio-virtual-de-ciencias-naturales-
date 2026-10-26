@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Crystal3D, CRYSTALS, Molecule3D, MOLECULES, moleculeSpecies, hillFormulaOf } from '../chem';
+import { Crystal3D, CRYSTALS, crystalForComposition, Molecule3D, MOLECULES, moleculeSpecies, hillFormulaOf } from '../chem';
 import { parseSdf } from '../models/geometry';
 import { StatusChip } from '../components/Provenance';
 import { Notice, Readout, RecordButton, Segmented, Select } from '../components/ui';
@@ -129,7 +129,7 @@ function InorganicNomenclatureBench({ api }: LabProps) {
     const hill = hillFormula(result.composition);
     const molId = molIndex.get(hill);
     if (molId) return { kind: 'mol' as const, id: molId };
-    const cr = CRYSTALS.find((c) => hillFormula(Object.fromEntries(Object.entries({ [c.cation[0]]: 1, [c.anion[0]]: c.type === 'fluorita' ? 2 : 1 }))) === hill);
+    const cr = crystalForComposition(result.composition);
     return cr ? { kind: 'cristal' as const, id: cr.id } : null;
   }, [result, molIndex]);
 

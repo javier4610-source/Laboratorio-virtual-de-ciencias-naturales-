@@ -1,0 +1,662 @@
+{
+ "fuente": "PubChem PUG View (https://pubchem.ncbi.nlm.nih.gov/rest/pug_view), secciones «Density» y «Other Experimental Properties»",
+ "fecha": "2026-10-26",
+ "script": "scripts/validacion/cristales_pubchem.mjs",
+ "metodo": "Nombre → CID con la fórmula de Hill esperada; se guardan todas las densidades con su fuente y referencia, y se elige una con la regla declarada (referencia al CRC Handbook; si no hay, la base PAC del DOE; si no, las ICSC).",
+ "cristales": {
+  "nacl": {
+   "consulta": "sodium chloride",
+   "cid": 5234,
+   "titulo": "Sodium Chloride",
+   "formula": "ClNa",
+   "elegido": {
+    "texto": "2.17 at 25 °C/4 °C",
+    "fuente": "Hazardous Substances Data Bank (HSDB)",
+    "registro": "SODIUM CHLORIDE",
+    "referencia": "Haynes, W.M. (ed.). CRC Handbook of Chemistry and Physics. 94th Edition. CRC Press LLC, Boca Raton: FL 2013-2014, p. 4-89",
+    "valor": 2.17,
+    "regla": {
+     "referencia": "/CRC Handbook/i"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "2.17 at 25 °C/4 °C",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "SODIUM CHLORIDE",
+     "referencia": "Haynes, W.M. (ed.). CRC Handbook of Chemistry and Physics. 94th Edition. CRC Press LLC, Boca Raton: FL 2013-2014, p. 4-89"
+    },
+    {
+     "texto": "Enthalpy of formation: -410.9 kJ/mol at 25 °C; Density of molten sodium chloride at 850 °C: 1.549 g/cu cm; latent heat of fusion: 0.52 kJ/g",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "SODIUM CHLORIDE",
+     "referencia": "Westphal G et al; Sodium Chloride. Ullmann's Encyclopedia of Industrial Chemistry. 7th ed. (1999-2013). New York, NY: John Wiley & Sons. Online Posting Date: 5 Jan 2010"
+    }
+   ],
+   "cristalografia": []
+  },
+  "kcl": {
+   "consulta": "potassium chloride",
+   "cid": 4873,
+   "titulo": "Potassium Chloride",
+   "formula": "ClK",
+   "elegido": {
+    "texto": "1.988 g/cu cm",
+    "fuente": "Hazardous Substances Data Bank (HSDB)",
+    "registro": "POTASSIUM CHLORIDE",
+    "referencia": "Haynes, W.M. (ed.). CRC Handbook of Chemistry and Physics. 95th Edition. CRC Press LLC, Boca Raton: FL 2014-2015, p. 4-82",
+    "valor": 1.988,
+    "regla": {
+     "referencia": "/CRC Handbook/i"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "1.984 (NTP, 1992) - Denser than water; will sink",
+     "fuente": "CAMEO Chemicals",
+     "registro": "POTASSIUM CHLORIDE",
+     "referencia": "National Toxicology Program, Institute of Environmental Health Sciences, National Institutes of Health (NTP). 1992. National Toxicology Program Chemical Repository Database. Research Triangle Park, North Carolina."
+    },
+    {
+     "texto": "1.988 g/cu cm",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "POTASSIUM CHLORIDE",
+     "referencia": "Haynes, W.M. (ed.). CRC Handbook of Chemistry and Physics. 95th Edition. CRC Press LLC, Boca Raton: FL 2014-2015, p. 4-82"
+    },
+    {
+     "texto": "Density of saturated aq soln at 15 °C: 1.172",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "POTASSIUM CHLORIDE",
+     "referencia": "O'Neil, M.J. (ed.). The Merck Index - An Encyclopedia of Chemicals, Drugs, and Biologicals. Cambridge, UK:  Royal Society of Chemistry, 2013., p. 1418"
+    },
+    {
+     "texto": "1.98 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "POTASSIUM CHLORIDE",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "mgo": {
+   "consulta": "magnesium oxide",
+   "cid": 14792,
+   "titulo": "Magnesium Oxide",
+   "formula": "MgO",
+   "elegido": {
+    "texto": "3.6 g/cu cm",
+    "fuente": "Hazardous Substances Data Bank (HSDB)",
+    "registro": "MAGNESIUM OXIDE",
+    "referencia": "Haynes, W.M. (ed.) CRC Handbook of Chemistry and Physics.   91st ed. Boca Raton, FL: CRC Press Inc., 2010-2011, p. 4-74",
+    "valor": 3.6,
+    "regla": {
+     "referencia": "/CRC Handbook/i"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "3.58 (NIOSH, 2024) - Denser than water; will sink",
+     "fuente": "CAMEO Chemicals",
+     "registro": "MAGNESIUM OXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "3.6 g/cu cm",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "MAGNESIUM OXIDE",
+     "referencia": "Haynes, W.M. (ed.) CRC Handbook of Chemistry and Physics.   91st ed. Boca Raton, FL: CRC Press Inc., 2010-2011, p. 4-74"
+    },
+    {
+     "texto": "Relative density (water = 1): 3.6",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "MAGNESIUM OXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "3.58",
+     "fuente": "Occupational Safety and Health Administration (OSHA)",
+     "registro": "MAGNESIUM OXIDE (FUME)",
+     "referencia": ""
+    },
+    {
+     "texto": "3.6 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Magnesium oxide",
+     "referencia": ""
+    },
+    {
+     "texto": "3.58",
+     "fuente": "The National Institute for Occupational Safety and Health (NIOSH)",
+     "registro": "Magnesium oxide fume",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "cao": {
+   "consulta": "calcium oxide",
+   "cid": 14778,
+   "titulo": "Calcium Oxide",
+   "formula": "CaO",
+   "elegido": {
+    "texto": "3.34 g/cu cm",
+    "fuente": "Hazardous Substances Data Bank (HSDB)",
+    "registro": "CALCIUM OXIDE",
+    "referencia": "Haynes, W.M. (ed.). CRC Handbook of Chemistry and Physics. 94th Edition. CRC Press LLC, Boca Raton: FL 2013-2014, p. 4-55",
+    "valor": 3.34,
+    "regla": {
+     "referencia": "/CRC Handbook/i"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "3.3 at 68 °F (USCG, 1999) - Denser than water; will sink",
+     "fuente": "CAMEO Chemicals",
+     "registro": "CALCIUM OXIDE",
+     "referencia": "U.S. Coast Guard. 1999. Chemical Hazard Response Information System (CHRIS) - Hazardous Chemical Data. Commandant Instruction 16465.12C. Washington, D.C.: U.S. Government Printing Office."
+    },
+    {
+     "texto": "3.34 g/cu cm",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CALCIUM OXIDE",
+     "referencia": "Haynes, W.M. (ed.). CRC Handbook of Chemistry and Physics. 94th Edition. CRC Press LLC, Boca Raton: FL 2013-2014, p. 4-55"
+    },
+    {
+     "texto": "Relative density (water = 1): 3.3-3.4",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "CALCIUM OXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "3.34",
+     "fuente": "Occupational Safety and Health Administration (OSHA)",
+     "registro": "CALCIUM OXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "3.37 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Calcium oxide",
+     "referencia": ""
+    },
+    {
+     "texto": "3.34",
+     "fuente": "The National Institute for Occupational Safety and Health (NIOSH)",
+     "registro": "Calcium oxide",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "caf2": {
+   "consulta": "calcium fluoride",
+   "cid": 84512,
+   "titulo": "Calcium Fluoride",
+   "formula": "CaF2",
+   "elegido": {
+    "texto": "3.18 @25 °C",
+    "fuente": "PAC Chemical Database, U.S. Department of Energy",
+    "registro": "Calcium fluoride",
+    "referencia": "",
+    "valor": 3.18,
+    "regla": {
+     "fuente": "/PAC/"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "3.18 at 68 °F (USCG, 1999) - Denser than water; will sink",
+     "fuente": "CAMEO Chemicals",
+     "registro": "CALCIUM FLUORIDE",
+     "referencia": "U.S. Coast Guard. 1999. Chemical Hazard Response Information System (CHRIS) - Hazardous Chemical Data. Commandant Instruction 16465.12C. Washington, D.C.: U.S. Government Printing Office."
+    },
+    {
+     "texto": "3.18",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CALCIUM FLUORIDE",
+     "referencia": "Budavari, S. (ed.). The Merck Index - An Encyclopedia of Chemicals, Drugs, and Biologicals. Whitehouse Station, NJ: Merck and Co., Inc., 1996., p. 273"
+    },
+    {
+     "texto": "3.2 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "CALCIUM FLUORIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "3.18 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Calcium fluoride",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "cscl": {
+   "consulta": "cesium chloride",
+   "cid": 24293,
+   "titulo": "Cesium Chloride",
+   "formula": "ClCs",
+   "elegido": {
+    "texto": "3.988",
+    "fuente": "Hazardous Substances Data Bank (HSDB)",
+    "registro": "CESIUM CHLORIDE",
+    "referencia": "Lide, DR (ed.). CRC Handbook of Chemistry and Physics. 81st Edition. CRC Press LLC, Boca Raton: FL 2000, p. 4-52",
+    "valor": 3.988,
+    "regla": {
+     "referencia": "/CRC Handbook/i"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "3.988",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CESIUM CHLORIDE",
+     "referencia": "Lide, DR (ed.). CRC Handbook of Chemistry and Physics. 81st Edition. CRC Press LLC, Boca Raton: FL 2000, p. 4-52"
+    },
+    {
+     "texto": "3.99 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Cesium chloride",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "li2o": {
+   "consulta": "lithium oxide",
+   "cid": 166630,
+   "titulo": "Lithium oxide",
+   "formula": "Li2O",
+   "elegido": {
+    "texto": "2.013 @25 °C",
+    "fuente": "PAC Chemical Database, U.S. Department of Energy",
+    "registro": "Lithium oxide",
+    "referencia": "",
+    "valor": 2.013,
+    "regla": {
+     "fuente": "/PAC/"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "2.013 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Lithium oxide",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "na2o": {
+   "consulta": "sodium oxide",
+   "cid": 73971,
+   "titulo": "Sodium oxide",
+   "formula": "Na2O",
+   "elegido": {
+    "texto": "2.27 @25 °C",
+    "fuente": "PAC Chemical Database, U.S. Department of Energy",
+    "registro": "Disodium monoxide; (Disodium oxide; Sodium oxide)",
+    "referencia": "",
+    "valor": 2.27,
+    "regla": {
+     "fuente": "/PAC/"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "2.3 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "SODIUM OXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "2.27 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Disodium monoxide; (Disodium oxide; Sodium oxide)",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "k2o": {
+   "consulta": "potassium oxide",
+   "cid": 9989219,
+   "titulo": "Potassium oxide",
+   "formula": "K2O",
+   "elegido": {
+    "texto": "2.3 g/cm³",
+    "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+    "registro": "POTASSIUM OXIDE",
+    "referencia": "",
+    "valor": 2.3,
+    "regla": {
+     "fuente": "/ICSC|Chemical Safety Cards/"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "2.3 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "POTASSIUM OXIDE",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "bao": {
+   "consulta": "barium oxide",
+   "cid": 62392,
+   "titulo": "Barium oxide",
+   "formula": "BaO",
+   "elegido": {
+    "texto": "5.72 @25 °C",
+    "fuente": "PAC Chemical Database, U.S. Department of Energy",
+    "registro": "Barium oxide",
+    "referencia": "",
+    "valor": 5.72,
+    "regla": {
+     "fuente": "/PAC/"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "5.7 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "BARIUM OXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "5.72 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Barium oxide",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "zns": {
+   "consulta": "zinc sulfide",
+   "cid": 9833931,
+   "titulo": "Zinc Sulfide",
+   "formula": "SZn",
+   "elegido": {
+    "texto": "4.04 g/cu cm (sphalerite); 4.09 g/cu cm (wurtzite)",
+    "fuente": "Hazardous Substances Data Bank (HSDB)",
+    "registro": "ZINC SULFIDE",
+    "referencia": "Lide, D.R. CRC Handbook of Chemistry and Physics 86TH  Edition 2005-2006. CRC Press, Taylor & Francis, Boca Raton,  FL 2005, p. 4-96",
+    "valor": 4.04,
+    "regla": {
+     "texto": "/sphalerite/i",
+     "referencia": "/CRC Handbook/i"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "4.04 g/cu cm (sphalerite); 4.09 g/cu cm (wurtzite)",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "ZINC SULFIDE",
+     "referencia": "Lide, D.R. CRC Handbook of Chemistry and Physics 86TH  Edition 2005-2006. CRC Press, Taylor & Francis, Boca Raton,  FL 2005, p. 4-96"
+    },
+    {
+     "texto": "4.0 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "ZINC SULFIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "4.09 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Zinc sulfide",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "tio2": {
+   "consulta": "titanium dioxide",
+   "cid": 26042,
+   "titulo": "Titanium dioxide",
+   "formula": "O2Ti",
+   "elegido": {
+    "texto": "4.23",
+    "fuente": "Hazardous Substances Data Bank (HSDB)",
+    "registro": "TITANIUM DIOXIDE",
+    "referencia": "Lide, DR (ed.). CRC Handbook of Chemistry and Physics. 81st Edition. CRC Press LLC, Boca Raton: FL 2000, p. 4-94",
+    "valor": 4.23,
+    "regla": {
+     "texto": "/^\\s*4\\.\\d+\\s*$/",
+     "referencia": "/CRC Handbook/i"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "3.9 to 4.2 (NTP, 1992)",
+     "fuente": "CAMEO Chemicals",
+     "registro": "TITANIUM DIOXIDE",
+     "referencia": "National Toxicology Program, Institute of Environmental Health Sciences, National Institutes of Health (NTP). 1992. National Toxicology Program Chemical Repository Database. Research Triangle Park, North Carolina."
+    },
+    {
+     "texto": "4.23",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "TITANIUM DIOXIDE",
+     "referencia": "Lide, DR (ed.). CRC Handbook of Chemistry and Physics. 81st Edition. CRC Press LLC, Boca Raton: FL 2000, p. 4-94"
+    },
+    {
+     "texto": "White, orthorhombic crystals; density: 4.17 g/cu cm /Titanium(IV)oxide (Brookite)/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "TITANIUM DIOXIDE",
+     "referencia": "Haynes, W.M. (ed.). CRC Handbook of Chemistry and Physics. 94th Edition. CRC Press LLC, Boca Raton: FL 2013-2014, p. 4-96"
+    },
+    {
+     "texto": "3.9-4.3 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "TITANIUM DIOXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "4.26",
+     "fuente": "Occupational Safety and Health Administration (OSHA)",
+     "registro": "TITANIUM DIOXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "4.23 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Titanium oxide; (Titanium dioxide)",
+     "referencia": ""
+    },
+    {
+     "texto": "4.26",
+     "fuente": "The National Institute for Occupational Safety and Health (NIOSH)",
+     "registro": "Titanium dioxide",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": [
+    {
+     "texto": "RUTILE: X-RAY CRYSTALLOGRAPHIC DATA: CRYSTAL SYSTEM: TETRAGONAL; SPACE GROUP: P4/MNM(136); 2 G FORMULA WT/UNIT CELL; X-RAY CRYSTALLOGRAPHIC DATA: AO= 4.5937 + OR - 0.0005; CO= 2.9618 + OR - 0.0010",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "TITANIUM DIOXIDE",
+     "referencia": "Weast, R.C. (ed.). Handbook of Chemistry and Physics. 60th ed. Boca Raton, Florida: CRC Press Inc., 1979., p. B-200"
+    },
+    {
+     "texto": "ANATASE: X-RAY CRYSTALLOGRAPHIC DATA: CRYSTAL SYSTEM: TETRAGONAL; SPACE GROUP: I41/AMD(141); 4 G FORMULA WT/UNIT CELL X-RAY CRYSTALLOGRAPHIC DATA: AO= 3.785 + OR - 0.002; CO= 9.514 + OR - 0.006",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "TITANIUM DIOXIDE",
+     "referencia": "Weast, R.C. (ed.). Handbook of Chemistry and Physics. 60th ed. Boca Raton, Florida: CRC Press Inc., 1979., p. B-200"
+    },
+    {
+     "texto": "BROOKITE: X-RAY CRYSTALLOGRAPHIC DATA: CRYSTAL SYSTEM: ORTHORHOMBIC; SPACE GROUP: PCAB (61); 8 G FORMULA WT/UNIT CELL X-RAY CRYSTALLOGRAPHIC DATA: AO= 5.456 + OR - 0.002; BO= 9.182 + OR - 0.005; CO= 5.143 + OR - 0.003",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "TITANIUM DIOXIDE",
+     "referencia": "Weast, R.C. (ed.). Handbook of Chemistry and Physics. 60th ed. Boca Raton, Florida: CRC Press Inc., 1979., p. B-200"
+    }
+   ]
+  },
+  "al2o3": {
+   "consulta": "aluminum oxide",
+   "cid": 9989226,
+   "titulo": "Alumina",
+   "formula": "Al2O3",
+   "elegido": {
+    "texto": "3.99 @25 °C",
+    "fuente": "PAC Chemical Database, U.S. Department of Energy",
+    "registro": "Aluminum oxide; (Alumina)",
+    "referencia": "",
+    "valor": 3.99,
+    "regla": {
+     "texto": "/^\\s*\\d\\.\\d+ @/",
+     "fuente": "/PAC/"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "4 (NIOSH, 2024) - Denser than water; will sink",
+     "fuente": "CAMEO Chemicals",
+     "registro": "ALUMINUM OXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "Density: 3.4-4.0",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "Aluminum oxide",
+     "referencia": "Lewis, R.J. Sr.; Hawley's Condensed Chemical Dictionary 15th  Edition. John Wiley & Sons, Inc. New York, NY 2007., p. 49"
+    },
+    {
+     "texto": "Soft white powder; transforms to corundum at 1200 °C; density: 3.97 g/cu cm; insoluble in water; soluble in acid; slightly soluble in alkaline solutions /Gamma-alumina/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "Aluminum oxide",
+     "referencia": "Lide, D.R. CRC Handbook of Chemistry and Physics 88TH    Edition 2007-2008. CRC Press, Taylor & Francis, Boca Raton,    FL 2007, p. 4-45"
+    },
+    {
+     "texto": "3.97 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "ALUMINIUM OXIDE",
+     "referencia": ""
+    },
+    {
+     "texto": "4",
+     "fuente": "Occupational Safety and Health Administration (OSHA)",
+     "registro": "α-ALUMINA (ALUNDUM)",
+     "referencia": ""
+    },
+    {
+     "texto": "3.99 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Aluminum oxide; (Alumina)",
+     "referencia": ""
+    },
+    {
+     "texto": "4.0",
+     "fuente": "The National Institute for Occupational Safety and Health (NIOSH)",
+     "registro": "alpha-Alumina",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  },
+  "sio2": {
+   "consulta": "silicon dioxide",
+   "cid": 24261,
+   "titulo": "Silica",
+   "formula": "O2Si",
+   "elegido": {
+    "texto": "Density = 2.648 /alpha-Quartz/ /from table/",
+    "fuente": "Hazardous Substances Data Bank (HSDB)",
+    "registro": "CRYSTALLINE SILICA",
+    "referencia": "IARC. Monographs on the Evaluation of the Carcinogenic Risk  of Chemicals to Humans. Geneva: World Health Organization,  International Agency for Research on Cancer, 1972-PRESENT.  (Multivolume work).",
+    "valor": 2.648,
+    "regla": {
+     "texto": "/alpha-Quartz/i"
+    }
+   },
+   "densidades": [
+    {
+     "texto": "2.2 (NIOSH, 2024) - Denser than water; will sink",
+     "fuente": "CAMEO Chemicals",
+     "registro": "SILICA, AMORPHOUS",
+     "referencia": ""
+    },
+    {
+     "texto": "2.2 @ 25 °C",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "AMORPHOUS SILICA",
+     "referencia": "O'Neil, M.J. (ed.). The Merck Index - An Encyclopedia of  Chemicals, Drugs, and Biologicals. 13th Edition, Whitehouse  Station, NJ:  Merck and Co., Inc., 2001., p. 1523"
+    },
+    {
+     "texto": "2.6",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CRYSTALLINE SILICA",
+     "referencia": "Lewis, R.J. Sax's Dangerous Properties of Industrial  Materials. 10th ed. Volumes 1-3 New York, NY: John Wiley &  Sons Inc., 1999., p. V3 3205"
+    },
+    {
+     "texto": "Colorless crystals or white powder; odorless and tasteless; density: 2.2-2.6; soluble in molten alkai when finely divided and amorphous /Silicon dioxide/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CRYSTALLINE SILICA",
+     "referencia": "Lewis, R.J., Sr (Ed.). Hawley's Condensed Chemical  Dictionary. 13th ed. New York, NY: John Wiley & Sons, Inc.  1997., p. 995"
+    },
+    {
+     "texto": "Density = 2.20 g/cm; Refractive index = 1.459; Surface tension = 5.200 @ 298 K (calc); Thermal conductivity = 1.37 W/m-deg K at 298 deg K ; Heat of Formation = -903.2 kJ/mol at 298 deg K; Heat Capacity = 37.94 J/mol-deg K at 298 deg K; Dielectric Constant = 3.8 /Corning 7940 fused silica/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CRYSTALLINE SILICA",
+     "referencia": "Gerhartz, W. (exec ed.). Ullmann's Encyclopedia of Industrial Chemistry. 5th ed.Vol A1: Deerfield Beach, FL: VCH Publishers, 1985 to Present., p. VA12 (1989) 373"
+    },
+    {
+     "texto": "Density = 2.648 /alpha-Quartz/ /from table/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CRYSTALLINE SILICA",
+     "referencia": "IARC. Monographs on the Evaluation of the Carcinogenic Risk  of Chemicals to Humans. Geneva: World Health Organization,  International Agency for Research on Cancer, 1972-PRESENT.  (Multivolume work)."
+    },
+    {
+     "texto": "Density = 2.269 /alpha-Tridymite/ /from table/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CRYSTALLINE SILICA",
+     "referencia": "IARC. Monographs on the Evaluation of the Carcinogenic Risk  of Chemicals to Humans. Geneva: World Health Organization,  International Agency for Research on Cancer, 1972-PRESENT.  (Multivolume work)."
+    },
+    {
+     "texto": "Density = 2.318 /alpha-Cristobalite/ /from table/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CRYSTALLINE SILICA",
+     "referencia": "IARC. Monographs on the Evaluation of the Carcinogenic Risk  of Chemicals to Humans. Geneva: World Health Organization,  International Agency for Research on Cancer, 1972-PRESENT.  (Multivolume work)."
+    },
+    {
+     "texto": "Density = 2.909 /Coesite/ /from table/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CRYSTALLINE SILICA",
+     "referencia": "IARC. Monographs on the Evaluation of the Carcinogenic Risk  of Chemicals to Humans. Geneva: World Health Organization,  International Agency for Research on Cancer, 1972-PRESENT.  (Multivolume work)."
+    },
+    {
+     "texto": "Density = 4.287 /Stishovite/ /from table/",
+     "fuente": "Hazardous Substances Data Bank (HSDB)",
+     "registro": "CRYSTALLINE SILICA",
+     "referencia": "IARC. Monographs on the Evaluation of the Carcinogenic Risk  of Chemicals to Humans. Geneva: World Health Organization,  International Agency for Research on Cancer, 1972-PRESENT.  (Multivolume work)."
+    },
+    {
+     "texto": "2.3 g/cm³",
+     "fuente": "ILO-WHO International Chemical Safety Cards (ICSCs)",
+     "registro": "CRISTOBALITE",
+     "referencia": ""
+    },
+    {
+     "texto": "2.334 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Cristobalite",
+     "referencia": ""
+    },
+    {
+     "texto": "2.2 @25 °C",
+     "fuente": "PAC Chemical Database, U.S. Department of Energy",
+     "registro": "Silica amorphous hydrated",
+     "referencia": ""
+    },
+    {
+     "texto": "2.20",
+     "fuente": "The National Institute for Occupational Safety and Health (NIOSH)",
+     "registro": "Silica, amorphous",
+     "referencia": ""
+    }
+   ],
+   "cristalografia": []
+  }
+ }
+}

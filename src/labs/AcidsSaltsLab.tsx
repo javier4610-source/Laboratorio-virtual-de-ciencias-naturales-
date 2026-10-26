@@ -222,7 +222,7 @@ function AcidsSaltsBench({ api }: LabProps) {
             <section className="card stack" aria-labelledby="acs-n3-h">
               <h3 id="acs-n3-h">Nomenclatura de la sal</h3>
               {saltCompound ? <NamesCard compound={saltCompound} title="Sal" idPrefix="acs-n" /> : <p className="small">Acetato de sodio: sal orgánica (etanoato de sodio).</p>}
-              <Select label="Red cristalina" value={crystalId} options={[{ value: 'nacl', label: 'NaCl · halita (sal de cocina)' }, { value: 'kcl', label: 'KCl · silvita' }, { value: 'caf2', label: 'CaF₂ · fluorita' }, { value: 'cscl', label: 'CsCl · cloruro de cesio' }]} onChange={setCrystalId} />
+              <Select label="Red cristalina" value={crystalId} options={[{ value: 'nacl', label: 'NaCl · halita (sal de cocina)' }, { value: 'kcl', label: 'KCl · silvita' }, { value: 'caf2', label: 'CaF₂ · fluorita' }, { value: 'cscl', label: 'CsCl · cloruro de cesio' }, { value: 'zns', label: 'ZnS · blenda (sulfuro de cinc)' }]} onChange={setCrystalId} />
               <Crystal3D crystal={getCrystal(crystalId)} idPrefix="acs" height={290} />
             </section>
           </>

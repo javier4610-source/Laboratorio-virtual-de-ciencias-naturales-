@@ -1,6 +1,6 @@
 import { equationText, prettyFormula, solveBalance, type ReactionDef, type SpeciesDef } from './balancing';
 import {
-  buildCompound, el as engineEl, ELEMENTS, FUNCTION_LABEL, oxoacid, roman, specKey, type AcidForm, type Compound, type Spec,
+  buildCompound, el as engineEl, ELEMENTS, FUNCTION_LABEL, NONMETAL_CATIONS, oxoacid, roman, specKey, type AcidForm, type Compound, type Spec,
 } from './inorganicNomenclature';
 import { CATEGORY_LABEL, isRadioactive, isSynthetic, ptElement, type PtElement } from './periodicTable';
 import type { ModelSpec } from './types';
@@ -23,8 +23,9 @@ import type { ModelSpec } from './types';
 
 /* ------------------------------------------------------------------ rutas */
 
-export type RouteId = 'metal-o2' | 'nometal-o2' | 'peroxido' | 'metal-h2' | 'oxido-agua' | 'anhidrido-agua' | 'h2-nometal' | 'neutralizacion' | 'metal-nometal';
-export type ForgeFamily = 'oxidos' | 'hidroxidos-acidos' | 'sales';
+export type RouteId = 'metal-o2' | 'nometal-o2' | 'peroxido' | 'metal-h2' | 'oxido-agua' | 'anhidrido-agua' | 'h2-nometal' | 'neutralizacion' | 'metal-nometal'
+  | 'amoniaco-acido' | 'nometal-nometal';
+export type ForgeFamily = 'oxidos' | 'hidroxidos-acidos' | 'sales' | 'moleculares';
 
 export interface RouteDef {
   id: RouteId;
@@ -46,9 +47,11 @@ export const ROUTES: RouteDef[] = [
   { id: 'h2-nometal', label: 'H₂ + halógeno o calcógeno → hidrácido', family: 'hidroxidos-acidos', slots: 1, slotLabels: ['No metal'], help: 'Con F, Cl, Br, I, S, Se o Te se forma un hidrácido; con N, P, As, C, Si, B u O, un hidruro no metálico (NH₃, AsH₃, CH₄, H₂O…).' },
   { id: 'neutralizacion', label: 'Ácido + hidróxido → sal + agua', family: 'sales', slots: 2, slotLabels: ['Metal del hidróxido', 'No metal del ácido'], help: 'Casilla 1: el metal del hidróxido. Casilla 2: el no metal del ácido (estado negativo = hidrácido; positivo = oxácido).' },
   { id: 'metal-nometal', label: 'Metal + no metal → sal binaria', family: 'sales', slots: 2, slotLabels: ['Metal', 'No metal (halógeno, S, Se o Te)'], help: 'Casilla 1: el metal. Casilla 2: un halógeno (F, Cl, Br, I) o un calcógeno (S, Se, Te), que actúan como aniones.' },
+  { id: 'amoniaco-acido', label: 'NH₃ + ácido → sal de amonio', family: 'sales', slots: 1, slotLabels: ['No metal del ácido'], help: 'Elige el no metal del ácido (estado negativo = hidrácido, como el HCl; positivo = oxácido, como el HNO₃ o el H₂SO₄). El par de electrones libre del N del amoníaco acepta el H⁺ del ácido y se forma el ion amonio, NH₄⁺, con cuatro enlaces N–H.' },
+  { id: 'nometal-nometal', label: 'No metal + no metal → compuesto molecular', family: 'moleculares', slots: 2, slotLabels: ['No metal menos electronegativo (B, C, Si, N, P o S)', 'No metal más electronegativo (F, Cl, Br o S)'], help: 'Casilla 1: el no metal menos electronegativo, que se escribe primero y actúa con número de oxidación positivo (P, C, S…). Casilla 2: el más electronegativo (F, Cl, Br o S), con su estado negativo. Comparten electrones: se forma una molécula (PCl₃, CCl₄, SF₆…), no una sal. Los óxidos de los no metales (CO, CO₂, NO, N₂O, SO₂…) se forman en la ruta «No metal + O₂».' },
 ];
 
-export const FAMILY_LABEL: Record<ForgeFamily, string> = { oxidos: 'Óxidos, peróxidos e hidruros', 'hidroxidos-acidos': 'Hidróxidos y ácidos', sales: 'Sales' };
+export const FAMILY_LABEL: Record<ForgeFamily, string> = { oxidos: 'Óxidos, peróxidos e hidruros', 'hidroxidos-acidos': 'Hidróxidos y ácidos', sales: 'Sales', moleculares: 'Compuestos binarios entre no metales' };
 
 export function routeById(id: RouteId): RouteDef {
   const r = ROUTES.find((x) => x.id === id);
@@ -164,6 +167,8 @@ export function suggestedStates(route: RouteId, slot: 0 | 1, sym: string | null)
     case 'h2-nometal': return ANION_STATE[sym] !== undefined ? [ANION_STATE[sym]] : HYDRIDE_STATES[sym] ?? [];
     case 'neutralizacion': return slot === 0 ? (metal ? e.ox : []) : [...(ANION_STATE[sym] !== undefined ? [ANION_STATE[sym]] : []), ...(e.acid ?? [])];
     case 'metal-nometal': return slot === 0 ? (metal ? e.ox : []) : ANION_STATE[sym] !== undefined ? [ANION_STATE[sym]] : [];
+    case 'amoniaco-acido': return metal && !e.acid?.length ? [] : [...(ANION_STATE[sym] !== undefined ? [ANION_STATE[sym]] : []), ...(e.acid ?? [])];
+    case 'nometal-nometal': return slot === 0 ? NONMETAL_CATIONS[sym]?.ox ?? [] : Object.values(NONMETAL_CATIONS).some((x) => x.with.includes(sym)) ? [ANION_STATE[sym]] : [];
   }
 }
 
@@ -373,7 +378,11 @@ function nonmetalOxidePathway(sym: string, ox: number): [Pathway, string] {
   if (k === 'As:5') return ['formal', 'El As₂O₅ no se forma quemando el arsénico: se obtiene deshidratando el ácido arsénico (que se prepara oxidando el As con ácido nítrico).'];
   if (k === 'Se:4' || k === 'Te:4') return ['directa', `${Art(sym)} arde en el aire y forma ${sym}O₂.`];
   if (k === 'Se:6' || k === 'Te:6') return ['formal', `El ${sym}O₃ no se forma quemando el ${nameOf(sym)}: se obtiene deshidratando su ácido (${sym === 'Se' ? 'H₂SeO₄' : 'H₆TeO₆'}).`];
-  if (sym === 'N') return ['formal', 'El nitrógeno no arde en el aire; este óxido se obtiene por otras rutas (por ejemplo, el NO₂ a partir del NO).'];
+  if (k === 'N:1') return ['formal', 'El nitrógeno y el oxígeno no forman N₂O directamente: se obtiene calentando con cuidado el nitrato de amonio (NH₄NO₃ → N₂O + 2 H₂O; forma esa sal en la ruta «NH₃ + ácido»).'];
+  if (k === 'N:4') return ['condiciones', 'El N₂ no arde: a muy alta temperatura (motores, rayos) se forma NO, que en el aire se oxida a NO₂ (2 NO + O₂ → 2 NO₂, el gas pardo del smog). La ecuación N₂ + 2 O₂ resume la composición de los dos pasos.'];
+  if (k === 'N:3') return ['formal', 'El N₂O₃ se forma al enfriar una mezcla de NO y NO₂ (NO + NO₂ ⇌ N₂O₃), no con nitrógeno y oxígeno.'];
+  if (k === 'N:5') return ['formal', 'El N₂O₅ se obtiene deshidratando el ácido nítrico con P₄O₁₀, no con nitrógeno y oxígeno.'];
+  if (sym === 'N') return ['formal', 'El nitrógeno no arde en el aire; este óxido se obtiene por otras rutas.'];
   return ['formal', 'Los halógenos no reaccionan directamente con el oxígeno: sus óxidos se preparan por otras rutas y varios son inestables o explosivos.'];
 }
 
@@ -431,6 +440,64 @@ const UNSTABLE_NOTES: Record<string, string> = {
   'sal:Ce4-I': 'El yoduro de cerio(IV) no existe: el Ce⁴⁺ oxida al I⁻.',
   'sal:Pb4-I': 'El yoduro de plomo(IV) no se aísla: el Pb⁴⁺ oxida al I⁻ (se forma PbI₂ e I₂).',
   'sal:Pb4-Br': 'El bromuro de plomo(IV) no se aísla: es inestable y se descompone en PbBr₂ y Br₂.',
+  // Sales de amonio (Greenwood y Earnshaw, 1997, cap. 11; fichas de PubChem de cada sal).
+  'oxisal:NH4-N3': 'El nitrito de amonio es inestable: al calentarlo (incluso en disolución) se descompone en nitrógeno y agua, NH₄NO₂ → N₂ + 2 H₂O.',
+  'oxisal:NH4-Cl5': 'El clorato de amonio es inestable y explosivo: no se prepara en el colegio.',
+  'oxisal:NH4-Mn7': 'El permanganato de amonio es inestable: se descompone de forma explosiva al calentarlo o golpearlo.',
+  'oxisal:NH4-Cr6-di': 'Es el «volcán» de las demostraciones: al calentarlo se descompone en Cr₂O₃ verde, N₂ y agua. Es tóxico (cromo hexavalente).',
+  'oxisal:NH4-Cl7': 'El perclorato de amonio es un oxidante fuerte (se usa en los propulsores sólidos de cohetes): no se manipula en el colegio.',
+  'oxisal:NH4-N5': 'El nitrato de amonio es un oxidante: almacenado en grandes cantidades o contaminado puede explotar.',
+  'oxisal:NH4-C4': 'El «carbonato de amonio» del comercio es en realidad una mezcla de hidrogenocarbonato de amonio y carbamato de amonio; libera amoníaco al aire.',
+  'sal:NH4-S': 'El sulfuro de amonio no se aísla como sólido: existe en disolución acuosa con amoníaco en exceso; el sólido que se obtiene es el NH₄HS.',
+};
+
+/** Vía de obtención de las sales de amonio: amoníaco + ácido (el N del NH₃ acepta el H⁺ con su par libre). */
+function ammoniumPathway(acid: Compound, hLeft: number): [Pathway, string] {
+  const s = acid.spec;
+  const generic: [Pathway, string] = ['directa', 'El par de electrones libre del N del amoníaco acepta el H⁺ del ácido (NH₃ + H⁺ → NH₄⁺); en disolución, al evaporar el agua, cristaliza la sal.'];
+  if (s.kind === 'hidracido') {
+    if (s.el === 'Cl') return ['directa', 'NH₃(g) + HCl(g) → NH₄Cl(s): al encontrarse los dos gases se forma un humo blanco de cloruro de amonio (una demostración clásica de la difusión de los gases).'];
+    if (s.el === 'S') return ['condiciones', 'El sulfuro de amonio solo existe en disolución, con amoníaco en exceso; como sólido se descompone.'];
+    if (s.el === 'Se' || s.el === 'Te') return ['formal', 'Relación de composición: el taller no tiene datos de que esta sal se haya aislado como sólido estable (revisa su registro en PubChem).'];
+    return generic;
+  }
+  if (s.kind !== 'oxacido') return generic;
+  const k = `${s.el}:${s.ox}`;
+  if (k === 'N:5') return ['directa', 'Así se fabrica el nitrato de amonio, el fertilizante nitrogenado más usado: NH₃ + HNO₃ → NH₄NO₃. Al calentarlo con cuidado se descompone en N₂O y agua.'];
+  if (k === 'S:6') return ['directa', hLeft ? 'Con menos amoníaco se forma la sal ácida, el hidrogenosulfato de amonio.' : 'Así se fabrica el sulfato de amonio, un fertilizante: 2 NH₃ + H₂SO₄ → (NH₄)₂SO₄.'];
+  if (k === 'C:4') return ['condiciones', hLeft ? 'El ácido carbónico solo existe en disolución: el hidrogenocarbonato de amonio se obtiene con CO₂, NH₃ y agua. Se usa como leudante en panadería: al hornear se descompone en NH₃, CO₂ y agua.' : 'El ácido carbónico solo existe en disolución: el carbonato de amonio se obtiene con CO₂, NH₃ y agua, y se descompone con facilidad liberando amoníaco (por eso se usó como «sal volátil»).'];
+  if (k === 'P:5') return hLeft ? ['directa', 'Así se fabrican los fertilizantes fosfatados: el hidrogenofosfato de diamonio (DAP) y el dihidrogenofosfato de amonio (MAP), con ácido fosfórico y amoníaco.'] : ['condiciones', 'El fosfato de triamonio es inestable: pierde amoníaco y pasa a hidrogenofosfato. Los fertilizantes son las sales ácidas (DAP y MAP).'];
+  if (acidPathway(s.el, s.ox, s.form ?? 'normal')[0] === 'formal') return ['formal', 'El ácido no se aísla como sustancia (revisa su ruta «Óxido ácido + H₂O»): la ecuación con NH₃ es una relación de composición y la sal se prepara por otras rutas.'];
+  return generic;
+}
+
+/** Vía de obtención de los compuestos binarios entre no metales (Greenwood y Earnshaw, 1997, capítulos de cada grupo). */
+const NONMETAL_BINARY_PATHWAY: Record<string, [Pathway, string]> = {
+  'B3-F': ['directa', 'El boro reacciona con el flúor a temperatura ambiente; en la industria el BF₃ se obtiene de B₂O₃, CaF₂ y ácido sulfúrico.'],
+  'B3-Cl': ['condiciones', 'El boro reacciona con el cloro al calentarlo; en la industria el BCl₃ se obtiene calentando B₂O₃ con carbono y cloro.'],
+  'B3-Br': ['condiciones', 'El boro reacciona con el bromo a alta temperatura.'],
+  'C4-F': ['condiciones', 'El carbono reacciona con el flúor y forma CF₄ junto con otros fluorocarbonos; la reacción es difícil de controlar.'],
+  'C4-Cl': ['formal', 'El carbono no reacciona directamente con el cloro: el CCl₄ se obtiene clorando el metano o el disulfuro de carbono.'],
+  'C4-Br': ['formal', 'El carbono no reacciona directamente con el bromo: el CBr₄ se prepara a partir de otros compuestos de carbono.'],
+  'C4-S': ['condiciones', 'El vapor de azufre reacciona con carbón al rojo vivo; hoy el CS₂ se fabrica con metano y azufre.'],
+  'Si4-F': ['directa', 'El silicio arde en el flúor a temperatura ambiente.'],
+  'Si4-Cl': ['condiciones', 'El silicio reacciona con el cloro al calentarlo; el SiCl₄ se usa para fabricar silicio muy puro y fibra óptica.'],
+  'N3-F': ['formal', 'El N₂ (con triple enlace) no reacciona con el flúor en condiciones ordinarias: el NF₃ se obtiene fluorando el amoníaco o por electrólisis de NH₄F en HF.'],
+  'N3-Cl': ['formal', 'El NCl₃ (explosivo) se forma al tratar sales de amonio con cloro, no con nitrógeno y cloro.'],
+  'P3-F': ['formal', 'Con flúor el fósforo forma PF₅; el PF₃ se obtiene fluorando el PCl₃.'],
+  'P5-F': ['condiciones', 'Con flúor en exceso el fósforo forma PF₅; en el laboratorio se prepara fluorando el PCl₅.'],
+  'P3-Cl': ['directa', 'El fósforo reacciona con el cloro (sin exceso) y forma PCl₃, un líquido: así se fabrica en la industria.'],
+  'P5-Cl': ['directa', 'Con cloro en exceso se forma PCl₅ (PCl₃ + Cl₂ → PCl₅), un sólido amarillo pálido.'],
+  'P3-Br': ['directa', 'El fósforo reacciona con el bromo y forma PBr₃, un reactivo de la química orgánica.'],
+  'P5-Br': ['condiciones', 'Con bromo en exceso se forma PBr₅, que se descompone al calentarlo en PBr₃ y Br₂.'],
+  'S4-F': ['formal', 'El azufre y el flúor forman SF₆, no SF₄: el SF₄ se prepara con SCl₂ y NaF.'],
+  'S6-F': ['directa', 'El azufre arde en el flúor y forma SF₆, un gas muy estable que se usa como aislante eléctrico (y es un gas de efecto invernadero muy potente).'],
+};
+const NONMETAL_BINARY_NOTES: Record<string, string> = {
+  'P5-Cl': 'En el gas el PCl₅ es una molécula con forma de bipirámide trigonal; en el sólido es iónico, [PCl₄]⁺[PCl₆]⁻.',
+  'P5-Br': 'El PBr₅ sólido es iónico, [PBr₄]⁺Br⁻.',
+  'C4-Cl': 'El CCl₄ es tóxico y daña la capa de ozono: su uso está restringido por el Protocolo de Montreal.',
+  'N3-Cl': 'El NCl₃ es un líquido explosivo; en pequeñas cantidades se forma en las piscinas cloradas y causa su olor irritante.',
 };
 
 /* ------------------------------------------------------------------ construcción */
@@ -662,7 +729,7 @@ export function forge(input: ForgeInput): ForgeOutcome {
       const g2 = elementGate(input.b, route.slotLabels[1]);
       const B = input.b ?? null;
       if (!isMetal(A)) {
-        if (B && !g2 && !isMetal(B)) return err('dos-no-metales', 'Dos no metales no forman una sal', `El ${nameA} y el ${nameOf(B)} son no metales: comparten electrones y forman un compuesto molecular (como el CCl₄), no una sal con cationes y aniones.`, 'En la casilla 1 elige un metal.');
+        if (B && !g2 && !isMetal(B)) return err('dos-no-metales', 'Dos no metales no forman una sal', `El ${nameA} y el ${nameOf(B)} son no metales: comparten electrones y forman un compuesto molecular (como el CCl₄), no una sal con cationes y aniones.`, 'Para formar el compuesto molecular usa la ruta «No metal + no metal»; para una sal, en la casilla 1 elige un metal.');
         if (B && !g2 && isMetal(B)) return err('papel', 'El metal va en la casilla 1', `En la fórmula de la sal se escribe primero el metal (el elemento menos electronegativo): pon ${art(B)} en la casilla 1 y el ${nameA} en la casilla 2.`);
         return err('no-es-metal', `El ${nameA} es un no metal`, `En la casilla 1 va el metal (el catión). El ${nameA} es un no metal.`);
       }
@@ -687,6 +754,65 @@ export function forge(input: ForgeInput): ForgeOutcome {
         ? ['condiciones', `La reacción directa es posible, pero el estado que alcanza ${art(A)} depende del no metal: con F₂ o Cl₂ (muy oxidantes) suele formarse el estado más alto; con S o I₂, el más bajo.`]
         : ['directa', `${Art(A)} reacciona directamente con el ${nameB}${b === 'S' ? ' al calentar la mezcla' : ''}.`];
       return finish(input, salt, [elementTerm(A), elementTerm(b)], [compoundTerm(salt)], path, []);
+    }
+    case 'amoniaco-acido': {
+      if (A === 'O' || A === 'H') return err('papel', 'Elige el no metal del ácido', 'Aquí va el elemento característico del ácido: un halógeno o el azufre (hidrácidos, como el HCl) o un no metal que forme oxácido (N, S, C, P, Cl…).');
+      if (A === 'N' && oxA < 0) return err('papel', 'El amoníaco no es un ácido', 'El NH₃ es la base de esta ruta: elige el no metal del ácido que neutraliza (por ejemplo, Cl con −1, N con +5 para el HNO₃ o S con +6 para el H₂SO₄).');
+      const eA = engineEl(A);
+      if (eA.kind === 'metal' && !(eA.acid ?? []).includes(oxA)) return err('dos-metales', `${Art(A)} es un metal${eA.acid ? ` y con ${stateLabel(oxA)} no forma un ácido` : ' y no forma ácidos'}`, `El amoníaco es una base: necesita un ácido. ${Art(A)} con ${stateLabel(oxA)} forma un óxido básico o un hidróxido, no un ácido.${eA.acid ? ` (${Art(A)} sí forma oxácidos con ${listStates(eA.acid)}).` : ''}`, 'Elige un no metal (por ejemplo, Cl con −1 o N con +5).');
+      const hLeft = input.hLeft ?? 0;
+      let acid: Compound | ForgeError;
+      let saltSpec: Spec;
+      if (oxA < 0) {
+        const an = ANION_STATE[A];
+        if (an === undefined) return err('papel', `El ${nameA} no forma un hidrácido`, `Con número de oxidación negativo el no metal formaría un hidrácido, y solo los halógenos (F, Cl, Br, I) y los calcógenos S, Se y Te los forman. ${eA.acid ? `El ${nameA} forma oxácidos con ${listStates(eA.acid)}.` : ''}`);
+        if (oxA !== an) return err('papel', `En el hidrácido el ${nameA} actúa con ${stateLabel(an)}`, `En el hidrácido y en sus sales el ${nameA} es el anión ${A}${an === -2 ? '²⁻' : '⁻'} (${stateLabel(an)}).`);
+        if (hLeft > 0) return err('papel', 'Sal ácida de un hidrácido', 'El taller no incluye las sales ácidas de los hidrácidos (por ejemplo, el NH₄HS). Usa la neutralización total.');
+        acid = buildCompound({ kind: 'hidracido', el: A });
+        saltSpec = { kind: 'sal-binaria', cation: { el: 'NH4' }, anion: A };
+      } else {
+        if (A === 'F') return err('papel', 'El flúor no forma oxácidos', 'El flúor solo forma el hidrácido HF (elige −1): con él se obtiene el fluoruro de amonio.');
+        const k = `${A}:${oxA}`;
+        if (k === 'C:2' || k === 'N:1' || k === 'N:2' || k === 'N:4') return err('oxido-neutro', `El ${nameA} no forma un oxácido con ${stateLabel(oxA)}`, `Con ${stateLabel(oxA)} el óxido del ${nameA} ${k === 'N:4' ? 'dismuta en agua' : 'es neutro'}: no hay un oxácido, así que tampoco hay sal de amonio.`, `Estados que forman oxácido: ${listStates(eA.acid ?? [])}.`);
+        acid = engine(() => buildCompound({ kind: 'oxacido', el: A, ox: oxA, form: input.form ?? 'normal' }), `El ${nameA} no forma este oxácido`);
+        if (isErr(acid)) return { ...acid, hint: eA.acid?.length ? `Estados que forman oxácido: ${listStates(eA.acid)}.` : undefined };
+        saltSpec = { kind: 'oxisal', cation: { el: 'NH4' }, acid: { el: A, ox: oxA, form: input.form ?? 'normal' }, hLeft };
+      }
+      const salt = engine(() => buildCompound(saltSpec), 'El taller no forma esta sal de amonio');
+      if (isErr(salt)) return salt;
+      const nh3 = buildCompound({ kind: 'hidruro', el: 'N' });
+      return finish(input, salt, [compoundTerm(nh3), compoundTerm(acid)], [compoundTerm(salt)], ammoniumPathway(acid, hLeft),
+        ['El ion amonio, NH₄⁺, tiene cuatro enlaces covalentes N–H en un tetraedro; en la sal se une a los aniones por atracción iónica. A diferencia de las sales de los metales, al calentarlas muchas sales de amonio se descomponen y liberan amoníaco.']);
+    }
+    case 'nometal-nometal': {
+      const B = input.b ?? null;
+      if (isMetal(A)) return err('no-es-no-metal', `${Art(A)} es un metal`, `${Art(A)} es un metal: con un no metal forma una sal (iones), no una molécula.`, 'Usa la ruta «Metal + no metal».');
+      if (A === 'H') return err('papel', 'Con el hidrógeno se forma un hidrácido o un hidruro', 'El hidrógeno con un halógeno o un calcógeno forma un hidrácido (HCl, H₂S) y con N, C, P… un hidruro (NH₃, CH₄).', 'Usa la ruta «H₂ + halógeno o calcógeno».');
+      if (A === 'O') return err('papel', 'Con el oxígeno se forma un óxido', 'El oxígeno es más electronegativo que casi todos los no metales: sus compuestos binarios son óxidos (CO₂, SO₂, NO…).', 'Usa la ruta «No metal + O₂».');
+      if (A === 'F' || A === 'Cl' || A === 'Br' || A === 'I') {
+        if (B && NONMETAL_CATIONS[B]?.with.includes(A)) return err('papel', 'El menos electronegativo va en la casilla 1', `En la fórmula se escribe primero el elemento menos electronegativo: pon el ${nameOf(B)} en la casilla 1 y el ${nameA} en la casilla 2.`);
+        return err('papel', `El ${nameA} es el elemento más electronegativo del par`, 'Los halógenos son los no metales más electronegativos: en estos compuestos van en la casilla 2, con número de oxidación −1.', 'En la casilla 1 elige B, C, Si, N, P o S.');
+      }
+      const nc = NONMETAL_CATIONS[A];
+      if (!nc) return err('papel', `El taller no incluye compuestos del ${nameA} con otros no metales`, 'Los compuestos binarios moleculares del taller los forman B, C, Si, N, P y S con F, Cl, Br o S (por ejemplo, PCl₃, CCl₄, CS₂ o SF₆).', 'En la casilla 1 elige B, C, Si, N, P o S.');
+      const g2 = slotGate(B, input.oxB, route.slotLabels[1]);
+      if (g2) return g2;
+      const Bs = B as string;
+      const nameB = nameOf(Bs);
+      if (isMetal(Bs)) return err('papel', `${Art(Bs)} es un metal`, `${Art(Bs)} es un metal: con el ${nameA} no forma una molécula.`, 'Usa la ruta «Metal + no metal».');
+      if (Bs === 'O') return err('papel', 'Con el oxígeno se forma un óxido', `El ${nameA} con el oxígeno forma un óxido.`, 'Usa la ruta «No metal + O₂».');
+      if (Bs === 'H') return err('papel', 'Con el hidrógeno se forma un hidruro', `El ${nameA} con el hidrógeno forma un hidruro no metálico.`, 'Usa la ruta «H₂ + halógeno o calcógeno».');
+      if (Bs === A) return err('papel', 'Es el mismo elemento', `Dos átomos del ${nameA} unidos forman la molécula del elemento, no un compuesto.`);
+      if (NONMETAL_CATIONS[Bs]?.with.includes(A)) return err('papel', 'El menos electronegativo va en la casilla 1', `En la fórmula se escribe primero el elemento menos electronegativo: pon el ${nameB} en la casilla 1 y el ${nameA} en la casilla 2.`);
+      if (!nc.with.includes(Bs)) return err('papel', `El taller no incluye el compuesto del ${nameA} con el ${nameB}`, `Con el ${nameA} el taller forma compuestos con ${nc.with.map((x) => `el ${nameOf(x)}`).join(', ')}. Otras combinaciones existen (por ejemplo, el S₂Cl₂, con un enlace S–S), pero no siguen la regla de un átomo central que usa el taller.`, `En la casilla 2 elige ${nc.with.join(', ')}.`);
+      if (!nc.ox.includes(oxA)) return err('papel', `Con el ${nameB}, el ${nameA} actúa con ${listStates(nc.ox)}`, `En estos compuestos el ${nameA} es el elemento menos electronegativo y actúa con ${listStates(nc.ox)}.`, `Elige ${listStates(nc.ox)} para el ${nameA}.`);
+      const an = ANION_STATE[Bs];
+      if (input.oxB !== an) return err('papel', `El ${nameB} actúa con ${stateLabel(an)}`, `El ${nameB} es el elemento más electronegativo del par: actúa con ${stateLabel(an)}.`);
+      const mol = engine(() => buildCompound({ kind: 'sal-binaria', cation: { el: A, ox: oxA }, anion: Bs }), 'El taller no forma este compuesto');
+      if (isErr(mol)) return mol;
+      const k = `${A}${oxA}-${Bs}`;
+      const extra = NONMETAL_BINARY_NOTES[k];
+      return finish(input, mol, [elementTerm(A), elementTerm(Bs)], [compoundTerm(mol)], NONMETAL_BINARY_PATHWAY[k] ?? ['formal', 'Relación de composición: la vía real de obtención no está documentada en el taller.'], extra ? [extra] : []);
     }
   }
 }
@@ -733,8 +859,9 @@ export function chargeParts(c: Compound): ChargePart[] {
       const h = s.hLeft ?? 0;
       const g = `${h ? `H${h > 1 ? h : ''}` : ''}${s.acid.el}${a.x > 1 ? a.x : ''}O${a.o > 1 ? a.o : ''}`;
       const q = -(a.h - h);
-      const m = comp[s.acid.el] / a.x;
-      const cp: ChargePart = s.cation.el === 'NH4' ? { label: 'NH₄⁺', charge: 1, count: (comp.N ?? 0) - (s.acid.el === 'N' ? m : 0) } : cat(s.cation.el, (s.cation as { ox: number }).ox);
+      // Número de oxoaniones por el O (en el NH₄NO₃ el N está en el catión y en el anión).
+      const m = comp.O / a.o;
+      const cp: ChargePart = s.cation.el === 'NH4' ? { label: 'NH₄⁺', charge: 1, count: (comp.N ?? 0) - (s.acid.el === 'N' ? m * a.x : 0) } : cat(s.cation.el, (s.cation as { ox: number }).ox);
       return [cp, { label: ionLabel(g, q), charge: q, count: m }];
     }
     case 'sal-basica': {
@@ -758,8 +885,15 @@ const FORMS: AcidForm[] = ['normal', 'meta', 'di'];
 export function enumerateForgeInputs(): ForgeInput[] {
   const out: ForgeInput[] = [];
   for (const route of ROUTES) {
-    if (route.slots === 1) {
+    if (route.id === 'amoniaco-acido') {
+      for (const a of ENGINE_SYMBOLS) for (const oxA of KNOWN_STATES[a]) {
+        if (oxA < 0) { out.push({ route: route.id, a, oxA }); continue; }
+        for (const form of FORMS) for (const hLeft of [0, 1, 2]) out.push({ route: route.id, a, oxA, form, hLeft });
+      }
+    } else if (route.slots === 1) {
       for (const a of ENGINE_SYMBOLS) for (const oxA of KNOWN_STATES[a]) for (const form of route.id === 'anhidrido-agua' ? FORMS : ['normal' as AcidForm]) out.push({ route: route.id, a, oxA, ...(route.id === 'anhidrido-agua' ? { form } : {}) });
+    } else if (route.id === 'nometal-nometal') {
+      for (const a of ENGINE_SYMBOLS) for (const oxA of KNOWN_STATES[a]) for (const b of ENGINE_SYMBOLS) if (ANION_STATE[b] !== undefined) out.push({ route: route.id, a, oxA, b, oxB: ANION_STATE[b] });
     } else if (route.id === 'metal-nometal') {
       for (const a of ENGINE_SYMBOLS) for (const oxA of KNOWN_STATES[a]) for (const b of ENGINE_SYMBOLS) if (ANION_STATE[b] !== undefined) out.push({ route: route.id, a, oxA, b, oxB: ANION_STATE[b] });
     } else {
@@ -809,6 +943,9 @@ export const FORGE_CHALLENGES: ForgeChallenge[] = [
   { id: 'permanganato', text: 'Forma el permanganato de potasio.', target: 'oxisal:K1-Mn7', hint: 'El manganeso con +7 forma el ácido permangánico; neutralízalo con KOH.' },
   { id: 'yeso', text: 'Forma el sulfato de calcio (yeso sin agua de cristalización).', target: 'oxisal:Ca2-S6', hint: 'Neutraliza el ácido sulfúrico con el hidróxido de calcio.' },
   { id: 'agua-oxigenada', text: 'Forma el agua oxigenada.', target: 'peroxido:H', hint: 'Ruta del peróxido con el hidrógeno.' },
+  { id: 'humo-blanco', text: 'Forma el «humo blanco» que aparece cuando se encuentran el amoníaco y el cloruro de hidrógeno.', target: 'sal:NH4-Cl', hint: 'Ruta «NH₃ + ácido» con el cloro (−1).' },
+  { id: 'fertilizante', text: 'Forma el nitrato de amonio, el fertilizante nitrogenado más usado.', target: 'oxisal:NH4-N5', hint: 'Ruta «NH₃ + ácido» con el nitrógeno en +5 (ácido nítrico).' },
+  { id: 'pcl3', text: 'Forma el tricloruro de fósforo, un líquido que se fabrica con fósforo y cloro.', target: 'sal:P3-Cl', route: 'nometal-nometal', hint: 'Ruta «No metal + no metal»: fósforo (+3) y cloro (−1).' },
 ];
 
 export function challengeMet(ch: ForgeChallenge, r: ForgeOutcome): boolean {
@@ -823,7 +960,7 @@ export { specKey };
 export const compoundForgeModelSpec: ModelSpec = {
   name: 'Taller de formación de compuestos: elementos elegidos → fórmula, ecuación balanceada, función y nombres',
   inputs: [
-    { symbol: 'ruta', name: 'Ruta de formación (metal + O₂, no metal + O₂, peróxido, hidruro, óxido + agua, H₂ + no metal, neutralización, metal + no metal)', unit: '—', initial: 'metal + O₂' },
+    { symbol: 'ruta', name: 'Ruta de formación (metal + O₂, no metal + O₂, peróxido, hidruro, óxido + agua, H₂ + no metal, neutralización, metal + no metal, NH₃ + ácido, no metal + no metal)', unit: '—', initial: 'metal + O₂' },
     { symbol: 'A, n.o.(A)', name: 'Primer elemento y su número de oxidación', unit: '—', initial: 'Ca, +2' },
     { symbol: 'B, n.o.(B)', name: 'Segundo elemento (rutas de sales) y su número de oxidación', unit: '—', initial: '—' },
   ],
@@ -846,5 +983,6 @@ export const compoundForgeModelSpec: ModelSpec = {
     'No predice si una reacción ocurre ni su rapidez: la vía real de obtención es una nota curada, no un cálculo.',
     'Los S y P elementales se escriben como átomos (no S₈ ni P₄), como en los textos escolares.',
   ],
-  testCases: ['2 Ca + O₂ → 2 CaO; CaO + H₂O → Ca(OH)₂; 2 S + 3 O₂ → 2 SO₃; SO₃ + H₂O → H₂SO₄; H₂SO₄ + Ca(OH)₂ → CaSO₄ + 2 H₂O; He rechazado (gas noble).'],
+  testCases: ['2 Ca + O₂ → 2 CaO; CaO + H₂O → Ca(OH)₂; 2 S + 3 O₂ → 2 SO₃; SO₃ + H₂O → H₂SO₄; H₂SO₄ + Ca(OH)₂ → CaSO₄ + 2 H₂O; He rechazado (gas noble).',
+    'NH₃ + HCl → NH₄Cl; 2 NH₃ + H₂SO₄ → (NH₄)₂SO₄; 2 P + 3 Cl₂ → 2 PCl₃; S + 3 F₂ → SF₆; Cl + P rechazado (orden de electronegatividad).'],
 };

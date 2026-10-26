@@ -124,8 +124,14 @@ function Viewer3D({ result, idPrefix }: { result: ForgeOk; idPrefix: string }) {
       {view === 'compuesto' && (
         <>
           {sv.kind === 'molecula' && <>{sv.note && <p className="small" style={{ margin: 0 }}>{sv.note}</p>}<Molecule3D species={sv.species} idPrefix={`${idPrefix}-mol`} height={280} measure /></>}
-          {sv.kind === 'cristal' && <><p className="small" style={{ margin: 0 }}>{result.product.formulaPretty} es un sólido iónico con parámetro de red publicado: se dibuja su red cristalina.</p><Crystal3D crystal={sv.crystal} idPrefix={`${idPrefix}-cr`} height={300} /><p className="small muted" style={{ margin: 0 }}>{IONIC_STICKS_NOTE}</p></>}
-          {sv.kind === 'ionico' && <><Notice>{sv.note}</Notice><Molecule3D species={sv.ions[0]} idPrefix={`${idPrefix}-ion`} height={240} /><p className="small muted" style={{ margin: 0 }}>{IONIC_STICKS_NOTE}</p></>}
+          {sv.kind === 'cristal' && (sv.crystal.bonding === 'covalente'
+            ? <><p className="small" style={{ margin: 0 }}>{result.product.formulaPretty} no forma moléculas sueltas: es un sólido de red covalente ({sv.crystal.mineral}) con estructura publicada. Se dibuja su red con todos los enlaces Si–O.</p><Crystal3D crystal={sv.crystal} idPrefix={`${idPrefix}-cr`} height={300} /></>
+            : <><p className="small" style={{ margin: 0 }}>{result.product.formulaPretty} es un sólido iónico con estructura publicada: se dibuja su red cristalina.</p><Crystal3D crystal={sv.crystal} idPrefix={`${idPrefix}-cr`} height={300} /><p className="small muted" style={{ margin: 0 }}>{IONIC_STICKS_NOTE}</p></>)}
+          {sv.kind === 'ionico' && <><Notice>{sv.note}</Notice>
+            <div className="forge-ions" style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))' }}>
+              {sv.ions.map((ion, i) => <Molecule3D key={ion.id} species={ion} idPrefix={`${idPrefix}-ion${i}`} height={240} />)}
+            </div>
+            <p className="small muted" style={{ margin: 0 }}>{IONIC_STICKS_NOTE}</p></>}
           {sv.kind === 'sin-geometria' && <Notice>{sv.note}</Notice>}
         </>
       )}
@@ -184,7 +190,8 @@ export default function CompoundForge({ api, initialRoute, idPrefix }: LabProps 
     clear();
   };
 
-  const input = { route, a: slots[0], oxA: ox[0], b: two ? slots[1] : null, oxB: two ? ox[1] : null, form, hLeft: route === 'neutralizacion' ? hLeft : 0 };
+  const partial = route === 'neutralizacion' || route === 'amoniaco-acido';
+  const input = { route, a: slots[0], oxA: ox[0], b: two ? slots[1] : null, oxB: two ? ox[1] : null, form, hLeft: partial ? hLeft : 0 };
 
   const build = () => {
     const r = forge(input);
@@ -213,14 +220,14 @@ export default function CompoundForge({ api, initialRoute, idPrefix }: LabProps 
     api.addTrial('taller', {
       ruta: ok.route.label, elementos: ok.chosen, ecuacion: ok.equation, formula: c.formulaPretty, funcion: FUNCTION_LABEL[c.fn],
       sistematica: c.names.sistematica, stock: c.names.stock ?? '—', tradicional: c.names.tradicional ?? c.names.comun ?? '—',
-      registrado: r.status === 'registrado' ? 'sí (por nombre)' : r.status === 'misma-formula' ? 'solo la fórmula' : r.status === 'formal' ? 'no (fórmula formal)' : 'sin información', cid: r.status === 'registrado' || r.status === 'misma-formula' ? r.entry.cid : null,
+      registrado: r.status === 'registrado' ? (r.entry.via === 'formula-sinonimo' ? 'sí (fórmula y sinónimo)' : 'sí (por nombre)') : r.status === 'misma-formula' ? 'fórmula registrada sin coincidencia de nombre' : r.status === 'formal' ? 'no (fórmula formal)' : 'sin información', cid: r.status === 'registrado' || r.status === 'misma-formula' ? r.entry.cid : null,
       via: PATHWAY_LABEL[ok.pathway], elementosN: Object.keys(c.composition).length, atomos: Object.values(c.composition).reduce((s, n) => s + n, 0),
     });
   };
 
   // Estado del grado de hidratación y de la neutralización parcial.
-  const acidEl = route === 'anhidrido-agua' ? slots[0] : route === 'neutralizacion' ? slots[1] : null;
-  const acidOx = route === 'anhidrido-agua' ? ox[0] : route === 'neutralizacion' ? ox[1] : null;
+  const acidEl = route === 'anhidrido-agua' || route === 'amoniaco-acido' ? slots[0] : route === 'neutralizacion' ? slots[1] : null;
+  const acidOx = route === 'anhidrido-agua' || route === 'amoniaco-acido' ? ox[0] : route === 'neutralizacion' ? ox[1] : null;
   const formOptions = useMemo(() => {
     if (!acidEl || !acidOx || acidOx < 0 || !ENGINE.has(acidEl)) return [];
     return (['normal', 'meta', 'di'] as AcidForm[]).filter((f) => { try { oxoacid(acidEl, acidOx, f); return true; } catch { return false; } });
@@ -231,12 +238,16 @@ export default function CompoundForge({ api, initialRoute, idPrefix }: LabProps 
 
   const quick = formed.filter((f) => (route === 'oxido-agua' ? f.compound.fn === 'oxido-basico' || f.compound.fn === 'oxido-anfotero'
     : route === 'anhidrido-agua' ? f.compound.fn === 'oxido-acido'
-      : route === 'neutralizacion' ? f.compound.fn === 'hidroxido' || f.compound.fn === 'hidracido' || f.compound.fn === 'oxacido' : false));
+      : route === 'neutralizacion' ? f.compound.fn === 'hidroxido' || f.compound.fn === 'hidracido' || f.compound.fn === 'oxacido'
+        : route === 'amoniaco-acido' ? f.compound.fn === 'hidracido' || f.compound.fn === 'oxacido' : false));
   const useFormed = (f: FormedEntry) => {
     const s = f.compound.spec;
     if (route === 'neutralizacion' && (s.kind === 'hidracido' || s.kind === 'oxacido')) {
       const st = s.kind === 'hidracido' ? (s.el === 'S' ? -2 : -1) : s.ox;
       setSlots((x) => [x[0], s.el]); setOx((o) => [o[0], st]); if (s.kind === 'oxacido') setForm(s.form ?? 'normal');
+    } else if (route === 'amoniaco-acido' && (s.kind === 'hidracido' || s.kind === 'oxacido')) {
+      const st = s.kind === 'hidracido' ? (s.el === 'S' || s.el === 'Se' || s.el === 'Te' ? -2 : -1) : s.ox;
+      setSlots((x) => [s.el, x[1]]); setOx((o) => [st, o[1]]); setForm(s.kind === 'oxacido' ? s.form ?? 'normal' : 'normal');
     } else if ('el' in s && 'ox' in s) {
       setSlots((x) => [s.el, x[1]]); setOx((o) => [s.ox, o[1]]);
       if (route === 'anhidrido-agua') setForm('normal');
@@ -245,7 +256,7 @@ export default function CompoundForge({ api, initialRoute, idPrefix }: LabProps 
     playSound('click', { intensity: 0.3 });
   };
 
-  const families = (['oxidos', 'hidroxidos-acidos', 'sales'] as ForgeFamily[]);
+  const families = (['oxidos', 'hidroxidos-acidos', 'sales', 'moleculares'] as ForgeFamily[]);
   const slotName = (i: number) => (slots[i] ? `${ptElement(slots[i]!).es} (${slots[i]})` : 'sin elegir');
 
   return (
@@ -267,7 +278,7 @@ export default function CompoundForge({ api, initialRoute, idPrefix }: LabProps 
           { k: 'Fórmula', v: ok ? ok.product.formulaPretty : fail ? '—' : 'forma un compuesto', data: true },
           { k: 'Función', v: ok ? FUNCTION_LABEL[ok.product.fn].split(' (')[0] : fail ? 'combinación no válida' : '—' },
           { k: 'Ecuación balanceada', v: ok ? ok.equation : '—', data: true },
-          { k: 'Registro en PubChem', v: reg ? (reg.status === 'registrado' ? `registrado (CID ${reg.entry.cid})` : reg.status === 'misma-formula' ? `solo la fórmula (CID ${reg.entry.cid})` : reg.status === 'formal' ? 'no encontrado: fórmula formal' : 'sin información') : '—' },
+          { k: 'Registro en PubChem', v: reg ? (reg.status === 'registrado' ? `registrado (CID ${reg.entry.cid})` : reg.status === 'misma-formula' ? `fórmula registrada sin coincidencia de nombre (CID ${reg.entry.cid})` : reg.status === 'formal' ? 'no encontrado: fórmula formal' : 'sin información') : '—' },
         ]} />
 
         {fail && (
@@ -354,7 +365,7 @@ export default function CompoundForge({ api, initialRoute, idPrefix }: LabProps 
           {formOptions.length > 1 && (
             <Segmented label="Grado de hidratación del ácido" value={form} options={formOptions.map((f) => ({ value: f, label: f === 'normal' ? 'normal (orto)' : f === 'meta' ? 'meta' : 'di- (piro-)' }))} onChange={(v) => { setForm(v); clear(); }} />
           )}
-          {route === 'neutralizacion' && acidH > 1 && (
+          {partial && acidH > 1 && (
             <Segmented label="Neutralización" value={String(hLeft)} options={Array.from({ length: acidH }, (_, h) => ({ value: String(h), label: h === 0 ? 'total' : `parcial (conserva ${h} H)` }))} onChange={(v) => { setHLeft(Number(v)); clear(); }} />
           )}
           {quick.length > 0 && (
@@ -375,7 +386,7 @@ export default function CompoundForge({ api, initialRoute, idPrefix }: LabProps 
             <StatusChip status="modelo" prefix="Ecuación" />
           </div>
           <p className="small" style={{ margin: 0 }}>Fórmula por neutralidad de cargas y nombres: motor de nomenclatura validado con {REFERENCE_CASES} compuestos de referencia contra los sinónimos de PubChem. Ecuación: método algebraico (balancing.ts). La vía de obtención es una nota de la bibliografía, no un cálculo.</p>
-          <p className="small muted" style={{ margin: 0 }}>Registro en PubChem de los {REGISTRY_META.total} compuestos que puede formar el taller (consulta del {REGISTRY_META.fecha}, {REGISTRY_META.script}): {REGISTRY_META.porNombre} hallados por su nombre, {REGISTRY_META.registrados - REGISTRY_META.porNombre} solo por la fórmula y {REGISTRY_META.formales} fórmulas formales.</p>
+          <p className="small muted" style={{ margin: 0 }}>Registro en PubChem de los {REGISTRY_META.total} compuestos que puede formar el taller (consulta del {REGISTRY_META.fecha}, {REGISTRY_META.script}): {REGISTRY_META.porNombre + REGISTRY_META.porSinonimo} registrados ({REGISTRY_META.porNombre} hallados por su nombre y {REGISTRY_META.porSinonimo} por la fórmula con un sinónimo que coincide), {REGISTRY_META.soloFormula} fórmulas registradas sin coincidencia de nombre y {REGISTRY_META.formales} fórmulas formales. Los registros con la misma fórmula que describen otra sustancia (hidróxido, peróxido, hidrato o hidruro) se descartan.</p>
           <p className="small muted" style={{ margin: 0 }}>Elementos del taller: {ENGINE_SYMBOLS.length} (resaltados). Los demás (gases nobles, actínidos, superpesados y los radiactivos Fr, Ra, Tc, Pm y At) se pueden elegir y el taller explica por qué no los incluye.</p>
         </div>
       </div>

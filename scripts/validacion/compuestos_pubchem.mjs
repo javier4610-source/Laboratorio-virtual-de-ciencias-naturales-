@@ -10,10 +10,16 @@
  *       /compound/name/<nombre>/property/MolecularFormula,Title/JSON → se acepta el primer CID cuya fórmula molecular
  *       es igual a la de Hill del compuesto o un múltiplo entero (P₄O₁₀ ↔ P₂O₅);
  *    b) si ningún nombre da un CID con esa fórmula, por FÓRMULA exacta:
- *       /compound/fastformula/<Hill>/property/MolecularFormula,Title,Charge/JSON → CID más bajo con la misma fórmula y
- *       carga 0 (se guarda el título de PubChem para que se vea qué registro es).
- *    Si nada coincide, el compuesto queda como «fórmula formal» (cid: null).
- * 3. Guarda src/data/quimica/compuestos-pubchem.json con la fecha, la fuente, el método y cada resultado.
+ *       /compound/fastformula/<Hill>/property/MolecularFormula,Title,Charge/JSON → CID con la misma fórmula y carga 0;
+ *       de los 10 de CID más bajo se descargan el nombre IUPAC (/property/IUPACName,Title) y los sinónimos
+ *       (/synonyms/JSON) y se aplica la REGLA de src/models/pubchemNameMatch.ts (desde la v2.6.x):
+ *         · si un título, nombre IUPAC o sinónimo coincide en forma canónica con un nombre del motor → «registrado»
+ *           (via: 'formula-sinonimo', con el sinónimo y el nombre del motor que coinciden);
+ *         · si el título o el nombre IUPAC indican otra clase de sustancia (hidróxido, peróxido, hidrato, hidruro que
+ *           el compuesto no es) → ese CID se DESCARTA (se anota en «descartados» con el motivo);
+ *         · si no, el CID más bajo no descartado queda como «fórmula registrada sin coincidencia de nombre» (via: 'formula').
+ *    Si nada coincide (o todos los CID se descartan), el compuesto queda como «fórmula formal» (cid: null).
+ * 3. Guarda src/data/quimica/compuestos-pubchem.json con la fecha, la fuente, el método, los totales y cada resultado.
  *
  * Uso (desde la raíz del repositorio): NODE_USE_ENV_PROXY=1 node scripts/validacion/compuestos_pubchem.mjs
  * Requiere esbuild (dependencia de Vite) para cargar el modelo TypeScript.
@@ -28,7 +34,7 @@ const root = fileURLToPath(new URL('../..', import.meta.url));
 const outDir = mkdtempSync(join(tmpdir(), 'taller-'));
 const bundle = join(outDir, 'forge.mjs');
 await build({
-  stdin: { contents: "export * from './src/models/compoundForge.ts'; export { hillFormula } from './src/models/inorganicNomenclature.ts';", resolveDir: root, loader: 'ts' },
+  stdin: { contents: "export * from './src/models/compoundForge.ts'; export { hillFormula } from './src/models/inorganicNomenclature.ts'; export * from './src/models/pubchemNameMatch.ts';", resolveDir: root, loader: 'ts' },
   bundle: true, format: 'esm', platform: 'node', outfile: bundle, logLevel: 'warning',
 });
 const m = await import(pathToFileURL(bundle).href);
@@ -81,26 +87,52 @@ for (const c of compounds) {
     const p = nameCache.get(n).find((x) => relation(c.composition, x.MolecularFormula));
     if (p) { hit = { cid: p.CID, titulo: p.Title, formulaPubChem: p.MolecularFormula, via: 'nombre', consulta: n, relacion: relation(c.composition, p.MolecularFormula) }; break; }
   }
+  let descartados = [];
   if (!hit) {
     const r = await get(`${REST}/compound/fastformula/${hill}/property/MolecularFormula,Title,Charge/JSON`);
-    const list = (r.status === 200 ? props(r.text) : []).filter((x) => x.MolecularFormula === hill && (x.Charge ?? 0) === 0).sort((p, q) => p.CID - q.CID);
-    if (list.length) hit = { cid: list[0].CID, titulo: list[0].Title, formulaPubChem: list[0].MolecularFormula, via: 'formula', consulta: hill, relacion: 'igual' };
+    const list = (r.status === 200 ? props(r.text) : []).filter((x) => x.MolecularFormula === hill && (x.Charge ?? 0) === 0).sort((p, q) => p.CID - q.CID).slice(0, 10);
+    if (list.length) {
+      const ids = list.map((x) => x.CID).join(',');
+      const iupac = new Map(props((await get(`${REST}/compound/cid/${ids}/property/IUPACName,Title/JSON`)).text).map((x) => [x.CID, x]));
+      let syn = new Map();
+      try { syn = new Map((JSON.parse((await get(`${REST}/compound/cid/${ids}/synonyms/JSON`)).text).InformationList.Information ?? []).map((x) => [x.CID, x.Synonym ?? []])); } catch { /* sin sinónimos */ }
+      const engineNames = [...names, c.names.sistematica, c.names.stock, c.names.tradicional, c.names.comun].filter(Boolean);
+      const cands = list.map((x) => ({ cid: x.CID, titulo: x.Title, iupac: iupac.get(x.CID)?.IUPACName ?? '', sinonimos: syn.get(x.CID) ?? [] }));
+      for (const k of cands) {
+        const mt = m.nameMatch(engineNames, [k.titulo, k.iupac, ...k.sinonimos]);
+        if (mt && !m.otherStructure(c.fn, k.titulo, k.iupac)) { hit = { cid: k.cid, titulo: k.titulo, formulaPubChem: hill, via: 'formula-sinonimo', consulta: hill, relacion: 'igual', sinonimo: mt.pubchem, nombreMotor: mt.motor }; break; }
+      }
+      if (!hit) {
+        for (const k of cands) {
+          const why = m.otherStructure(c.fn, k.titulo, k.iupac);
+          if (why) { descartados.push({ cid: k.cid, titulo: k.titulo, iupac: k.iupac, motivo: why }); continue; }
+          hit = { cid: k.cid, titulo: k.titulo, iupac: k.iupac, formulaPubChem: hill, via: 'formula', consulta: hill, relacion: 'igual' };
+          break;
+        }
+        // Solo se guardan los descartes anteriores al CID elegido (los que explican por qué no se tomó el más bajo).
+      }
+    }
   }
-  out[c.key] = { formula: c.formula, hill, ...(hit ?? { cid: null, consultas: [...names, hill] }) };
-  console.log(`${String(i).padStart(4)}/${compounds.length} ${c.key.padEnd(26)} ${hill.padEnd(12)} ${hit ? `CID ${hit.cid} (${hit.via}: ${hit.consulta})` : 'sin registro → fórmula formal'}`);
+  out[c.key] = { formula: c.formula, hill, ...(hit ?? { cid: null, consultas: [...names, hill] }), ...(descartados.length ? { descartados } : {}) };
+  console.log(`${String(i).padStart(4)}/${compounds.length} ${c.key.padEnd(26)} ${hill.padEnd(12)} ${hit ? `CID ${hit.cid} (${hit.via}: ${hit.sinonimo ?? hit.consulta})` : 'sin registro → fórmula formal'}${descartados.length ? ` · ${descartados.length} descartados` : ''}`);
 }
 
-const registrados = Object.values(out).filter((x) => x.cid !== null).length;
+const vals = Object.values(out);
+const registrados = vals.filter((x) => x.cid !== null).length;
 const data = {
   fuente: 'PubChem PUG REST (https://pubchem.ncbi.nlm.nih.gov/rest/pug)',
   fecha: new Date().toISOString().slice(0, 10),
   script: 'scripts/validacion/compuestos_pubchem.mjs',
-  metodo: 'Nombre en inglés generado por el motor → CID con la misma fórmula de Hill (o múltiplo entero); si no hay, fórmula exacta (fastformula, carga 0) → CID más bajo. Sin coincidencia: fórmula formal.',
+  metodo: 'Nombre en inglés generado por el motor → CID con la misma fórmula de Hill (o múltiplo entero); si no hay, fórmula exacta (fastformula, carga 0) y regla de src/models/pubchemNameMatch.ts sobre los 10 CID más bajos: nombre IUPAC, título o sinónimo que coincide en forma canónica con un nombre del motor → registrado; título o nombre IUPAC de otra clase (hidróxido, peróxido, hidrato, hidruro) → descartado; si no, CID más bajo no descartado como «fórmula registrada sin coincidencia de nombre». Sin coincidencia: fórmula formal.',
   combinaciones: results.length,
   total: compounds.length,
   registrados,
+  porNombre: vals.filter((x) => x.via === 'nombre').length,
+  porSinonimo: vals.filter((x) => x.via === 'formula-sinonimo').length,
+  soloFormula: vals.filter((x) => x.via === 'formula').length,
   formales: compounds.length - registrados,
+  conDescartes: vals.filter((x) => x.descartados?.length).length,
   compuestos: Object.fromEntries(Object.entries(out).sort(([p], [q]) => p.localeCompare(q))),
 };
 writeFileSync(join(root, 'src/data/quimica/compuestos-pubchem.json'), `${JSON.stringify(data, null, 1)}\n`);
-console.log(`\n${registrados} registrados en PubChem · ${data.formales} fórmulas formales (de ${compounds.length}).`);
+console.log(`\n${registrados} con CID en PubChem (${data.porNombre} por nombre, ${data.porSinonimo} por fórmula + sinónimo, ${data.soloFormula} solo por fórmula) · ${data.formales} fórmulas formales · ${data.conDescartes} con registros descartados por ser otra estructura (de ${compounds.length}).`);

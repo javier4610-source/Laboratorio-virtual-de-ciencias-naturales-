@@ -44,6 +44,47 @@ formato de los datos guardados, contrato del servidor ni modelos científicos (l
 - `@keyframes pulse` estaba definida dos veces y anulaba el pulso del héroe.
 - «en función de el volumen» → «en función del volumen» en el análisis.
 
+## [2.5.0] · 2026-10-26
+
+Versión MENOR: corrección de los visores 3D y ampliación del taller, sin cambiar rutas, identificadores ni el formato
+de los datos guardados.
+
+### Corregido
+- **Palitos (enlaces) que no se veían en los visores 3D** (pedido del docente). Causa raíz: los visores 3Dmol
+  (Molecule3D, visores orgánicos y de grupos funcionales y la práctica de geometría molecular) dejaban la esfera por
+  defecto de la biblioteca en «esferas y palitos», 0,28 × radio de van der Waals de Bondi. Esos radios son 2,4–3,8 veces
+  los covalentes (H: 1,20 frente a 0,32 Å): en los enlaces con hidrógeno las dos esferas tapaban el 70–90 % del enlace
+  (N–H, O–H, H–H) y, al girar la molécula, el palito desaparecía (NH₃, H₂O₂, OH⁻, H₂O, H₂SO₄, ácidos, orgánicas…). Los
+  datos no tenían errores: se comprobó la conectividad de las 2940 especies que se pueden dibujar (biblioteca, prácticas
+  orgánicas y funcionales, VSEPR, iones, ensamblados iónicos y las 3D del taller) y el SDF V2000 que lee 3Dmol.
+  Corrección: un solo modelo de «esferas y palitos» para todos los visores (`ballRadius` en `src/chem/elements.ts` y
+  `applyMolStyle` en `src/chem/molStyle.ts`): esfera = máx(0,20 Å; 0,42 × radio covalente de Pyykkö), la misma escala en
+  3Dmol, en la reacción 3D y en la vista SVG de respaldo; queda a la vista al menos el 38 % de cada palito (antes, 9 %
+  en H₂). Dobles y triples algo más gruesos.
+- Leyenda en la reacción 3D y en el taller: en los sólidos iónicos no hay palitos entre iones (es correcto) y sí dentro
+  de los iones poliatómicos (OH⁻, SO₄²⁻, NO₃⁻, CO₃²⁻…).
+
+### Añadido
+- **Taller de formación de compuestos con 77 elementos** (antes 31; pedido del docente): Rb, Cs, Be, Sr; Sc, Y, La y los
+  lantánidos (salvo Pm); Ti, Zr, Hf, V, Nb, Ta, Mo, W, Re, Ru, Os, Rh, Ir, Pd, Pt, Cd; Ga, In, Tl, Ge, Sb, Bi, Po; As, Se y
+  Te. Estados habituales y raros (con ejemplo) según Greenwood y Earnshaw (1997) y la IUPAC; nombres tradicionales solo
+  donde son de uso habitual (titanoso/titánico, ceroso/cérico, talioso/tálico, platinoso/platínico, germanoso/germánico,
+  antimonioso; los demás se nombran con Stock y la ficha lo dice); Stock con romanos en Os, Rh, Pd, Nb, Ta y Bi; «r» doble
+  tras prefijo (dirrubidio, dirrenio). Oxácidos nuevos: arsenioso, arsénico, antimónico, selenioso, selénico, teluroso,
+  telúrico, vanádico (orto y meta), molíbdico, wolfrámico y perrénico; hidrácidos H₂Se y H₂Te; arsano; peróxidos e
+  hidruros de Rb, Cs y Sr. Estados sin hidróxido u oxisal definidos (Ti(IV), V(IV), Ge, Mo, W, Nb, Ta, Ru, Os, Ir, Po…) se
+  rechazan con explicación, igual que las sales que no existen (CeCl₄, PbI₄, TlI₃ como Tl⁺I₃⁻…).
+- Los 41 elementos que siguen fuera explican por qué al tocarlos: gases nobles, Fr, Ra, Tc, Pm, At, actínidos y
+  superpesados (radiactivos, sintéticos o sin química escolar).
+- Masas atómicas estándar (CIAAW) de 45 elementos en `balancing.ts` y radios covalentes de Pyykkö (Z = 1–86) en el kit.
+- Registro en PubChem del nuevo conjunto (`compuestos_pubchem.mjs`, 2026-10-25): 3756 combinaciones y 3329 compuestos;
+  1391 hallados por su nombre, 1129 solo por la fórmula y 809 fórmulas formales.
+- Referencia del motor de nomenclatura: 294 compuestos (los 149 anteriores sin cambios + 145 de los elementos nuevos,
+  verificados con los sinónimos de PubChem; se descartaron 11 candidatos sin CID de la misma fórmula o sin nombre).
+- Pruebas: `tests/unit/chemBonds.test.ts` (conectividad y palitos visibles de todas las especies),
+  `tests/e2e/visores-palitos.spec.ts` (píxeles de los palitos en 3Dmol para H₂SO₄, CaSO₄, Ca(OH)₂, NaNO₃, H₂O₂, CO₂,
+  HClO₄, NH₃, una orgánica y las reacciones del taller al 0, 30, 70 y 100 %; respaldo SVG) y el E2E del taller ampliado.
+
 ## [2.4.0] · 2026-10-25
 
 Versión **MENOR**: se agrega una estación nueva sin cambiar rutas, identificadores ni datos guardados.

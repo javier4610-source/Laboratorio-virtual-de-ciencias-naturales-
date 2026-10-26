@@ -4,6 +4,8 @@ import { Segmented } from '../ui';
 import { ProjectedSvg, toSdf, type Species3D } from '../../chem';
 import { cssVar, use3DViewer, useThemeVersion, reducedMotion } from '../../chem/engine3d';
 import { frameRadius, statusOf } from '../../chem/Molecule3D';
+import { applyMolStyle } from '../../chem/molStyle';
+import { ballRadius } from '../../chem/elements';
 
 /**
  * Visor 3D de grupos funcionales, construido sobre el motor del kit (src/chem/engine3d.ts: 3Dmol.js diferido y respaldo SVG con las
@@ -33,7 +35,6 @@ export interface FunctionalViewer3DProps {
 }
 
 type St = 'bs' | 'pal' | 'esf';
-const SPEC: Record<St, Record<string, unknown>> = { bs: { stick: { radius: 0.14 }, sphere: { scale: 0.27 } }, pal: { stick: { radius: 0.2 } }, esf: { sphere: { scale: 1 } } };
 const VDW: Record<string, number> = { H: 1.2, C: 1.7, N: 1.55, O: 1.52, F: 1.47, Cl: 1.75, Br: 1.85, I: 1.98 };
 const COV: Record<string, number> = { H: 0.31, C: 0.76, N: 0.71, O: 0.66, F: 0.57, Cl: 1.02, Br: 1.2, I: 1.39 };
 
@@ -55,7 +56,7 @@ export function FunctionalViewer3D({ species, idPrefix, highlights, height = 320
     try {
       v.removeAllModels(); v.removeAllShapes(); v.removeAllLabels();
       v.addModel(sdf, 'sdf');
-      v.setStyle({}, SPEC[style]);
+      applyMolStyle(v, style, species.atoms.map((a) => a.el));
       const ink = cssVar('--surface', '#ffffff');
       for (const h of highlights) {
         const col = resolve(h.color);
@@ -89,7 +90,7 @@ export function FunctionalViewer3D({ species, idPrefix, highlights, height = 320
         {fallback && (
           <div style={{ position: 'absolute', inset: 0 }}>
             <ProjectedSvg ariaLabel={`${species.name}: vista de respaldo con las coordenadas del confórmero; los átomos resaltados llevan un anillo. Arrastra o usa las flechas para girarla`}
-              atoms={species.atoms.map((a) => ({ ...a, r: style === 'esf' ? (VDW[a.el] ?? 1.6) * 0.9 : (COV[a.el] ?? 0.7) * 0.5 }))} bonds={style === 'esf' ? [] : species.bonds}
+              atoms={species.atoms.map((a) => ({ ...a, r: style === 'esf' ? (VDW[a.el] ?? 1.6) * 0.9 : style === 'bs' ? ballRadius(a.el) : 0.14 }))} bonds={style === 'esf' ? [] : species.bonds}
               height={height} width={Math.round(height * 1.8)} selection={hlAll} />
           </div>
         )}

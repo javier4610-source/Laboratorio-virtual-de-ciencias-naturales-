@@ -72,7 +72,7 @@ Utilidades: `toSdf`, `toXyz`, `elementCounts`, `hillFormulaOf`, `atomDistance`, 
 | `species` | `Species3D` a mostrar |
 | `idPrefix` | prefijo **único** de ids en tu laboratorio |
 | `height` | alto en px (por defecto 300) |
-| `defaultStyle` | `'bs'` esferas y palitos · `'esf'` espacio lleno · `'pal'` palitos |
+| `defaultStyle` | `'bs'` esferas y palitos · `'esf'` espacio lleno · `'pal'` palitos (v2.5.0: en `'bs'` la esfera es máx(0,20 Å; 0,42 × radio covalente de Pyykkö), `ballRadius`/`applyMolStyle`, igual en 3Dmol, la reacción 3D y el SVG; no la de 3Dmol por defecto, que tapaba los enlaces con H) |
 | `controls` | estilo, nombres de átomos, giro continuo, girar 90°, centrar (por defecto `true`) |
 | `measure` | elegir 2 átomos (distancia) o 3 (ángulo) con clic o con las listas «Átomo 1/2/3 de la medición en <fórmula>» |
 | `extraDescription` | texto añadido a la descripción accesible |

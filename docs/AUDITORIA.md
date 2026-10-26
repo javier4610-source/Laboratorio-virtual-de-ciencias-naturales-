@@ -398,6 +398,24 @@ prácticas `oxidos-hidroxidos`, `acidos-sales` y `nomenclatura-inorganica`.
 | Interfaz | E2E del taller en las tres prácticas (recorrido Ca → CaO → Ca(OH)₂; S(+6) → SO₃ → H₂SO₄ → CaSO₄; He rechazado; teclado en la tabla) y axe WCAG 2.2 AA en ambos temas (resultado, reacción 3D y rechazo); 390 y 1280 px sin desbordamiento; capturas revisadas | Correcto | Ecuación partida entre coeficiente y fórmula a 390 px; tabla de nombres apretada | Términos sin salto interno; tabla con ancho mínimo y desplazamiento | Corregido |
 | Regresión | `tsc -b` sin errores; 1152 pruebas unitarias (66 archivos, 42 del taller); `npm run build`; E2E completo 151 de 151 (9 nuevas del taller) | Todas pasan | — | — | Correcto |
 
+# Visores 3D y taller ampliado (versión 2.5.0)
+
+Pedido del docente: «en algunas [moléculas] los palitos no se ven» y «amplía la cantidad de elementos de la tabla
+periódica que son funcionales».
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Conectividad 3D | 2940 especies (biblioteca, orgánicas, funcionales, geometría VSEPR, iones, ensamblados iónicos, 2944 reacciones 3D del taller): índices en rango, órdenes 1–3, sin repetidos, longitudes ±25 % de Pyykkö, ningún enlace faltante, moléculas conectadas, iones poliatómicos con sus enlaces; `toSdf` leído con las reglas de columnas de 3Dmol 2.5.5 | Correcto | Ninguno en los datos | — | Correcto |
+| Palitos en 3Dmol | Píxeles en el punto medio de cada palito (imagen real frente a máscara de solo esferas) en H₂SO₄, CaSO₄, Ca(OH)₂, NaNO₃, H₂O₂, CO₂, HClO₄, NH₃ y un hidrocarburo, en «esferas y palitos» y «palitos», y en sus reacciones al 0, 30, 70 y 100 % | Todos visibles | Con la esfera por defecto de 3Dmol (0,28 × van der Waals) solo 1 de 3 palitos de H₂O₂ y 2 de 3 de NH₃ quedaban a la vista; fracción visible mínima calculada 9 % (H₂) | Esfera = máx(0,20 Å; 0,42 × r_cov) en todos los visores (`ballRadius`, `applyMolStyle`); mínimo 38 % | Corregido |
+| Respaldo SVG | Sin 3Dmol: 7 de 8 trazos de palito de H₂SO₄ visibles en su punto medio (`elementFromPoint`) | Correcto | — | Mismos radios que 3Dmol | Correcto |
+| Sólidos iónicos | Redes y ensamblados de iones sin palitos entre iones; leyenda visible | Correcto | No se explicaba | Leyenda en la reacción 3D y en el taller | Corregido |
+| Elementos | 77 habilitados (antes 31); los 41 restantes (gases nobles, Fr, Ra, Tc, Pm, At, actínidos, superpesados) explican por qué; estados habituales y raros con fuente (Greenwood y Earnshaw, IUPAC) | Correcto | — | — | Correcto |
+| Modelo del taller | 157 044 entradas → 3756 combinaciones y 3329 compuestos; Σ n·q = 0; balanceo con coeficientes mínimos; búsqueda exhaustiva sin compuestos fuera del conjunto | Correcto | Estados sin hidróxido u oxisal definidos (Ti(IV), V(IV), Ge, Mo, W…) | Se rechazan con explicación | Correcto |
+| Nomenclatura | 294 casos de referencia (149 + 145 nuevos escritos a mano y comparados con el motor: 0 diferencias); 290 con CID de la misma fórmula y algún nombre del motor entre los sinónimos; 278 los forma también el taller, 0 diferencias | Correcto | 11 candidatos sin CID de la misma fórmula o sin nombre en PubChem (Rb₂O, Cs₂O, Bi₂O₃, PoO₂, SrH₂, Y(OH)₃, ZnSe, InCl₃, Na₃AsO₃, CaWO₄, Bi(NO₃)₃) | No se incluyen en la referencia (no se inventan CID) | Correcto |
+| Registro en PubChem | `compuestos_pubchem.mjs` (2026-10-25): 1391 por nombre, 1129 solo por fórmula, 809 formales; BaO 62392, SnO₂ 16747781, TiO₂ 26042, SrO 73975, CeO₂ 73963, Na₂SeO₄ 25960 | Correcto | Las coincidencias solo por fórmula pueden ser otra sustancia | Rótulo «sin coincidencia de nombre» | Correcto (revisión manual pendiente) |
+| 3D del taller | Reacción 3D en 2907 de 3756 combinaciones; oxoaniones VSEPR nuevos (AsO₄³⁻, SeO₄²⁻, MoO₄²⁻, WO₄²⁻, VO₄³⁻, ReO₄⁻); sin geometría (explicado) para H₂TeO₄, H₃SbO₄, ácidos de Mo, W, V y Re y óxidos de red | Correcto | — | — | Correcto |
+| Regresión | `tsc -b` sin errores; 1187 pruebas unitarias (67 archivos); `npm run build`; E2E completo: 154 de 155 a la primera; la que falló (conservación de la masa, `app.spec.ts`) también falla de forma intermitente en la v2.4.0 (4 de 6 repeticiones) | Pasa tras la corrección | Aserción estricta de «217,45 g» con dos lecturas iguales en pantalla | `.first()` en la prueba (6 de 6) | Correcto |
+
 # Rediseño integral de la plataforma (versión 2.6.0, sin publicar)
 
 Pedido del docente: rediseño integral de la interfaz. Diagnóstico y plan: `docs/v2/REDISENO-2026-10.md`; decisión:

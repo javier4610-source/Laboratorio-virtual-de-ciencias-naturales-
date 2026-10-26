@@ -31,6 +31,16 @@ export function webglAvailable(): boolean {
 
 export type EngineState = 'cargando' | 'disponible' | 'sin-webgl' | 'no-disponible';
 
+/**
+ * Lo que un visor deja colgado de su contenedor para las pruebas de extremo a extremo (tests/e2e/visores-palitos.spec.ts):
+ * el visor 3Dmol y, en la reacción 3D (que dibuja formas, no un modelo), las esferas y los palitos del cuadro actual.
+ * No cambia nada de lo que se ve; solo permite comprobar en el navegador que los palitos se dibujan.
+ */
+export interface Viewer3DHost extends HTMLDivElement {
+  __lv3d?: GLViewer | null;
+  __lv3dScene?: { atoms: { x: number; y: number; z: number; r: number }[]; bonds: { a: number; b: number; order: number; opacity: number }[]; stickRadius: number; stickColor: string };
+}
+
 export const reducedMotion = () => { try { return prefersReducedMotion(); } catch { return false; } };
 
 export const cssVar = (name: string, fallback: string) => {
@@ -55,6 +65,7 @@ export function use3DViewer(hostRef: RefObject<HTMLDivElement | null>, tag: stri
       if (cancelled) return;
       try {
         viewerRef.current = lib.createViewer(host, { backgroundColor: 'white', backgroundAlpha: 0, antialias: true });
+        (host as Viewer3DHost).__lv3d = viewerRef.current;
         setEngine('disponible');
       } catch (e) {
         console.warn(`[${tag}] No se pudo crear el visor 3D; se usa la vista de respaldo.`, e);
@@ -68,6 +79,7 @@ export function use3DViewer(hostRef: RefObject<HTMLDivElement | null>, tag: stri
       ro?.disconnect();
       try { viewerRef.current?.clear(); } catch { /* ya liberado */ }
       viewerRef.current = null;
+      (host as Viewer3DHost).__lv3d = null;
       host.innerHTML = '';
     };
   }, [attempt, hostRef, tag]);

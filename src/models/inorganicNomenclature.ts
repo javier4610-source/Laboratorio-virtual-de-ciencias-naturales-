@@ -33,46 +33,123 @@ export interface ElementInfo {
   acid?: number[];
   /** Carga como anión monoatómico en compuestos binarios (−1 halógenos, −2 S). */
   anion?: number;
-  /** Adjetivos tradicionales por estado (es / en). */
+  /** Adjetivos tradicionales por estado (es / en). Sin ellos, el compuesto no tiene nombre tradicional usual (se usa Stock). */
   tradEs?: Record<number, string>;
   tradEn?: Record<number, string>;
+  /** Estados de catión que NO forman hidróxido definido (precipitan como óxidos hidratados). */
+  noHydroxide?: number[];
+  /** Estados de catión con sales binarias (haluros, sulfuros…) pero sin oxisales documentadas. */
+  noOxisalt?: number[];
+  /** Estados que solo aparecen en óxidos (sin hidróxido ni sales), como el Mn(IV) del MnO₂. */
+  oxideOnly?: number[];
+  /** Escribe siempre el número de oxidación de Stock aunque el taller use un solo estado (Os, Rh, Pd, Nb, Ta, Bi). */
+  romanAlways?: boolean;
+  /** Lantánido de la fila f (Ce–Lu): se dibuja en la fila inferior de la tabla. */
+  fblock?: boolean;
 }
 
 const E = (sym: string, z: number, es: string, en: string, group: number, period: number, kind: ElKind, ox: number[], extra: Partial<ElementInfo> = {}): ElementInfo => ({ sym, z, es, en, group, period, kind, ox, ...extra });
 
+/**
+ * Elementos del motor (77 en la v2.5.0; 31 hasta la v2.4.0). Estados de oxidación: los habituales en compuestos
+ * documentados según Greenwood, N. N. y Earnshaw, A. (1997), Chemistry of the Elements, 2.ª ed. (capítulo del grupo de
+ * cada elemento), y la tabla de estados de oxidación de la IUPAC; los compuestos de cada estado están en el CRC
+ * Handbook of Chemistry and Physics («Physical Constants of Inorganic Compounds») y se comprobaron uno a uno contra
+ * PubChem (src/data/quimica/compuestos-pubchem.json). Nombres: IUPAC, Recomendaciones de 2005 («Libro Rojo»), en su
+ * versión en español; adjetivos tradicionales (-oso/-ico) solo donde son de uso habitual (ferroso/férrico,
+ * estannoso/estánnico, titanoso/titánico, ceroso/cérico, talioso/tálico, platinoso/platínico…). Sin adjetivo, el
+ * compuesto no tiene nombre tradicional usual y se nombra con Stock.
+ */
 export const ELEMENTS: ElementInfo[] = [
   E('H', 1, 'hidrógeno', 'hydrogen', 1, 1, 'nometal', [1]),
   E('Li', 3, 'litio', 'lithium', 1, 2, 'metal', [1], { tradEs: { 1: 'lítico' } }),
   E('Na', 11, 'sodio', 'sodium', 1, 3, 'metal', [1], { tradEs: { 1: 'sódico' } }),
   E('K', 19, 'potasio', 'potassium', 1, 4, 'metal', [1], { tradEs: { 1: 'potásico' } }),
+  E('Rb', 37, 'rubidio', 'rubidium', 1, 5, 'metal', [1], { tradEs: { 1: 'rubídico' } }),
+  E('Cs', 55, 'cesio', 'cesium', 1, 6, 'metal', [1], { tradEs: { 1: 'césico' } }),
+  E('Be', 4, 'berilio', 'beryllium', 2, 2, 'metal', [2], { tradEs: { 2: 'berílico' } }),
   E('Mg', 12, 'magnesio', 'magnesium', 2, 3, 'metal', [2], { tradEs: { 2: 'magnésico' } }),
   E('Ca', 20, 'calcio', 'calcium', 2, 4, 'metal', [2], { tradEs: { 2: 'cálcico' } }),
+  E('Sr', 38, 'estroncio', 'strontium', 2, 5, 'metal', [2], { tradEs: { 2: 'estróncico' } }),
   E('Ba', 56, 'bario', 'barium', 2, 6, 'metal', [2], { tradEs: { 2: 'bárico' } }),
+  // Grupo 3 y lantánidos: estado +3 (el Ce también +4 y el Eu también +2).
+  E('Sc', 21, 'escandio', 'scandium', 3, 4, 'metal', [3]),
+  E('Y', 39, 'itrio', 'yttrium', 3, 5, 'metal', [3]),
+  E('La', 57, 'lantano', 'lanthanum', 3, 6, 'metal', [3]),
+  E('Ce', 58, 'cerio', 'cerium', 3, 6, 'metal', [3, 4], { fblock: true, tradEs: { 3: 'ceroso', 4: 'cérico' }, tradEn: { 3: 'cerous', 4: 'ceric' } }),
+  E('Pr', 59, 'praseodimio', 'praseodymium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Nd', 60, 'neodimio', 'neodymium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Sm', 62, 'samario', 'samarium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Eu', 63, 'europio', 'europium', 3, 6, 'metal', [2, 3], { fblock: true }),
+  E('Gd', 64, 'gadolinio', 'gadolinium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Tb', 65, 'terbio', 'terbium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Dy', 66, 'disprosio', 'dysprosium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Ho', 67, 'holmio', 'holmium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Er', 68, 'erbio', 'erbium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Tm', 69, 'tulio', 'thulium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Yb', 70, 'iterbio', 'ytterbium', 3, 6, 'metal', [3], { fblock: true }),
+  E('Lu', 71, 'lutecio', 'lutetium', 3, 6, 'metal', [3], { fblock: true }),
+  // Grupos 4 a 7: el estado máximo es el número del grupo; los estados altos dan óxidos ácidos y oxácidos.
+  E('Ti', 22, 'titanio', 'titanium', 4, 4, 'metal', [3, 4], { tradEs: { 3: 'titanoso', 4: 'titánico' }, tradEn: { 3: 'titanous', 4: 'titanic' }, noHydroxide: [4], noOxisalt: [4] }),
+  E('Zr', 40, 'circonio', 'zirconium', 4, 5, 'metal', [4]),
+  E('Hf', 72, 'hafnio', 'hafnium', 4, 6, 'metal', [4], { noOxisalt: [4] }),
+  E('V', 23, 'vanadio', 'vanadium', 5, 4, 'metal', [2, 3, 4], { acid: [5], noHydroxide: [4], noOxisalt: [4] }),
+  E('Nb', 41, 'niobio', 'niobium', 5, 5, 'metal', [5], { romanAlways: true, noHydroxide: [5], noOxisalt: [5] }),
+  E('Ta', 73, 'tantalio', 'tantalum', 5, 6, 'metal', [5], { romanAlways: true, noHydroxide: [5], noOxisalt: [5] }),
   E('Cr', 24, 'cromo', 'chromium', 6, 4, 'metal', [2, 3], { acid: [6], tradEs: { 2: 'cromoso', 3: 'crómico' }, tradEn: { 2: 'chromous', 3: 'chromic' } }),
+  E('Mo', 42, 'molibdeno', 'molybdenum', 6, 5, 'metal', [4], { acid: [6], noHydroxide: [4], noOxisalt: [4] }),
+  E('W', 74, 'wolframio', 'tungsten', 6, 6, 'metal', [4], { acid: [6], noHydroxide: [4], noOxisalt: [4] }),
   E('Mn', 25, 'manganeso', 'manganese', 7, 4, 'metal', [2, 3, 4], { acid: [6, 7], tradEs: { 2: 'manganoso', 3: 'mangánico' }, tradEn: { 2: 'manganous', 3: 'manganic' } }),
+  E('Re', 75, 'renio', 'rhenium', 7, 6, 'metal', [4], { acid: [7], noHydroxide: [4], noOxisalt: [4] }),
+  // Grupos 8 a 12.
   E('Fe', 26, 'hierro', 'iron', 8, 4, 'metal', [2, 3], { tradEs: { 2: 'ferroso', 3: 'férrico' }, tradEn: { 2: 'ferrous', 3: 'ferric' } }),
+  E('Ru', 44, 'rutenio', 'ruthenium', 8, 5, 'metal', [3, 4], { noHydroxide: [3, 4], noOxisalt: [3, 4] }),
+  E('Os', 76, 'osmio', 'osmium', 8, 6, 'metal', [4], { romanAlways: true, noHydroxide: [4], noOxisalt: [4] }),
   E('Co', 27, 'cobalto', 'cobalt', 9, 4, 'metal', [2, 3], { tradEs: { 2: 'cobaltoso', 3: 'cobáltico' }, tradEn: { 2: 'cobaltous', 3: 'cobaltic' } }),
+  E('Rh', 45, 'rodio', 'rhodium', 9, 5, 'metal', [3], { romanAlways: true }),
+  E('Ir', 77, 'iridio', 'iridium', 9, 6, 'metal', [3, 4], { noHydroxide: [3, 4], noOxisalt: [3, 4] }),
   E('Ni', 28, 'níquel', 'nickel', 10, 4, 'metal', [2, 3], { tradEs: { 2: 'niqueloso', 3: 'niquélico' }, tradEn: { 2: 'nickelous', 3: 'nickelic' } }),
+  E('Pd', 46, 'paladio', 'palladium', 10, 5, 'metal', [2], { romanAlways: true }),
+  E('Pt', 78, 'platino', 'platinum', 10, 6, 'metal', [2, 4], { tradEs: { 2: 'platinoso', 4: 'platínico' }, tradEn: { 2: 'platinous', 4: 'platinic' }, noHydroxide: [4], noOxisalt: [4] }),
   E('Cu', 29, 'cobre', 'copper', 11, 4, 'metal', [1, 2], { tradEs: { 1: 'cuproso', 2: 'cúprico' }, tradEn: { 1: 'cuprous', 2: 'cupric' } }),
   E('Ag', 47, 'plata', 'silver', 11, 5, 'metal', [1], { tradEs: { 1: 'argéntico' } }),
   E('Au', 79, 'oro', 'gold', 11, 6, 'metal', [1, 3], { tradEs: { 1: 'auroso', 3: 'áurico' }, tradEn: { 1: 'aurous', 3: 'auric' } }),
   E('Zn', 30, 'cinc', 'zinc', 12, 4, 'metal', [2], { tradEs: { 2: 'cíncico' } }),
+  E('Cd', 48, 'cadmio', 'cadmium', 12, 5, 'metal', [2]),
   E('Hg', 80, 'mercurio', 'mercury', 12, 6, 'metal', [1, 2], { tradEs: { 1: 'mercurioso', 2: 'mercúrico' }, tradEn: { 1: 'mercurous', 2: 'mercuric' } }),
+  // Metales del bloque p (grupos 13 a 16).
   E('Al', 13, 'aluminio', 'aluminum', 13, 3, 'metal', [3], { tradEs: { 3: 'alumínico' } }),
+  E('Ga', 31, 'galio', 'gallium', 13, 4, 'metal', [3]),
+  E('In', 49, 'indio', 'indium', 13, 5, 'metal', [3]),
+  E('Tl', 81, 'talio', 'thallium', 13, 6, 'metal', [1, 3], { tradEs: { 1: 'talioso', 3: 'tálico' }, tradEn: { 1: 'thallous', 3: 'thallic' }, noHydroxide: [3] }),
+  E('Ge', 32, 'germanio', 'germanium', 14, 4, 'metal', [2, 4], { tradEs: { 2: 'germanoso', 4: 'germánico' }, tradEn: { 2: 'germanous', 4: 'germanic' }, noHydroxide: [2, 4], noOxisalt: [2, 4] }),
   E('Sn', 50, 'estaño', 'tin', 14, 5, 'metal', [2, 4], { tradEs: { 2: 'estannoso', 4: 'estánnico' }, tradEn: { 2: 'stannous', 4: 'stannic' } }),
   E('Pb', 82, 'plomo', 'lead', 14, 6, 'metal', [2, 4], { tradEs: { 2: 'plumboso', 4: 'plúmbico' }, tradEn: { 2: 'plumbous', 4: 'plumbic' } }),
+  E('Sb', 51, 'antimonio', 'antimony', 15, 5, 'metal', [3], { acid: [5], tradEs: { 3: 'antimonioso' }, noHydroxide: [3] }),
+  E('Bi', 83, 'bismuto', 'bismuth', 15, 6, 'metal', [3], { romanAlways: true }),
+  E('Po', 84, 'polonio', 'polonium', 16, 6, 'metal', [2, 4], { noHydroxide: [2, 4], noOxisalt: [2, 4] }),
+  // No metales y metaloides que actúan como no metales (B, Si, As, Se, Te).
   E('B', 5, 'boro', 'boron', 13, 2, 'nometal', [3], { acid: [3] }),
   E('C', 6, 'carbono', 'carbon', 14, 2, 'nometal', [2, 4], { acid: [4] }),
   E('Si', 14, 'silicio', 'silicon', 14, 3, 'nometal', [4], { acid: [4] }),
   E('N', 7, 'nitrógeno', 'nitrogen', 15, 2, 'nometal', [1, 2, 3, 4, 5], { acid: [3, 5] }),
   E('P', 15, 'fósforo', 'phosphorus', 15, 3, 'nometal', [3, 5], { acid: [3, 5] }),
+  E('As', 33, 'arsénico', 'arsenic', 15, 4, 'nometal', [3, 5], { acid: [3, 5] }),
   E('O', 8, 'oxígeno', 'oxygen', 16, 2, 'nometal', []),
   E('S', 16, 'azufre', 'sulfur', 16, 3, 'nometal', [4, 6], { acid: [4, 6], anion: -2 }),
+  E('Se', 34, 'selenio', 'selenium', 16, 4, 'nometal', [4, 6], { acid: [4, 6], anion: -2 }),
+  E('Te', 52, 'telurio', 'tellurium', 16, 5, 'nometal', [4, 6], { acid: [4, 6], anion: -2 }),
   E('F', 9, 'flúor', 'fluorine', 17, 2, 'nometal', [], { anion: -1 }),
   E('Cl', 17, 'cloro', 'chlorine', 17, 3, 'nometal', [1, 3, 5, 7], { acid: [1, 3, 5, 7], anion: -1 }),
   E('Br', 35, 'bromo', 'bromine', 17, 4, 'nometal', [1], { acid: [1, 3, 5, 7], anion: -1 }),
   E('I', 53, 'yodo', 'iodine', 17, 5, 'nometal', [5], { acid: [1, 5, 7], anion: -1 }),
 ];
+
+/**
+ * Compuestos de referencia con los que se valida el motor (tests/fixtures/quimica/nomenclatura-casos.json): nombres en
+ * español esperados y nombres en inglés que deben aparecer entre los sinónimos del CID de PubChem con la misma fórmula.
+ */
+export const REFERENCE_CASES = 294;
 
 export function el(sym: string): ElementInfo {
   const e = ELEMENTS.find((x) => x.sym === sym);
@@ -85,7 +162,7 @@ export function positiveStates(sym: string): number[] {
   const e = el(sym);
   return [...new Set([...e.ox, ...(e.acid ?? [])])].sort((a, b) => a - b);
 }
-const variable = (sym: string) => positiveStates(sym).length > 1;
+const variable = (sym: string) => positiveStates(sym).length > 1 || !!el(sym).romanAlways;
 
 export function roman(n: number): string {
   const R = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
@@ -139,6 +216,8 @@ function preEs(n: number, word: string, mono: boolean): string {
   if (n === 1 && !mono) return word;
   const p = PRE_ES[n];
   if (p === 'mono' && word.startsWith('ó')) return `monó${word.slice(1)}`;
+  // Ortografía del español (RAE, 2010): tras un prefijo terminado en vocal la r inicial se duplica (dirrubidio, dirrenio).
+  if (word.startsWith('r')) return `${p}r${word}`;
   return p + word;
 }
 function preEn(n: number, word: string, mono: boolean): string {
@@ -194,13 +273,32 @@ const ACID_NAMES: Record<string, Record<number, AcidName>> = {
     7: { es: 'permangánico', en: 'permanganic', anionEs: 'permanganato', anionEn: 'permanganate', stemEs: 'manganato', icoEs: 'mangánico' },
   },
   Cr: { 6: { es: 'crómico', en: 'chromic', anionEs: 'cromato', anionEn: 'chromate', stemEs: 'cromato', icoEs: 'crómico' } },
+  // v2.5.0: oxácidos de As, Sb, Se, Te, V, Mo, W y Re (nombres tradicionales aceptados por la IUPAC 2005, tabla IR-8.1, o
+  // de uso en los textos; en español «arseniato», «seleniato», «wolframato» y «perrenato», como en las Recomendaciones).
+  As: {
+    3: { es: 'arsenioso', en: 'arsenous', anionEs: 'arsenito', anionEn: 'arsenite', stemEs: 'arseniato', icoEs: 'arsénico' },
+    5: { es: 'arsénico', en: 'arsenic', anionEs: 'arseniato', anionEn: 'arsenate', stemEs: 'arseniato', icoEs: 'arsénico' },
+  },
+  Sb: { 5: { es: 'antimónico', en: 'antimonic', anionEs: 'antimoniato', anionEn: 'antimonate', stemEs: 'antimoniato', icoEs: 'antimónico' } },
+  Se: {
+    4: { es: 'selenioso', en: 'selenous', anionEs: 'selenito', anionEn: 'selenite', stemEs: 'seleniato', icoEs: 'selénico' },
+    6: { es: 'selénico', en: 'selenic', anionEs: 'seleniato', anionEn: 'selenate', stemEs: 'seleniato', icoEs: 'selénico' },
+  },
+  Te: {
+    4: { es: 'teluroso', en: 'tellurous', anionEs: 'telurito', anionEn: 'tellurite', stemEs: 'telurato', icoEs: 'telúrico' },
+    6: { es: 'telúrico', en: 'telluric', anionEs: 'telurato', anionEn: 'tellurate', stemEs: 'telurato', icoEs: 'telúrico' },
+  },
+  V: { 5: { es: 'vanádico', en: 'vanadic', anionEs: 'vanadato', anionEn: 'vanadate', stemEs: 'vanadato', icoEs: 'vanádico' } },
+  Mo: { 6: { es: 'molíbdico', en: 'molybdic', anionEs: 'molibdato', anionEn: 'molybdate', stemEs: 'molibdato', icoEs: 'molíbdico' } },
+  W: { 6: { es: 'wolfrámico', en: 'tungstic', anionEs: 'wolframato', anionEn: 'tungstate', stemEs: 'wolframato', icoEs: 'wolfrámico' } },
+  Re: { 7: { es: 'perrénico', en: 'perrhenic', anionEs: 'perrenato', anionEn: 'perrhenate', stemEs: 'renato', icoEs: 'rénico' } },
 };
 
-/** Elementos cuyo ácido «normal» es el orto (máxima hidratación habitual): P y B con 3 H₂O, Si con 2 H₂O. */
-const ORTHO_WATERS: Record<string, number> = { P: 3, B: 3, Si: 2 };
+/** Elementos cuyo ácido «normal» es el orto (máxima hidratación habitual): P, As, Sb, V y B con 3 H₂O, Si con 2 H₂O. */
+const ORTHO_WATERS: Record<string, number> = { P: 3, B: 3, Si: 2, As: 3, Sb: 3, V: 3 };
 /** Formas di- (dos unidades de óxido y una de agua, o piro- = di- en el fósforo) admitidas. */
 const DI_ALLOWED: Record<string, number[]> = { S: [6], Cr: [6], P: [5] };
-const META_ALLOWED = new Set(['P', 'B', 'Si']);
+const META_ALLOWED = new Set(['P', 'B', 'Si', 'V']);
 
 /** Notas de rigor sobre la existencia de algunos compuestos (se muestran en la ficha del compuesto). */
 const ACID_NOTES: Record<string, string> = {
@@ -221,6 +319,17 @@ const ACID_NOTES: Record<string, string> = {
   'Mn:7': 'El ácido permangánico solo existe en disolución; su sal de potasio (KMnO₄, violeta) es muy común.',
   'Cr:6': 'El ácido crómico existe en disolución; sus sales, cromatos (amarillos) y dicromatos (naranja), son tóxicas.',
   'Si:4': 'Los ácidos silícicos se condensan con facilidad; los silicatos forman redes y cadenas (minerales y vidrio).',
+  'As:3': 'El ácido arsenioso solo existe en disolución (As₂O₃, el «arsénico blanco», disuelto en agua). Es muy tóxico.',
+  'As:5': 'El ácido arsénico se parece al fosfórico (H₃AsO₄ frente a H₃PO₄); él y sus sales, los arseniatos, son muy tóxicos.',
+  'Sb:5': 'El «ácido antimónico» no se aísla con esta fórmula: en agua es H[Sb(OH)₆]. Sus sales (antimoniatos) son hexahidroxoantimoniatos o redes de óxidos.',
+  'Se:4': 'El ácido selenioso se obtiene disolviendo SeO₂ en agua; él y sus sales son tóxicos.',
+  'Se:6': 'El ácido selénico es un ácido fuerte y muy oxidante, parecido al sulfúrico.',
+  'Te:4': 'El ácido teluroso es poco estable y casi insoluble; se conocen mejor sus sales, los teluritos.',
+  'Te:6': 'El ácido telúrico real es el ortotelúrico H₆TeO₆ = Te(OH)₆ (Te rodeado por seis OH, octaédrico); H₂TeO₄ es la fórmula que da los teluratos como el Na₂TeO₄.',
+  'V:5': 'El ácido vanádico no se aísla; existen sus sales: vanadatos (VO₄³⁻, «ortovanadatos») y metavanadatos (VO₃⁻), como el NH₄VO₃.',
+  'Mo:6': 'El ácido molíbdico es el MoO₃ hidratado (H₂MoO₄ = MoO₃·H₂O); sus sales son los molibdatos, como el Na₂MoO₄.',
+  'W:6': 'El ácido wolfrámico (o túngstico) es el WO₃ hidratado, amarillo; sus sales son los wolframatos, como el CaWO₄ (el mineral scheelita).',
+  'Re:7': 'El ácido perrénico existe en disolución (Re₂O₇ disuelto en agua); su sal más común es el perrenato de potasio, KReO₄.',
 };
 
 export interface Oxoacid {
@@ -234,7 +343,7 @@ export interface Oxoacid {
 export function oxoacid(sym: string, ox: number, form: AcidForm = 'normal'): Oxoacid {
   const info = el(sym);
   if (!info.acid?.includes(ox) || !ACID_NAMES[sym]?.[ox]) throw new RangeError(`${info.es} no forma oxoácido con número de oxidación +${ox} en este motor.`);
-  if (form === 'meta' && (!META_ALLOWED.has(sym) || (sym === 'P' && ox !== 5))) throw new RangeError('El prefijo meta- solo se usa aquí con P(V), B y Si.');
+  if (form === 'meta' && (!META_ALLOWED.has(sym) || (sym === 'P' && ox !== 5))) throw new RangeError('El prefijo meta- solo se usa aquí con P(V), B, Si y V(V).');
   if (form === 'di' && !DI_ALLOWED[sym]?.includes(ox)) throw new RangeError('La forma di- (piro-) solo se usa aquí con S(VI), Cr(VI) y P(V).');
   // Óxido X₂Oₙ (n impar) o XOₙ/₂ (n par)
   const [x0, o0] = ox % 2 ? [2, ox] : [1, ox / 2];
@@ -346,6 +455,8 @@ const ANION_BIN: Record<string, { es: string; en: string; hydracidEs: string; hy
   Br: { es: 'bromuro', en: 'bromide', hydracidEs: 'bromhídrico', hydracidEn: 'hydrobromic' },
   I: { es: 'yoduro', en: 'iodide', hydracidEs: 'yodhídrico', hydracidEn: 'hydroiodic' },
   S: { es: 'sulfuro', en: 'sulfide', hydracidEs: 'sulfhídrico', hydracidEn: 'hydrosulfuric' },
+  Se: { es: 'seleniuro', en: 'selenide', hydracidEs: 'selenhídrico', hydracidEn: 'hydroselenic' },
+  Te: { es: 'telururo', en: 'telluride', hydracidEs: 'telurhídrico', hydracidEn: 'hydrotelluric' },
 };
 
 const sup = (n: number) => String(n).replace(/\d/g, (d) => '⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(d)]);
@@ -370,10 +481,11 @@ function neutralitySteps(c: Part, a: Part, n: number, m: number): string[] {
 
 /* ------------------------------------------------------------------ constructor */
 
-const AMPHOTERIC = new Set(['Al:3', 'Zn:2', 'Sn:2', 'Sn:4', 'Pb:2', 'Pb:4', 'Cr:3', 'Mn:4']);
+/** Óxidos e hidróxidos anfóteros (Greenwood y Earnshaw, 1997, capítulo de cada grupo). */
+const AMPHOTERIC = new Set(['Al:3', 'Zn:2', 'Sn:2', 'Sn:4', 'Pb:2', 'Pb:4', 'Cr:3', 'Mn:4', 'Be:2', 'Ga:3', 'Ge:4', 'Sb:3', 'Ti:4', 'V:4', 'Zr:4']);
 const NEUTRAL_OXIDES = new Set(['C:2', 'N:1', 'N:2']);
-const PEROXIDE_EL = new Set(['H', 'Li', 'Na', 'K', 'Mg', 'Ca', 'Ba']);
-const HYDRIDE_METALS = new Set(['Li', 'Na', 'K', 'Mg', 'Ca', 'Ba', 'Al']);
+const PEROXIDE_EL = new Set(['H', 'Li', 'Na', 'K', 'Rb', 'Cs', 'Mg', 'Ca', 'Sr', 'Ba']);
+const HYDRIDE_METALS = new Set(['Li', 'Na', 'K', 'Rb', 'Cs', 'Mg', 'Ca', 'Sr', 'Ba', 'Al']);
 const NONMETAL_HYDRIDES: Record<string, { formula: string; es: string; iupac: string; sistAntigua: string; en: string; note?: string }> = {
   B: { formula: 'BH3', es: 'borano', iupac: 'borano', sistAntigua: 'trihidruro de boro', en: 'borane', note: 'El BH₃ no se aísla: forma el dímero diborano, B₂H₆.' },
   C: { formula: 'CH4', es: 'metano', iupac: 'metano', sistAntigua: 'tetrahidruro de carbono', en: 'methane' },
@@ -381,6 +493,7 @@ const NONMETAL_HYDRIDES: Record<string, { formula: string; es: string; iupac: st
   N: { formula: 'NH3', es: 'amoníaco', iupac: 'azano', sistAntigua: 'trihidruro de nitrógeno', en: 'ammonia' },
   P: { formula: 'PH3', es: 'fosfina', iupac: 'fosfano', sistAntigua: 'trihidruro de fósforo', en: 'phosphine', note: 'La IUPAC 2005 recomienda «fosfano»; «fosfina» ya no se recomienda.' },
   O: { formula: 'H2O', es: 'agua', iupac: 'oxidano', sistAntigua: 'monóxido de dihidrógeno', en: 'water' },
+  As: { formula: 'AsH3', es: 'arsina', iupac: 'arsano', sistAntigua: 'trihidruro de arsénico', en: 'arsine', note: 'La IUPAC 2005 recomienda «arsano»; «arsina» ya no se recomienda. Es un gas muy tóxico.' },
 };
 /** No metales que pueden actuar como «catión» (elemento menos electronegativo) frente a halógenos o S. */
 const NONMETAL_CATIONS: Record<string, { ox: number[]; with: string[] }> = {
@@ -400,6 +513,18 @@ const recommendedText = {
 };
 
 function metalAdjEs(info: ElementInfo, ox: number): string | null { return info.tradEs?.[ox] ?? null; }
+/** Nota cuando el metal no tiene adjetivo tradicional (-oso/-ico) de uso habitual. */
+const noTradNote = (info: ElementInfo) => `El ${info.es} no tiene nombre tradicional (-oso/-ico) de uso habitual: se nombra con la nomenclatura de Stock o la sistemática.`;
+/** Notas por elemento (toxicidad, radiactividad) que se añaden a todos sus compuestos. */
+const ELEMENT_NOTES: Record<string, string> = {
+  Po: 'El polonio es muy radiactivo (emisor alfa): sus compuestos solo se preparan en cantidades diminutas y en laboratorios especiales.',
+  Tl: 'Los compuestos de talio son muy tóxicos (el Tl₂SO₄ se usó como raticida y hoy está prohibido).',
+  Cd: 'Los compuestos de cadmio son tóxicos y cancerígenos.',
+  Be: 'Los compuestos de berilio son tóxicos (su polvo causa una enfermedad pulmonar grave).',
+  As: 'Los compuestos de arsénico son muy tóxicos.',
+  Se: 'El selenio es un micronutriente esencial, pero sus compuestos son tóxicos en dosis algo mayores.',
+};
+const elementNotes = (...syms: string[]) => [...new Set(syms.map((x) => ELEMENT_NOTES[x]).filter(Boolean))];
 function metalAdjEn(info: ElementInfo, ox: number): string | null { return info.tradEn?.[ox] ?? null; }
 
 /** Construye un compuesto a partir de su especificación (lanza RangeError si la combinación no es válida). */
@@ -478,13 +603,19 @@ function buildOxide(sym: string, ox: number, spec: Spec): Compound {
   if (sym === 'Hg' && ox === 1) notes.push('El mercurio(I) existe como el ion dímero Hg₂²⁺ (Hg–Hg): por eso Hg₂O y no «HgO₀,₅».');
   if (AMPHOTERIC.has(keyS)) notes.push('Óxido anfótero: reacciona con ácidos (como óxido básico) y con bases fuertes (como óxido ácido).');
   if (keyS === 'Si:4') notes.push('El SiO₂ es un sólido de red covalente (cuarzo, arena), no una molécula aislada.');
+  if (keyS === 'As:3') notes.push('En el vapor y en una de sus formas sólidas la molécula real es As₄O₆; As₂O₃ es la fórmula empírica.');
+  if (keyS === 'Sb:3') notes.push('En el vapor la molécula es Sb₄O₆; Sb₂O₃ es la fórmula empírica (sólido blanco, retardante de llama).');
+  if (keyS === 'Se:4') notes.push('El SeO₂ sólido forma cadenas (un polímero); en el vapor es una molécula angular, como el SO₂.');
+  if (keyS === 'V:5' || keyS === 'Mo:6' || keyS === 'W:6' || keyS === 'Nb:5' || keyS === 'Ta:5') notes.push('Es un sólido de red (no forma moléculas sueltas).');
+  if (isMetal && !acidState && !metalAdjEs(info, ox)) notes.push(noTradNote(info));
+  notes.push(...elementNotes(sym));
   if (v && m === 1) vs.push(`óxido de ${preEs(cnt, info.es, false)}`);
   for (const w of ['tetraóxido', 'pentaóxido', 'heptaóxido', 'hexaóxido']) if (sist.startsWith(w)) vs.push(sist.replace(w, w.replace('aóxido', 'óxido')));
   return finish(spec, formula, fn, { sistematica: sist, stock, tradicional: trad, variantes: { sistematica: vs } }, { sistematica: sistEn, stock: stockEn, tradicional: tradEn }, recommendedText.binario, neutralitySteps(c, a, n, m), notes);
 }
 
 function buildPeroxide(sym: string, spec: Spec): Compound {
-  if (!PEROXIDE_EL.has(sym)) throw new RangeError('En el motor solo forman peróxido el H y los metales de los grupos 1 y 2.');
+  if (!PEROXIDE_EL.has(sym)) throw new RangeError('En el motor solo forman peróxido el H y los metales de los grupos 1 y 2 (salvo el berilio).');
   const info = el(sym);
   const ox = info.ox[0];
   const c = cationPart({ el: sym, ox });
@@ -505,6 +636,7 @@ function buildHydroxide(sym: string, ox: number, spec: Spec): Compound {
   if (info.kind !== 'metal' || !info.ox.includes(ox)) throw new RangeError('Los hidróxidos se forman con un metal en uno de sus números de oxidación como catión.');
   if (sym === 'Hg' && ox === 1) throw new RangeError('El hidróxido de mercurio(I) no existe como compuesto estable.');
   if (sym === 'Mn' && ox === 4) throw new RangeError('El motor no incluye «Mn(OH)₄»: el manganeso(IV) forma MnO₂.');
+  if (info.noHydroxide?.includes(ox)) throw new RangeError(`El ${info.es}(${roman(ox)}) no forma un hidróxido definido: al precipitar da el óxido hidratado (${info.sym === 'Ti' ? 'TiO₂·nH₂O' : 'óxido con agua de composición variable'}).`);
   const c = cationPart({ el: sym, ox });
   const a: Part = { formula: 'OH', charge: -1, atoms: 2, es: 'hidróxido', en: 'hydroxide', poly: true };
   const [n, m] = neutralCounts(c.charge, a.charge);
@@ -517,6 +649,8 @@ function buildHydroxide(sym: string, ox: number, spec: Spec): Compound {
   if ((sym === 'Co' || sym === 'Ni') && ox === 3) notes.push('Más que M(OH)₃, el sólido real es un oxihidróxido MO(OH).');
   if (sym === 'Au') notes.push('Los «hidróxidos de oro» se describen mejor como óxidos hidratados.');
   if (AMPHOTERIC.has(`${sym}:${ox}`)) notes.push('Hidróxido anfótero: se disuelve en ácidos y también en bases fuertes.');
+  if (!adj) notes.push(noTradNote(info));
+  notes.push(...elementNotes(sym));
   return finish(spec, formula, 'hidroxido', {
     sistematica: `${preEs(m, 'hidróxido', v)} de ${info.es}`, stock: `hidróxido de ${info.es}${v ? `(${roman(ox)})` : ''}`, tradicional: adj ? `hidróxido ${adj}` : null, variantes: {},
   }, { sistematica: `${info.en} ${preEn(m, 'hydroxide', v)}`, stock: `${info.en}${v ? `(${roman(ox)})` : ''} hydroxide`, tradicional: aEn ? `${aEn} hydroxide` : null }, recommendedText.binario, neutralitySteps(c, a, n, m), notes);
@@ -529,7 +663,7 @@ function buildHydride(sym: string, spec: Spec): Compound {
       { sistematica: null, stock: null, tradicional: null, comun: special.en }, recommendedText.especial,
       [`El hidrógeno (+1) se une al ${el(sym).es}; la fórmula sigue la valencia habitual del ${el(sym).es} (${special.formula.replace(/\d/g, (d) => '₀₁₂₃₄₅₆₇₈₉'[Number(d)])}).`], special.note ? [special.note] : []);
   }
-  if (!HYDRIDE_METALS.has(sym)) throw new RangeError('En el motor forman hidruro metálico Li, Na, K, Mg, Ca, Ba y Al; los hidruros de B, C, Si, N, P y O tienen nombre propio.');
+  if (!HYDRIDE_METALS.has(sym)) throw new RangeError('En el motor forman hidruro metálico los metales alcalinos, Mg, Ca, Sr, Ba y Al; los hidruros de B, C, Si, N, P, As y O tienen nombre propio.');
   const info = el(sym);
   const ox = info.ox[0];
   const c = cationPart({ el: sym, ox });
@@ -543,7 +677,7 @@ function buildHydride(sym: string, spec: Spec): Compound {
 
 function buildHydracid(sym: string, spec: Spec): Compound {
   const an = ANION_BIN[sym];
-  if (!an) throw new RangeError('Los hidrácidos del motor son HF, HCl, HBr, HI y H₂S.');
+  if (!an) throw new RangeError('Los hidrácidos del motor son HF, HCl, HBr, HI, H₂S, H₂Se y H₂Te.');
   const info = el(sym);
   const q = info.anion!;
   const n = -q;
@@ -588,6 +722,7 @@ function anionFromAcid(acid: { el: string; ox: number; form?: AcidForm }, hLeft:
   const nm = acidNames(a);
   if (acid.el === 'P' && acid.ox === 3) throw new RangeError('Las sales del ácido fosfónico (H₃PO₃, diprótico) no se incluyen en el motor.');
   if (acid.el === 'B') throw new RangeError('Los boratos forman aniones poliméricos; no se incluyen en el motor.');
+  if (acid.el === 'Sb') throw new RangeError('Los antimoniatos son hexahidroxoantimoniatos, [Sb(OH)₆]⁻, o redes de óxidos; no se incluyen en el motor.');
   if (hLeft < 0 || hLeft >= a.acidicH) throw new RangeError(`El ácido tiene ${a.acidicH} hidrógenos ácidos: una sal ácida conserva de 1 a ${a.acidicH - 1}.`);
   if (hLeft > 0 && !(a.form === 'normal' && ['C:4', 'S:4', 'S:6', 'P:5'].includes(`${acid.el}:${acid.ox}`))) throw new RangeError('El motor incluye sales ácidas solo de los ácidos carbónico, sulfuroso, sulfúrico y fosfórico.');
   const g = groupFormula(a);
@@ -602,10 +737,16 @@ function guardSaltCation(c: { info?: ElementInfo; ox?: number }) {
   const k = c.info ? `${c.info.sym}:${c.ox}` : '';
   if (k === 'Mn:4' || k === 'Ni:3' || k === 'Co:3') throw new RangeError('El motor no forma sales con Mn(IV), Co(III) ni Ni(III): son inestables o casi inexistentes; ese estado aparece en óxidos.');
 }
+/** Estados que forman haluros y sulfuros pero no oxisales (sulfatos, nitratos…). */
+function guardOxisaltCation(c: { info?: ElementInfo; ox?: number }) {
+  if (c.info && c.ox !== undefined && c.info.noOxisalt?.includes(c.ox)) {
+    throw new RangeError(`El ${c.info.es}(${roman(c.ox)}) no forma oxisales sencillas (sulfatos, nitratos…): en agua se hidroliza y da óxidos hidratados u oxocationes${c.info.sym === 'V' ? ' como el vanadilo, VO²⁺' : c.info.sym === 'Ti' ? ' como el titanilo, TiO²⁺' : ''}. Sí forma haluros.`);
+  }
+}
 
 function buildBinarySalt(cation: CationRef, anionEl: string, spec: Spec): Compound {
   const an = ANION_BIN[anionEl];
-  if (!an) throw new RangeError('Aniones binarios del motor: F⁻, Cl⁻, Br⁻, I⁻ y S²⁻.');
+  if (!an) throw new RangeError('Aniones binarios del motor: F⁻, Cl⁻, Br⁻, I⁻, S²⁻, Se²⁻ y Te²⁻.');
   const a: Part = { formula: anionEl, charge: el(anionEl).anion!, atoms: 1, es: an.es, en: an.en, poly: false };
   if (cation.el !== 'NH4' && el(cation.el).kind === 'nometal') {
     const ox = (cation as { ox: number }).ox;
@@ -647,6 +788,8 @@ function saltNames(spec: Spec, formula: string, c: ReturnType<typeof cationPart>
   const variantes = { tradicional: [!v ? `${tAn} de ${c.es}` : ''].filter(Boolean) };
   const notes = [...extraNotes];
   if (c.formula === 'Hg2') notes.push('El mercurio(I) es el ion dímero Hg₂²⁺: Hg₂Cl₂ y no «HgCl».');
+  if (!isNH4 && !adj) notes.push(noTradNote(c.info!));
+  notes.push(...elementNotes(...Object.keys(parseFormula(formula))));
   const enStock = `${c.en}${romanTxt} ${a.en}`;
   return finish(spec, formula, fn, { sistematica: sist, stock, tradicional: trad, antigua: antiguaAnion ? `${antiguaAnion} de ${c.es}${romanTxt}` : undefined, variantes },
     { sistematica: `${preEn(cnt, c.en, false)} ${a.poly ? anionMultEn(m, a.en) : preEn(m, a.en, v)}`, stock: enStock, tradicional: adjEn ? `${adjEn} ${a.en}` : tradAnionEn ? `${c.en} ${tradAnionEn}` : null },
@@ -657,6 +800,7 @@ function buildOxisalt(cation: CationRef, acid: { el: string; ox: number; form?: 
   const c = cationPart(cation);
   if (c.info && (c.info.kind !== 'metal' || !c.info.ox.includes(c.ox!))) throw new RangeError('Las oxisales del motor llevan un metal (en un número de oxidación de catión) o el ion amonio.');
   guardSaltCation(c);
+  guardOxisaltCation(c);
   const a = anionFromAcid(acid, hLeft);
   const [n, m] = neutralCounts(c.charge, a.charge);
   const formula = `${join(c, n)}${join(a, m)}`;
@@ -679,6 +823,7 @@ function buildOxisalt(cation: CationRef, acid: { el: string; ox: number; form?: 
 function buildBasicSalt(cation: { el: string; ox: number }, anion: string | { el: string; ox: number; form?: AcidForm }, spec: Spec): Compound {
   const c = cationPart(cation);
   if (!c.info || c.info.kind !== 'metal' || !c.info.ox.includes(cation.ox) || c.charge !== 2) throw new RangeError('El motor forma sales básicas M(OH)X con cationes de carga +2 y aniones de carga −1.');
+  if (typeof anion !== 'string') guardOxisaltCation(c);
   const an: Part = typeof anion === 'string'
     ? { formula: anion, charge: el(anion).anion ?? 0, atoms: 1, es: ANION_BIN[anion]?.es ?? '', en: ANION_BIN[anion]?.en ?? '', poly: false }
     : anionFromAcid(anion, 0);

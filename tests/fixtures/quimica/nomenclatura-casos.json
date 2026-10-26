@@ -2630,5 +2630,2584 @@
    "stock": "cloruro hidróxido de magnesio",
    "tradicional": "cloruro básico magnésico"
   }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Sr",
+   "ox": 2
+  },
+  "queries": [
+   "strontium oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de estroncio",
+   "stock": "óxido de estroncio",
+   "tradicional": "óxido estróncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Be",
+   "ox": 2
+  },
+  "queries": [
+   "beryllium oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de berilio",
+   "stock": "óxido de berilio",
+   "tradicional": "óxido berílico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Sc",
+   "ox": 3
+  },
+  "queries": [
+   "scandium oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de diescandio",
+   "stock": "óxido de escandio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Y",
+   "ox": 3
+  },
+  "queries": [
+   "yttrium oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de diitrio",
+   "stock": "óxido de itrio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "La",
+   "ox": 3
+  },
+  "queries": [
+   "lanthanum oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dilantano",
+   "stock": "óxido de lantano",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ce",
+   "ox": 4
+  },
+  "queries": [
+   "cerium(IV) oxide",
+   "ceric oxide",
+   "cerium dioxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de cerio",
+   "stock": "óxido de cerio(IV)",
+   "tradicional": "óxido cérico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ce",
+   "ox": 3
+  },
+  "queries": [
+   "cerium(III) oxide",
+   "cerous oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dicerio",
+   "stock": "óxido de cerio(III)",
+   "tradicional": "óxido ceroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Nd",
+   "ox": 3
+  },
+  "queries": [
+   "neodymium oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dineodimio",
+   "stock": "óxido de neodimio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Eu",
+   "ox": 3
+  },
+  "queries": [
+   "europium(III) oxide",
+   "europium oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dieuropio",
+   "stock": "óxido de europio(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Gd",
+   "ox": 3
+  },
+  "queries": [
+   "gadolinium oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de digadolinio",
+   "stock": "óxido de gadolinio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ti",
+   "ox": 4
+  },
+  "queries": [
+   "titanium dioxide",
+   "titanium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de titanio",
+   "stock": "óxido de titanio(IV)",
+   "tradicional": "óxido titánico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ti",
+   "ox": 3
+  },
+  "queries": [
+   "titanium(III) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dititanio",
+   "stock": "óxido de titanio(III)",
+   "tradicional": "óxido titanoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Zr",
+   "ox": 4
+  },
+  "queries": [
+   "zirconium dioxide",
+   "zirconium oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de circonio",
+   "stock": "óxido de circonio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Hf",
+   "ox": 4
+  },
+  "queries": [
+   "hafnium dioxide",
+   "hafnium oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de hafnio",
+   "stock": "óxido de hafnio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "V",
+   "ox": 5
+  },
+  "queries": [
+   "vanadium pentoxide",
+   "vanadium(V) oxide"
+  ],
+  "es": {
+   "sistematica": "pentaóxido de divanadio",
+   "stock": "óxido de vanadio(V)",
+   "tradicional": "anhídrido vanádico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "V",
+   "ox": 4
+  },
+  "queries": [
+   "vanadium dioxide",
+   "vanadium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de vanadio",
+   "stock": "óxido de vanadio(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "V",
+   "ox": 3
+  },
+  "queries": [
+   "vanadium(III) oxide",
+   "vanadium trioxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de divanadio",
+   "stock": "óxido de vanadio(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Nb",
+   "ox": 5
+  },
+  "queries": [
+   "niobium pentoxide",
+   "niobium(V) oxide"
+  ],
+  "es": {
+   "sistematica": "pentaóxido de diniobio",
+   "stock": "óxido de niobio(V)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ta",
+   "ox": 5
+  },
+  "queries": [
+   "tantalum pentoxide",
+   "tantalum(V) oxide"
+  ],
+  "es": {
+   "sistematica": "pentaóxido de ditantalio",
+   "stock": "óxido de tantalio(V)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Mo",
+   "ox": 6
+  },
+  "queries": [
+   "molybdenum trioxide",
+   "molybdenum(VI) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de molibdeno",
+   "stock": "óxido de molibdeno(VI)",
+   "tradicional": "anhídrido molíbdico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Mo",
+   "ox": 4
+  },
+  "queries": [
+   "molybdenum dioxide",
+   "molybdenum(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de molibdeno",
+   "stock": "óxido de molibdeno(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "W",
+   "ox": 6
+  },
+  "queries": [
+   "tungsten trioxide",
+   "tungsten(VI) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de wolframio",
+   "stock": "óxido de wolframio(VI)",
+   "tradicional": "anhídrido wolfrámico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "W",
+   "ox": 4
+  },
+  "queries": [
+   "tungsten dioxide",
+   "tungsten(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de wolframio",
+   "stock": "óxido de wolframio(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Re",
+   "ox": 7
+  },
+  "queries": [
+   "rhenium heptoxide",
+   "rhenium(VII) oxide"
+  ],
+  "es": {
+   "sistematica": "heptaóxido de dirrenio",
+   "stock": "óxido de renio(VII)",
+   "tradicional": "anhídrido perrénico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Re",
+   "ox": 4
+  },
+  "queries": [
+   "rhenium dioxide",
+   "rhenium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de renio",
+   "stock": "óxido de renio(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ru",
+   "ox": 4
+  },
+  "queries": [
+   "ruthenium dioxide",
+   "ruthenium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de rutenio",
+   "stock": "óxido de rutenio(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Os",
+   "ox": 4
+  },
+  "queries": [
+   "osmium dioxide",
+   "osmium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de osmio",
+   "stock": "óxido de osmio(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Rh",
+   "ox": 3
+  },
+  "queries": [
+   "rhodium(III) oxide",
+   "rhodium oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de dirrodio",
+   "stock": "óxido de rodio(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ir",
+   "ox": 4
+  },
+  "queries": [
+   "iridium dioxide",
+   "iridium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de iridio",
+   "stock": "óxido de iridio(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Pd",
+   "ox": 2
+  },
+  "queries": [
+   "palladium(II) oxide",
+   "palladium oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de paladio",
+   "stock": "óxido de paladio(II)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Pt",
+   "ox": 4
+  },
+  "queries": [
+   "platinum dioxide",
+   "platinum(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de platino",
+   "stock": "óxido de platino(IV)",
+   "tradicional": "óxido platínico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Pt",
+   "ox": 2
+  },
+  "queries": [
+   "platinum(II) oxide",
+   "platinum monoxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de platino",
+   "stock": "óxido de platino(II)",
+   "tradicional": "óxido platinoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Cd",
+   "ox": 2
+  },
+  "queries": [
+   "cadmium oxide"
+  ],
+  "es": {
+   "sistematica": "óxido de cadmio",
+   "stock": "óxido de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ga",
+   "ox": 3
+  },
+  "queries": [
+   "gallium oxide",
+   "gallium(III) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de digalio",
+   "stock": "óxido de galio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "In",
+   "ox": 3
+  },
+  "queries": [
+   "indium oxide",
+   "indium(III) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de diindio",
+   "stock": "óxido de indio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Tl",
+   "ox": 1
+  },
+  "queries": [
+   "thallium(I) oxide",
+   "thallous oxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de ditalio",
+   "stock": "óxido de talio(I)",
+   "tradicional": "óxido talioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Tl",
+   "ox": 3
+  },
+  "queries": [
+   "thallium(III) oxide",
+   "thallic oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de ditalio",
+   "stock": "óxido de talio(III)",
+   "tradicional": "óxido tálico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ge",
+   "ox": 4
+  },
+  "queries": [
+   "germanium dioxide",
+   "germanium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de germanio",
+   "stock": "óxido de germanio(IV)",
+   "tradicional": "óxido germánico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Ge",
+   "ox": 2
+  },
+  "queries": [
+   "germanium(II) oxide",
+   "germanium monoxide"
+  ],
+  "es": {
+   "sistematica": "monóxido de germanio",
+   "stock": "óxido de germanio(II)",
+   "tradicional": "óxido germanoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Sb",
+   "ox": 3
+  },
+  "queries": [
+   "antimony trioxide",
+   "antimony(III) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de diantimonio",
+   "stock": "óxido de antimonio(III)",
+   "tradicional": "óxido antimonioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Sb",
+   "ox": 5
+  },
+  "queries": [
+   "antimony pentoxide",
+   "antimony(V) oxide"
+  ],
+  "es": {
+   "sistematica": "pentaóxido de diantimonio",
+   "stock": "óxido de antimonio(V)",
+   "tradicional": "anhídrido antimónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "As",
+   "ox": 3
+  },
+  "queries": [
+   "arsenic trioxide",
+   "arsenic(III) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de diarsénico",
+   "stock": "óxido de arsénico(III)",
+   "tradicional": "anhídrido arsenioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "As",
+   "ox": 5
+  },
+  "queries": [
+   "arsenic pentoxide",
+   "arsenic(V) oxide"
+  ],
+  "es": {
+   "sistematica": "pentaóxido de diarsénico",
+   "stock": "óxido de arsénico(V)",
+   "tradicional": "anhídrido arsénico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Se",
+   "ox": 4
+  },
+  "queries": [
+   "selenium dioxide",
+   "selenium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de selenio",
+   "stock": "óxido de selenio(IV)",
+   "tradicional": "anhídrido selenioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Se",
+   "ox": 6
+  },
+  "queries": [
+   "selenium trioxide",
+   "selenium(VI) oxide"
+  ],
+  "es": {
+   "sistematica": "trióxido de selenio",
+   "stock": "óxido de selenio(VI)",
+   "tradicional": "anhídrido selénico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxido",
+   "el": "Te",
+   "ox": 4
+  },
+  "queries": [
+   "tellurium dioxide",
+   "tellurium(IV) oxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de telurio",
+   "stock": "óxido de telurio(IV)",
+   "tradicional": "anhídrido teluroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "peroxido",
+   "el": "Sr"
+  },
+  "queries": [
+   "strontium peroxide"
+  ],
+  "es": {
+   "sistematica": "dióxido de estroncio",
+   "stock": "peróxido de estroncio",
+   "tradicional": "peróxido estróncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "Rb"
+  },
+  "queries": [
+   "rubidium hydride"
+  ],
+  "es": {
+   "sistematica": "hidruro de rubidio",
+   "stock": "hidruro de rubidio",
+   "tradicional": "hidruro rubídico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "Cs"
+  },
+  "queries": [
+   "cesium hydride",
+   "caesium hydride"
+  ],
+  "es": {
+   "sistematica": "hidruro de cesio",
+   "stock": "hidruro de cesio",
+   "tradicional": "hidruro césico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidruro",
+   "el": "As"
+  },
+  "queries": [
+   "arsine"
+  ],
+  "es": {
+   "sistematica": "arsano",
+   "stock": null,
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidracido",
+   "el": "Se"
+  },
+  "queries": [
+   "hydrogen selenide"
+  ],
+  "es": {
+   "sistematica": "seleniuro de dihidrógeno",
+   "stock": null,
+   "tradicional": "ácido selenhídrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidracido",
+   "el": "Te"
+  },
+  "queries": [
+   "hydrogen telluride"
+  ],
+  "es": {
+   "sistematica": "telururo de dihidrógeno",
+   "stock": null,
+   "tradicional": "ácido telurhídrico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Sr",
+   "ox": 2
+  },
+  "queries": [
+   "strontium hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de estroncio",
+   "stock": "hidróxido de estroncio",
+   "tradicional": "hidróxido estróncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Be",
+   "ox": 2
+  },
+  "queries": [
+   "beryllium hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de berilio",
+   "stock": "hidróxido de berilio",
+   "tradicional": "hidróxido berílico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Rb",
+   "ox": 1
+  },
+  "queries": [
+   "rubidium hydroxide"
+  ],
+  "es": {
+   "sistematica": "hidróxido de rubidio",
+   "stock": "hidróxido de rubidio",
+   "tradicional": "hidróxido rubídico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Cs",
+   "ox": 1
+  },
+  "queries": [
+   "cesium hydroxide",
+   "caesium hydroxide"
+  ],
+  "es": {
+   "sistematica": "hidróxido de cesio",
+   "stock": "hidróxido de cesio",
+   "tradicional": "hidróxido césico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Cd",
+   "ox": 2
+  },
+  "queries": [
+   "cadmium hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de cadmio",
+   "stock": "hidróxido de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "La",
+   "ox": 3
+  },
+  "queries": [
+   "lanthanum hydroxide"
+  ],
+  "es": {
+   "sistematica": "trihidróxido de lantano",
+   "stock": "hidróxido de lantano",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Ce",
+   "ox": 4
+  },
+  "queries": [
+   "cerium(IV) hydroxide",
+   "ceric hydroxide"
+  ],
+  "es": {
+   "sistematica": "tetrahidróxido de cerio",
+   "stock": "hidróxido de cerio(IV)",
+   "tradicional": "hidróxido cérico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Bi",
+   "ox": 3
+  },
+  "queries": [
+   "bismuth hydroxide",
+   "bismuth(III) hydroxide"
+  ],
+  "es": {
+   "sistematica": "trihidróxido de bismuto",
+   "stock": "hidróxido de bismuto(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "In",
+   "ox": 3
+  },
+  "queries": [
+   "indium hydroxide",
+   "indium(III) hydroxide"
+  ],
+  "es": {
+   "sistematica": "trihidróxido de indio",
+   "stock": "hidróxido de indio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Ga",
+   "ox": 3
+  },
+  "queries": [
+   "gallium hydroxide",
+   "gallium(III) hydroxide"
+  ],
+  "es": {
+   "sistematica": "trihidróxido de galio",
+   "stock": "hidróxido de galio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Tl",
+   "ox": 1
+  },
+  "queries": [
+   "thallium(I) hydroxide",
+   "thallous hydroxide",
+   "thallium hydroxide"
+  ],
+  "es": {
+   "sistematica": "monohidróxido de talio",
+   "stock": "hidróxido de talio(I)",
+   "tradicional": "hidróxido talioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Zr",
+   "ox": 4
+  },
+  "queries": [
+   "zirconium hydroxide",
+   "zirconium(IV) hydroxide"
+  ],
+  "es": {
+   "sistematica": "tetrahidróxido de circonio",
+   "stock": "hidróxido de circonio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "hidroxido",
+   "el": "Pd",
+   "ox": 2
+  },
+  "queries": [
+   "palladium(II) hydroxide",
+   "palladium hydroxide"
+  ],
+  "es": {
+   "sistematica": "dihidróxido de paladio",
+   "stock": "hidróxido de paladio(II)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "As",
+   "ox": 5
+  },
+  "queries": [
+   "arsenic acid"
+  ],
+  "es": {
+   "sistematica": "trihidrogeno(tetraoxidoarseniato)",
+   "stock": null,
+   "tradicional": "ácido arsénico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "As",
+   "ox": 3
+  },
+  "queries": [
+   "arsenous acid",
+   "arsenious acid"
+  ],
+  "es": {
+   "sistematica": "trihidrogeno(trioxidoarseniato)",
+   "stock": null,
+   "tradicional": "ácido arsenioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Se",
+   "ox": 4
+  },
+  "queries": [
+   "selenous acid",
+   "selenious acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(trioxidoseleniato)",
+   "stock": null,
+   "tradicional": "ácido selenioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Se",
+   "ox": 6
+  },
+  "queries": [
+   "selenic acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(tetraoxidoseleniato)",
+   "stock": null,
+   "tradicional": "ácido selénico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Te",
+   "ox": 4
+  },
+  "queries": [
+   "tellurous acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(trioxidotelurato)",
+   "stock": null,
+   "tradicional": "ácido teluroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Mo",
+   "ox": 6
+  },
+  "queries": [
+   "molybdic acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(tetraoxidomolibdato)",
+   "stock": null,
+   "tradicional": "ácido molíbdico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "W",
+   "ox": 6
+  },
+  "queries": [
+   "tungstic acid"
+  ],
+  "es": {
+   "sistematica": "dihidrogeno(tetraoxidowolframato)",
+   "stock": null,
+   "tradicional": "ácido wolfrámico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "Re",
+   "ox": 7
+  },
+  "queries": [
+   "perrhenic acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(tetraoxidorenato)",
+   "stock": null,
+   "tradicional": "ácido perrénico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxacido",
+   "el": "V",
+   "ox": 5,
+   "form": "meta"
+  },
+  "queries": [
+   "metavanadic acid"
+  ],
+  "es": {
+   "sistematica": "hidrogeno(trioxidovanadato)",
+   "stock": null,
+   "tradicional": "ácido metavanádico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ti",
+    "ox": 4
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "titanium tetrachloride",
+   "titanium(IV) chloride"
+  ],
+  "es": {
+   "sistematica": "tetracloruro de titanio",
+   "stock": "cloruro de titanio(IV)",
+   "tradicional": "cloruro titánico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ti",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "titanium trichloride",
+   "titanium(III) chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de titanio",
+   "stock": "cloruro de titanio(III)",
+   "tradicional": "cloruro titanoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Zr",
+    "ox": 4
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "zirconium tetrachloride",
+   "zirconium(IV) chloride"
+  ],
+  "es": {
+   "sistematica": "tetracloruro de circonio",
+   "stock": "cloruro de circonio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "V",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "vanadium trichloride",
+   "vanadium(III) chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de vanadio",
+   "stock": "cloruro de vanadio(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Nb",
+    "ox": 5
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "niobium pentachloride",
+   "niobium(V) chloride"
+  ],
+  "es": {
+   "sistematica": "pentacloruro de niobio",
+   "stock": "cloruro de niobio(V)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ta",
+    "ox": 5
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "tantalum pentachloride",
+   "tantalum(V) chloride"
+  ],
+  "es": {
+   "sistematica": "pentacloruro de tantalio",
+   "stock": "cloruro de tantalio(V)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Mo",
+    "ox": 4
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "molybdenum disulfide",
+   "molybdenum(IV) sulfide"
+  ],
+  "es": {
+   "sistematica": "disulfuro de molibdeno",
+   "stock": "sulfuro de molibdeno(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "W",
+    "ox": 4
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "tungsten disulfide",
+   "tungsten(IV) sulfide"
+  ],
+  "es": {
+   "sistematica": "disulfuro de wolframio",
+   "stock": "sulfuro de wolframio(IV)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ru",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "ruthenium(III) chloride",
+   "ruthenium trichloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de rutenio",
+   "stock": "cloruro de rutenio(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Rh",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "rhodium(III) chloride",
+   "rhodium trichloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de rodio",
+   "stock": "cloruro de rodio(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ir",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "iridium(III) chloride",
+   "iridium trichloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de iridio",
+   "stock": "cloruro de iridio(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Pd",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "palladium(II) chloride",
+   "palladium chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de paladio",
+   "stock": "cloruro de paladio(II)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Pt",
+    "ox": 4
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "platinum(IV) chloride",
+   "platinum tetrachloride"
+  ],
+  "es": {
+   "sistematica": "tetracloruro de platino",
+   "stock": "cloruro de platino(IV)",
+   "tradicional": "cloruro platínico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Pt",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "platinum(II) chloride",
+   "platinum dichloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de platino",
+   "stock": "cloruro de platino(II)",
+   "tradicional": "cloruro platinoso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Cd",
+    "ox": 2
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "cadmium sulfide"
+  ],
+  "es": {
+   "sistematica": "sulfuro de cadmio",
+   "stock": "sulfuro de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Cd",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "cadmium chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de cadmio",
+   "stock": "cloruro de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Cd",
+    "ox": 2
+   },
+   "anion": "Se"
+  },
+  "queries": [
+   "cadmium selenide"
+  ],
+  "es": {
+   "sistematica": "seleniuro de cadmio",
+   "stock": "seleniuro de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Cd",
+    "ox": 2
+   },
+   "anion": "Te"
+  },
+  "queries": [
+   "cadmium telluride"
+  ],
+  "es": {
+   "sistematica": "telururo de cadmio",
+   "stock": "telururo de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Pb",
+    "ox": 2
+   },
+   "anion": "Se"
+  },
+  "queries": [
+   "lead selenide",
+   "lead(II) selenide"
+  ],
+  "es": {
+   "sistematica": "monoseleniuro de plomo",
+   "stock": "seleniuro de plomo(II)",
+   "tradicional": "seleniuro plumboso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "anion": "Se"
+  },
+  "queries": [
+   "sodium selenide"
+  ],
+  "es": {
+   "sistematica": "seleniuro de disodio",
+   "stock": "seleniuro de sodio",
+   "tradicional": "seleniuro sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ga",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "gallium trichloride",
+   "gallium(III) chloride",
+   "gallium chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de galio",
+   "stock": "cloruro de galio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Tl",
+    "ox": 1
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "thallium(I) chloride",
+   "thallous chloride"
+  ],
+  "es": {
+   "sistematica": "monocloruro de talio",
+   "stock": "cloruro de talio(I)",
+   "tradicional": "cloruro talioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ge",
+    "ox": 4
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "germanium tetrachloride",
+   "germanium(IV) chloride"
+  ],
+  "es": {
+   "sistematica": "tetracloruro de germanio",
+   "stock": "cloruro de germanio(IV)",
+   "tradicional": "cloruro germánico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Sb",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "antimony trichloride",
+   "antimony(III) chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de antimonio",
+   "stock": "cloruro de antimonio(III)",
+   "tradicional": "cloruro antimonioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Sb",
+    "ox": 3
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "antimony trisulfide",
+   "antimony(III) sulfide"
+  ],
+  "es": {
+   "sistematica": "trisulfuro de diantimonio",
+   "stock": "sulfuro de antimonio(III)",
+   "tradicional": "sulfuro antimonioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Bi",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "bismuth(III) chloride",
+   "bismuth trichloride",
+   "bismuth chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de bismuto",
+   "stock": "cloruro de bismuto(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Bi",
+    "ox": 3
+   },
+   "anion": "S"
+  },
+  "queries": [
+   "bismuth(III) sulfide",
+   "bismuth sulfide"
+  ],
+  "es": {
+   "sistematica": "trisulfuro de dibismuto",
+   "stock": "sulfuro de bismuto(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Ce",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "cerium(III) chloride",
+   "cerous chloride",
+   "cerium trichloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de cerio",
+   "stock": "cloruro de cerio(III)",
+   "tradicional": "cloruro ceroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "La",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "lanthanum chloride",
+   "lanthanum(III) chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de lantano",
+   "stock": "cloruro de lantano",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Y",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "yttrium chloride",
+   "yttrium(III) chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de itrio",
+   "stock": "cloruro de itrio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Nd",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "neodymium chloride",
+   "neodymium(III) chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de neodimio",
+   "stock": "cloruro de neodimio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Eu",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "europium(II) chloride",
+   "europium dichloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de europio",
+   "stock": "cloruro de europio(II)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Sr",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "strontium chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de estroncio",
+   "stock": "cloruro de estroncio",
+   "tradicional": "cloruro estróncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Be",
+    "ox": 2
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "beryllium chloride"
+  ],
+  "es": {
+   "sistematica": "dicloruro de berilio",
+   "stock": "cloruro de berilio",
+   "tradicional": "cloruro berílico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Cs",
+    "ox": 1
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "cesium chloride",
+   "caesium chloride"
+  ],
+  "es": {
+   "sistematica": "cloruro de cesio",
+   "stock": "cloruro de cesio",
+   "tradicional": "cloruro césico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Rb",
+    "ox": 1
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "rubidium chloride"
+  ],
+  "es": {
+   "sistematica": "cloruro de rubidio",
+   "stock": "cloruro de rubidio",
+   "tradicional": "cloruro rubídico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Sc",
+    "ox": 3
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "scandium chloride",
+   "scandium(III) chloride"
+  ],
+  "es": {
+   "sistematica": "tricloruro de escandio",
+   "stock": "cloruro de escandio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "sal-binaria",
+   "cation": {
+    "el": "Hf",
+    "ox": 4
+   },
+   "anion": "Cl"
+  },
+  "queries": [
+   "hafnium tetrachloride",
+   "hafnium(IV) chloride"
+  ],
+  "es": {
+   "sistematica": "tetracloruro de hafnio",
+   "stock": "cloruro de hafnio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "As",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "sodium arsenate"
+  ],
+  "es": {
+   "sistematica": "arseniato de trisodio",
+   "stock": "arseniato de sodio",
+   "tradicional": "arseniato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Se",
+    "ox": 4
+   }
+  },
+  "queries": [
+   "sodium selenite"
+  ],
+  "es": {
+   "sistematica": "selenito de disodio",
+   "stock": "selenito de sodio",
+   "tradicional": "selenito sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Se",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "sodium selenate"
+  ],
+  "es": {
+   "sistematica": "seleniato de disodio",
+   "stock": "seleniato de sodio",
+   "tradicional": "seleniato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Te",
+    "ox": 4
+   }
+  },
+  "queries": [
+   "sodium tellurite"
+  ],
+  "es": {
+   "sistematica": "telurito de disodio",
+   "stock": "telurito de sodio",
+   "tradicional": "telurito sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Mo",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "sodium molybdate"
+  ],
+  "es": {
+   "sistematica": "molibdato de disodio",
+   "stock": "molibdato de sodio",
+   "tradicional": "molibdato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "W",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "sodium tungstate"
+  ],
+  "es": {
+   "sistematica": "wolframato de disodio",
+   "stock": "wolframato de sodio",
+   "tradicional": "wolframato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Pb",
+    "ox": 2
+   },
+   "acid": {
+    "el": "Mo",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "lead molybdate",
+   "lead(II) molybdate"
+  ],
+  "es": {
+   "sistematica": "molibdato de plomo",
+   "stock": "molibdato de plomo(II)",
+   "tradicional": "molibdato plumboso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "V",
+    "ox": 5,
+    "form": "meta"
+   }
+  },
+  "queries": [
+   "sodium metavanadate"
+  ],
+  "es": {
+   "sistematica": "metavanadato de sodio",
+   "stock": "metavanadato de sodio",
+   "tradicional": "metavanadato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "V",
+    "ox": 5,
+    "form": "meta"
+   }
+  },
+  "queries": [
+   "ammonium metavanadate"
+  ],
+  "es": {
+   "sistematica": "metavanadato de amonio",
+   "stock": "metavanadato de amonio",
+   "tradicional": "metavanadato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Na",
+    "ox": 1
+   },
+   "acid": {
+    "el": "V",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "sodium orthovanadate",
+   "sodium vanadate"
+  ],
+  "es": {
+   "sistematica": "vanadato de trisodio",
+   "stock": "vanadato de sodio",
+   "tradicional": "vanadato sódico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "K",
+    "ox": 1
+   },
+   "acid": {
+    "el": "Re",
+    "ox": 7
+   }
+  },
+  "queries": [
+   "potassium perrhenate"
+  ],
+  "es": {
+   "sistematica": "perrenato de potasio",
+   "stock": "perrenato de potasio",
+   "tradicional": "perrenato potásico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "NH4"
+   },
+   "acid": {
+    "el": "Re",
+    "ox": 7
+   }
+  },
+  "queries": [
+   "ammonium perrhenate"
+  ],
+  "es": {
+   "sistematica": "perrenato de amonio",
+   "stock": "perrenato de amonio",
+   "tradicional": "perrenato amónico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Sr",
+    "ox": 2
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4
+   }
+  },
+  "queries": [
+   "strontium carbonate"
+  ],
+  "es": {
+   "sistematica": "carbonato de estroncio",
+   "stock": "carbonato de estroncio",
+   "tradicional": "carbonato estróncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Sr",
+    "ox": 2
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "strontium sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de estroncio",
+   "stock": "sulfato de estroncio",
+   "tradicional": "sulfato estróncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Sr",
+    "ox": 2
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "strontium nitrate"
+  ],
+  "es": {
+   "sistematica": "bis(nitrato) de estroncio",
+   "stock": "nitrato de estroncio",
+   "tradicional": "nitrato estróncico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Be",
+    "ox": 2
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "beryllium sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de berilio",
+   "stock": "sulfato de berilio",
+   "tradicional": "sulfato berílico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Cs",
+    "ox": 1
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4
+   }
+  },
+  "queries": [
+   "cesium carbonate",
+   "caesium carbonate"
+  ],
+  "es": {
+   "sistematica": "carbonato de dicesio",
+   "stock": "carbonato de cesio",
+   "tradicional": "carbonato césico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Rb",
+    "ox": 1
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4
+   }
+  },
+  "queries": [
+   "rubidium carbonate"
+  ],
+  "es": {
+   "sistematica": "carbonato de dirrubidio",
+   "stock": "carbonato de rubidio",
+   "tradicional": "carbonato rubídico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Cd",
+    "ox": 2
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "cadmium sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de cadmio",
+   "stock": "sulfato de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Cd",
+    "ox": 2
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "cadmium nitrate"
+  ],
+  "es": {
+   "sistematica": "bis(nitrato) de cadmio",
+   "stock": "nitrato de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Cd",
+    "ox": 2
+   },
+   "acid": {
+    "el": "C",
+    "ox": 4
+   }
+  },
+  "queries": [
+   "cadmium carbonate"
+  ],
+  "es": {
+   "sistematica": "carbonato de cadmio",
+   "stock": "carbonato de cadmio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Tl",
+    "ox": 1
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "thallium(I) sulfate",
+   "thallous sulfate"
+  ],
+  "es": {
+   "sistematica": "sulfato de ditalio",
+   "stock": "sulfato de talio(I)",
+   "tradicional": "sulfato talioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Tl",
+    "ox": 1
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "thallium(I) nitrate",
+   "thallous nitrate"
+  ],
+  "es": {
+   "sistematica": "nitrato de talio",
+   "stock": "nitrato de talio(I)",
+   "tradicional": "nitrato talioso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Ce",
+    "ox": 4
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "cerium(IV) sulfate",
+   "ceric sulfate"
+  ],
+  "es": {
+   "sistematica": "bis(sulfato) de cerio",
+   "stock": "sulfato de cerio(IV)",
+   "tradicional": "sulfato cérico"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Ce",
+    "ox": 3
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "cerium(III) nitrate",
+   "cerous nitrate"
+  ],
+  "es": {
+   "sistematica": "tris(nitrato) de cerio",
+   "stock": "nitrato de cerio(III)",
+   "tradicional": "nitrato ceroso"
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "La",
+    "ox": 3
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "lanthanum nitrate",
+   "lanthanum(III) nitrate"
+  ],
+  "es": {
+   "sistematica": "tris(nitrato) de lantano",
+   "stock": "nitrato de lantano",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Y",
+    "ox": 3
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "yttrium nitrate",
+   "yttrium(III) nitrate"
+  ],
+  "es": {
+   "sistematica": "tris(nitrato) de itrio",
+   "stock": "nitrato de itrio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "In",
+    "ox": 3
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "indium(III) sulfate",
+   "indium sulfate"
+  ],
+  "es": {
+   "sistematica": "tris(sulfato) de diindio",
+   "stock": "sulfato de indio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Ga",
+    "ox": 3
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "gallium nitrate",
+   "gallium(III) nitrate"
+  ],
+  "es": {
+   "sistematica": "tris(nitrato) de galio",
+   "stock": "nitrato de galio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Zr",
+    "ox": 4
+   },
+   "acid": {
+    "el": "S",
+    "ox": 6
+   }
+  },
+  "queries": [
+   "zirconium sulfate",
+   "zirconium(IV) sulfate"
+  ],
+  "es": {
+   "sistematica": "bis(sulfato) de circonio",
+   "stock": "sulfato de circonio",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Pd",
+    "ox": 2
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "palladium(II) nitrate",
+   "palladium nitrate"
+  ],
+  "es": {
+   "sistematica": "bis(nitrato) de paladio",
+   "stock": "nitrato de paladio(II)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Rh",
+    "ox": 3
+   },
+   "acid": {
+    "el": "N",
+    "ox": 5
+   }
+  },
+  "queries": [
+   "rhodium(III) nitrate",
+   "rhodium nitrate"
+  ],
+  "es": {
+   "sistematica": "tris(nitrato) de rodio",
+   "stock": "nitrato de rodio(III)",
+   "tradicional": null
+  }
+ },
+ {
+  "spec": {
+   "kind": "oxisal",
+   "cation": {
+    "el": "Ba",
+    "ox": 2
+   },
+   "acid": {
+    "el": "Se",
+    "ox": 4
+   }
+  },
+  "queries": [
+   "barium selenite"
+  ],
+  "es": {
+   "sistematica": "selenito de bario",
+   "stock": "selenito de bario",
+   "tradicional": "selenito bárico"
+  }
  }
 ]

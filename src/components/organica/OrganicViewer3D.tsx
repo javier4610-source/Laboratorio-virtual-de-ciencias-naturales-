@@ -5,6 +5,8 @@ import type { EpistemicStatus } from '../../lib/provenance';
 import { ProjectedSvg, toSdf, type Atom3D, type Bond3D, type Species3D } from '../../chem';
 import { cssVar, use3DViewer, useThemeVersion } from '../../chem/engine3d';
 import { frameRadius } from '../../chem/Molecule3D';
+import { applyMolStyle } from '../../chem/molStyle';
+import { ballRadius } from '../../chem/elements';
 
 /**
  * Visor 3D para química orgánica construido sobre el motor del kit (src/chem/engine3d.ts: 3Dmol.js diferido y respaldo SVG).
@@ -34,7 +36,6 @@ export interface OrganicViewer3DProps {
 }
 
 type St = 'bs' | 'pal' | 'esf';
-const SPEC: Record<St, Record<string, unknown>> = { bs: { stick: { radius: 0.14 }, sphere: { scale: 0.28 } }, pal: { stick: { radius: 0.2 } }, esf: { sphere: { scale: 1 } } };
 const R: Record<string, number> = { H: 0.31, C: 0.76, N: 0.71, O: 0.66, F: 0.57, Cl: 1.02, Br: 1.2, I: 1.39 };
 
 export function OrganicViewer3D({ atoms, bonds, idPrefix, ariaLabel, status, statusPrefix, provenance, labels, highlight = [], height = 300, viewKey, controls = true, styleLabel = 'Estilo del modelo 3D' }: OrganicViewer3DProps) {
@@ -53,7 +54,7 @@ export function OrganicViewer3D({ atoms, bonds, idPrefix, ariaLabel, status, sta
     try {
       v.removeAllModels(); v.removeAllShapes(); v.removeAllLabels();
       v.addModel(toSdf(species), 'sdf');
-      v.setStyle({}, SPEC[style]);
+      applyMolStyle(v, style, atoms.map((a) => a.el));
       const data = cssVar('--data', '#1971c2'), surface = cssVar('--surface', '#ffffff');
       for (const i of highlight) {
         const a = atoms[i]; if (!a) continue;
@@ -82,7 +83,7 @@ export function OrganicViewer3D({ atoms, bonds, idPrefix, ariaLabel, status, sta
         {!fallback && <span className="sr-only" role="img" aria-label={ariaLabel} />}
         {fallback && (
           <ProjectedSvg
-            atoms={atoms.map((a, i) => ({ ...a, r: style === 'esf' ? (R[a.el] ?? 0.8) * 1.4 : (R[a.el] ?? 0.8) * 0.45, label: labels?.[i], opacity: highlight.length && !hl.has(i) && a.el !== 'H' ? 0.85 : 1 }))}
+            atoms={atoms.map((a, i) => ({ ...a, r: style === 'esf' ? (R[a.el] ?? 0.8) * 1.4 : style === 'bs' ? ballRadius(a.el) : 0.14, label: labels?.[i], opacity: highlight.length && !hl.has(i) && a.el !== 'H' ? 0.85 : 1 }))}
             bonds={bonds} ariaLabel={`${ariaLabel} (vista de respaldo en SVG con las mismas coordenadas; arrastra o usa las flechas para girar)`}
             height={height} width={640} showLabels={!!labels} selection={highlight} />
         )}

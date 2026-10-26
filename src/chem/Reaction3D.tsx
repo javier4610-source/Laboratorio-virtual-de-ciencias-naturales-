@@ -2,15 +2,18 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { fmt } from '../lib/format';
 import { StatusChip } from '../components/Provenance';
 import { Segmented } from '../components/ui';
-import { drawRadius, elementColor } from './elements';
+import { ballRadius, drawRadius, elementColor } from './elements';
 import { ProjectedSvg } from './ProjectedSvg';
 import { bondChanges, buildReactionScene, checkBalanced, countsAt, equationText, frameBonds, framePositions, phaseName, PHASES, REACTION3D_LABEL, STEPS, type Reaction3DDef } from './reactionScene';
 import { prettyFormula } from '../models/balancing';
-import { reducedMotion, use3DViewer, useThemeVersion } from './engine3d';
-import type { V3 } from './species';
+import { reducedMotion, use3DViewer, useThemeVersion, type Viewer3DHost } from './engine3d';
+import { hasIonicSpecies, IONIC_STICKS_NOTE, type V3 } from './species';
 
 type RStyle = 'bs' | 'esf';
-const R_OF: Record<RStyle, (el: string) => number> = { bs: (el) => drawRadius(el) * 0.5, esf: (el) => drawRadius(el) * 1.25 };
+/** «Esferas y palitos» con las mismas esferas que Molecule3D y la vista SVG (ballRadius, proporcional al radio covalente). */
+const R_OF: Record<RStyle, (el: string) => number> = { bs: (el) => ballRadius(el), esf: (el) => drawRadius(el) * 1.25 };
+const STICK_COLOR = '#8d989c';
+
 const BASE_SECONDS = 6;
 
 function perpendicular(d: V3): V3 {
@@ -38,6 +41,7 @@ export function Reaction3D({ def, idPrefix, height = 320, labelSuffix = '' }: Re
   const scene = useMemo(() => buildReactionScene(def), [def]);
   const balance = useMemo(() => checkBalanced(def), [def]);
   const changes = useMemo(() => bondChanges(scene), [scene]);
+  const ionic = useMemo(() => hasIonicSpecies([...def.reactants, ...def.products].map((x) => x.species)), [def]);
   const [t, setT] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState<'0.5' | '1' | '2'>('1');
@@ -96,13 +100,18 @@ export function Reaction3D({ def, idPrefix, height = 320, labelSuffix = '' }: Re
       }
       v.removeAllShapes();
       scene.atoms.forEach((a, i) => v.addSphere({ center: { x: pos[i][0], y: pos[i][1], z: pos[i][2] }, radius: R_OF[style](a.el), color: elementColor(a.el) }));
+      const host = hostRef.current as Viewer3DHost | null;
+      if (host) host.__lv3dScene = {
+        atoms: scene.atoms.map((a, i) => ({ x: pos[i][0], y: pos[i][1], z: pos[i][2], r: R_OF[style](a.el) })),
+        bonds: style === 'bs' ? bonds.map((b) => ({ a: b.a, b: b.b, order: b.order, opacity: b.opacity })) : [], stickRadius: 0.11, stickColor: STICK_COLOR,
+      };
       if (style === 'bs') for (const b of bonds) {
         const p = pos[b.a], q = pos[b.b];
         const d: V3 = [q[0] - p[0], q[1] - p[1], q[2] - p[2]];
         const len = Math.hypot(...d) || 1;
         const n = perpendicular([d[0] / len, d[1] / len, d[2] / len]);
         const offs = b.order === 2 ? [-0.11, 0.11] : b.order === 3 ? [-0.16, 0, 0.16] : [0];
-        for (const k of offs) v.addCylinder({ start: { x: p[0] + n[0] * k, y: p[1] + n[1] * k, z: p[2] + n[2] * k }, end: { x: q[0] + n[0] * k, y: q[1] + n[1] * k, z: q[2] + n[2] * k }, radius: b.order > 1 ? 0.07 : 0.11, color: '#8d989c', opacity: b.opacity, fromCap: 1, toCap: 1 });
+        for (const k of offs) v.addCylinder({ start: { x: p[0] + n[0] * k, y: p[1] + n[1] * k, z: p[2] + n[2] * k }, end: { x: q[0] + n[0] * k, y: q[1] + n[1] * k, z: q[2] + n[2] * k }, radius: b.order > 1 ? 0.07 : 0.11, color: STICK_COLOR, opacity: b.opacity, fromCap: 1, toCap: 1 });
       }
       v.render();
     } catch (e) { fail(e); }
@@ -146,6 +155,7 @@ export function Reaction3D({ def, idPrefix, height = 320, labelSuffix = '' }: Re
       <figcaption className="small" style={{ marginTop: 6 }}>
         <StatusChip status="ilustracion" prefix="Animación" /> <span className="muted">{REACTION3D_LABEL.replace(/^[^:]+:\s*/, '')}.</span>
       </figcaption>
+      {ionic && style === 'bs' && <p className="small muted" style={{ margin: '6px 0 0' }}>{IONIC_STICKS_NOTE}</p>}
       {fallback && (
         <div className="notice small" role="status" style={{ marginTop: 6 }}>
           <strong>Vista de respaldo:</strong> {engine === 'sin-webgl' ? 'este equipo no ofrece WebGL;' : 'no se pudo cargar el visor 3D;'} la reacción se dibuja con las mismas posiciones. Gírala con las flechas del teclado.

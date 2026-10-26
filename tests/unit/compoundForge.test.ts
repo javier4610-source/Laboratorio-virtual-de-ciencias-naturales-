@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { gcdAll } from '../../src/models/balancing';
 import {
-  chargeParts, challengeMet, enumerateForgeInputs, enumerateForgeResults, forge, FORGE_CHALLENGES, forgeCompounds, KNOWN_STATES, ROUTES, STATE_CHOICES,
+  chargeParts, challengeMet, ENGINE_SYMBOLS, enumerateForgeInputs, enumerateForgeResults, EXCLUDED_REASON, forge, FORGE_CHALLENGES, forgeCompounds, KNOWN_STATES, RARE_STATES, ROUTES, STATE_CHOICES,
   type ForgeError, type ForgeInput, type ForgeOk,
 } from '../../src/models/compoundForge';
 import { REGISTRY_META, registryEntries, registryStatus, registryText } from '../../src/models/compoundForgeRegistry';
@@ -11,7 +11,7 @@ import { PT_ELEMENTS } from '../../src/models/periodicTable';
 import { forgeReaction3D, staticView } from '../../src/labs/compoundForge3d';
 
 /**
- * Taller de formación de compuestos: neutralidad de cargas, balanceo, nombres iguales a los 149 casos de referencia,
+ * Taller de formación de compuestos: neutralidad de cargas, balanceo, nombres iguales a los casos de referencia,
  * rechazo explicado de combinaciones inválidas y coherencia con el archivo real de PubChem
  * (src/data/quimica/compuestos-pubchem.json, scripts/validacion/compuestos_pubchem.mjs).
  */
@@ -57,6 +57,52 @@ describe('taller · recorrido del docente (Ca, S y sulfato de calcio)', () => {
   });
 });
 
+describe('taller · elementos habilitados en la v2.5.0', () => {
+  it('pedidos del docente y de la guía: Ba + O₂ → BaO; Sn(IV) + O₂ → SnO₂ «óxido estánnico»; HIO₄; KMnO₄; Zn(OH)₂', () => {
+    expect(ok({ route: 'metal-o2', a: 'Ba', oxA: 2 }).equation).toBe('2 Ba + O₂ → 2 BaO');
+    const sno2 = ok({ route: 'metal-o2', a: 'Sn', oxA: 4 });
+    expect([sno2.equation, sno2.product.names.tradicional, sno2.product.names.stock]).toEqual(['Sn + O₂ → SnO₂', 'óxido estánnico', 'óxido de estaño(IV)']);
+    const hio4 = ok({ route: 'anhidrido-agua', a: 'I', oxA: 7 });
+    expect([hio4.product.formula, hio4.product.names.tradicional, hio4.equation]).toEqual(['HIO4', 'ácido peryódico', 'I₂O₇ + H₂O → 2 HIO₄']);
+    expect(ok({ route: 'neutralizacion', a: 'K', oxA: 1, b: 'Mn', oxB: 7 }).equation).toBe('HMnO₄ + KOH → KMnO₄ + H₂O');
+    expect(ok({ route: 'oxido-agua', a: 'Zn', oxA: 2 }).equation).toBe('ZnO + H₂O → Zn(OH)₂');
+  });
+
+  it('metales nuevos: grupos 1 y 2, transición, bloque p y lantánidos', () => {
+    expect(ok({ route: 'metal-o2', a: 'Sr', oxA: 2 }).equation).toBe('2 Sr + O₂ → 2 SrO');
+    expect(ok({ route: 'peroxido', a: 'Sr', oxA: 2 }).product.formula).toBe('SrO2');
+    expect(ok({ route: 'oxido-agua', a: 'Cs', oxA: 1 }).equation).toBe('Cs₂O + H₂O → 2 CsOH');
+    const tio2 = ok({ route: 'metal-o2', a: 'Ti', oxA: 4 });
+    expect([tio2.equation, tio2.product.names.stock, tio2.product.names.tradicional, tio2.product.fn, tio2.pathway]).toEqual(['Ti + O₂ → TiO₂', 'óxido de titanio(IV)', 'óxido titánico', 'oxido-anfotero', 'directa']);
+    const v2o5 = ok({ route: 'metal-o2', a: 'V', oxA: 5 });
+    expect([v2o5.equation, v2o5.product.fn]).toEqual(['4 V + 5 O₂ → 2 V₂O₅', 'oxido-acido']);
+    expect(ok({ route: 'neutralizacion', a: 'Na', oxA: 1, b: 'Mo', oxB: 6 }).equation).toBe('H₂MoO₄ + 2 NaOH → Na₂MoO₄ + 2 H₂O');
+    expect(ok({ route: 'neutralizacion', a: 'Ca', oxA: 2, b: 'W', oxB: 6 }).product.names.stock).toBe('wolframato de calcio');
+    expect(ok({ route: 'neutralizacion', a: 'K', oxA: 1, b: 'Re', oxB: 7 }).product.formula).toBe('KReO4');
+    expect(ok({ route: 'neutralizacion', a: 'Na', oxA: 1, b: 'V', oxB: 5, form: 'meta' }).product.names.stock).toBe('metavanadato de sodio');
+    expect(ok({ route: 'metal-nometal', a: 'Cd', oxA: 2, b: 'S', oxB: -2 }).equation).toBe('Cd + S → CdS');
+    expect(ok({ route: 'metal-nometal', a: 'Cd', oxA: 2, b: 'Te', oxB: -2 }).product.names.stock).toBe('telururo de cadmio');
+    expect(ok({ route: 'metal-nometal', a: 'Pt', oxA: 4, b: 'Cl', oxB: -1 }).product.names.tradicional).toBe('cloruro platínico');
+    expect(ok({ route: 'neutralizacion', a: 'Bi', oxA: 3, b: 'N', oxB: 5 }).equation).toBe('3 HNO₃ + Bi(OH)₃ → Bi(NO₃)₃ + 3 H₂O');
+    expect(ok({ route: 'neutralizacion', a: 'Ce', oxA: 4, b: 'S', oxB: 6 }).product.names.tradicional).toBe('sulfato cérico');
+    expect(ok({ route: 'metal-o2', a: 'Nd', oxA: 3 }).equation).toBe('4 Nd + 3 O₂ → 2 Nd₂O₃');
+    expect(ok({ route: 'neutralizacion', a: 'Tl', oxA: 1, b: 'S', oxB: 6 }).product.notes.join(' ')).toMatch(/talio son muy tóxicos/);
+    expect(ok({ route: 'metal-o2', a: 'Po', oxA: 4 }).product.notes.join(' ')).toMatch(/radiactivo/);
+  });
+
+  it('no metales y metaloides nuevos: As, Se y Te (óxidos, oxácidos, hidrácidos, sales) y su vía de obtención', () => {
+    expect(ok({ route: 'nometal-o2', a: 'As', oxA: 3 }).pathway).toBe('directa');
+    expect(ok({ route: 'anhidrido-agua', a: 'As', oxA: 5 }).equation).toBe('As₂O₅ + 3 H₂O → 2 H₃AsO₄');
+    expect(ok({ route: 'anhidrido-agua', a: 'Se', oxA: 6 }).product.names.tradicional).toBe('ácido selénico');
+    expect(ok({ route: 'h2-nometal', a: 'Se', oxA: -2 }).equation).toBe('H₂ + Se → H₂Se');
+    expect(ok({ route: 'h2-nometal', a: 'As', oxA: -3 }).product.names.sistematica).toBe('arsano');
+    expect(ok({ route: 'neutralizacion', a: 'Na', oxA: 1, b: 'Se', oxB: 4 }).product.names.stock).toBe('selenito de sodio');
+    expect(ok({ route: 'neutralizacion', a: 'Zn', oxA: 2, b: 'Se', oxB: -2 }).equation).toBe('H₂Se + Zn(OH)₂ → ZnSe + 2 H₂O');
+    const te = ok({ route: 'anhidrido-agua', a: 'Te', oxA: 6 });
+    expect(te.product.notes.join(' ')).toMatch(/H₆TeO₆/);
+  });
+});
+
 describe('taller · rechazos con explicación pedagógica', () => {
   const cases: [ForgeInput, ForgeError['code'], RegExp][] = [
     [{ route: 'metal-o2', a: 'He', oxA: 2 }, 'gas-noble', /capa de valencia completa/],
@@ -77,13 +123,29 @@ describe('taller · rechazos con explicación pedagógica', () => {
     [{ route: 'oxido-agua', a: 'S', oxA: 6 }, 'no-es-metal', /oxácido/],
     [{ route: 'metal-h2', a: 'Fe', oxA: 2 }, 'papel', /intersticiales/],
     [{ route: 'peroxido', a: 'Fe', oxA: 2 }, 'papel', /grupos 1 y 2/],
-    [{ route: 'metal-o2', a: 'Ti', oxA: 4 }, 'fuera-del-taller', /TiO₂/],
+    [{ route: 'metal-o2', a: 'U', oxA: 4 }, 'fuera-del-taller', /UO₂/],
+    [{ route: 'metal-o2', a: 'Tc', oxA: 7 }, 'fuera-del-taller', /pertecnetato/],
+    [{ route: 'metal-o2', a: 'Pm', oxA: 3 }, 'fuera-del-taller', /sintético y radiactivo/],
+    [{ route: 'metal-o2', a: 'Fr', oxA: 1 }, 'fuera-del-taller', /22 minutos/],
+    [{ route: 'metal-o2', a: 'Ra', oxA: 2 }, 'fuera-del-taller', /bario/],
+    [{ route: 'h2-nometal', a: 'At', oxA: -1 }, 'fuera-del-taller', /astato/],
+    [{ route: 'metal-o2', a: 'Am', oxA: 3 }, 'fuera-del-taller', /actínido sintético/],
+    [{ route: 'metal-o2', a: 'Ti', oxA: 5 }, 'estado-inexistente', /grupos 4 a 7/],
+    [{ route: 'metal-o2', a: 'Ti', oxA: 2 }, 'estado-raro', /TiCl₂/],
+    [{ route: 'metal-o2', a: 'Ga', oxA: 2 }, 'estado-inexistente', /tres electrones de valencia/],
+    [{ route: 'peroxido', a: 'Be', oxA: 2 }, 'papel', /berilio/],
+    [{ route: 'metal-h2', a: 'Be', oxA: 2 }, 'papel', /BeH₂/],
+    [{ route: 'oxido-agua', a: 'Ge', oxA: 4 }, 'motor', /hidróxido definido/],
+    [{ route: 'neutralizacion', a: 'Hf', oxA: 4, b: 'S', oxB: 6 }, 'motor', /no forma oxisales sencillas/],
+    [{ route: 'oxido-agua', a: 'Mo', oxA: 6 }, 'papel', /ácido molíbdico/],
+    [{ route: 'anhidrido-agua', a: 'Fe', oxA: 2 }, 'metal-sin-oxacido', /Mo\(\+6\) → H₂MoO₄/],
     [{ route: 'metal-o2', a: 'Og', oxA: 2 }, 'gas-noble', /sintético/],
     [{ route: 'metal-o2', a: 'Fl', oxA: 2 }, 'fuera-del-taller', /superpesado/],
     [{ route: 'nometal-o2', a: 'F', oxA: -1 }, 'papel', /OF₂/],
     [{ route: 'nometal-o2', a: 'F', oxA: 2 }, 'estado-inexistente', /siempre tiene −1/],
     [{ route: 'h2-nometal', a: 'Cl', oxA: 1 }, 'papel', /−1/],
     [{ route: 'metal-nometal', a: 'Na', oxA: 1, b: 'N', oxB: -3 }, 'papel', /nitruros/],
+    [{ route: 'metal-nometal', a: 'Ga', oxA: 3, b: 'As', oxB: -3 }, 'papel', /GaAs/],
     [{ route: 'neutralizacion', a: 'Mn', oxA: 2, b: 'Mn', oxB: 7 }, 'papel', /a la vez el catión/],
     [{ route: 'metal-o2', a: null, oxA: null }, 'sin-elemento', /Elige/],
   ];
@@ -92,6 +154,18 @@ describe('taller · rechazos con explicación pedagógica', () => {
     expect(r.code).toBe(code);
     expect(`${r.title} ${r.message}`).toMatch(re);
     expect(r.message.length).toBeGreaterThan(40);
+  });
+
+  it('77 elementos habilitados; los 41 que no (gases nobles, Fr, Ra, Tc, Pm, At, actínidos y superpesados) explican por qué', () => {
+    expect(ENGINE_SYMBOLS.length).toBe(77);
+    const off = PT_ELEMENTS.filter((e) => !KNOWN_STATES[e.sym]);
+    expect(off.length).toBe(41);
+    for (const e of off) {
+      const ok = e.category === 'gas-noble' || e.z >= 104 || e.category === 'actinido' || EXCLUDED_REASON[e.sym];
+      expect(ok, e.sym).toBeTruthy();
+    }
+    expect(Object.keys(KNOWN_STATES).sort()).toEqual([...ENGINE_SYMBOLS].sort());
+    for (const [sym, r] of Object.entries(RARE_STATES)) for (const x of r.states) expect(KNOWN_STATES[sym].includes(x), `${sym} ${x}`).toBe(false);
   });
 
   it('todos los gases nobles y los elementos fuera del taller se rechazan con explicación en todas las rutas', () => {
@@ -109,8 +183,12 @@ describe('taller · rechazos con explicación pedagógica', () => {
 describe('taller · conjunto finito: neutralidad, balanceo y nombres', () => {
   it('enumera las combinaciones válidas y reúne los compuestos de todas las ecuaciones', () => {
     console.log(`[taller] ${enumerateForgeInputs().length} entradas probadas → ${results.length} combinaciones válidas → ${compounds.length} compuestos distintos`);
-    expect(results.length).toBeGreaterThan(1000);
-    expect(compounds.length).toBeGreaterThan(900);
+    // v2.4.0 (31 elementos): 1196 combinaciones y 1066 compuestos; v2.5.0 (77 elementos):
+    expect(results.length).toBe(3756);
+    expect(compounds.length).toBe(3329);
+    // Cada elemento habilitado aparece en algún compuesto del taller.
+    const used = new Set(compounds.flatMap((c) => Object.keys(c.composition)));
+    expect(ENGINE_SYMBOLS.filter((x) => !used.has(x))).toEqual([]);
   });
 
   it('neutralidad de cargas: en cada compuesto Σ n·q = 0 y las partes reproducen la fórmula', () => {
@@ -148,7 +226,7 @@ describe('taller · conjunto finito: neutralidad, balanceo y nombres', () => {
     }
     console.log(`[taller] ${matched} de ${casos.length} casos de referencia los forma también el taller; diferencias de nombre: ${errors.length}`);
     expect(errors).toEqual([]);
-    expect(matched).toBeGreaterThanOrEqual(110);
+    expect(matched).toBeGreaterThanOrEqual(250);
   });
 
   it('la búsqueda exhaustiva (todos los elementos × todos los estados de la interfaz) no produce compuestos fuera del conjunto enumerado', () => {
@@ -158,15 +236,18 @@ describe('taller · conjunto finito: neutralidad, balanceo y nombres', () => {
       const out = forge({ route: r.id, a: e.sym, oxA, form });
       if (out.ok) expect(keys.has(out.product.key), `${r.id} ${e.sym} ${oxA} ${form}`).toBe(true);
     }
-    for (const a of Object.keys(KNOWN_STATES)) for (const oxA of STATE_CHOICES) for (const b of Object.keys(KNOWN_STATES)) for (const oxB of STATE_CHOICES) {
+    // Rutas de dos casillas: un estado que el elemento no presenta se rechaza siempre (stateGate), así que basta con
+    // recorrer sus estados conocidos más uno inexistente, para las dos casillas.
+    const states = (x: string) => [...KNOWN_STATES[x], ...STATE_CHOICES.filter((v) => !KNOWN_STATES[x].includes(v)).slice(0, 1)];
+    for (const a of Object.keys(KNOWN_STATES)) for (const oxA of states(a)) for (const b of Object.keys(KNOWN_STATES)) for (const oxB of states(b)) {
       const s = forge({ route: 'metal-nometal', a, oxA, b, oxB });
       if (s.ok) expect(keys.has(s.product.key)).toBe(true);
-      for (const hLeft of [0, 1, 2]) {
-        const n = forge({ route: 'neutralizacion', a, oxA, b, oxB, hLeft });
-        if (n.ok) expect(keys.has(n.product.key), `${a}${oxA} ${b}${oxB} H${hLeft}`).toBe(true);
+      for (const hLeft of [0, 1, 2]) for (const form of ['normal', 'meta', 'di'] as const) {
+        const n = forge({ route: 'neutralizacion', a, oxA, b, oxB, hLeft, form });
+        if (n.ok) expect(keys.has(n.product.key), `${a}${oxA} ${b}${oxB} H${hLeft} ${form}`).toBe(true);
       }
     }
-  });
+  }, 120_000);
 
   it('retos: cada reto se puede lograr con alguna combinación del taller', () => {
     for (const ch of FORGE_CHALLENGES) expect(results.some((r) => challengeMet(ch, r)), ch.id).toBe(true);

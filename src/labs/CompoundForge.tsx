@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react';
-import { Crystal3D, Molecule3D, Reaction3D } from '../chem';
+import { Crystal3D, IONIC_STICKS_NOTE, Molecule3D, Reaction3D } from '../chem';
 import { StatusChip } from '../components/Provenance';
 import { Notice, Readout, RecordButton, Segmented } from '../components/ui';
 import { playSound } from '../lib/sound';
@@ -8,7 +8,7 @@ import {
   type ForgeFamily, type ForgeOk, type ForgeOutcome, type RouteId,
 } from '../models/compoundForge';
 import { pubchemUrl, REGISTRY_META, registryStatus, registryText } from '../models/compoundForgeRegistry';
-import { FUNCTION_LABEL, oxoacid, type AcidForm, type Compound } from '../models/inorganicNomenclature';
+import { FUNCTION_LABEL, oxoacid, REFERENCE_CASES, type AcidForm, type Compound } from '../models/inorganicNomenclature';
 import { CATEGORY_LABEL, isMetalCategory, PT_ELEMENTS, ptElement, type PtElement } from '../models/periodicTable';
 import { forgeReaction3D, staticView } from './compoundForge3d';
 import { NamesCard } from './inorganicShared';
@@ -124,8 +124,8 @@ function Viewer3D({ result, idPrefix }: { result: ForgeOk; idPrefix: string }) {
       {view === 'compuesto' && (
         <>
           {sv.kind === 'molecula' && <>{sv.note && <p className="small" style={{ margin: 0 }}>{sv.note}</p>}<Molecule3D species={sv.species} idPrefix={`${idPrefix}-mol`} height={280} measure /></>}
-          {sv.kind === 'cristal' && <><p className="small" style={{ margin: 0 }}>{result.product.formulaPretty} es un sólido iónico con parámetro de red publicado: se dibuja su red cristalina.</p><Crystal3D crystal={sv.crystal} idPrefix={`${idPrefix}-cr`} height={300} /></>}
-          {sv.kind === 'ionico' && <><Notice>{sv.note}</Notice><Molecule3D species={sv.ions[0]} idPrefix={`${idPrefix}-ion`} height={240} /></>}
+          {sv.kind === 'cristal' && <><p className="small" style={{ margin: 0 }}>{result.product.formulaPretty} es un sólido iónico con parámetro de red publicado: se dibuja su red cristalina.</p><Crystal3D crystal={sv.crystal} idPrefix={`${idPrefix}-cr`} height={300} /><p className="small muted" style={{ margin: 0 }}>{IONIC_STICKS_NOTE}</p></>}
+          {sv.kind === 'ionico' && <><Notice>{sv.note}</Notice><Molecule3D species={sv.ions[0]} idPrefix={`${idPrefix}-ion`} height={240} /><p className="small muted" style={{ margin: 0 }}>{IONIC_STICKS_NOTE}</p></>}
           {sv.kind === 'sin-geometria' && <Notice>{sv.note}</Notice>}
         </>
       )}
@@ -374,9 +374,9 @@ export default function CompoundForge({ api, initialRoute, idPrefix }: LabProps 
             <StatusChip status="modelo" prefix="Fórmula y nombres" />
             <StatusChip status="modelo" prefix="Ecuación" />
           </div>
-          <p className="small" style={{ margin: 0 }}>Fórmula por neutralidad de cargas y nombres: motor de nomenclatura validado con 149 compuestos de PubChem. Ecuación: método algebraico (balancing.ts). La vía de obtención es una nota de la bibliografía, no un cálculo.</p>
+          <p className="small" style={{ margin: 0 }}>Fórmula por neutralidad de cargas y nombres: motor de nomenclatura validado con {REFERENCE_CASES} compuestos de referencia contra los sinónimos de PubChem. Ecuación: método algebraico (balancing.ts). La vía de obtención es una nota de la bibliografía, no un cálculo.</p>
           <p className="small muted" style={{ margin: 0 }}>Registro en PubChem de los {REGISTRY_META.total} compuestos que puede formar el taller (consulta del {REGISTRY_META.fecha}, {REGISTRY_META.script}): {REGISTRY_META.porNombre} hallados por su nombre, {REGISTRY_META.registrados - REGISTRY_META.porNombre} solo por la fórmula y {REGISTRY_META.formales} fórmulas formales.</p>
-          <p className="small muted" style={{ margin: 0 }}>Elementos del taller: 31 (resaltados). Los demás se pueden elegir y el taller explica por qué no los incluye.</p>
+          <p className="small muted" style={{ margin: 0 }}>Elementos del taller: {ENGINE_SYMBOLS.length} (resaltados). Los demás (gases nobles, actínidos, superpesados y los radiactivos Fr, Ra, Tc, Pm y At) se pueden elegir y el taller explica por qué no los incluye.</p>
         </div>
       </div>
     </div>

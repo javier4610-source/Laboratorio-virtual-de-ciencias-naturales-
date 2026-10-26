@@ -5,7 +5,7 @@ import { StatusChip } from '../components/Provenance';
 import { Notice, Readout, RecordButton, Segmented, Select } from '../components/ui';
 import { playSound } from '../lib/sound';
 import {
-  buildCompound, checkFormula, checkName, el, ELEMENTS, FUNCTION_LABEL, hillFormula, makeChallenges, oxoacid, roman, SYSTEM_LABEL, type AcidForm, type Compound, type Spec,
+  buildCompound, checkFormula, checkName, el, ELEMENTS, FUNCTION_LABEL, hillFormula, makeChallenges, oxoacid, REFERENCE_CASES, roman, SYSTEM_LABEL, type AcidForm, type Compound, type Spec,
 } from '../models/inorganicNomenclature';
 import type { LabProps } from './registry';
 import { ForgeStation } from './forgeStation';
@@ -21,16 +21,16 @@ const FN_HELP: Record<Fn, string> = {
   oxido: 'Elige un metal o un no metal y su número de oxidación; el oxígeno actúa con −2.',
   peroxido: 'Elige H o un metal de los grupos 1 o 2; el ion peróxido O₂²⁻ tiene cada O con −1.',
   hidroxido: 'Elige un metal y su número de oxidación; el ion hidróxido OH⁻ tiene carga −1.',
-  hidruro: 'Metales de los grupos 1, 2 y Al (H⁻), o B, C, Si, N, P, O (hidruros con nombre propio).',
-  hidracido: 'Elige F, Cl, Br, I o S: el hidrógeno actúa con +1.',
-  oxacido: 'Elige el no metal (o Cr, Mn) y su número de oxidación: óxido ácido + agua.',
-  'sal-binaria': 'Elige el catión (metal, NH₄⁺ o no metal menos electronegativo) y el anión F⁻, Cl⁻, Br⁻, I⁻ o S²⁻.',
+  hidruro: 'Metales de los grupos 1, 2 (salvo Be) y Al (H⁻), o B, C, Si, N, P, As, O (hidruros con nombre propio).',
+  hidracido: 'Elige F, Cl, Br, I, S, Se o Te: el hidrógeno actúa con +1.',
+  oxacido: 'Elige el no metal (o un metal en su estado más alto: V, Cr, Mo, W, Mn, Re, Sb) y su número de oxidación: óxido ácido + agua.',
+  'sal-binaria': 'Elige el catión (metal, NH₄⁺ o no metal menos electronegativo) y el anión F⁻, Cl⁻, Br⁻, I⁻, S²⁻, Se²⁻ o Te²⁻.',
   oxisal: 'Elige el catión y el oxoanión que proviene de un oxácido (-ito o -ato).',
   'sal-acida': 'Catión + anión que conserva H del ácido (hidrogenocarbonato, dihidrogenofosfato…).',
   'sal-basica': 'Catión de carga +2 con un OH⁻ y un anión de carga −1.',
 };
 
-const ANION_BIN = [{ value: 'F', label: 'F⁻ fluoruro' }, { value: 'Cl', label: 'Cl⁻ cloruro' }, { value: 'Br', label: 'Br⁻ bromuro' }, { value: 'I', label: 'I⁻ yoduro' }, { value: 'S', label: 'S²⁻ sulfuro' }];
+const ANION_BIN = [{ value: 'F', label: 'F⁻ fluoruro' }, { value: 'Cl', label: 'Cl⁻ cloruro' }, { value: 'Br', label: 'Br⁻ bromuro' }, { value: 'I', label: 'I⁻ yoduro' }, { value: 'S', label: 'S²⁻ sulfuro' }, { value: 'Se', label: 'Se²⁻ seleniuro' }, { value: 'Te', label: 'Te²⁻ telururo' }];
 const OXOANIONS: { value: string; label: string; acid: { el: string; ox: number; form?: AcidForm } }[] = [
   { value: 'Cl1', label: 'ClO⁻ hipoclorito', acid: { el: 'Cl', ox: 1 } }, { value: 'Cl3', label: 'ClO₂⁻ clorito', acid: { el: 'Cl', ox: 3 } },
   { value: 'Cl5', label: 'ClO₃⁻ clorato', acid: { el: 'Cl', ox: 5 } }, { value: 'Cl7', label: 'ClO₄⁻ perclorato', acid: { el: 'Cl', ox: 7 } },
@@ -41,6 +41,9 @@ const OXOANIONS: { value: string; label: string; acid: { el: string; ox: number;
   { value: 'P5di', label: 'P₂O₇⁴⁻ difosfato', acid: { el: 'P', ox: 5, form: 'di' } }, { value: 'Si4meta', label: 'SiO₃²⁻ metasilicato', acid: { el: 'Si', ox: 4, form: 'meta' } },
   { value: 'Mn7', label: 'MnO₄⁻ permanganato', acid: { el: 'Mn', ox: 7 } }, { value: 'Mn6', label: 'MnO₄²⁻ manganato', acid: { el: 'Mn', ox: 6 } },
   { value: 'Cr6', label: 'CrO₄²⁻ cromato', acid: { el: 'Cr', ox: 6 } }, { value: 'Cr6di', label: 'Cr₂O₇²⁻ dicromato', acid: { el: 'Cr', ox: 6, form: 'di' } },
+  { value: 'As5', label: 'AsO₄³⁻ arseniato', acid: { el: 'As', ox: 5 } }, { value: 'Se6', label: 'SeO₄²⁻ seleniato', acid: { el: 'Se', ox: 6 } },
+  { value: 'Mo6', label: 'MoO₄²⁻ molibdato', acid: { el: 'Mo', ox: 6 } }, { value: 'W6', label: 'WO₄²⁻ wolframato', acid: { el: 'W', ox: 6 } },
+  { value: 'V5meta', label: 'VO₃⁻ metavanadato', acid: { el: 'V', ox: 5, form: 'meta' } }, { value: 'Re7', label: 'ReO₄⁻ perrenato', acid: { el: 'Re', ox: 7 } },
 ];
 const ACID_ANIONS = [
   { value: 'C4-1', label: 'HCO₃⁻ hidrogenocarbonato', acid: { el: 'C', ox: 4 }, h: 1 }, { value: 'S6-1', label: 'HSO₄⁻ hidrogenosulfato', acid: { el: 'S', ox: 6 }, h: 1 },
@@ -54,6 +57,7 @@ function statesFor(sym: string, fn: Fn): number[] {
   const e = el(sym);
   switch (fn) {
     case 'oxido': return [...e.ox, ...(e.kind === 'metal' ? (e.acid ?? []).filter((x) => !(sym === 'Mn' && x === 6)) : [])];
+    case 'hidroxido': return e.kind === 'metal' ? e.ox.filter((x) => !e.noHydroxide?.includes(x)) : [];
     case 'oxacido': return e.acid ?? [];
     case 'peroxido': case 'hidruro': case 'hidracido': return [e.ox[0] ?? 0];
     case 'sal-binaria': return e.kind === 'metal' ? e.ox : ({ B: [3], C: [4], Si: [4], N: [3], P: [3, 5], S: [4, 6] } as Record<string, number[]>)[sym] ?? [];
@@ -157,12 +161,16 @@ function InorganicNomenclatureBench({ api }: LabProps) {
   const expected = ch.mode === 'nombrar' ? (ch.compound.names[ch.system] ?? '') : ch.compound.formulaPretty;
 
   /* ---------- tabla periódica */
+  // Filas 1–6 de la tabla de 18 columnas y, debajo (fila 8, tras un hueco), los lantánidos Ce–Lu en su bloque f.
   const grid = useMemo(() => {
-    const cells: (typeof ELEMENTS[number] | null)[][] = Array.from({ length: 6 }, () => Array(18).fill(null));
-    for (const e of ELEMENTS) cells[e.period - 1][e.group - 1] = e;
+    const cells: (typeof ELEMENTS[number] | null)[][] = Array.from({ length: 8 }, () => Array(18).fill(null));
+    for (const e of ELEMENTS) {
+      if (e.fblock) cells[7][Math.min(17, e.z - 55)] = e;
+      else cells[e.period - 1][e.group - 1] = e;
+    }
     return cells;
   }, []);
-  const enabledFor = (s: string) => fn === 'oxacido' ? !!el(s).acid?.length : fn === 'hidracido' ? ['F', 'Cl', 'Br', 'I', 'S'].includes(s) : s !== 'O' && (statesFor(s, fn).length > 0 || (fn === 'hidruro' && ['B', 'C', 'Si', 'N', 'P', 'O'].includes(s)));
+  const enabledFor = (s: string) => fn === 'oxacido' ? !!el(s).acid?.length : fn === 'hidracido' ? ['F', 'Cl', 'Br', 'I', 'S', 'Se', 'Te'].includes(s) : s !== 'O' && (statesFor(s, fn).length > 0 || (fn === 'hidruro' && ['B', 'C', 'Si', 'N', 'P', 'As', 'O'].includes(s)));
 
   return (
     <div className="lab-layout">
@@ -256,7 +264,7 @@ function InorganicNomenclatureBench({ api }: LabProps) {
           <h3>¿Qué sistema usar?</h3>
           <p className="small" style={{ margin: 0 }}>La IUPAC (Recomendaciones 2005, el «Libro Rojo») recomienda la nomenclatura <strong>estequiométrica</strong> (prefijos) y la de <strong>Stock</strong> (números romanos). La <strong>tradicional</strong> (-oso/-ico) solo se acepta para algunos compuestos: los oxoácidos y sus aniones (ácido sulfúrico, sulfato) y nombres como agua y amoníaco.</p>
           <StatusChip status="modelo" prefix="Fórmulas y nombres" />
-          <p className="small muted" style={{ margin: 0 }}>Motor validado con 149 compuestos contra los sinónimos de PubChem (fórmula y nombres en inglés).</p>
+          <p className="small muted" style={{ margin: 0 }}>Motor validado con {REFERENCE_CASES} compuestos contra los sinónimos de PubChem (fórmula y nombres en inglés).</p>
         </div>
       </div>
     </div>

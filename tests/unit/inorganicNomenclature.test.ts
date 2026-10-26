@@ -1,13 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
-  buildCompound, checkFormula, checkName, enumerateCompounds, findByFormula, hillFormula, makeChallenges, neutralCounts, oxoacid,
-  type Compound, type Spec,
+  buildCompound, checkFormula, checkName, el, ELEMENTS, enumerateCompounds, findByFormula, hillFormula, makeChallenges, neutralCounts, oxoacid,
+  REFERENCE_CASES, type Compound, type Spec,
 } from '../../src/models/inorganicNomenclature';
 
 /**
  * Validación del motor de nomenclatura con datos reales:
- *  - tests/fixtures/quimica/nomenclatura-casos.json: 149 compuestos con los nombres en español esperados (IUPAC 2005 en
+ *  - tests/fixtures/quimica/nomenclatura-casos.json: los compuestos de referencia (149 hasta la v2.4.0; ampliados en la
+ *    v2.5.0 con los de los elementos nuevos del taller) con los nombres en español esperados (IUPAC 2005 en
  *    su traducción española para sistemática y Stock; tradicional de uso escolar) y consultas en inglés.
  *  - tests/fixtures/quimica/nomenclatura-pubchem.json: CID, fórmula y sinónimos REALES de PubChem descargados por
  *    scripts/validacion/nomenclatura_pubchem.mjs (fecha en el archivo).
@@ -39,7 +40,7 @@ function formulaMatch(c: Compound, pubFormula: string): 'igual' | 'multiplo' | n
   return Number.isInteger(k) && k > 1 && keys.every((x) => p[x] === k * c.composition[x]) ? 'multiplo' : null;
 }
 
-describe('motor de nomenclatura · nombres en español de referencia (149 compuestos)', () => {
+describe(`motor de nomenclatura · nombres en español de referencia (${REFERENCE_CASES} compuestos)`, () => {
   it('reproduce exactamente los nombres sistemático, Stock y tradicional esperados', () => {
     const errors: string[] = [];
     for (const k of casos) {
@@ -49,7 +50,15 @@ describe('motor de nomenclatura · nombres en español de referencia (149 compue
       if (c.names.tradicional !== k.es.tradicional) errors.push(`${c.formula} tradicional: «${c.names.tradicional}» ≠ «${k.es.tradicional}»`);
     }
     expect(errors, errors.join('\n')).toEqual([]);
-    expect(casos.length).toBeGreaterThanOrEqual(80);
+    expect(casos.length).toBe(REFERENCE_CASES);
+    // Los 149 casos de la v2.4.0 siguen siendo los primeros del archivo (no se cambió ninguno).
+    expect(casos[0].spec).toEqual({ kind: 'oxido', el: 'Fe', ox: 3 });
+  });
+
+  it('los casos nuevos cubren los elementos que se habilitaron en la v2.5.0', () => {
+    const NEW = ['Rb', 'Cs', 'Be', 'Sr', 'Sc', 'Y', 'La', 'Ce', 'Nd', 'Eu', 'Ti', 'Zr', 'V', 'Nb', 'Ta', 'Mo', 'W', 'Re', 'Ru', 'Rh', 'Ir', 'Pd', 'Pt', 'Cd', 'Ga', 'In', 'Tl', 'Ge', 'Sb', 'Bi', 'As', 'Se', 'Te'];
+    const covered = new Set(casos.flatMap((k) => Object.keys(buildCompound(k.spec).composition)));
+    expect(NEW.filter((x) => !covered.has(x))).toEqual([]);
   });
 });
 
@@ -65,7 +74,7 @@ describe('motor de nomenclatura · validación contra PubChem', () => {
     return { c, hit, found, es, match: hit ? formulaMatch(c, hit.formula!) : null };
   });
 
-  it('al menos 80 compuestos tienen CID con la misma fórmula (o múltiplo) y en todos ellos algún nombre del motor está entre los sinónimos', () => {
+  it('casi todos los compuestos de referencia tienen CID con la misma fórmula (o múltiplo) y en todos ellos algún nombre del motor está entre los sinónimos', () => {
     const matched = rows.filter((r) => r.hit);
     const noName = matched.filter((r) => !Object.values(r.found).some((v) => v === true));
     const count = (s: string) => [matched.filter((r) => r.found[s] === true).length, matched.filter((r) => r.found[s] !== null).length];
@@ -73,7 +82,7 @@ describe('motor de nomenclatura · validación contra PubChem', () => {
     console.log(`[nomenclatura] PubChem ${pubchem.fecha}: ${matched.length}/${rows.length} con fórmula coincidente (${matched.filter((r) => r.match === 'multiplo').length} como múltiplo); `
       + `nombres en inglés hallados entre los sinónimos — Stock ${st}/${stN}, tradicional ${tr}/${trN}, estequiométrico ${si}/${siN}, común ${co}/${coN}; `
       + `algún nombre en español (sin tildes) ${matched.filter((r) => r.es).length}/${matched.length}; sin coincidencia de nombre: ${noName.map((r) => r.c.formula).join(', ') || 'ninguno'}.`);
-    expect(matched.length).toBeGreaterThanOrEqual(80);
+    expect(matched.length).toBeGreaterThanOrEqual(Math.floor(0.95 * rows.length));
     expect(noName.map((r) => `${r.c.formula} (CID ${r.hit!.cid})`)).toEqual([]);
   });
 
@@ -88,6 +97,13 @@ describe('motor de nomenclatura · validación contra PubChem', () => {
       { kind: 'oxacido', el: 'N', ox: 3 }, { kind: 'oxacido', el: 'N', ox: 5 }, { kind: 'oxacido', el: 'P', ox: 3 }, { kind: 'oxacido', el: 'P', ox: 5 },
       { kind: 'oxacido', el: 'C', ox: 4 }, { kind: 'oxacido', el: 'Mn', ox: 7 }, { kind: 'oxacido', el: 'Cr', ox: 6 }, { kind: 'oxacido', el: 'Cr', ox: 6, form: 'di' },
       { kind: 'peroxido', el: 'H' }, { kind: 'peroxido', el: 'Na' }, { kind: 'hidruro', el: 'Ca' }, { kind: 'hidruro', el: 'Na' },
+      // v2.5.0: estados de Ti, Ce, Tl, Pt y Ge; ácidos de As, Se, Mo, W y Re; sales de Sr, Cd, Sb y Bi.
+      { kind: 'oxido', el: 'Ti', ox: 4 }, { kind: 'oxido', el: 'Ce', ox: 4 }, { kind: 'oxido', el: 'Tl', ox: 1 }, { kind: 'oxido', el: 'Ge', ox: 4 },
+      { kind: 'sal-binaria', cation: { el: 'Pt', ox: 2 }, anion: 'Cl' }, { kind: 'sal-binaria', cation: { el: 'Pt', ox: 4 }, anion: 'Cl' },
+      { kind: 'oxacido', el: 'As', ox: 5 }, { kind: 'oxacido', el: 'Se', ox: 6 }, { kind: 'oxisal', cation: { el: 'Na', ox: 1 }, acid: { el: 'Mo', ox: 6 } },
+      { kind: 'oxisal', cation: { el: 'K', ox: 1 }, acid: { el: 'Re', ox: 7 } }, { kind: 'oxisal', cation: { el: 'Na', ox: 1 }, acid: { el: 'W', ox: 6 } },
+      { kind: 'oxisal', cation: { el: 'Sr', ox: 2 }, acid: { el: 'C', ox: 4 } }, { kind: 'sal-binaria', cation: { el: 'Cd', ox: 2 }, anion: 'S' },
+      { kind: 'sal-binaria', cation: { el: 'Sb', ox: 3 }, anion: 'Cl' }, { kind: 'sal-binaria', cation: { el: 'Bi', ox: 3 }, anion: 'Cl' },
     ];
     const bad: string[] = [];
     for (const spec of hard) {
@@ -99,6 +115,7 @@ describe('motor de nomenclatura · validación contra PubChem', () => {
     const cid = (s: Spec) => rows.find((x) => x.c.key === buildCompound(s).key)!.hit!.cid;
     expect(cid({ kind: 'oxido', el: 'Fe', ox: 2 })).not.toBe(cid({ kind: 'oxido', el: 'Fe', ox: 3 }));
     expect(cid({ kind: 'sal-binaria', cation: { el: 'Hg', ox: 1 }, anion: 'Cl' })).not.toBe(cid({ kind: 'sal-binaria', cation: { el: 'Hg', ox: 2 }, anion: 'Cl' }));
+    expect(cid({ kind: 'sal-binaria', cation: { el: 'Pt', ox: 2 }, anion: 'Cl' })).not.toBe(cid({ kind: 'sal-binaria', cation: { el: 'Pt', ox: 4 }, anion: 'Cl' }));
   });
 });
 
@@ -116,12 +133,12 @@ describe('motor de nomenclatura · reglas', () => {
       if (elx === 'H') return c.fn === 'hidruro-metalico' ? -1 : 1;
       if (elx === 'O') return c.fn === 'peroxido' ? -1 : -2;
       if (s.kind === 'oxido' || s.kind === 'hidroxido' || s.kind === 'oxacido') if (elx === s.el) return s.ox!;
-      if (s.kind === 'peroxido' && elx === s.el) return ({ Li: 1, Na: 1, K: 1, Mg: 2, Ca: 2, Ba: 2 } as Record<string, number>)[elx];
+      if (s.kind === 'peroxido' && elx === s.el) return el(elx).ox[0];
       if (s.cation && 'ox' in s.cation && elx === s.cation.el) return s.cation.ox!;
       if (s.cation?.el === 'NH4' && elx === 'N' && !(s.acid?.el === 'N')) return -3;
       if (s.acid && elx === s.acid.el) return s.acid.ox;
       if (typeof s.anion === 'object' && elx === s.anion.el) return s.anion.ox;
-      return ({ F: -1, Cl: -1, Br: -1, I: -1, S: -2 } as Record<string, number>)[elx] ?? NaN;
+      return ({ F: -1, Cl: -1, Br: -1, I: -1, S: -2, Se: -2, Te: -2 } as Record<string, number>)[elx] ?? NaN;
     };
     let checked = 0;
     for (const c of enumerateCompounds()) {
@@ -134,7 +151,48 @@ describe('motor de nomenclatura · reglas', () => {
       expect(total, `${c.formula} (${c.key})`).toBe(0);
       checked++;
     }
-    expect(checked).toBeGreaterThan(500);
+    expect(checked).toBeGreaterThan(2000);
+  });
+
+  it('oxácidos y sales de los elementos nuevos (v2.5.0): orto de As y V, meta del V, Te(VI) como H₂TeO₄ con su nota', () => {
+    const f = (x: string, ox: number, form: 'normal' | 'meta' = 'normal') => buildCompound({ kind: 'oxacido', el: x, ox, form }).formula;
+    expect([f('As', 5), f('As', 3), f('Se', 4), f('Se', 6), f('Te', 4), f('Te', 6), f('Mo', 6), f('W', 6), f('Re', 7), f('V', 5), f('V', 5, 'meta'), f('Sb', 5)])
+      .toEqual(['H3AsO4', 'H3AsO3', 'H2SeO3', 'H2SeO4', 'H2TeO3', 'H2TeO4', 'H2MoO4', 'H2WO4', 'HReO4', 'H3VO4', 'HVO3', 'H3SbO4']);
+    expect(buildCompound({ kind: 'oxacido', el: 'Te', ox: 6 }).notes.join(' ')).toMatch(/H₆TeO₆/);
+    const fe = (s: Spec) => buildCompound(s).formula;
+    expect(fe({ kind: 'oxisal', cation: { el: 'NH4' }, acid: { el: 'V', ox: 5, form: 'meta' } })).toBe('NH4VO3');
+    expect(fe({ kind: 'oxisal', cation: { el: 'Ca', ox: 2 }, acid: { el: 'W', ox: 6 } })).toBe('CaWO4');
+    expect(fe({ kind: 'oxisal', cation: { el: 'Ce', ox: 4 }, acid: { el: 'S', ox: 6 } })).toBe('Ce(SO4)2');
+    expect(fe({ kind: 'sal-binaria', cation: { el: 'Mo', ox: 4 }, anion: 'S' })).toBe('MoS2');
+    expect(fe({ kind: 'hidracido', el: 'Se' })).toBe('H2Se');
+    expect(fe({ kind: 'hidruro', el: 'As' })).toBe('AsH3');
+    expect(fe({ kind: 'peroxido', el: 'Sr' })).toBe('SrO2');
+  });
+
+  it('Stock con romanos cuando el elemento tiene varios estados reales (también Os, Rh, Pd, Nb, Ta y Bi); r doble tras prefijo (dirrubidio)', () => {
+    expect(buildCompound({ kind: 'oxido', el: 'Bi', ox: 3 }).names.stock).toBe('óxido de bismuto(III)');
+    expect(buildCompound({ kind: 'sal-binaria', cation: { el: 'Pd', ox: 2 }, anion: 'Cl' }).names.stock).toBe('cloruro de paladio(II)');
+    expect(buildCompound({ kind: 'oxido', el: 'Zr', ox: 4 }).names.stock).toBe('óxido de circonio');
+    expect(buildCompound({ kind: 'oxido', el: 'Rb', ox: 1 }).names.sistematica).toBe('óxido de dirrubidio');
+    expect(buildCompound({ kind: 'oxido', el: 'Re', ox: 7 }).names.sistematica).toBe('heptaóxido de dirrenio');
+  });
+
+  it('sin nombre tradicional usual se dice y se usa Stock; los estados sin hidróxido u oxisal se rechazan con explicación', () => {
+    const v2o3 = buildCompound({ kind: 'oxido', el: 'V', ox: 3 });
+    expect(v2o3.names.tradicional).toBeNull();
+    expect(v2o3.notes.join(' ')).toMatch(/no tiene nombre tradicional/);
+    expect(buildCompound({ kind: 'oxido', el: 'Ti', ox: 4 }).names.tradicional).toBe('óxido titánico');
+    expect(() => buildCompound({ kind: 'hidroxido', el: 'Ti', ox: 4 })).toThrow(/TiO₂·nH₂O/);
+    expect(() => buildCompound({ kind: 'oxisal', cation: { el: 'V', ox: 4 }, acid: { el: 'S', ox: 6 } })).toThrow(/vanadilo/);
+    expect(() => buildCompound({ kind: 'oxisal', cation: { el: 'Na', ox: 1 }, acid: { el: 'Sb', ox: 5 } })).toThrow(/antimoniatos/);
+    expect(buildCompound({ kind: 'sal-binaria', cation: { el: 'Tl', ox: 1 }, anion: 'Cl' }).notes.join(' ')).toMatch(/tóxicos/);
+  });
+
+  it('cada elemento del motor tiene masa atómica, radio covalente y color de dibujo', async () => {
+    const { ATOMIC_MASS } = await import('../../src/models/balancing');
+    const { R_SINGLE, ELEMENT_COLOR } = await import('../../src/chem/elements');
+    expect(ELEMENTS.filter((e) => !ATOMIC_MASS[e.sym] || !R_SINGLE[e.sym] || !ELEMENT_COLOR[e.sym]).map((e) => e.sym)).toEqual([]);
+    expect(ELEMENTS.length).toBe(77);
   });
 
   it('oxoácidos por hidratación del óxido: orto, meta y di (piro)', () => {

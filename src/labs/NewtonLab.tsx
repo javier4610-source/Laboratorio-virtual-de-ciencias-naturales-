@@ -4,6 +4,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd } from './kit';
 import { ManipHint, ManipScene, Plunger } from './manipulate';
@@ -235,7 +236,8 @@ export default function NewtonLab({ api }: LabProps) {
     if (!running) return;
     if (!res.moves) { setRunning(false); setDone(true); return; }
     if (prefersReducedMotion()) { setT(res.time!); setRunning(false); setDone(true); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, el reloj sigue desde el tiempo ya recorrido.
+    const start = performance.now() - t * 1000;
     const tick = (now: number) => {
       const el = Math.max(0, (now - start) / 1000);
       if (el >= res.time!) { setT(res.time!); setRunning(false); setDone(true); playSound('photogate'); return; }
@@ -321,10 +323,10 @@ export default function NewtonLab({ api }: LabProps) {
           <Select label="Superficie" value={surface} onChange={setSurface} options={SURFACES.map((s) => ({ value: s.id, label: s.name }))} />
           <Slider label="Masa del carrito" value={mass} min={NEWTON_LIMITS.mass[0]} max={NEWTON_LIMITS.mass[1]} step={0.05} unit="kg" decimals={2} onChange={setMass} />
           <Slider label="Fuerza aplicada" value={force} min={NEWTON_LIMITS.force[0]} max={NEWTON_LIMITS.force[1]} step={0.1} unit="N" decimals={1} onChange={setForce} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { remeasure('cronometro'); setT(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.8 }); }} disabled={running}>Soltar el carrito</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          {/* Sin barra de avance: el tiempo en recorrer 1,00 m es la lectura que se mide. */}
+          <SimControls title="Carrito" status={simStatusOf(running, t > 0, done)} startLabel="Soltar el carrito" repeatLabel="Soltar de nuevo"
+            onStart={() => { remeasure('cronometro'); setT(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.8 }); }}
+            onPause={() => setRunning(false)} onResume={() => setRunning(true)} onReset={reset} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>Fuerza constante y horizontal; g = 9,8 m/s². Los coeficientes de fricción son típicos y aproximados.</Notice>

@@ -105,6 +105,12 @@ export interface ReadoutItem {
 
 const STATE_TEXT = { ok: 'en rango', warn: 'en el límite', bad: 'fuera de rango' } as const;
 
+/** Texto uniforme de la resolución de un instrumento para `ReadoutItem.resolution`: «resolución 0,01 s». */
+export function resolutionText(step: number, unit: string): string {
+  const decimals = Math.max(0, Math.ceil(-Math.log10(step) - 1e-9));
+  return `resolución ${fmt(step, decimals)}${unit ? ` ${unit}` : ''}`;
+}
+
 /** Lecturas de instrumentos: rótulo, valor con unidad en tipografía de datos y, si se indica, la resolución y el estado. */
 export function Readout({ items, live = true }: { items: ReadoutItem[]; live?: boolean }) {
   return (

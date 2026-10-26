@@ -6,7 +6,8 @@ import {
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
-import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { Notice, Readout, RecordButton, Segmented, Select, Slider, resolutionText } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { BenchTop, Lcd, shade, Stopwatch } from './kit';
@@ -233,7 +234,8 @@ export default function PendulumLab({ api }: LabProps) {
     const finish = () => { setT(tStop); setRunning(false); if (mode !== 'libre') setDone(true); };
     if (prefersReducedMotion()) { finish(); return; }
     const factor = speed === 'x4' ? 4 : 1;
-    const start = performance.now();
+    // Al reanudar (o al cambiar la velocidad) el reloj sigue desde el tiempo ya simulado.
+    const start = performance.now() - (t / factor) * 1000;
     const tick = (now: number) => {
       const el = Math.max(0, ((now - start) / 1000) * factor);
       if (el >= tStop) { finish(); return; }
@@ -326,11 +328,16 @@ export default function PendulumLab({ api }: LabProps) {
     });
   };
 
+  const finished = released && !running && (done || t >= tStop);
+  const paused = released && !running && !finished;
+  const simStatus = simStatusOf(running, paused, finished);
+
   const descText = done && meas
     ? (meas.kind === 'cronometro'
       ? `Medición terminada: el cronómetro marcó ${fmt(meas.t10, 2)} s para 10 oscilaciones.`
       : `Medición terminada: la fotopuerta registró un período de ${fmt(meas.period, 3)} s.`)
     : running ? `El péndulo oscila; ángulo actual ${fmt((theta * 180) / Math.PI, 0)}°.`
+      : paused ? `Oscilación en pausa en t = ${fmt(t, 2)} s; ángulo ${fmt((theta * 180) / Math.PI, 0)}°.`
       : `Lenteja de ${bob.name.toLowerCase()} de ${fmt(massG, 0)} g colgada de un hilo de ${fmt(length, 2)} m, sostenida a ${fmt(amplitude, 0)}° de la vertical.`;
 
   return (
@@ -402,8 +409,8 @@ export default function PendulumLab({ api }: LabProps) {
         </div>
         <ManipHint>Arrastra la lenteja hacia la derecha para elegir el ángulo de liberación, o enfócala con Tab y usa las flechas.</ManipHint>
         <Readout items={[
-          { k: 'Tiempo de 10 oscilaciones (cronómetro)', v: result && meas?.t10 != null ? `${fmt(meas.t10, 2)} s` : '—', data: true },
-          { k: 'Período T', v: result ? `${fmt(result.period, 3)} s` : '—', data: true },
+          { k: 'Tiempo de 10 oscilaciones (cronómetro)', v: result && meas?.t10 != null ? `${fmt(meas.t10, 2)} s` : '—', data: true, resolution: meas?.kind === 'cronometro' ? resolutionText(0.01, 's') : undefined },
+          { k: 'Período T', v: result ? `${fmt(result.period, 3)} s` : '—', data: true, resolution: meas ? resolutionText(0.001, 's') : undefined },
           { k: 'Frecuencia f = 1/T', v: result ? `${fmt(result.frequency, 3)} Hz` : '—', data: true },
           { k: 'T²', v: result ? `${fmt(result.period2, 3)} s²` : '—', data: true },
           { k: 'g = 4π²L/T² (este ensayo)', v: result ? `${fmt(result.gCalculated, 2)} m/s²` : '—', data: true },
@@ -429,10 +436,10 @@ export default function PendulumLab({ api }: LabProps) {
         </div>
         <div className="card stack">
           <h3>Medición</h3>
-          <div className="btn-row">
-            <button type="button" className="btn" onClick={() => launch('libre')} disabled={running}>Soltar el péndulo</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          {/* Sin barra de avance: la duración de la corrida depende del período, que es lo que se mide. */}
+          <SimControls title="Péndulo" status={simStatus} startLabel="Soltar el péndulo"
+            onStart={() => launch(simStatus === 'terminado' ? mode : 'libre')}
+            onPause={() => setRunning(false)} onResume={() => setRunning(true)} onReset={reset} />
           <div className="btn-row">
             <button type="button" className="btn primary" onClick={() => launch('cronometro')} disabled={running}>Medir 10 oscilaciones</button>
             <button type="button" className="btn primary" onClick={() => launch('fotopuerta')} disabled={running}>Medir con la fotopuerta</button>

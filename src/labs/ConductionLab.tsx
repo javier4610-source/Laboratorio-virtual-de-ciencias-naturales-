@@ -11,6 +11,7 @@ import { Chart } from '../components/Chart';
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
@@ -190,7 +191,7 @@ function Hand({ cx, tip }: { cx: number; tip: number }) {
 
 /* ------------------------------------------------------------------ laboratorio */
 
-type Phase = 'listo' | 'midiendo' | 'medido';
+type Phase = 'listo' | 'midiendo' | 'pausa' | 'medido';
 
 export default function ConductionLab({ api }: LabProps) {
   const [rodId, setRodId] = useState<RodId>('cobre');
@@ -239,7 +240,8 @@ export default function ConductionLab({ api }: LabProps) {
   useEffect(() => {
     if (phase !== 'midiendo') return;
     if (prefersReducedMotion()) { setElapsed(RUN_MS); setPhase('medido'); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, el reloj sigue desde el tiempo ya transcurrido.
+    const start = performance.now() - elapsed;
     const tick = (now: number) => {
       const e = Math.min(RUN_MS, Math.max(0, now - start));
       setElapsed(e);
@@ -304,8 +306,8 @@ export default function ConductionLab({ api }: LabProps) {
 
   const desc = done
     ? `Después de 30 min, los termopares marcan ${readings.temps.map((T, i) => `${fmt(T, 1)} °C a ${fmt(probes[i], 1)} cm`).join(', ')}. Cayeron ${tacks.fallen} de ${nTacks} tachuelas; la más lejana estaba a ${fmt(tacks.farthest, 0)} cm.`
-    : running
-      ? `La varilla de ${rod.short.toLowerCase()} se calienta: tiempo ${clock(simT)}; termopar 1 en ${fmt(liveT[0], 1)} °C.`
+    : running || phase === 'pausa'
+      ? `La varilla de ${rod.short.toLowerCase()} se calienta${phase === 'pausa' ? ' (en pausa)' : ''}: tiempo ${clock(simT)}; termopar 1 en ${fmt(liveT[0], 1)} °C.`
       : `Varilla de ${rod.name.toLowerCase()} de 30 cm (${covered ? 'con funda de icopor' : 'desnuda'}) con un extremo en un baño de agua a ${fmt(bathT, 0)} °C calentado por un mechero, ${indicator === 'cinta' ? 'con una cinta termocrómica' : `con ${nTacks} tachuelas pegadas con cera`} y tres termopares en ${probes.map((p) => fmt(p, 1)).join(', ')} cm conectados a un registrador.`;
 
   /* --------------------------- gráficas */
@@ -742,10 +744,9 @@ export default function ConductionLab({ api }: LabProps) {
           {probes.map((x, i) => (
             <Slider key={i} label={`Posición del termopar ${i + 1}`} value={x} min={CONDUCTION_LIMITS.position[0]} max={CONDUCTION_LIMITS.position[1]} step={0.5} unit="cm" decimals={1} onChange={(v) => setProbe(i, v)} />
           ))}
-          <div className="btn-row">
-            <button type="button" className="btn primary" disabled={running} onClick={start}>Encender y medir</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          <SimControls title="Calentamiento de la varilla" status={simStatusOf(running, phase === 'pausa', done)} startLabel="Encender y medir" repeatLabel="Medir de nuevo"
+            onStart={start} onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => setPhase('midiendo')} onReset={reset}
+            progress={{ value: simT / 60, max: RUN_S / 60, unit: 'min', label: 'Tiempo simulado' }} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>

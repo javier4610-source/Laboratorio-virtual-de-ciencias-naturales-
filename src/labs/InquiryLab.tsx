@@ -8,13 +8,14 @@ import { formatWithUncertainty } from '../lib/fit';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import { Chart, type ChartPoint } from '../components/Chart';
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, Lcd } from './kit';
 
 /* ------------------------------------------------------------------ utilidades */
 
-type Phase = 'diseno' | 'recolectando' | 'recolectado';
+type Phase = 'diseno' | 'recolectando' | 'pausa' | 'recolectado';
 type Axis = 'x' | 'orden';
 
 /** Primer diseño (mejorable a propósito) de cada sistema. */
@@ -239,7 +240,8 @@ export default function InquiryLab({ api }: LabProps) {
     const n = run.samples.length;
     if (prefersReducedMotion()) { setShown(n); setPhase('recolectado'); return; }
     const per = Math.min(STEP_S, MAX_ANIM_S / n);
-    const start = performance.now();
+    // Al reanudar tras una pausa, la recolección sigue desde la última muestra mostrada.
+    const start = performance.now() - Math.max(0, shown - 1) * per * 1000;
     const tick = (now: number) => {
       const el = Math.max(0, (now - start) / 1000);
       const k = Math.min(n, Math.floor(el / per) + 1);
@@ -434,10 +436,11 @@ export default function InquiryLab({ api }: LabProps) {
 
         <div className="card stack">
           <h3>3. Recolección y registro</h3>
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={start} disabled={phase !== 'diseno' || !!plan.error || overBudget}>Recolectar datos</button>
-            <button type="button" className="btn" onClick={reset} disabled={phase === 'diseno'}>Rediseñar</button>
-          </div>
+          <SimControls title="Recolección de muestras" status={simStatusOf(phase === 'recolectando', phase === 'pausa', collected)}
+            startLabel="Recolectar datos" repeatLabel="Repetir la recolección" resetLabel="Rediseñar"
+            disabled={phase === 'diseno' && (!!plan.error || overBudget)}
+            onStart={start} onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => setPhase('recolectando')} onReset={reset}
+            progress={phase !== 'diseno' ? { value: shown, max: samples.length, unit: 'muestras', label: 'Muestras recolectadas' } : undefined} />
           <RecordButton onRecord={record} disabled={!collected || alreadySaved} label={`Guardar las ${collected ? samples.length : planned} muestras en la tabla`} />
           {!collected && <p className="small muted">Recolecta los datos para ver el análisis y guardarlos en el cuaderno.</p>}
           {alreadySaved && <p className="small muted">Esta campaña ya está en la tabla. Cambia el diseño o la semilla para recolectar otra.</p>}

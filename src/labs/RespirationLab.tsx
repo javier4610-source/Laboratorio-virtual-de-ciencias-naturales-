@@ -9,6 +9,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
@@ -170,7 +171,7 @@ export default function RespirationLab({ api }: LabProps) {
   const [minutes, setMinutes] = useState(20);
   const [accounting, setAccounting] = useState<Accounting>('moderna');
   const [shuttle, setShuttle] = useState<Shuttle>('malato');
-  const [phase, setPhase] = useState<'listo' | 'midiendo' | 'medido'>('listo');
+  const [phase, setPhase] = useState<'listo' | 'midiendo' | 'pausa' | 'medido'>('listo');
   const [progress, setProgress] = useState(0);
   const raf = useRef(0);
 
@@ -197,7 +198,8 @@ export default function RespirationLab({ api }: LabProps) {
   useEffect(() => {
     if (phase !== 'midiendo') return;
     if (prefersReducedMotion()) { setProgress(1); setPhase('medido'); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, el cronómetro sigue desde el avance ya mostrado.
+    const start = performance.now() - progress * ANIM_MS;
     const tick = (now: number) => {
       const p = Math.min(1, Math.max(0, now - start) / ANIM_MS);
       setProgress(p);
@@ -245,6 +247,7 @@ export default function RespirationLab({ api }: LabProps) {
     ? `Después de ${fmt(minutes, 0)} min a ${fmt(temperature, 0)} °C, la gota A marca ${mmText(readings.a)}, la B ${mmText(readings.b)} y la del termobarómetro ${mmText(readings.c)}. El azul de bromotimol del tubo B está ${indicatorColor(pHNow)}.`
     : phase === 'midiendo'
       ? 'Las gotas de los capilares se desplazan mientras corre el cronómetro.'
+      : phase === 'pausa' ? 'Medición en pausa: las gotas y el cronómetro se detienen donde iban.'
       : `Tres tubos con ${s.name.toLowerCase()} (A y B) y semillas hervidas (C) en un baño a ${fmt(temperature, 0)} °C; las tres gotas están en la marca 0.`;
 
   const rqText = a.rq === null ? 'no calculable (O₂ ≈ 0)' : fmt(a.rq, 2);
@@ -401,10 +404,9 @@ export default function RespirationLab({ api }: LabProps) {
           <Slider label="Temperatura del baño" value={temperature} min={RESP_LIMITS.temperature[0]} max={RESP_LIMITS.temperature[1]} step={1} unit="°C" decimals={0} onChange={setTemperature} />
           <Slider label="Masa de semillas por tubo" value={mass} min={RESP_LIMITS.mass[0]} max={RESP_LIMITS.mass[1]} step={0.5} unit="g" decimals={1} onChange={setMass} />
           <Slider label="Duración de la medición" value={minutes} min={RESP_LIMITS.minutes[0]} max={RESP_LIMITS.minutes[1]} step={5} unit="min" decimals={0} onChange={setMinutes} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" disabled={phase === 'midiendo'} onClick={start}>Iniciar medición</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          <SimControls title="Respirómetro" status={simStatusOf(phase === 'midiendo', phase === 'pausa', done)} startLabel="Iniciar medición" repeatLabel="Medir de nuevo"
+            onStart={start} onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => setPhase('midiendo')} onReset={reset}
+            progress={{ value: minutes * (done ? 1 : progress), max: minutes, unit: 'min', decimals: 1, label: 'Tiempo de medición' }} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <div className="card stack">

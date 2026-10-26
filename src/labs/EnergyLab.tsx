@@ -14,6 +14,7 @@ import type { LabProps } from './registry';
 import { useModelParams, usePublishModel } from '../components/Advanced';
 import { G as G_ENERGY } from '../models/energy';
 import { BenchTop } from './kit';
+import { SimControls, simStatusOf } from '../components/Experiment';
 
 const W = 640, H = 260, X0 = 72;
 const rulerTicks = Array.from({ length: 21 }, (_, i) => i / 10);
@@ -57,9 +58,10 @@ function TrackActivity({ api }: LabProps) {
   useEffect(() => {
     if (!running) return;
     if (prefersReducedMotion()) { setIdx(res.points.length - 1); setRunning(false); setDone(true); return; }
-    const start = performance.now();
+    // Al reanudar, la animación sigue desde el punto ya recorrido.
+    const start = performance.now() - (idx / res.points.length) * 3500;
     const loop = (now: number) => {
-      const i = Math.max(0, Math.min(res.points.length - 1, Math.floor(((now - start) / 3500) * res.points.length)));
+      const i = Math.max(idx, Math.min(res.points.length - 1, Math.floor(((now - start) / 3500) * res.points.length)));
       setIdx(i);
       if (i >= res.points.length - 1) { setRunning(false); setDone(true); return; }
       raf.current = requestAnimationFrame(loop);
@@ -194,10 +196,10 @@ function TrackActivity({ api }: LabProps) {
           <Slider label="Masa de la esfera" value={mass} min={ENERGY_LIMITS.mass[0]} max={ENERGY_LIMITS.mass[1]} step={0.05} unit="kg" decimals={2} onChange={setMass} />
           <Slider label="Fricción efectiva μ" value={mu} min={ENERGY_LIMITS.mu[0]} max={ENERGY_LIMITS.mu[1]} step={0.005} decimals={3} onChange={setMu} />
           <label className="check"><input type="checkbox" checked={rolling} onChange={(e) => setRolling(e.target.checked)} /> La esfera rueda (parte de la energía va a la rotación)</label>
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { setIdx(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.7 }); }} disabled={running}>Soltar la esfera</button>
-            <button type="button" className="btn" onClick={() => { setIdx(0); setDone(false); setRunning(false); }}>Reiniciar</button>
-          </div>
+          <SimControls title="Pista" status={simStatusOf(running, idx > 0, done)} startLabel="Soltar la esfera" repeatLabel="Soltar de nuevo"
+            onStart={() => { setIdx(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.7 }); }}
+            onPause={() => setRunning(false)} onResume={() => setRunning(true)}
+            onReset={() => { setIdx(0); setDone(false); setRunning(false); }} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>g = 9,8 m/s²; sin resistencia del aire. La fricción se modela como μ·m·g por metro horizontal (aproximación para pendientes suaves).</Notice>
@@ -282,7 +284,8 @@ function FallActivity({ api }: LabProps) {
     };
     if (prefersReducedMotion()) { finish(); return; }
     const rate = pace === 'lenta' ? 0.25 : 1;
-    const start = performance.now();
+    // Al reanudar (o al cambiar el ritmo) el reloj sigue desde el tiempo ya simulado.
+    const start = performance.now() - (tNow / rate) * 1000;
     const loop = (now: number) => {
       const t = ((now - start) / 1000) * rate;
       if (t >= tEnd) { finish(); return; }
@@ -296,7 +299,7 @@ function FallActivity({ api }: LabProps) {
   const release = () => { setTNow(0); setDone(false); setRunning(true); playSound('click', { intensity: 0.7 }); };
   const reset = () => { setTNow(0); setDone(false); setRunning(false); };
 
-  const started = running || done;
+  const started = running || done || tNow > 0;
   const cur = res ? stateAt(res.points, tNow) : null;
   const yTop = useMemo(() => {
     const top = Math.max(h0, res?.apex?.y ?? h0);
@@ -450,10 +453,9 @@ function FallActivity({ api }: LabProps) {
             options={DT_OPTIONS.map((d) => ({ value: String(d), label: `${fmt(d, 3)} s` }))} />
           <Segmented<Pace> label="Ritmo de la animación" value={pace} onChange={setPace}
             options={[{ value: 'real', label: 'Tiempo real' }, { value: 'lenta', label: 'Cámara lenta (×0,25)' }]} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={release} disabled={running || !res}>Soltar la pelota</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          {/* Sin barra de avance: el tiempo de caída es uno de los resultados que se miden. */}
+          <SimControls title="Caída de la pelota" status={simStatusOf(running, tNow > 0, done)} startLabel="Soltar la pelota" repeatLabel="Soltar de nuevo"
+            disabled={!res} onStart={release} onPause={() => setRunning(false)} onResume={() => setRunning(true)} onReset={reset} />
           <RecordButton onRecord={record} disabled={!done || !res} />
         </div>
         <Notice>

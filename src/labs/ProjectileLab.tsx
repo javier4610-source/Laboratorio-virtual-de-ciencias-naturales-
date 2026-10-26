@@ -1,15 +1,17 @@
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  GATE_RES, TIMER_RES, STROBE_SCALE_RES, TAPE_RES,
   G, PROJECTILE_LIMITS, SPHERES, SPRING_LEVELS, STROBE_DT, TARGET_RADIUS, checkTarget, findSphere,
   idealMaxRange, optimalAngle, simulateShot, targetDistance, type SpringLevel, type TrajPoint,
 } from '../models/projectile';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { impactIntensity, playSound } from '../lib/sound';
-import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { Notice, Readout, RecordButton, Segmented, Select, Slider, resolutionText } from '../components/ui';
 import { Chart } from '../components/Chart';
 import type { LabProps } from './registry';
 import { useModelParams, usePublishModel } from '../components/Advanced';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import { BenchTop, Lcd, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
 
@@ -25,7 +27,7 @@ const BALL_R = 6;
 
 type Air = 'ideal' | 'aire';
 type Activity = 'libre' | 'blanco' | 'optimo';
-type Phase = 'listo' | 'vuelo' | 'cayo' | 'medido';
+type Phase = 'listo' | 'vuelo' | 'pausa' | 'cayo' | 'medido';
 
 const AIR_LABEL: Record<Air, string> = { ideal: 'Sin aire (ideal)', aire: 'Con resistencia del aire' };
 
@@ -261,7 +263,8 @@ export default function ProjectileLab({ api }: LabProps) {
   useEffect(() => {
     if (phase !== 'vuelo') return;
     if (prefersReducedMotion() || shot.flightTime <= 0) { setT(shot.flightTime); setPhase('cayo'); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, el reloj sigue desde el tiempo ya recorrido.
+    const start = performance.now() - t * 1000;
     const tick = (now: number) => {
       const el = Math.max(0, (now - start) / 1000);
       if (el >= shot.flightTime) { setT(shot.flightTime); setPhase('cayo'); playSound('thud', { intensity: 0.3 + 0.7 * impactIntensity(v0, 8) }); return; }
@@ -325,6 +328,7 @@ export default function ProjectileLab({ api }: LabProps) {
   const descText = !fired
     ? `La esfera de ${sphere.name.toLowerCase()} está cargada en el lanzador a ${fmt(angle, 1)}° y ${fmt(height, 2)} m de altura.`
     : flying ? 'La esfera está en vuelo.'
+      : phase === 'pausa' ? `Vuelo en pausa en t = ${fmt(t, 2)} s.`
       : measured ? `La esfera cayó a ${fmt(shot.rangeReading, 3)} m de la plomada, según la cinta métrica.` : 'La esfera cayó y dejó una marca en el papel carbón; falta medir el alcance con la cinta.';
 
   return (
@@ -425,10 +429,10 @@ export default function ProjectileLab({ api }: LabProps) {
         <ManipHint>Inclina el tubo del lanzador arrastrando su culata, o enfócalo con Tab y usa las flechas para cambiar el ángulo.</ManipHint>
 
         <Readout items={[
-          { k: 'v₀ (fotopuerta)', v: fired ? `${fmt(shot.v0Reading, 2)} m/s` : '—', data: true },
-          { k: 'Tiempo de vuelo', v: landed ? `${fmt(shot.timeReading, 3)} s` : '—', data: true },
-          { k: 'Altura máxima (estroboscopía)', v: landed ? `${fmt(shot.maxHeightReading, 2)} m` : '—', data: true },
-          { k: 'Alcance (cinta métrica)', v: measured ? `${fmt(shot.rangeReading, 3)} m` : landed ? 'mide' : '—', data: true },
+          { k: 'v₀ (fotopuerta)', v: fired ? `${fmt(shot.v0Reading, 2)} m/s` : '—', data: true, resolution: resolutionText(GATE_RES, 'm/s') },
+          { k: 'Tiempo de vuelo', v: landed ? `${fmt(shot.timeReading, 3)} s` : '—', data: true, resolution: resolutionText(TIMER_RES, 's') },
+          { k: 'Altura máxima (estroboscopía)', v: landed ? `${fmt(shot.maxHeightReading, 2)} m` : '—', data: true, resolution: resolutionText(STROBE_SCALE_RES, 'm') },
+          { k: 'Alcance (cinta métrica)', v: measured ? `${fmt(shot.rangeReading, 3)} m` : landed ? 'mide' : '—', data: true, resolution: resolutionText(TAPE_RES, 'm') },
           ...(withAir ? [{ k: 'Alcance ideal (sin aire)', v: measured ? `${fmt(shot.idealRange, 3)} m${shot.idealRange > 1e-9 ? ` (con aire: ${fmt(((shot.range - shot.idealRange) / shot.idealRange) * 100, 1)} %)` : ''}` : '—' }] : []),
         ]} />
 
@@ -484,11 +488,13 @@ export default function ProjectileLab({ api }: LabProps) {
             options={SPHERES.map((sp) => ({ value: sp.id, label: `${sp.name} (${fmt(sp.mass * 1000, sp.mass < 0.001 ? 2 : 1)} g, ${fmt(sp.diameter * 1000, 1)} mm)` }))} />
           <Segmented label="Resistencia del aire" value={air} onChange={setAir}
             options={[{ value: 'ideal', label: 'Sin aire (ideal)' }, { value: 'aire', label: 'Con aire' }]} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={fire} disabled={flying}>Disparar</button>
+          {/* Sin barra de avance: el tiempo de vuelo total es una de las lecturas que se miden. */}
+          <SimControls title="Lanzador" status={simStatusOf(flying, phase === 'pausa', landed)}
+            startLabel="Disparar" repeatLabel="Disparar de nuevo"
+            onStart={fire} onPause={() => setPhase('pausa')} onResume={() => setPhase('vuelo')}
+            onReset={() => { setPhase('listo'); setT(0); }}>
             <button type="button" className="btn" onClick={measure} disabled={!landed || measured}>Medir el alcance con la cinta</button>
-            <button type="button" className="btn" onClick={() => { setPhase('listo'); setT(0); }}>Reiniciar</button>
-          </div>
+          </SimControls>
           <RecordButton onRecord={record} disabled={!measured} />
         </div>
         <div className="card stack">

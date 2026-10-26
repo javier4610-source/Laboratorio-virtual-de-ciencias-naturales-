@@ -9,7 +9,8 @@ import { playSound } from '../lib/sound';
 import { Chart, type Series } from '../components/Chart';
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
-import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
+import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings, resolutionText } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { Stopwatch } from './kit';
@@ -161,7 +162,8 @@ export default function KinematicsLab({ api }: LabProps) {
     if (!running) return;
     if (prefersReducedMotion()) { setT(tObs); setRunning(false); setDone(true); return; }
     const factor = speed === 'x4' ? 4 : 1;
-    const start = performance.now();
+    // Al reanudar (o al cambiar la velocidad) el reloj sigue desde el tiempo ya recorrido.
+    const start = performance.now() - (t / factor) * 1000;
     const tick = (now: number) => {
       const el = Math.max(0, ((now - start) / 1000) * factor);
       if (el >= tObs) { setT(tObs); setRunning(false); setDone(true); return; }
@@ -176,7 +178,7 @@ export default function KinematicsLab({ api }: LabProps) {
   const tShown = Math.min(Math.max(0, t), tObs);
   const pos = done && res.endReason === 'pista' ? TRACK_LENGTH : stateAt(v0, acc, tShown).x;
   const nStrobe = Math.min(res.strobe.length, Math.floor(tShown / STROBE_INTERVAL + 1e-9) + 1);
-  const visibleStrobe = running || done ? res.strobe.slice(0, done ? res.strobe.length : nStrobe) : [];
+  const visibleStrobe = running || done || t > 0 ? res.strobe.slice(0, done ? res.strobe.length : nStrobe) : [];
 
   const tMax = Math.max(duration, challenge?.duration ?? 0);
   const xtSeries: Series[] = [];
@@ -216,7 +218,7 @@ export default function KinematicsLab({ api }: LabProps) {
 
   const descText = done
     ? `Recorrido terminado: ${fmt(res.distance, 2)} m en ${fmt(res.time, 2)} s; ${res.strobe.length} fotos estroboscópicas sobre la pista.`
-    : running ? `El ciclista avanza; cronómetro en ${fmt(tShown, 2)} s.` : 'El ciclista está en la salida (0 m) de la ciclorruta.';
+    : running ? `El ciclista avanza; cronómetro en ${fmt(tShown, 2)} s.` : t > 0 ? `Recorrido en pausa; cronómetro en ${fmt(tShown, 2)} s.` : 'El ciclista está en la salida (0 m) de la ciclorruta.';
 
   return (
     <div className="lab-layout">
@@ -240,8 +242,8 @@ export default function KinematicsLab({ api }: LabProps) {
           </svg>
         </div>
         <Readout items={[
-          { k: 'Tiempo (cronómetro)', v: done ? `${fmt(res.time, 2)} s` : running ? `${fmt(tShown, 2)} s` : '—', data: true },
-          { k: 'Distancia recorrida', v: done ? `${fmt(res.distance, 2)} m` : '—', data: true },
+          { k: 'Tiempo (cronómetro)', v: done ? `${fmt(res.time, 2)} s` : running || t > 0 ? `${fmt(tShown, 2)} s` : '—', data: true, resolution: resolutionText(0.01, 's') },
+          { k: 'Distancia recorrida', v: done ? `${fmt(res.distance, 2)} m` : '—', data: true, resolution: resolutionText(0.01, 'm') },
           { k: 'Velocidad final', v: done ? `${fmt(res.finalSpeed, 2)} m/s` : '—', data: true },
           { k: 'Velocidad media = d/t', v: done ? `${fmt(res.meanSpeed, 2)} m/s` : '—', data: true },
           ...(challenge ? [{ k: 'Error frente al reto', v: done && error !== null ? `${fmt(error, 2)} m` : '—', data: true }] : []),
@@ -288,10 +290,9 @@ export default function KinematicsLab({ api }: LabProps) {
           <Slider label="Duración del recorrido" value={duration} min={KIN_LIMITS.duration[0]} max={KIN_LIMITS.duration[1]} step={0.5} unit="s" decimals={1} onChange={setDuration} />
           <Segmented<AnimSpeed> label="Velocidad de la animación" value={speed} onChange={setSpeed}
             options={[{ value: 'real', label: 'Tiempo real' }, { value: 'x4', label: 'Acelerada ×4' }]} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={start} disabled={running}>Iniciar recorrido</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          {/* Sin barra de avance: si el ciclista llega al final de la pista o se detiene antes, la duración real es un resultado. */}
+          <SimControls title="Recorrido del ciclista" status={simStatusOf(running, t > 0, done)} startLabel="Iniciar recorrido" repeatLabel="Repetir el recorrido"
+            onStart={start} onPause={() => setRunning(false)} onResume={() => setRunning(true)} onReset={reset} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>Pista recta de 50 m; aceleración constante. Cinta métrica de 1 cm, cronómetro de 0,01 s y fotografías cada 0,5 s. Al frenar, el ciclista se detiene y no retrocede.</Notice>

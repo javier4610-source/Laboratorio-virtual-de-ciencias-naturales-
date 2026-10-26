@@ -20,6 +20,32 @@ const SIM_STATUS_TEXT: Record<SimStatus, string> = {
   terminado: 'Terminada',
 };
 
+/**
+ * Estado de la barra a partir de lo que ya lleva el laboratorio: si el tiempo avanza, si ya empezó (t > 0 o una
+ * fase iniciada) y si terminó. «Terminada» tiene prioridad; luego «En curso»; luego «En pausa» si ya empezó.
+ */
+export function simStatusOf(running: boolean, started: boolean, finished = false): SimStatus {
+  if (finished && !running) return 'terminado';
+  if (running) return 'en-curso';
+  return started ? 'en-pausa' : 'listo';
+}
+
+/** Texto del estado que se anuncia (role="status"). */
+export function simStatusText(status: SimStatus): string { return SIM_STATUS_TEXT[status]; }
+
+/**
+ * Acción del botón principal según el estado: Iniciar (o el rótulo propio) → Pausar → Reanudar; Repetir al terminar.
+ * Sin `canPause` (simulación que no admite pausa) no hay botón principal mientras corre.
+ */
+export function simPrimaryAction(status: SimStatus, canPause: boolean, startLabel = 'Iniciar', repeatLabel = 'Repetir'): { kind: 'start' | 'pause' | 'resume' | 'repeat'; label: string } | null {
+  switch (status) {
+    case 'en-curso': return canPause ? { kind: 'pause', label: 'Pausar' } : null;
+    case 'en-pausa': return { kind: 'resume', label: 'Reanudar' };
+    case 'terminado': return { kind: 'repeat', label: repeatLabel };
+    default: return { kind: 'start', label: startLabel };
+  }
+}
+
 export interface SimProgress {
   /** Tiempo (u otra magnitud) transcurrido y total, en la misma unidad. */
   value: number;
@@ -35,25 +61,30 @@ export interface SimProgress {
  * (Iniciar → Pausar → Reanudar; Repetir al terminar), Reiniciar, el estado en texto (no solo color) y el avance.
  * La lógica del tiempo sigue en el laboratorio: este componente solo llama a sus funciones.
  */
-export function SimControls({ status, onStart, onPause, onResume, onReset, startLabel = 'Iniciar', resetLabel = 'Reiniciar', progress, disabled, title = 'Control de la simulación', children }: {
+export function SimControls({ status, onStart, onPause, onResume, onReset, startLabel = 'Iniciar', repeatLabel = 'Repetir', resetLabel = 'Reiniciar', resetDisabled, progress, disabled, title = 'Control de la simulación', children }: {
   status: SimStatus;
   onStart: () => void;
   onPause?: () => void;
   onResume?: () => void;
   onReset?: () => void;
   startLabel?: string;
+  /** Rótulo del botón principal al terminar (por defecto «Repetir»). */
+  repeatLabel?: string;
   resetLabel?: string;
+  /** Por defecto Reiniciar se desactiva solo en «Lista para iniciar»; un laboratorio con preparación previa (p. ej. subir un objeto) puede habilitarlo antes. */
+  resetDisabled?: boolean;
   progress?: SimProgress;
   disabled?: boolean;
   title?: string;
   children?: ReactNode;
 }) {
   const id = useId();
-  const primary = status === 'en-curso'
-    ? (onPause ? { label: 'Pausar', icon: 'pausa' as const, run: onPause } : null)
-    : status === 'en-pausa'
-      ? { label: 'Reanudar', icon: 'reproducir' as const, run: onResume ?? onStart }
-      : { label: status === 'terminado' ? 'Repetir' : startLabel, icon: (status === 'terminado' ? 'reiniciar' : 'reproducir') as 'reiniciar' | 'reproducir', run: onStart };
+  const action = simPrimaryAction(status, !!onPause, startLabel, repeatLabel);
+  const primary = action && {
+    label: action.label,
+    icon: (action.kind === 'pause' ? 'pausa' : action.kind === 'repeat' ? 'reiniciar' : 'reproducir') as 'pausa' | 'reiniciar' | 'reproducir',
+    run: action.kind === 'pause' ? onPause! : action.kind === 'resume' ? (onResume ?? onStart) : onStart,
+  };
   const pct = progress && progress.max > 0 ? Math.max(0, Math.min(100, (progress.value / progress.max) * 100)) : null;
   const d = progress?.decimals ?? 0;
   return (
@@ -69,7 +100,7 @@ export function SimControls({ status, onStart, onPause, onResume, onReset, start
           </button>
         )}
         {onReset && (
-          <button type="button" className="btn" onClick={onReset} disabled={disabled || status === 'listo'}>
+          <button type="button" className="btn" onClick={onReset} disabled={disabled || (resetDisabled ?? status === 'listo')}>
             <Icon name="reiniciar" size={17} />{resetLabel}
           </button>
         )}

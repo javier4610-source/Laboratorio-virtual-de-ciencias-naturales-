@@ -53,16 +53,17 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       refinamiento publicado (AMCSD/ICSD) y SrO con una densidad publicada; revisión humana, con un químico, de los
       registros que quedan como «fórmula registrada sin coincidencia de nombre»; ampliar los binarios entre no metales
       con dos átomos centrales (S₂Cl₂, N₂F₄) si hay geometría fiable.
-- [ ] **Rediseño, paso siguiente** (ADR 0007): `Readout.resolution`/`state` en los instrumentos de las prácticas sin
-      dinámica temporal y `ConditionAlert` con «cómo corregirlo» propio en las advertencias de cada modelo (hoy las
-      muestra `Warnings` con un aviso genérico); medir con Lighthouse cuando haya red para instalarlo; revisar con
-      estudiantes la barra de simulación, los atajos y el inicio por perfiles.
+- [ ] **Rediseño, paso siguiente** (ADR 0007): medir con Lighthouse cuando haya red para instalarlo; revisar con
+      estudiantes la barra de simulación, los atajos, el inicio por perfiles y los avisos con «Cómo corregirlo».
 - [ ] **Mejoras:** pistas contextuales al cambiar dos variables a la vez; auditoría de rendimiento en equipos
       modestos; exportación para Google Classroom y Moodle; pruebas de regresión visual.
 
 ## Hecho
 
-- [x] v2.8.0 (sin publicar) · Taller de compuestos, siguiente paso: redes de Li₂O, Na₂O, K₂O, BaO, ZnS, TiO₂ (rutilo),
+- [x] v2.9.0 · Rediseño, siguiente paso (ADR 0007): «Cómo corregirlo» propio de cada modelo en los avisos de 19 prácticas
+  (nivel «no válida», «atención» o «nota», calculado con el mismo umbral del modelo y comprobado en pruebas) y resolución del
+  instrumento en las lecturas de 17 prácticas más, con estado «fuera de rango» solo donde el modelo define el rango.
+- [x] v2.8.0 · Taller de compuestos, siguiente paso: redes de Li₂O, Na₂O, K₂O, BaO, ZnS, TiO₂ (rutilo),
   α-Al₂O₃ (corindón, CIF AMCSD) y cuarzo α (red covalente) con densidad publicada citada; rutas «NH₃ + ácido» (sales
   de amonio con el NH₄⁺ y sus enlaces N–H) y «No metal + no metal»; revisión automática de los registros de PubChem
   hallados por la fórmula con una regla documentada (`src/models/pubchemNameMatch.ts`).
@@ -86,7 +87,9 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Bloqueos
 
-(ninguno)
+- Taller de compuestos, siguiente paso (2026-10-26): las bases cristalográficas (AMCSD/RRUFF, COD, ICSD) y el CCCBDB
+  no son accesibles desde el entorno de desarrollo; la red de la anhidrita, la densidad del SrO y la verificación de los
+  parámetros «por verificar» esperan a que se puedan consultar. La revisión con un químico depende del docente.
 
 ## Programa v2 · prompt maestro del docente (plataforma in silico)
 

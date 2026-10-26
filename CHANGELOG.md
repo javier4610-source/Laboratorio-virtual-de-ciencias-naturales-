@@ -7,6 +7,8 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.9.0] · 2026-10-26
+
 Rediseño, paso siguiente (ADR 0007): cada aviso de condición dice su causa y cómo corregirla, y las lecturas directas
 de instrumentos muestran su resolución. Los textos de las advertencias de los modelos, las rutas, los datos guardados y
 los valores dorados no cambian.

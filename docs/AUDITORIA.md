@@ -501,3 +501,16 @@ No incluido (declarado en `CRYSTALS_NOT_INCLUDED`): CaSO₄ (sin acceso a un ref
 publicada en PubChem) y redes de sales de amonio (el NH₄⁺ se desordena en el cristal).
 
 | Parámetros de red de Li₂O, Na₂O, K₂O, BaO y ZnS (2.8.0) | Revisión de integridad del integrador | Parcial | Los valores se tomaron de Wyckoff (1963) sin poder consultar la obra desde el entorno (AMCSD, COD e ICSD bloqueados) | Marcados «por verificar» en la interfaz y en `src/chem/crystal.ts` (`WYCKOFF_PV`) | Pendiente: verificar contra la fuente |
+
+# Rediseño, siguiente paso: avisos con «Cómo corregirlo» y resolución de instrumentos (versión 2.9.0)
+
+Elemento de la hoja de ruta (ADR 0007). Capturas de revisión (gases, enzimas, densidad y circuitos; claro y oscuro;
+1280 y 390 px) revisadas por el integrador; la prueba `tests/e2e/avisos.spec.ts` las regenera con `AVISOS_SHOTS`.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| «Cómo corregirlo» por modelo (19 prácticas) | `tests/unit/conditions.test.ts` (34 pruebas): se aplica al modelo el valor que sugiere cada corrección y se comprueba que el aviso desaparece | Correcto; los textos de las advertencias de los modelos no cambian (valores dorados intactos) | Cuatro avisos no se alcanzan con los rangos de los controles (sobrecarga de la balanza, H₂O₂ < 20 mL, globo > 3 L, todo el SCN⁻ precipitado) y los de circuitos simples se prueban con el texto del modelo | Se prueban con el texto literal del aviso | Correcto, con la limitación declarada |
+| Región de estado de los avisos | axe (WCAG 2.2 AA) y prueba de una sola región `role="status"` por práctica | Una región viva; cada aviso con nivel en texto («Condición no válida», «Atención», «Nota») | Varias regiones vivas simultáneas | `ConditionAlert live={false}` dentro del contenedor común | Correcto |
+| Resolución y estado en lecturas (17 prácticas más) | Resolución tomada de las fichas de instrumentos o de constantes del modelo; estado solo con rango definido (300 kPa, 3 A, Decreto 1076, absorbancia, 2,5 bar, Tm de Wallace…) | Correcto; sin números nuevos (`NO2_MAX_PRESSURE` y `COLORIMETER_RES` solo dan nombre a umbrales existentes) | — | — | Correcto |
+| Optimización infactible (metabolismo) | Revisión | La corrección lee los controles actuales, que pueden diferir del último cálculo hasta pulsar «Calcular el óptimo» | — | — | Limitación conocida |
+| Regresión | `tsc -b`; `vitest run`; `npm run build`; E2E completo con axe | Sin errores; 1264 pruebas unitarias (72 archivos); compilación correcta; E2E 188 pasan y 1 se omite por diseño | — | — | Correcto |

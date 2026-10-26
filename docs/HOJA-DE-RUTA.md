@@ -53,20 +53,23 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       refinamiento publicado (AMCSD/ICSD) y SrO con una densidad publicada; revisión humana, con un químico, de los
       registros que quedan como «fórmula registrada sin coincidencia de nombre»; ampliar los binarios entre no metales
       con dos átomos centrales (S₂Cl₂, N₂F₄) si hay geometría fiable.
-- [ ] **Rediseño, siguiente paso** (ADR 0007): adoptar `SimControls` en las demás prácticas con dinámica temporal
-      (proyectiles, péndulo, choques, cinemática, energía, cinética, conducción…), `Readout.resolution`/`state` en los
-      instrumentos y `ConditionAlert` con «cómo corregirlo» en las advertencias propias de cada modelo; medir con
-      Lighthouse cuando haya red para instalarlo; revisar con estudiantes los atajos y el inicio por perfiles.
+- [ ] **Rediseño, paso siguiente** (ADR 0007): `Readout.resolution`/`state` en los instrumentos de las prácticas sin
+      dinámica temporal y `ConditionAlert` con «cómo corregirlo» propio en las advertencias de cada modelo (hoy las
+      muestra `Warnings` con un aviso genérico); medir con Lighthouse cuando haya red para instalarlo; revisar con
+      estudiantes la barra de simulación, los atajos y el inicio por perfiles.
 - [ ] **Mejoras:** pistas contextuales al cambiar dos variables a la vez; auditoría de rendimiento en equipos
       modestos; exportación para Google Classroom y Moodle; pruebas de regresión visual.
 
 ## Hecho
 
-- [x] v2.6.x (sin publicar) · Taller de compuestos, siguiente paso: redes de Li₂O, Na₂O, K₂O, BaO, ZnS, TiO₂ (rutilo),
+- [x] v2.8.0 (sin publicar) · Taller de compuestos, siguiente paso: redes de Li₂O, Na₂O, K₂O, BaO, ZnS, TiO₂ (rutilo),
   α-Al₂O₃ (corindón, CIF AMCSD) y cuarzo α (red covalente) con densidad publicada citada; rutas «NH₃ + ácido» (sales
   de amonio con el NH₄⁺ y sus enlaces N–H) y «No metal + no metal»; revisión automática de los registros de PubChem
   hallados por la fórmula con una regla documentada (`src/models/pubchemNameMatch.ts`).
-
+- [x] v2.7.0 · Rediseño, siguiente paso (ADR 0007): `SimControls` con pausa real en las 23 prácticas con
+  dinámica temporal (21 nuevas), `Readout.resolution` en seis de ellas, `ConditionAlert` en choques, animaciones
+  continuas de gases y fotosíntesis que ya se pueden pausar (WCAG 2.2.2) y tabla de adopción por práctica (con el
+  motivo de las 19 que tienen animación sin dinámica que pausar) en `docs/v2/SISTEMA-DE-DISENO.md`.
 - [x] v2.6.0 (sin publicar) · Rediseño integral de la plataforma (pedido del docente, ADR 0007): sistema de diseño con
   tokens y escala de datos distinguible con daltonismo, inicio por perfiles, catálogo con filtros en la dirección,
   espacio de trabajo de la práctica, atajos de teclado, componentes experimentales compartidos (simulación, condiciones,

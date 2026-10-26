@@ -8,6 +8,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
+import { SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, Beaker, DigitalBalance, Erlenmeyer, shade, TestTube } from './kit';
 
@@ -29,7 +30,7 @@ const SYSTEM_LABEL: Record<SystemId, string> = { abierto: 'Abierto', globo: 'Cer
 /** Duración de la animación de cada reacción (s). */
 const DURATION: Record<ReactionId, number> = { bicarbonato: 4, efervescente: 5, precipitacion: 3, oxidacion: 4 };
 
-type Phase = 'listo' | 'pesado' | 'reaccionando' | 'terminado';
+type Phase = 'listo' | 'pesado' | 'reaccionando' | 'pausa' | 'terminado';
 
 const signed = (v: number, d = 2) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${fmt(Math.abs(v), d)}`;
 
@@ -260,7 +261,8 @@ export default function ConservationLab({ api }: LabProps) {
   useEffect(() => {
     if (phase !== 'reaccionando') return;
     if (prefersReducedMotion()) { setT(duration); setPhase('terminado'); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, la reacción sigue desde el avance ya alcanzado.
+    const start = performance.now() - t * 1000;
     const tick = (now: number) => {
       const el = Math.max(0, (now - start) / 1000);
       if (el >= duration) { setT(duration); setPhase('terminado'); return; }
@@ -281,7 +283,7 @@ export default function ConservationLab({ api }: LabProps) {
   };
 
   const weighed = phase !== 'listo';
-  const started = phase === 'reaccionando' || phase === 'terminado';
+  const started = phase === 'reaccionando' || phase === 'pausa' || phase === 'terminado';
   const done = phase === 'terminado';
   const extent = started ? extentAt(t, duration) : 0;
   const rate = started && !done ? Math.max(0, 1 - extent) : 0;
@@ -418,7 +420,7 @@ export default function ConservationLab({ api }: LabProps) {
     : <Beaker x={500} y={262} w={84} h={90} fill={0.55} liquid={liquidColor} liquidOpacity={0.6} label={reaction === 'efervescente' ? 'agua' : reaction === 'bicarbonato' ? 'vinagre' : 'CaCl₂ (ac)'} />;
 
   const desc = `${rx.name}; ${res.container.name}. ` +
-    (!weighed ? 'La balanza está en espera.' : started && !done ? `La reacción está ocurriendo; la balanza marca ${fmt(current, 2)} g.` : done ? `La reacción terminó; la balanza marca ${fmt(res.readingFinal, 2)} g.` : `La balanza marca ${fmt(res.readingInitial, 2)} g antes de mezclar.`) +
+    (!weighed ? 'La balanza está en espera.' : phase === 'pausa' ? `Reacción en pausa; la balanza marca ${fmt(current, 2)} g.` : started && !done ? `La reacción está ocurriendo; la balanza marca ${fmt(current, 2)} g.` : done ? `La reacción terminó; la balanza marca ${fmt(res.readingFinal, 2)} g.` : `La balanza marca ${fmt(res.readingInitial, 2)} g antes de mezclar.`) +
     (balloonDone ? ` El globo se infló hasta unos ${fmt(res.balloonVolume, 0)} mL.` : '');
 
   return (
@@ -451,12 +453,12 @@ export default function ConservationLab({ api }: LabProps) {
           </svg>
         </div>
         <Readout live={false} items={[
-          { k: 'Lectura durante la reacción', v: started ? `${fmt(current, 2)} g` : '—', data: true },
+          { k: 'Lectura durante la reacción', v: started ? `${fmt(current, 2)} g` : '—', data: true, resolution: resolutionText(0.01, 'g') },
           { k: 'Avance de la reacción', v: started ? `${fmt(extent * 100, 0)} %` : '—' },
         ]} />
         <Readout items={[
-          { k: 'Masa inicial (balanza)', v: weighed ? `${fmt(res.readingInitial, 2)} g` : 'sin pesar', data: true },
-          { k: 'Masa final (balanza)', v: done ? `${fmt(res.readingFinal, 2)} g` : '—', data: true },
+          { k: 'Masa inicial (balanza)', v: weighed ? `${fmt(res.readingInitial, 2)} g` : 'sin pesar', data: true, resolution: resolutionText(0.01, 'g') },
+          { k: 'Masa final (balanza)', v: done ? `${fmt(res.readingFinal, 2)} g` : '—', data: true, resolution: resolutionText(0.01, 'g') },
           { k: 'Diferencia (final − inicial)', v: done ? `${signed(res.difference)} g` : '—', data: true },
           { k: 'Gas calculado (estequiometría)', v: done ? (isOx ? `O₂ fijado: ${fmt(res.oxygenFixed, 3)} g` : res.gasProduced > 0 ? `CO₂: ${fmt(res.gasProduced, 3)} g` : 'no se produce gas') : '—' },
           { k: 'Reactivo limitante', v: done ? res.limiting.limiting : '—' },
@@ -494,11 +496,15 @@ export default function ConservationLab({ api }: LabProps) {
             <Slider label={VOLUME_LABEL[reaction]} value={volume} min={rx.volumeRange[0]} max={rx.volumeRange[1]} step={5} unit="mL" decimals={0}
               onChange={(v) => { setVolume(v); reset(); }} hint={rx.liquid} />
           )}
+          {/* Primero se pesa el sistema; el segundo paso inicia la reacción, que se puede pausar. */}
           <div className="btn-row">
             <button type="button" className="btn primary" onClick={() => { setPhase('pesado'); playSound('tare'); }} disabled={weighed}>1. Pesar el sistema inicial</button>
-            <button type="button" className="btn primary" onClick={() => { setT(0); setPhase('reaccionando'); playSound(isOx ? 'switch' : 'pour', { duration: 0.8 }); }} disabled={phase !== 'pesado'}>{isOx ? '2. Encender la lana de acero' : '2. Mezclar los reactivos'}</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar medición</button>
           </div>
+          <SimControls title="Reacción en la balanza" status={simStatusOf(phase === 'reaccionando', phase === 'pausa', done)}
+            startLabel={isOx ? '2. Encender la lana de acero' : '2. Mezclar los reactivos'} repeatLabel="Repetir la reacción" resetLabel="Reiniciar medición"
+            disabled={phase === 'listo'} resetDisabled={phase === 'listo'}
+            onStart={() => { setT(0); setPhase('reaccionando'); playSound(isOx ? 'switch' : 'pour', { duration: 0.8 }); }}
+            onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => setPhase('reaccionando')} onReset={reset} />
           <RecordButton onRecord={record} disabled={!done} />
           {!done && <p className="small muted">Pesa el sistema, provoca la reacción y espera a que termine para guardar el ensayo.</p>}
         </div>

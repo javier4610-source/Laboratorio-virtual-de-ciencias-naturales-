@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
 import { useMeasure } from '../components/Measurement';
 import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, ContactShadow, Lcd, Stopwatch } from './kit';
@@ -56,7 +57,7 @@ const SURFACE_STYLE: Record<SurfaceId, { fill: string; edge: string }> = {
 };
 
 type Experiment = 'rampa' | 'escalera';
-type Phase = 'listo' | 'midiendo' | 'medido';
+type Phase = 'listo' | 'midiendo' | 'pausa' | 'medido';
 
 const rad = (deg: number) => (deg * Math.PI) / 180;
 /** Del marco de la rampa (x a lo largo de la tabla, y hacia dentro de la tabla) a la pantalla. */
@@ -369,7 +370,8 @@ export default function WorkLab({ api }: LabProps) {
   useEffect(() => {
     if (phase !== 'midiendo') return;
     if (prefersReducedMotion()) { setElapsed(totalMs); setPhase('medido'); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, la subida sigue desde donde iba.
+    const start = performance.now() - elapsed;
     const tick = (now: number) => {
       const el = Math.min(totalMs, Math.max(0, now - start));
       setElapsed(el);
@@ -612,7 +614,10 @@ export default function WorkLab({ api }: LabProps) {
     : `Escalera de ${steps} escalones hasta el segundo piso de un colegio en Apartadó; una persona de ${fmt(personMass, 0)} kg sube a ${fmt(pace, 1)} escalones por segundo. ` +
       (measured ? `El cronómetro marca ${fmt(stairReadings.t, 2)} s.` : 'Aún no se ha cronometrado.');
 
-  const busy = phase === 'midiendo';
+  const busy = phase === 'midiendo' || phase === 'pausa';
+  const simStatus = simStatusOf(phase === 'midiendo', phase === 'pausa', measured);
+  const pauseRun = () => { cancelAnimationFrame(raf.current); setPhase('pausa'); };
+  const resumeRun = () => setPhase('midiendo');
   const canRecord = measured && (exp === 'rampa' ? derived !== null : stairReadings.power !== null);
 
   return (
@@ -782,10 +787,8 @@ export default function WorkLab({ api }: LabProps) {
                 <Slider label="Potencia del torno" value={motorPower} min={WORK_LIMITS.motorPower[0]} max={WORK_LIMITS.motorPower[1]} step={0.1} unit="W" decimals={1} onChange={setMotorPower}
                   hint={`La cuerda avanza a P/F, hasta ${fmt(MOTOR_MAX_SPEED, 2)} m/s.`} />
               )}
-              <div className="btn-row">
-                <button type="button" className="btn primary" disabled={busy} onClick={startMeasure}>Medir subida por la rampa</button>
-                <button type="button" className="btn" onClick={reset}>Reiniciar medición</button>
-              </div>
+              <SimControls title="Subida por la rampa" status={simStatus} startLabel="Medir subida por la rampa" repeatLabel="Medir de nuevo" resetLabel="Reiniciar medición"
+                onStart={startMeasure} onPause={pauseRun} onResume={resumeRun} onReset={reset} />
             </>
           ) : (
             <>
@@ -794,10 +797,8 @@ export default function WorkLab({ api }: LabProps) {
                 hint={`Cada escalón mide unos ${fmt(STEP_HEIGHT * 100, 0)} cm.`} />
               <Slider label="Ritmo de subida" value={pace} min={WORK_LIMITS.pace[0]} max={WORK_LIMITS.pace[1]} step={0.1} unit="escalones/s" decimals={1} onChange={setPace}
                 hint="Caminando: 1 a 2 escalones/s; corriendo: 3 a 4." />
-              <div className="btn-row">
-                <button type="button" className="btn primary" disabled={busy} onClick={startMeasure}>Subir la escalera y cronometrar</button>
-                <button type="button" className="btn" onClick={reset}>Reiniciar medición</button>
-              </div>
+              <SimControls title="Subida por la escalera" status={simStatus} startLabel="Subir la escalera y cronometrar" repeatLabel="Subir de nuevo" resetLabel="Reiniciar medición"
+                onStart={startMeasure} onPause={pauseRun} onResume={resumeRun} onReset={reset} />
             </>
           )}
           <RecordButton onRecord={record} disabled={!canRecord} />

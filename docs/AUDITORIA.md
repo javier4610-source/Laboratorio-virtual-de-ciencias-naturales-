@@ -451,3 +451,29 @@ ADR 0007; sistema de diseño: `docs/v2/SISTEMA-DE-DISENO.md`. Capturas antes y d
 
 No verificado: lectores de pantalla reales, Firefox y Safari, equipos escolares reales, usabilidad con estudiantes y
 docentes del nuevo inicio por perfiles y de los atajos; Lighthouse (no instalado y sin red para instalarlo).
+
+# Barra de simulación común en las prácticas con dinámica temporal (sin publicar)
+
+Elemento «Rediseño, siguiente paso» de la hoja de ruta (ADR 0007). Inventario con `grep` de `requestAnimationFrame`,
+`setInterval` y estados `running`/`phase` en `src/labs`: 23 prácticas tienen una dinámica temporal que el estudiante
+inicia y observa (21 adoptadas en esta ronda más ósmosis y ondas); otras 19 (15 con alguna animación y 4 de la lista
+de la hoja de ruta sin animación) solo tienen transiciones de instrumento, pasos de procedimiento, generaciones
+discretas o una fuente controlada por la propia práctica (tabla con el motivo en `docs/v2/SISTEMA-DE-DISENO.md`). Los laboratorios del taller de química inorgánica y orgánica no se tocaron.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Modelos científicos | Valores dorados (`tests/golden`) y pruebas de modelos sin cambios; ningún archivo de `src/models` modificado | Correcto | — | — | Correcto |
+| Estado de `SimControls` | `tests/unit/simControls.test.ts`: `simStatusOf`, recorrido iniciar → pausar → reanudar → terminar → repetir, rótulos propios, sin pausa, marcado (`role="group"` con nombre, `role="status"`, botones habilitados), avance y recorte, `resolutionText`, adopción en las 23 prácticas y en la tabla del documento | 9 pruebas pasan | No había prueba unitaria del componente | Lógica extraída a funciones puras (`simStatusOf`, `simPrimaryAction`) | Correcto |
+| Pausa sin alterar resultados | E2E: proyectil (2,870 m) y choque (0,660 m/s) con pausa a mitad de camino; conducción por teclado termina en 82,2 °C; las pruebas existentes de cada práctica siguen pasando con sus valores | Correcto | Pausar y reanudar reiniciaba el reloj de la animación; cambiar la velocidad a mitad de la corrida (péndulo, cinemática, caída) también | El reloj se reconstruye desde el tiempo ya recorrido (`start = now − t`); en movimiento, el cronómetro de mano se corre lo que duró la pausa | Corregido |
+| Lectura congelada en pausa | E2E: avance de conducción, calor y cinética, y cronómetro de cinemática, iguales tras 0,7 s en pausa | Correcto | En energía (caída) las gráficas desaparecían en pausa; en cinética química, las burbujas | Se muestran mientras la corrida está empezada | Corregido |
+| Iniciar → pausar → reanudar → reiniciar | E2E con axe WCAG 2.2 AA en pausa: conducción, calor, cinética química, cinemática, péndulo y ecosistema | Correcto, sin violaciones | — | — | Correcto |
+| Teclado y lector de pantalla | E2E: Enter inicia, el foco queda en «Pausar», Enter pausa, espacio reanuda; estado en `role="status"` | Correcto | — | — | Correcto |
+| Movimiento reducido | E2E con `reducedMotion: 'reduce'`: calor salta a «Terminada» con 39,8 °C y avance 100 %; gases arranca «Lista para iniciar» | Correcto | Las animaciones continuas de gases y fotosíntesis no se podían detener (WCAG 2.2.2) y con movimiento reducido no había forma de verlas | Pausar/Reanudar; arrancan detenidas con movimiento reducido y se pueden iniciar a voluntad | Corregido |
+| Condición imposible | E2E: choques con v₂ > v₁ muestra `ConditionAlert` «Cómo corregirlo» y bloquea «Lanzar» | Correcto | — | — | Correcto |
+| Avance que revelaría la respuesta | Revisión de cada práctica | Sin barra donde la duración es la lectura (tiempo de vuelo, período, tiempo en 1 m, recorrido, rampa) | — | — | Correcto |
+| Capturas claro/oscuro, 1280 y 390 px | Conducción, péndulo, cinética química y choques en pausa (`SIMC_SHOTS=<carpeta> npx playwright test simulacion`) | Barra legible en ambos temas y en teléfono, sin desplazamiento horizontal | — | — | Correcto |
+| Rendimiento: JS inicial | `npm run build` | 391,33 kB (123,5 kB gzip), igual que antes | `resolutionText` en `ui.tsx` sumaba 0,12 kB al paquete inicial | Movido a `Experiment.tsx` (carga con la práctica) | Corregido |
+| Regresión | `tsc -b`; 1206 pruebas unitarias (69 archivos); `npm run build`; E2E completo 172 pasan y 1 omitida (la de capturas, solo con `SIMC_SHOTS`); 11 nuevas en `simulacion.spec.ts` | Todas pasan | — | — | Correcto |
+
+No verificado: lectores de pantalla reales (NVDA, VoiceOver) leyendo el cambio de estado, Firefox y Safari, equipos
+escolares modestos y uso con estudiantes de la pausa en clase.

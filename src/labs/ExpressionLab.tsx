@@ -9,6 +9,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, Lcd } from './kit';
 import { ManipHint, useSvgDrag } from './manipulate';
@@ -64,7 +65,7 @@ const PRE_SCALE = PRE_W / (GENE_LENGTH - SEGMENT_RANGES.ex1.start + 2);
 const MODE_LABEL: Record<SplicingMode, string> = { constitutivo: 'Empalme normal', 'salto-exon2': 'Salto del exón 2' };
 const KIND_LABEL: Record<MutationKind, string> = { sustitucion: 'Sustitución', insercion: 'Inserción', delecion: 'Deleción' };
 
-type Phase = 'listo' | 'expresando' | 'medido';
+type Phase = 'listo' | 'expresando' | 'pausa' | 'medido';
 
 function changeText(m: GeneMutation): string {
   const wt = GENE_SEQ[m.position - 1];
@@ -301,8 +302,9 @@ export default function ExpressionLab({ api }: LabProps) {
   useEffect(() => {
     if (phase !== 'expresando') return;
     if (prefersReducedMotion()) { setT(1); setPhase('medido'); return; }
-    const start = performance.now();
-    let spliced = false, lastTick = -1;
+    // Al reanudar tras una pausa, la animación sigue desde donde iba (sin repetir sonidos ya oídos).
+    const start = performance.now() - t * DURATION;
+    let spliced = t >= SPL[0], lastTick = t >= TL[0] ? Math.floor(seg(t, TL) * Math.max(0, nCodons - 1) / 12) : -1;
     const tick = (now: number) => {
       const q = clamp01(Math.max(0, now - start) / DURATION);
       setT(q);
@@ -316,6 +318,7 @@ export default function ExpressionLab({ api }: LabProps) {
     return () => cancelAnimationFrame(raf.current);
   }, [phase, nCodons]);
 
+  const animating = phase === 'expresando' || phase === 'pausa';
   const express = () => { cancelAnimationFrame(raf.current); playSound('click'); setT(0); setPhase('expresando'); };
   const skip = () => { cancelAnimationFrame(raf.current); setT(1); setPhase('medido'); playSound('beep', { volume: 0.3, freq: 2200 }); };
 
@@ -530,11 +533,11 @@ export default function ExpressionLab({ api }: LabProps) {
               {/* TFIID sobre la caja TATA y la polimerasa */}
               <ellipse cx={(gx(PROMOTER_ELEMENTS[2].start) + gx(PROMOTER_ELEMENTS[2].end)) / 2} cy={tataHit && done ? DNA_Y - 22 : DNA_Y - 12} rx={9} ry={6}
                 fill="var(--amb)" fillOpacity={tataHit && done ? 0.35 : 0.8} stroke="var(--amb)" />
-              <Polymerase x={polX} y={DNA_Y - 4} active={phase === 'expresando' && qTx < 1} />
-              {phase === 'expresando' && qTx > 0 && qTx < 1 && (
+              <Polymerase x={polX} y={DNA_Y - 4} active={animating && qTx < 1} />
+              {animating && qTx > 0 && qTx < 1 && (
                 <path d={`M${polX - 14} ${DNA_Y + 10} q -8 12 -18 10 q -10 -2 -16 8`} fill="none" stroke="var(--data)" strokeWidth="2" />
               )}
-              <text x={phase !== 'expresando' ? polX : Math.min(polX, G1 - 30)} y={DNA_Y + 52} textAnchor="middle" style={{ fontSize: 9, fill: 'var(--qui)', fontWeight: 700 }}>ARN polimerasa II</text>
+              <text x={!animating ? polX : Math.min(polX, G1 - 30)} y={DNA_Y + 52} textAnchor="middle" style={{ fontSize: 9, fill: 'var(--qui)', fontWeight: 700 }}>ARN polimerasa II</text>
             </g>
 
             {/* ARN: pre-ARNm → ARNm maduro */}
@@ -618,7 +621,7 @@ export default function ExpressionLab({ api }: LabProps) {
                   <text x={RIBO_X + 5} y={TR_Y - 60} textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>subunidad mayor</text>
                   <text x={RIBO_X + 5} y={TR_Y + 20} textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>subunidad menor</text>
                   <text x={RIBO_X + 5} y={TR_Y - 124} textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink-2)' }}>
-                    {phase === 'expresando' ? 'El ARNm maduro sale del núcleo por un poro…' : 'Ribosoma libre, esperando un ARNm'}
+                    {animating ? 'El ARNm maduro sale del núcleo por un poro…' : 'Ribosoma libre, esperando un ARNm'}
                   </text>
                 </>
               )}
@@ -810,10 +813,10 @@ export default function ExpressionLab({ api }: LabProps) {
           <h3>Célula y expresión</h3>
           <Segmented<SplicingMode> label="Modo de empalme" value={mode} onChange={setMode}
             options={[{ value: 'constitutivo', label: MODE_LABEL.constitutivo }, { value: 'salto-exon2', label: MODE_LABEL['salto-exon2'] }]} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={express} disabled={phase === 'expresando'}>Expresar el gen</button>
-            {phase === 'expresando' && <button type="button" className="btn small" onClick={skip}>Omitir la animación</button>}
-          </div>
+          <SimControls title="Expresión del gen" status={simStatusOf(phase === 'expresando', phase === 'pausa', done)} startLabel="Expresar el gen" repeatLabel="Expresar de nuevo"
+            onStart={express} onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => setPhase('expresando')} onReset={reset}>
+            {animating && <button type="button" className="btn small" onClick={skip}>Omitir la animación</button>}
+          </SimControls>
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>

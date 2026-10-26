@@ -7,6 +7,7 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 
 const ANIM_MS = 2500;
@@ -204,7 +205,8 @@ export default function FoodWebLab({ api }: LabProps) {
   useEffect(() => {
     if (!running) return;
     if (prefersReducedMotion()) { setFrame(lastIndex); setRunning(false); setDone(true); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, la animación sigue desde el año ya mostrado.
+    const start = performance.now() - (lastIndex > 0 ? (frame / lastIndex) * ANIM_MS : 0);
     const tick = (now: number) => {
       const el = Math.max(0, now - start);
       if (el >= ANIM_MS) { setFrame(lastIndex); setRunning(false); setDone(true); return; }
@@ -223,7 +225,7 @@ export default function FoodWebLab({ api }: LabProps) {
     return l;
   }, [current]);
   const tNow = res.times[idx];
-  const started = running || done;
+  const started = running || done || frame > 0;
 
   const chartSeries = useMemo(() => {
     if (!started) return [];
@@ -356,10 +358,9 @@ export default function FoodWebLab({ api }: LabProps) {
           <Slider label="Caza de gavilanes (% por año)" value={hunting} min={FOODWEB_LIMITS.hunting[0]} max={FOODWEB_LIMITS.hunting[1]} step={5} unit="%/año" decimals={0} onChange={setHunting} />
           <Slider label="Pesticida sobre insectos (% por año)" value={pesticide} min={FOODWEB_LIMITS.pesticide[0]} max={FOODWEB_LIMITS.pesticide[1]} step={5} unit="%/año" decimals={0} onChange={setPesticide} />
           <Slider label="Años simulados" value={years} min={FOODWEB_LIMITS.years[0]} max={FOODWEB_LIMITS.years[1]} step={1} unit="años" decimals={0} onChange={setYears} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={() => { setFrame(0); setDone(false); setRunning(true); }} disabled={running}>Simular</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          <SimControls title="Simulación de la red trófica" status={simStatusOf(running, frame > 0, done)} startLabel="Simular" repeatLabel="Simular de nuevo"
+            onStart={() => { setFrame(0); setDone(false); setRunning(true); }} onPause={() => setRunning(false)} onResume={() => setRunning(true)} onReset={reset}
+            progress={{ value: tNow, max: res.times[lastIndex], unit: 'años', label: 'Tiempo simulado', decimals: 1 }} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         {done && extinctNames.length > 0 && (

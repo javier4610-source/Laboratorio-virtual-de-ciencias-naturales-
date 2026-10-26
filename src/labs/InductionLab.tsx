@@ -13,6 +13,7 @@ import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogge
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
 import type { ModelQuantity } from '../lib/advanced';
 import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, ContactShadow, Lcd } from './kit';
@@ -488,7 +489,7 @@ const toA = (x: number) => A_CX + x * A_S;
 const TURN_OPTIONS = [50, 100, 200, 400, 800];
 const GALV_MAX = 1000; // mV a fondo de escala
 
-type FPhase = 'listo' | 'midiendo' | 'medido' | 'mano';
+type FPhase = 'listo' | 'midiendo' | 'pausa' | 'medido' | 'mano';
 interface LiveTrace { pts: { t: number; e: number }[]; t0: number; lastT: number; lastX: number; firstX: number; firstT: number; area: number; peak: number; emf: number }
 
 function Galvanometer({ x, y, emf }: { x: number; y: number; emf: number }) {
@@ -600,7 +601,8 @@ function FaradayActivity({ api, measure, remeasure, top }: { api: Api; measure: 
     if (phase !== 'midiendo') return;
     const finish = () => { setElapsed(dispMs); setPhase('medido'); setXm(run.x[run.x.length - 1]); setNeedle(0); playSound('clack', { intensity: 0.55 }); };
     if (prefersReducedMotion()) { finish(); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, la repetición sigue desde el instante ya mostrado.
+    const start = performance.now() - elapsed;
     const step = (now: number) => {
       const el = Math.min(dispMs, Math.max(0, now - start));
       const ts = el / 1000 / slow;
@@ -651,7 +653,7 @@ function FaradayActivity({ api, measure, remeasure, top }: { api: Api; measure: 
   const dragMagnet = (vCm: number) => {
     const x = clampN(vCm / 100, FARADAY_PATH.outside, FARADAY_PATH.inside);
     const now = performance.now();
-    if (phase === 'midiendo') return;
+    if (phase === 'midiendo' || phase === 'pausa') return;
     let L = live.current;
     if (phase !== 'mano' || !L) {
       L = { pts: [{ t: 0, e: 0 }], t0: now - 50, lastT: now - 50, lastX: xm, firstX: xm, firstT: now, area: 0, peak: 0, emf: 0 };
@@ -728,7 +730,7 @@ function FaradayActivity({ api, measure, remeasure, top }: { api: Api; measure: 
   const cx0 = A_CX - coilL / 2, cx1 = A_CX + coilL / 2;
   const nDrawn = Math.round(6 + Math.sqrt(turns) * 1.1);
   const windings = Array.from({ length: nDrawn }, (_, i) => cx0 + 3 + ((i + 0.5) * (coilL - 6)) / nDrawn);
-  const simT = phase === 'midiendo' || phase === 'medido' ? elapsed / 1000 / slow : null;
+  const simT = phase === 'midiendo' || phase === 'pausa' || phase === 'medido' ? elapsed / 1000 / slow : null;
   const desc = `Imán de ${MAGNETS[magnet].short.toLowerCase()} con el polo ${pole === 'N' ? 'norte' : 'sur'} hacia una bobina de ${turns} vueltas, ` +
     `a ${fmt(Math.abs(xm) * 100, 1)} cm de su centro. La aguja del galvanómetro marca ${sfmt(needle, 0)} mV.`;
 
@@ -797,7 +799,7 @@ function FaradayActivity({ api, measure, remeasure, top }: { api: Api; measure: 
               {Math.abs(needle) > GALV_MAX && <text x={650} y={A_BENCH - 202} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--bad)', fontWeight: 700 }}>¡Fuera de escala!</text>}
             </svg>}>
             <DragHandle label="Imán: arrastrarlo dentro o fuera de la bobina" value={Number((xm * 100).toFixed(1))} min={-20} max={0} step={0.5} pageStep={5} unit="cm" decimals={1}
-              disabled={phase === 'midiendo'} hit={{ x: mx - ml / 2, y: A_AXIS - 20, w: ml, h: 40 }}
+              disabled={phase === 'midiendo' || phase === 'pausa'} hit={{ x: mx - ml / 2, y: A_AXIS - 20, w: ml, h: 40 }}
               valueText={(v) => `${fmt(Math.abs(v), 1)} cm del centro de la bobina`}
               valueFromPoint={({ point, start, startValue }) => startValue + ((point.x - start.x) / A_S) * 100}
               onChange={dragMagnet} />
@@ -851,11 +853,13 @@ function FaradayActivity({ api, measure, remeasure, top }: { api: Api; measure: 
             options={TURN_OPTIONS.map((n) => ({ value: String(n), label: String(n) }))} />
           <Slider label="Rapidez del imán" value={speed} min={IND_LIMITS.speed[0]} max={IND_LIMITS.speed[1]} step={0.05} unit="m/s" decimals={2} onChange={setSpeed}
             hint="El imán recorre 20 cm a velocidad constante." />
-          <div className="btn-row">
-            <button type="button" className="btn primary" disabled={phase === 'midiendo'} onClick={() => startRun('introducir')}>Introducir el imán a velocidad constante</button>
-            <button type="button" className="btn" disabled={phase === 'midiendo'} onClick={() => startRun('sacar')}>Sacar el imán a velocidad constante</button>
-            <button type="button" className="btn" onClick={() => { reset(); setXm(FARADAY_PATH.outside); }}>Reiniciar medición</button>
-          </div>
+          <SimControls title="Imán a velocidad constante" status={simStatusOf(phase === 'midiendo', phase === 'pausa', measured)}
+            startLabel="Introducir el imán a velocidad constante" repeatLabel="Repetir el movimiento" resetLabel="Reiniciar medición" resetDisabled={phase === 'listo'}
+            onStart={() => startRun(measured ? motion : 'introducir')}
+            onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => setPhase('midiendo')}
+            onReset={() => { reset(); setXm(FARADAY_PATH.outside); }}>
+            <button type="button" className="btn" disabled={phase === 'midiendo' || phase === 'pausa'} onClick={() => startRun('sacar')}>Sacar el imán a velocidad constante</button>
+          </SimControls>
           <RecordButton onRecord={record} disabled={!canRecord} />
           {!canRecord && <p className="small muted">Mueve el imán (con los botones o con la mano) para poder guardar el ensayo.</p>}
         </div>

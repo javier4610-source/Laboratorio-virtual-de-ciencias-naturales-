@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
@@ -53,7 +54,7 @@ const FISH_POS: { x: number; y: number; flip?: boolean; dur: number }[] = [
 const DEAD_FISH = [{ x: 470, y: 409 }, { x: 512, y: 411 }, { x: 436, y: 412 }, { x: 540, y: 410 }];
 const DEAD_SHELL = [{ x: 452, y: 410 }, { x: 488, y: 412 }, { x: 396, y: 413 }, { x: 526, y: 413 }, { x: 420, y: 414 }, { x: 506, y: 409 }];
 
-type Phase = 'listo' | 'simulando' | 'medido';
+type Phase = 'listo' | 'simulando' | 'pausa' | 'medido';
 type Kind = 'snail' | 'fish' | 'plant';
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
@@ -346,10 +347,15 @@ export default function EcosystemLab({ api }: LabProps) {
     remeasure('od', 'ph', 'caracoles', 'biomasa');
     playSound('click', { intensity: 0.6 });
     if (prefersReducedMotion() || targetH === 0) { setSimH(targetH); setPhase('medido'); playSound('beep'); return; }
-    setSimH(0);
+    runFrom(0);
+  };
+  /** Avanza la animación desde la hora simulada h0 (0 al iniciar; la hora en pausa al reanudar). */
+  const runFrom = (h0: number) => {
+    cancelAnimationFrame(raf.current);
+    setSimH(h0);
     setPhase('simulando');
     const total = Math.min(3200, 500 + targetH * 4);
-    const start = performance.now();
+    const start = performance.now() - (targetH > 0 ? (h0 / targetH) * total : 0);
     const tick = (now: number) => {
       const q = clamp01(Math.max(0, now - start) / total);
       setSimH(q * targetH);
@@ -688,9 +694,9 @@ export default function EcosystemLab({ api }: LabProps) {
           <Slider label="Día de la medición" value={day} min={ECO_LIMITS.day[0]} max={ECO_LIMITS.day[1]} step={1} decimals={0} onChange={setDay} />
           <Segmented<ReadTime> label="Hora de la lectura" value={time} onChange={setTime}
             options={[{ value: 'amanecer', label: READ_TIME_LABEL.amanecer }, { value: 'tarde', label: READ_TIME_LABEL.tarde }]} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" disabled={phase === 'simulando'} onClick={simulate}>Simular y medir</button>
-          </div>
+          <SimControls title="Acuario" status={simStatusOf(phase === 'simulando', phase === 'pausa', done)} startLabel="Simular y medir" repeatLabel="Simular de nuevo"
+            onStart={simulate} onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => runFrom(simH)} onReset={reset}
+            progress={{ value: shownH, max: targetH, unit: 'h', label: 'Tiempo simulado' }} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>

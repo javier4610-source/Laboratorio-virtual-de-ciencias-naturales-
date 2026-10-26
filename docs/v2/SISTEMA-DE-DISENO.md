@@ -163,20 +163,92 @@ el avance es una barra con `aria-valuetext` («t = 12 s de 60 s»).
 
 ```tsx
 <SimControls title="Observación al microscopio"
-  status={running ? 'en-curso' : finished ? 'terminado' : t > 0 ? 'en-pausa' : 'listo'}
+  status={simStatusOf(running, t > 0, finished)}
   onStart={start} onPause={() => setRunning(false)} onResume={() => setRunning(true)} onReset={reset}
   progress={{ value: t, max: duration, unit: 's', label: 't' }} />
 ```
 
-Adoptado en: ósmosis y ondas. Para adoptarlo en otra práctica: reemplazar la fila de botones
-iniciar/pausar/reiniciar por el componente, conservando las mismas funciones del laboratorio; si una prueba E2E usa
-el nombre de un botón («Soltar el péndulo», «Lanzar»), pasar ese texto en `startLabel`.
+Para adoptarlo en otra práctica: reemplazar la fila de botones iniciar/pausar/reiniciar por el componente,
+conservando las mismas funciones del laboratorio; si una prueba E2E usa el nombre de un botón («Soltar el péndulo»,
+«Lanzar»), pasar ese texto en `startLabel` (y uno propio en `repeatLabel`, que por defecto es «Repetir»). Reglas que
+siguen todas las prácticas adoptadas:
+
+- **El estado sale de lo que ya lleva el laboratorio**: `simStatusOf(corriendo, yaEmpezó, terminó)`. Pausar no borra
+  nada: deja de pedir cuadros (`cancelAnimationFrame`) y conserva el tiempo; al reanudar, el reloj se reconstruye
+  desde el tiempo ya recorrido (`start = performance.now() − t`), de modo que **ninguna lectura cambia por pausar**
+  y los valores dorados siguen iguales. Donde hay un cronómetro de mano (movimiento), el arranque del cronómetro se
+  corre lo que duró la pausa.
+- **Barra de avance solo si el total no es la respuesta**: se muestra cuando la duración la fija el estudiante o el
+  protocolo (30 min de calentamiento, 180 s de reacción, años simulados); se omite cuando la duración es lo que se
+  mide (tiempo de vuelo, período, tiempo en 1 m), porque la barra lo revelaría.
+- **Preparación previa** (subir con el torno, pesar el sistema): el paso queda como botón aparte antes de la barra;
+  `disabled` bloquea el inicio hasta completarlo y `resetDisabled={false}` permite reiniciar desde la preparación.
+- **Movimiento reducido**: las corridas siguen saltando al resultado final; las animaciones continuas (gases,
+  fotosíntesis) arrancan detenidas y el estudiante puede iniciarlas a voluntad.
+- **Teclado y lector de pantalla**: el botón principal es el mismo elemento en todos los estados (el foco no se
+  pierde al pasar de «Iniciar» a «Pausar»), el estado se anuncia con `role="status"` y el grupo tiene nombre propio
+  (p. ej. «Riel de aire»), que es el que usan las pruebas.
+
+#### Tabla de adopción por práctica (v2.6.0, sin publicar)
+
+| Práctica | Componente | Barra (título · inicio) | Avance | Además |
+|---|---|---|---|---|
+| Ósmosis | `OsmosisLab` | Observación al microscopio · Iniciar | t de la observación | (adopción inicial) |
+| Ondas | `WavesLab` | Generador de ondas · Iniciar | — (onda continua) | (adopción inicial) |
+| Proyectiles | `ProjectileLab` | Lanzador · Disparar | — (el tiempo de vuelo es una lectura) | Resolución de fotopuerta, cronómetro, estroboscopía y cinta |
+| Péndulo | `PendulumLab` | Péndulo · Soltar el péndulo (+ cronómetro y fotopuerta) | — (el período es la lectura) | Resolución 0,01 s / 0,001 s |
+| Choques | `CollisionsLab` | Riel de aire · Lanzar | t del registro | Resolución de fotopuertas (0,1 ms) y balanza; `ConditionAlert` «los deslizadores no se alcanzan» |
+| Energía mecánica | `EnergyLab` | Pista · Soltar la esfera; Caída de la pelota · Soltar la pelota | — | Gráficas visibles en pausa |
+| Cinemática | `KinematicsLab` | Recorrido del ciclista · Iniciar recorrido | — | Resolución de cronómetro y cinta |
+| Movimiento | `MotionLab` | Salida y recorrido · Dar la salida (+ cronómetro de mano) | — | La pausa corre el arranque del cronómetro de mano |
+| Leyes de Newton | `NewtonLab` | Carrito · Soltar el carrito | — | — |
+| Cinética y potencial | `KineticPotentialLab` | Riel de aire · Lanzar el carrito; Torre de caída · Soltar; Lanzador de resorte · Soltar el pestillo | — | «Subir con el torno» como preparación |
+| Conducción | `ConductionLab` | Calentamiento de la varilla · Encender y medir | Tiempo simulado (30 min) | — |
+| Calor | `HeatLab` | Calorímetro · Mezclar y medir | Tiempo de registro (10 min) | — |
+| Ecosistema | `EcosystemLab` | Acuario · Simular y medir | Horas simuladas | — |
+| Redes tróficas | `FoodWebLab` | Simulación de la red trófica · Simular | Años simulados | — |
+| Respiración | `RespirationLab` | Respirómetro · Iniciar medición | Minutos de medición | — |
+| Reto de indagación | `InquiryLab` | Recolección de muestras · Recolectar datos (Reiniciar = «Rediseñar») | Muestras recolectadas | — |
+| Expresión génica | `ExpressionLab` | Expresión del gen · Expresar el gen (+ Omitir la animación) | — | — |
+| Conservación de la masa | `ConservationLab` | Reacción en la balanza · 2. Mezclar los reactivos | — | «1. Pesar» como preparación; resolución 0,01 g |
+| Cinética química | `KineticsLab` | Reacción y cronómetro · Iniciar reacción y cronómetro | t (180 s) | Resolución de jeringa (1 mL) y cronómetro (1 s) |
+| Trabajo y potencia | `WorkLab` | Subida por la rampa / por la escalera | — (el tiempo es la lectura) | — |
+| Inducción (Faraday) | `InductionLab` | Imán a velocidad constante · Introducir el imán (+ Sacar) | — | — |
+| Leyes de los gases | `GasLab` | Movimiento de las partículas · Animar las partículas | — | Antes no se podía detener (WCAG 2.2.2) |
+| Fotosíntesis | `PhotoLab` | Burbujeo de la elodea · Animar las burbujas | — | Antes no se podía detener (WCAG 2.2.2) |
+
+**Prácticas con animación pero sin dinámica que pausar** (no se inventan controles):
+
+| Práctica | Componente | Motivo |
+|---|---|---|
+| Microscopio (células) | `MicroscopeLab` | Conteo a lo largo del diámetro: barrido de 1,4 s del procedimiento, no un fenómeno en el tiempo. |
+| Máquinas simples | `MachinesLab` | Animación de 1,7 s del levantamiento al medir; la lectura no depende del tiempo. |
+| Presión | `PressureLab` | Chorros (1,5 s) y oscilación transitoria del manómetro al mover la sonda: respuesta del instrumento. |
+| Flotación | `BuoyancyLab` | La aguja del dinamómetro se asienta y la sal se disuelve: transiciones del instrumento. |
+| Conductores | `ConductorsLab` | Cierre del circuito de 0,9 s antes de leer el amperímetro: transición del instrumento. |
+| Descomposición | `DecompositionLab` | Pesaje de las bolsas (1,6 s); las semanas se eligen con un control deslizante, no transcurren. |
+| Balanceo | `BalancingLab` | La balanza de átomos se inclina hasta su posición: transición, sin tiempo. |
+| Modelo de ADN | `DnaExtractionLab` | Etapas del procedimiento con un botón cada una (verter, filtrar, enrollar). |
+| Mol | `MoleLab` | Reacción de 3,2 s como paso entre «Pesar antes» y «Pesar después»; se mide la diferencia de masas. |
+| Equilibrio químico | `EquilibriumLab` | Relajación de 3 s que dispara cada perturbación; no hay corrida que iniciar y el estado ya se anuncia («El sistema está respondiendo…»). |
+| Selección natural | `SelectionLab` | Generaciones discretas con «Avanzar 1 / 10 generaciones» (transición de 0,7 s). |
+| Calidad del agua | `WaterQualityLab` | Toma de la muestra (2,4 s) antes de leer los instrumentos. |
+| Interferencia | `InterferenceLab` | Barrido automático del sensor (instrumento) sobre un patrón estacionario; el sensor también se mueve a mano. |
+| Sonido | `SoundLab` | Fuente sonora real: «Golpear el diapasón», «Encender/Apagar el generador» y «Detener el sonido» ya controlan la dinámica. |
+| Circuitos simples | `SimpleCircuitsLab` | El giro del motor es el estado del circuito; se detiene con el interruptor. |
+| Inducción (generador) | `InductionLab` | La bobina gira según las rpm elegidas (0 = detenida); la lectura es instantánea. |
+| Mitosis, población, genética de poblaciones, enzimas | `MitosisLab`, `PopulationLab`, `PopGenLab`, `EnzymeLab` | Sin animación temporal: el modelo se calcula completo y se muestra como gráfica o resultado. |
+
+Las 23 prácticas restantes (densidad, mezclas, óptica, soluciones, química inorgánica y orgánica, genómica, etc.)
+no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 23 adoptadas + 19 sin dinámica que pausar + 23 sin
+animación = 65.
 
 ### `ConditionAlert` (`src/components/ConditionAlert.tsx`)
 
 Aviso de condición experimental con nivel (`invalido`, `advertencia`, `nota`), título, causa y **cómo corregirlo**.
 `Warnings` (lista de advertencias del modelo, usada por 19 laboratorios) ya lo usa, así que todas las prácticas las
-muestran igual. El análisis lo usa para el control de variables.
+muestran igual. El análisis lo usa para el control de variables y los choques, para la condición imposible «los
+deslizadores no se alcanzan» (nivel `invalido`, con el inicio bloqueado).
 
 ```tsx
 <ConditionAlert level="invalido" title="la muestra flota"
@@ -186,8 +258,11 @@ muestran igual. El análisis lo usa para el control de variables.
 
 ### `Readout` con resolución y estado (`src/components/ui.tsx`)
 
-Cada lectura admite `resolution` («± 0,1 g») y `state` (`ok`, `warn`, `bad`, dicho en texto: «en rango», «en el
-límite», «fuera de rango»). Retrocompatible: los 65 laboratorios siguen funcionando sin cambios.
+Cada lectura admite `resolution` y `state` (`ok`, `warn`, `bad`, dicho en texto: «en rango», «en el límite», «fuera
+de rango»). Retrocompatible: los 65 laboratorios siguen funcionando sin cambios. La resolución se escribe con
+`resolutionText(paso, unidad)` («resolución 0,01 s»), tomando el paso de la constante del modelo cuando existe
+(`TIMER_RES`, `TAPE_RES`, `BALANCE_RES`…). Con resolución: proyectiles, péndulo, choques, cinemática, conservación de
+la masa y cinética química.
 
 ### `RelationExplainer` (análisis)
 

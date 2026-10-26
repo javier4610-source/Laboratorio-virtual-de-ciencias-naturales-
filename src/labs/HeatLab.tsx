@@ -11,6 +11,7 @@ import { Chart } from '../components/Chart';
 import { DataLogger, LoggerRunCharts, SensorCard } from '../components/DataLogger';
 import type { LoggerChannel, LoggerRun } from '../lib/logger';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
@@ -168,7 +169,7 @@ function DigitalThermometer({ x, y, text, probeX, probeY }: { x: number; y: numb
 
 /* ------------------------------------------------------------------ laboratorio */
 
-type Phase = 'listo' | 'midiendo' | 'medido';
+type Phase = 'listo' | 'midiendo' | 'pausa' | 'medido';
 
 export default function HeatLab({ api }: LabProps) {
   const [experiment, setExperiment] = useState<ExperimentId>('agua');
@@ -218,7 +219,8 @@ export default function HeatLab({ api }: LabProps) {
   useEffect(() => {
     if (phase !== 'midiendo') return;
     if (prefersReducedMotion()) { setElapsed(TRANSFER_MS + RUN_MS); setPhase('medido'); return; }
-    const start = performance.now();
+    // Al reanudar tras una pausa, el reloj sigue desde el tiempo ya transcurrido.
+    const start = performance.now() - elapsed;
     const tick = (now: number) => {
       const e = Math.min(TRANSFER_MS + RUN_MS, Math.max(0, now - start));
       setElapsed(e);
@@ -311,8 +313,8 @@ export default function HeatLab({ api }: LabProps) {
 
   const desc = done
     ? `Después de 10 min, el termómetro del calorímetro marca ${fmt(readings.t10, 1)} °C. La mezcla llegó al equilibrio térmico a ${fmt(readings.te, 1)} °C y luego se acercó lentamente a la temperatura del salón (${fmt(ROOM_T, 0)} °C).`
-    : phase === 'midiendo'
-      ? `Se agregó ${sampleNoun} al calorímetro; el termómetro marca ${fmt(lcdTemp, 1)} °C a los ${fmt(simT, 0)} s.`
+    : phase === 'midiendo' || phase === 'pausa'
+      ? `Se agregó ${sampleNoun} al calorímetro; el termómetro marca ${fmt(lcdTemp, 1)} °C a los ${fmt(simT, 0)} s${phase === 'pausa' ? ' (registro en pausa)' : ''}.`
       : `Calorímetro (${vessel.name.toLowerCase()} con tapa) sobre una balanza, con ${fmt(waterMass, 0)} g de agua a ${fmt(waterTemp, 0)} °C. En la parrilla, ${isMetal ? `una pieza de ${metalInfo.name.toLowerCase()} de ${fmt(sampleMass, 0)} g en agua a ${fmt(sampleTemp, 0)} °C` : `${fmt(sampleMass, 0)} g de agua a ${fmt(sampleTemp, 0)} °C`}.`;
 
   const probeX = CX + 34, stirX = CX - 34;
@@ -322,7 +324,7 @@ export default function HeatLab({ api }: LabProps) {
   const inner = `M${CX - innerHalf(style, CUP_TOP)} ${CUP_TOP} L${CX - innerHalf(style, inBottom)} ${inBottom} L${CX + innerHalf(style, inBottom)} ${inBottom} L${CX + innerHalf(style, CUP_TOP)} ${CUP_TOP} Z`;
   const waterColor = '#7fbfe0';
 
-  const chartPoints = done ? thermoSeries : phase === 'midiendo' && transfer >= 1 ? thermoSeries.slice(0, idx + 1) : [];
+  const chartPoints = done ? thermoSeries : (phase === 'midiendo' || phase === 'pausa') && transfer >= 1 ? thermoSeries.slice(0, idx + 1) : [];
 
   return (
     <div className="lab-layout">
@@ -550,10 +552,9 @@ export default function HeatLab({ api }: LabProps) {
             hint={isMetal ? 'El metal se calienta varios minutos en agua; hirviendo, a ≈ 99 °C en Urabá.' : undefined} />
           <Slider label="Masa de agua en el calorímetro" value={waterMass} min={HEAT_LIMITS.waterMass[0]} max={HEAT_LIMITS.waterMass[1]} step={1} unit="g" decimals={0} onChange={setWaterMass} />
           <Slider label="Temperatura inicial del agua del calorímetro" value={waterTemp} min={HEAT_LIMITS.waterTemp[0]} max={HEAT_LIMITS.waterTemp[1]} step={1} unit="°C" decimals={0} onChange={setWaterTemp} />
-          <div className="btn-row">
-            <button type="button" className="btn primary" disabled={phase === 'midiendo'} onClick={start}>Mezclar y medir</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          <SimControls title="Calorímetro" status={simStatusOf(phase === 'midiendo', phase === 'pausa', done)} startLabel="Mezclar y medir" repeatLabel="Medir de nuevo"
+            onStart={start} onPause={() => { cancelAnimationFrame(raf.current); setPhase('pausa'); }} onResume={() => setPhase('midiendo')} onReset={reset}
+            progress={{ value: simT / 60, max: RECORD_S / 60, unit: 'min', decimals: 1, label: 'Tiempo de registro' }} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>

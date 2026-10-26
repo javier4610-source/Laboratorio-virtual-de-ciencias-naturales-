@@ -10,6 +10,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { playSound, useSoundLoop } from '../lib/sound';
 import { Chart, type Series } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import { useMeasure } from '../components/Measurement';
 import { useModelParams, usePublishModel } from '../components/Advanced';
 import type { LabProps } from './registry';
@@ -40,7 +41,7 @@ const HAND_CAP = 99.99;
 
 type Activity = 'ida' | 'idavuelta' | 'carrera';
 type Timing = 'fotopuerta' | 'manual' | 'companero';
-type Phase = 'listo' | 'corriendo' | 'medido';
+type Phase = 'listo' | 'corriendo' | 'pausa' | 'medido';
 type AnimSpeed = 'real' | 'x4';
 type Prediction = '' | '1' | '2' | 'empate';
 
@@ -486,6 +487,20 @@ export default function MotionLab({ api }: LabProps) {
     setPhase('corriendo');
   };
 
+  // Pausa: el reloj de la animación se congela. Al reanudar se corre el origen del tiempo (y el arranque del
+  // cronómetro de mano, si está en marcha) lo que duró la pausa, de modo que ninguna lectura cambia por pausar.
+  const pausedAt = useRef(0);
+  const pause = () => { cancelAnimationFrame(raf.current); clearTimers(); pausedAt.current = performance.now(); setPhase('pausa'); };
+  const resume = () => {
+    const t = performance.now();
+    const delta = t - pausedAt.current;
+    setRunStart((r0) => r0 + delta);
+    const s = sw.current;
+    if (s.start !== null && s.stop === null) { s.start += delta; setSwStart(s.start); }
+    setNow(t);
+    setPhase('corriendo');
+  };
+
   const pressWatch = () => {
     if (!manual || phase !== 'corriendo') return;
     const t = performance.now();
@@ -651,10 +666,11 @@ export default function MotionLab({ api }: LabProps) {
 
   const desc = (() => {
     const where = `Cono de salida en ${fmt(start, 0)} m y bandera de meta en ${fmt(finish, 0)} m de la cancha; la cinta métrica está tendida ${fmt(tape, 1)} m desde el cono${aligned ? ' y llega a la bandera' : ' y no llega exactamente a la bandera'}.`;
-    if (isRace) return `${where} Carrera: carril 1 ${lanes[0].name.toLowerCase()}, carril 2 ${lanes[1].name.toLowerCase()}. ${done ? `Llegó primero: ${winnerText}.` : running ? 'Los móviles avanzan.' : 'Los móviles esperan antes de la salida.'}`;
+    if (isRace) return `${where} Carrera: carril 1 ${lanes[0].name.toLowerCase()}, carril 2 ${lanes[1].name.toLowerCase()}. ${done ? `Llegó primero: ${winnerText}.` : running ? 'Los móviles avanzan.' : phase === 'pausa' ? 'La carrera está en pausa.' : 'Los móviles esperan antes de la salida.'}`;
     const state = done
       ? (timeReading !== null ? `Recorrido terminado; el cronómetro marca ${fmt(timeReading, 2)} s.` : 'Recorrido terminado sin cronometrar.')
-      : running ? `${mover.name} en movimiento; cronómetro en ${fmt(watchValue, 2)} s.` : `${mover.name} espera detrás del cono de salida.`;
+      : running ? `${mover.name} en movimiento; cronómetro en ${fmt(watchValue, 2)} s.`
+        : phase === 'pausa' ? `Recorrido en pausa; cronómetro en ${fmt(watchValue, 2)} s.` : `${mover.name} espera detrás del cono de salida.`;
     return `${where} ${state}`;
   })();
 
@@ -799,15 +815,15 @@ export default function MotionLab({ api }: LabProps) {
             <Segmented<AnimSpeed> label="Velocidad de la animación" value={anim} onChange={setAnim}
               options={[{ value: 'real', label: 'Tiempo real' }, { value: 'x4', label: 'Acelerada ×4' }]} />
           )}
-          <div className="btn-row">
-            <button type="button" className="btn primary" onClick={go} disabled={running || (isRace && !prediction)}>Dar la salida</button>
+          {/* Sin barra de avance: el tiempo del recorrido es lo que se mide. */}
+          <SimControls title="Salida y recorrido" status={simStatusOf(running, phase === 'pausa', done)} startLabel="Dar la salida" repeatLabel="Dar la salida otra vez"
+            disabled={phase === 'listo' && isRace && !prediction} onStart={go} onPause={pause} onResume={resume} onReset={reset}>
             {manual && (
               <button type="button" className="btn" onClick={pressWatch} disabled={!running || swStop !== null}>
                 {swStart === null ? 'Arrancar cronómetro' : 'Detener cronómetro'}
               </button>
             )}
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          </SimControls>
           {startHint && <p className="small muted" style={{ margin: 0 }}>{startHint}</p>}
           {isRace && !prediction && <p className="small muted" style={{ margin: 0 }}>Elige tu predicción antes de dar la salida.</p>}
           <RecordButton onRecord={record} disabled={!canRecord} label={isRace ? 'Guardar los dos carriles en la tabla' : undefined} />

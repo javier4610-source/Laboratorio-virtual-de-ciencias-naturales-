@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  COLLISION_LIMITS, COLLISION_TYPES, FLAG_LENGTH, RAIL, contactSamples, simulateCollision, stateAt, timeline,
+  BALANCE_RES, COLLISION_LIMITS, COLLISION_TYPES, FLAG_LENGTH, RAIL, contactSamples, simulateCollision, stateAt, timeline, TIMER_RES,
   type CollisionType,
 } from '../models/collisions';
 import { fmt } from '../lib/format';
@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { impactIntensity, playSound, useSoundLoop } from '../lib/sound';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { ConditionAlert, SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { BenchTop, DigitalBalance, Lcd } from './kit';
@@ -281,7 +282,8 @@ export default function CollisionsLab({ api }: LabProps) {
     if (prefersReducedMotion()) { setT(tl.tEnd); setRunning(false); setDone(true); return; }
     // Reproducción acelerada si el registro dura más de 6 s (deslizadores lentos).
     const rate = Math.max(1, tl.tEnd / 6);
-    const start = performance.now();
+    // Al reanudar tras una pausa, el registro sigue desde el instante ya reproducido.
+    const start = performance.now() - (t / rate) * 1000;
     const tick = (now: number) => {
       const sim = Math.max(0, (now - start) / 1000) * rate;
       if (sim >= tl.tEnd) { setT(tl.tEnd); setRunning(false); setDone(true); return; }
@@ -327,6 +329,7 @@ export default function CollisionsLab({ api }: LabProps) {
 
   const dtText = (dt: number | null) => (dt === null ? 'no pasa (en reposo)' : `${fmt(dt * 1000, 1)} ms`);
   const show = (s: string) => (done ? s : '—');
+  const timerRes = resolutionText(TIMER_RES * 1000, 'ms');
 
   const record = () => api.addTrial('choques', {
     tipo: typeName.short, m1, m2,
@@ -342,7 +345,7 @@ export default function CollisionsLab({ api }: LabProps) {
     ? 'Los deslizadores no se alcanzan: el deslizador 1 no es más rápido hacia la derecha que el 2.'
     : done
       ? `Después de la interacción el deslizador 1 se mueve a ${f0(m.v1f, 3)} m/s y el 2 a ${f0(m.v2f, 3)} m/s. Cantidad de movimiento total: ${f0(m.pBefore, 4)} kg·m/s antes y ${f0(m.pAfter, 4)} kg·m/s después.`
-      : running ? 'Los deslizadores se mueven por el riel de aire.' : 'Los deslizadores esperan en el riel de aire, listos para lanzarse.';
+      : running ? 'Los deslizadores se mueven por el riel de aire.' : t > 0 ? `Reproducción en pausa en t = ${fmt(t, 2)} s.` : 'Los deslizadores esperan en el riel de aire, listos para lanzarse.';
 
   return (
     <div className="lab-layout">
@@ -393,10 +396,10 @@ export default function CollisionsLab({ api }: LabProps) {
           <div className="stack">
             <h3>Fotopuertas (bandera de 10,0 cm)</h3>
             <Readout items={[
-              { k: 'Δt₁ antes', v: show(dtText(g.before1)), data: true },
-              { k: 'Δt₂ antes', v: show(dtText(g.before2)), data: true },
-              { k: 'Δt₁ después', v: show(dtText(g.after1)), data: true },
-              { k: 'Δt₂ después', v: show(dtText(g.after2)), data: true },
+              { k: 'Δt₁ antes', v: show(dtText(g.before1)), data: true, resolution: timerRes },
+              { k: 'Δt₂ antes', v: show(dtText(g.before2)), data: true, resolution: timerRes },
+              { k: 'Δt₁ después', v: show(dtText(g.after1)), data: true, resolution: timerRes },
+              { k: 'Δt₂ después', v: show(dtText(g.after2)), data: true, resolution: timerRes },
             ]} />
             <h3>Velocidades (v = L/Δt)</h3>
             <Readout items={[
@@ -409,8 +412,8 @@ export default function CollisionsLab({ api }: LabProps) {
           <div className="stack">
             <h3>Balanza (0,1 g)</h3>
             <Readout live={false} items={[
-              { k: 'm₁', v: `${fmt(res.balance1, 1)} g` },
-              { k: 'm₂', v: `${fmt(res.balance2, 1)} g` },
+              { k: 'm₁', v: `${fmt(res.balance1, 1)} g`, resolution: resolutionText(BALANCE_RES, 'g') },
+              { k: 'm₂', v: `${fmt(res.balance2, 1)} g`, resolution: resolutionText(BALANCE_RES, 'g') },
             ]} />
             <h3>Totales del sistema</h3>
             <Readout items={[
@@ -469,12 +472,16 @@ export default function CollisionsLab({ api }: LabProps) {
           )}
           <Segmented label="Deslizador en la balanza" value={weighed} onChange={setWeighed}
             options={[{ value: '1', label: 'Deslizador 1' }, { value: '2', label: 'Deslizador 2' }]} />
-          {!res.collides && <Notice kind="warn">Los deslizadores no se alcanzan: para que choquen, el deslizador 1 debe ir hacia la derecha más rápido que el 2 (v₁ &gt; v₂).</Notice>}
-          <div className="btn-row">
-            <button type="button" className="btn primary" disabled={running || !res.collides}
-              onClick={() => { cancelAnimationFrame(raf.current); setT(0); setDone(false); setRunning(true); if (isExplosion) playSound('thunk', { intensity: 0.5 }); }}>Lanzar</button>
-            <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-          </div>
+          {!res.collides && (
+            <ConditionAlert level="invalido" title="los deslizadores no se alcanzan"
+              cause="Para que choquen, el deslizador 1 debe ir hacia la derecha más rápido que el 2 (v₁ > v₂)."
+              fix="Aumenta la velocidad del deslizador 1 o reduce (o invierte) la del deslizador 2." />
+          )}
+          <SimControls title="Riel de aire" status={simStatusOf(running, t > 0, done)} startLabel="Lanzar" repeatLabel="Lanzar de nuevo"
+            disabled={!res.collides}
+            onStart={() => { cancelAnimationFrame(raf.current); setT(0); setDone(false); setRunning(true); if (isExplosion) playSound('thunk', { intensity: 0.5 }); }}
+            onPause={() => setRunning(false)} onResume={() => setRunning(true)} onReset={reset}
+            progress={res.collides ? { value: Math.min(t, tl.tEnd), max: tl.tEnd, unit: 's', decimals: 2, label: 't' } : undefined} />
           <RecordButton onRecord={record} disabled={!done} />
         </div>
         <Notice>Riel horizontal sin fricción; el contacto dura unas decenas de milisegundos. Cada fotopuerta de doble haz registra el tiempo de paso de la bandera y el sentido del movimiento.</Notice>

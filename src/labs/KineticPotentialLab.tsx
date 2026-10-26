@@ -12,6 +12,7 @@ import { useAdvanced, usePublishModel } from '../components/Advanced';
 import type { ModelState } from '../lib/advanced';
 import { Chart, type Series } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
+import { SimControls, simStatusOf } from '../components/Experiment';
 import type { Trial } from '../core/types';
 import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
@@ -26,7 +27,7 @@ function instrumentSpec(id: KpInstrumentId): KpInstrumentSpec {
 }
 
 type Station = 'cinetica' | 'gravitatoria' | 'elastica';
-type Phase = 'listo' | 'subiendo' | 'arriba' | 'corriendo' | 'medido';
+type Phase = 'listo' | 'subiendo' | 'arriba' | 'corriendo' | 'pausa' | 'medido';
 
 /* ------------------------------------------------------------------ geometría del riel (estaciones 1 y 3) */
 
@@ -406,7 +407,8 @@ export default function KineticPotentialLab({ api }: LabProps) {
     if (phase !== 'corriendo' && phase !== 'subiendo') return;
     const lifting = phase === 'subiendo';
     if (prefersReducedMotion()) { if (lifting) { setT(1); setPhase('arriba'); } else { setT(tEnd); setPhase('medido'); } return; }
-    const start = performance.now();
+    // Al reanudar una corrida en pausa, el reloj sigue desde el tiempo ya simulado.
+    const start = performance.now() - (lifting ? 0 : (t / rate) * 1000);
     const tick = (now: number) => {
       const el = Math.max(0, now - start);
       if (lifting) {
@@ -425,22 +427,24 @@ export default function KineticPotentialLab({ api }: LabProps) {
   }, [phase, tEnd, rate, LIFT_MS]);
 
   const running = phase === 'corriendo';
+  const paused = phase === 'pausa';
+  const inMotion = running || paused;
   const measured = phase === 'medido';
-  const busy = running || phase === 'subiendo';
+  const busy = inMotion || phase === 'subiendo';
 
   // Estados instantáneos para la escena y las barras.
   const s1 = cartStateAt(cart, phase === 'listo' ? 0 : t);
-  const s2 = dropStateAt(drop, running || measured ? t : 0);
-  const s3 = springStateAt(sp, running || measured ? t : 0);
+  const s2 = dropStateAt(drop, inMotion || measured ? t : 0);
+  const s3 = springStateAt(sp, inMotion || measured ? t : 0);
   const liftFrac = phase === 'subiendo' ? t : phase === 'listo' ? 0 : 1;
   const objY = phase === 'listo' || phase === 'subiendo' ? height * liftFrac : s2.y; // altura del centro de la bandera (m)
 
   // Sonidos: soplador, torno, electroimán, fotopuerta y fin de la medición.
-  useSoundLoop('blower', station !== 'gravitatoria' && (running || measured), 0.7);
+  useSoundLoop('blower', station !== 'gravitatoria' && (inMotion || measured), 0.7);
   useSoundLoop('hum', phase === 'subiendo', 0.6);
   const cartX = station === 'cinetica' ? qx(phase === 'listo' ? 0 : s1.x) : qx(s3.q);
   const gateBlocked = station === 'gravitatoria'
-    ? Math.abs(objY) <= FLAG_WIDTH / 2 && phase !== 'listo' && phase !== 'subiendo' && (running || measured)
+    ? Math.abs(objY) <= FLAG_WIDTH / 2 && phase !== 'listo' && phase !== 'subiendo' && (inMotion || measured)
     : Math.abs(cartX - GATE_X) < FLAG_PX / 2;
   const prevGate = useRef(gateBlocked);
   useEffect(() => {
@@ -457,6 +461,9 @@ export default function KineticPotentialLab({ api }: LabProps) {
     setT(0);
     setPhase('corriendo');
   };
+  const pauseRun = () => { cancelAnimationFrame(raf.current); setPhase('pausa'); };
+  const resumeRun = () => setPhase('corriendo');
+  const simStatus = simStatusOf(running, paused, measured);
   const startLift = () => { remeasure('altura', 'fuerza-torno', 'masa-objeto'); playSound('click'); cancelAnimationFrame(raf.current); setT(0); setPhase('subiendo'); };
   const startCompress = () => remeasure('compresion', 'fuerza-resorte');
   useEffect(() => { if (station === 'elastica') startCompress(); }, [comp, springId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -561,7 +568,7 @@ export default function KineticPotentialLab({ api }: LabProps) {
     if (station === 'cinetica') {
       const e = phase === 'listo' ? { ek: 0, heat: 0 } : s1;
       return {
-        scale: cart.ek0, caption: phase === 'listo' ? 'en reposo, antes de lanzar' : running ? `en movimiento${rate > 1 ? ` · animación ×${fmt(rate, 1)}` : ''}` : 'en la fotopuerta',
+        scale: cart.ek0, caption: phase === 'listo' ? 'en reposo, antes de lanzar' : running ? `en movimiento${rate > 1 ? ` · animación ×${fmt(rate, 1)}` : ''}` : paused ? 'en pausa' : 'en la fotopuerta',
         items: [
           { k: 'ec', label: 'Cinética Ec', v: e.ek, color: COLORS.ec },
           { k: 'ep', label: 'Potencial Ep', v: 0, color: COLORS.epg },
@@ -575,7 +582,7 @@ export default function KineticPotentialLab({ api }: LabProps) {
       const ep = lifting ? drop.mass * g * objY : s2.ep, ek = lifting ? 0 : s2.ek, heat = lifting ? 0 : s2.heat;
       return {
         scale: drop.ep0,
-        caption: phase === 'listo' ? 'objeto en el nivel de referencia' : phase === 'subiendo' ? 'el torno hace trabajo' : phase === 'arriba' ? 'arriba, en reposo' : running ? 'cayendo' : 'en la fotopuerta',
+        caption: phase === 'listo' ? 'objeto en el nivel de referencia' : phase === 'subiendo' ? 'el torno hace trabajo' : phase === 'arriba' ? 'arriba, en reposo' : running ? 'cayendo' : paused ? 'caída en pausa' : 'en la fotopuerta',
         items: [
           { k: 'ep', label: 'Potencial m·g·h', v: ep, color: COLORS.epg },
           { k: 'ec', label: 'Cinética Ec', v: ek, color: COLORS.ec },
@@ -585,7 +592,7 @@ export default function KineticPotentialLab({ api }: LabProps) {
       };
     }
     return {
-      scale: sp.epElastic, caption: phase === 'listo' ? 'resorte comprimido' : running ? `en movimiento${rate > 1 ? ` · animación ×${fmt(rate, 1)}` : ''}` : sp.run?.reachesGate ? 'en la fotopuerta' : 'detenido',
+      scale: sp.epElastic, caption: phase === 'listo' ? 'resorte comprimido' : running ? `en movimiento${rate > 1 ? ` · animación ×${fmt(rate, 1)}` : ''}` : paused ? 'en pausa' : sp.run?.reachesGate ? 'en la fotopuerta' : 'detenido',
       items: [
         { k: 'ep', label: 'Elástica ½·k·x²', v: s3.ep, color: COLORS.epe },
         { k: 'ec', label: 'Cinética Ec', v: s3.ek, color: COLORS.ec },
@@ -596,7 +603,7 @@ export default function KineticPotentialLab({ api }: LabProps) {
   })();
 
   /* -------------------------------------------------- escenas */
-  const gateText = (dt: number | null) => (measured && dt !== null ? fmt(dt, 2) : running ? '- - - -' : '0,00');
+  const gateText = (dt: number | null) => (measured && dt !== null ? fmt(dt, 2) : inMotion ? '- - - -' : '0,00');
 
   const trackScene = (st: 'cinetica' | 'elastica') => {
     const slots = st === 'cinetica' ? slots1 : slots3;
@@ -609,7 +616,7 @@ export default function KineticPotentialLab({ api }: LabProps) {
     return (
       <g>
         <BenchTop y={BENCH_Y} width={W} />
-        <AirTrack blowing={running || measured} />
+        <AirTrack blowing={inMotion || measured} />
         {/* cable de la fotopuerta al temporizador */}
         <path d={`M${GATE_X + 14} ${GY} C ${GATE_X + 14} 150, 240 120, 210 60`} fill="none" stroke="var(--ink-2)" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
         <GateTimer x={14} y={12} text={gateText(dt)} caption={dt === null && measured ? 'el carrito no llegó a la fotopuerta' : 'tiempo de bloqueo de la bandera'} />
@@ -664,7 +671,7 @@ export default function KineticPotentialLab({ api }: LabProps) {
           </g>
         )}
         <Cart cx={cx} slots={slots} />
-        {(running || measured) && <VelocityArrow x={cx + CART_HALF + 6} y={RY - 64} v={v} label={`${fmt(v, 2)} m/s`} />}
+        {(inMotion || measured) && <VelocityArrow x={cx + CART_HALF + 6} y={RY - 64} v={v} label={`${fmt(v, 2)} m/s`} />}
         <text x={qx(0)} y={RY + 64} textAnchor="middle" style={{ fontSize: 9, fill: 'var(--ink-2)' }}>salida</text>
         <path d={`M${qx(0)} ${RY + 54} V${RY + 28}`} stroke="var(--ink-2)" strokeWidth="0.8" strokeDasharray="2 2" />
         <g>
@@ -747,7 +754,7 @@ export default function KineticPotentialLab({ api }: LabProps) {
           <text x={DROP_X} y={oy - 14} textAnchor="middle" style={{ fontSize: 6, fill: '#1f2a2d' }}>kg</text>
         </g>
         <PhotoGate x={DROP_X} top={YG} bottom={YG + 16} blocked={gateBlocked} label="Fotopuerta · Ep = 0" horizontal />
-        {(running || measured) && s2.v > 0.05 && (
+        {(inMotion || measured) && s2.v > 0.05 && (
           <g>
             <line x1={DROP_X + 40} x2={DROP_X + 40} y1={oy - 44} y2={oy - 44 + Math.min(60, s2.v * 4.5)} stroke="var(--series-1)" strokeWidth="3" />
             <path d={`M${DROP_X + 40} ${oy - 36 + Math.min(60, s2.v * 4.5)} l-5 -8 h10 Z`} fill="var(--series-1)" />
@@ -1005,10 +1012,8 @@ export default function KineticPotentialLab({ api }: LabProps) {
                 hint={`Masa: carrito de 200 g + pesas = ${fmt(m1 * 1000, 0)} g.`} />
               <Slider label="Rapidez del lanzador" value={launch} min={KP_LIMITS.launchSpeed[0]} max={KP_LIMITS.launchSpeed[1]} step={0.05} unit="m/s" decimals={2} onChange={setLaunch}
                 hint="La rapidez la mide la fotopuerta; en el modo de instrumento real el lanzador varía cerca de 1 %." />
-              <div className="btn-row">
-                <button type="button" className="btn primary" disabled={busy} onClick={startRun}>Lanzar el carrito</button>
-                <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-              </div>
+              <SimControls title="Riel de aire" status={simStatus} startLabel="Lanzar el carrito" repeatLabel="Lanzar de nuevo"
+                onStart={startRun} onPause={pauseRun} onResume={resumeRun} onReset={reset} />
               <RecordButton onRecord={record} disabled={!canRecord} label="Guardar lanzamiento en la tabla" />
             </>
           )}
@@ -1019,11 +1024,13 @@ export default function KineticPotentialLab({ api }: LabProps) {
               <Slider label="Masa del objeto" value={dropMass} min={KP_LIMITS.dropMass[0]} max={KP_LIMITS.dropMass[1]} step={0.05} unit="kg" decimals={2} onChange={setDropMass} />
               <Slider label="Altura sobre la fotopuerta" value={height} min={KP_LIMITS.height[0]} max={KP_LIMITS.height[1]} step={0.05} unit="m" decimals={2} onChange={setHeight}
                 hint="Se mide desde el haz de la fotopuerta (nivel de referencia, Ep = 0) hasta el centro de la bandera." />
+              {/* Primero se sube el objeto con el torno; «Soltar» inicia la caída, que se puede pausar. */}
               <div className="btn-row">
                 <button type="button" className="btn primary" disabled={busy || phase === 'arriba' || measured} onClick={startLift}>Subir con el torno</button>
-                <button type="button" className="btn primary" disabled={phase !== 'arriba'} onClick={startRun}>Soltar</button>
-                <button type="button" className="btn" onClick={reset}>Reiniciar</button>
               </div>
+              <SimControls title="Torre de caída" status={simStatus} startLabel="Soltar" repeatLabel="Subir otra vez con el torno"
+                disabled={phase === 'listo' || phase === 'subiendo'} resetDisabled={phase === 'listo'}
+                onStart={measured ? startLift : startRun} onPause={pauseRun} onResume={resumeRun} onReset={reset} />
               <RecordButton onRecord={record} disabled={!canRecord} label="Guardar caída en la tabla" />
             </>
           )}
@@ -1034,10 +1041,8 @@ export default function KineticPotentialLab({ api }: LabProps) {
                 onChange={(v) => setComp(r(v / 100, 4))} />
               <Slider label="Pesas de 100 g sobre el carrito" value={slots3} min={0} max={CART.maxSlots} step={1} decimals={0} onChange={changeSlots(setSlots3, slots3)}
                 hint={`Masa: ${fmt(m3 * 1000, 0)} g.`} />
-              <div className="btn-row">
-                <button type="button" className="btn primary" disabled={busy} onClick={startRun}>Soltar el pestillo</button>
-                <button type="button" className="btn" onClick={reset}>Reiniciar</button>
-              </div>
+              <SimControls title="Lanzador de resorte" status={simStatus} startLabel="Soltar el pestillo" repeatLabel="Soltar de nuevo"
+                onStart={startRun} onPause={pauseRun} onResume={resumeRun} onReset={reset} />
               <RecordButton onRecord={record} disabled={!canRecord} label="Guardar disparo en la tabla" />
             </>
           )}

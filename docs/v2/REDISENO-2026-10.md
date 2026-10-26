@@ -61,4 +61,4 @@ experimento), después la arquitectura y por último el acabado.
 
 ## 4. Resultado
 
-Ver la sección «Rediseño integral de la plataforma (versión 2.5.0)» de `docs/AUDITORIA.md` y el CHANGELOG.
+Ver la sección «Rediseño integral de la plataforma (versión 2.6.0)» de `docs/AUDITORIA.md` y el CHANGELOG.

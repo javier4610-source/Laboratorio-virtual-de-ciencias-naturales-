@@ -176,7 +176,7 @@ Módulos del enunciado → código: A navegación (`App.tsx`, `lib/router.ts`), 
 
 ## Interfaz y sistema de diseño
 
-La interfaz (rediseño 2.5.0, [ADR 0007](docs/v2/adr/0007-sistema-de-diseno-y-espacio-de-trabajo.md)) se organiza por
+La interfaz (rediseño 2.6.0, [ADR 0007](docs/v2/adr/0007-sistema-de-diseno-y-espacio-de-trabajo.md)) se organiza por
 tareas y alrededor del espacio de trabajo de cada práctica:
 
 - **Inicio por perfil**: estudiante, docente o investigador/curioso; cada perfil muestra cuatro tareas («Continuar mi

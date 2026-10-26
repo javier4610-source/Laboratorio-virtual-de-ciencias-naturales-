@@ -59,7 +59,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
-- [x] v2.5.0 (sin publicar) · Rediseño integral de la plataforma (pedido del docente, ADR 0007): sistema de diseño con
+- [x] v2.6.0 (sin publicar) · Rediseño integral de la plataforma (pedido del docente, ADR 0007): sistema de diseño con
   tokens y escala de datos distinguible con daltonismo, inicio por perfiles, catálogo con filtros en la dirección,
   espacio de trabajo de la práctica, atajos de teclado, componentes experimentales compartidos (simulación, condiciones,
   lecturas, relaciones, comparación de ensayos, JSON) y carga más liviana.
@@ -104,7 +104,7 @@ ilustración educativa, sin información). Diagnóstico y plan: `docs/v2/DIAGNOS
 - [x] **Química inorgánica** (versión 2.1.0): kit 3D, óxidos e hidróxidos, ácidos y sales, nomenclatura inorgánica.
 - [x] **Química orgánica, parte 1** (versión 2.2.0): hidrocarburos, aromáticos y nomenclatura IUPAC.
 - [x] **Química orgánica, parte 2** (versión 2.3.0): grupos funcionales oxigenados y nitrogenados, reacciones orgánicas en 3D.
-- [x] **Rediseño integral de la plataforma** (versión 2.5.0, sin publicar): diagnóstico en `docs/v2/REDISENO-2026-10.md`,
+- [x] **Rediseño integral de la plataforma** (versión 2.6.0, sin publicar): diagnóstico en `docs/v2/REDISENO-2026-10.md`,
       sistema de diseño en `docs/v2/SISTEMA-DE-DISENO.md`, ADR 0007.
 - [ ] **v2 · Fase 7 (en pausa por decisión del docente):** fármacos con RDKit.js; trabajo guardado fuera del repositorio, listo para retomar.
 - [ ] **v2 · Fases 7–10:** fármacos, genómica, dinámica molecular,

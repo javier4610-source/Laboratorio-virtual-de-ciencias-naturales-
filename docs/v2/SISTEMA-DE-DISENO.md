@@ -1,6 +1,6 @@
 # Sistema de diseño del Laboratorio Virtual
 
-Versión 2.5.0 (octubre de 2026). Decisión: [ADR 0007](adr/0007-sistema-de-diseno-y-espacio-de-trabajo.md).
+Versión 2.6.0 (octubre de 2026). Decisión: [ADR 0007](adr/0007-sistema-de-diseno-y-espacio-de-trabajo.md).
 Diagnóstico que lo motivó: [REDISENO-2026-10.md](REDISENO-2026-10.md).
 
 ## 1. Principios

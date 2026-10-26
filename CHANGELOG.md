@@ -7,7 +7,7 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
-Versión **MENOR** prevista (2.5.0): rediseño integral de la interfaz sin cambiar rutas, identificadores de práctica,
+Versión **MENOR** prevista (2.6.0): rediseño integral de la interfaz sin cambiar rutas, identificadores de práctica,
 formato de los datos guardados, contrato del servidor ni modelos científicos (los valores dorados no cambian).
 
 ### Añadido

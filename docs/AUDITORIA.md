@@ -397,3 +397,38 @@ prácticas `oxidos-hidroxidos`, `acidos-sales` y `nomenclatura-inorganica`.
 | 3D | Reacción 3D en 1025 de 1196 combinaciones (el resto explica por qué no); CaO red, H₂SO₄ confórmero, HBrO₃ VSEPR, CaSO₄ ion poliatómico, Cl₂O₅ y SiO₂ sin geometría; P₂O₅ se anima como P₄O₁₀ | Correcto | — | — | Correcto |
 | Interfaz | E2E del taller en las tres prácticas (recorrido Ca → CaO → Ca(OH)₂; S(+6) → SO₃ → H₂SO₄ → CaSO₄; He rechazado; teclado en la tabla) y axe WCAG 2.2 AA en ambos temas (resultado, reacción 3D y rechazo); 390 y 1280 px sin desbordamiento; capturas revisadas | Correcto | Ecuación partida entre coeficiente y fórmula a 390 px; tabla de nombres apretada | Términos sin salto interno; tabla con ancho mínimo y desplazamiento | Corregido |
 | Regresión | `tsc -b` sin errores; 1152 pruebas unitarias (66 archivos, 42 del taller); `npm run build`; E2E completo 151 de 151 (9 nuevas del taller) | Todas pasan | — | — | Correcto |
+
+# Rediseño integral de la plataforma (versión 2.6.0, sin publicar)
+
+Pedido del docente: rediseño integral de la interfaz. Diagnóstico y plan: `docs/v2/REDISENO-2026-10.md`; decisión:
+ADR 0007; sistema de diseño: `docs/v2/SISTEMA-DE-DISENO.md`. Capturas antes y después (68 + 68, claro/oscuro, 1280 y
+390 px) en el directorio temporal del agente (fuera del repositorio).
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Modelos científicos | Valores dorados (`tests/golden`) y pruebas de modelos sin cambios | Correcto | — | Ningún modelo se tocó | Correcto |
+| Tokens del sistema de diseño | Prueba unitaria: bloques oscuros idénticos; todo token usado por laboratorios, componentes y páginas está definido | Correcto | Dos hojas de estilo con valores en conflicto (foco 3 px y 2 px, radios distintos) | Valores solo en `src/tokens.css` | Correcto |
+| Contraste | `scripts/diseno/verificar_paleta.py`: 21 pares de texto, controles, foco y áreas por tema; axe WCAG 2.2 AA en todas las páginas y prácticas, ambos temas y teléfono | Todo cumple (texto secundario ≥ 5,87:1; foco ≥ 5,71:1) | El foco usaba el mismo naranja que los datos | Foco azul propio (`--focus`) | Correcto |
+| Escala de datos y daltonismo | ΔE2000 mínimo entre 8 series tras simular protanopía, deuteranopía y tritanopía (Machado 2009) | Claro: 7,4 / 6,2 / 10,3 (antes 2,6 / 0,9 / 2,7); oscuro: 9,6 / 6,9 / 9,4 (antes 2,8 / 2,7 / 8,8) | Series indistinguibles con deuteranopía | Nueva escala + marcador con forma por serie | Correcto |
+| Rendimiento: carga de la práctica | Recursos descargados al abrir densidad | Ya no se descargan las 65 fichas | `questionById` del currículo completo importado por `PracticeSections` y `lib/report` | `src/assessment/lookup.ts` + prueba de igualdad con `questionById` | Correcto |
+| Rendimiento: JS inicial | `npm run build` | 407,86 → 391,3 kB (126,50 → 123,5 kB gzip); CSS 115,1 → 130,6 kB (22,4 → 25,4 kB gzip) | Kit de instrumentos y sintetizador en el paquete inicial | Catálogo, grado, héroe y definiciones del kit bajo demanda | Correcto (el sintetizador sigue en el paquete inicial: pendiente) |
+| Carga medida (Chromium, CPU ×4, 1,6 Mb/s, 150 ms; mediana de 3; servidor sin compresión) | FCP, LCP, tiempo de bloqueo y JS transferido | Ver la tabla siguiente | — | — | Correcto (Lighthouse no disponible sin red) |
+| Inicio por perfiles | E2E: perfiles, tareas, recordar el perfil, «Continuar mi práctica» | Correcto; alto de 13 620 → ~4 000 px (escritorio) y 36 535 → ~8 800 px (teléfono) | «Abrir el código de mi docente» chocaba con el botón «Abrir» de una prueba | Renombrado a «Usar el código de mi docente» | Correcto |
+| Catálogo | Unitarias de filtros (adn → 3, química → 20, avance, orden, varias palabras); E2E: filtros en la dirección, chips, estado vacío | Correcto | — | — | Correcto |
+| Práctica: espacio de trabajo | E2E: migas con área, anterior/siguiente del grado; axe en todas las etapas y prácticas | Correcto | En teléfono la barra de etapas ocultaba 3 de 5 pestañas sin pista; el orden flexible movía las pestañas del panel docente al final | Barra desplazable con degradado y etapa activa visible; regla limitada a `.stage-bar` | Corregido |
+| Atajos de teclado | Unitaria de `shortcutKey`; E2E: `?`, `/`, números, sin efecto al escribir; axe del diálogo | Correcto | El botón «Atajos» quedaba sin nombre en teléfono (texto oculto) | `aria-label="Atajos de teclado"` | Corregido |
+| Simulación (ósmosis, ondas) | E2E: estados «Lista para iniciar», «Terminada», «En pausa», «En curso» y avance 100 % | Correcto | — | — | Correcto |
+| Cuaderno | Unitarias de comparación (B − A, variación, entradas cambiadas) y JSON; E2E: comparación +51,3 g, descarga JSON, axe | Correcto | La fila nueva parpadeaba en amarillo/rojo | Animación de color explícita | Corregido |
+| Análisis | E2E: explicación de la relación y axe en claro y oscuro | Correcto | «en función de el volumen» | «en función del volumen» | Corregido |
+| Panel docente, banco, ayuda, informe | axe en todas las pestañas (ahora también «Catálogo»); capturas | Correcto; panel 9 838 → ~1 250 px al abrir; banco 52 474 → ~6 450 px | — | — | Correcto |
+| Impresión | Captura con `media: print` del experimento y del informe | Sin barras de herramientas, paginador ni ajustes | — | — | Correcto |
+| Regresión | `tsc -b`; 1162 pruebas unitarias (67 archivos); `npm run build`; E2E completo 158 de 158 (7 nuevas en plataforma.spec.ts) | Todas pasan | — | — | Correcto |
+
+| Ruta (390 px) | FCP antes → después | LCP antes → después | Bloqueo (> 50 ms) antes → después | JS transferido antes → después |
+|---|---|---|---|---|
+| Inicio | 4296 → 3456 ms | 4296 → 3456 ms | 4099 → 810 ms | 429 → 457 kB |
+| Catálogo | 3588 → 3084 ms | 3588 → 3968 ms | 2324 → 1651 ms | 429 → 463 kB |
+| Práctica (densidad) | 3104 → 3132 ms | 14532 → 6264 ms | 190 → 96 ms | 2535 → 881 kB |
+
+No verificado: lectores de pantalla reales, Firefox y Safari, equipos escolares reales, usabilidad con estudiantes y
+docentes del nuevo inicio por perfiles y de los atajos; Lighthouse (no instalado y sin red para instalarlo).

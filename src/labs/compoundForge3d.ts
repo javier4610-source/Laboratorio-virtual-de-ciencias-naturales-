@@ -140,7 +140,16 @@ function binarySpecies(c: Compound): Species3D | null {
   if ((v - ox) % 2 !== 0 || v < ox) return null;
   const lp = (v - ox) / 2;
   try {
-    return buildVsepr({ id: `binario-${c.formula}`, name: c.names.sistematica[0].toUpperCase() + c.names.sistematica.slice(1), label: c.formulaPretty, center, ligands: Array.from({ length: m }, () => ({ el: s.anion, order: order as 1 | 2 })), lonePairs: lp });
+    const sp = buildVsepr({ id: `binario-${c.formula}`, name: c.names.sistematica[0].toUpperCase() + c.names.sistematica.slice(1), label: c.formulaPretty, center, ligands: Array.from({ length: m }, () => ({ el: s.anion, order: order as 1 | 2 })), lonePairs: lp });
+    // Solo presentación: con 4 o más dominios se inclina la molécula (giro rígido, la geometría no cambia) para que los
+    // enlaces axiales del PCl₅ o del SF₆ no queden de frente al observador, tapados por el átomo central.
+    if (m + lp < 4) return sp;
+    const [a, b] = [(55 * Math.PI) / 180, (25 * Math.PI) / 180];
+    const rot = ({ x, y, z }: { x: number; y: number; z: number }) => {
+      const y1 = y * Math.cos(a) - z * Math.sin(a), z1 = y * Math.sin(a) + z * Math.cos(a);
+      return { x: x * Math.cos(b) + z1 * Math.sin(b), y: y1, z: -x * Math.sin(b) + z1 * Math.cos(b) };
+    };
+    return { ...sp, atoms: sp.atoms.map((at) => ({ ...at, ...rot(at) })) };
   } catch { return null; }
 }
 

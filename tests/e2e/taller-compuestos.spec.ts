@@ -44,7 +44,7 @@ test('oxidos-hidroxidos: Ca + O₂ → CaO «óxido de calcio» (registrado en P
   await expect(ro(page, 'Ca(OH)₂')).toBeVisible();
   await expect(ro(page, 'CaO + H₂O → Ca(OH)₂')).toBeVisible();
   await expect(forgeRoot(page).getByRole('cell', { name: 'hidróxido de calcio', exact: true }).first()).toBeVisible();
-  await expect(forgeRoot(page).getByText(/Logrados: 1 de 10/)).toBeVisible();
+  await expect(forgeRoot(page).getByText(/Logrados: 1 de 13/)).toBeVisible();
   // Visor 3D: la reacción se anima con su rótulo obligatorio y el conteo de átomos.
   await forgeRoot(page).getByRole('button', { name: 'Reacción en 3D' }).click();
   await expect(forgeRoot(page).getByText(/interpolación entre geometrías calculadas de reactivos y productos/).first()).toBeVisible();
@@ -79,7 +79,7 @@ test('acidos-sales: S(+6) + O₂ → SO₃; SO₃ + H₂O → H₂SO₄ «ácido
   await expect(ro(page, 'H₂SO₄ + Ca(OH)₂ → CaSO₄ + 2 H₂O')).toBeVisible();
   await expect(forgeRoot(page).getByRole('cell', { name: 'sulfato de calcio', exact: true }).first()).toBeVisible();
   await expect(forgeRoot(page).getByText(/^Compuesto registrado en PubChem \(CID \d+\)/)).toBeVisible();
-  await expect(forgeRoot(page).getByText(/Logrados: 2 de 10/)).toBeVisible();
+  await expect(forgeRoot(page).getByText(/Logrados: 2 de 13/)).toBeVisible();
 });
 
 test('nomenclatura-inorganica: el helio se rechaza con explicación; 2 Na + Cl₂ → 2 NaCl; la tabla se recorre con el teclado', async ({ page }) => {
@@ -235,6 +235,82 @@ for (const id of Object.keys(FLOWS)) {
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
         expect(overflow, `desbordamiento horizontal a ${width} px`).toBeLessThanOrEqual(0);
         if (SHOTS) await page.screenshot({ fullPage: true, path: `${SHOTS}/${id}-taller-${scheme}-${width}.png` });
+      }
+    });
+  }
+}
+
+/* ---------------------------------------------------------------- siguiente paso del taller (v2.6.x) */
+
+const NEW_FLOWS: Record<string, { lab: string; run: (page: Page) => Promise<void> }> = {
+  'nitrato-amonio': {
+    lab: 'acidos-sales',
+    run: async (page) => {
+      await route(page, 'amoniaco-acido');
+      await element(page, 'nitrógeno', 'N').click();
+      await forgeRoot(page).getByLabel('Número de oxidación del nitrógeno (casilla 1)').selectOption('5');
+      await formar(page);
+      await expect(ro(page, 'NH₃ + HNO₃ → NH₄NO₃')).toBeVisible();
+      await expect(forgeRoot(page).getByRole('cell', { name: 'nitrato de amonio', exact: true }).first()).toBeVisible();
+      // Los dos iones poliatómicos, cada uno en su visor y con sus enlaces covalentes (N–H en el NH₄⁺).
+      await expect(forgeRoot(page).getByText(/en el cristal el NH₄⁺ gira o se desordena/)).toBeVisible();
+      await expect(forgeRoot(page).locator('.forge-ions figure')).toHaveCount(2);
+    },
+  },
+  'tricloruro-fosforo': {
+    lab: 'nomenclatura-inorganica',
+    run: async (page) => {
+      await route(page, 'nometal-nometal');
+      await element(page, 'fósforo', 'P').click();
+      await element(page, 'cloro', 'Cl').click();
+      await formar(page);
+      await expect(ro(page, '2 P + 3 Cl₂ → 2 PCl₃')).toBeVisible();
+      await expect(ro(page, 'Compuesto binario entre no metales')).toBeVisible();
+      await expect(forgeRoot(page).getByRole('cell', { name: 'tricloruro de fósforo', exact: true }).first()).toBeVisible();
+      await expect(forgeRoot(page).getByText(/Logrados: 1 de 13/)).toBeVisible();
+    },
+  },
+  corindon: {
+    lab: 'oxidos-hidroxidos',
+    run: async (page) => {
+      await element(page, 'aluminio', 'Al').click();
+      await formar(page);
+      await expect(ro(page, '4 Al + 3 O₂ → 2 Al₂O₃')).toBeVisible();
+      await expect(forgeRoot(page).getByText('R3̄c (n.º 167, ejes hexagonales) · celda hexagonal con Z = 6')).toBeVisible();
+      await expect(forgeRoot(page).getByText('1,855 Å (×3) y 1,972 Å (×3)', { exact: true })).toBeVisible();
+    },
+  },
+  cuarzo: {
+    lab: 'oxidos-hidroxidos',
+    run: async (page) => {
+      await route(page, 'nometal-o2');
+      await element(page, 'silicio', 'Si').click();
+      await formar(page);
+      await expect(ro(page, 'Si + O₂ → SiO₂')).toBeVisible();
+      await expect(forgeRoot(page).getByText(/es un sólido de red covalente \(cuarzo α\)/)).toBeVisible();
+      await expect(forgeRoot(page).getByText(/^143,7° \(calculado; red covalente/)).toBeVisible();
+    },
+  },
+};
+
+for (const [name, flow] of Object.entries(NEW_FLOWS)) {
+  for (const scheme of ['light', 'dark'] as const) {
+    test(`taller v2.6.x · ${name}: resultado, axe WCAG 2.2 AA y sin desbordamiento a 390 px (${scheme})`, async ({ page }) => {
+      test.setTimeout(240_000);
+      await page.emulateMedia({ colorScheme: scheme });
+      await openForge(page, flow.lab);
+      await flow.run(page);
+      await page.waitForTimeout(1200);
+      const r = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+      expect(r.violations.map((v) => `${v.id}: ${v.help} → ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`)).toEqual([]);
+      for (const width of [1280, 390]) {
+        await page.setViewportSize({ width, height: 900 });
+        await openForge(page, flow.lab);
+        await flow.run(page);
+        await page.waitForTimeout(2000);
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        expect(overflow, `desbordamiento horizontal a ${width} px`).toBeLessThanOrEqual(0);
+        if (SHOTS) await page.screenshot({ fullPage: true, path: `${SHOTS}/v26-${name}-${scheme}-${width}.png` });
       }
     });
   }

@@ -49,7 +49,10 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 - [ ] **T2 · Publicación del servidor:** el docente eligió Render; `Dockerfile`, `render.yaml` y la guía
       `docs/DESPLIEGUE-SERVIDOR.md` están listos. Falta que el docente cree la cuenta y entregue la dirección para
       configurar la variable `API_URL`; política de privacidad y autorización de acudientes (Ley 1581).
-- [ ] **Taller de compuestos, siguiente paso:** redes cristalinas de más sólidos iónicos con parámetro publicado (CaSO₄, Na₂O, Al₂O₃…), sales de amonio y binarios no metálicos en el taller, y revisión manual de los registros de PubChem hallados solo por fórmula.
+- [ ] **Taller de compuestos, siguiente paso (pendiente):** red de la anhidrita (CaSO₄) cuando se pueda consultar un
+      refinamiento publicado (AMCSD/ICSD) y SrO con una densidad publicada; revisión humana, con un químico, de los
+      registros que quedan como «fórmula registrada sin coincidencia de nombre»; ampliar los binarios entre no metales
+      con dos átomos centrales (S₂Cl₂, N₂F₄) si hay geometría fiable.
 - [ ] **Rediseño, siguiente paso** (ADR 0007): adoptar `SimControls` en las demás prácticas con dinámica temporal
       (proyectiles, péndulo, choques, cinemática, energía, cinética, conducción…), `Readout.resolution`/`state` en los
       instrumentos y `ConditionAlert` con «cómo corregirlo» en las advertencias propias de cada modelo; medir con
@@ -58,6 +61,11 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       modestos; exportación para Google Classroom y Moodle; pruebas de regresión visual.
 
 ## Hecho
+
+- [x] v2.6.x (sin publicar) · Taller de compuestos, siguiente paso: redes de Li₂O, Na₂O, K₂O, BaO, ZnS, TiO₂ (rutilo),
+  α-Al₂O₃ (corindón, CIF AMCSD) y cuarzo α (red covalente) con densidad publicada citada; rutas «NH₃ + ácido» (sales
+  de amonio con el NH₄⁺ y sus enlaces N–H) y «No metal + no metal»; revisión automática de los registros de PubChem
+  hallados por la fórmula con una regla documentada (`src/models/pubchemNameMatch.ts`).
 
 - [x] v2.6.0 (sin publicar) · Rediseño integral de la plataforma (pedido del docente, ADR 0007): sistema de diseño con
   tokens y escala de datos distinguible con daltonismo, inicio por perfiles, catálogo con filtros en la dirección,

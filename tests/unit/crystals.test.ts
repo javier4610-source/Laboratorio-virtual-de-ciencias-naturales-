@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
   bridgeAngles, calculatedDensity, cationAnionDistance, cellContent, cellVolume, coordinationNumber, CRYSTALS, CRYSTALS_NOT_INCLUDED, crystalForComposition,
-  densityDeviation, expandSites, generateLattice, getCrystal, latticeFragment, networkBonds, parseSymop, shannonSum, shellDistances, structureSites,
+  densityDeviation, expandSites, generateLattice, getCrystal, latticeFragment, networkBonds, parseSymop, periodicShell, shannonSum, shellDistances, structureSites,
 } from '../../src/chem/crystal';
 import { hasIonicSpecies } from '../../src/chem/species';
 
@@ -124,6 +124,23 @@ describe('redes cristalinas · densidad calculada frente a la publicada', () => 
     // Volúmenes de celda no cúbicos: tetragonal a²c y hexagonal (√3/2)a²c.
     expect(cellVolume(getCrystal('tio2'))).toBeCloseTo(4.5937 ** 2 * 2.9618, 10);
     expect(cellVolume(getCrystal('al2o3'))).toBeCloseTo(254.977, 2); // _cell_volume del CIF de la AMCSD
+  });
+});
+
+describe('redes cristalinas · poliedro resaltado en el visor', () => {
+  it('el poliedro de coordinación se calcula completo en la red periódica, aunque parte caiga fuera del bloque', () => {
+    for (const c of CRYSTALS) for (const n of [1, 2]) {
+      const ions = generateLattice(c, n);
+      for (const which of ['cation', 'anion'] as const) {
+        const i = ions.findIndex((x) => (which === 'cation' ? x.charge > 0 : x.charge < 0));
+        expect(periodicShell(c, ions, i), `${c.id} ${which} n=${n}`).toHaveLength(coordinationNumber(c, which));
+      }
+    }
+    // En la celda central de NaCl los 6 Cl⁻ del Na⁺ del centro están dibujados; en la celda estrecha del corindón no.
+    const na = generateLattice(getCrystal('nacl'), 1);
+    expect(periodicShell(getCrystal('nacl'), na, na.findIndex((x) => x.f.every((v) => v === 0.5))).every((x) => x.index !== null)).toBe(true);
+    const al = generateLattice(getCrystal('al2o3'), 1);
+    expect(al.some((_, i) => al[i].charge > 0 && periodicShell(getCrystal('al2o3'), al, i).some((x) => x.index === null))).toBe(true);
   });
 });
 

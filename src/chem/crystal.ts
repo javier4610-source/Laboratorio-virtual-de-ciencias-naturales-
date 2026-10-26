@@ -367,6 +367,34 @@ export function coordinationShell(ions: Ion[], index: number): number[] {
   return opp.filter((x) => x.d <= dmin * CN_WINDOW).map((x) => x.i);
 }
 
+/**
+ * Poliedro de coordinación COMPLETO de un átomo del bloque, calculado en la red periódica: devuelve los vecinos de
+ * signo contrario (hasta CN_WINDOW × la distancia mínima) con su índice en el bloque si están dibujados, o con sus
+ * coordenadas si caen en una celda contigua (en celdas estrechas, como la del corindón, parte del octaedro queda fuera
+ * del bloque y no se debe mostrar un poliedro incompleto).
+ */
+export function periodicShell(c: CrystalDef, ions: Ion[], index: number): { index: number | null; ion: Ion }[] {
+  const o = ions[index];
+  const sites = structureSites(c);
+  const M = cellMatrix(c);
+  const base = o.f.map(Math.floor) as F3;
+  const cand: Ion[] = [];
+  for (let i = -2; i <= 2; i++) for (let j = -2; j <= 2; j++) for (let k = -2; k <= 2; k++) {
+    for (const s of sites) {
+      if (Math.sign(s.charge) === Math.sign(o.charge)) continue;
+      const f: F3 = [s.f[0] + base[0] + i, s.f[1] + base[1] + j, s.f[2] + base[2] + k];
+      const [x, y, z] = toCart(M, f);
+      cand.push({ el: s.el, charge: s.charge, f, x, y, z });
+    }
+  }
+  const d = (q: Ion) => Math.hypot(q.x - o.x, q.y - o.y, q.z - o.z);
+  const dmin = Math.min(...cand.map(d).filter((v) => v > 1e-6));
+  return cand.filter((q) => d(q) > 1e-6 && d(q) <= dmin * CN_WINDOW).map((q) => {
+    const at = ions.findIndex((p) => Math.abs(p.x - q.x) < 1e-4 && Math.abs(p.y - q.y) < 1e-4 && Math.abs(p.z - q.z) < 1e-4);
+    return { index: at >= 0 ? at : null, ion: q };
+  });
+}
+
 /** Enlaces de una red covalente dentro del bloque: pares de signo contrario a menos de CN_WINDOW × la distancia mínima. */
 export function networkBonds(c: CrystalDef, atoms: { x: number; y: number; z: number; charge?: number }[]): Bond3D[] {
   const cut = cationAnionDistance(c) * CN_WINDOW;

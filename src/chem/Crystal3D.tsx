@@ -6,8 +6,8 @@ import { ballRadius, elementColor, ionicRadius, STICK_RADIUS } from './elements'
 import { applyMolStyle } from './molStyle';
 import { ProjectedSvg, type SvgLine3D } from './ProjectedSvg';
 import {
-  bridgeAngles, calculatedDensity, cellMatrix, coordinationNumber, coordinationShell, CRYSTAL_GEOMETRY_LABEL, densityDeviation, densitySourceShort,
-  DISTANCE_EXPR, formulaMass, generateLattice, networkBonds, shannonSum, shellDistances, SPACE_GROUP, STRUCTURE_NAME, SYSTEM_OF, toCart, type CrystalDef,
+  bridgeAngles, calculatedDensity, cellMatrix, coordinationNumber, CRYSTAL_GEOMETRY_LABEL, densityDeviation, densitySourceShort,
+  DISTANCE_EXPR, formulaMass, generateLattice, networkBonds, periodicShell, shannonSum, shellDistances, SPACE_GROUP, STRUCTURE_NAME, SYSTEM_OF, toCart, type CrystalDef,
 } from './crystal';
 import { toSdf } from './species';
 import { reducedMotion, use3DViewer, useThemeVersion, cssVar } from './engine3d';
@@ -17,6 +17,19 @@ type V3 = [number, number, number];
 
 const ionText = (el: string, q: number) => `${el}${Math.abs(q) > 1 ? Math.abs(q) : ''}${q > 0 ? '⁺' : '⁻'}`.replace(/([0-9])([⁺⁻])/, (_, d: string, s: string) => `${'⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(d)]}${s}`);
 const num = (v: number, d = 4) => fmt(v, d);
+
+/**
+ * Orientación inicial del visor (cuaternión de 3Dmol): las celdas cúbicas de frente, como antes; en las tetragonales y
+ * hexagonales el eje c se pone vertical y se gira 28° para ver la profundidad (desde arriba los octaedros del rutilo y
+ * del corindón se veían aplastados). Se fija en cada encuadre, así que cambiar de cristal no acumula giros.
+ */
+function initialQuaternion(nonCubic: boolean): [number, number, number, number] {
+  if (!nonCubic) return [0, 0, 0, 1];
+  const ax = (-90 * Math.PI) / 360, ay = (28 * Math.PI) / 360;
+  const sx = Math.sin(ax), cx = Math.cos(ax), sy = Math.sin(ay), cy = Math.cos(ay);
+  // q = q_y · q_x (primero el giro sobre x, luego sobre el eje vertical de la pantalla).
+  return [cy * sx, cx * sy, -sy * sx, cy * cx];
+}
 
 /** Aristas de las celdas de un bloque de n × n × n celdas (Å), con los vectores de la celda (cúbica, tetragonal o hexagonal). */
 function cellEdges(c: CrystalDef, n: number): SvgLine3D[] {
@@ -58,12 +71,14 @@ export function Crystal3D({ crystal, idPrefix, height = 320, labelSuffix = '' }:
     const r = ionicRadius(el, q > 0 ? cnC : cnA);
     return size === 'shannon' ? r : r * 0.38;
   };
-  // Átomo central del tipo elegido (el más cercano al centro del bloque) y sus vecinos de signo contrario.
+  // Átomo central del tipo elegido (el más cercano al centro del bloque) y su poliedro de coordinación COMPLETO,
+  // calculado en la red periódica: los vecinos que caen en una celda contigua se dibujan aparte (extra).
   const focus = useMemo(() => {
     const mid = toCart(cellMatrix(crystal), [N / 2, N / 2, N / 2]);
     const cand = ions.map((x, i) => ({ i, x })).filter(({ x }) => (who === 'cation' ? x.charge > 0 : x.charge < 0))
       .sort((p, q) => Math.hypot(p.x.x - mid[0], p.x.y - mid[1], p.x.z - mid[2]) - Math.hypot(q.x.x - mid[0], q.x.y - mid[1], q.x.z - mid[2]))[0];
-    return { center: cand.i, shell: coordinationShell(ions, cand.i) };
+    const full = periodicShell(crystal, ions, cand.i);
+    return { center: cand.i, shell: full.filter((x) => x.index !== null).map((x) => x.index as number), extra: full.filter((x) => x.index === null).map((x) => x.ion) };
   }, [ions, who, N, crystal]);
   const shell = useMemo(() => shellDistances(crystal, 'cation'), [crystal]);
   const rho = calculatedDensity(crystal);
@@ -92,14 +107,21 @@ export function Crystal3D({ crystal, idPrefix, height = 320, labelSuffix = '' }:
           v.addModel(`${ions.length}\nencuadre\n${ions.map((p) => `H ${p.x.toFixed(3)} ${p.y.toFixed(3)} ${p.z.toFixed(3)}`).join('\n')}`, 'xyz');
           v.setStyle({}, { sphere: { radius: 0.01, opacity: 0.01 } });
         }
-        v.resize(); v.zoomTo(); v.zoom(0.85);
+        v.resize();
+        const view = v.getView();
+        const q = initialQuaternion(SYSTEM_OF[crystal.type] !== 'cubica');
+        if (Array.isArray(view) && view.length >= 8) { view[4] = q[0]; view[5] = q[1]; view[6] = q[2]; view[7] = q[3]; v.setView(view); }
+        // Celdas altas (corindón, c ≈ 2,7 a) un poco más lejos para que quepan al girar; las bajas (rutilo) más cerca.
+        const tall = (crystal.c ?? crystal.a) / crystal.a > 2;
+        v.zoomTo(); v.zoom(SYSTEM_OF[crystal.type] === 'cubica' ? 0.85 : tall ? 0.78 : 1.05);
       }
       v.removeAllShapes();
       const data = cssVar('--data', '#b23a0a'), line = cssVar('--ink-2', '#44524f');
       const inShell = new Set([focus.center, ...focus.shell]);
       if (!covalent) ions.forEach((x, i) => v.addSphere({ center: { x: x.x, y: x.y, z: x.z }, radius: radius(x.el, x.charge), color: elementColor(x.el), opacity: inShell.has(i) || size === 'pequenas' ? 1 : 0.55 }));
       const r = covalent ? STICK_RADIUS.bs * 1.35 : 0.07;
-      for (const j of focus.shell) { const p = ions[focus.center], q = ions[j]; v.addCylinder({ start: { x: p.x, y: p.y, z: p.z }, end: { x: q.x, y: q.y, z: q.z }, radius: r, color: data, fromCap: 1, toCap: 1 }); }
+      for (const q of focus.extra) v.addSphere({ center: { x: q.x, y: q.y, z: q.z }, radius: radius(q.el, q.charge), color: elementColor(q.el), opacity: 0.8 });
+      for (const q of [...focus.shell.map((j) => ions[j]), ...focus.extra]) { const p = ions[focus.center]; v.addCylinder({ start: { x: p.x, y: p.y, z: p.z }, end: { x: q.x, y: q.y, z: q.z }, radius: r, color: data, fromCap: 1, toCap: 1 }); }
       for (const e of edges) v.addCylinder({ start: { x: e.p[0], y: e.p[1], z: e.p[2] }, end: { x: e.q[0], y: e.q[1], z: e.q[2] }, radius: 0.03, color: line, dashed: true, dashLength: 0.25, gapLength: 0.18 });
       if (spin && !reducedMotion()) v.spin('y', 0.4); else v.spin(false);
       v.render();
@@ -114,7 +136,7 @@ export function Crystal3D({ crystal, idPrefix, height = 320, labelSuffix = '' }:
   const params = `a = ${num(crystal.a)} Å${crystal.c ? `, c = ${num(crystal.c)} Å` : ''}`;
   const shellText = shell.map((s) => `${num(s.d, 3)} Å${shell.length > 1 ? ` (×${s.n})` : ''}`).join(' y ');
   const atomWord = covalent ? 'átomos' : 'iones';
-  const desc = `Red de ${crystal.nombre} (${crystal.formula}), estructura ${STRUCTURE_NAME[crystal.type]}, ${params}; bloque de ${N}×${N}×${N} celdas con ${ions.length} ${atomWord}${covalent ? ` y ${bonds.length} enlaces` : ''}. Cada ${cat} tiene ${cnC} ${an} vecinos y cada ${an} tiene ${cnA} ${cat}; distancia ${cat}–${an} ${shellText}. Resaltado: un ${who === 'cation' ? cat : an} y sus ${focus.shell.length} vecinos.`;
+  const desc = `Red de ${crystal.nombre} (${crystal.formula}), estructura ${STRUCTURE_NAME[crystal.type]}, ${params}; bloque de ${N}×${N}×${N} celdas con ${ions.length} ${atomWord}${covalent ? ` y ${bonds.length} enlaces` : ''}. Cada ${cat} tiene ${cnC} ${an} vecinos y cada ${an} tiene ${cnA} ${cat}; distancia ${cat}–${an} ${shellText}. Resaltado: un ${who === 'cation' ? cat : an} y sus ${focus.shell.length + focus.extra.length} vecinos${focus.extra.length ? ` (${focus.extra.length} de ellos en la celda contigua, dibujados aparte)` : ''}.`;
   const expr = DISTANCE_EXPR[crystal.type];
 
   return (
@@ -126,8 +148,8 @@ export function Crystal3D({ crystal, idPrefix, height = 320, labelSuffix = '' }:
         {fallback && (
           <div style={{ position: 'absolute', inset: 0 }}>
             <ProjectedSvg ariaLabel={`Red de ${crystal.nombre}: vista de respaldo con las posiciones calculadas; arrastra o usa las flechas para girarla`}
-              atoms={ions.map((x) => ({ el: x.el, x: x.x, y: x.y, z: x.z, r: radius(x.el, x.charge), charge: covalent ? undefined : x.charge }))}
-              bonds={covalent ? bonds : focus.shell.map((j) => ({ a: focus.center, b: j, order: 1 }))} lines={edges} height={height} width={Math.round(height * 1.6)} selection={[focus.center]} showCharges={!covalent && size === 'shannon'} />
+              atoms={[...ions, ...focus.extra].map((x) => ({ el: x.el, x: x.x, y: x.y, z: x.z, r: radius(x.el, x.charge), charge: covalent ? undefined : x.charge }))}
+              bonds={[...(covalent ? bonds : focus.shell.map((j) => ({ a: focus.center, b: j, order: 1 }))), ...focus.extra.map((_, k) => ({ a: focus.center, b: ions.length + k, order: 1 }))]} lines={edges} height={height} width={Math.round(height * 1.6)} selection={[focus.center]} showCharges={!covalent && size === 'shannon'} />
           </div>
         )}
         <div className="small" aria-hidden="true" style={{ position: 'absolute', right: 10, top: 8, display: 'flex', gap: 8, padding: '3px 8px', borderRadius: 999, background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1px solid var(--line)' }}>
@@ -154,7 +176,7 @@ export function Crystal3D({ crystal, idPrefix, height = 320, labelSuffix = '' }:
           <label className="check small"><input type="checkbox" checked={showCell} onChange={(e) => setShowCell(e.target.checked)} /> Mostrar las aristas de la celda</label>
           {!fallback && <button type="button" className="btn small" aria-pressed={spin} disabled={engine !== 'disponible' || reducedMotion()} onClick={() => setSpin((s) => !s)}>{spin ? 'Detener el giro' : 'Girar continuamente'}</button>}
         </div>
-        <dl className="small chem-dl" style={{ margin: 0, display: 'grid', gridTemplateColumns: 'minmax(0, auto) minmax(0, 1fr)', gap: '3px 12px' }}>
+        <dl className="small chem-dl" style={{ margin: 0, display: 'grid', gridTemplateColumns: 'fit-content(40%) minmax(0, 1fr)', gap: '3px 12px' }}>
           <dt>Estructura</dt><dd style={{ margin: 0 }}>{STRUCTURE_NAME[crystal.type]}{crystal.mineral ? ` (mineral: ${crystal.mineral})` : ''}</dd>
           <dt>Grupo espacial</dt><dd style={{ margin: 0 }}>{SPACE_GROUP[crystal.type]} · celda {sys === 'cubica' ? 'cúbica' : sys === 'tetragonal' ? 'tetragonal' : 'hexagonal'} con Z = {crystal.z}</dd>
           <dt>Parámetros de red</dt><dd style={{ margin: 0 }}>{params} (medidos por difracción de rayos X)</dd>
@@ -162,7 +184,7 @@ export function Crystal3D({ crystal, idPrefix, height = 320, labelSuffix = '' }:
           {shannon !== null
             ? <><dt>Suma de radios de Shannon</dt><dd style={{ margin: 0 }}>{num(shannon, 2)} Å</dd></>
             : <><dt>Ángulo {cat}–{an}–{cat}</dt><dd style={{ margin: 0 }}>{angles.map((x) => `${num(x, 1)}°`).join(', ')} (calculado; red covalente: no se usan radios iónicos)</dd></>}
-          <dt>Coordinación</dt><dd style={{ margin: 0 }}>{cat}: {cnC} · {an}: {cnA} (contada en la red)</dd>
+          <dt>Coordinación</dt><dd style={{ margin: 0 }}>{cat}: {cnC} · {an}: {cnA} (contada en la red){focus.extra.length > 0 && <> · el poliedro resaltado incluye {focus.extra.length} {focus.extra.length === 1 ? 'vecino' : 'vecinos'} de la celda contigua</>}</dd>
           <dt>Densidad calculada</dt><dd style={{ margin: 0 }}><strong>{num(rho, 3)} g/cm³</strong> = {crystal.z} · {num(formulaMass(crystal), 2)} g/mol / (N_A · V)</dd>
           <dt>Densidad publicada</dt><dd style={{ margin: 0 }}>{String(crystal.densityPublished).replace('.', ',')} g/cm³ ({densitySourceShort(crystal)}) · diferencia {dev >= 0 ? '+' : '−'}{num(Math.abs(dev), 1)} %</dd>
         </dl>

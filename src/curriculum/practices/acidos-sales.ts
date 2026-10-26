@@ -56,7 +56,8 @@ export const acidosSales: PracticeDef = {
     'Repite la titulación con ácido acético y con H₂SO₄ de la misma concentración. Compara el volumen de equivalencia y el pH en ese punto; activa la curva del modelo para comprobar.',
     'Escribe la ecuación balanceada de cada neutralización, la fórmula de la sal que se forma y sus nombres en los tres sistemas. Mira la reacción en 3D.',
     'Estación 3: disuelve cada sal a 0,10 mol/L, mide el pH y clasifícala: ¿de qué ácido y de qué base proviene? Compara la clasificación por nomenclatura (neutra, ácida) con el carácter de la disolución.',
-    'Explora la red cristalina del NaCl: calcula la distancia Na–Cl y la densidad con el parámetro de red, y compáralas con los valores publicados.',
+    'Explora la red cristalina del NaCl: calcula la distancia Na–Cl y la densidad con el parámetro de red, y compáralas con los valores publicados. Compara con la blenda (ZnS), donde cada ion tiene solo cuatro vecinos.',
+    'En el Taller de formación de compuestos, usa la ruta «NH₃ + ácido» para formar el cloruro, el nitrato, el sulfato y el carbonato de amonio: observa los cuatro enlaces N–H del ion amonio y explica por qué sus disoluciones son ácidas.',
   ],
   interpretation: [
     '¿Por qué el pH del HCl 0,01 M es 2,00 y el del ácido carbónico 0,01 M es mucho mayor? Explica con la diferencia entre ácidos fuertes y débiles.',

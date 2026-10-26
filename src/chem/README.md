@@ -108,18 +108,30 @@ const combustion: Reaction3DDef = {
 - Funciones puras (para pruebas): `buildReactionScene`, `framePositions(scene, t)`, `frameBonds`, `countsAt`,
   `bondChanges`, `checkBalanced`, `equationText` («CH₄ + 2 O₂ → CO₂ + 2 H₂O»).
 
-## 4. `<Crystal3D>` — redes cristalinas iónicas
+## 4. `<Crystal3D>` — redes cristalinas (iónicas y covalentes)
 
 ```tsx
 <Crystal3D crystal={getCrystal('nacl')} idPrefix="acs" height={300} />
 ```
 
-Cristales (`CRYSTALS`): `nacl` (a = 5,6402 Å), `kcl` (6,2931), `mgo` (4,2112), `cao` (4,8105), `caf2` (5,4626),
-`cscl` (4,123); parámetros de Wyckoff (1963), densidades del CRC Handbook (97.ª ed.). Calcula: posiciones
-`generateLattice(c, n)`, `cationAnionDistance` (= a/2 en la halita), `coordinationNumber(c, 'cation'|'anion')`,
-`calculatedDensity` (ρ = Z·M/(N_A·a³)), `densityDeviation` (todas < 1,5 %), `shannonSum`, `coordinationShell`,
-`latticeFragment(c, unidades)`. Rótulo: «Modelo calculado: red generada a partir del parámetro de red publicado».
-Controles: «Bloque de celdas», «Tamaño de los iones», «Coordinación de», «Mostrar las aristas de la celda».
+Cristales (`CRYSTALS`, 14): `nacl` (a = 5,6402 Å), `kcl` (6,2931), `mgo` (4,2112), `cao` (4,8105), `caf2` (5,4626),
+`cscl` (4,123), `bao` (5,523), `li2o` (4,619), `na2o` (5,55), `k2o` (6,436), `zns` (5,4093) —todos de Wyckoff (1963)—,
+`tio2` (rutilo, P4₂/mnm; a = 4,5937 y c = 2,9618 Å del CRC 60.ª ed. citado en PubChem; x(O) = 0,30478 de Abrahams y
+Bernstein, 1971), `al2o3` (corindón, R3̄c; CIF de la AMCSD 0009325, Lewis y otros, 1982) y `sio2` (cuarzo α, P3₂21,
+**red covalente**; Levien y otros, 1980). Densidades publicadas: `src/data/quimica/cristales-pubchem.json`
+(`scripts/validacion/cristales_pubchem.mjs`, con la fuente original de cada valor).
+
+El generador aplica las operaciones de simetría del grupo (`parseSymop`, `expandSites`, escritas como en los CIF) a la
+unidad asimétrica y pasa a Å con la matriz de la celda (`cellMatrix`: cúbica, tetragonal o hexagonal). Calcula:
+`generateLattice(c, n)`, `cationAnionDistance`, `shellDistances` (distancias del poliedro con su multiplicidad),
+`coordinationNumber` (vecinos de signo contrario hasta `CN_WINDOW` = 1,10 × la distancia mínima), `bridgeAngles`
+(Si–O–Si), `calculatedDensity` (ρ = Z·M/(N_A·V)), `densityDeviation` (< 3 %; Na₂O y BaO, 6 %, llevan `densityNote`),
+`shannonSum` (null en las redes covalentes), `periodicShell` (poliedro completo aunque caiga fuera del bloque),
+`networkBonds`, `latticeFragment(c, unidades)` y `crystalForComposition`. Rótulo: «Modelo calculado: red generada a
+partir de la estructura publicada». En las redes covalentes el visor dibuja todos los enlaces con `applyMolStyle`.
+Lo que no se incluye y por qué: `CRYSTALS_NOT_INCLUDED` (CaSO₄, SrO, sales de amonio).
+Controles: «Bloque de celdas», «Tamaño de los iones» (solo redes iónicas), «Coordinación de», «Mostrar las aristas
+de la celda» y el panel «Fuentes de la estructura y de la densidad».
 
 ## 5. Motor y respaldo
 

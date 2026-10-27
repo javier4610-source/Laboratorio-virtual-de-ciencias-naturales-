@@ -1,0 +1,118 @@
+/**
+ * MUESTRA DE PRUEBA del banco avanzado (solo para pruebas unitarias, E2E y capturas en desarrollo).
+ * NO forma parte del banco publicado: src/assessment/avanzado/bloques.ts no la importa.
+ * Tres ítems cortos pero completos (bloques A, C y F) que cumplen el esquema de src/assessment/avanzado/types.ts.
+ */
+import type { AdvancedItem, Check } from '../../src/assessment/avanzado/types';
+
+const QA_OK: Check[] = Array.from({ length: 15 }, () => 'Cumple');
+
+export const MUESTRA_AVANZADO: AdvancedItem[] = [
+  {
+    id: 'SN-A-001',
+    n: 1,
+    block: 'A',
+    topic: 'Membrana plasmática y ósmosis',
+    competency: 'explicacion',
+    affirmation: 'Explica el movimiento de agua a través de membranas a partir de diferencias de concentración de solutos.',
+    evidence: 'Relaciona el cambio de masa de un tejido con el sentido neto del movimiento de agua por ósmosis.',
+    level: 1,
+    contextType: 'experimento-escolar',
+    resource: 'texto',
+    context: 'En una clase, un grupo sumerge durante una hora dos trozos iguales de papa cruda: uno en agua destilada y otro en una solución muy concentrada de sal. Al final, el trozo que estuvo en la solución salada está más blando y pesa menos que al inicio.',
+    simulatedData: false,
+    stem: '¿Cuál explicación da cuenta de lo que le pasó al trozo de papa que estuvo en la solución salada?',
+    options: {
+      A: 'La sal entró a las células y desplazó el aire que había en ellas, por eso la papa se ablandó.',
+      B: 'Salió agua de las células hacia la solución, porque afuera había mayor concentración de solutos.',
+      C: 'Entró agua a las células desde la solución, porque adentro había mayor concentración de solutos.',
+      D: 'Las paredes celulares se disolvieron en la sal y por eso el tejido perdió masa y firmeza.',
+    },
+    key: 'B',
+    justification: 'En la ósmosis el agua atraviesa la membrana desde la región con menor concentración de solutos hacia la de mayor concentración. La solución salada es hipertónica respecto al citoplasma: las células pierden agua, disminuye la presión de turgencia y el tejido pierde masa y firmeza.',
+    distractors: {
+      A: { why: 'La pérdida de masa no se explica por entrada de sal ni por salida de aire; el fenómeno observado es la salida neta de agua.', misconception: 'Pensar que se mueve el soluto y no el agua, o confundir la turgencia con aire dentro de la célula.' },
+      C: { why: 'Si entrara agua, la papa ganaría masa y se pondría más firme; además el sentido de la concentración está invertido.', misconception: 'Invertir el sentido de la ósmosis: creer que el agua va hacia donde hay menos solutos.' },
+      D: { why: 'La pared celular de celulosa no se disuelve en una solución de sal; el tejido se recupera si se pasa luego a agua destilada.', misconception: 'Atribuir el cambio a una destrucción química en lugar de a un movimiento de agua reversible.' },
+    },
+    pitfall: 'Confundir el sentido del movimiento de agua con el del soluto en la ósmosis.',
+    strategy: 'Compara la concentración de solutos a cada lado de la membrana y pregúntate hacia dónde se mueve el agua; luego verifica si eso coincide con la ganancia o pérdida de masa observada.',
+    practiceId: undefined,
+    qa: QA_OK,
+  },
+  {
+    id: 'SN-C-061',
+    n: 61,
+    block: 'C',
+    topic: 'Soluciones y diluciones',
+    competency: 'uso',
+    affirmation: 'Usa la relación entre cantidad de soluto, volumen y concentración para resolver problemas de dilución.',
+    evidence: 'Calcula la concentración final de una dilución a partir de datos de una tabla.',
+    level: 2,
+    contextType: 'laboratorio',
+    resource: 'tabla',
+    context: 'Un técnico prepara soluciones de cloruro de sodio tomando un volumen de una solución madre de 2,0 mol/L y completando con agua destilada hasta el volumen final indicado en la tabla. Los datos son ficticios, con finalidad didáctica.',
+    table: {
+      caption: 'Preparación de diluciones de NaCl (datos ficticios con finalidad didáctica)',
+      headers: ['Solución', 'Volumen tomado de la solución madre (mL)', 'Volumen final (mL)'],
+      rows: [['1', 25, 100], ['2', 50, 200], ['3', 10, 250]],
+    },
+    simulatedData: true,
+    stem: '¿Cuál es la concentración de la solución 2?',
+    options: {
+      A: '0,25 mol/L',
+      B: '1,0 mol/L',
+      C: '4,0 mol/L',
+      D: '0,50 mol/L',
+    },
+    key: 'D',
+    justification: 'Al diluir, la cantidad de soluto no cambia: C₁·V₁ = C₂·V₂. Para la solución 2: (2,0 mol/L)(50 mL) = C₂(200 mL), de donde C₂ = 100 / 200 = 0,50 mol/L. La concentración baja a la cuarta parte porque el volumen se multiplicó por cuatro.',
+    distractors: {
+      A: { why: '0,25 mol/L correspondería a una dilución de 1 a 8; la solución 2 se diluyó de 50 mL a 200 mL, es decir, 1 a 4.', misconception: 'Dividir dos veces o confundir la fila de la solución con la de otra dilución.' },
+      B: { why: '1,0 mol/L resulta de dividir 2,0 entre 2, como si el volumen solo se hubiera duplicado.', misconception: 'Usar la diferencia de volúmenes o una razón equivocada en lugar del cociente V₁/V₂.' },
+      C: { why: '4,0 mol/L es mayor que la concentración de la solución madre: diluir no puede aumentar la concentración.', misconception: 'Multiplicar por la razón de volúmenes en lugar de dividir (invertir V₁ y V₂).' },
+    },
+    pitfall: 'Olvidar que al diluir se conserva la cantidad de soluto y solo cambia el volumen.',
+    strategy: 'Escribe C₁·V₁ = C₂·V₂ con unidades y comprueba que el resultado sea menor que la concentración inicial.',
+    qa: QA_OK,
+  },
+  {
+    id: 'SN-F-151',
+    n: 151,
+    block: 'F',
+    topic: 'Correlación, causalidad y control de variables',
+    competency: 'indagacion',
+    affirmation: 'Evalúa si una conclusión está sustentada por los datos y el diseño experimental disponibles.',
+    evidence: 'Identifica qué conclusión es compatible con una gráfica de resultados y no excede la evidencia.',
+    level: 3,
+    contextType: 'agricola-ambiental',
+    resource: 'grafica',
+    context: 'Un grupo siembra 50 semillas de fríjol en cada una de cuatro bandejas iguales, con el mismo sustrato y la misma cantidad de agua, y las mantiene a 15, 20, 25 y 30 °C. A los siete días cuenta las semillas germinadas. Los datos son ficticios, con finalidad didáctica.',
+    chart: {
+      kind: 'linea',
+      title: 'Semillas germinadas a los 7 días según la temperatura (datos ficticios)',
+      xLabel: 'Temperatura (°C)',
+      yLabel: 'Semillas germinadas (de 50)',
+      series: [{ name: 'Bandeja por temperatura', points: [[15, 12], [20, 31], [25, 44], [30, 40]] }],
+      description: 'Gráfica de línea con la temperatura en el eje horizontal (15 a 30 °C) y el número de semillas germinadas de 50 en el eje vertical. A 15 °C germinaron 12; a 20 °C, 31; a 25 °C, 44 y a 30 °C, 40. El máximo está en 25 °C y a 30 °C el valor baja un poco.',
+    },
+    simulatedData: true,
+    stem: '¿Cuál conclusión está mejor sustentada por estos resultados?',
+    options: {
+      A: 'En el intervalo estudiado, la germinación a los 7 días fue mayor cerca de 25 °C que a 15 °C.',
+      B: 'La germinación aumenta siempre con la temperatura, de modo que a 40 °C germinarían las 50 semillas.',
+      C: 'La temperatura óptima para germinar el fríjol en cualquier suelo es exactamente 25 °C.',
+      D: 'La temperatura no influye en la germinación, porque a 30 °C germinaron menos semillas que a 25 °C.',
+    },
+    key: 'A',
+    justification: 'Los datos muestran 44 semillas germinadas a 25 °C frente a 12 a 15 °C, con las demás condiciones controladas. La conclusión A se limita al intervalo medido y al tiempo de 7 días, sin extrapolar ni generalizar a otros suelos.',
+    distractors: {
+      B: { why: 'Los datos no muestran un aumento continuo (a 30 °C hay menos que a 25 °C) y 40 °C está fuera del intervalo estudiado.', misconception: 'Extrapolar una tendencia más allá de los datos y suponer que es monótona.' },
+      C: { why: 'Con solo cuatro temperaturas y un único sustrato no se puede afirmar un óptimo exacto ni generalizar a cualquier suelo.', misconception: 'Convertir el mayor valor medido en un valor exacto y universal.' },
+      D: { why: 'El número de semillas germinadas cambia mucho entre 15 y 25 °C; una disminución a 30 °C no significa que no haya efecto.', misconception: 'Creer que una relación no lineal implica ausencia de relación.' },
+    },
+    pitfall: 'Sacar conclusiones que van más allá del intervalo de datos y de las condiciones del experimento.',
+    strategy: 'Antes de elegir, revisa si la conclusión se mantiene dentro del intervalo medido, si respeta las condiciones controladas y si no usa palabras absolutas como «siempre» o «exactamente».',
+    qa: QA_OK,
+  },
+];

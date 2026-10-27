@@ -41,6 +41,14 @@ export function BankPage() {
       <Notice kind="warn">
         <strong>Preguntas originales de práctica.</strong> Fueron elaboradas para esta plataforma y se alinean con las competencias de Ciencias Naturales evaluadas en Saber 11 (uso comprensivo del conocimiento científico, explicación de fenómenos e indagación). <strong>No son preguntas oficiales del ICFES</strong> ni reproducen ítems liberados.
       </Notice>
+      <section className="card adv-entry" aria-labelledby="adv-entry-h">
+        <div className="stack-sm">
+          <h2 id="adv-entry-h">Banco avanzado tipo Saber 11</h2>
+          <p>Preguntas originales de mayor exigencia, con tablas, gráficas y experimentos, en tres modalidades: <strong>práctica guiada</strong> con explicación de cada error, <strong>simulacro</strong> sin claves hasta terminar y <strong>refuerzo personalizado</strong> por competencia, bloque y nivel.</p>
+          <p className="small muted">180 preguntas en seis bloques que se publican por entregas. Material original de práctica: no es oficial del ICFES ni está avalado por el ICFES.</p>
+        </div>
+        <a className="btn primary" href={href('banco', 'avanzado')}><Icon name="banco" size={18} />Abrir el banco avanzado</a>
+      </section>
       <div className="filters">
         <Select label="Origen" value={source} onChange={(v) => setSource(v as 'saber' | 'todas')} options={[{ value: 'saber', label: `Banco tipo Saber (${SABER_BANK.length})` }, { value: 'todas', label: `Todas, incluidas las de las prácticas (${ALL_QUESTIONS.length})` }]} />
         <Select label="Grado recomendado" value={grade} onChange={setGrade} options={[{ value: '', label: 'Todos' }, ...GRADES.map((g) => ({ value: String(g.id), label: `${g.id}.º` }))]} />

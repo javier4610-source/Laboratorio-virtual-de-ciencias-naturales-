@@ -1,0 +1,13 @@
+import type { AdvancedItem } from './types';
+
+/**
+ * Registro de los bloques publicados del banco avanzado. Es el ÚNICO lugar que hay que tocar al incorporar un bloque:
+ *
+ *   import { BLOQUE_A } from './bloqueA';
+ *   export const BLOQUES: readonly (readonly AdvancedItem[])[] = [BLOQUE_A];
+ *
+ * El banco se arma con los bloques presentes (puede faltar cualquiera); el validador aplica las metas por bloque a cada
+ * bloque registrado y las metas globales (180 ítems) solo cuando están los seis.
+ * La muestra de pruebas (tests/fixtures/avanzado-muestra.ts) NUNCA se registra aquí.
+ */
+export const BLOQUES: readonly (readonly AdvancedItem[])[] = [];

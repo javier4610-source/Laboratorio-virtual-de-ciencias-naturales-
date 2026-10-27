@@ -14,7 +14,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "server": "node server/index.mjs",
-    "guias": "node scripts/guias/exportar.mjs && python3 scripts/guias/generar_guias.py"
+    "guias": "node scripts/guias/exportar.mjs && python3 scripts/guias/generar_guias.py",
+    "banco": "node scripts/banco-avanzado.mjs"
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "5.2.6",

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import type { Area, GradeId } from '../core/types';
 import { PRACTICES } from '../curriculum';
 import { SABER_BANK } from '../assessment/bank';
@@ -8,6 +8,9 @@ import { assignmentText, catalogLinksCsv, classroomShareUrl, selectQuestions, to
 import { practicePermalink } from '../lib/permalink';
 import { Notice, Select } from '../components/ui';
 import { Icon } from '../components/icons';
+
+// El banco avanzado (hasta 180 ítems con su solucionario) se carga solo al abrir esta pestaña.
+const AdvancedTeacherSection = lazy(() => import('./AdvancedTeacherSection').then((m) => ({ default: m.AdvancedTeacherSection })));
 
 const SOURCES: { value: QuestionSource; label: string }[] = [
   { value: 'todas', label: 'Banco Saber 11 y prácticas' },
@@ -132,6 +135,7 @@ export function LmsExportTab() {
         Todo se genera en este navegador, sin servidor ni cuentas. Las preguntas son originales de práctica, alineadas con Saber 11, y <strong>no</strong> son ítems oficiales del ICFES.
       </Notice>
       <MoodleSection />
+      <Suspense fallback={<p className="small muted" role="status">Cargando el banco avanzado…</p>}><AdvancedTeacherSection /></Suspense>
       <ClassroomSection />
       <details>
         <summary>Cómo publicarlo paso a paso</summary>

@@ -19,6 +19,7 @@ import { GlobalShortcuts } from './components/Shortcuts';
 const PracticePage = lazy(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
 const ReportPage = lazy(() => import('./pages/ReportPage').then((m) => ({ default: m.ReportPage })));
 const BankPage = lazy(() => import('./pages/BankPage').then((m) => ({ default: m.BankPage })));
+const AdvancedBankPage = lazy(() => import('./pages/AdvancedBankPage').then((m) => ({ default: m.AdvancedBankPage })));
 const TeacherPage = lazy(() => import('./pages/TeacherPage').then((m) => ({ default: m.TeacherPage })));
 const CatalogPage = lazy(() => import('./pages/CatalogPages').then((m) => ({ default: m.CatalogPage })));
 const GradePage = lazy(() => import('./pages/CatalogPages').then((m) => ({ default: m.GradePage })));
@@ -84,7 +85,7 @@ export default function App() {
   else if (section === 'practica' && id && metaById(id)) {
     page = <PracticeRoute id={id} report={sub === 'informe'} />;
     current = 'catalogo';
-  } else if (section === 'banco') page = <BankPage />;
+  } else if (section === 'banco') page = id === 'avanzado' ? <AdvancedBankPage /> : <BankPage />;
   else if (section === 'docente') page = <TeacherPage />;
   else if (section === 'unirme') page = <JoinPage code={route.query.get('codigo') ?? undefined} server={route.query.get('servidor') ?? undefined} />;
   else if (section === 'ayuda') page = <HelpPage prefs={prefs} setPrefs={setPrefs} />;

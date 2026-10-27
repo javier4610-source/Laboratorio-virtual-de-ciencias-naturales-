@@ -29,6 +29,11 @@ export interface ExportItem {
   origin: 'banco' | 'practica';
   practice?: PracticeDef;
   area: Area;
+  /** Opcionales para otros bancos (p. ej. el banco avanzado): reemplazan la categoría, las etiquetas, el nombre y la retroalimentación general. */
+  category?: string[];
+  tags?: string[];
+  name?: string;
+  generalFeedbackHtml?: string;
 }
 
 /** Área de una pregunta del banco que no está ligada a una práctica, según su componente de Saber 11. */
@@ -119,6 +124,7 @@ export function questionHtml(q: Question): string {
 
 /** Retroalimentación general en HTML: explicación, repaso y enlace a la práctica del laboratorio. */
 export function generalFeedbackHtml(it: ExportItem): string {
+  if (it.generalFeedbackHtml) return it.generalFeedbackHtml;
   const q = it.question;
   const parts = [`<p>${escapeHtml(q.explanation)}</p>`];
   if (q.review) parts.push(`<p><strong>Repaso:</strong> ${escapeHtml(q.review)}</p>`);
@@ -131,6 +137,7 @@ export function questionName(q: Question): string {
 }
 
 export function itemCategory(it: ExportItem): string[] {
+  if (it.category) return it.category;
   const g = `Grado ${it.question.grade}`;
   return it.origin === 'banco'
     ? [ROOT_CATEGORY, 'Banco tipo Saber 11', g, AREA_LABEL[it.area]]
@@ -139,6 +146,7 @@ export function itemCategory(it: ExportItem): string[] {
 
 /** Etiquetas sin espacios ni comas, útiles para filtrar en el banco de preguntas de Moodle. */
 export function itemTags(it: ExportItem): string[] {
+  if (it.tags) return it.tags;
   const q = it.question;
   return [`grado-${q.grade}`, `area-${it.area}`, `competencia-${q.competency}`, `componente-${q.component}`, `dificultad-${q.difficulty}`, ...(it.practice ? [`practica-${it.practice.id}`] : [])];
 }
@@ -175,7 +183,7 @@ function moodleQuestion(it: ExportItem): string {
     `  ${comment(q.id)}`,
     `  <question type="multichoice">`,
     `    <name>`,
-    `      ${text(questionName(q))}`,
+    `      ${text(it.name ?? questionName(q))}`,
     `    </name>`,
     htmlField('questiontext', questionHtml(q)),
     htmlField('generalfeedback', generalFeedbackHtml(it)),
@@ -228,7 +236,7 @@ function giftQuestion(it: ExportItem): string {
   const g = (html: string) => escapeGift(html);
   const lines = [
     `// ${q.id}`,
-    `::${g(questionName(q))}::[html]${g(questionHtml(q))} {`,
+    `::${g(it.name ?? questionName(q))}::[html]${g(questionHtml(q))} {`,
     ...q.options.map((o) => `\t${o.id === q.correct ? '=' : '~'}${g(escapeHtml(o.text))}#${g(escapeHtml(o.feedback))}`),
     `\t####${g(generalFeedbackHtml(it))}`,
     '}',

@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
 
 ## Tabla consolidada
 
@@ -19,6 +19,12 @@ Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
 | 61: B | 62: D | 63: A | 64: C | 65: A | 66: D | 67: B | 68: C | 69: D | 70: A |
 | 71: C | 72: B | 73: D | 74: A | 75: A | 76: C | 77: D | 78: B | 79: C | 80: D |
 | 81: A | 82: B | 83: D | 84: C | 85: A | 86: B | 87: D | 88: A | 89: C | 90: B |
+| 91: C | 92: A | 93: D | 94: B | 95: B | 96: D | 97: A | 98: C | 99: D | 100: A |
+| 101: B | 102: C | 103: A | 104: D | 105: C | 106: B | 107: D | 108: A | 109: C | 110: B |
+| 111: A | 112: D | 113: B | 114: C | 115: D | 116: B | 117: A | 118: C | 119: A | 120: D |
+| 121: C | 122: A | 123: D | 124: B | 125: B | 126: D | 127: A | 128: C | 129: A | 130: D |
+| 131: C | 132: B | 133: D | 134: A | 135: A | 136: C | 137: B | 138: D | 139: C | 140: A |
+| 141: D | 142: B | 143: C | 144: A | 145: B | 146: D | 147: B | 148: C | 149: A | 150: D |
 
 ## Detalle por pregunta
 
@@ -114,6 +120,66 @@ Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
 | 88 | SN-C-088 | C | Explicación de fenómenos | 1 | A |
 | 89 | SN-C-089 | C | Indagación | 3 | C |
 | 90 | SN-C-090 | C | Indagación | 3 | B |
+| 91 | SN-D-091 | D | Uso comprensivo del conocimiento científico | 1 | C |
+| 92 | SN-D-092 | D | Uso comprensivo del conocimiento científico | 1 | A |
+| 93 | SN-D-093 | D | Uso comprensivo del conocimiento científico | 2 | D |
+| 94 | SN-D-094 | D | Indagación | 2 | B |
+| 95 | SN-D-095 | D | Uso comprensivo del conocimiento científico | 3 | B |
+| 96 | SN-D-096 | D | Explicación de fenómenos | 2 | D |
+| 97 | SN-D-097 | D | Explicación de fenómenos | 1 | A |
+| 98 | SN-D-098 | D | Uso comprensivo del conocimiento científico | 1 | C |
+| 99 | SN-D-099 | D | Indagación | 1 | D |
+| 100 | SN-D-100 | D | Explicación de fenómenos | 3 | A |
+| 101 | SN-D-101 | D | Uso comprensivo del conocimiento científico | 2 | B |
+| 102 | SN-D-102 | D | Explicación de fenómenos | 2 | C |
+| 103 | SN-D-103 | D | Indagación | 3 | A |
+| 104 | SN-D-104 | D | Explicación de fenómenos | 3 | D |
+| 105 | SN-D-105 | D | Indagación | 2 | C |
+| 106 | SN-D-106 | D | Uso comprensivo del conocimiento científico | 2 | B |
+| 107 | SN-D-107 | D | Explicación de fenómenos | 1 | D |
+| 108 | SN-D-108 | D | Uso comprensivo del conocimiento científico | 3 | A |
+| 109 | SN-D-109 | D | Indagación | 1 | C |
+| 110 | SN-D-110 | D | Indagación | 2 | B |
+| 111 | SN-D-111 | D | Explicación de fenómenos | 2 | A |
+| 112 | SN-D-112 | D | Indagación | 3 | D |
+| 113 | SN-D-113 | D | Uso comprensivo del conocimiento científico | 1 | B |
+| 114 | SN-D-114 | D | Explicación de fenómenos | 1 | C |
+| 115 | SN-D-115 | D | Uso comprensivo del conocimiento científico | 2 | D |
+| 116 | SN-D-116 | D | Explicación de fenómenos | 2 | B |
+| 117 | SN-D-117 | D | Indagación | 1 | A |
+| 118 | SN-D-118 | D | Explicación de fenómenos | 3 | C |
+| 119 | SN-D-119 | D | Indagación | 3 | A |
+| 120 | SN-D-120 | D | Indagación | 2 | D |
+| 121 | SN-E-121 | E | Uso comprensivo del conocimiento científico | 1 | C |
+| 122 | SN-E-122 | E | Explicación de fenómenos | 1 | A |
+| 123 | SN-E-123 | E | Explicación de fenómenos | 2 | D |
+| 124 | SN-E-124 | E | Indagación | 2 | B |
+| 125 | SN-E-125 | E | Uso comprensivo del conocimiento científico | 1 | B |
+| 126 | SN-E-126 | E | Indagación | 2 | D |
+| 127 | SN-E-127 | E | Uso comprensivo del conocimiento científico | 2 | A |
+| 128 | SN-E-128 | E | Explicación de fenómenos | 1 | C |
+| 129 | SN-E-129 | E | Uso comprensivo del conocimiento científico | 1 | A |
+| 130 | SN-E-130 | E | Explicación de fenómenos | 3 | D |
+| 131 | SN-E-131 | E | Indagación | 2 | C |
+| 132 | SN-E-132 | E | Uso comprensivo del conocimiento científico | 2 | B |
+| 133 | SN-E-133 | E | Uso comprensivo del conocimiento científico | 3 | D |
+| 134 | SN-E-134 | E | Indagación | 3 | A |
+| 135 | SN-E-135 | E | Explicación de fenómenos | 2 | A |
+| 136 | SN-E-136 | E | Indagación | 2 | C |
+| 137 | SN-E-137 | E | Indagación | 1 | B |
+| 138 | SN-E-138 | E | Explicación de fenómenos | 1 | D |
+| 139 | SN-E-139 | E | Explicación de fenómenos | 3 | C |
+| 140 | SN-E-140 | E | Uso comprensivo del conocimiento científico | 3 | A |
+| 141 | SN-E-141 | E | Indagación | 1 | D |
+| 142 | SN-E-142 | E | Uso comprensivo del conocimiento científico | 1 | B |
+| 143 | SN-E-143 | E | Uso comprensivo del conocimiento científico | 2 | C |
+| 144 | SN-E-144 | E | Explicación de fenómenos | 2 | A |
+| 145 | SN-E-145 | E | Explicación de fenómenos | 2 | B |
+| 146 | SN-E-146 | E | Explicación de fenómenos | 1 | D |
+| 147 | SN-E-147 | E | Uso comprensivo del conocimiento científico | 2 | B |
+| 148 | SN-E-148 | E | Indagación | 3 | C |
+| 149 | SN-E-149 | E | Indagación | 3 | A |
+| 150 | SN-E-150 | E | Indagación | 3 | D |
 
 ## Distribución de claves y revisión de patrones
 
@@ -122,6 +188,8 @@ Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
 | Bloque A | 7 | 7 | 8 | 8 | 2 (D desde 8) | No |
 | Bloque B | 7 | 8 | 7 | 8 | 2 (C desde 34) | No |
 | Bloque C | 8 | 7 | 7 | 8 | 2 (A desde 74) | No |
-| Total | 22 | 22 | 22 | 24 | 2 (D desde 8) | No |
+| Bloque D | 8 | 7 | 7 | 8 | 2 (B desde 94) | No |
+| Bloque E | 8 | 7 | 7 | 8 | 2 (B desde 124) | No |
+| Total | 38 | 36 | 36 | 40 | 2 (D desde 8) | No |
 
 Criterio del banco (decisión metodológica, no regla oficial): en cada bloque, cada letra entre 6 y 9 veces y nunca más de 3 claves iguales seguidas. La calidad científica del ítem prevalece sobre la distribución de claves.

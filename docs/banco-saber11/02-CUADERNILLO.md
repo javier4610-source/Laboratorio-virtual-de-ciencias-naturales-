@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
 
 ## Instrucciones para el estudiante
 
@@ -368,7 +368,7 @@ Un esquema muestra la meiosis de una célula humana considerando solo el par de 
 
 Se compararon dos hipótesis. H1: el antibiótico estreptomicina provoca en las bacterias las mutaciones que las hacen resistentes. H2: las mutaciones de resistencia surgen al azar antes del contacto con el antibiótico, y este solo selecciona a las bacterias que ya las tienen. Con un procedimiento inspirado en el experimento clásico de réplica en placa, se cultivó una placa original sin antibiótico con cientos de colonias. Con un mismo terciopelo estéril se transfirieron células de todas las colonias, conservando sus posiciones, a dos placas con estreptomicina. En ambas placas crecieron 3 colonias, en las mismas posiciones. Luego se tomaron células de esas posiciones en la placa original, que nunca había estado en contacto con el antibiótico, y resultaron resistentes al cultivarlas con estreptomicina (datos ficticios con fines didácticos).
 
-**¿Qué conclusión se sustenta mejor en estos resultados?**
+**¿Cuál de las dos hipótesis apoyan los resultados de la réplica en placa?**
 
 - **A.** Se apoya H1, porque las colonias resistentes solo aparecieron en las placas con estreptomicina.
 - **B.** Se apoya H1, porque el antibiótico produjo la misma mutación en las dos placas que lo contenían.
@@ -2003,5 +2003,1347 @@ La etiqueta de un vinagre indica 5 % m/v de ácido acético (CH₃COOH, 60 g/mol
 - **B.** Los grupos 1 y 2 coinciden con la etiqueta, y el desvío repetible del grupo 3 sugiere un error sistemático.
 - **C.** Como los resultados del grupo 3 son muy repetibles, son los más exactos y deben preferirse a los demás.
 - **D.** Ningún resultado es confiable, porque los tres grupos obtuvieron volúmenes distintos entre sí.
+
+---
+
+## Bloque D. Física y fenómenos mecánicos (preguntas 91–120)
+
+### Pregunta 91
+
+En un curso de conducción segura para conductores de buses intermunicipales, el instructor pide una expresión para la distancia de frenado d de un bus que se detiene con aceleración constante. Se conocen la rapidez inicial v (en m/s) y la magnitud de la aceleración de frenado a (en m/s²). Los aprendices proponen cuatro expresiones.
+
+**¿Cuál es la única expresión cuyas unidades corresponden a una distancia?**
+
+- **A.** d = v/(2a): la rapidez dividida entre el doble de la aceleración.
+- **B.** d = v·a/2: la mitad del producto de la rapidez por la aceleración.
+- **C.** d = v²/(2a): el cuadrado de la rapidez dividido entre el doble de la aceleración.
+- **D.** d = 2v/a²: el doble de la rapidez dividido entre el cuadrado de la aceleración.
+
+---
+
+### Pregunta 92
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un bus alimentador recorre una avenida recta. Con el GPS de un celular, una estudiante registró la posición del bus respecto al paradero inicial durante 10 minutos (datos ficticios con fines didácticos). Entre los puntos registrados, el bus se movió con rapidez constante.
+
+**Gráfica: Posición del bus alimentador en la avenida**
+
+*Descripción:* Gráfica de líneas de posición (km) contra tiempo (min) formada por tramos rectos que unen los puntos (0 min; 0 km), (2 min; 1,2 km), (4 min; 1,2 km), (5 min; 2,2 km), (8 min; 3,1 km) y (10 min; 3,1 km). Entre 2 y 4 min y entre 8 y 10 min la línea es horizontal.
+
+*Posición del bus*
+
+| Tiempo (min) | Posición respecto al paradero inicial (km) |
+| --- | --- |
+| 0 | 0 |
+| 2 | 1,2 |
+| 4 | 1,2 |
+| 5 | 2,2 |
+| 8 | 3,1 |
+| 10 | 3,1 |
+
+**¿En qué intervalo se movió el bus con mayor rapidez?**
+
+- **A.** Entre los minutos 4 y 5, porque en ese tramo la recta tiene la mayor pendiente.
+- **B.** Entre los minutos 0 y 2, porque en ese tramo el bus recorrió la mayor distancia.
+- **C.** Entre los minutos 8 y 10, porque allí el bus está más lejos del paradero inicial.
+- **D.** Entre los minutos 5 y 8, porque es el tramo con movimiento que dura más tiempo.
+
+---
+
+### Pregunta 93
+
+> *Datos ficticios con finalidad didáctica.*
+
+En una recta de entrenamiento, una ciclista parte del reposo, acelera de manera uniforme, mantiene su rapidez y luego frena hasta detenerse. Un sensor de su bicicleta registró la velocidad (datos ficticios con fines didácticos).
+
+**Gráfica: Velocidad de la ciclista en la recta de entrenamiento**
+
+*Descripción:* Gráfica de líneas de velocidad (m/s) contra tiempo (s) formada por tres tramos rectos: de (0 s; 0 m/s) a (4 s; 12 m/s), aumento uniforme; de (4 s; 12 m/s) a (10 s; 12 m/s), velocidad constante; y de (10 s; 12 m/s) a (13 s; 0 m/s), disminución uniforme hasta detenerse.
+
+*Velocidad de la ciclista*
+
+| Tiempo (s) | Velocidad (m/s) |
+| --- | --- |
+| 0 | 0 |
+| 4 | 12 |
+| 10 | 12 |
+| 13 | 0 |
+
+**¿Qué distancia recorrió la ciclista en los 13 s y cuál fue su rapidez media?**
+
+- **A.** 156 m y 12,0 m/s.
+- **B.** 72 m y 5,5 m/s.
+- **C.** 78 m y 6,0 m/s.
+- **D.** 114 m y 8,8 m/s.
+
+---
+
+### Pregunta 94
+
+> *Datos ficticios con finalidad didáctica.*
+
+En el laboratorio, un grupo dejó rodar un carrito desde el reposo por un riel inclinado y lo filmó junto a una cinta métrica. Con el video midieron su posición cada 0,20 s (datos ficticios con fines didácticos). Quieren saber si el carrito se mueve con aceleración constante y, si es así, cuánto vale.
+
+**Posición del carrito en el riel inclinado (datos ficticios con fines didácticos)**
+
+| Tiempo (s) | Posición (cm) |
+| --- | --- |
+| 0 | 0 |
+| 0,20 | 3,1 |
+| 0,40 | 11,9 |
+| 0,60 | 27,2 |
+| 0,80 | 47,8 |
+| 1,00 | 75,1 |
+
+**¿Qué análisis de los datos responde correctamente la pregunta del grupo?**
+
+- **A.** Calcular x/t en cada fila: como el resultado cambia de una fila a otra, la aceleración del carrito no es constante.
+- **B.** Calcular la distancia de cada intervalo: crece unos 6 cm de uno al siguiente, así que la aceleración es constante, de unos 1,5 m/s².
+- **C.** Dividir la posición final entre el tiempo total: 75,1 cm / 1,00 s ≈ 0,75 m/s², que es el valor de la aceleración constante.
+- **D.** Calcular la distancia de cada intervalo: como es cada vez mayor, la aceleración del carrito también aumenta a medida que pasa el tiempo.
+
+---
+
+### Pregunta 95
+
+En una avenida recta, un bus arranca desde el reposo en un paradero con aceleración constante de 1,2 m/s², en el mismo instante en que una ciclista pasa junto a él con rapidez constante de 6,0 m/s y en la misma dirección. Se usa este modelo, con las posiciones medidas desde el paradero: bus, x_B = ½ · (1,2 m/s²) · t²; ciclista, x_C = (6,0 m/s) · t. Se supone que el bus mantiene su aceleración durante todo el intervalo estudiado.
+
+**Según el modelo, ¿cuándo y dónde alcanza el bus a la ciclista?**
+
+- **A.** A los 5,0 s y a 30 m del paradero, que es cuando el bus alcanza la rapidez de la ciclista.
+- **B.** A los 10 s y a 60 m del paradero; en ese instante el bus va a 12 m/s, el doble que la ciclista.
+- **C.** A los 10 s y a 120 m del paradero, porque el bus recorre 12 m/s durante esos 10 segundos.
+- **D.** Nunca la alcanza, porque la ciclista lleva ventaja en rapidez desde el instante inicial.
+
+---
+
+### Pregunta 96
+
+> *Datos ficticios con finalidad didáctica.*
+
+En un entrenamiento de fútbol, un jugador lanza un balón verticalmente hacia arriba con una rapidez de 14,7 m/s. La gráfica muestra la velocidad del balón (datos ficticios con fines didácticos, calculados con un modelo que desprecia la resistencia del aire; la velocidad es positiva hacia arriba).
+
+**Gráfica: Velocidad del balón lanzado verticalmente hacia arriba**
+
+*Descripción:* Gráfica de líneas de velocidad (m/s, positiva hacia arriba) contra tiempo (s). Es una recta descendente que pasa por (0 s; 14,7 m/s), (0,5 s; 9,8 m/s), (1,0 s; 4,9 m/s), (1,5 s; 0 m/s), (2,0 s; −4,9 m/s), (2,5 s; −9,8 m/s) y (3,0 s; −14,7 m/s). La recta corta el eje del tiempo en 1,5 s.
+
+*Velocidad del balón*
+
+| Tiempo (s) | Velocidad (m/s) |
+| --- | --- |
+| 0 | 14,7 |
+| 0,5 | 9,8 |
+| 1 | 4,9 |
+| 1,5 | 0 |
+| 2 | −4,9 |
+| 2,5 | −9,8 |
+| 3 | −14,7 |
+
+**Un estudiante afirma: «En el punto más alto el balón se detiene; por eso, en ese instante, su aceleración es cero». ¿Qué explicación, apoyada en la gráfica, es correcta?**
+
+- **A.** El estudiante tiene razón: en t = 1,5 s la velocidad es cero y, por tanto, la aceleración también es cero.
+- **B.** La aceleración es cero en el punto más alto porque allí el peso queda equilibrado por la fuerza del lanzamiento.
+- **C.** La aceleración cambia de signo en el punto más alto: es negativa mientras sube y positiva mientras baja.
+- **D.** La pendiente es −9,8 m/s² en todo el vuelo: en el punto más alto la velocidad es cero, pero sigue cambiando.
+
+---
+
+### Pregunta 97
+
+En una cancha de grama sintética, un jugador patea un balón que rueda en línea recta por el piso horizontal y se detiene unos 30 m más adelante. Una estudiante dice que el balón se detiene «porque se le acabó la fuerza que le dio el pie».
+
+**Según las leyes de Newton, ¿cuál es la explicación correcta de por qué el balón se detiene?**
+
+- **A.** Mientras rueda, la grama y el aire ejercen sobre él fuerzas opuestas al movimiento, que reducen su velocidad.
+- **B.** El pie le transmite al balón una fuerza que viaja con él y que se va gastando a medida que recorre la cancha.
+- **C.** Todo cuerpo en movimiento tiende por naturaleza a quedar en reposo, aunque ninguna fuerza actúe sobre él.
+- **D.** El peso del balón actúa en contra del movimiento y lo frena, porque lo empuja hacia atrás sobre la grama.
+
+---
+
+### Pregunta 98
+
+En una obra de construcción, un trabajador arrastra un bulto de arena de 25 kg por un piso horizontal tirando de una cuerda horizontal. El esquema describe el diagrama de cuerpo libre del bulto mientras se mueve hacia la derecha (g = 9,8 m/s²).
+
+*Esquema:* Diagrama de cuerpo libre del bulto, representado como un punto. Hacia la derecha: tensión de la cuerda, 150 N. Hacia la izquierda: fuerza de rozamiento del piso, 100 N. Hacia abajo: peso, 245 N. Hacia arriba: fuerza normal del piso, 245 N.
+
+**¿Cuál es la aceleración del bulto?**
+
+- **A.** 6,0 m/s² hacia la derecha.
+- **B.** 10 m/s² hacia la derecha.
+- **C.** 2,0 m/s² hacia la derecha.
+- **D.** 0,20 m/s² hacia la derecha.
+
+---
+
+### Pregunta 99
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un grupo quiere saber si la fuerza necesaria para empezar a deslizar un bloque depende del área de contacto con la superficie. Con un dinamómetro tiran horizontalmente de bloques de madera apoyados sobre distintas caras (datos ficticios con fines didácticos).
+
+**Fuerza horizontal necesaria para que el bloque empiece a deslizar (datos ficticios con fines didácticos)**
+
+| Ensayo | Superficie | Masa del bloque (kg) | Área de la cara apoyada (cm²) | Fuerza para iniciar el deslizamiento (N) |
+| --- | --- | --- | --- | --- |
+| 1 | Tabla de madera | 0,50 | 60 | 2,0 |
+| 2 | Tabla de madera | 1,00 | 60 | 4,0 |
+| 3 | Tabla de madera | 0,50 | 20 | 2,0 |
+| 4 | Papel de lija | 0,50 | 60 | 3,5 |
+| 5 | Papel de lija | 1,00 | 20 | 7,0 |
+
+**¿Qué ensayos deben compararse para responder la pregunta del grupo?**
+
+- **A.** Los ensayos 1 y 2.
+- **B.** Los ensayos 4 y 5.
+- **C.** Los ensayos 3 y 5.
+- **D.** Los ensayos 1 y 3.
+
+---
+
+### Pregunta 100
+
+Una camioneta de 2 000 kg empuja por una vía horizontal un carro averiado de 1 000 kg, con los parachoques en contacto. Parten del reposo y aceleran juntos a 0,50 m/s². Sobre el carro actúa una fuerza de rozamiento con el piso de 300 N que se opone al movimiento. Un pasajero comenta: «La camioneta empuja al carro con más fuerza que la que el carro le hace a ella; si no fuera así, no podrían acelerar».
+
+**¿Qué explicación del movimiento es correcta?**
+
+- **A.** Ambas fuerzas entre los vehículos valen 800 N; el conjunto acelera porque el piso empuja hacia adelante las llantas motrices de la camioneta.
+- **B.** La camioneta empuja al carro con más fuerza que la que recibe de él; si las dos fuerzas fueran iguales, se anularían y no habría aceleración.
+- **C.** Las fuerzas entre los vehículos solo son iguales a velocidad constante; al acelerar, la camioneta empuja con 800 N y el carro, con 300 N.
+- **D.** La camioneta empuja al carro con 500 N, que es la masa del carro por su aceleración, y el carro le responde con otros 500 N.
+
+---
+
+### Pregunta 101
+
+En una obra, un bulto de cemento de 50 kg permanece en reposo sobre una tabla inclinada 30° respecto a la horizontal. Usa g = 9,8 m/s², sen 30° = 0,50 y cos 30° ≈ 0,87.
+
+*Esquema:* Diagrama de cuerpo libre del bulto sobre la tabla inclinada: el peso (490 N) apunta verticalmente hacia abajo; la fuerza normal es perpendicular a la tabla y se aleja de ella; la fuerza de rozamiento es paralela a la tabla. Se trazan dos ejes, uno paralelo y otro perpendicular a la tabla. El peso forma un ángulo de 30° con el eje perpendicular a la tabla.
+
+**¿Qué valores tienen la fuerza de rozamiento y la fuerza normal sobre el bulto?**
+
+- **A.** Rozamiento: 0 N, porque el bulto no se mueve; normal: 490 N.
+- **B.** Rozamiento: 245 N, hacia arriba de la tabla; normal: ≈ 426 N.
+- **C.** Rozamiento: 245 N, hacia abajo de la tabla; normal: ≈ 426 N.
+- **D.** Rozamiento: ≈ 426 N, hacia arriba de la tabla; normal: 245 N.
+
+---
+
+### Pregunta 102
+
+> *Datos ficticios con finalidad didáctica.*
+
+En una obra, un montacargas sube una plataforma con ladrillos (masa total: 400 kg) desde el primer piso. Un sensor midió la tensión del cable en tres fases del ascenso (datos ficticios con fines didácticos; g = 9,8 m/s²).
+
+**Tensión del cable del montacargas en cada fase (datos ficticios con fines didácticos)**
+
+| Fase | Intervalo (s) | Movimiento observado | Tensión del cable (N) |
+| --- | --- | --- | --- |
+| 1. Arranque | 0 a 2 | Sube cada vez más rápido | 4 320 |
+| 2. Ascenso | 2 a 10 | Sube con rapidez constante de 2,0 m/s | 3 920 |
+| 3. Frenado | 10 a 12 | Sube cada vez más despacio hasta detenerse | 3 520 |
+
+**¿Qué explicación es coherente con los datos?**
+
+- **A.** En la fase 2 la tensión debería superar al peso, porque para que la carga siga subiendo hace falta una fuerza neta hacia arriba.
+- **B.** En la fase 3 la tensión es menor que el peso; por eso la carga deja de subir y empieza a bajar durante esos dos segundos.
+- **C.** En la fase 2 la tensión iguala al peso y la fuerza neta es cero; la tensión difiere del peso solo mientras la velocidad cambia.
+- **D.** La tensión disminuye de una fase a otra porque, a medida que la carga sube, se aleja de la Tierra y su peso se reduce.
+
+---
+
+### Pregunta 103
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un grupo dejó caer desde el reposo filtros de papel para café con forma de cono, encajados unos dentro de otros: 1, 2 y 4 filtros. Así cambia la masa sin cambiar la forma ni el tamaño. Con un video midieron la velocidad de caída (datos ficticios con fines didácticos). Discuten dos modelos para la fuerza que ejerce el aire: proporcional a la rapidez (F = k·v) o proporcional al cuadrado de la rapidez (F = k·v²).
+
+**Gráfica: Velocidad de caída de filtros de papel encajados**
+
+*Descripción:* Gráfica de líneas de velocidad de caída (m/s) contra tiempo (s), de 0 a 0,8 s, con tres curvas que parten de 0 con inclinaciones parecidas y luego se aplanan. 1 filtro: 0,78 m/s a 0,1 s; 1,04 a 0,2 s; 1,09 a 0,3 s; constante en 1,10 m/s desde 0,4 s. 2 filtros: 0,87; 1,32; 1,49; 1,54; 1,55 m/s, y se estabiliza en 1,56 m/s. 4 filtros: 0,92; 1,57; 1,92; 2,08; 2,15; 2,18; 2,19 m/s, y se estabiliza en 2,20 m/s a 0,8 s.
+
+*1 filtro*
+
+| Tiempo (s) | Velocidad de caída (m/s) |
+| --- | --- |
+| 0 | 0 |
+| 0,1 | 0,78 |
+| 0,2 | 1,04 |
+| 0,3 | 1,09 |
+| 0,4 | 1,1 |
+| 0,5 | 1,1 |
+| 0,6 | 1,1 |
+| 0,7 | 1,1 |
+| 0,8 | 1,1 |
+
+*2 filtros*
+
+| Tiempo (s) | Velocidad de caída (m/s) |
+| --- | --- |
+| 0 | 0 |
+| 0,1 | 0,87 |
+| 0,2 | 1,32 |
+| 0,3 | 1,49 |
+| 0,4 | 1,54 |
+| 0,5 | 1,55 |
+| 0,6 | 1,55 |
+| 0,7 | 1,56 |
+| 0,8 | 1,56 |
+
+*4 filtros*
+
+| Tiempo (s) | Velocidad de caída (m/s) |
+| --- | --- |
+| 0 | 0 |
+| 0,1 | 0,92 |
+| 0,2 | 1,57 |
+| 0,3 | 1,92 |
+| 0,4 | 2,08 |
+| 0,5 | 2,15 |
+| 0,6 | 2,18 |
+| 0,7 | 2,19 |
+| 0,8 | 2,2 |
+
+**¿Qué conclusión sobre la fuerza que ejerce el aire se apoya en los datos?**
+
+- **A.** Cuadruplicar la masa solo duplica la velocidad terminal; como en ella la fuerza del aire iguala al peso, esa fuerza crece casi con v².
+- **B.** La fuerza del aire es proporcional a la rapidez (F = k·v), porque cuanto mayor es la masa de los filtros, mayor es su velocidad terminal.
+- **C.** Con 4 filtros la aceleración es cuatro veces mayor que con 1 filtro durante toda la caída, porque el peso es cuatro veces mayor.
+- **D.** Al alcanzar la velocidad terminal deja de actuar la fuerza del aire, y por eso la velocidad de los filtros ya no cambia.
+
+---
+
+### Pregunta 104
+
+Una tractomula cargada viaja por una carretera de montaña. Su motor puede entregar a las ruedas una potencia máxima de 300 kW, y el conductor la usa al máximo tanto en un tramo plano como en una subida larga. En el tramo plano, para mantener la velocidad debe vencer resistencias (aire y rodadura) que suman unos 12 000 N. En la subida, la fuerza que necesita para avanzar sin frenarse es de unos 30 000 N, porque se suma la componente del peso a lo largo de la pendiente.
+
+**¿Qué explica que la tractomula suba mucho más despacio de lo que avanza en el tramo plano?**
+
+- **A.** En la subida el motor entrega menos potencia, porque la potencia máxima de un motor solo se alcanza en un terreno plano.
+- **B.** Como necesita más fuerza que en el plano, la tractomula irá perdiendo velocidad durante toda la subida hasta detenerse.
+- **C.** Podría subir tan rápido como en el plano si aplicara más fuerza, porque la potencia necesaria no depende de la velocidad.
+- **D.** Con la potencia máxima fija, P = F·v: si la fuerza necesaria pasa de 12 000 N a 30 000 N, su mayor velocidad baja de 25 a 10 m/s.
+
+---
+
+### Pregunta 105
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un ciclista baja sin pedalear ni frenar por una vía de montaña recta. Con un GPS y un velocímetro registró la altura y la rapidez en cuatro puntos, P1 a P4, y con la masa del ciclista y su bicicleta (80 kg) calculó las energías, tomando como referencia la altura de P4 (datos ficticios con fines didácticos; g = 9,8 m/s²).
+
+**Gráfica: Energía potencial y energía cinética del ciclista en cuatro puntos de la bajada**
+
+*Descripción:* Gráfica de barras agrupadas con la energía (kJ) en cuatro puntos de la vía. Energía potencial gravitatoria: P1, 47,0; P2, 31,4; P3, 15,7; P4, 0. Energía cinética: P1, 1,0; P2, 6,8; P3, 9,6; P4, 10,2. Alturas sobre P4: 60, 40, 20 y 0 m; rapideces: 5,0; 13; 15,5 y 16 m/s.
+
+*Energía potencial gravitatoria*
+
+| Punto de la vía (altura sobre P4; rapidez) | Energía (kJ) |
+| --- | --- |
+| P1 (60 m; 5,0 m/s) | 47 |
+| P2 (40 m; 13 m/s) | 31,4 |
+| P3 (20 m; 15,5 m/s) | 15,7 |
+| P4 (0 m; 16 m/s) | 0 |
+
+*Energía cinética*
+
+| Punto de la vía (altura sobre P4; rapidez) | Energía (kJ) |
+| --- | --- |
+| P1 (60 m; 5,0 m/s) | 1 |
+| P2 (40 m; 13 m/s) | 6,8 |
+| P3 (20 m; 15,5 m/s) | 9,6 |
+| P4 (0 m; 16 m/s) | 10,2 |
+
+**¿Qué conclusión sobre la energía del ciclista se apoya en los datos?**
+
+- **A.** La energía mecánica se conserva en la bajada, porque toda la energía potencial que se pierde aparece como energía cinética.
+- **B.** Entre P1 y P4 se destruyen unos 38 kJ de energía a causa del rozamiento con el aire y con la superficie de la vía.
+- **C.** La energía mecánica disminuye unos 38 kJ entre P1 y P4; esa energía pasa al aire y al entorno, sobre todo como energía térmica.
+- **D.** La energía cinética casi deja de aumentar entre P3 y P4 porque la energía potencial ya se había agotado al llegar a P3.
+
+---
+
+### Pregunta 106
+
+> *Datos ficticios con finalidad didáctica.*
+
+La gráfica muestra la fuerza que el pie de una jugadora ejerció sobre un balón de 0,45 kg, que estaba en reposo, durante el contacto de una patada (datos ficticios con fines didácticos, estimados a partir de un video de alta velocidad). Durante el contacto, las demás fuerzas sobre el balón son despreciables frente a la del pie.
+
+**Gráfica: Fuerza del pie sobre el balón durante la patada**
+
+*Descripción:* Gráfica de líneas de fuerza (N) contra tiempo (ms) con forma de triángulo: la fuerza sube en línea recta desde 0 N en t = 0 ms hasta 1 350 N en t = 5 ms, y baja en línea recta hasta 0 N en t = 10 ms, cuando el balón deja el pie.
+
+*Fuerza sobre el balón*
+
+| Tiempo (ms) | Fuerza (N) |
+| --- | --- |
+| 0 | 0 |
+| 5 | 1350 |
+| 10 | 0 |
+
+**¿Con qué rapidez sale el balón?**
+
+- **A.** 6,8 m/s
+- **B.** 15 m/s
+- **C.** 30 m/s
+- **D.** 7,5 m/s
+
+---
+
+### Pregunta 107
+
+Al atajar un balón que llega muy rápido, una arquera no deja los brazos rígidos: los recoge hacia el pecho mientras detiene el balón. Así siente menos fuerza en las manos que si los mantuviera rígidos.
+
+**¿Qué explica que la fuerza sobre sus manos sea menor?**
+
+- **A.** Al recoger los brazos, el balón pierde menos cantidad de movimiento durante la atajada.
+- **B.** Los guantes absorben la cantidad de movimiento del balón y la transforman en calor.
+- **C.** Al mover las manos hacia atrás, el balón llega a ellas con una velocidad menor.
+- **D.** El cambio en la cantidad de movimiento es igual, pero ocurre en más tiempo.
+
+---
+
+### Pregunta 108
+
+En una ciénaga de aguas quietas, un pescador de 70 kg está de pie en su canoa de 50 kg; ambos están en reposo. El pescador salta horizontalmente hacia la orilla y sale con una rapidez de 2,0 m/s respecto al agua. Durante el salto, el rozamiento del agua con la canoa es despreciable.
+
+**¿Qué afirmación sobre el salto es correcta?**
+
+- **A.** La canoa retrocede a 2,8 m/s; la cantidad de movimiento total sigue en cero y la energía cinética total pasa de 0 a 336 J.
+- **B.** La canoa retrocede a 2,0 m/s, porque el pescador y la canoa se empujan mutuamente con fuerzas iguales y opuestas.
+- **C.** La canoa retrocede a 2,8 m/s y la energía cinética se conserva: el pescador y la canoa terminan con igual energía cinética.
+- **D.** La canoa retrocede a 1,4 m/s, porque tiene menos masa que el pescador y, por eso, recibe un impulso menor que el suyo.
+
+---
+
+### Pregunta 109
+
+Un estudiante afirma: «Los objetos pesados se hunden en el agua y los livianos flotan». Para poner a prueba esa idea, su grupo dispone de un recipiente grande con agua y de varios conjuntos de objetos.
+
+**¿Qué conjunto de objetos permite poner a prueba la idea de manera más directa?**
+
+- **A.** Tres cubos del mismo tamaño: uno de icopor, uno de madera y uno de aluminio.
+- **B.** Una bola de plastilina y la misma plastilina moldeada en forma de barquito.
+- **C.** Tres bloques de la misma madera, de 20 g, 200 g y 2 000 g.
+- **D.** Un mismo bloque de madera, puesto primero en agua dulce y luego en agua salada.
+
+---
+
+### Pregunta 110
+
+> *Datos ficticios con finalidad didáctica.*
+
+En un embalse ubicado a unos 2 500 m de altitud, un grupo bajó desde una lancha un sensor de presión absoluta atado a una cuerda marcada y registró la presión a varias profundidades (datos ficticios con fines didácticos; g = 9,8 m/s²).
+
+**Presión absoluta en el agua del embalse según la profundidad (datos ficticios con fines didácticos)**
+
+| Profundidad (m) | Presión absoluta (kPa) |
+| --- | --- |
+| 0 (superficie) | 75,0 |
+| 2,0 | 94,6 |
+| 5,0 | 124,0 |
+| 10,0 | 173,0 |
+| 15,0 | 222,0 |
+
+**¿Qué conclusión sobre la presión en el embalse se apoya en los datos?**
+
+- **A.** La presión es directamente proporcional a la profundidad: a 10 m es el doble de la que hay a 5 m.
+- **B.** La presión aumenta 9,8 kPa por metro, como corresponde a agua de 1 000 kg/m³, y se duplica hacia los 7,7 m.
+- **C.** La presión se duplica a 10 m de profundidad, como en cualquier embalse, porque 10 m de agua equivalen a una atmósfera.
+- **D.** Los valores dependen del volumen de agua del embalse: en uno más pequeño, a 10 m la presión sería menor.
+
+---
+
+### Pregunta 111
+
+En un taller, un elevador hidráulico sostiene un carro de 1 000 kg (peso: 9 800 N). Un operario dice: «Con solo 196 N levanto un carro de 9 800 N: este aparato multiplica la energía».
+
+*Esquema:* Dos cilindros verticales unidos por un tubo y llenos de aceite. El cilindro pequeño tiene un émbolo de 10 cm² de área, sobre el que se aplica una fuerza de 196 N hacia abajo. El cilindro grande tiene un émbolo de 500 cm² de área, sobre el que está el carro. Se desprecian el peso de los émbolos y el rozamiento, y el aceite se considera incompresible.
+
+**¿Qué explicación sobre lo que dice el operario es correcta?**
+
+- **A.** Se equivoca: la fuerza se multiplica por 50, pero para subir el carro 10 cm el émbolo pequeño debe bajar 5 m, y el trabajo es el mismo.
+- **B.** Tiene razón: la presión en el émbolo grande es 50 veces mayor que en el pequeño, y por eso la energía también se multiplica.
+- **C.** Tiene razón: el aceite almacena energía cuando se comprime en el cilindro pequeño y luego la entrega al subir el carro.
+- **D.** Se equivoca: los dos émbolos recorren la misma distancia, y la fuerza no se multiplica, sino que se transmite sin cambios.
+
+---
+
+### Pregunta 112
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un vendedor ofrece una figura dorada inspirada en la orfebrería precolombina y asegura que es «de oro macizo». Un grupo de estudiantes la cuelga de un dinamómetro de resolución 0,02 N: en el aire marca 1,72 N, y completamente sumergida en agua marca 1,52 N (datos ficticios con fines didácticos; g = 9,8 m/s²; densidad del agua: 1,00 g/cm³). La tabla muestra densidades de referencia.
+
+**Densidad de algunos metales a temperatura ambiente (valores de referencia redondeados)**
+
+| Material | Densidad (g/cm³) |
+| --- | --- |
+| Oro | 19,3 |
+| Plata | 10,5 |
+| Cobre | 8,96 |
+| Latón (aleación de cobre y cinc) | 8,4 a 8,7 |
+| Aluminio | 2,70 |
+
+**¿Qué conclusión es válida a partir de las mediciones?**
+
+- **A.** La figura es de latón, porque su densidad media, de unos 8,6 g/cm³, coincide con el intervalo de densidades del latón de la tabla.
+- **B.** La figura es de oro macizo, porque su color es dorado y su masa, de unos 176 g, es alta para su tamaño.
+- **C.** No se puede calcular la densidad, porque el empuje del agua altera la medida del peso de la figura.
+- **D.** No es de oro macizo: su densidad media (≈ 8,6 g/cm³) es muy inferior a la del oro, pero no se sabe de qué está hecha.
+
+---
+
+### Pregunta 113
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una estudiante mueve hacia arriba y hacia abajo el extremo de una cuerda larga y tensa, haciendo 2,5 oscilaciones completas por segundo. La gráfica muestra la forma de la cuerda en un instante (datos ficticios con fines didácticos).
+
+**Gráfica: Forma de la cuerda en un instante**
+
+*Descripción:* Gráfica de líneas con el desplazamiento vertical (cm) contra la distancia a lo largo de la cuerda (m), de 0 a 2,4 m. Es una onda sinusoidal que oscila entre +4 cm y −4 cm: crestas en 0,3 m y 1,5 m, valles en 0,9 m y 2,1 m, y cruces por cero en 0; 0,6; 1,2; 1,8 y 2,4 m.
+
+*Forma de la cuerda*
+
+| Distancia a lo largo de la cuerda (m) | Desplazamiento vertical (cm) |
+| --- | --- |
+| 0 | 0 |
+| 0,1 | 2 |
+| 0,2 | 3,46 |
+| 0,3 | 4 |
+| 0,4 | 3,46 |
+| 0,5 | 2 |
+| 0,6 | 0 |
+| 0,7 | −2 |
+| 0,8 | −3,46 |
+| 0,9 | −4 |
+| 1 | −3,46 |
+| 1,1 | −2 |
+| 1,2 | 0 |
+| 1,3 | 2 |
+| 1,4 | 3,46 |
+| 1,5 | 4 |
+| 1,6 | 3,46 |
+| 1,7 | 2 |
+| 1,8 | 0 |
+| 1,9 | −2 |
+| 2 | −3,46 |
+| 2,1 | −4 |
+| 2,2 | −3,46 |
+| 2,3 | −2 |
+| 2,4 | 0 |
+
+**¿Cuáles son la amplitud, la longitud de onda y la rapidez de la onda?**
+
+- **A.** Amplitud: 8 cm; longitud de onda: 1,2 m; rapidez: 3,0 m/s.
+- **B.** Amplitud: 4 cm; longitud de onda: 1,2 m; rapidez: 3,0 m/s.
+- **C.** Amplitud: 4 cm; longitud de onda: 0,6 m; rapidez: 1,5 m/s.
+- **D.** Amplitud: 4 cm; longitud de onda: 1,2 m; rapidez: 0,48 m/s.
+
+---
+
+### Pregunta 114
+
+En un embalse, un pescador observa una pelota de icopor que flota suelta, lejos de la orilla. Cuando pasan las olas producidas por una lancha, la pelota sube y baja varias veces, pero casi no se desplaza hacia la orilla, aunque las olas sí llegan hasta ella.
+
+**¿Qué explica esta observación?**
+
+- **A.** Las olas arrastran el agua hacia la orilla, pero la pelota es demasiado liviana para que el agua la lleve consigo.
+- **B.** La pelota sube y baja porque el viento que produce la lancha la empuja hacia arriba cada vez que pasa una ola.
+- **C.** Las olas transportan energía hacia la orilla; el agua, y con ella la pelota, solo oscila alrededor de su posición.
+- **D.** Las olas llevan el agua hacia la orilla, pero la pelota flota encima del agua y por eso solo sube y baja.
+
+---
+
+### Pregunta 115
+
+Un pescador usa una ecosonda en un embalse. El aparato emite un pulso de sonido hacia abajo y registra dos ecos: el de un cardumen de peces, 0,016 s después de la emisión, y el del fondo, 0,040 s después de la emisión. La rapidez del sonido en esa agua es de unos 1 480 m/s.
+
+**¿A qué profundidad se encuentran el cardumen y el fondo?**
+
+- **A.** Cardumen: 23,7 m; fondo: 59,2 m.
+- **B.** Cardumen: 2,7 m; fondo: 6,8 m.
+- **C.** Cardumen: 11,8 m; fondo: 17,8 m.
+- **D.** Cardumen: 11,8 m; fondo: 29,6 m.
+
+---
+
+### Pregunta 116
+
+> *Datos ficticios con finalidad didáctica.*
+
+Con un micrófono y una aplicación de celular, un grupo registró la variación de presión del aire producida por una cuerda de guitarra. La nota 1 se tocó con la cuerda libre; la nota 2, pisando la cuerda en el traste 12, que deja vibrando la mitad de su longitud, con la misma tensión (datos ficticios con fines didácticos).
+
+**Gráfica: Variación de la presión del aire producida por dos notas de una guitarra**
+
+*Descripción:* Gráfica de líneas de la variación de presión (Pa) contra el tiempo (ms), de 0 a 8 ms. Nota 1: onda sinusoidal de amplitud 0,8 Pa y período de 4 ms (máximos en 1 ms y 5 ms). Nota 2: onda sinusoidal de amplitud 0,4 Pa y período de 2 ms (máximos en 0,5; 2,5; 4,5 y 6,5 ms).
+
+*Nota 1 (cuerda libre)*
+
+| Tiempo (ms) | Variación de presión (Pa) |
+| --- | --- |
+| 0 | 0 |
+| 0,25 | 0,306 |
+| 0,5 | 0,566 |
+| 0,75 | 0,739 |
+| 1 | 0,8 |
+| 1,25 | 0,739 |
+| 1,5 | 0,566 |
+| 1,75 | 0,306 |
+| 2 | 0 |
+| 2,25 | −0,306 |
+| 2,5 | −0,566 |
+| 2,75 | −0,739 |
+| 3 | −0,8 |
+| 3,25 | −0,739 |
+| 3,5 | −0,566 |
+| 3,75 | −0,306 |
+| 4 | 0 |
+| 4,25 | 0,306 |
+| 4,5 | 0,566 |
+| 4,75 | 0,739 |
+| 5 | 0,8 |
+| 5,25 | 0,739 |
+| 5,5 | 0,566 |
+| 5,75 | 0,306 |
+| 6 | 0 |
+| 6,25 | −0,306 |
+| 6,5 | −0,566 |
+| 6,75 | −0,739 |
+| 7 | −0,8 |
+| 7,25 | −0,739 |
+| 7,5 | −0,566 |
+| 7,75 | −0,306 |
+| 8 | 0 |
+
+*Nota 2 (traste 12)*
+
+| Tiempo (ms) | Variación de presión (Pa) |
+| --- | --- |
+| 0 | 0 |
+| 0,25 | 0,283 |
+| 0,5 | 0,4 |
+| 0,75 | 0,283 |
+| 1 | 0 |
+| 1,25 | −0,283 |
+| 1,5 | −0,4 |
+| 1,75 | −0,283 |
+| 2 | 0 |
+| 2,25 | 0,283 |
+| 2,5 | 0,4 |
+| 2,75 | 0,283 |
+| 3 | 0 |
+| 3,25 | −0,283 |
+| 3,5 | −0,4 |
+| 3,75 | −0,283 |
+| 4 | 0 |
+| 4,25 | 0,283 |
+| 4,5 | 0,4 |
+| 4,75 | 0,283 |
+| 5 | 0 |
+| 5,25 | −0,283 |
+| 5,5 | −0,4 |
+| 5,75 | −0,283 |
+| 6 | 0 |
+| 6,25 | 0,283 |
+| 6,5 | 0,4 |
+| 6,75 | 0,283 |
+| 7 | 0 |
+| 7,25 | −0,283 |
+| 7,5 | −0,4 |
+| 7,75 | −0,283 |
+| 8 | 0 |
+
+**¿Qué explicación es coherente con los registros?**
+
+- **A.** La nota 2 tiene mayor longitud de onda en el aire, porque la parte de la cuerda que vibra es más corta.
+- **B.** La nota 2 es más aguda: su período es la mitad del de la nota 1, así que su frecuencia es el doble, 500 Hz.
+- **C.** La nota 2 viaja por el aire con el doble de rapidez que la nota 1, y por eso su período es la mitad.
+- **D.** La nota 2 suena más fuerte que la nota 1, porque sus oscilaciones son más frecuentes que las de la nota 1.
+
+---
+
+### Pregunta 117
+
+En el laboratorio, la docente coloca un timbre que suena de forma continua dentro de una campana de vidrio conectada a una bomba de vacío. A medida que extrae el aire, el sonido se oye cada vez más débil, aunque a través del vidrio se sigue viendo el martillo golpear la campanilla del timbre. Al dejar entrar de nuevo el aire, el sonido vuelve a oírse con la intensidad inicial.
+
+**¿Qué conclusión se apoya en estas observaciones?**
+
+- **A.** El sonido necesita un medio material para propagarse; la luz que permite ver el martillo, no.
+- **B.** Al extraer el aire, el martillo del timbre deja de golpear la campanilla y por eso el sonido se apaga.
+- **C.** El vidrio de la campana bloquea el sonido cuando dentro de ella ya no queda aire que lo empuje.
+- **D.** Al extraer el aire, el sonido se vuelve tan agudo que el oído humano ya no lo puede percibir.
+
+---
+
+### Pregunta 118
+
+Una estudiante de 1,60 m de estatura, con los ojos a 1,50 m del piso, quiere comprar un espejo plano para colgarlo en la pared y verse de cuerpo entero. La vendedora le dice: «Si se para más lejos del espejo, le basta uno más pequeño».
+
+*Esquema:* Esquema de rayos: la estudiante está de pie frente a un espejo plano vertical. Un rayo sale de la parte de arriba de su cabeza, se refleja en el espejo y llega a sus ojos; otro rayo sale de sus pies, se refleja en el espejo y llega a sus ojos. En cada reflexión, el ángulo de incidencia es igual al ángulo de reflexión, medidos respecto a la normal (horizontal) al espejo.
+
+**¿Qué explicación sobre lo que dice la vendedora es correcta?**
+
+- **A.** Tiene razón: al alejarse, la imagen en el espejo se hace más pequeña y cabe en un espejo de menor altura.
+- **B.** No tiene razón: para verse completa, el espejo debe medir lo mismo que ella, 1,60 m, a cualquier distancia.
+- **C.** No tiene razón: por la ley de la reflexión basta con la mitad de su estatura, 0,80 m, a cualquier distancia.
+- **D.** Tiene razón: al alejarse, los rayos llegan más inclinados y se reflejan con un ángulo mayor que el de incidencia.
+
+---
+
+### Pregunta 119
+
+> *Datos ficticios con finalidad didáctica.*
+
+En el laboratorio, un grupo hace incidir un rayo de luz desde el aire sobre la cara plana de un bloque semicircular de acrílico y mide los ángulos de incidencia (i) y de refracción (r) respecto a la normal (datos ficticios con fines didácticos). Ana propone que el ángulo de refracción es proporcional al de incidencia (i/r constante); Beto propone que lo constante es sen i / sen r.
+
+**Ángulos de incidencia y de refracción del aire al acrílico (datos ficticios con fines didácticos)**
+
+| Ángulo de incidencia i (°) | Ángulo de refracción r (°) | sen i | sen r |
+| --- | --- | --- | --- |
+| 10 | 6,7 | 0,174 | 0,117 |
+| 20 | 13,3 | 0,342 | 0,230 |
+| 30 | 19,6 | 0,500 | 0,335 |
+| 40 | 25,6 | 0,643 | 0,432 |
+| 50 | 30,9 | 0,766 | 0,514 |
+| 60 | 35,5 | 0,866 | 0,581 |
+| 70 | 39,1 | 0,940 | 0,631 |
+
+**¿Qué conclusión sobre las dos propuestas se apoya en los datos?**
+
+- **A.** Apoyan la propuesta de Beto: i/r aumenta de ≈ 1,49 a ≈ 1,79, mientras sen i / sen r se mantiene cerca de 1,49.
+- **B.** Apoyan la propuesta de Ana, porque para ángulos pequeños i/r es casi constante y eso basta para todos los ángulos.
+- **C.** Apoyan por igual las dos propuestas, porque en ambas el ángulo de refracción aumenta cuando aumenta el de incidencia.
+- **D.** No permiten evaluar ninguna propuesta, porque con i = 0° no hay desviación y las dos razones quedan sin definir.
+
+---
+
+### Pregunta 120
+
+> *Datos ficticios con finalidad didáctica.*
+
+Con una lente convergente, una vela y una pantalla, un grupo buscó, para cada distancia de la vela a la lente (d_o), la distancia de la lente a la pantalla (d_i) en la que se forma una imagen nítida (datos ficticios con fines didácticos). Con la vela a 8 cm de la lente no encontraron imagen en la pantalla en ninguna posición, pero al mirar a través de la lente vieron la vela derecha y aumentada.
+
+**Distancias del objeto y de la imagen con una lente convergente (datos ficticios con fines didácticos)**
+
+| Distancia vela–lente, d_o (cm) | Distancia lente–pantalla, d_i (cm) | Imagen en la pantalla |
+| --- | --- | --- |
+| 60 | 12,0 | Invertida y más pequeña |
+| 40 | 13,3 | Invertida y más pequeña |
+| 30 | 15,0 | Invertida y más pequeña |
+| 20 | 20,0 | Invertida y del mismo tamaño |
+| 15 | 30,0 | Invertida y más grande |
+| 8 | — | No se forma |
+
+**¿Qué conclusión es coherente con los datos?**
+
+- **A.** La distancia de la imagen es inversamente proporcional a la del objeto, porque el producto d_o · d_i es igual en todos los ensayos.
+- **B.** Cuanto más se acerca la vela a la lente, más cerca de la lente se forma la imagen y más pequeña resulta.
+- **C.** Con la vela a 8 cm no se forma imagen porque, desde tan cerca, la luz de la vela no alcanza a atravesar la lente.
+- **D.** La distancia focal de la lente es de unos 10 cm, porque en los ensayos con imagen 1/d_o + 1/d_i ≈ 0,10 cm⁻¹.
+
+---
+
+## Bloque E. Electricidad, magnetismo, ondas y energía (preguntas 121–150)
+
+### Pregunta 121
+
+En el laboratorio, un estudiante sigue tres pasos con dos esferas metálicas idénticas, X e Y, que al comienzo están descargadas, montadas sobre soportes aislantes y en contacto entre sí. Las esferas y la barra se manipulan siempre por sus partes aislantes.
+
+*Esquema:* Paso 1: una barra de plástico con carga negativa se acerca a la esfera X por el lado opuesto a Y, sin tocarla; las esferas X e Y siguen en contacto. Paso 2: con la barra quieta en esa posición, se separan las esferas tomándolas por los soportes aislantes. Paso 3: se aleja la barra. En ningún momento la barra toca alguna de las esferas ni las esferas tocan otro objeto.
+
+**¿Qué carga tiene cada esfera al final del paso 3?**
+
+- **A.** Las dos quedan descargadas, porque la barra nunca tocó a ninguna de las dos esferas.
+- **B.** Las dos quedan con carga negativa, porque la barra les cedió parte de sus electrones.
+- **C.** X queda con carga positiva e Y con carga negativa, las dos de igual magnitud.
+- **D.** X queda con carga negativa e Y con carga positiva, las dos de igual magnitud.
+
+---
+
+### Pregunta 122
+
+Una estudiante frota un globo con su cabello seco y lo acerca, sin tocarlos, a unos trocitos de papel que están sobre la mesa; los trocitos saltan y se pegan al globo. Antes de la prueba, acercó los trocitos de papel a un electroscopio descargado y sus láminas no se separaron: el papel no tenía carga neta.
+
+**¿Qué explica que el globo atraiga los trocitos de papel?**
+
+- **A.** El globo separa un poco las cargas del papel; la parte más cercana queda con signo opuesto y, al estar más cerca, se atrae con más fuerza.
+- **B.** El globo frotado crea a su alrededor un campo magnético que atrae al papel, como un imán atrae los clips de acero de un escritorio.
+- **C.** El globo le transfiere carga al papel a través del aire, y así el papel queda con una carga neta de signo opuesto a la del globo.
+- **D.** El papel ya tenía una carga de signo opuesto a la del globo, y las cargas de signo contrario se atraen cuando se acercan entre sí.
+
+---
+
+### Pregunta 123
+
+Las aves se posan con frecuencia sobre un solo cable desnudo de una red de distribución de energía, que está a un potencial de miles de voltios respecto al suelo, y no sufren daño. En cambio, aves grandes que tocan al mismo tiempo un cable y la cruceta metálica del poste conectada a tierra, o dos cables a la vez, pueden morir electrocutadas. Una persona que tocara ese mismo cable mientras está apoyada en el suelo sufriría una descarga que puede ser mortal.
+
+**¿Qué explica que el ave posada en un solo cable no sufra daño?**
+
+- **A.** Las patas del ave están cubiertas de escamas secas que la aíslan por completo del cable, cosa que no ocurre con la piel humana.
+- **B.** Toda la corriente del cable pasa también por el cuerpo del ave, pero las aves resisten corrientes mucho mayores que las personas.
+- **C.** Entre las patas del ave hay la misma diferencia de potencial que entre el cable y el suelo, pero el cuerpo del ave casi no conduce.
+- **D.** Las dos patas tocan puntos casi al mismo potencial, así que casi no hay diferencia de potencial que impulse corriente por el ave.
+
+---
+
+### Pregunta 124
+
+> *Datos ficticios con finalidad didáctica.*
+
+En una cubeta con una capa delgada de agua de la llave se colocan dos placas metálicas paralelas separadas 12 cm y se conectan a una fuente de 6,0 V. Con un voltímetro, cuyo terminal negativo está fijo en la placa negativa, se mide el potencial en puntos a lo largo de dos líneas perpendiculares a las placas: la línea 1, cerca de un borde de la cubeta, y la línea 2, por el centro (datos ficticios con fines didácticos).
+
+**Potencial respecto a la placa negativa en puntos entre las placas (datos ficticios con fines didácticos)**
+
+| Distancia desde la placa negativa (cm) | Potencial en la línea 1 (V) | Potencial en la línea 2 (V) |
+| --- | --- | --- |
+| 0 | 0,0 | 0,0 |
+| 2 | 1,0 | 1,0 |
+| 4 | 2,0 | 2,1 |
+| 6 | 3,0 | 3,0 |
+| 8 | 4,0 | 3,9 |
+| 10 | 5,0 | 5,0 |
+| 12 | 6,0 | 6,0 |
+
+**¿Qué conclusión sobre el campo eléctrico entre las placas se apoya en los datos?**
+
+- **A.** El campo es nulo junto a la placa negativa, porque allí el potencial medido es 0 V.
+- **B.** El campo es casi uniforme, de unos 0,5 V/cm, y apunta de la placa positiva a la negativa.
+- **C.** El campo es más intenso junto a la placa positiva, porque allí el potencial es mayor.
+- **D.** El campo apunta de la placa negativa a la positiva, porque el potencial crece en ese sentido.
+
+---
+
+### Pregunta 125
+
+Un grupo quiere medir la corriente que pasa por un bombillo y el voltaje entre sus extremos. Para eso dispone del circuito del esquema, de un amperímetro y de un voltímetro.
+
+*Esquema:* Circuito de un solo camino: el polo positivo de una batería de 4,5 V se conecta a un interruptor; del interruptor sale un cable hasta un extremo del bombillo, y del otro extremo del bombillo sale un cable que vuelve al polo negativo de la batería. Los medidores todavía no están conectados.
+
+**¿Cómo deben conectarse los medidores y por qué?**
+
+- **A.** El amperímetro en paralelo con el bombillo, para que mida la corriente que pasa por él, y el voltímetro en serie, para que mida el voltaje que le llega.
+- **B.** El amperímetro en serie, porque por él debe pasar la misma corriente que por el bombillo, y el voltímetro en paralelo, conectado a los dos extremos del bombillo.
+- **C.** Los dos en serie con el bombillo, uno a cada lado, para que la corriente que pasa por el bombillo atraviese también los dos instrumentos.
+- **D.** Los dos en paralelo con el bombillo, conectados a sus extremos, para que ninguno de los dos instrumentos interrumpa el paso de la corriente.
+
+---
+
+### Pregunta 126
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un grupo aplicó voltajes de 0 a 6 V a un resistor de carbón y, por separado, a un bombillo pequeño de filamento, y midió la corriente en cada caso (datos ficticios con fines didácticos).
+
+**Gráfica: Corriente en función del voltaje para un resistor y un bombillo de filamento**
+
+*Descripción:* Gráfica de líneas con el voltaje aplicado (0 a 6 V) en el eje horizontal y la corriente en amperios en el eje vertical. Resistor: 0; 0,05; 0,10; 0,15; 0,20; 0,25 y 0,30 A para 0, 1, 2, 3, 4, 5 y 6 V (una recta que pasa por el origen). Bombillo: 0; 0,10; 0,15; 0,19; 0,22; 0,25 y 0,27 A para los mismos voltajes (una curva que se aplana). Las dos curvas se cruzan en 5 V, donde ambas corrientes son 0,25 A.
+
+*Resistor*
+
+| Voltaje aplicado (V) | Corriente (A) |
+| --- | --- |
+| 0 | 0 |
+| 1 | 0,05 |
+| 2 | 0,1 |
+| 3 | 0,15 |
+| 4 | 0,2 |
+| 5 | 0,25 |
+| 6 | 0,3 |
+
+*Bombillo de filamento*
+
+| Voltaje aplicado (V) | Corriente (A) |
+| --- | --- |
+| 0 | 0 |
+| 1 | 0,1 |
+| 2 | 0,15 |
+| 3 | 0,19 |
+| 4 | 0,22 |
+| 5 | 0,25 |
+| 6 | 0,27 |
+
+**¿Qué conclusión se apoya en la gráfica?**
+
+- **A.** Los dos elementos cumplen la ley de Ohm, porque en ambos la corriente aumenta cuando aumenta el voltaje aplicado.
+- **B.** El bombillo tiene una resistencia constante de 20 Ω, porque a 5 V conduce la misma corriente que el resistor.
+- **C.** La resistencia del bombillo disminuye a medida que aumenta el voltaje, porque su curva se aplana.
+- **D.** Solo el resistor es óhmico; en el bombillo, el cociente V/I pasa de unos 10 Ω a unos 22 Ω.
+
+---
+
+### Pregunta 127
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un grupo midió la resistencia de alambres de la misma aleación de níquel y cromo, a la misma temperatura, con distintas longitudes y áreas de sección transversal (datos ficticios con fines didácticos).
+
+**Resistencia de alambres de la misma aleación (datos ficticios con fines didácticos)**
+
+| Alambre | Longitud (m) | Área de la sección (mm²) | Resistencia (Ω) |
+| --- | --- | --- | --- |
+| 1 | 0,50 | 0,20 | 2,5 |
+| 2 | 1,00 | 0,20 | 5,0 |
+| 3 | 1,00 | 0,40 | 2,5 |
+| 4 | 2,00 | 0,40 | 5,0 |
+
+**¿Qué resistencia se espera para un alambre de la misma aleación con 1,50 m de longitud y 0,10 mm² de área de sección?**
+
+- **A.** 15 Ω
+- **B.** 3,75 Ω
+- **C.** 7,5 Ω
+- **D.** 10 Ω
+
+---
+
+### Pregunta 128
+
+> *Datos ficticios con finalidad didáctica.*
+
+Antes de cerrar el circuito del esquema, Samuel predijo que el bombillo P, el primero que encuentra la corriente que sale del polo positivo, brillaría más que el bombillo Q, porque «la corriente se va gastando». Al cerrar el interruptor, los dos bombillos, que son idénticos, brillaron igual, y los tres amperímetros marcaron lo mismo (datos ficticios con fines didácticos).
+
+*Esquema:* Circuito de un solo camino: polo positivo de una pila de 3,0 V → amperímetro 1 → bombillo P → amperímetro 2 → bombillo Q → amperímetro 3 → interruptor → polo negativo de la pila. Lecturas: amperímetro 1: 0,20 A; amperímetro 2: 0,20 A; amperímetro 3: 0,20 A.
+
+**¿Qué explicación es coherente con lo observado?**
+
+- **A.** La corriente se gasta en P, pero Q brilla igual porque recibe a cambio el voltaje que P no alcanzó a usar.
+- **B.** Los electrones salen del polo negativo, así que Q debería brillar más; brillan igual solo porque la pila es nueva.
+- **C.** La corriente es la misma en todo el circuito en serie; lo que se transforma en los bombillos es energía, no carga.
+- **D.** Cada bombillo recibe la mitad de la corriente de la pila, y como reciben la misma mitad, brillan igual.
+
+---
+
+### Pregunta 129
+
+En una casa de Montería, cuando se enciende el televisor, el bombillo de la sala no cambia de brillo, y cuando se fundió el bombillo de la cocina, los demás aparatos siguieron funcionando. Los tomacorrientes y los bombillos de la casa están conectados en paralelo a la red de 120 V.
+
+**¿Qué afirmación sobre esta instalación es correcta?**
+
+- **A.** Cada aparato recibe los mismos 120 V y funciona por su cuenta; al encender más aparatos, la corriente total que entra a la casa aumenta.
+- **B.** Cada aparato funciona por su cuenta, y al encender más aparatos la corriente total que entra a la casa disminuye porque se reparte entre más caminos.
+- **C.** Los 120 V se reparten entre los aparatos encendidos, así que cada uno funciona con menos voltaje cuantos más aparatos estén encendidos.
+- **D.** La corriente que entra a la casa es siempre la misma, y se reparte entre los aparatos que estén encendidos en cada momento.
+
+---
+
+### Pregunta 130
+
+Se arma el circuito del esquema con tres bombillos idénticos, L1, L2 y L3. Para analizarlo, se supone que cada bombillo tiene una resistencia constante y que la batería mantiene 6,0 V entre sus polos. Al cerrar el circuito, L1 brilla más que L2 y L3, que brillan igual entre sí. Luego se desenrosca L3 de su portalámparas.
+
+*Esquema:* El polo positivo de la batería de 6,0 V se conecta a L1. Del otro extremo de L1 sale un cable que se divide en dos ramas en paralelo: una rama tiene solo a L2 y la otra solo a L3. Las dos ramas se unen de nuevo y el cable vuelve al polo negativo de la batería. Así, L1 está en serie con el conjunto en paralelo formado por L2 y L3.
+
+**¿Qué ocurre con el brillo de L1 y de L2 al desenroscar L3?**
+
+- **A.** L1 y L2 brillan igual que antes, porque cada uno sigue conectado a la misma batería de 6,0 V.
+- **B.** L1 y L2 brillan más que antes, porque la corriente que pasaba por L3 se suma a la de cada uno.
+- **C.** L1 brilla más y L2 brilla menos, porque al quitar L3 disminuye la resistencia total del circuito y aumenta la corriente.
+- **D.** L1 brilla menos y L2 brilla más, porque aumenta la resistencia total y L1 y L2 se reparten el voltaje por igual.
+
+---
+
+### Pregunta 131
+
+> *Datos ficticios con finalidad didáctica.*
+
+Se conectan en paralelo tres resistores de 10 Ω, 20 Ω y 30 Ω a una fuente de 6,0 V. Con un voltímetro se mide el voltaje entre los extremos de cada resistor y con un amperímetro, la corriente en cada rama y en el cable principal que sale de la fuente (datos ficticios con fines didácticos).
+
+**Voltaje y corriente en un circuito con tres resistores en paralelo (datos ficticios con fines didácticos)**
+
+| Lugar de la medición | Voltaje entre los extremos (V) | Corriente (A) |
+| --- | --- | --- |
+| Rama del resistor de 10 Ω | 6,0 | 0,60 |
+| Rama del resistor de 20 Ω | 6,0 | 0,30 |
+| Rama del resistor de 30 Ω | 6,0 | 0,20 |
+| Cable principal | 6,0 | 1,10 |
+
+**¿Qué conclusión permiten obtener estas mediciones?**
+
+- **A.** La corriente es igual en las tres ramas, porque los tres resistores están conectados a la misma fuente.
+- **B.** El voltaje se reparte entre las ramas, y la rama de mayor resistencia recibe la mayor parte del voltaje.
+- **C.** La corriente total es la suma de las de las ramas, y la rama de mayor resistencia lleva la menor corriente.
+- **D.** Si se agregara una cuarta rama en paralelo, la corriente total disminuiría, porque aumentaría la resistencia total.
+
+---
+
+### Pregunta 132
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una familia de Bogotá revisa su factura de energía y anota la potencia y el tiempo de uso diario de sus aparatos principales. Para calcular costos usan una tarifa ficticia de $ 850 por kWh (datos ficticios con fines didácticos; las tarifas reales dependen de la empresa y del estrato).
+
+**Potencia y uso diario de los aparatos de una vivienda (datos ficticios con fines didácticos)**
+
+| Aparato | Potencia (W) | Tiempo de funcionamiento al día (h) |
+| --- | --- | --- |
+| Nevera (tiempo en que funciona el compresor) | 150 | 12 |
+| Ducha eléctrica | 3 000 | 0,4 |
+| Televisor | 120 | 5 |
+| Cinco bombillos LED de 10 W cada uno | 50 | 6 |
+
+**Para un mes de 30 días, ¿qué afirmación es correcta?**
+
+- **A.** La ducha es el aparato que más energía consume en el mes, porque su potencia es 20 veces la de la nevera.
+- **B.** La nevera consume en el mes más energía que la ducha, 54 kWh frente a 36 kWh, aunque su potencia es mucho menor.
+- **C.** Todos los aparatos de la tabla consumen 3,9 kWh en el mes, lo que cuesta $ 3 315 con la tarifa indicada.
+- **D.** El consumo del mes es de 3 320 kWh, que se obtiene al sumar las potencias de los aparatos de la tabla.
+
+---
+
+### Pregunta 133
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una tienda de barrio quiere cambiar un bombillo incandescente por uno LED que produce una iluminación similar. Se comparan los dos durante 3 000 horas de uso, con una tarifa ficticia de $ 800 por kWh (datos ficticios con fines didácticos). Cuando un bombillo llega al final de su vida útil, se reemplaza por otro igual.
+
+**Características de dos bombillos de iluminación similar (datos ficticios con fines didácticos)**
+
+| Bombillo | Potencia (W) | Precio de compra ($) | Vida útil (h) |
+| --- | --- | --- | --- |
+| Incandescente | 60 | 3 000 | 1 000 |
+| LED | 9 | 12 000 | 15 000 |
+
+**¿Cuánto dinero se ahorra en total con el LED en las 3 000 horas de uso?**
+
+- **A.** $ 113 400
+- **B.** $ 122 400
+- **C.** Nada: el LED cuesta $ 9 000 más
+- **D.** $ 119 400
+
+---
+
+### Pregunta 134
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una familia sospecha que su nevera vieja es la causa del aumento de la factura. Durante tres noches, de 10:00 p. m. a 6:00 a. m. (8 h), apagan todo lo que pueden y leen el medidor de energía de la casa al comenzar y al terminar. Algunos aparatos quedan en modo de espera (enrutador, televisor y cargadores conectados). La segunda noche, con la nevera vacía, la desconectan (datos ficticios con fines didácticos).
+
+**Energía registrada por el medidor de la casa en tres noches de 8 h (datos ficticios con fines didácticos)**
+
+| Noche | Nevera | Energía registrada en 8 h (kWh) |
+| --- | --- | --- |
+| 1 | Conectada | 1,10 |
+| 2 | Desconectada | 0,30 |
+| 3 | Conectada | 1,14 |
+
+**El padre concluye: «La nevera consume 1,12 kWh cada 8 horas; en un mes gasta 1,12 × 3 × 30 ≈ 101 kWh». ¿Qué procedimiento estima mejor el consumo mensual de la nevera?**
+
+- **A.** Restar el consumo de los aparatos en espera y medir también de día, porque de noche la nevera se abre menos y el ambiente es más fresco.
+- **B.** Mantener el cálculo del padre, porque el promedio de dos noches con la nevera conectada ya representa cualquier momento del día.
+- **C.** Usar el valor de la noche 2 para el cálculo, porque es la única medición en la que el resto de la casa no influyó en el resultado.
+- **D.** Desconectar la nevera durante un mes completo y comparar la factura de ese mes con la del mes anterior en el que estuvo conectada.
+
+---
+
+### Pregunta 135
+
+En una cocina se conectan a una sola multitoma, marcada «máximo 10 A», una plancha de 1 200 W, un horno microondas de 1 200 W y una olla arrocera de 600 W, todos para 120 V. Los tres funcionan bien al comienzo, pero después de unos minutos el cable de la multitoma se siente muy caliente y el interruptor automático (breaker) del circuito se abre.
+
+**¿Qué explica lo ocurrido?**
+
+- **A.** Los aparatos están en paralelo y cada uno suma corriente: el total, unos 25 A, supera lo que soportan la multitoma y el circuito.
+- **B.** Al conectar más aparatos el voltaje de la multitoma subió por encima de 120 V, y ese exceso de voltaje calentó el cable.
+- **C.** Los aparatos quedan en serie dentro de la multitoma, y la gran resistencia total del conjunto es la que calienta el cable.
+- **D.** Hubo un cortocircuito: la corriente pasó directamente de un enchufe a otro sin atravesar los aparatos, y eso calentó la multitoma.
+
+---
+
+### Pregunta 136
+
+Un grupo coloca una brújula debajo de un alambre recto, tendido en la dirección norte-sur, que se conecta a una pila por medio de un interruptor. Con el interruptor abierto, la aguja apunta al norte, a lo largo del alambre. Al cerrarlo, la aguja gira hacia el este. Un estudiante afirma que la aguja se desvía por el campo magnético que produce la corriente; otro, que se desvía porque el alambre se calienta.
+
+**¿Qué procedimiento permite distinguir entre las dos hipótesis?**
+
+- **A.** Repetir el experimento diez veces con el mismo montaje y verificar que la aguja se desvía siempre hacia el este.
+- **B.** Agregar una segunda pila en serie para aumentar la corriente y observar si la desviación de la aguja es mayor.
+- **C.** Invertir las conexiones de la pila sin mover nada más y observar si la aguja se desvía hacia el lado contrario.
+- **D.** Alejar la brújula del alambre y observar si la desviación de la aguja es menor que cuando estaba más cerca.
+
+---
+
+### Pregunta 137
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un grupo construyó un electroimán enrollando alambre de cobre esmaltado alrededor de un mismo clavo de hierro, y contó cuántos clips levantaba en distintas condiciones (datos ficticios con fines didácticos).
+
+**Clips levantados por un electroimán (datos ficticios con fines didácticos)**
+
+| Ensayo | Número de vueltas | Corriente (A) | Clips levantados |
+| --- | --- | --- | --- |
+| 1 | 20 | 0,5 | 4 |
+| 2 | 40 | 0,5 | 9 |
+| 3 | 40 | 1,0 | 17 |
+| 4 | 20 | 1,0 | 8 |
+
+**Para saber si el número de vueltas influye en la cantidad de clips que levanta el electroimán, ¿qué ensayos se deben comparar?**
+
+- **A.** Los ensayos 1 y 3
+- **B.** Los ensayos 1 y 2
+- **C.** Los ensayos 2 y 3
+- **D.** Los ensayos 2 y 4
+
+---
+
+### Pregunta 138
+
+En una cubeta de ondas con agua de profundidad uniforme, una regla que vibra produce ondas planas. Las ondas llegan de forma oblicua a una pared recta y se reflejan.
+
+*Esquema:* Vista desde arriba: los frentes de onda incidentes son líneas rectas paralelas, separadas 2,0 cm, que avanzan hacia la pared formando un ángulo de 30° con ella. La regla vibra 10 veces por segundo. Después de chocar, los frentes reflejados se alejan de la pared con otra dirección; toda la cubeta tiene la misma profundidad.
+
+**¿Qué describe correctamente la onda reflejada?**
+
+- **A.** Tiene menor rapidez, porque pierde energía al chocar contra la pared, y por eso su longitud de onda es menor.
+- **B.** Tiene la misma rapidez, pero su frecuencia es el doble, porque se suman las ondas que van y las que vuelven.
+- **C.** Cambia de frecuencia y de longitud de onda, pero sigue avanzando en la misma dirección que la onda incidente.
+- **D.** Conserva la frecuencia de 10 Hz, la longitud de onda de 2,0 cm y la rapidez; lo que cambia es su dirección.
+
+---
+
+### Pregunta 139
+
+> *Datos ficticios con finalidad didáctica.*
+
+Se dejan caer, desde el reposo, un imán cilíndrico de neodimio y un cilindro de acero sin imantar del mismo tamaño y masa por tubos verticales de 1,0 m de largo con el mismo diámetro interior. El imán no se pega a las paredes de cobre ni de aluminio. Uno de los tubos de cobre tiene una ranura a lo largo de toda su longitud (datos ficticios con fines didácticos).
+
+**Tiempo de caída en tubos verticales de 1,0 m (datos ficticios con fines didácticos)**
+
+| Objeto | Tubo | Tiempo de caída (s) |
+| --- | --- | --- |
+| Imán | PVC | 0,46 |
+| Imán | Cobre | 4,8 |
+| Imán | Cobre con ranura a lo largo | 1,3 |
+| Imán | Aluminio | 3,1 |
+| Cilindro de acero sin imantar | Cobre | 0,46 |
+
+**¿Qué explicación del frenado del imán se sustenta mejor en todos los datos?**
+
+- **A.** El cobre y el aluminio atraen al imán, como lo hace el hierro, y esa atracción contra las paredes frena su caída.
+- **B.** El aire queda atrapado entre el imán y las paredes del tubo metálico y lo frena más que en el tubo de PVC.
+- **C.** El imán en movimiento induce corrientes en las paredes metálicas, y estas generan un campo que se opone a su caída.
+- **D.** El tubo de cobre tiene más masa que el de PVC, y su atracción gravitacional sobre el imán es la que lo frena.
+
+---
+
+### Pregunta 140
+
+Una pequeña central hidroeléctrica entrega una potencia de 1,0 MW (1 000 000 W) a una línea de transmisión cuyos cables tienen una resistencia total de 5,0 Ω. Un ingeniero compara dos opciones: transmitir a 10 000 V o usar un transformador elevador para transmitir a 100 000 V. En los dos casos la potencia que entra a la línea es la misma.
+
+**¿Qué ocurre con la potencia que se pierde como calor en los cables al pasar de 10 000 V a 100 000 V?**
+
+- **A.** Pasa de 50 kW a 0,5 kW: se reduce 100 veces, porque la corriente se reduce 10 veces y la pérdida depende de I².
+- **B.** Pasa de 50 kW a 5 kW: se reduce 10 veces, porque la corriente en los cables se reduce 10 veces al aumentar el voltaje 10 veces.
+- **C.** Aumenta 100 veces, porque la potencia disipada es V²/R y el voltaje de la línea es 10 veces mayor en la segunda opción.
+- **D.** No cambia, porque en las dos opciones la potencia que entrega la central a la línea es la misma: 1,0 MW.
+
+---
+
+### Pregunta 141
+
+Un grupo tiene un generador de manivela: al girarla, una bobina gira entre dos imanes y se enciende un bombillo conectado al generador. Quieren poner a prueba la hipótesis: «Cuanto más rápido se gira la manivela, mayor es el voltaje que produce el generador». Disponen de un voltímetro, un cronómetro y varios bombillos diferentes.
+
+**¿Qué procedimiento permite poner a prueba la hipótesis?**
+
+- **A.** Girar la manivela siempre con la misma rapidez y cambiar el bombillo conectado, midiendo el brillo de cada bombillo.
+- **B.** Girar la manivela a distintas rapideces y conectar en cada caso un bombillo diferente, midiendo el voltaje.
+- **C.** Girar la manivela tan rápido como se pueda durante varios minutos y medir cuánto se calienta el bombillo.
+- **D.** Girar a distintas rapideces medidas (vueltas por segundo), con el mismo bombillo, y medir el voltaje en cada caso.
+
+---
+
+### Pregunta 142
+
+> *Datos ficticios con finalidad didáctica.*
+
+Desde un muelle en Santa Marta, una estudiante observa las olas que pasan junto a un poste. Cuenta que en 60 s pasan 12 olas completas (12 periodos) y estima, con las marcas del muelle, que la distancia entre dos crestas consecutivas es de 15 m (datos ficticios con fines didácticos).
+
+**¿Con qué rapidez avanzan las olas?**
+
+- **A.** 0,80 m/s
+- **B.** 3,0 m/s
+- **C.** 75 m/s
+- **D.** 180 m/s
+
+---
+
+### Pregunta 143
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un vibrador produce una onda en una cuerda tensa. Un sensor registra el desplazamiento vertical de un punto de la cuerda a lo largo del tiempo, y una fotografía muestra que la distancia entre dos crestas consecutivas es de 1,2 m (datos ficticios con fines didácticos).
+
+**Gráfica: Desplazamiento vertical de un punto de la cuerda**
+
+*Descripción:* Gráfica de líneas con el tiempo (0 a 0,80 s) en el eje horizontal y el desplazamiento en cm en el eje vertical. La curva es una oscilación regular: empieza en 0 cm, sube a +3 cm a los 0,10 s, vuelve a 0 a los 0,20 s, baja a −3 cm a los 0,30 s y regresa a 0 a los 0,40 s. El ciclo se repite igual: máximo de +3 cm a los 0,50 s, mínimo de −3 cm a los 0,70 s y 0 cm a los 0,80 s.
+
+*Punto de la cuerda*
+
+| Tiempo (s) | Desplazamiento (cm) |
+| --- | --- |
+| 0 | 0 |
+| 0,05 | 2,1 |
+| 0,1 | 3 |
+| 0,15 | 2,1 |
+| 0,2 | 0 |
+| 0,25 | −2,1 |
+| 0,3 | −3 |
+| 0,35 | −2,1 |
+| 0,4 | 0 |
+| 0,45 | 2,1 |
+| 0,5 | 3 |
+| 0,55 | 2,1 |
+| 0,6 | 0 |
+| 0,65 | −2,1 |
+| 0,7 | −3 |
+| 0,75 | −2,1 |
+| 0,8 | 0 |
+
+**¿Qué valores de frecuencia y de rapidez de la onda se obtienen?**
+
+- **A.** f = 0,40 Hz y v = 0,48 m/s
+- **B.** f = 5,0 Hz y v = 6,0 m/s
+- **C.** f = 2,5 Hz y v = 3,0 m/s
+- **D.** f = 2,5 Hz y v = 0,075 m/s
+
+---
+
+### Pregunta 144
+
+> *Datos ficticios con finalidad didáctica.*
+
+En una cubeta de ondas se coloca una lámina de vidrio en el fondo de una mitad, de modo que el agua es menos profunda en esa mitad. Una regla que vibra a 10 Hz produce ondas planas que cruzan de forma oblicua la frontera entre las dos zonas (datos ficticios con fines didácticos).
+
+*Esquema:* Vista desde arriba: en la zona profunda los frentes de onda son líneas paralelas separadas 2,0 cm. Al cruzar la frontera recta hacia la zona poco profunda, los frentes siguen siendo paralelos entre sí, pero quedan separados 1,2 cm y cambian de dirección: forman con la frontera un ángulo menor que el que tenían en la zona profunda.
+
+**¿Qué explica los cambios que se observan en los frentes de onda?**
+
+- **A.** La onda se frena en el agua poco profunda; con la misma frecuencia, su longitud de onda es menor, y el frente oblicuo se desvía.
+- **B.** La frecuencia disminuye en la zona poco profunda, porque el fondo frena las oscilaciones del agua, y por eso la longitud de onda es menor.
+- **C.** La onda es más rápida en el agua poco profunda, porque hay menos agua que mover, y por eso los frentes de onda quedan más cerca unos de otros.
+- **D.** Parte de la onda se refleja en la frontera, y esa parte reflejada se suma a la que sigue avanzando y acorta la longitud de onda.
+
+---
+
+### Pregunta 145
+
+Un estudiante afirma: «Los rayos X atraviesan el cuerpo porque viajan más rápido que la luz visible y que las ondas de radio». Para evaluar la afirmación, el grupo consulta frecuencias típicas de varias ondas electromagnéticas y sus longitudes de onda en el vacío.
+
+**Frecuencias típicas y longitudes de onda en el vacío de algunas ondas electromagnéticas (valores redondeados)**
+
+| Tipo de onda | Uso o fuente típica | Frecuencia (Hz) | Longitud de onda en el vacío (m) |
+| --- | --- | --- | --- |
+| Radio FM | Emisora de 100 MHz | 1,0 × 10⁸ | 3,0 |
+| Microondas | Red wifi de 2,4 GHz | 2,4 × 10⁹ | 0,125 |
+| Luz visible | Luz verde | 6,0 × 10¹⁴ | 5,0 × 10⁻⁷ |
+| Rayos X | Radiografía | 3,0 × 10¹⁸ | 1,0 × 10⁻¹⁰ |
+
+**¿Qué evaluación de la afirmación es correcta?**
+
+- **A.** Es correcta: los rayos X tienen la mayor frecuencia y, como v = λ·f, también tienen la mayor rapidez.
+- **B.** Es incorrecta: en todas las filas λ·f ≈ 3,0 × 10⁸ m/s, así que todas viajan con la misma rapidez en el vacío.
+- **C.** Es incorrecta: los rayos X son las ondas más lentas de la tabla, porque tienen la menor longitud de onda.
+- **D.** Es correcta: las ondas de radio son las más lentas, porque su gran longitud de onda las hace perder energía.
+
+---
+
+### Pregunta 146
+
+Un termo para llevar tinto caliente tiene una botella interior de doble pared de vidrio, con vacío entre las dos paredes; las caras de las paredes que dan al vacío están plateadas (como un espejo), y la boca se cierra con un tapón de plástico.
+
+**¿Qué explica cómo cada elemento del termo reduce la pérdida de calor del tinto?**
+
+- **A.** El vacío reduce la radiación, porque sin aire no puede pasar la luz; las paredes plateadas reducen la conducción; el tapón reduce la radiación por la boca.
+- **B.** El vacío impide todo paso de calor, incluida la radiación; las paredes plateadas solo sirven para que el termo sea más resistente.
+- **C.** Las paredes plateadas atrapan el frío del exterior para que no entre al termo; el vacío y el tapón impiden que el tinto se evapore.
+- **D.** El vacío reduce la conducción y la convección entre paredes; las superficies plateadas reducen la radiación; el tapón evita la convección por la boca.
+
+---
+
+### Pregunta 147
+
+En un recipiente de icopor con tapa, en el que las pérdidas de energía al ambiente y al recipiente son despreciables, se mezclan 200 g de agua a 80 °C con 300 g de agua a 20 °C y se agita hasta que la temperatura deja de cambiar.
+
+**¿Cuál es la temperatura final de la mezcla y por qué?**
+
+- **A.** 50 °C, porque en el equilibrio térmico la temperatura final es siempre el promedio de las dos temperaturas iniciales.
+- **B.** 44 °C, porque la energía que cede el agua caliente al enfriarse es igual a la que gana el agua fría al calentarse.
+- **C.** 56 °C, porque la porción con más masa cede más energía, y eso hace que la mezcla quede más cerca de 80 °C.
+- **D.** 36 °C, porque esa es la temperatura que pierde el agua caliente al ceder su energía hasta alcanzar el equilibrio.
+
+---
+
+### Pregunta 148
+
+> *Datos ficticios con finalidad didáctica.*
+
+En un colegio de Barranquilla, un grupo calienta una muestra de 100 g de aluminio en agua hirviendo (100 °C) y la pasa a un vaso de icopor con 200 g de agua a 22,0 °C. Calcula el calor específico del metal con c_metal = m_agua·c_agua·ΔT_agua / (m_metal·ΔT_metal), con c_agua = 4,18 J/(g·°C). El valor de referencia del aluminio es 0,90 J/(g·°C). En el primer ensayo el vaso estaba destapado y el traslado tardó unos 10 s; en el segundo, el vaso tenía tapa y el traslado tardó unos 2 s (datos ficticios con fines didácticos).
+
+**Resultados de dos ensayos de calorimetría con 100 g de aluminio y 200 g de agua (datos ficticios con fines didácticos)**
+
+| Ensayo | Condiciones | Temperatura inicial del agua (°C) | Temperatura final (°C) | Calor específico calculado (J/(g·°C)) |
+| --- | --- | --- | --- | --- |
+| 1 | Vaso destapado, traslado de 10 s | 22,0 | 28,0 | 0,70 |
+| 2 | Vaso tapado, traslado de 2 s | 22,0 | 29,1 | 0,84 |
+
+**¿Qué interpretación de la diferencia con el valor de referencia es coherente con los dos ensayos?**
+
+- **A.** La muestra no es de aluminio, porque el calor específico calculado en el primer ensayo (0,70 J/(g·°C)) es muy distinto del valor de referencia.
+- **B.** El calor específico del aluminio depende de las condiciones en que se mide, porque los dos ensayos dieron valores distintos con la misma muestra.
+- **C.** Parte de la energía que cedió el metal no llegó al agua; al reducir esas pérdidas, el valor calculado se acercó al de referencia.
+- **D.** La energía no se conservó en el primer ensayo, porque el agua ganó menos energía de la que el metal debía ceder al enfriarse.
+
+---
+
+### Pregunta 149
+
+> *Datos ficticios con finalidad didáctica.*
+
+En un debate escolar se comparan tres centrales eléctricas hipotéticas. Para cada una se estimó la energía que entra al proceso en un día y la energía eléctrica que entrega a la red (datos ficticios con fines didácticos; no corresponden a ninguna central real).
+
+**Energía que entra y energía eléctrica entregada en un día por tres centrales hipotéticas (datos ficticios con fines didácticos)**
+
+| Central | Energía que entra al proceso | Energía que entra (MWh) | Energía eléctrica entregada (MWh) |
+| --- | --- | --- | --- |
+| Hidroeléctrica | Energía potencial gravitatoria del agua que pasa por las turbinas | 1 000 | 880 |
+| Solar fotovoltaica | Energía de la luz solar que llega a los paneles | 1 000 | 180 |
+| Térmica de carbón | Energía química del carbón que se quema | 1 000 | 360 |
+
+**Una estudiante concluye: «La central solar es la peor opción para el país, porque desperdicia el 82 % de la energía que recibe». ¿Qué evaluación de esta conclusión es adecuada?**
+
+- **A.** No se sostiene solo con estos datos: la eficiencia no tiene en cuenta si el recurso es renovable, ni las emisiones de cada central.
+- **B.** Se sostiene, porque la eficiencia es el criterio físico que permite decidir cuál central produce la energía más conveniente para un país.
+- **C.** No se sostiene, porque la central solar es en realidad la más eficiente, ya que produce su energía sin consumir ningún combustible.
+- **D.** Se sostiene, porque el 82 % de la energía que llega a los paneles se destruye y ya no se puede aprovechar para ningún otro fin.
+
+---
+
+### Pregunta 150
+
+> *Datos ficticios con finalidad didáctica.*
+
+En Apartadó, un grupo quiere saber qué inclinación de un panel solar pequeño (orientado hacia el sur) produce más potencia. Un día despejado, midieron la potencia entregada por el panel con una inclinación distinta cada hora: 0° a las 9:00, 10° a las 10:00, 20° a las 11:00, 30° a las 12:00, 45° a las 13:00 y 60° a las 14:00. Concluyeron que la mejor inclinación es 30° (datos ficticios con fines didácticos).
+
+**Gráfica: Potencia entregada por el panel según su inclinación (cada inclinación medida a una hora distinta)**
+
+*Descripción:* Gráfica de líneas con la inclinación del panel (0° a 60°) en el eje horizontal y la potencia entregada en vatios en el eje vertical. Valores: 5,1 W a 0° (medida a las 9:00), 7,0 W a 10° (10:00), 8,3 W a 20° (11:00), 8,5 W a 30° (12:00), 7,4 W a 45° (13:00) y 5,2 W a 60° (14:00). La curva sube hasta un máximo en 30° y luego baja.
+
+*Potencia medida*
+
+| Inclinación del panel respecto a la horizontal (°) | Potencia entregada (W) |
+| --- | --- |
+| 0 | 5,1 |
+| 10 | 7 |
+| 20 | 8,3 |
+| 30 | 8,5 |
+| 45 | 7,4 |
+| 60 | 5,2 |
+
+**¿Qué evaluación de la conclusión del grupo es adecuada?**
+
+- **A.** Es válida, porque con 30° se midió la mayor potencia y el día estuvo despejado durante todas las mediciones.
+- **B.** Es válida, aunque convendría repetir las mismas mediciones con un instrumento que tenga más cifras decimales.
+- **C.** No es válida, porque el panel debería estar vertical (90°) para recibir más luz y nunca se midió esa inclinación.
+- **D.** No es válida, porque la hora cambió junto con la inclinación; habría que medir todas casi a la misma hora.
 
 ---

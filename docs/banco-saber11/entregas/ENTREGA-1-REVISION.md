@@ -182,3 +182,7 @@ Pendientes: entregas 2 (B, ecología), 3 (C, química), 4 (D, física mecánica)
 - **Ítem 21.** El sistema de cinco reinos se usa porque es el habitual en la educación media; la sistemática actual no reconoce a los protistas como grupo natural.
 - **Ítem 5.** El modelo supone una penetración uniforme de 0,3 cm en todas las caras y en todos los cubos (simplificación didáctica).
 - **Ítem 26.** La autoincompatibilidad se menciona como coherente con los datos («algunas especies»), sin afirmar datos reales del cultivo de maracuyá.
+
+- Revisión del integrador (versión 2.13.0), ítem 17: su enunciado era idéntico al del ítem 7 («¿Qué conclusión se sustenta mejor
+  en estos resultados?»); se cambió por «¿Cuál de las dos hipótesis apoyan los resultados de la réplica en placa?», que
+  además nombra la tarea. Las opciones y la clave no cambian.

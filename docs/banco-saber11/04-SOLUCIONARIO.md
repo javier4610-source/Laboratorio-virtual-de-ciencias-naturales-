@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
 
 ## Bloque A. Biología y organización de los seres vivos (preguntas 1–30)
 
@@ -1829,5 +1829,1213 @@ Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
 **Error conceptual que conviene evitar:** Preferir los datos más repetibles como si fueran los más exactos.
 
 **Estrategia:** Separa dos preguntas: ¿qué tan parecidos son los ensayos de un grupo? (precisión) y ¿qué tan cerca están del valor esperado o de otros grupos independientes? (exactitud).
+
+---
+
+## Bloque D. Física y fenómenos mecánicos (preguntas 91–120)
+
+### Pregunta 91 · Clave C
+
+*SN-D-091 · Uso comprensivo del conocimiento científico · Magnitudes físicas y unidades: análisis dimensional de una fórmula · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** d = v²/(2a): el cuadrado de la rapidez dividido entre el doble de la aceleración.
+
+**Justificación:** Para que una expresión represente una distancia, sus unidades deben reducirse a metros. En C: (m/s)² / (m/s²) = (m²/s²) · (s²/m) = m. En A: (m/s) / (m/s²) = s, que es un tiempo. En B: (m/s) · (m/s²) = m²/s³. En D: (m/s) / (m²/s⁴) = s³/m. Solo C es dimensionalmente coherente, y coincide con la relación v² = 2·a·d del movimiento uniformemente acelerado cuando la rapidez final es cero. El análisis de unidades no permite comprobar el factor numérico ½: eso exige la deducción o la medición.
+
+**Análisis de distractores:**
+
+- **A.** v/(2a) tiene unidades de (m/s)/(m/s²) = s: es un tiempo (de hecho, v/a es la duración del frenado), no una distancia. *Razonamiento que origina el error:* Recordar la forma de la fórmula sin el cuadrado y no revisar las unidades del resultado.
+- **B.** v·a/2 tiene unidades de m²/s³, que no corresponden a una distancia; además, predice que con más aceleración de frenado la distancia sería mayor. *Razonamiento que origina el error:* Suponer que si d depende de v y de a basta con multiplicarlas, sin revisar las unidades ni el sentido de la dependencia.
+- **D.** 2v/a² tiene unidades de (m/s)/(m²/s⁴) = s³/m, que no son de longitud. *Razonamiento que origina el error:* Combinar los símbolos sin controlar los exponentes de las unidades.
+
+**Error conceptual que conviene evitar:** Aceptar una fórmula porque «tiene las letras correctas» sin comprobar que sus unidades corresponden a la magnitud buscada.
+
+**Estrategia:** Reemplaza cada símbolo por sus unidades, simplifica y compara con la unidad de la magnitud pedida; revisa también si la dependencia es razonable (más aceleración de frenado debe dar menos distancia).
+
+---
+
+### Pregunta 92 · Clave A
+
+*SN-D-092 · Uso comprensivo del conocimiento científico · Movimiento rectilíneo: lectura de una gráfica de posición contra tiempo · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** Entre los minutos 4 y 5, porque en ese tramo la recta tiene la mayor pendiente.
+
+**Justificación:** En una gráfica de posición contra tiempo, la rapidez en cada tramo recto es la pendiente, Δx/Δt. Entre 0 y 2 min: 1,2 km / 2 min = 0,6 km/min (36 km/h). Entre 2 y 4 min: 0 (detenido en un paradero). Entre 4 y 5 min: 1,0 km / 1 min = 1,0 km/min (60 km/h). Entre 5 y 8 min: 0,9 km / 3 min = 0,3 km/min (18 km/h). Entre 8 y 10 min: 0 (detenido). La mayor rapidez es la del tramo de 4 a 5 min: allí el bus recorre algo menos distancia que entre 0 y 2 min, pero en la mitad del tiempo.
+
+**Análisis de distractores:**
+
+- **B.** Entre 0 y 2 min recorrió 1,2 km, pero en 2 min: 0,6 km/min, menos que el 1,0 km/min del tramo de 4 a 5 min. *Razonamiento que origina el error:* Comparar distancias sin dividirlas entre el tiempo empleado.
+- **C.** Entre 8 y 10 min la línea es horizontal: la posición no cambia y el bus está detenido. *Razonamiento que origina el error:* Leer la altura de la gráfica (la posición) como si fuera la rapidez.
+- **D.** Entre 5 y 8 min avanzó 0,9 km en 3 min: 0,3 km/min, la menor rapidez de los tramos con movimiento. *Razonamiento que origina el error:* Asociar más tiempo en movimiento con mayor rapidez.
+
+**Error conceptual que conviene evitar:** Confundir el valor de la posición, o la distancia recorrida en un tramo, con la rapidez.
+
+**Estrategia:** En una gráfica x–t compara pendientes: un tramo más inclinado significa más rapidez y un tramo horizontal significa reposo.
+
+---
+
+### Pregunta 93 · Clave D
+
+*SN-D-093 · Uso comprensivo del conocimiento científico · Gráficas de velocidad contra tiempo: área, distancia y rapidez media · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** 114 m y 8,8 m/s.
+
+**Justificación:** La distancia es el área bajo la gráfica v–t. De 0 a 4 s (triángulo): ½ · 4 s · 12 m/s = 24 m. De 4 a 10 s (rectángulo): 6 s · 12 m/s = 72 m. De 10 a 13 s (triángulo): ½ · 3 s · 12 m/s = 18 m. Total: 24 + 72 + 18 = 114 m. La rapidez media es la distancia total entre el tiempo total: 114 m / 13 s ≈ 8,8 m/s. No coincide con el promedio entre 0 y 12 m/s (6 m/s) porque la ciclista pasó la mayor parte del tiempo a 12 m/s.
+
+**Análisis de distractores:**
+
+- **A.** 156 m = 12 m/s · 13 s supone que la ciclista fue a 12 m/s todo el tiempo, sin las fases de aceleración y de frenado. *Razonamiento que origina el error:* Usar la velocidad máxima como si fuera constante.
+- **B.** 72 m es solo el área del tramo de velocidad constante; faltan los 24 m de la aceleración y los 18 m del frenado (72 m / 13 s ≈ 5,5 m/s). *Razonamiento que origina el error:* Pensar que solo hay desplazamiento mientras la velocidad es constante.
+- **C.** 78 m = ½ · 13 s · 12 m/s trata toda la gráfica como un solo triángulo, y 6,0 m/s es el promedio de 0 y 12 m/s; pero la gráfica tiene una meseta de 6 s. *Razonamiento que origina el error:* Calcular la rapidez media como el promedio de la velocidad inicial y la máxima, aunque el movimiento no sea uniformemente acelerado.
+
+**Error conceptual que conviene evitar:** Calcular la rapidez media promediando velocidades en lugar de dividir la distancia total entre el tiempo total.
+
+**Estrategia:** Divide el área bajo la gráfica v–t en figuras simples (triángulos y rectángulos), súmalas y luego divide entre el tiempo total.
+
+---
+
+### Pregunta 94 · Clave B
+
+*SN-D-094 · Indagación · Movimiento uniformemente acelerado: análisis de datos de posición · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Calcular la distancia de cada intervalo: crece unos 6 cm de uno al siguiente, así que la aceleración es constante, de unos 1,5 m/s².
+
+**Justificación:** Distancias recorridas en cada intervalo de 0,20 s: 3,1; 8,8; 15,3; 20,6 y 27,3 cm. Sus diferencias sucesivas son 5,7; 6,5; 5,3 y 6,7 cm, casi iguales (promedio ≈ 6,0 cm), como ocurre en un movimiento uniformemente acelerado, en el que Δd = a·T². Entonces a ≈ 6,0 cm / (0,20 s)² = 150 cm/s² = 1,5 m/s². Un ajuste de x = ½·a·t² a todos los puntos da el mismo valor (x ≈ 75·t² en cm, a ≈ 1,50 m/s²). Las pequeñas variaciones se explican por la incertidumbre al leer posiciones en el video.
+
+**Análisis de distractores:**
+
+- **A.** x/t es la velocidad media desde el inicio, que en un movimiento acelerado debe cambiar. Aquí crece casi lo mismo cada 0,20 s (15,5; 29,8; 45,3; 59,7 y 75,1 cm/s), lo que es coherente con aceleración constante. *Razonamiento que origina el error:* Confundir «velocidad constante» con «aceleración constante».
+- **C.** 75,1 cm / 1,00 s es una velocidad media (0,75 m/s), no una aceleración; como x = ½·a·t², la aceleración es a = 2x/t² ≈ 1,5 m/s². *Razonamiento que origina el error:* Tratar el cociente posición/tiempo como una aceleración, sin revisar unidades ni el modelo.
+- **D.** Que las distancias crezcan muestra que la velocidad aumenta; para que la aceleración aumentara, las diferencias entre distancias sucesivas deberían crecer, y se mantienen cerca de 6 cm. *Razonamiento que origina el error:* Pensar que si la velocidad aumenta, la aceleración también tiene que aumentar.
+
+**Error conceptual que conviene evitar:** Confundir el aumento de la velocidad con un aumento de la aceleración.
+
+**Estrategia:** En intervalos de tiempo iguales, calcula las distancias y luego sus diferencias: si las diferencias son casi constantes, la aceleración es constante y vale Δd/T².
+
+---
+
+### Pregunta 95 · Clave B
+
+*SN-D-095 · Uso comprensivo del conocimiento científico · Modelación matemática del movimiento: encuentro de un bus y una ciclista · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (B):** A los 10 s y a 60 m del paradero; en ese instante el bus va a 12 m/s, el doble que la ciclista.
+
+**Justificación:** El bus alcanza a la ciclista cuando ocupan la misma posición: ½ · 1,2 · t² = 6,0 · t → 0,6·t² − 6,0·t = 0 → t · (0,6·t − 6,0) = 0. La solución t = 0 es el instante inicial; la otra es t = 6,0 / 0,6 = 10 s. Posición: x = 6,0 m/s · 10 s = 60 m (comprobación con el bus: 0,6 · 10² = 60 m). La velocidad del bus en ese instante es v = a·t = 1,2 m/s² · 10 s = 12 m/s, el doble de la de la ciclista, como debe ser, porque partió del reposo y su rapidez media en esos 10 s es 6,0 m/s. A los 5,0 s ambos van a 6,0 m/s, pero la ciclista está a 30 m y el bus a 15 m: es el instante de máxima separación (15 m), no el encuentro.
+
+**Análisis de distractores:**
+
+- **A.** A los 5,0 s las rapideces son iguales, pero la ciclista está en 30 m y el bus en 15 m: es el instante de máxima separación. También se obtiene 5,0 s si se olvida el ½ en la posición del bus. *Razonamiento que origina el error:* Confundir «tener la misma rapidez» con «estar en la misma posición».
+- **C.** 120 m = 12 m/s · 10 s supone que el bus tuvo 12 m/s desde el principio; su rapidez media en esos 10 s es 6,0 m/s, así que recorre 60 m. *Razonamiento que origina el error:* Usar la rapidez final como si fuera la rapidez media en un movimiento acelerado.
+- **D.** La ventaja inicial de rapidez no se mantiene: el bus gana 1,2 m/s cada segundo, a partir de los 5 s va más rápido que la ciclista y recupera la distancia. *Razonamiento que origina el error:* Pensar que quien empieza más rápido siempre va adelante, sin considerar la aceleración.
+
+**Error conceptual que conviene evitar:** Igualar velocidades cuando la condición de encuentro es igualar posiciones.
+
+**Estrategia:** Escribe la posición de cada móvil con el mismo origen y el mismo instante inicial, iguala las posiciones y comprueba el resultado reemplazándolo en las dos ecuaciones.
+
+---
+
+### Pregunta 96 · Clave D
+
+*SN-D-096 · Explicación de fenómenos · Velocidad y aceleración: lanzamiento vertical y punto más alto · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** La pendiente es −9,8 m/s² en todo el vuelo: en el punto más alto la velocidad es cero, pero sigue cambiando.
+
+**Justificación:** La aceleración es la pendiente de la gráfica v–t: (−14,7 − 14,7) m/s / 3,0 s = −9,8 m/s², la misma en todo el recorrido porque la recta no cambia de inclinación. En t = 1,5 s la velocidad es cero solo durante un instante: un momento antes es positiva (sube) y un momento después es negativa (baja); sigue cambiando al mismo ritmo. En el modelo, la única fuerza después del lanzamiento es el peso, que actúa durante todo el vuelo y produce la aceleración g hacia abajo (segunda ley de Newton). Velocidad cero no implica aceleración cero.
+
+**Análisis de distractores:**
+
+- **A.** Una velocidad nula en un instante no implica aceleración nula: la velocidad pasa de positiva a negativa y la pendiente en ese punto es −9,8 m/s². *Razonamiento que origina el error:* Confundir el valor de la velocidad con su ritmo de cambio.
+- **B.** Después de que el balón sale de la mano no actúa ninguna «fuerza del lanzamiento»; en el modelo solo actúa el peso, que no está equilibrado. *Razonamiento que origina el error:* Creer que un objeto lanzado lleva consigo una fuerza que se va gastando (concepción del ímpetu).
+- **C.** La recta tiene la misma pendiente negativa al subir y al bajar; lo que cambia de signo en 1,5 s es la velocidad, no la aceleración. *Razonamiento que origina el error:* Suponer que la aceleración siempre apunta en el sentido del movimiento.
+
+**Error conceptual que conviene evitar:** Pensar que si un cuerpo está quieto durante un instante, no tiene aceleración ni fuerza neta.
+
+**Estrategia:** Lee la aceleración como la pendiente de la gráfica v–t, no como el valor de v, y pregúntate qué fuerzas actúan sobre el cuerpo en ese instante.
+
+---
+
+### Pregunta 97 · Clave A
+
+*SN-D-097 · Explicación de fenómenos · Primera ley de Newton: la idea de que el movimiento requiere una fuerza · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** Mientras rueda, la grama y el aire ejercen sobre él fuerzas opuestas al movimiento, que reducen su velocidad.
+
+**Justificación:** El pie actúa sobre el balón solo durante el contacto (unas milésimas de segundo). Después, sobre el balón actúan el peso y la fuerza del piso, que se equilibran en la dirección vertical, y fuerzas que se oponen al avance: la resistencia a la rodadura de la grama y la del aire. Esa fuerza neta, contraria al movimiento, produce una aceleración opuesta a la velocidad (segunda ley) y el balón se detiene. Si esas fuerzas no existieran, el balón seguiría en línea recta con velocidad constante (primera ley o ley de la inercia). Para mantener un movimiento no hace falta una fuerza; para cambiarlo, sí.
+
+**Análisis de distractores:**
+
+- **B.** Una fuerza es una interacción entre dos cuerpos y solo existe mientras interactúan; cuando el pie deja de tocar el balón ya no le aplica fuerza. *Razonamiento que origina el error:* Concepción del ímpetu: creer que el movimiento se mantiene por una fuerza almacenada que se agota.
+- **C.** Según la primera ley, sin fuerza neta el balón mantendría su velocidad; si se detiene es porque actúan fuerzas sobre él. *Razonamiento que origina el error:* Idea aristotélica de que el estado natural de los cuerpos es el reposo.
+- **D.** El peso es vertical, hacia abajo: no tiene componente en la dirección horizontal del movimiento y lo equilibra la fuerza normal del piso. *Razonamiento que origina el error:* Asignar a una fuerza una dirección que no tiene, por no dibujar el diagrama de fuerzas.
+
+**Error conceptual que conviene evitar:** Creer que un objeto en movimiento necesita una fuerza en la dirección en la que se mueve.
+
+**Estrategia:** Haz el diagrama de fuerzas del objeto después de la interacción: dibuja solo las fuerzas que ejerce algo en contacto con él y su peso.
+
+---
+
+### Pregunta 98 · Clave C
+
+*SN-D-098 · Uso comprensivo del conocimiento científico · Segunda ley de Newton: fuerza neta a partir de un diagrama de cuerpo libre · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** 2,0 m/s² hacia la derecha.
+
+**Justificación:** En la dirección vertical, la normal (245 N) y el peso (245 N) se anulan. En la horizontal, la fuerza neta es 150 N − 100 N = 50 N hacia la derecha. Por la segunda ley de Newton, a = F_neta / m = 50 N / 25 kg = 2,0 m/s², en la dirección de la fuerza neta (hacia la derecha).
+
+**Análisis de distractores:**
+
+- **A.** 150 N / 25 kg = 6,0 m/s² usa solo la tensión e ignora el rozamiento, que también actúa sobre el bulto. *Razonamiento que origina el error:* Usar una sola fuerza en lugar de la fuerza neta.
+- **B.** (150 + 100) N / 25 kg suma dos fuerzas que tienen sentidos opuestos. *Razonamiento que origina el error:* Sumar las magnitudes de las fuerzas sin considerar su dirección.
+- **D.** 50 N / 245 N divide entre el peso (en newtons) en lugar de dividir entre la masa (en kilogramos). *Razonamiento que origina el error:* Confundir masa y peso.
+
+**Error conceptual que conviene evitar:** Calcular la aceleración con una sola fuerza o sin tener en cuenta las direcciones de las fuerzas.
+
+**Estrategia:** Suma las fuerzas de cada eje con signo (derecha +, izquierda −) y divide la fuerza neta entre la masa en kilogramos.
+
+---
+
+### Pregunta 99 · Clave D
+
+*SN-D-099 · Indagación · Fuerza de rozamiento: control de variables en un experimento · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Los ensayos 1 y 3.
+
+**Justificación:** Para saber si una variable influye, se comparan ensayos en los que solo cambia esa variable. Los ensayos 1 y 3 tienen la misma superficie (madera) y la misma masa (0,50 kg), y solo difieren en el área apoyada (60 cm² y 20 cm²). La fuerza es la misma (2,0 N): en este rango, la fuerza para iniciar el deslizamiento no depende del área de contacto. Los datos sugieren, en cambio, que depende de la masa (ensayos 1 y 2) y de la superficie (ensayos 1 y 4): F/(m·g) ≈ 2,0 / (0,50 · 9,8) ≈ 0,41 en madera y ≈ 3,5 / (0,50 · 9,8) ≈ 0,71 en lija, igual que en el ensayo 5 (7,0 / 9,8 ≈ 0,71).
+
+**Análisis de distractores:**
+
+- **A.** Entre 1 y 2 cambia la masa y el área es la misma: esa comparación responde si influye la masa, no el área. *Razonamiento que origina el error:* Elegir cualquier par con resultados diferentes sin revisar qué variable cambió.
+- **B.** Entre 4 y 5 cambian a la vez la masa y el área: no se puede saber cuál de las dos produce la diferencia. *Razonamiento que origina el error:* Comparar ensayos en los que cambian dos variables a la vez.
+- **C.** Entre 3 y 5 el área es la misma, y cambian la superficie y la masa: la variable que se quiere estudiar no cambia. *Razonamiento que origina el error:* Confundir la variable que se quiere estudiar con una variable que se mantiene constante.
+
+**Error conceptual que conviene evitar:** Sacar conclusiones de comparaciones en las que cambia más de una variable.
+
+**Estrategia:** Antes de comparar dos ensayos, marca qué columnas cambian entre ellos: debe cambiar solo la variable de la pregunta.
+
+---
+
+### Pregunta 100 · Clave A
+
+*SN-D-100 · Explicación de fenómenos · Tercera ley de Newton: fuerzas entre dos vehículos que aceleran juntos · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** Ambas fuerzas entre los vehículos valen 800 N; el conjunto acelera porque el piso empuja hacia adelante las llantas motrices de la camioneta.
+
+**Justificación:** Por la tercera ley, la fuerza que la camioneta ejerce sobre el carro y la que el carro ejerce sobre la camioneta tienen igual magnitud y sentidos opuestos, haya o no aceleración. Como actúan sobre cuerpos distintos, no se anulan entre sí. Para el carro: F − 300 N = 1 000 kg · 0,50 m/s² → F = 800 N. La camioneta recibe entonces 800 N hacia atrás. Acelera hacia adelante porque el piso, mediante el rozamiento estático, empuja sus llantas motrices hacia adelante con una fuerza mayor que la suma de las que se le oponen: sin contar sus propias resistencias, F_piso = 800 N + 2 000 kg · 0,50 m/s² = 1 800 N.
+
+**Análisis de distractores:**
+
+- **B.** Las fuerzas de interacción entre los vehículos son iguales y opuestas, pero actúan sobre cuerpos diferentes, así que no pueden anularse entre sí. *Razonamiento que origina el error:* Creer que el cuerpo que «gana» o que acelera ejerce más fuerza, y que la acción y la reacción se anulan.
+- **C.** La tercera ley se cumple siempre, también con aceleración; los 300 N son el rozamiento del piso sobre el carro, no la fuerza del carro sobre la camioneta. *Razonamiento que origina el error:* Pensar que la tercera ley solo vale en equilibrio y confundir la reacción con otra fuerza que actúa sobre el mismo cuerpo.
+- **D.** m·a = 500 N es la fuerza neta sobre el carro; la camioneta debe vencer además los 300 N de rozamiento, así que lo empuja con 800 N. *Razonamiento que origina el error:* Igualar una de las fuerzas con la fuerza neta.
+
+**Error conceptual que conviene evitar:** Pensar que, en una interacción, el cuerpo más grande o el que acelera ejerce más fuerza.
+
+**Estrategia:** Identifica sobre qué cuerpo actúa cada fuerza y haz un diagrama para cada vehículo; aplica la segunda ley a cada uno y la tercera ley a las fuerzas entre ellos.
+
+---
+
+### Pregunta 101 · Clave B
+
+*SN-D-101 · Uso comprensivo del conocimiento científico · Equilibrio y diagramas de fuerzas: cuerpo en reposo sobre un plano inclinado · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Rozamiento: 245 N, hacia arriba de la tabla; normal: ≈ 426 N.
+
+**Justificación:** Peso: W = 50 kg · 9,8 m/s² = 490 N. Componentes del peso: paralela a la tabla, W · sen 30° = 490 · 0,50 = 245 N, hacia abajo de la tabla; perpendicular, W · cos 30° ≈ 490 · 0,87 ≈ 426 N, hacia la tabla. Como el bulto está en reposo, la fuerza neta es cero en cada eje: el rozamiento estático equilibra la componente paralela (245 N hacia arriba de la tabla) y la normal equilibra la perpendicular (≈ 426 N; con cos 30° = 0,866 se obtiene ≈ 424 N).
+
+**Análisis de distractores:**
+
+- **A.** Sin rozamiento, la componente del peso paralela a la tabla (245 N) haría deslizar el bulto; además, en un plano inclinado la normal es menor que el peso. *Razonamiento que origina el error:* Creer que un cuerpo en reposo no tiene rozamiento y que la normal siempre es igual al peso.
+- **C.** El rozamiento estático se opone a la tendencia a deslizar, que es hacia abajo de la tabla; por eso apunta hacia arriba. *Razonamiento que origina el error:* Pensar que el rozamiento siempre apunta hacia abajo o en el sentido del peso.
+- **D.** Intercambia las componentes: la paralela es W · sen 30° = 245 N y la perpendicular es W · cos 30° ≈ 426 N. *Razonamiento que origina el error:* Asignar seno y coseno sin identificar el ángulo que forma el peso con cada eje.
+
+**Error conceptual que conviene evitar:** Suponer que la normal siempre es igual al peso o que un cuerpo en reposo no tiene rozamiento.
+
+**Estrategia:** Elige ejes paralelo y perpendicular al plano, descompón el peso y aplica ΣF = 0 en cada eje.
+
+---
+
+### Pregunta 102 · Clave C
+
+*SN-D-102 · Explicación de fenómenos · Leyes de Newton: tensión de un cable en un montacargas · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** En la fase 2 la tensión iguala al peso y la fuerza neta es cero; la tensión difiere del peso solo mientras la velocidad cambia.
+
+**Justificación:** Peso: 400 kg · 9,8 m/s² = 3 920 N. Fase 1: F_neta = 4 320 − 3 920 = 400 N hacia arriba → a = 400 N / 400 kg = 1,0 m/s²; la rapidez pasa de 0 a 2,0 m/s en 2 s. Fase 2: la tensión es igual al peso, F_neta = 0 y la velocidad se mantiene en 2,0 m/s aunque la carga se mueve (primera ley). Fase 3: F_neta = 3 520 − 3 920 = −400 N → a = −1,0 m/s²: la carga sigue subiendo, cada vez más despacio, y se detiene a los 2 s (2,0 m/s − 1,0 m/s² · 2 s = 0). La fuerza neta indica cómo cambia la velocidad, no hacia dónde se mueve el cuerpo.
+
+**Análisis de distractores:**
+
+- **A.** El dato de la fase 2 (3 920 N) es igual al peso: con fuerza neta cero, la carga mantiene su velocidad de subida. *Razonamiento que origina el error:* Creer que para mantener un movimiento se necesita una fuerza neta en su dirección.
+- **B.** Una fuerza neta hacia abajo reduce la velocidad de subida, pero la carga sigue subiendo mientras su velocidad sea hacia arriba; la tabla dice que sube cada vez más despacio. *Razonamiento que origina el error:* Suponer que el cuerpo se mueve siempre en el sentido de la fuerza neta.
+- **D.** Al subir unos pocos metros, el peso cambia de forma despreciable; además, en la fase 2 la tensión es igual al peso calculado en el suelo. *Razonamiento que origina el error:* Atribuir los cambios de tensión a un cambio del peso y no a la aceleración.
+
+**Error conceptual que conviene evitar:** Confundir el sentido de la fuerza neta con el sentido del movimiento.
+
+**Estrategia:** Compara cada tensión con el peso: la diferencia es la fuerza neta, que indica si la velocidad aumenta, se mantiene o disminuye.
+
+---
+
+### Pregunta 103 · Clave A
+
+*SN-D-103 · Indagación · Fuerzas de resistencia del aire: velocidad terminal y comparación de modelos · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** Cuadruplicar la masa solo duplica la velocidad terminal; como en ella la fuerza del aire iguala al peso, esa fuerza crece casi con v².
+
+**Justificación:** Cuando la velocidad deja de cambiar (velocidad terminal, v_t), la fuerza neta es cero: la fuerza del aire iguala al peso, m·g. Si F = k·v, entonces v_t = m·g/k, proporcional a la masa: con 2 y 4 filtros debería ser 2,2 y 4,4 m/s. Si F = k·v², entonces v_t = √(m·g/k), proporcional a √m: 1,10 · √2 ≈ 1,56 m/s y 1,10 · √4 = 2,20 m/s, que son los valores medidos. Los datos apoyan el modelo cuadrático en este rango, lo que es esperable para objetos de este tamaño que caen en el aire. La conclusión tiene límites: son solo tres masas y una forma; para afirmarla con más seguridad convendría repetir las medidas y usar más masas.
+
+**Análisis de distractores:**
+
+- **B.** Que v_t aumente con la masa es compatible con los dos modelos; el lineal predice que se duplique al duplicar la masa (2,2 m/s), y con 2 filtros se midieron 1,56 m/s. *Razonamiento que origina el error:* Aceptar un modelo porque predice la tendencia correcta, sin comprobar la proporción.
+- **C.** Las tres curvas empiezan con inclinaciones parecidas (cercanas a g) y al final la aceleración de todas es casi cero; más peso implica también más masa que acelerar. *Razonamiento que origina el error:* Creer que los cuerpos más pesados caen con una aceleración proporcional a su peso.
+- **D.** La fuerza del aire no desaparece: a velocidad terminal alcanza su mayor valor, igual al peso, y por eso la fuerza neta es cero. *Razonamiento que origina el error:* Pensar que velocidad constante significa ausencia de fuerzas y no fuerzas equilibradas.
+
+**Error conceptual que conviene evitar:** Elegir un modelo porque acierta en la tendencia (aumenta o disminuye) y no en la proporción cuantitativa.
+
+**Estrategia:** Escribe qué predice cada modelo para la variable medida (aquí, v_t al duplicar o cuadruplicar la masa) y compara esas predicciones con los datos.
+
+---
+
+### Pregunta 104 · Clave D
+
+*SN-D-104 · Explicación de fenómenos · Potencia mecánica: relación entre potencia, fuerza y velocidad · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** Con la potencia máxima fija, P = F·v: si la fuerza necesaria pasa de 12 000 N a 30 000 N, su mayor velocidad baja de 25 a 10 m/s.
+
+**Justificación:** La potencia es el trabajo por unidad de tiempo: P = W/t = F·d/t = F·v. Con la potencia máxima fija (300 kW), la mayor velocidad constante posible es v = P/F. En el plano: v = 300 000 W / 12 000 N = 25 m/s (90 km/h). En la subida: v = 300 000 W / 30 000 N = 10 m/s (36 km/h). Para subir a 25 m/s haría falta P = 30 000 N · 25 m/s = 750 kW, más del doble de lo que puede dar el motor. En la subida, la tractomula llega a una nueva velocidad constante, más baja, en la que la fuerza del motor equilibra las que se oponen; no se detiene. Es un modelo simplificado: en la realidad, las resistencias también cambian con la velocidad.
+
+**Análisis de distractores:**
+
+- **A.** El contexto indica que el motor entrega su potencia máxima en los dos tramos; esa potencia no depende de la inclinación de la vía. *Razonamiento que origina el error:* Atribuir la menor velocidad a una menor potencia y no a la mayor fuerza necesaria.
+- **B.** A 10 m/s el motor puede ejercer 300 kW / 10 m/s = 30 000 N, que equilibra las fuerzas opuestas: la tractomula sube con velocidad constante, sin detenerse. *Razonamiento que origina el error:* No reconocer que la velocidad se ajusta hasta un nuevo equilibrio de fuerzas.
+- **C.** La potencia es F·v: subir a 25 m/s con 30 000 N exigiría 750 kW, más de los 300 kW disponibles. *Razonamiento que origina el error:* Confundir fuerza con potencia y pensar que la potencia no depende de la rapidez.
+
+**Error conceptual que conviene evitar:** Confundir fuerza, trabajo y potencia.
+
+**Estrategia:** Cuando la potencia está fija, usa P = F·v: si se necesita más fuerza, la velocidad posible es menor.
+
+---
+
+### Pregunta 105 · Clave C
+
+*SN-D-105 · Indagación · Conservación de la energía con rozamiento: un ciclista en bajada · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** La energía mecánica disminuye unos 38 kJ entre P1 y P4; esa energía pasa al aire y al entorno, sobre todo como energía térmica.
+
+**Justificación:** Energía mecánica = Ep + Ec. P1: 47,0 + 1,0 = 48,0 kJ; P2: 31,4 + 6,8 = 38,2 kJ; P3: 15,7 + 9,6 = 25,3 kJ; P4: 0 + 10,2 = 10,2 kJ. Disminuye 48,0 − 10,2 = 37,8 kJ ≈ 38 kJ. Sin rozamiento, en P4 la energía cinética sería 48,0 kJ y la rapidez, √(2 · 48 000 J / 80 kg) ≈ 35 m/s, no 16 m/s. La resistencia del aire y la de rodadura hacen trabajo negativo y transfieren esa energía al entorno (aire y vía algo más calientes, sonido); la energía total se conserva. Entre P3 y P4 se pierden 15,7 kJ de energía potencial y la cinética sube apenas 0,6 kJ: el ciclista se acerca a su velocidad terminal, en la que la resistencia del aire equilibra la componente del peso a lo largo de la vía.
+
+**Análisis de distractores:**
+
+- **A.** De P1 a P4 la energía potencial baja 47,0 kJ, pero la cinética solo sube 9,2 kJ: la suma Ep + Ec pasa de 48,0 a 10,2 kJ. *Razonamiento que origina el error:* Aplicar la conservación de la energía mecánica sin comprobar si actúan fuerzas disipativas.
+- **B.** La disminución calculada es correcta, pero la energía no se destruye: se transfiere al entorno. *Razonamiento que origina el error:* Confundir la disminución de la energía mecánica con la desaparición de la energía.
+- **D.** En P3 la energía potencial aún es 15,7 kJ y se sigue transformando, pero casi toda pasa al entorno por la resistencia del aire. *Razonamiento que origina el error:* Atribuir que la rapidez se estanque a que no queda energía, sin considerar el trabajo de las fuerzas de resistencia.
+
+**Error conceptual que conviene evitar:** Pensar que la energía «se pierde» o «se destruye» cuando hay rozamiento.
+
+**Estrategia:** Suma Ep + Ec en cada punto; si la suma cambia, busca qué fuerzas hicieron trabajo y hacia dónde se transfirió la energía.
+
+---
+
+### Pregunta 106 · Clave B
+
+*SN-D-106 · Uso comprensivo del conocimiento científico · Impulso y cantidad de movimiento: gráfica de fuerza contra tiempo · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** 15 m/s
+
+**Justificación:** El impulso es el área bajo la gráfica F–t: J = ½ · 0,010 s · 1 350 N = 6,75 N·s (hay que pasar los milisegundos a segundos: 10 ms = 0,010 s). Por el teorema del impulso, J = Δp = m·v − 0, así que v = 6,75 N·s / 0,45 kg = 15 m/s. La fuerza media durante el contacto es J/Δt = 6,75 N·s / 0,010 s = 675 N, la mitad de la máxima.
+
+**Análisis de distractores:**
+
+- **A.** 6,75 (≈ 6,8) es el impulso en N·s; para obtener la velocidad hay que dividirlo entre la masa del balón. *Razonamiento que origina el error:* Confundir el impulso (o la cantidad de movimiento) con la velocidad.
+- **C.** 30 m/s resulta de usar la fuerza máxima durante los 10 ms (área de un rectángulo); la fuerza solo vale 1 350 N en un instante. *Razonamiento que origina el error:* Usar la fuerza máxima como si actuara durante todo el contacto.
+- **D.** 7,5 m/s usa solo el área hasta el máximo (5 ms); el pie sigue empujando el balón hasta los 10 ms. *Razonamiento que origina el error:* Pensar que el balón sale cuando la fuerza es máxima.
+
+**Error conceptual que conviene evitar:** Multiplicar la fuerza máxima por el tiempo cuando la fuerza varía durante la interacción.
+
+**Estrategia:** Con una fuerza variable, el impulso es el área bajo la curva F–t; después usa J = m·Δv.
+
+---
+
+### Pregunta 107 · Clave D
+
+*SN-D-107 · Explicación de fenómenos · Impulso: duración de la interacción y fuerza media · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** El cambio en la cantidad de movimiento es igual, pero ocurre en más tiempo.
+
+**Justificación:** En las dos formas de atajar, el balón pasa de su velocidad de llegada a cero: el cambio de cantidad de movimiento, Δp = m·Δv, es el mismo. Por el teorema del impulso, F_media · Δt = Δp, así que F_media = Δp/Δt. Al recoger los brazos, el frenado dura más (por ejemplo, el doble de tiempo) y la fuerza media sobre las manos es menor (la mitad). El mismo principio explica las colchonetas, los cascos y las bolsas de aire de los carros.
+
+**Análisis de distractores:**
+
+- **A.** El balón termina en reposo en los dos casos, así que pierde la misma cantidad de movimiento; lo que cambia es la duración del frenado. *Razonamiento que origina el error:* Pensar que la fuerza depende solo del cambio de cantidad de movimiento y no del tiempo en que ocurre.
+- **B.** La cantidad de movimiento no se convierte en calor: es una magnitud vectorial que se transfiere; lo que puede transformarse en energía térmica es parte de la energía cinética. *Razonamiento que origina el error:* Confundir la cantidad de movimiento con la energía.
+- **C.** La velocidad con que el balón llega a las manos no depende de lo que haga la arquera después del contacto; recoger los brazos alarga el frenado. *Razonamiento que origina el error:* Atribuir el efecto a la velocidad de llegada y no a la duración de la interacción.
+
+**Error conceptual que conviene evitar:** Pensar que la fuerza de un impacto depende solo de la masa y la velocidad, sin considerar cuánto dura.
+
+**Estrategia:** Usa F_media = Δp/Δt: si Δp es el mismo, alargar el tiempo de la interacción reduce la fuerza.
+
+---
+
+### Pregunta 108 · Clave A
+
+*SN-D-108 · Uso comprensivo del conocimiento científico · Conservación de la cantidad de movimiento y de la energía: el salto desde una canoa · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** La canoa retrocede a 2,8 m/s; la cantidad de movimiento total sigue en cero y la energía cinética total pasa de 0 a 336 J.
+
+**Justificación:** Antes del salto, la cantidad de movimiento total es cero. Sin fuerzas externas horizontales apreciables, se conserva: 70 kg · 2,0 m/s + 50 kg · v_c = 0 → v_c = −2,8 m/s, es decir, 2,8 m/s hacia atrás. La energía cinética no se conserva: pescador, ½ · 70 · 2,0² = 140 J; canoa, ½ · 50 · 2,8² = 196 J; total, 336 J, que provienen de la energía química de los músculos del pescador. Las fuerzas iguales y opuestas producen impulsos iguales y opuestos (el mismo cambio de cantidad de movimiento, 140 kg·m/s), no velocidades iguales.
+
+**Análisis de distractores:**
+
+- **B.** Fuerzas e impulsos iguales y opuestos producen el mismo cambio de cantidad de movimiento, no la misma velocidad: la canoa, de menor masa, sale más rápido. *Razonamiento que origina el error:* Confundir «fuerzas iguales» con «velocidades iguales».
+- **C.** La velocidad es correcta, pero las energías cinéticas son 140 J y 196 J: no son iguales, y la total pasa de 0 J a 336 J gracias al trabajo de los músculos. *Razonamiento que origina el error:* Creer que en toda interacción se conserva la energía cinética, como la cantidad de movimiento.
+- **D.** Los impulsos sobre el pescador y sobre la canoa tienen igual magnitud; 1,4 m/s resulta de invertir la razón de masas (50 · 2,0 / 70). *Razonamiento que origina el error:* Pensar que el cuerpo de menor masa recibe menos impulso e invertir la proporción.
+
+**Error conceptual que conviene evitar:** Suponer que si se conserva la cantidad de movimiento también se conserva la energía cinética.
+
+**Estrategia:** Plantea la conservación de p con signos (antes = después) y calcula aparte la energía cinética para ver si cambió y de dónde provino la energía.
+
+---
+
+### Pregunta 109 · Clave C
+
+*SN-D-109 · Indagación · Densidad y flotación: diseño de una prueba de hipótesis · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** Tres bloques de la misma madera, de 20 g, 200 g y 2 000 g.
+
+**Justificación:** Para probar si la masa determina que un objeto flote, hay que cambiar la masa sin cambiar los demás factores que influyen, en especial el material (su densidad). Los bloques de la misma madera tienen masas muy distintas (en una proporción de 1 a 100) y la misma densidad: si la idea fuera cierta, el de 2 000 g debería hundirse y el de 20 g flotar. Sea cual sea la madera, los tres se comportan igual: con la mayoría de las maderas, menos densas que el agua, los tres flotan, y eso refuta la idea. Lo que decide si un objeto flota es su densidad media comparada con la del líquido, no su masa.
+
+**Análisis de distractores:**
+
+- **A.** En cubos del mismo tamaño la masa cambia junto con el material (la densidad): si el de aluminio se hunde, no se sabe si es por su masa o por su material, y el resultado parecería apoyar la idea. *Razonamiento que origina el error:* No reconocer una variable de confusión: la masa y la densidad cambian juntas.
+- **B.** La masa es la misma en los dos casos; lo que cambia es la forma (y el volumen de agua que puede desalojar). Ese ensayo responde otra pregunta. *Razonamiento que origina el error:* Elegir un experimento interesante que no manipula la variable de la hipótesis.
+- **D.** Cambia el líquido y no el objeto: estudia el efecto de la densidad del líquido, no el de la masa del objeto. *Razonamiento que origina el error:* Confundir la variable independiente de la hipótesis con otra variable del sistema.
+
+**Error conceptual que conviene evitar:** Elegir objetos en los que la masa cambia al mismo tiempo que el material.
+
+**Estrategia:** Identifica la variable de la hipótesis (aquí, la masa) y busca un conjunto en el que solo cambie ella.
+
+---
+
+### Pregunta 110 · Clave B
+
+*SN-D-110 · Indagación · Presión hidrostática: presión contra profundidad en un embalse · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** La presión aumenta 9,8 kPa por metro, como corresponde a agua de 1 000 kg/m³, y se duplica hacia los 7,7 m.
+
+**Justificación:** De 0 a 15 m la presión aumenta 222,0 − 75,0 = 147,0 kPa, es decir, 147,0 / 15 = 9,8 kPa por metro; lo mismo se obtiene entre cualquier par de filas. Según p = p_atm + ρ·g·h, ese aumento por metro es ρ·g = 9 800 Pa/m; con g = 9,8 m/s², ρ = 1 000 kg/m³. En la superficie la presión es la atmosférica del lugar (75,0 kPa, menor que al nivel del mar por la altitud). La presión se duplica cuando ρ·g·h = 75,0 kPa → h = 75 000 Pa / 9 800 Pa/m ≈ 7,7 m. La relación es lineal pero no proporcional, porque tiene un valor inicial distinto de cero.
+
+**Análisis de distractores:**
+
+- **A.** A 5 m la presión es 124,0 kPa y a 10 m es 173,0 kPa: la razón es ≈ 1,4, no 2, porque a la presión del agua se suma la de la superficie (75,0 kPa). *Razonamiento que origina el error:* Confundir una relación lineal con valor inicial con una proporcionalidad directa.
+- **C.** A 10 m la presión es 173,0 kPa, no 150 kPa. Diez metros de agua añaden ≈ 98 kPa; eso duplica la presión de la superficie solo cerca del nivel del mar, donde p_atm ≈ 101 kPa. *Razonamiento que origina el error:* Aplicar una regla memorizada fuera de sus condiciones.
+- **D.** La presión hidrostática depende de la profundidad y de la densidad del líquido, no del volumen total de agua ni de la forma del embalse. *Razonamiento que origina el error:* Creer que más cantidad de agua implica más presión a la misma profundidad.
+
+**Error conceptual que conviene evitar:** Confundir una relación lineal con una proporcionalidad, o pensar que la presión depende del volumen del líquido.
+
+**Estrategia:** Calcula el aumento de presión por metro con varias filas y escribe la ecuación de la recta (valor inicial + pendiente · profundidad) antes de concluir.
+
+---
+
+### Pregunta 111 · Clave A
+
+*SN-D-111 · Explicación de fenómenos · Principio de Pascal: elevador hidráulico y conservación de la energía · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** Se equivoca: la fuerza se multiplica por 50, pero para subir el carro 10 cm el émbolo pequeño debe bajar 5 m, y el trabajo es el mismo.
+
+**Justificación:** Por el principio de Pascal, la presión aplicada en el émbolo pequeño se transmite a todo el aceite: p = 196 N / 10 cm² = 19,6 N/cm² (196 kPa). En el émbolo grande: F = 19,6 N/cm² · 500 cm² = 9 800 N; la fuerza se multiplica por 500/10 = 50. Como el aceite es incompresible, el volumen que sale del cilindro pequeño entra en el grande: 10 cm² · d₁ = 500 cm² · d₂. Para subir el carro d₂ = 0,10 m, el émbolo pequeño debe bajar d₁ = 5,0 m en total (en varios bombeos). Trabajo de entrada: 196 N · 5,0 m = 980 J; trabajo sobre el carro: 9 800 N · 0,10 m = 980 J. La máquina multiplica la fuerza, no la energía.
+
+**Análisis de distractores:**
+
+- **B.** La presión es la misma en todo el aceite (a igual altura); lo que es 50 veces mayor es el área y, por eso, la fuerza. *Razonamiento que origina el error:* Confundir presión con fuerza.
+- **C.** El aceite es prácticamente incompresible y no almacena una energía apreciable: solo transmite la presión. *Razonamiento que origina el error:* Imaginar que el líquido actúa como un resorte que acumula energía.
+- **D.** Con áreas distintas, el mismo volumen de aceite produce desplazamientos distintos (5,0 m y 0,10 m), y la fuerza sí se multiplica por la razón de las áreas. *Razonamiento que origina el error:* Pensar que una máquina hidráulica transmite la fuerza y el desplazamiento sin cambiarlos.
+
+**Error conceptual que conviene evitar:** Creer que una máquina que multiplica la fuerza también multiplica la energía.
+
+**Estrategia:** Compara el trabajo de entrada y el de salida (F · d): en una máquina ideal son iguales; lo que se gana en fuerza se pierde en distancia.
+
+---
+
+### Pregunta 112 · Clave D
+
+*SN-D-112 · Indagación · Densidad y principio de Arquímedes: ¿una figura de oro macizo? · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** No es de oro macizo: su densidad media (≈ 8,6 g/cm³) es muy inferior a la del oro, pero no se sabe de qué está hecha.
+
+**Justificación:** Empuje: E = 1,72 N − 1,52 N = 0,20 N. Por el principio de Arquímedes, E = ρ_agua · g · V → V = 0,20 N / (1 000 kg/m³ · 9,8 m/s²) ≈ 2,04 × 10⁻⁵ m³ ≈ 20,4 cm³. Masa: m = 1,72 N / 9,8 m/s² ≈ 0,1755 kg ≈ 175,5 g. Densidad media: 175,5 g / 20,4 cm³ ≈ 8,6 g/cm³. Con la resolución del dinamómetro, el empuje está entre 0,18 y 0,22 N y la densidad entre ≈ 7,8 y ≈ 9,6 g/cm³, muy lejos de 19,3 g/cm³: no es de oro macizo (una figura de oro de ese volumen pesaría unos 3,9 N). Pero la densidad media no identifica el material: el valor es compatible con latón o con cobre, y también con una pieza de un metal más denso con partes huecas cerradas o con un núcleo de otro metal recubierto de oro.
+
+**Análisis de distractores:**
+
+- **A.** La densidad media coincide con la del latón, pero también con la del cobre y con la de piezas huecas o recubiertas; la medición descarta el oro macizo, pero no prueba de qué está hecha. *Razonamiento que origina el error:* Concluir más de lo que permite la evidencia: tomar una coincidencia como una identificación.
+- **B.** El color y la masa no identifican el material; la densidad calculada (≈ 8,6 g/cm³) es menos de la mitad de la del oro. *Razonamiento que origina el error:* Basar la conclusión en la apariencia y no en una propiedad característica medida.
+- **C.** La diferencia entre el peso en el aire y el peso aparente en el agua es justamente el empuje, que permite calcular el volumen y, con él, la densidad. *Razonamiento que origina el error:* No reconocer el empuje como una medida útil del volumen (método de Arquímedes).
+
+**Error conceptual que conviene evitar:** Confundir «los datos son compatibles con X» con «los datos demuestran X».
+
+**Estrategia:** Calcula la densidad con su intervalo de incertidumbre y pregúntate qué hipótesis descarta y cuáles siguen siendo posibles.
+
+**Fuente:** Densidades de referencia redondeadas: Haynes, W. M. (ed.), CRC Handbook of Chemistry and Physics, CRC Press, tablas de propiedades físicas de los elementos y de aleaciones comunes.
+
+---
+
+### Pregunta 113 · Clave B
+
+*SN-D-113 · Uso comprensivo del conocimiento científico · Movimiento ondulatorio: amplitud, longitud de onda y rapidez en una cuerda · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** Amplitud: 4 cm; longitud de onda: 1,2 m; rapidez: 3,0 m/s.
+
+**Justificación:** La amplitud es el desplazamiento máximo desde la posición de equilibrio: 4 cm. La longitud de onda es la distancia entre dos crestas consecutivas (0,3 m y 1,5 m): λ = 1,2 m. La frecuencia de la onda es la de la fuente: f = 2,5 Hz (período T = 0,4 s). Rapidez: v = λ·f = 1,2 m · 2,5 Hz = 3,0 m/s.
+
+**Análisis de distractores:**
+
+- **A.** 8 cm es la distancia vertical entre una cresta y un valle; la amplitud se mide desde la posición de equilibrio hasta una cresta. *Razonamiento que origina el error:* Confundir la amplitud con la distancia de pico a pico.
+- **C.** 0,6 m es la distancia entre dos cruces por cero consecutivos, es decir, media longitud de onda. *Razonamiento que origina el error:* Tomar media onda como si fuera una onda completa.
+- **D.** 0,48 m/s resulta de dividir λ entre f; la rapidez es λ·f, o λ/T con T = 0,4 s. *Razonamiento que origina el error:* Confundir la frecuencia con el período en la relación v = λ/T.
+
+**Error conceptual que conviene evitar:** Medir la longitud de onda o la amplitud entre puntos que no corresponden.
+
+**Estrategia:** Marca dos crestas consecutivas para la longitud de onda y la distancia del eje a una cresta para la amplitud; luego usa v = λ·f.
+
+---
+
+### Pregunta 114 · Clave C
+
+*SN-D-114 · Explicación de fenómenos · Ondas mecánicas: transporte de energía sin transporte de materia · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** Las olas transportan energía hacia la orilla; el agua, y con ella la pelota, solo oscila alrededor de su posición.
+
+**Justificación:** Una onda mecánica es una perturbación que se propaga por un medio y transporta energía sin transportar el medio. Al pasar la ola, cada porción de agua de la superficie describe un vaivén (en aguas profundas, aproximadamente circular) alrededor de su posición y vuelve casi al mismo lugar. La pelota se mueve con esa agua: sube, baja y oscila, pero no viaja con la onda. Lo que llega a la orilla es la energía de la perturbación; allí las olas rompen y sí mueven el agua. El pequeño desplazamiento neto que puede tener la pelota no alcanza para explicar la llegada de las olas.
+
+**Análisis de distractores:**
+
+- **A.** Un objeto liviano que flota se mueve con el agua de la superficie; si esa agua viajara hacia la orilla con la ola, también arrastraría la pelota. *Razonamiento que origina el error:* Pensar que una onda transporta materia.
+- **B.** El movimiento de la pelota acompaña el paso de cada ola y se explica por el movimiento del agua de la superficie, sin necesidad de viento. *Razonamiento que origina el error:* Buscar una causa externa en lugar de reconocer el movimiento del medio.
+- **D.** La pelota flota pero se mueve con el agua que tiene debajo; si esa agua se desplazara hacia la orilla, la pelota también lo haría. *Razonamiento que origina el error:* Separar el movimiento del objeto que flota del movimiento del medio.
+
+**Error conceptual que conviene evitar:** Creer que las ondas transportan el medio en lugar de la energía.
+
+**Estrategia:** Observa un punto del medio (un corcho, una marca en una cuerda) al paso de una onda: si vuelve a su lugar, la onda transportó energía, no materia.
+
+---
+
+### Pregunta 115 · Clave D
+
+*SN-D-115 · Uso comprensivo del conocimiento científico · Sonido: eco y ecosonda en un embalse · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** Cardumen: 11,8 m; fondo: 29,6 m.
+
+**Justificación:** El pulso recorre la distancia de ida y de vuelta, así que la profundidad es d = v·t/2. Cardumen: 1 480 m/s · 0,016 s / 2 ≈ 11,8 m. Fondo: 1 480 m/s · 0,040 s / 2 = 29,6 m. Los dos tiempos se miden desde la emisión del pulso. La rapidez del sonido en el agua (≈ 1 500 m/s) es más de cuatro veces la del aire (≈ 340 m/s), porque el agua es mucho menos compresible.
+
+**Análisis de distractores:**
+
+- **A.** Multiplica la rapidez por el tiempo sin dividir entre 2: ese es el recorrido de ida y vuelta, no la profundidad. *Razonamiento que origina el error:* Olvidar que el eco recorre dos veces la distancia.
+- **B.** Usa la rapidez del sonido en el aire (≈ 340 m/s), pero el pulso viaja por el agua. *Razonamiento que origina el error:* Pensar que el sonido tiene la misma rapidez en todos los medios.
+- **C.** El cardumen está bien, pero para el fondo se usó la diferencia de tiempos (0,024 s), que da la distancia entre el cardumen y el fondo, no la profundidad del fondo. *Razonamiento que origina el error:* Medir el tiempo del segundo eco desde el primero y no desde la emisión.
+
+**Error conceptual que conviene evitar:** Olvidar que el tiempo de un eco corresponde al viaje de ida y vuelta.
+
+**Estrategia:** Dibuja el recorrido del pulso (bajada y subida) antes de aplicar d = v·t, y revisa en qué medio viaja.
+
+---
+
+### Pregunta 116 · Clave B
+
+*SN-D-116 · Explicación de fenómenos · Sonido: tono, intensidad y longitud de la cuerda que vibra · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** La nota 2 es más aguda: su período es la mitad del de la nota 1, así que su frecuencia es el doble, 500 Hz.
+
+**Justificación:** La frecuencia es el inverso del período: nota 1, f = 1 / 4 ms = 250 Hz; nota 2, f = 1 / 2 ms = 500 Hz. El tono (agudo o grave) depende de la frecuencia: la nota 2 es más aguda (una octava más alta). En una cuerda con la misma tensión y densidad, la frecuencia fundamental es inversamente proporcional a la longitud que vibra (f = v/2L), así que reducir la longitud a la mitad duplica la frecuencia. La intensidad depende de la amplitud: la nota 2 (0,4 Pa) es más débil que la nota 1 (0,8 Pa). Las dos notas viajan por el aire con la misma rapidez (≈ 343 m/s a 20 °C), así que la longitud de onda de la nota 2 es la mitad: 343/250 ≈ 1,37 m y 343/500 ≈ 0,69 m.
+
+**Análisis de distractores:**
+
+- **A.** Con la misma rapidez en el aire, λ = v/f: al duplicarse la frecuencia, la longitud de onda se reduce a la mitad (≈ 0,69 m frente a ≈ 1,37 m). *Razonamiento que origina el error:* Confundir la longitud de la cuerda con la longitud de onda del sonido en el aire, o invertir la relación λ = v/f.
+- **C.** La rapidez del sonido depende del medio (el aire), no de la frecuencia: las dos notas viajan a ≈ 343 m/s. *Razonamiento que origina el error:* Pensar que los sonidos agudos viajan más rápido.
+- **D.** La intensidad depende de la amplitud, y la de la nota 2 (0,4 Pa) es la mitad de la de la nota 1; la frecuencia determina el tono, no la intensidad. *Razonamiento que origina el error:* Confundir el tono (frecuencia) con la intensidad (amplitud).
+
+**Error conceptual que conviene evitar:** Confundir el tono, que depende de la frecuencia, con la intensidad, que depende de la amplitud.
+
+**Estrategia:** En una gráfica de presión contra tiempo, mide el período para obtener la frecuencia (tono) y la altura de los máximos para la amplitud (intensidad).
+
+---
+
+### Pregunta 117 · Clave A
+
+*SN-D-117 · Indagación · Sonido: necesidad de un medio material para su propagación · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** El sonido necesita un medio material para propagarse; la luz que permite ver el martillo, no.
+
+**Justificación:** El sonido es una onda mecánica: se propaga mediante las vibraciones de las partículas de un medio (aire, agua, sólidos). Al extraer el aire quedan cada vez menos partículas que transmitan la vibración desde el timbre hasta el vidrio, y el sonido que llega afuera se debilita. La luz es una onda electromagnética que sí atraviesa el vacío: por eso se sigue viendo el martillo. Al volver el aire, el sonido regresa, lo que muestra que el cambio se debe al aire y no al timbre. En la práctica nunca se logra un vacío total y algo de sonido pasa por los soportes del timbre; por eso se oye «cada vez más débil» y no se apaga por completo.
+
+**Análisis de distractores:**
+
+- **B.** Las observaciones indican que se sigue viendo el martillo golpear la campanilla: el timbre sigue vibrando. *Razonamiento que origina el error:* Sacar una conclusión que contradice una observación del propio experimento.
+- **C.** El vidrio estuvo presente todo el tiempo, también cuando el sonido se oía bien; lo único que cambió fue la cantidad de aire dentro de la campana. *Razonamiento que origina el error:* Atribuir el efecto a una variable que no cambió.
+- **D.** La frecuencia del sonido la determina la vibración del timbre, que no cambia; lo que disminuye es la intensidad que llega al exterior. *Razonamiento que origina el error:* Confundir la intensidad con el tono.
+
+**Error conceptual que conviene evitar:** Atribuir el resultado a un factor que no cambió durante el experimento.
+
+**Estrategia:** Identifica la única variable que se modificó (la cantidad de aire) y comprueba qué ocurre al revertir ese cambio.
+
+---
+
+### Pregunta 118 · Clave C
+
+*SN-D-118 · Explicación de fenómenos · Óptica geométrica: altura mínima de un espejo plano · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** No tiene razón: por la ley de la reflexión basta con la mitad de su estatura, 0,80 m, a cualquier distancia.
+
+**Justificación:** Como el ángulo de incidencia es igual al de reflexión y la normal es horizontal, el rayo que va de los pies a los ojos se refleja en el punto del espejo que está a la mitad de la altura de los ojos: 1,50 m / 2 = 0,75 m. El rayo que va de la parte de arriba de la cabeza a los ojos se refleja a la mitad entre 1,50 m y 1,60 m, es decir, a 1,55 m. La parte del espejo que se usa mide 1,55 − 0,75 = 0,80 m, la mitad de la estatura. Esas alturas no dependen de la distancia al espejo (en los triángulos semejantes la distancia se cancela): al alejarse, la imagen se ve más pequeña desde el ojo, pero el espejo también, en la misma proporción. La imagen en un espejo plano siempre tiene el mismo tamaño que el objeto.
+
+**Análisis de distractores:**
+
+- **A.** La imagen de un espejo plano siempre tiene el tamaño del objeto; al alejarse se ve más pequeña porque está más lejos, pero el espejo también se ve más pequeño en la misma proporción, y la parte necesaria sigue siendo 0,80 m. *Razonamiento que origina el error:* Confundir el tamaño de la imagen con su tamaño aparente.
+- **B.** Cada rayo se refleja a mitad de camino, en altura, entre el ojo y el punto del cuerpo; basta con la mitad de la estatura. *Razonamiento que origina el error:* Pensar que el espejo debe «contener» la imagen completa a escala real.
+- **D.** La ley de la reflexión se cumple con cualquier inclinación: el ángulo de reflexión siempre es igual al de incidencia. *Razonamiento que origina el error:* No aplicar la ley de la reflexión de forma general.
+
+**Error conceptual que conviene evitar:** Pensar que la imagen de un espejo plano cambia de tamaño o que el espejo debe tener el tamaño del objeto.
+
+**Estrategia:** Dibuja los rayos desde los extremos del objeto hasta el ojo y usa ángulos iguales de incidencia y de reflexión para ubicar los puntos del espejo que se usan.
+
+---
+
+### Pregunta 119 · Clave A
+
+*SN-D-119 · Indagación · Refracción de la luz: comparación de modelos con datos (ley de Snell) · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** Apoyan la propuesta de Beto: i/r aumenta de ≈ 1,49 a ≈ 1,79, mientras sen i / sen r se mantiene cerca de 1,49.
+
+**Justificación:** Razón i/r: 10/6,7 ≈ 1,49; 20/13,3 ≈ 1,50; 30/19,6 ≈ 1,53; 40/25,6 ≈ 1,56; 50/30,9 ≈ 1,62; 60/35,5 ≈ 1,69; 70/39,1 ≈ 1,79: no es constante. Razón sen i / sen r: 0,174/0,117 ≈ 1,49; 0,342/0,230 ≈ 1,49; 0,500/0,335 ≈ 1,49; 0,643/0,432 ≈ 1,49; 0,766/0,514 ≈ 1,49; 0,866/0,581 ≈ 1,49; 0,940/0,631 ≈ 1,49: es constante dentro de la precisión de los datos. Es la ley de Snell, n_aire · sen i = n_acrílico · sen r, con n_acrílico ≈ 1,49, un valor típico de este material. Para ángulos pequeños sen θ es casi proporcional a θ, y las dos propuestas casi coinciden: por eso son las mediciones con ángulos grandes las que permiten distinguirlas.
+
+**Análisis de distractores:**
+
+- **B.** Que i/r sea casi constante con ángulos pequeños no permite extender el modelo: desde 30° la razón crece de forma sistemática hasta ≈ 1,79. *Razonamiento que origina el error:* Generalizar a todo el rango una regularidad observada solo en una parte de los datos.
+- **C.** Las dos propuestas predicen que r aumenta con i, así que esa tendencia no las distingue; lo que las distingue es cuál razón se mantiene constante. *Razonamiento que origina el error:* Evaluar modelos solo por la tendencia cualitativa y no por su predicción cuantitativa.
+- **D.** El caso i = 0° no se usa: las otras siete mediciones permiten calcular las dos razones y compararlas. *Razonamiento que origina el error:* Descartar todo el análisis por un caso particular que no está en los datos.
+
+**Error conceptual que conviene evitar:** Aceptar un modelo porque funciona en una parte del rango o porque predice la tendencia correcta.
+
+**Estrategia:** Calcula, para cada fila, la cantidad que cada modelo dice que es constante; el modelo correcto es el que la mantiene constante en todo el rango medido.
+
+---
+
+### Pregunta 120 · Clave D
+
+*SN-D-120 · Indagación · Óptica geométrica: imágenes formadas por una lente convergente · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** La distancia focal de la lente es de unos 10 cm, porque en los ensayos con imagen 1/d_o + 1/d_i ≈ 0,10 cm⁻¹.
+
+**Justificación:** Ecuación de las lentes delgadas: 1/f = 1/d_o + 1/d_i. Con 60 cm: 1/60 + 1/12,0 = 0,100 cm⁻¹; con 40 cm: 1/40 + 1/13,3 ≈ 0,100 cm⁻¹; con 30 cm: 1/30 + 1/15,0 = 0,100 cm⁻¹; con 20 cm: 1/20 + 1/20,0 = 0,100 cm⁻¹; con 15 cm: 1/15 + 1/30,0 = 0,100 cm⁻¹. Entonces f ≈ 10 cm. Coincide con que, con d_o = 20 cm = 2f, la imagen se forma a 2f y es del mismo tamaño. Al acercar la vela al foco, la imagen se aleja y crece; con la vela a 8 cm, dentro de la distancia focal, los rayos salen divergentes y no forman una imagen real en la pantalla: se ve una imagen virtual, derecha y aumentada, como en una lupa.
+
+**Análisis de distractores:**
+
+- **A.** d_o · d_i vale 720, 532, 450, 400 y 450 cm²: no es constante. Lo que se mantiene constante es 1/d_o + 1/d_i. *Razonamiento que origina el error:* Ver que una variable disminuye cuando la otra aumenta y suponer, sin comprobarlo, una proporcionalidad inversa.
+- **B.** Los datos muestran lo contrario: al acercar la vela de 60 cm a 15 cm, la imagen se aleja de 12,0 cm a 30,0 cm y se hace más grande. *Razonamiento que origina el error:* Suponer que el objeto y la imagen se mueven en el mismo sentido.
+- **C.** La luz sí atraviesa la lente (se ve la vela aumentada); dentro de la distancia focal los rayos refractados divergen y forman una imagen virtual, que no se proyecta en una pantalla. *Razonamiento que origina el error:* Confundir «no hay imagen real» con «la luz no pasa».
+
+**Error conceptual que conviene evitar:** Suponer una proporcionalidad inversa sin comprobarla con los datos.
+
+**Estrategia:** Prueba con los datos varias relaciones (producto, cociente, suma de inversos) y quédate con la que da un valor constante.
+
+---
+
+## Bloque E. Electricidad, magnetismo, ondas y energía (preguntas 121–150)
+
+### Pregunta 121 · Clave C
+
+*SN-E-121 · Uso comprensivo del conocimiento científico · Carga eléctrica: electrización por inducción · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** X queda con carga positiva e Y con carga negativa, las dos de igual magnitud.
+
+**Justificación:** En un metal hay electrones que se mueven con libertad. La barra negativa repele esos electrones, que se desplazan de X hacia Y a través del contacto: X queda con déficit de electrones (carga positiva) e Y con exceso (carga negativa). Si se separan las esferas mientras la barra sigue cerca, los electrones ya no pueden regresar, y al alejar la barra cada esfera conserva su carga. Como no entró ni salió carga del par de esferas, la carga total sigue siendo cero: las cargas de X e Y son opuestas y de igual magnitud (conservación de la carga). Este proceso es la electrización por inducción.
+
+**Análisis de distractores:**
+
+- **A.** La inducción no requiere contacto: la barra redistribuye los electrones entre las esferas, y separarlas con la barra cerca deja esa redistribución «atrapada». *Razonamiento que origina el error:* Creer que un cuerpo solo se electriza por contacto o por frotamiento.
+- **B.** La barra no tocó las esferas, así que no hubo transferencia de electrones desde ella; la carga total del par sigue siendo cero, por lo que no pueden quedar las dos negativas. *Razonamiento que origina el error:* Suponer que acercar un cuerpo cargado siempre le transfiere su carga a otro, y olvidar la conservación de la carga.
+- **D.** Invierte el resultado: los electrones son repelidos por la barra negativa y se alejan de X; por eso la esfera cercana queda positiva, no negativa. *Razonamiento que origina el error:* Pensar que la parte más cercana a un cuerpo cargado adquiere la misma carga que ese cuerpo.
+
+**Error conceptual que conviene evitar:** Olvidar que en la inducción no se crea carga: solo se redistribuyen electrones, y la suma de las cargas del sistema aislado no cambia.
+
+**Estrategia:** Dibuja en cada paso hacia dónde se mueven los electrones del metal y verifica al final que la suma de las cargas sea igual a la del comienzo.
+
+---
+
+### Pregunta 122 · Clave A
+
+*SN-E-122 · Explicación de fenómenos · Carga eléctrica: polarización y atracción de cuerpos neutros · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** El globo separa un poco las cargas del papel; la parte más cercana queda con signo opuesto y, al estar más cerca, se atrae con más fuerza.
+
+**Justificación:** El papel es neutro (lo comprueba el electroscopio), pero sus moléculas tienen cargas positivas y negativas que pueden desplazarse un poco. El globo cargado atrae las cargas de signo opuesto y repele las del mismo signo, de modo que en cada trocito la cara cercana al globo queda con carga opuesta y la cara lejana con carga del mismo signo (polarización). La fuerza eléctrica disminuye con la distancia, así que la atracción sobre la cara cercana es mayor que la repulsión sobre la lejana, y el trocito, aunque sigue con carga neta cero, es atraído.
+
+**Análisis de distractores:**
+
+- **B.** Un globo frotado en reposo tiene carga eléctrica, no es un imán: la interacción es eléctrica. Además, el papel no es un material magnético. *Razonamiento que origina el error:* Confundir la interacción eléctrica con la magnética.
+- **C.** Si el globo cediera parte de su carga al papel, el papel quedaría con carga del mismo signo que el globo y sería repelido, no atraído. Además, el papel salta antes de tocar el globo. *Razonamiento que origina el error:* Pensar que la atracción exige que el cuerpo neutro gane una carga neta, y equivocar el signo de la carga transferida.
+- **D.** El electroscopio mostró que el papel no tenía carga neta antes de la prueba; la atracción ocurre aunque el papel sea neutro. *Razonamiento que origina el error:* Suponer que solo se atraen cuerpos que tienen cargas netas de signo opuesto.
+
+**Error conceptual que conviene evitar:** Creer que un objeto neutro no puede ser atraído por uno cargado.
+
+**Estrategia:** Distingue la carga neta de un objeto de la distribución de sus cargas, y recuerda que la fuerza eléctrica depende de la distancia.
+
+---
+
+### Pregunta 123 · Clave D
+
+*SN-E-123 · Explicación de fenómenos · Potencial eléctrico: diferencia de potencial y seguridad en las redes de distribución · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** Las dos patas tocan puntos casi al mismo potencial, así que casi no hay diferencia de potencial que impulse corriente por el ave.
+
+**Justificación:** La corriente por un cuerpo depende de la diferencia de potencial entre los puntos que toca. Las dos patas del ave tocan puntos del mismo cable separados unos centímetros; el tramo de cable entre ellas tiene una resistencia muy pequeña, así que la diferencia de potencial entre las patas es mínima y casi no circula corriente por el ave, aunque todo su cuerpo esté a miles de voltios respecto al suelo. Una persona que toca el cable estando en el suelo queda entre dos puntos con una diferencia de potencial de miles de voltios, y por su cuerpo puede circular una corriente peligrosa. El contexto confirma la explicación: el cuerpo del ave sí conduce, porque cuando toca dos puntos a distinto potencial (dos cables, o un cable y la cruceta a tierra) se electrocuta. Por seguridad, nunca se debe tocar ni acercarse a un cable caído o desnudo.
+
+**Análisis de distractores:**
+
+- **A.** El contexto muestra que el cuerpo del ave sí conduce: las aves que tocan dos puntos a distinto potencial mueren electrocutadas. Lo que la protege es la falta de diferencia de potencial, no un aislamiento. *Razonamiento que origina el error:* Atribuir la seguridad a un aislamiento del cuerpo en lugar de a la diferencia de potencial.
+- **B.** La corriente del cable sigue por el cable, cuya resistencia es mucho menor; por el ave casi no pasa corriente. Además, aves grandes mueren cuando se cierra un camino entre dos potenciales distintos. *Razonamiento que origina el error:* Creer que todo objeto que toca un cable recibe la corriente que este transporta.
+- **C.** La diferencia de potencial entre las patas no es la del cable respecto al suelo: las patas tocan el mismo conductor, separadas por un tramo de resistencia mínima. Y el cuerpo del ave sí conduce. *Razonamiento que origina el error:* Confundir el potencial de un punto respecto a tierra con la diferencia de potencial entre dos puntos.
+
+**Error conceptual que conviene evitar:** Pensar que el peligro depende del «voltaje del cable» y no de la diferencia de potencial entre los dos puntos que toca el cuerpo.
+
+**Estrategia:** Antes de decidir si circula corriente por un cuerpo, identifica los dos puntos de contacto y pregúntate si hay diferencia de potencial entre ellos.
+
+---
+
+### Pregunta 124 · Clave B
+
+*SN-E-124 · Indagación · Campo y potencial eléctrico: mapeo del potencial entre dos placas · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** El campo es casi uniforme, de unos 0,5 V/cm, y apunta de la placa positiva a la negativa.
+
+**Justificación:** El potencial aumenta 1,0 V por cada 2 cm en las dos líneas (las diferencias de ±0,1 V son propias de la medición), así que el cambio de potencial por unidad de distancia es constante: E = ΔV / Δd = 6,0 V / 12 cm = 0,5 V/cm = 50 V/m. Que el ritmo de cambio sea el mismo en todo el recorrido y en las dos líneas indica un campo casi uniforme entre las placas; los puntos de igual potencial forman líneas paralelas a las placas. El campo eléctrico apunta en el sentido en que el potencial disminuye, es decir, de la placa positiva (6,0 V) hacia la negativa (0 V).
+
+**Análisis de distractores:**
+
+- **A.** El valor 0 V es solo la referencia elegida (la placa negativa); el campo depende de cuánto cambia el potencial con la distancia, y ese cambio es el mismo junto a esa placa que en el resto. *Razonamiento que origina el error:* Confundir el valor del potencial en un punto con la intensidad del campo en ese punto.
+- **C.** Un potencial mayor no implica un campo mayor: entre 10 y 12 cm el potencial sube 1,0 V, igual que entre 0 y 2 cm, así que el campo es igual en ambas zonas. *Razonamiento que origina el error:* Asociar el campo con el valor del potencial y no con su variación por unidad de distancia.
+- **D.** El campo eléctrico apunta hacia donde el potencial disminuye (de mayor a menor potencial), que es la dirección en que se movería una carga positiva. *Razonamiento que origina el error:* Invertir la relación entre el sentido del campo y el aumento del potencial.
+
+**Error conceptual que conviene evitar:** Leer el campo eléctrico en el valor del potencial en lugar de en su variación con la distancia.
+
+**Estrategia:** Calcula las diferencias de potencial entre puntos consecutivos: si son iguales para distancias iguales, el campo es uniforme, y su magnitud es ΔV/Δd.
+
+---
+
+### Pregunta 125 · Clave B
+
+*SN-E-125 · Uso comprensivo del conocimiento científico · Corriente y voltaje: conexión del amperímetro y del voltímetro · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** El amperímetro en serie, porque por él debe pasar la misma corriente que por el bombillo, y el voltímetro en paralelo, conectado a los dos extremos del bombillo.
+
+**Justificación:** El amperímetro mide la corriente que lo atraviesa; para medir la del bombillo, la misma corriente debe pasar por los dos, y eso ocurre si están en serie (en el mismo camino). El amperímetro tiene una resistencia muy pequeña para no alterar la corriente. El voltímetro mide la diferencia de potencial entre los dos puntos donde se conecta; para medir el voltaje del bombillo se conecta en paralelo, a sus dos extremos. Tiene una resistencia muy grande, así que casi no desvía corriente. Por seguridad, un amperímetro nunca se conecta en paralelo con un elemento o con la batería: por su baja resistencia provocaría una corriente muy grande (casi un cortocircuito) que puede dañar el instrumento.
+
+**Análisis de distractores:**
+
+- **A.** Un amperímetro en paralelo ofrece un camino de resistencia casi nula: la corriente se desvía por él, el bombillo se apaga y el instrumento puede dañarse. Un voltímetro en serie, por su gran resistencia, casi impide el paso de la corriente. *Razonamiento que origina el error:* Pensar que el voltaje «llega» o «pasa» por los elementos como la corriente, en lugar de ser una diferencia entre dos puntos.
+- **C.** El voltímetro en serie, por su resistencia muy grande, reduce casi a cero la corriente del circuito, y además no mediría el voltaje entre los extremos del bombillo. *Razonamiento que origina el error:* Creer que cualquier medidor debe ser recorrido por la corriente para medir.
+- **D.** Con el amperímetro en paralelo se forma un camino de resistencia casi nula que desvía la corriente del bombillo (casi un cortocircuito). *Razonamiento que origina el error:* Suponer que conectar en paralelo es siempre la forma de «no interrumpir» un circuito, sin considerar la resistencia del instrumento.
+
+**Error conceptual que conviene evitar:** Conectar el amperímetro en paralelo, lo que produce casi un cortocircuito y puede dañar el instrumento.
+
+**Estrategia:** Pregunta qué mide cada instrumento: la corriente que pasa por un camino (en serie) o la diferencia de potencial entre dos puntos (en paralelo).
+
+---
+
+### Pregunta 126 · Clave D
+
+*SN-E-126 · Indagación · Ley de Ohm y elementos no óhmicos: curvas corriente-voltaje · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** Solo el resistor es óhmico; en el bombillo, el cociente V/I pasa de unos 10 Ω a unos 22 Ω.
+
+**Justificación:** Un elemento es óhmico si su resistencia R = V/I es constante, lo que se ve como una recta que pasa por el origen en la gráfica I-V. Resistor: 1 V / 0,05 A = 20 Ω; 3 V / 0,15 A = 20 Ω; 6 V / 0,30 A = 20 Ω (constante). Bombillo: 1 V / 0,10 A = 10 Ω; 3 V / 0,19 A ≈ 15,8 Ω; 5 V / 0,25 A = 20 Ω; 6 V / 0,27 A ≈ 22,2 Ω: la resistencia aumenta con el voltaje, así que no es óhmico. La explicación física es que, al aumentar la corriente, el filamento se calienta mucho, y la resistencia de un metal aumenta con la temperatura.
+
+**Análisis de distractores:**
+
+- **A.** Que la corriente aumente con el voltaje no basta: la ley de Ohm exige proporcionalidad (V/I constante), y en el bombillo V/I cambia de 10 Ω a 22 Ω. *Razonamiento que origina el error:* Confundir una relación creciente con una relación de proporcionalidad directa.
+- **B.** El cruce a 5 V solo indica que en ese punto ambos tienen V/I = 20 Ω; en los demás voltajes el cociente del bombillo es distinto. *Razonamiento que origina el error:* Generalizar el valor de un solo punto de la gráfica a todo el intervalo.
+- **C.** Si la curva I-V se aplana, cada voltio adicional produce menos corriente, lo que significa que la resistencia aumenta, no que disminuye. *Razonamiento que origina el error:* Leer la pendiente de la gráfica I contra V como si fuera la resistencia (es su inverso).
+
+**Error conceptual que conviene evitar:** Tomar la pendiente de una gráfica I contra V como la resistencia, cuando en realidad R = V/I en cada punto.
+
+**Estrategia:** Calcula V/I en varios puntos de cada curva: si el cociente es constante, el elemento es óhmico; si cambia, no lo es.
+
+---
+
+### Pregunta 127 · Clave A
+
+*SN-E-127 · Uso comprensivo del conocimiento científico · Resistencia eléctrica: dependencia de la longitud y del área del conductor · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** 15 Ω
+
+**Justificación:** Alambres 1 y 2 (misma área): al duplicar la longitud, la resistencia se duplica (2,5 → 5,0 Ω), así que R es proporcional a L. Alambres 2 y 3 (misma longitud): al duplicar el área, la resistencia se reduce a la mitad (5,0 → 2,5 Ω), así que R es inversamente proporcional al área A. El alambre 4 lo confirma: doble longitud y doble área dan la misma resistencia que el alambre 2. Partiendo del alambre 2 (1,00 m; 0,20 mm²; 5,0 Ω): la longitud se multiplica por 1,50 y el área se divide entre 2, de modo que R = 5,0 Ω × 1,5 × 2 = 15 Ω. Es la relación R = ρ·L/A, con ρ = 5,0 Ω × 0,20 mm² / 1,00 m = 1,0 Ω·mm²/m.
+
+**Análisis de distractores:**
+
+- **B.** Se obtiene con 5,0 Ω × 1,5 × 0,5: se trató el área como si fuera directamente proporcional a la resistencia, cuando un alambre más delgado tiene más resistencia. *Razonamiento que origina el error:* Suponer que todas las variables influyen en el mismo sentido (proporcionalidad directa).
+- **C.** Se obtiene con 5,0 Ω × 1,5: solo se tuvo en cuenta el aumento de la longitud y se ignoró que el área se redujo a la mitad. *Razonamiento que origina el error:* Considerar una sola variable cuando cambian dos al mismo tiempo.
+- **D.** Se obtiene con 5,0 Ω × 2: solo se tuvo en cuenta la reducción del área y se ignoró el aumento de la longitud. *Razonamiento que origina el error:* Considerar una sola variable cuando cambian dos al mismo tiempo.
+
+**Error conceptual que conviene evitar:** Aplicar solo una de las dos relaciones cuando cambian la longitud y el área a la vez.
+
+**Estrategia:** Identifica en la tabla pares de filas que difieran en una sola variable para hallar cada relación, y luego aplica los dos factores uno tras otro.
+
+---
+
+### Pregunta 128 · Clave C
+
+*SN-E-128 · Explicación de fenómenos · Circuito en serie: la corriente no se «gasta» · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** La corriente es la misma en todo el circuito en serie; lo que se transforma en los bombillos es energía, no carga.
+
+**Justificación:** Los tres amperímetros marcan 0,20 A: la carga que entra a cada bombillo es igual a la que sale, porque la carga no se acumula ni se destruye en el circuito. En un circuito en serie hay un solo camino, así que la corriente es la misma en todos sus puntos. Lo que los bombillos transforman (en luz y calor) es la energía que la pila entrega a las cargas: cada bombillo idéntico tiene la misma caída de voltaje (1,5 V, si los cables y la pila tienen resistencia despreciable) y disipa la misma potencia, P = V·I = 1,5 V × 0,20 A = 0,30 W, por lo que brillan igual.
+
+**Análisis de distractores:**
+
+- **A.** Los amperímetros muestran que la corriente no disminuye después de P (0,20 A antes y después). El voltaje no es algo que un bombillo «deje» para el otro: es la energía por unidad de carga que cada uno transforma. *Razonamiento que origina el error:* Modelo de la corriente que se consume a lo largo del circuito.
+- **B.** El sentido del movimiento de los electrones no cambia el resultado: en cualquier sentido, la corriente es la misma en todos los puntos del circuito en serie, como muestran las lecturas. *Razonamiento que origina el error:* Seguir creyendo que la corriente se gasta, aunque se cambie el sentido del recorrido.
+- **D.** En serie la corriente no se divide: hay un solo camino, y los tres amperímetros (antes, entre y después de los bombillos) marcan la corriente completa, 0,20 A. *Razonamiento que origina el error:* Confundir el circuito en serie con el paralelo, en el que la corriente se reparte entre ramas.
+
+**Error conceptual que conviene evitar:** Creer que la corriente se consume en los elementos del circuito, en lugar de reconocer que lo que se transforma es la energía.
+
+**Estrategia:** Cuando compares brillos, mide o razona la corriente antes y después de cada elemento: la carga se conserva; la energía se transforma.
+
+---
+
+### Pregunta 129 · Clave A
+
+*SN-E-129 · Uso comprensivo del conocimiento científico · Circuitos en paralelo: instalación eléctrica de una vivienda · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** Cada aparato recibe los mismos 120 V y funciona por su cuenta; al encender más aparatos, la corriente total que entra a la casa aumenta.
+
+**Justificación:** En una conexión en paralelo, cada aparato se conecta directamente entre los mismos dos conductores de la red, así que todos reciben el mismo voltaje (120 V) y cada uno forma su propio camino: si uno se apaga o se funde, los demás siguen funcionando, y el brillo del bombillo no cambia al encender otro aparato. La corriente total que entra a la casa es la suma de las corrientes de los aparatos encendidos; por eso aumenta cada vez que se enciende uno más. Esa es la razón por la que una instalación se protege con interruptores automáticos (breakers) que se abren si la corriente total supera el valor seguro para los cables.
+
+**Análisis de distractores:**
+
+- **B.** Cada aparato encendido agrega su propia corriente; al haber más caminos en paralelo, la corriente total aumenta (la resistencia equivalente disminuye). *Razonamiento que origina el error:* Pensar que una cantidad fija de corriente se reparte entre más caminos, en lugar de reconocer que cada camino nuevo suma corriente.
+- **C.** En paralelo el voltaje no se reparte: todos los aparatos están conectados a los mismos dos conductores de la red. Si se repartiera, el bombillo perdería brillo al encender el televisor, y eso no ocurre. *Razonamiento que origina el error:* Aplicar al paralelo el reparto del voltaje propio de un circuito en serie.
+- **D.** La red no entrega una corriente fija: la corriente total depende de cuántos aparatos estén encendidos y de su potencia. *Razonamiento que origina el error:* Creer que la fuente entrega siempre la misma corriente, sin importar lo que se conecte.
+
+**Error conceptual que conviene evitar:** Pensar que la red entrega una cantidad fija de corriente que se reparte, cuando en realidad cada aparato en paralelo suma su corriente a la total.
+
+**Estrategia:** En un circuito en paralelo, piensa primero en el voltaje (igual en todas las ramas) y después suma las corrientes de las ramas para obtener la total.
+
+---
+
+### Pregunta 130 · Clave D
+
+*SN-E-130 · Explicación de fenómenos · Circuito mixto: predicción de brillos al retirar un bombillo · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** L1 brilla menos y L2 brilla más, porque aumenta la resistencia total y L1 y L2 se reparten el voltaje por igual.
+
+**Justificación:** Sea R la resistencia de cada bombillo. Antes: L2 y L3 en paralelo equivalen a R/2, y la resistencia total es R + R/2 = 1,5R; la corriente total es I = 6,0 V / 1,5R = 4/R (en A si R está en Ω). L1 tiene 4,0 V y potencia P1 = 16/R; el par en paralelo tiene 2,0 V, y L2 disipa P2 = (2,0 V)²/R = 4/R. Después de quitar L3, L1 y L2 quedan en serie: resistencia total 2R (mayor que antes), corriente 3/R (menor), y cada uno tiene 3,0 V; P1 = P2 = 9/R. L1 pasa de 16/R a 9/R (brilla menos) y L2 pasa de 4/R a 9/R (brilla más); al final brillan igual. Con bombillos reales (resistencia que cambia con la temperatura) los valores cambian, pero el sentido de los cambios es el mismo y, por ser idénticos y estar en serie, L1 y L2 siguen quedando con el mismo brillo.
+
+**Análisis de distractores:**
+
+- **A.** Solo los elementos conectados directamente a los polos de la batería tienen 6,0 V; L1 y L2 se reparten el voltaje, y ese reparto cambia al quitar L3 (L1: de 4,0 V a 3,0 V; L2: de 2,0 V a 3,0 V). *Razonamiento que origina el error:* Creer que todo elemento de un circuito recibe el voltaje completo de la batería.
+- **B.** Al quitar L3 la resistencia total aumenta (de 1,5R a 2R) y la corriente total disminuye; L1 recibe menos corriente, no más. *Razonamiento que origina el error:* Pensar que la corriente que pasaba por un elemento retirado «se queda» y se redistribuye entre los demás.
+- **C.** Quitar una rama en paralelo aumenta la resistencia total (de 1,5R a 2R); por eso la corriente por L1 disminuye y L1 brilla menos. *Razonamiento que origina el error:* Suponer que retirar un elemento siempre reduce la resistencia del circuito, sin distinguir si estaba en serie o en paralelo.
+
+**Error conceptual que conviene evitar:** Analizar cada bombillo por separado sin recalcular la resistencia total y el reparto del voltaje después del cambio.
+
+**Estrategia:** Antes y después del cambio: calcula la resistencia equivalente, luego la corriente total y, por último, el voltaje y la potencia de cada elemento.
+
+---
+
+### Pregunta 131 · Clave C
+
+*SN-E-131 · Indagación · Circuitos en paralelo: reparto de la corriente entre ramas · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** La corriente total es la suma de las de las ramas, y la rama de mayor resistencia lleva la menor corriente.
+
+**Justificación:** Las tres ramas tienen el mismo voltaje (6,0 V), como corresponde a una conexión en paralelo. La suma de las corrientes de las ramas es 0,60 + 0,30 + 0,20 = 1,10 A, igual a la del cable principal: la carga que sale de la fuente se divide entre las ramas sin perderse. En cada rama I = V/R: 6,0/10 = 0,60 A; 6,0/20 = 0,30 A; 6,0/30 = 0,20 A, de modo que la rama con mayor resistencia lleva la menor corriente (la corriente es inversamente proporcional a la resistencia cuando el voltaje es el mismo).
+
+**Análisis de distractores:**
+
+- **A.** Las corrientes medidas son 0,60 A, 0,30 A y 0,20 A: distintas, porque cada rama tiene una resistencia diferente. *Razonamiento que origina el error:* Creer que estar conectado a la misma fuente implica recibir la misma corriente.
+- **B.** Los voltajes medidos son 6,0 V en las tres ramas: en paralelo el voltaje no se reparte. El reparto del voltaje ocurre en serie. *Razonamiento que origina el error:* Aplicar al circuito en paralelo el reparto del voltaje propio de la conexión en serie.
+- **D.** Una rama más agrega su propia corriente al total y reduce la resistencia equivalente; los datos muestran que la corriente total es la suma de las ramas, de modo que agregar una rama la aumenta. *Razonamiento que origina el error:* Pensar que agregar resistores siempre aumenta la resistencia total, sin importar el tipo de conexión.
+
+**Error conceptual que conviene evitar:** Confundir lo que se reparte en serie (el voltaje) con lo que se reparte en paralelo (la corriente).
+
+**Estrategia:** Organiza los datos en dos preguntas: ¿qué magnitud es igual en todas las ramas? y ¿cómo se relaciona la suma de las ramas con el total?
+
+---
+
+### Pregunta 132 · Clave B
+
+*SN-E-132 · Uso comprensivo del conocimiento científico · Potencia y energía eléctrica: consumo mensual en kWh de una vivienda · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** La nevera consume en el mes más energía que la ducha, 54 kWh frente a 36 kWh, aunque su potencia es mucho menor.
+
+**Justificación:** La energía es la potencia por el tiempo: E = P·t. Por día: nevera 0,150 kW × 12 h = 1,8 kWh; ducha 3,0 kW × 0,4 h = 1,2 kWh; televisor 0,120 kW × 5 h = 0,6 kWh; bombillos 0,050 kW × 6 h = 0,3 kWh; total 3,9 kWh/día. En 30 días: nevera 1,8 × 30 = 54 kWh y ducha 1,2 × 30 = 36 kWh; la nevera consume más porque funciona muchas más horas, aunque su potencia es 20 veces menor (3 000 W / 150 W = 20). El total del mes es 3,9 × 30 = 117 kWh, que con la tarifa ficticia cuesta 117 × $ 850 = $ 99 450.
+
+**Análisis de distractores:**
+
+- **A.** La potencia indica qué tan rápido se consume la energía, no cuánta se consume: la ducha funciona solo 0,4 h al día (36 kWh al mes), y la nevera, 12 h (54 kWh al mes). *Razonamiento que origina el error:* Confundir la potencia de un aparato con la energía que consume.
+- **C.** 3,9 kWh es el consumo de un solo día; falta multiplicar por 30 días (117 kWh, $ 99 450). *Razonamiento que origina el error:* Olvidar el periodo de tiempo al pasar del consumo diario al mensual.
+- **D.** Sumar las potencias (150 + 3 000 + 120 + 50 = 3 320 W) da la potencia total si todo estuviera encendido a la vez, no una energía; además son vatios, no kilovatios-hora. *Razonamiento que origina el error:* Confundir potencia (W) con energía (kWh) y omitir el tiempo de uso.
+
+**Error conceptual que conviene evitar:** Pensar que el aparato de mayor potencia es siempre el que más energía consume.
+
+**Estrategia:** Convierte la potencia a kW, multiplica por las horas de uso y por los días, y solo entonces compara aparatos o calcula el costo.
+
+---
+
+### Pregunta 133 · Clave D
+
+*SN-E-133 · Uso comprensivo del conocimiento científico · Eficiencia energética: costo total de bombillos incandescentes y LED · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** $ 119 400
+
+**Justificación:** Incandescente: energía = 0,060 kW × 3 000 h = 180 kWh, que cuestan 180 × $ 800 = $ 144 000; como dura 1 000 h, en 3 000 h se necesitan 3 bombillos: 3 × $ 3 000 = $ 9 000. Total: $ 153 000. LED: energía = 0,009 kW × 3 000 h = 27 kWh, que cuestan 27 × $ 800 = $ 21 600; un solo bombillo dura todo el periodo: $ 12 000. Total: $ 33 600. Ahorro: $ 153 000 − $ 33 600 = $ 119 400. El LED gasta menos porque transforma en luz una fracción mucho mayor de la energía eléctrica; el incandescente transforma la mayor parte en calor.
+
+**Análisis de distractores:**
+
+- **A.** Se obtiene con un solo bombillo incandescente ($ 3 000 + $ 144 000 = $ 147 000; $ 147 000 − $ 33 600 = $ 113 400), sin tener en cuenta que dura 1 000 h y hay que reemplazarlo dos veces. *Razonamiento que origina el error:* Ignorar la vida útil de cada tecnología en un análisis de costos.
+- **B.** Es solo la diferencia en el costo de la energía ($ 144 000 − $ 21 600); no incluye el precio de compra de los bombillos. *Razonamiento que origina el error:* Comparar únicamente el costo de operación y olvidar la inversión inicial.
+- **C.** Compara solo el precio de compra de un bombillo de cada tipo ($ 12 000 − $ 3 000); ignora la energía consumida, que es el costo principal, y los reemplazos del incandescente. *Razonamiento que origina el error:* Decidir solo con el precio de compra, sin considerar el consumo de energía durante el uso.
+
+**Error conceptual que conviene evitar:** Comparar tecnologías solo por su precio de compra o solo por su consumo, sin sumar todos los costos durante el mismo tiempo de uso.
+
+**Estrategia:** Fija un mismo tiempo de uso para las dos opciones y suma, para cada una, el costo de la energía y el de todos los bombillos necesarios.
+
+---
+
+### Pregunta 134 · Clave A
+
+*SN-E-134 · Indagación · Consumo eléctrico: estimación del consumo de una nevera con el medidor de la casa · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** Restar el consumo de los aparatos en espera y medir también de día, porque de noche la nevera se abre menos y el ambiente es más fresco.
+
+**Justificación:** La noche 2 muestra que, sin la nevera, la casa consume 0,30 kWh en 8 h por los aparatos en espera. Por tanto, la nevera consume de noche unos 1,12 − 0,30 = 0,82 kWh en 8 h, no 1,12 kWh. Además, multiplicar por 3 supone que el consumo nocturno representa todo el día; pero de día la nevera se abre con frecuencia y el ambiente es más caliente, de modo que el compresor funciona más. El procedimiento adecuado corrige las dos limitaciones: restar la línea de base de los aparatos en espera y medir también durante el día (por ejemplo, 24 h completas, en varios días). Desconectar la nevera un mes no es adecuado: el resto del consumo de la casa cambia de un mes a otro (otra variable no controlada) y se dañarían los alimentos.
+
+**Análisis de distractores:**
+
+- **B.** Ignora dos limitaciones: el valor de 1,12 kWh incluye 0,30 kWh de otros aparatos, y la noche no representa las condiciones del día (aperturas de la puerta, temperatura). *Razonamiento que origina el error:* Generalizar una medición hecha en condiciones particulares a todas las condiciones.
+- **C.** En la noche 2 la nevera estaba desconectada: ese valor mide el consumo de los aparatos en espera, no el de la nevera. *Razonamiento que origina el error:* Confundir la medición de control (línea de base) con la medición de la variable de interés.
+- **D.** Entre dos meses cambian muchas otras cosas (uso de la ducha, del televisor, número de días), así que la diferencia de facturas no se podría atribuir solo a la nevera; además, desconectarla un mes es impráctico. *Razonamiento que origina el error:* Comparar periodos en los que cambian muchas variables a la vez como si fuera un experimento controlado.
+
+**Error conceptual que conviene evitar:** Atribuir a un aparato todo lo que registra un medidor que también cuenta el consumo de otros aparatos.
+
+**Estrategia:** Antes de aceptar una estimación, pregunta qué más está incluido en la medición (línea de base) y si las condiciones medidas representan aquellas sobre las que se quiere concluir.
+
+---
+
+### Pregunta 135 · Clave A
+
+*SN-E-135 · Explicación de fenómenos · Seguridad eléctrica: sobrecarga de una multitoma · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** Los aparatos están en paralelo y cada uno suma corriente: el total, unos 25 A, supera lo que soportan la multitoma y el circuito.
+
+**Justificación:** En la multitoma los aparatos quedan en paralelo, cada uno con 120 V, y la corriente total es la suma de las corrientes: I = P/V = 1 200/120 + 1 200/120 + 600/120 = 10 + 10 + 5 = 25 A (o 3 000 W / 120 V = 25 A). Esa corriente pasa toda por el cable de la multitoma, diseñado para 10 A. La energía que se disipa como calor en un cable aumenta con el cuadrado de la corriente (P = I²·R): con 25 A es 6,25 veces la que habría con 10 A, por eso el cable se calienta y hay riesgo de incendio. El breaker se abre cuando la corriente supera durante un tiempo el valor seguro del circuito; que todo funcionara unos minutos antes de abrirse indica una sobrecarga y no un cortocircuito, que lo abriría casi de inmediato. Nunca se debe reemplazar el breaker por uno de mayor capacidad ni encadenar multitomas.
+
+**Análisis de distractores:**
+
+- **B.** El voltaje de la red no aumenta al conectar aparatos (en todo caso, baja un poco); lo que aumenta es la corriente total que circula por el cable. *Razonamiento que origina el error:* Pensar que la carga conectada eleva el voltaje de la fuente.
+- **C.** Una multitoma conecta los aparatos en paralelo (cada uno funciona por su cuenta con 120 V). Además, más resistencia en serie reduciría la corriente y el calentamiento. *Razonamiento que origina el error:* Confundir la conexión de una multitoma con una conexión en serie y asociar más resistencia con más calentamiento.
+- **D.** Un cortocircuito produce una corriente enorme que abre el breaker casi al instante; aquí los aparatos funcionaron normalmente varios minutos, lo que corresponde a una sobrecarga. *Razonamiento que origina el error:* No distinguir entre sobrecarga y cortocircuito.
+
+**Error conceptual que conviene evitar:** Pensar que una multitoma «multiplica» la capacidad del tomacorriente, cuando todas las corrientes pasan por el mismo cable.
+
+**Estrategia:** Suma las potencias de los aparatos conectados al mismo cable, divide entre el voltaje y compara la corriente con la que indica el fabricante.
+
+---
+
+### Pregunta 136 · Clave C
+
+*SN-E-136 · Indagación · Electromagnetismo: campo magnético de una corriente (experimento de Oersted) · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** Invertir las conexiones de la pila sin mover nada más y observar si la aguja se desvía hacia el lado contrario.
+
+**Justificación:** Un procedimiento distingue dos hipótesis cuando cada una predice un resultado distinto. Si la desviación se debe al campo magnético de la corriente, al invertir el sentido de la corriente el campo se invierte y la aguja debe girar hacia el oeste. Si se debe al calentamiento, el alambre se calienta igual sin importar el sentido de la corriente, y la aguja debería desviarse hacia el mismo lado. Al invertir las conexiones de la pila se observa la inversión de la desviación, lo que apoya la hipótesis del campo magnético de la corriente (resultado conocido como experimento de Oersted).
+
+**Análisis de distractores:**
+
+- **A.** Repetir aumenta la confianza en que la desviación ocurre, pero las dos hipótesis predicen ese mismo resultado: no permite distinguirlas. *Razonamiento que origina el error:* Confundir la reproducibilidad de un resultado con la evidencia para elegir entre explicaciones.
+- **B.** Más corriente produce un campo magnético mayor y también más calentamiento: las dos hipótesis predicen una desviación mayor. *Razonamiento que origina el error:* Elegir un cambio que afecta a las dos causas propuestas a la vez.
+- **D.** Al alejar la brújula disminuyen tanto el campo magnético como el efecto del calor: ambas hipótesis predicen una desviación menor. *Razonamiento que origina el error:* No verificar si las hipótesis hacen predicciones diferentes para el procedimiento propuesto.
+
+**Error conceptual que conviene evitar:** Escoger un procedimiento cuyo resultado esperado es el mismo para todas las hipótesis.
+
+**Estrategia:** Escribe, para cada procedimiento, qué predice cada hipótesis; elige aquel en que las predicciones sean opuestas.
+
+---
+
+### Pregunta 137 · Clave B
+
+*SN-E-137 · Indagación · Electromagnetismo: variables que influyen en la fuerza de un electroimán · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** Los ensayos 1 y 2
+
+**Justificación:** Para evaluar el efecto de una variable, se comparan ensayos en los que solo cambie esa variable y las demás se mantengan constantes. En los ensayos 1 y 2 el número de vueltas cambia (20 → 40) y la corriente es la misma (0,5 A), así que la diferencia en los clips (4 → 9) se puede atribuir al número de vueltas. (Los ensayos 4 y 3, ambos con 1,0 A, también servirían, pero no están entre las opciones.)
+
+**Análisis de distractores:**
+
+- **A.** Entre los ensayos 1 y 3 cambian a la vez el número de vueltas y la corriente; no se puede saber cuál de las dos produjo el aumento de clips. *Razonamiento que origina el error:* Elegir la comparación con la mayor diferencia en los resultados, aunque cambien dos variables.
+- **C.** Los ensayos 2 y 3 tienen el mismo número de vueltas (40): solo cambia la corriente, así que evalúan el efecto de la corriente, no el de las vueltas. *Razonamiento que origina el error:* Confundir la variable que se quiere estudiar con otra variable que sí cambia.
+- **D.** Entre los ensayos 2 y 4 cambian las dos variables (40 → 20 vueltas y 0,5 → 1,0 A); sus efectos se mezclan. *Razonamiento que origina el error:* No verificar que las demás variables permanezcan constantes.
+
+**Error conceptual que conviene evitar:** Comparar ensayos en los que cambian dos variables a la vez.
+
+**Estrategia:** Marca en la tabla qué columnas cambian entre los dos ensayos: debe cambiar solo la variable que se estudia.
+
+---
+
+### Pregunta 138 · Clave D
+
+*SN-E-138 · Explicación de fenómenos · Ondas: reflexión y propiedades que se conservan · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Conserva la frecuencia de 10 Hz, la longitud de onda de 2,0 cm y la rapidez; lo que cambia es su dirección.
+
+**Justificación:** La frecuencia de una onda la fija la fuente (la regla vibra 10 veces por segundo, 10 Hz), y la reflexión no cambia el número de oscilaciones por segundo. La rapidez la determina el medio: la profundidad es la misma en toda la cubeta, así que la onda reflejada viaja con la misma rapidez, v = λ·f = 2,0 cm × 10 Hz = 20 cm/s. Si v y f no cambian, tampoco cambia λ = v/f = 2,0 cm. Lo que cambia es la dirección de propagación: el ángulo de reflexión es igual al de incidencia. La amplitud puede disminuir algo si la pared absorbe parte de la energía, pero eso no cambia v, f ni λ.
+
+**Análisis de distractores:**
+
+- **A.** Perder energía puede reducir la amplitud, pero no la rapidez: la rapidez depende del medio, que es el mismo antes y después de la reflexión. *Razonamiento que origina el error:* Asociar la energía de una onda con su rapidez en lugar de con su amplitud.
+- **B.** La frecuencia la determina la fuente; la superposición de las ondas que van y vuelven puede cambiar el patrón que se observa, pero no la frecuencia de cada onda. *Razonamiento que origina el error:* Confundir la superposición de ondas con un cambio en la frecuencia.
+- **C.** Es al revés: la reflexión cambia la dirección y conserva la frecuencia y la longitud de onda (mismo medio, misma fuente). *Razonamiento que origina el error:* Invertir qué propiedades cambian y cuáles se conservan en la reflexión.
+
+**Error conceptual que conviene evitar:** Pensar que la reflexión cambia la rapidez o la frecuencia de la onda.
+
+**Estrategia:** Pregunta qué determina cada propiedad: la fuente fija la frecuencia, el medio fija la rapidez, y la longitud de onda resulta de λ = v/f.
+
+---
+
+### Pregunta 139 · Clave C
+
+*SN-E-139 · Explicación de fenómenos · Inducción electromagnética: imán que cae dentro de tubos metálicos · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** El imán en movimiento induce corrientes en las paredes metálicas, y estas generan un campo que se opone a su caída.
+
+**Justificación:** En el tubo de PVC (aislante) el imán tarda 0,46 s, casi lo mismo que en caída libre (t = √(2h/g) = √(2 × 1,0 m / 9,8 m/s²) ≈ 0,45 s). En los tubos metálicos, que son conductores, tarda mucho más (4,8 s en cobre y 3,1 s en aluminio). Al caer, el imán cambia el campo magnético que atraviesa cada sección del tubo; ese cambio induce corrientes circulares en las paredes (inducción electromagnética), y esas corrientes crean un campo magnético que se opone al movimiento del imán (ley de Lenz). La ranura corta el camino circular de esas corrientes y el frenado disminuye mucho (1,3 s), y un cilindro de acero sin imantar, del mismo tamaño, cae en el tubo de cobre como en caída libre (0,46 s), porque sin un campo magnético que cambie no hay corrientes inducidas. Todos los datos son coherentes con esta explicación.
+
+**Análisis de distractores:**
+
+- **A.** El contexto dice que el imán no se pega al cobre ni al aluminio, que no son materiales ferromagnéticos como el hierro; además, la ranura no cambiaría una atracción del material y, sin embargo, reduce mucho el frenado. *Razonamiento que origina el error:* Suponer que todos los metales son atraídos por los imanes.
+- **B.** El cilindro de acero, del mismo tamaño, cae en el tubo de cobre en 0,46 s: si el aire atrapado fuera la causa, también lo frenaría. *Razonamiento que origina el error:* Proponer una explicación posible sin contrastarla con el ensayo de control.
+- **D.** La atracción gravitacional entre el tubo y el imán es despreciable frente al peso del imán; además, el cilindro de acero cae en el mismo tubo de cobre sin frenarse. *Razonamiento que origina el error:* Atribuir efectos observables a la gravedad entre objetos de masa pequeña.
+
+**Error conceptual que conviene evitar:** Pensar que los imanes atraen a todos los metales, y no usar los ensayos de control para descartar explicaciones.
+
+**Estrategia:** Para cada explicación, revisa qué predice para el tubo con ranura y para el cilindro sin imantar; descarta la que contradiga algún dato.
+
+---
+
+### Pregunta 140 · Clave A
+
+*SN-E-140 · Uso comprensivo del conocimiento científico · Transformadores y transmisión de energía eléctrica a alto voltaje · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** Pasa de 50 kW a 0,5 kW: se reduce 100 veces, porque la corriente se reduce 10 veces y la pérdida depende de I².
+
+**Justificación:** La corriente en la línea es I = P/V. A 10 000 V: I = 1 000 000 W / 10 000 V = 100 A, y la potencia disipada en los cables es P = I²·R = (100 A)² × 5,0 Ω = 50 000 W = 50 kW (5 % de lo transmitido). A 100 000 V: I = 10 A, y P = (10 A)² × 5,0 Ω = 500 W = 0,5 kW (0,05 %). Al multiplicar el voltaje por 10, la corriente se divide entre 10 y la pérdida se divide entre 10² = 100. Por eso las centrales usan transformadores elevadores antes de transmitir y transformadores reductores cerca de los usuarios; los transformadores funcionan con corriente alterna, porque necesitan un campo magnético que cambie para inducir voltaje en la bobina de salida.
+
+**Análisis de distractores:**
+
+- **B.** Es cierto que la corriente se reduce 10 veces, pero la pérdida es I²·R: depende del cuadrado de la corriente y se reduce 100 veces (de 50 kW a 0,5 kW). *Razonamiento que origina el error:* Suponer que la pérdida es proporcional a la corriente y no a su cuadrado.
+- **C.** En V²/R, V debería ser la caída de voltaje en los cables (I·R: 500 V y 50 V), no el voltaje de transmisión. Con esa caída se obtiene el mismo resultado que con I²·R. *Razonamiento que origina el error:* Usar el voltaje de la línea respecto a tierra en lugar de la diferencia de potencial entre los extremos del cable.
+- **D.** La potencia transmitida es la misma, pero la parte que se pierde en los cables depende de la corriente que circula, y esta cambia con el voltaje de transmisión. *Razonamiento que origina el error:* Confundir la potencia transmitida con la potencia disipada en la línea.
+
+**Error conceptual que conviene evitar:** Aplicar V²/R con el voltaje de transmisión, que no es la diferencia de potencial entre los extremos del cable.
+
+**Estrategia:** Calcula primero la corriente con I = P/V y después la pérdida en los cables con P = I²·R; compara los dos casos con un cociente.
+
+---
+
+### Pregunta 141 · Clave D
+
+*SN-E-141 · Indagación · Inducción electromagnética: diseño de un experimento con un generador de manivela · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Girar a distintas rapideces medidas (vueltas por segundo), con el mismo bombillo, y medir el voltaje en cada caso.
+
+**Justificación:** En la hipótesis, la variable independiente es la rapidez de giro y la dependiente es el voltaje. Un procedimiento adecuado cambia la rapidez de giro de forma controlada y medida (vueltas por segundo con el cronómetro), mide el voltaje con el voltímetro y mantiene constantes las demás condiciones (el mismo generador y el mismo bombillo). Así, si el voltaje aumenta con la rapidez, la diferencia se puede atribuir a ella. Es lo que predice la inducción electromagnética: cuanto más rápido cambia el campo magnético que atraviesa la bobina, mayor es el voltaje inducido.
+
+**Análisis de distractores:**
+
+- **A.** Mantiene constante la rapidez, que es justamente la variable que se quiere estudiar, y cambia otra (el bombillo); además mide el brillo y no el voltaje. *Razonamiento que origina el error:* Confundir la variable independiente de la hipótesis con otra variable del montaje.
+- **B.** Cambia dos variables a la vez (rapidez y bombillo): si el voltaje cambia, no se puede saber cuál de las dos lo causó. *Razonamiento que origina el error:* No mantener constantes las demás variables.
+- **C.** No varía la rapidez y mide el calentamiento del bombillo, que no es la variable dependiente de la hipótesis. *Razonamiento que origina el error:* Medir una consecuencia relacionada en lugar de la variable que plantea la hipótesis.
+
+**Error conceptual que conviene evitar:** Cambiar varias variables a la vez o medir una variable distinta de la que plantea la hipótesis.
+
+**Estrategia:** Subraya en la hipótesis la variable que se cambia y la que se mide; luego verifica que el procedimiento cambie solo la primera y mida la segunda.
+
+---
+
+### Pregunta 142 · Clave B
+
+*SN-E-142 · Uso comprensivo del conocimiento científico · Ondas: frecuencia, periodo, longitud de onda y rapidez (v = λ·f) · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** 3,0 m/s
+
+**Justificación:** La frecuencia es el número de oscilaciones por unidad de tiempo: f = 12 / 60 s = 0,20 Hz; el periodo es T = 1/f = 5,0 s. La distancia entre dos crestas consecutivas es la longitud de onda, λ = 15 m. La rapidez es v = λ·f = 15 m × 0,20 Hz = 3,0 m/s (o v = λ/T = 15 m / 5,0 s = 3,0 m/s): cada cresta avanza una longitud de onda en un periodo.
+
+**Análisis de distractores:**
+
+- **A.** Se obtiene dividiendo 12 entre 15: se mezcló el número de olas con la longitud de onda, sin usar el tiempo en que se contaron. *Razonamiento que origina el error:* Combinar los datos sin atender a sus unidades.
+- **C.** Se obtiene con 15 m × 5,0 s: se multiplicó la longitud de onda por el periodo, cuando la rapidez es la longitud de onda dividida entre el periodo. *Razonamiento que origina el error:* Confundir el periodo con la frecuencia en v = λ·f.
+- **D.** Se obtiene con 15 m × 12: se usó el número de olas como si fuera la frecuencia, sin dividir entre los 60 s. *Razonamiento que origina el error:* Confundir el número de oscilaciones contadas con la frecuencia.
+
+**Error conceptual que conviene evitar:** Usar el número de oscilaciones o el periodo en lugar de la frecuencia en v = λ·f.
+
+**Estrategia:** Calcula primero f (oscilaciones / tiempo) o T (tiempo / oscilaciones) y verifica que las unidades del resultado sean m/s.
+
+---
+
+### Pregunta 143 · Clave C
+
+*SN-E-143 · Uso comprensivo del conocimiento científico · Ondas: lectura del periodo, la frecuencia y la amplitud en una gráfica · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** f = 2,5 Hz y v = 3,0 m/s
+
+**Justificación:** El periodo es el tiempo de una oscilación completa: de 0 a 0,40 s el punto sube, baja y vuelve al mismo estado (también de un máximo, a 0,10 s, al siguiente, a 0,50 s). T = 0,40 s, así que f = 1/T = 1 / 0,40 s = 2,5 Hz. La amplitud es 3 cm (desplazamiento máximo desde el equilibrio), pero no interviene en la rapidez. Con la longitud de onda de la fotografía: v = λ·f = 1,2 m × 2,5 Hz = 3,0 m/s.
+
+**Análisis de distractores:**
+
+- **A.** Toma el periodo (0,40 s) como si fuera la frecuencia y multiplica 1,2 m × 0,40 = 0,48; la frecuencia es el inverso del periodo. *Razonamiento que origina el error:* Confundir periodo y frecuencia.
+- **B.** Usa 0,20 s (de un máximo a un mínimo, o entre dos ceros consecutivos), que es medio periodo; con T = 0,20 s se obtiene f = 5,0 Hz y v = 6,0 m/s. *Razonamiento que origina el error:* Tomar media oscilación como si fuera el periodo.
+- **D.** La frecuencia es correcta, pero usa la amplitud (3 cm = 0,03 m) como si fuera la longitud de onda: 0,03 m × 2,5 Hz = 0,075 m/s. *Razonamiento que origina el error:* Confundir la amplitud con la longitud de onda.
+
+**Error conceptual que conviene evitar:** Leer medio ciclo como periodo, o confundir amplitud (eje vertical) con longitud de onda (distancia entre crestas).
+
+**Estrategia:** En una gráfica contra el tiempo, mide el periodo entre dos máximos consecutivos; la longitud de onda se lee en una representación contra la posición.
+
+---
+
+### Pregunta 144 · Clave A
+
+*SN-E-144 · Explicación de fenómenos · Ondas: refracción al cambiar la profundidad del agua · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** La onda se frena en el agua poco profunda; con la misma frecuencia, su longitud de onda es menor, y el frente oblicuo se desvía.
+
+**Justificación:** La frecuencia la impone la fuente (10 Hz) y no cambia al pasar de una zona a otra: cada oscilación que llega a la frontera genera una oscilación al otro lado. Con v = λ·f: en la zona profunda v = 2,0 cm × 10 Hz = 20 cm/s y en la poco profunda v = 1,2 cm × 10 Hz = 12 cm/s; la onda se frena. Como el frente llega de forma oblicua, el extremo que entra primero a la zona poco profunda avanza más despacio mientras el resto sigue a 20 cm/s; por eso el frente gira y cambia de dirección. Ese cambio de dirección por un cambio de rapidez es la refracción, y explica por qué las olas tienden a llegar casi paralelas a la playa.
+
+**Análisis de distractores:**
+
+- **B.** La frecuencia la fija la fuente y se conserva al pasar de un medio a otro; lo que cambia es la rapidez, y con ella la longitud de onda. *Razonamiento que origina el error:* Pensar que la frecuencia depende del medio.
+- **C.** Con la misma frecuencia, una longitud de onda menor implica menor rapidez (12 cm/s frente a 20 cm/s): la onda se frena en el agua poco profunda. *Razonamiento que origina el error:* Invertir la relación entre la longitud de onda y la rapidez cuando la frecuencia es constante.
+- **D.** La reflexión parcial en la frontera puede ocurrir, pero no cambia la longitud de onda de la onda transmitida ni explica el cambio de dirección de los frentes. *Razonamiento que origina el error:* Atribuir a la reflexión un fenómeno que se debe al cambio de rapidez (refracción).
+
+**Error conceptual que conviene evitar:** Creer que la frecuencia cambia al pasar a otro medio; lo que cambia es la rapidez.
+
+**Estrategia:** Cuando una onda cambia de medio, mantén fija la frecuencia y usa v = λ·f para ver qué pasa con la rapidez y la longitud de onda.
+
+---
+
+### Pregunta 145 · Clave B
+
+*SN-E-145 · Explicación de fenómenos · Espectro electromagnético: rapidez, frecuencia y longitud de onda · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Es incorrecta: en todas las filas λ·f ≈ 3,0 × 10⁸ m/s, así que todas viajan con la misma rapidez en el vacío.
+
+**Justificación:** Para cada fila, v = λ·f: radio FM 3,0 m × 1,0 × 10⁸ Hz = 3,0 × 10⁸ m/s; microondas 0,125 m × 2,4 × 10⁹ Hz = 3,0 × 10⁸ m/s; luz verde 5,0 × 10⁻⁷ m × 6,0 × 10¹⁴ Hz = 3,0 × 10⁸ m/s; rayos X 1,0 × 10⁻¹⁰ m × 3,0 × 10¹⁸ Hz = 3,0 × 10⁸ m/s. Todas las ondas electromagnéticas viajan en el vacío con la misma rapidez, c ≈ 3,0 × 10⁸ m/s: a mayor frecuencia, menor longitud de onda. La capacidad de los rayos X de atravesar tejidos blandos se relaciona con su alta frecuencia (mayor energía de cada fotón) y con cómo interactúan con la materia, no con su rapidez.
+
+**Análisis de distractores:**
+
+- **A.** En v = λ·f, al aumentar la frecuencia disminuye la longitud de onda en la misma proporción; el producto es el mismo en todas las filas. *Razonamiento que origina el error:* Usar una fórmula fijándose en una sola variable sin considerar cómo cambia la otra.
+- **C.** Una longitud de onda menor no implica menor rapidez cuando la frecuencia es mayor; el producto λ·f de los rayos X es igual al de las demás ondas. *Razonamiento que origina el error:* Relacionar la rapidez solo con la longitud de onda.
+- **D.** Las ondas de radio también viajan a 3,0 × 10⁸ m/s en el vacío; la longitud de onda no determina la rapidez ni hace que la onda «pierda energía». *Razonamiento que origina el error:* Atribuir a la longitud de onda un efecto sobre la rapidez de las ondas electromagnéticas.
+
+**Error conceptual que conviene evitar:** Pensar que las ondas electromagnéticas de mayor frecuencia viajan más rápido en el vacío.
+
+**Estrategia:** Cuando compares ondas electromagnéticas, calcula λ·f en cada caso: en el vacío siempre da c; lo que distingue a cada tipo es su frecuencia.
+
+**Fuente:** Rapidez de la luz en el vacío: c = 299 792 458 m/s (valor exacto que define el metro), NIST, CODATA Recommended Values of the Fundamental Physical Constants. Las frecuencias son valores típicos redondeados (banda FM de 88 a 108 MHz; wifi en la banda de 2,4 GHz).
+
+---
+
+### Pregunta 146 · Clave D
+
+*SN-E-146 · Explicación de fenómenos · Transferencia de calor: conducción, convección y radiación en un termo · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** El vacío reduce la conducción y la convección entre paredes; las superficies plateadas reducen la radiación; el tapón evita la convección por la boca.
+
+**Justificación:** La conducción y la convección necesitan un medio material: la conducción transfiere energía por choques entre partículas, y la convección, por el movimiento de un fluido (como el aire). Entre las dos paredes hay vacío, así que esos dos mecanismos casi no ocurren allí. La radiación (infrarroja) sí atraviesa el vacío; las superficies plateadas la reflejan en gran parte, de vuelta hacia el tinto, y emiten poca. El tapón impide que el aire caliente suba y escape por la boca (convección) y reduce la evaporación. Ningún termo es perfecto: el calor también se conduce por el cuello y el tapón, y por eso el tinto se enfría lentamente.
+
+**Análisis de distractores:**
+
+- **A.** La radiación sí atraviesa el vacío (así llega la energía del Sol a la Tierra); el vacío reduce la conducción y la convección, y las superficies plateadas reducen la radiación. *Razonamiento que origina el error:* Creer que la radiación térmica necesita un medio material para propagarse.
+- **B.** El vacío no impide la radiación; las superficies plateadas cumplen precisamente la función de reflejarla. *Razonamiento que origina el error:* Suponer que el vacío es un aislante perfecto para todos los mecanismos.
+- **C.** El «frío» no es algo que se transfiera: el calor fluye del cuerpo más caliente (el tinto) al más frío (el ambiente), y el termo reduce esa salida de energía. *Razonamiento que origina el error:* Pensar que el frío es una sustancia o una forma de energía que se transfiere.
+
+**Error conceptual que conviene evitar:** Pensar que la radiación térmica no atraviesa el vacío o que el «frío» se transfiere.
+
+**Estrategia:** Para cada mecanismo, pregunta qué necesita para ocurrir (contacto, un fluido que se mueva o nada) y qué parte del diseño lo bloquea.
+
+---
+
+### Pregunta 147 · Clave B
+
+*SN-E-147 · Uso comprensivo del conocimiento científico · Temperatura y equilibrio térmico: mezcla de agua a distintas temperaturas · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** 44 °C, porque la energía que cede el agua caliente al enfriarse es igual a la que gana el agua fría al calentarse.
+
+**Justificación:** Con pérdidas despreciables, la energía que cede el agua caliente es igual a la que gana la fría: m₁·c·(80 − T) = m₂·c·(T − 20). Como las dos porciones son de agua, c se cancela: 200 × (80 − T) = 300 × (T − 20) → 16 000 − 200T = 300T − 6 000 → 500T = 22 000 → T = 44 °C. Comprobación con c = 4,18 J/(g·°C): el agua caliente cede 200 × 4,18 × 36 = 30 096 J y la fría gana 300 × 4,18 × 24 = 30 096 J. La temperatura final queda más cerca de 20 °C porque hay más masa de agua fría. La transferencia de energía (calor) va siempre del cuerpo más caliente al más frío.
+
+**Análisis de distractores:**
+
+- **A.** El promedio simple (80 + 20) / 2 = 50 °C solo sería correcto si las dos masas fueran iguales; hay más agua fría (300 g), así que la temperatura final queda más cerca de 20 °C. *Razonamiento que origina el error:* Promediar temperaturas sin ponderar por la masa (y el calor específico).
+- **C.** La porción de mayor masa es la fría (300 g a 20 °C): 56 °C se obtiene al intercambiar las masas, (200 × 20 + 300 × 80) / 500. La porción mayor «arrastra» la temperatura final hacia la suya, que es 20 °C. *Razonamiento que origina el error:* Asignar los datos a la porción equivocada o pensar que la masa mayor siempre cede energía.
+- **D.** 36 °C es cuánto baja la temperatura del agua caliente (80 − 44 = 36 °C), no la temperatura final de la mezcla: es un cambio de temperatura (ΔT), no un estado final. *Razonamiento que origina el error:* Confundir el cambio de temperatura (ΔT) con la temperatura final.
+
+**Error conceptual que conviene evitar:** Promediar temperaturas sin tener en cuenta la masa de cada porción, o confundir el cambio de temperatura con la temperatura final.
+
+**Estrategia:** Escribe el balance «energía cedida = energía ganada» con la masa, el calor específico y el cambio de temperatura de cada porción, y verifica que T quede entre las dos temperaturas iniciales.
+
+---
+
+### Pregunta 148 · Clave C
+
+*SN-E-148 · Indagación · Calorimetría: calor específico de un metal y fuentes de error · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** Parte de la energía que cedió el metal no llegó al agua; al reducir esas pérdidas, el valor calculado se acercó al de referencia.
+
+**Justificación:** Ensayo 1: c = 200 g × 4,18 J/(g·°C) × (28,0 − 22,0) °C / (100 g × (100 − 28,0) °C) = 5 016 / 7 200 ≈ 0,70 J/(g·°C). Ensayo 2: c = 200 × 4,18 × 7,1 / (100 × 70,9) = 5 935,6 / 7 090 ≈ 0,84 J/(g·°C). El cálculo supone que toda la energía que cede el metal la gana el agua y que el metal entra a 100 °C. Si el metal se enfría en el aire durante el traslado, o si parte de la energía se va al vaso y al ambiente, el agua se calienta menos y el valor calculado resulta menor que el real. El segundo ensayo, con menos pérdidas (traslado más rápido y vaso tapado), dio un valor más cercano a 0,90 J/(g·°C), lo que apoya esa interpretación. Con pérdidas nulas, la temperatura final esperada sería (200 × 4,18 × 22 + 100 × 0,90 × 100) / (200 × 4,18 + 100 × 0,90) ≈ 29,6 °C.
+
+**Análisis de distractores:**
+
+- **A.** La diferencia se explica por pérdidas de energía: cuando se reducen, el valor sube a 0,84 J/(g·°C), cerca del de referencia. Un error sistemático del procedimiento no permite concluir que el material sea otro. *Razonamiento que origina el error:* Atribuir una diferencia con el valor de referencia a la muestra sin considerar los errores del procedimiento.
+- **B.** El calor específico es una propiedad del material; lo que cambió entre los ensayos fueron las pérdidas de energía del procedimiento, que afectan el valor calculado, no la propiedad. *Razonamiento que origina el error:* Confundir un error de medición con una variación real de una propiedad del material.
+- **D.** La energía se conserva siempre: la que no llegó al agua pasó al aire y al vaso, sistemas que el cálculo no tuvo en cuenta. *Razonamiento que origina el error:* Interpretar una pérdida hacia el ambiente como una violación de la conservación de la energía.
+
+**Error conceptual que conviene evitar:** Concluir que la muestra o la ley física están mal, cuando la diferencia se debe a supuestos del procedimiento que no se cumplen.
+
+**Estrategia:** Identifica los supuestos del cálculo (sistema aislado, temperatura inicial del metal) y pregunta en qué sentido cambiaría el resultado si no se cumplen.
+
+---
+
+### Pregunta 149 · Clave A
+
+*SN-E-149 · Indagación · Fuentes de energía y eficiencia: centrales hidroeléctrica, solar y térmica · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** No se sostiene solo con estos datos: la eficiencia no tiene en cuenta si el recurso es renovable, ni las emisiones de cada central.
+
+**Justificación:** Eficiencias: hidroeléctrica 880 / 1 000 = 88 %; solar 180 / 1 000 = 18 % (el 82 % restante no se convierte en electricidad, sobre todo se transforma en calor o se refleja); térmica 360 / 1 000 = 36 %. El dato del 82 % es correcto, pero la conclusión va más allá de la evidencia: la eficiencia solo compara la energía útil con la que entra. No dice nada del costo ni de la disponibilidad del recurso (la luz solar es renovable y no se compra, mientras que el carbón se agota, se paga y al quemarse emite CO₂ y otros contaminantes), ni de otros impactos (por ejemplo, la inundación de tierras por los embalses o el área que ocupan los paneles). Para decidir cuál opción es mejor se necesitarían más criterios y datos.
+
+**Análisis de distractores:**
+
+- **B.** La eficiencia es un criterio importante, pero no el único: no incluye si el recurso es renovable, su costo, las emisiones ni los impactos ambientales y sociales de cada central. *Razonamiento que origina el error:* Reducir una decisión tecnológica compleja a un solo indicador.
+- **C.** La eficiencia se calcula con la energía que entra, sea luz o combustible: la central solar convierte solo el 18 % de la luz que recibe, la menor de las tres. *Razonamiento que origina el error:* Confundir «no consumir combustible» con «ser más eficiente».
+- **D.** La energía no se destruye: el 82 % que no se convierte en electricidad se transforma principalmente en calor o se refleja. Además, este argumento no evalúa la conclusión con otros criterios. *Razonamiento que origina el error:* Interpretar la energía no aprovechada como energía destruida.
+
+**Error conceptual que conviene evitar:** Decidir cuál fuente de energía es mejor con un solo indicador, como la eficiencia.
+
+**Estrategia:** Antes de aceptar una conclusión, pregunta qué mide exactamente el dato que la apoya y qué criterios importantes para la decisión no incluye.
+
+---
+
+### Pregunta 150 · Clave D
+
+*SN-E-150 · Indagación · Energía solar: inclinación de un panel fotovoltaico y diseño del experimento · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** No es válida, porque la hora cambió junto con la inclinación; habría que medir todas casi a la misma hora.
+
+**Justificación:** La potencia de un panel depende de cuánta luz recibe, y eso cambia con la posición del Sol durante el día: es mayor cerca del mediodía y menor en la mañana y en la tarde. En el experimento, cada inclinación se midió a una hora distinta, así que la inclinación y la hora cambian juntas (variable de confusión). El máximo en 30° coincide con las 12:00, y los valores bajos de 0° y 60° coinciden con las 9:00 y las 14:00; con estos datos no se puede separar el efecto de la inclinación del de la hora. Un procedimiento adecuado mide todas las inclinaciones en un intervalo corto (por ejemplo, alrededor del mediodía, alternando el orden) y repite en varios días. Cerca del ecuador, como en Apartadó, el Sol del mediodía está alto, y suelen convenir inclinaciones pequeñas, lo que hace aún más dudosa la conclusión.
+
+**Análisis de distractores:**
+
+- **A.** Que el día estuviera despejado no controla la posición del Sol, que cambia con la hora: la mayor potencia en 30° puede deberse a que se midió a las 12:00. *Razonamiento que origina el error:* Considerar controlada una condición (el clima) sin reconocer otra que sí cambia (la hora).
+- **B.** Más cifras decimales no corrigen el problema de diseño: la inclinación y la hora siguen cambiando juntas. *Razonamiento que origina el error:* Confundir la precisión del instrumento con la validez del diseño experimental.
+- **C.** Un panel vertical recibe la luz muy de lado cuando el Sol está alto, como cerca del mediodía en Apartadó; además, la crítica no señala el problema del diseño. *Razonamiento que origina el error:* Suponer que una superficie vertical recibe más luz solar sin considerar la dirección de los rayos.
+
+**Error conceptual que conviene evitar:** Atribuir un efecto a la variable estudiada cuando otra variable (la hora) cambió al mismo tiempo.
+
+**Estrategia:** Haz una lista de todo lo que cambió entre una medición y otra; si cambia algo además de la variable estudiada, el diseño no permite atribuirle el efecto.
 
 ---

@@ -538,7 +538,7 @@ export const BLOQUE_A: AdvancedItem[] = [
     level: 3, contextType: 'laboratorio', resource: 'experimento',
     context: 'Se compararon dos hipótesis. H1: el antibiótico estreptomicina provoca en las bacterias las mutaciones que las hacen resistentes. H2: las mutaciones de resistencia surgen al azar antes del contacto con el antibiótico, y este solo selecciona a las bacterias que ya las tienen. Con un procedimiento inspirado en el experimento clásico de réplica en placa, se cultivó una placa original sin antibiótico con cientos de colonias. Con un mismo terciopelo estéril se transfirieron células de todas las colonias, conservando sus posiciones, a dos placas con estreptomicina. En ambas placas crecieron 3 colonias, en las mismas posiciones. Luego se tomaron células de esas posiciones en la placa original, que nunca había estado en contacto con el antibiótico, y resultaron resistentes al cultivarlas con estreptomicina (datos ficticios con fines didácticos).',
     simulatedData: true,
-    stem: '¿Qué conclusión se sustenta mejor en estos resultados?',
+    stem: '¿Cuál de las dos hipótesis apoyan los resultados de la réplica en placa?',
     options: {
       A: 'Se apoya H1, porque las colonias resistentes solo aparecieron en las placas con estreptomicina.',
       B: 'Se apoya H1, porque el antibiótico produjo la misma mutación en las dos placas que lo contenían.',

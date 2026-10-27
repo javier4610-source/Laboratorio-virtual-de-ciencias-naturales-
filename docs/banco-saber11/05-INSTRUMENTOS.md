@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
 
 ## 1. Matriz de trazabilidad curricular
 
@@ -102,6 +102,66 @@ Las afirmaciones y evidencias son formulaciones operativas propias del banco, no
 | 88 | C | Separación de mezclas y propiedades físicas: mercurio y oro en la minería | Explicación de fenómenos | Explica procesos tecnológicos y sus implicaciones a partir de propiedades físicas de las sustancias. | Explica la separación de una amalgama por calentamiento con la diferencia de temperaturas de ebullición y reconoce cómo una retorta reduce las emisiones de mercurio. | 1 | Industrial | Esquema | A |
 | 89 | C | Interpretación de experimentos químicos: extracción del café y control de variables | Indagación | Evalúa diseños experimentales y propone modificaciones que permiten poner a prueba una hipótesis. | Identifica una variable no controlada en un diseño de extracción y selecciona la modificación que permite atribuir el efecto a la variable estudiada. | 3 | Experimento escolar | Experimento | C |
 | 90 | C | Interpretación de experimentos químicos: titulación del vinagre, precisión y exactitud | Indagación | Evalúa la validez de conclusiones a partir de datos experimentales repetidos, distinguiendo precisión de exactitud. | Calcula la concentración a partir de una titulación y juzga qué conclusión se sostiene cuando un grupo obtiene resultados repetibles pero desplazados. | 3 | Laboratorio | Tabla | B |
+| 91 | D | Magnitudes físicas y unidades: análisis dimensional de una fórmula | Uso comprensivo del conocimiento científico | Usa las magnitudes físicas y sus unidades del Sistema Internacional para evaluar la coherencia de expresiones matemáticas. | Identifica, mediante el análisis de unidades, la única expresión que puede representar una distancia a partir de una rapidez y una aceleración. | 1 | Cotidiano | Texto | C |
+| 92 | D | Movimiento rectilíneo: lectura de una gráfica de posición contra tiempo | Uso comprensivo del conocimiento científico | Usa las representaciones gráficas del movimiento rectilíneo para describir la rapidez de un móvil en distintos intervalos. | Identifica en una gráfica posición–tiempo el intervalo de mayor rapidez a partir de la pendiente de cada tramo. | 1 | Cotidiano | Gráfica | A |
+| 93 | D | Gráficas de velocidad contra tiempo: área, distancia y rapidez media | Uso comprensivo del conocimiento científico | Usa la relación entre el área bajo la gráfica velocidad–tiempo y el desplazamiento para analizar un movimiento con varias fases. | Calcula la distancia recorrida como el área bajo una gráfica v–t por tramos y obtiene la rapidez media como distancia total entre tiempo total. | 2 | Cotidiano | Gráfica | D |
+| 94 | D | Movimiento uniformemente acelerado: análisis de datos de posición | Indagación | Selecciona procedimientos de análisis de datos adecuados para responder una pregunta sobre el tipo de movimiento. | Elige el análisis de distancias en intervalos iguales que permite decidir si la aceleración es constante y estimar su valor. | 2 | Laboratorio | Tabla | B |
+| 95 | D | Modelación matemática del movimiento: encuentro de un bus y una ciclista | Uso comprensivo del conocimiento científico | Usa modelos matemáticos del movimiento rectilíneo uniforme y uniformemente acelerado para resolver problemas con dos móviles. | Plantea e iguala las ecuaciones de posición de dos móviles para hallar el instante y el lugar del encuentro, y lo distingue del instante en que tienen igual rapidez. | 3 | Cotidiano | Modelo | B |
+| 96 | D | Velocidad y aceleración: lanzamiento vertical y punto más alto | Explicación de fenómenos | Explica el movimiento de un cuerpo en caída libre a partir de la relación entre velocidad, aceleración y fuerza. | Usa la pendiente constante de una gráfica v–t para refutar la idea de que la aceleración es nula en el punto más alto de un lanzamiento vertical. | 2 | Cotidiano | Gráfica | D |
+| 97 | D | Primera ley de Newton: la idea de que el movimiento requiere una fuerza | Explicación de fenómenos | Explica el movimiento de los cuerpos con las leyes de Newton y las distingue de concepciones intuitivas. | Atribuye la detención de un balón a las fuerzas que se oponen a su movimiento y no al agotamiento de una fuerza recibida. | 1 | Cotidiano | Texto | A |
+| 98 | D | Segunda ley de Newton: fuerza neta a partir de un diagrama de cuerpo libre | Uso comprensivo del conocimiento científico | Usa la segunda ley de Newton y los diagramas de cuerpo libre para calcular la aceleración de un cuerpo. | Obtiene la fuerza neta sumando con signo las fuerzas de un diagrama de cuerpo libre y la divide entre la masa. | 1 | Industrial | Esquema | C |
+| 99 | D | Fuerza de rozamiento: control de variables en un experimento | Indagación | Reconoce las comparaciones experimentales que permiten aislar el efecto de una variable. | Selecciona en una tabla los ensayos que difieren solo en el área de contacto para evaluar si esta influye en la fuerza de rozamiento. | 1 | Experimento escolar | Tabla | D |
+| 100 | D | Tercera ley de Newton: fuerzas entre dos vehículos que aceleran juntos | Explicación de fenómenos | Explica interacciones entre cuerpos con la tercera ley de Newton y la integra con la segunda ley. | Calcula la fuerza de interacción entre dos vehículos, reconoce que es igual en ambos sentidos aunque haya aceleración e identifica la fuerza externa que acelera el sistema. | 3 | Cotidiano | Texto | A |
+| 101 | D | Equilibrio y diagramas de fuerzas: cuerpo en reposo sobre un plano inclinado | Uso comprensivo del conocimiento científico | Usa la condición de equilibrio y la descomposición de fuerzas para analizar cuerpos en reposo. | Descompone el peso en componentes paralela y perpendicular a un plano inclinado y determina la magnitud y el sentido del rozamiento estático y de la normal. | 2 | Industrial | Esquema | B |
+| 102 | D | Leyes de Newton: tensión de un cable en un montacargas | Explicación de fenómenos | Explica la relación entre fuerza neta y cambio de velocidad a partir de datos de un sistema mecánico. | Relaciona las diferencias entre la tensión y el peso con las fases de aceleración, velocidad constante y frenado de un montacargas. | 2 | Industrial | Tabla | C |
+| 103 | D | Fuerzas de resistencia del aire: velocidad terminal y comparación de modelos | Indagación | Evalúa modelos alternativos a partir de la comparación entre sus predicciones y los resultados de un experimento. | Compara la velocidad terminal medida para distintas masas con la que predicen un modelo lineal y uno cuadrático de la fuerza del aire, y reconoce los límites de la conclusión. | 3 | Experimento escolar | Gráfica | A |
+| 104 | D | Potencia mecánica: relación entre potencia, fuerza y velocidad | Explicación de fenómenos | Explica el comportamiento de sistemas mecánicos con la relación entre trabajo, potencia, fuerza y velocidad. | Usa P = F·v con la potencia máxima fija para explicar por qué un vehículo sube una pendiente con menor velocidad constante y descarta explicaciones que confunden fuerza y potencia. | 3 | Tecnológico | Texto | D |
+| 105 | D | Conservación de la energía con rozamiento: un ciclista en bajada | Indagación | Interpreta datos de energía para evaluar conclusiones sobre la conservación y la transformación de la energía. | Calcula la energía mecánica en varios puntos a partir de una gráfica de barras y decide qué conclusión sobre la energía disipada se apoya en los datos. | 2 | Cotidiano | Gráfica | C |
+| 106 | D | Impulso y cantidad de movimiento: gráfica de fuerza contra tiempo | Uso comprensivo del conocimiento científico | Usa el teorema del impulso y la cantidad de movimiento para analizar interacciones de corta duración. | Calcula el impulso como el área bajo una gráfica fuerza–tiempo y lo relaciona con la velocidad final de un cuerpo. | 2 | Cotidiano | Gráfica | B |
+| 107 | D | Impulso: duración de la interacción y fuerza media | Explicación de fenómenos | Explica fenómenos cotidianos con la relación entre impulso, cantidad de movimiento y fuerza media. | Explica por qué alargar el tiempo de frenado de un balón reduce la fuerza sobre las manos con el mismo cambio de cantidad de movimiento. | 1 | Cotidiano | Texto | D |
+| 108 | D | Conservación de la cantidad de movimiento y de la energía: el salto desde una canoa | Uso comprensivo del conocimiento científico | Usa los principios de conservación de la cantidad de movimiento y de la energía para analizar interacciones entre cuerpos. | Calcula la velocidad de retroceso de una canoa con la conservación de la cantidad de movimiento y reconoce que la energía cinética del sistema no se conserva en esa interacción. | 3 | Cotidiano | Texto | A |
+| 109 | D | Densidad y flotación: diseño de una prueba de hipótesis | Indagación | Selecciona procedimientos experimentales que permitan poner a prueba una hipótesis controlando variables de confusión. | Elige el conjunto de objetos en el que solo cambia la masa para poner a prueba la idea de que los objetos pesados se hunden. | 1 | Experimento escolar | Experimento | C |
+| 110 | D | Presión hidrostática: presión contra profundidad en un embalse | Indagación | Interpreta datos de presión en fluidos para evaluar conclusiones y reconocer relaciones lineales. | Obtiene de una tabla el aumento de presión por metro, lo relaciona con la densidad del agua y la presión atmosférica del lugar, y descarta conclusiones de proporcionalidad. | 2 | Experimento escolar | Tabla | B |
+| 111 | D | Principio de Pascal: elevador hidráulico y conservación de la energía | Explicación de fenómenos | Explica el funcionamiento de máquinas hidráulicas con el principio de Pascal y la conservación de la energía. | Relaciona la multiplicación de la fuerza en un elevador hidráulico con el mayor desplazamiento del émbolo pequeño y la igualdad de trabajos de entrada y de salida. | 2 | Tecnológico | Esquema | A |
+| 112 | D | Densidad y principio de Arquímedes: ¿una figura de oro macizo? | Indagación | Evalúa la validez de conclusiones a partir de mediciones, considerando su incertidumbre y las hipótesis alternativas. | Calcula la densidad media de un objeto con el método de Arquímedes, descarta una hipótesis y reconoce que los datos no permiten identificar el material. | 3 | Materiales y sustancias | Tabla | D |
+| 113 | D | Movimiento ondulatorio: amplitud, longitud de onda y rapidez en una cuerda | Uso comprensivo del conocimiento científico | Usa las magnitudes que describen una onda mecánica y la relación v = λ·f para interpretar representaciones de ondas. | Lee la amplitud y la longitud de onda en una gráfica de la forma de una cuerda y calcula la rapidez de propagación con la frecuencia de la fuente. | 1 | Experimento escolar | Gráfica | B |
+| 114 | D | Ondas mecánicas: transporte de energía sin transporte de materia | Explicación de fenómenos | Explica fenómenos ondulatorios con el modelo de onda como perturbación que transporta energía. | Explica que un objeto que flota oscile sin avanzar con las olas porque la onda transporta energía y no el medio. | 1 | Cotidiano | Texto | C |
+| 115 | D | Sonido: eco y ecosonda en un embalse | Uso comprensivo del conocimiento científico | Usa las propiedades de propagación del sonido en distintos medios para resolver problemas tecnológicos. | Calcula profundidades a partir de los tiempos de eco de una ecosonda, considerando el recorrido de ida y vuelta y la rapidez del sonido en el agua. | 2 | Tecnológico | Texto | D |
+| 116 | D | Sonido: tono, intensidad y longitud de la cuerda que vibra | Explicación de fenómenos | Explica las cualidades del sonido a partir de las características de la onda que lo produce. | Relaciona el período y la amplitud de dos registros de presión con el tono y la intensidad, y explica el cambio de frecuencia al acortar la cuerda. | 2 | Experimento escolar | Gráfica | B |
+| 117 | D | Sonido: necesidad de un medio material para su propagación | Indagación | Obtiene conclusiones de un experimento a partir de la variable que se modifica y de las observaciones registradas. | Concluye a partir del experimento de la campana de vacío que el sonido necesita un medio material y descarta conclusiones contradichas por las observaciones. | 1 | Laboratorio | Experimento | A |
+| 118 | D | Óptica geométrica: altura mínima de un espejo plano | Explicación de fenómenos | Explica la formación de imágenes en espejos planos con la ley de la reflexión y el modelo de rayos. | Usa la ley de la reflexión para mostrar que la parte del espejo necesaria para verse de cuerpo entero es la mitad de la estatura y no depende de la distancia. | 3 | Cotidiano | Esquema | C |
+| 119 | D | Refracción de la luz: comparación de modelos con datos (ley de Snell) | Indagación | Evalúa modelos alternativos a partir de datos experimentales e identifica qué mediciones permiten distinguirlos. | Calcula y compara las razones i/r y sen i / sen r en una tabla de ángulos para decidir qué modelo de la refracción se ajusta a los datos. | 3 | Laboratorio | Tabla | A |
+| 120 | D | Óptica geométrica: imágenes formadas por una lente convergente | Indagación | Interpreta resultados experimentales con lentes para identificar regularidades y estimar parámetros. | Identifica en una tabla de distancias de objeto e imagen la relación 1/d_o + 1/d_i constante, estima la distancia focal y descarta relaciones no apoyadas por los datos. | 2 | Laboratorio | Tabla | D |
+| 121 | E | Carga eléctrica: electrización por inducción | Uso comprensivo del conocimiento científico | Usa el modelo de cargas eléctricas móviles en los conductores para predecir el resultado de un proceso de electrización. | Predice el signo y la magnitud de la carga final de dos conductores separados en presencia de un cuerpo cargado, sin contacto con él. | 1 | Laboratorio | Esquema | C |
+| 122 | E | Carga eléctrica: polarización y atracción de cuerpos neutros | Explicación de fenómenos | Explica fenómenos electrostáticos cotidianos con el modelo de cargas y de interacción eléctrica. | Explica la atracción entre un cuerpo cargado y un cuerpo neutro mediante la separación de cargas (polarización) y la dependencia de la fuerza con la distancia. | 1 | Cotidiano | Texto | A |
+| 123 | E | Potencial eléctrico: diferencia de potencial y seguridad en las redes de distribución | Explicación de fenómenos | Explica situaciones de riesgo eléctrico con los conceptos de diferencia de potencial y de corriente. | Explica por qué un ave posada en un solo cable no sufre descarga y una persona en contacto con el cable y con el suelo sí, usando la diferencia de potencial entre los puntos de contacto. | 2 | Cotidiano | Texto | D |
+| 124 | E | Campo y potencial eléctrico: mapeo del potencial entre dos placas | Indagación | Obtiene conclusiones sobre el campo eléctrico a partir de mediciones de potencial. | Interpreta una tabla de potenciales medidos entre dos placas para inferir la uniformidad, la magnitud y el sentido del campo eléctrico. | 2 | Laboratorio | Tabla | B |
+| 125 | E | Corriente y voltaje: conexión del amperímetro y del voltímetro | Uso comprensivo del conocimiento científico | Usa los conceptos de corriente y diferencia de potencial para seleccionar procedimientos de medición en circuitos. | Identifica la conexión correcta del amperímetro y del voltímetro en un circuito y la justifica con lo que mide cada instrumento. | 1 | Laboratorio | Esquema | B |
+| 126 | E | Ley de Ohm y elementos no óhmicos: curvas corriente-voltaje | Indagación | Interpreta gráficas de resultados experimentales para clasificar materiales y dispositivos según su comportamiento eléctrico. | Compara las curvas corriente-voltaje de un resistor y de un bombillo de filamento y calcula el cociente V/I para decidir cuál cumple la ley de Ohm. | 2 | Laboratorio | Gráfica | D |
+| 127 | E | Resistencia eléctrica: dependencia de la longitud y del área del conductor | Uso comprensivo del conocimiento científico | Usa relaciones de proporcionalidad entre variables para predecir propiedades eléctricas de los conductores. | Deduce de una tabla que la resistencia de un alambre es proporcional a su longitud e inversamente proporcional a su área transversal, y predice la resistencia de un alambre nuevo. | 2 | Laboratorio | Tabla | A |
+| 128 | E | Circuito en serie: la corriente no se «gasta» | Explicación de fenómenos | Explica el comportamiento de los circuitos con el modelo de corriente eléctrica y de transformación de energía. | Explica, a partir de mediciones de corriente en varios puntos de un circuito en serie, por qué dos bombillos iguales brillan igual. | 1 | Experimento escolar | Esquema | C |
+| 129 | E | Circuitos en paralelo: instalación eléctrica de una vivienda | Uso comprensivo del conocimiento científico | Usa las características de los circuitos en paralelo para interpretar el funcionamiento de las instalaciones eléctricas. | Relaciona la conexión en paralelo de los aparatos de una vivienda con el voltaje que recibe cada uno y con el cambio de la corriente total al encender más aparatos. | 1 | Cotidiano | Texto | A |
+| 130 | E | Circuito mixto: predicción de brillos al retirar un bombillo | Explicación de fenómenos | Explica y predice las consecuencias de modificar un circuito con el modelo de resistencia equivalente y de reparto del voltaje. | Predice cómo cambia el brillo de dos bombillos de un circuito mixto al retirar un tercero, y lo explica con el cambio de la resistencia total y del reparto del voltaje. | 3 | Laboratorio | Esquema | D |
+| 131 | E | Circuitos en paralelo: reparto de la corriente entre ramas | Indagación | Obtiene conclusiones a partir de las mediciones de un experimento con circuitos. | Interpreta las corrientes y los voltajes medidos en un circuito en paralelo para establecer cómo se reparte la corriente según la resistencia de cada rama. | 2 | Laboratorio | Tabla | C |
+| 132 | E | Potencia y energía eléctrica: consumo mensual en kWh de una vivienda | Uso comprensivo del conocimiento científico | Usa la relación entre potencia, tiempo y energía para analizar el consumo eléctrico de una vivienda. | Calcula la energía mensual de varios aparatos a partir de su potencia y su tiempo de uso, y distingue la potencia de un aparato de la energía que consume. | 2 | Cotidiano | Tabla | B |
+| 133 | E | Eficiencia energética: costo total de bombillos incandescentes y LED | Uso comprensivo del conocimiento científico | Usa los conceptos de potencia, energía y eficiencia para resolver problemas de decisión tecnológica con varios pasos. | Calcula el costo total (compra y energía) de dos tecnologías de iluminación durante un mismo tiempo de uso, teniendo en cuenta la vida útil de cada una. | 3 | Tecnológico | Tabla | D |
+| 134 | E | Consumo eléctrico: estimación del consumo de una nevera con el medidor de la casa | Indagación | Evalúa procedimientos de medición y reconoce sus limitaciones para responder una pregunta de investigación. | Reconoce que una medición incluye el consumo de otros aparatos y que unas condiciones de medición no representan todo el día, y elige el procedimiento que corrige ambas limitaciones. | 3 | Cotidiano | Tabla | A |
+| 135 | E | Seguridad eléctrica: sobrecarga de una multitoma | Explicación de fenómenos | Explica situaciones de riesgo eléctrico en el hogar con las relaciones entre potencia, voltaje y corriente. | Explica el calentamiento de una multitoma y la apertura del interruptor automático por el aumento de la corriente total de aparatos en paralelo, y lo distingue de un cortocircuito. | 2 | Cotidiano | Texto | A |
+| 136 | E | Electromagnetismo: campo magnético de una corriente (experimento de Oersted) | Indagación | Selecciona procedimientos experimentales que permitan distinguir entre hipótesis alternativas. | Elige la modificación del experimento de Oersted cuyos resultados esperados son distintos según la desviación de la brújula se deba a la corriente o al calentamiento del alambre. | 2 | Experimento escolar | Experimento | C |
+| 137 | E | Electromagnetismo: variables que influyen en la fuerza de un electroimán | Indagación | Reconoce variables independientes, dependientes y controladas en un experimento. | Selecciona en una tabla de resultados el par de ensayos que permite evaluar el efecto del número de vueltas manteniendo constante la corriente. | 1 | Experimento escolar | Tabla | B |
+| 138 | E | Ondas: reflexión y propiedades que se conservan | Explicación de fenómenos | Explica fenómenos ondulatorios con la relación entre la fuente, el medio y las propiedades de una onda. | Explica qué propiedades de una onda cambian y cuáles se conservan al reflejarse en un obstáculo dentro del mismo medio. | 1 | Laboratorio | Esquema | D |
+| 139 | E | Inducción electromagnética: imán que cae dentro de tubos metálicos | Explicación de fenómenos | Compara explicaciones alternativas de un fenómeno y determina cuál se sustenta mejor en la evidencia. | Usa los tiempos de caída de un imán y de un cilindro no magnético en tubos de distintos materiales para descartar explicaciones y sustentar la de las corrientes inducidas. | 3 | Laboratorio | Tabla | C |
+| 140 | E | Transformadores y transmisión de energía eléctrica a alto voltaje | Uso comprensivo del conocimiento científico | Usa las relaciones entre potencia, voltaje, corriente y resistencia para analizar sistemas tecnológicos de transmisión de energía. | Calcula la potencia disipada en una línea de transmisión para dos voltajes y explica por qué se eleva el voltaje con transformadores. | 3 | Tecnológico | Texto | A |
+| 141 | E | Inducción electromagnética: diseño de un experimento con un generador de manivela | Indagación | Diseña procedimientos experimentales que permitan poner a prueba una hipótesis. | Selecciona el procedimiento que varía solo la variable independiente de la hipótesis, mide la variable dependiente y mantiene constantes las demás. | 1 | Experimento escolar | Experimento | D |
+| 142 | E | Ondas: frecuencia, periodo, longitud de onda y rapidez (v = λ·f) | Uso comprensivo del conocimiento científico | Usa la relación entre longitud de onda, frecuencia y rapidez para calcular propiedades de una onda. | Calcula la frecuencia de una onda a partir del número de oscilaciones en un tiempo dado y la usa con la longitud de onda para obtener la rapidez. | 1 | Cotidiano | Texto | B |
+| 143 | E | Ondas: lectura del periodo, la frecuencia y la amplitud en una gráfica | Uso comprensivo del conocimiento científico | Usa representaciones gráficas de las ondas para obtener sus propiedades. | Lee el periodo y la amplitud en una gráfica de desplazamiento contra tiempo y los usa, con la longitud de onda, para calcular la frecuencia y la rapidez. | 2 | Laboratorio | Gráfica | C |
+| 144 | E | Ondas: refracción al cambiar la profundidad del agua | Explicación de fenómenos | Explica la refracción como un cambio en la rapidez de una onda al pasar de un medio a otro. | Explica el cambio de longitud de onda y de dirección de una onda que pasa a una zona de menor profundidad, a partir de la conservación de la frecuencia. | 2 | Laboratorio | Esquema | A |
+| 145 | E | Espectro electromagnético: rapidez, frecuencia y longitud de onda | Explicación de fenómenos | Evalúa explicaciones sobre fenómenos ondulatorios a partir de datos y del modelo de las ondas electromagnéticas. | Usa el producto λ·f de varias ondas electromagnéticas para refutar la idea de que las de mayor frecuencia viajan más rápido en el vacío. | 2 | Tecnológico | Tabla | B |
+| 146 | E | Transferencia de calor: conducción, convección y radiación en un termo | Explicación de fenómenos | Explica el funcionamiento de dispositivos tecnológicos con los mecanismos de transferencia de calor. | Relaciona cada elemento del diseño de un termo con el mecanismo de transferencia de calor que reduce. | 1 | Tecnológico | Texto | D |
+| 147 | E | Temperatura y equilibrio térmico: mezcla de agua a distintas temperaturas | Uso comprensivo del conocimiento científico | Usa el principio de conservación de la energía para predecir la temperatura de equilibrio de un sistema. | Calcula la temperatura final de una mezcla de agua igualando la energía que cede la porción caliente con la que gana la fría. | 2 | Laboratorio | Texto | B |
+| 148 | E | Calorimetría: calor específico de un metal y fuentes de error | Indagación | Evalúa la validez de conclusiones experimentales considerando las fuentes de error y los resultados de ensayos modificados. | Interpreta la diferencia entre un calor específico medido y el valor de referencia a partir de las pérdidas de energía, usando la mejora obtenida en un segundo ensayo. | 3 | Laboratorio | Tabla | C |
+| 149 | E | Fuentes de energía y eficiencia: centrales hidroeléctrica, solar y térmica | Indagación | Evalúa el alcance de conclusiones sobre decisiones tecnológicas a partir de datos y de los criterios que esos datos no incluyen. | Calcula la eficiencia de tres centrales y reconoce que la eficiencia, por sí sola, no basta para concluir cuál fuente es la mejor opción. | 3 | Tecnológico | Tabla | A |
+| 150 | E | Energía solar: inclinación de un panel fotovoltaico y diseño del experimento | Indagación | Reconoce limitaciones metodológicas que impiden atribuir un efecto a la variable estudiada. | Identifica que la hora de medición varía junto con la inclinación del panel y propone un procedimiento que separe los dos efectos. | 3 | Experimento escolar | Gráfica | D |
 
 ## 2. Lista de control de calidad
 
@@ -217,8 +277,68 @@ Valoración interna por criterio: C = Cumple, RA = Requiere ajuste, NC = No cump
 | 88 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
 | 89 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
 | 90 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 91 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 92 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 93 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 94 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 95 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 96 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 97 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 98 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 99 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 100 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 101 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 102 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 103 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 104 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 105 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 106 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 107 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 108 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 109 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 110 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 111 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 112 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 113 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 114 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 115 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 116 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 117 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 118 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 119 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 120 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 121 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 122 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 123 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 124 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 125 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 126 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 127 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 128 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 129 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 130 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 131 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 132 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 133 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 134 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 135 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 136 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 137 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 138 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 139 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 140 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 141 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 142 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 143 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 144 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 145 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 146 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 147 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 148 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 149 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 150 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
 
-Revisión automática (npm run banco): 0 errores y 1 avisos; las metas globales se revisan cuando estén los seis bloques.
+Revisión automática (npm run banco): 0 errores y 0 avisos; las metas globales se revisan cuando estén los seis bloques.
 
 El banco está revisado con criterios técnicos, pero **no está validado psicométricamente**: no hay aplicación piloto, ni índices de dificultad, discriminación o confiabilidad. Esos indicadores solo pueden obtenerse con datos reales de aplicación.
 
@@ -226,12 +346,12 @@ El banco está revisado con criterios técnicos, pero **no está validado psicom
 
 Escribe aciertos / preguntas aplicadas en cada celda (o el porcentaje). La aplicación web genera esta tabla al terminar un simulacro y la descarga en CSV.
 
-| Competencia | Bloque A | Bloque B | Bloque C | Total |
-| --- | --- | --- | --- | --- |
-| Uso comprensivo del conocimiento científico |  |  |  |  |
-| Explicación de fenómenos |  |  |  |  |
-| Indagación |  |  |  |  |
-| Total |  |  |  |  |
+| Competencia | Bloque A | Bloque B | Bloque C | Bloque D | Bloque E | Total |
+| --- | --- | --- | --- | --- | --- | --- |
+| Uso comprensivo del conocimiento científico |  |  |  |  |  |  |
+| Explicación de fenómenos |  |  |  |  |  |  |
+| Indagación |  |  |  |  |  |  |
+| Total |  |  |  |  |  |  |
 
 ## 4. Plantilla para registrar aciertos, errores y dificultades
 

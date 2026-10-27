@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
 
 Los documentos oficiales consultados (ICFES y Ministerio de Educación Nacional) y sus fechas de consulta están en 01-FUNDAMENTACION.md.
 
@@ -68,6 +68,37 @@ Los documentos oficiales consultados (ICFES y Ministerio de Educación Nacional)
 | 87 | SN-C-087 | Química del carbono: solubilidad de los alcoholes y longitud de la cadena | Gráfica | Solubilidad en agua de alcoholes lineales a 20 °C |
 | 89 | SN-C-089 | Interpretación de experimentos químicos: extracción del café y control de variables | Experimento | Condiciones y resultados de las dos preparaciones (datos ficticios con fines didácticos) |
 | 90 | SN-C-090 | Interpretación de experimentos químicos: titulación del vinagre, precisión y exactitud | Tabla | Volumen de NaOH 0,50 mol/L gastado por 10,0 mL de vinagre (datos ficticios con fines didácticos) |
+| 92 | SN-D-092 | Movimiento rectilíneo: lectura de una gráfica de posición contra tiempo | Gráfica | Posición del bus alimentador en la avenida |
+| 93 | SN-D-093 | Gráficas de velocidad contra tiempo: área, distancia y rapidez media | Gráfica | Velocidad de la ciclista en la recta de entrenamiento |
+| 94 | SN-D-094 | Movimiento uniformemente acelerado: análisis de datos de posición | Tabla | Posición del carrito en el riel inclinado (datos ficticios con fines didácticos) |
+| 96 | SN-D-096 | Velocidad y aceleración: lanzamiento vertical y punto más alto | Gráfica | Velocidad del balón lanzado verticalmente hacia arriba |
+| 99 | SN-D-099 | Fuerza de rozamiento: control de variables en un experimento | Tabla | Fuerza horizontal necesaria para que el bloque empiece a deslizar (datos ficticios con fines didácticos) |
+| 102 | SN-D-102 | Leyes de Newton: tensión de un cable en un montacargas | Tabla | Tensión del cable del montacargas en cada fase (datos ficticios con fines didácticos) |
+| 103 | SN-D-103 | Fuerzas de resistencia del aire: velocidad terminal y comparación de modelos | Gráfica | Velocidad de caída de filtros de papel encajados |
+| 105 | SN-D-105 | Conservación de la energía con rozamiento: un ciclista en bajada | Gráfica | Energía potencial y energía cinética del ciclista en cuatro puntos de la bajada |
+| 106 | SN-D-106 | Impulso y cantidad de movimiento: gráfica de fuerza contra tiempo | Gráfica | Fuerza del pie sobre el balón durante la patada |
+| 110 | SN-D-110 | Presión hidrostática: presión contra profundidad en un embalse | Tabla | Presión absoluta en el agua del embalse según la profundidad (datos ficticios con fines didácticos) |
+| 112 | SN-D-112 | Densidad y principio de Arquímedes: ¿una figura de oro macizo? | Tabla | Densidad de algunos metales a temperatura ambiente (valores de referencia redondeados) |
+| 113 | SN-D-113 | Movimiento ondulatorio: amplitud, longitud de onda y rapidez en una cuerda | Gráfica | Forma de la cuerda en un instante |
+| 116 | SN-D-116 | Sonido: tono, intensidad y longitud de la cuerda que vibra | Gráfica | Variación de la presión del aire producida por dos notas de una guitarra |
+| 119 | SN-D-119 | Refracción de la luz: comparación de modelos con datos (ley de Snell) | Tabla | Ángulos de incidencia y de refracción del aire al acrílico (datos ficticios con fines didácticos) |
+| 120 | SN-D-120 | Óptica geométrica: imágenes formadas por una lente convergente | Tabla | Distancias del objeto y de la imagen con una lente convergente (datos ficticios con fines didácticos) |
+| 124 | SN-E-124 | Campo y potencial eléctrico: mapeo del potencial entre dos placas | Tabla | Potencial respecto a la placa negativa en puntos entre las placas (datos ficticios con fines didácticos) |
+| 126 | SN-E-126 | Ley de Ohm y elementos no óhmicos: curvas corriente-voltaje | Gráfica | Corriente en función del voltaje para un resistor y un bombillo de filamento |
+| 127 | SN-E-127 | Resistencia eléctrica: dependencia de la longitud y del área del conductor | Tabla | Resistencia de alambres de la misma aleación (datos ficticios con fines didácticos) |
+| 128 | SN-E-128 | Circuito en serie: la corriente no se «gasta» | Esquema | Datos en el contexto |
+| 131 | SN-E-131 | Circuitos en paralelo: reparto de la corriente entre ramas | Tabla | Voltaje y corriente en un circuito con tres resistores en paralelo (datos ficticios con fines didácticos) |
+| 132 | SN-E-132 | Potencia y energía eléctrica: consumo mensual en kWh de una vivienda | Tabla | Potencia y uso diario de los aparatos de una vivienda (datos ficticios con fines didácticos) |
+| 133 | SN-E-133 | Eficiencia energética: costo total de bombillos incandescentes y LED | Tabla | Características de dos bombillos de iluminación similar (datos ficticios con fines didácticos) |
+| 134 | SN-E-134 | Consumo eléctrico: estimación del consumo de una nevera con el medidor de la casa | Tabla | Energía registrada por el medidor de la casa en tres noches de 8 h (datos ficticios con fines didácticos) |
+| 137 | SN-E-137 | Electromagnetismo: variables que influyen en la fuerza de un electroimán | Tabla | Clips levantados por un electroimán (datos ficticios con fines didácticos) |
+| 139 | SN-E-139 | Inducción electromagnética: imán que cae dentro de tubos metálicos | Tabla | Tiempo de caída en tubos verticales de 1,0 m (datos ficticios con fines didácticos) |
+| 142 | SN-E-142 | Ondas: frecuencia, periodo, longitud de onda y rapidez (v = λ·f) | Texto | Datos en el contexto |
+| 143 | SN-E-143 | Ondas: lectura del periodo, la frecuencia y la amplitud en una gráfica | Gráfica | Desplazamiento vertical de un punto de la cuerda |
+| 144 | SN-E-144 | Ondas: refracción al cambiar la profundidad del agua | Esquema | Datos en el contexto |
+| 148 | SN-E-148 | Calorimetría: calor específico de un metal y fuentes de error | Tabla | Resultados de dos ensayos de calorimetría con 100 g de aluminio y 200 g de agua (datos ficticios con fines didácticos) |
+| 149 | SN-E-149 | Fuentes de energía y eficiencia: centrales hidroeléctrica, solar y térmica | Tabla | Energía que entra y energía eléctrica entregada en un día por tres centrales hipotéticas (datos ficticios con fines didácticos) |
+| 150 | SN-E-150 | Energía solar: inclinación de un panel fotovoltaico y diseño del experimento | Gráfica | Potencia entregada por el panel según su inclinación (cada inclinación medida a una hora distinta) |
 
 Los datos ficticios son internamente coherentes y plausibles, pero no provienen de investigaciones reales ni deben citarse como tales.
 
@@ -85,4 +116,6 @@ Los datos ficticios son internamente coherentes y plausibles, pero no provienen 
 | 67 | SN-C-067 | Estructura molecular y polaridad: momento dipolar de los clorometanos | Momentos dipolares en fase gaseosa: CRC Handbook of Chemistry and Physics, tabla «Dipole Moments» (valores redondeados a una cifra decimal). Electronegatividades de Pauling redondeadas. |
 | 79 | SN-C-079 | Ácidos y bases: estimación del pH con indicadores | Rangos de viraje habituales de los indicadores, tabulados en textos de química analítica, p. ej., Harris, D. C. Quantitative Chemical Analysis. W. H. Freeman, tabla de indicadores ácido-base. |
 | 88 | SN-C-088 | Separación de mezclas y propiedades físicas: mercurio y oro en la minería | Temperaturas de fusión y de ebullición del mercurio y del oro: CRC Handbook of Chemistry and Physics (valores redondeados). |
+| 112 | SN-D-112 | Densidad y principio de Arquímedes: ¿una figura de oro macizo? | Densidades de referencia redondeadas: Haynes, W. M. (ed.), CRC Handbook of Chemistry and Physics, CRC Press, tablas de propiedades físicas de los elementos y de aleaciones comunes. |
+| 145 | SN-E-145 | Espectro electromagnético: rapidez, frecuencia y longitud de onda | Rapidez de la luz en el vacío: c = 299 792 458 m/s (valor exacto que define el metro), NIST, CODATA Recommended Values of the Fundamental Physical Constants. Las frecuencias son valores típicos redondeados (banda FM de 88 a 108 MHz; wifi en la banda de 2,4 GHz). |
 

@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30). Total: 30 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
 
 Los documentos oficiales consultados (ICFES y Ministerio de Educación Nacional) y sus fechas de consulta están en 01-FUNDAMENTACION.md.
 
@@ -30,6 +30,44 @@ Los documentos oficiales consultados (ICFES y Ministerio de Educación Nacional)
 | 26 | SN-A-026 | Reproducción en plantas: polinización y formación de frutos | Tabla | Formación de frutos según el tratamiento de polinización |
 | 28 | SN-A-028 | Microorganismos: fermentación láctica | Tabla | pH de la leche en tres montajes |
 | 30 | SN-A-030 | Salud desde la evidencia: evaluación de una intervención escolar | Tabla | Casos de diarrea por cada 100 estudiantes en periodos de 3 meses |
+| 33 | SN-B-033 | Flujo de energía: eficiencia de transferencia entre niveles tróficos | Tabla | Energía incorporada en la biomasa de cada nivel trófico de un pastizal (datos ficticios con fines didácticos) |
+| 34 | SN-B-034 | Contaminación por mercurio: bioacumulación y biomagnificación | Tabla | Mercurio en el agua y en organismos de una ciénaga (datos ficticios con fines didácticos) |
+| 35 | SN-B-035 | Ciclo del carbono: balance de un bosque como sumidero o fuente | Esquema | Datos en el contexto |
+| 36 | SN-B-036 | Ciclo del nitrógeno: fijación biológica en leguminosas | Tabla | Crecimiento de plantas de fríjol después de 6 semanas, promedio por planta (datos ficticios con fines didácticos) |
+| 37 | SN-B-037 | Ciclo del agua: regulación hídrica en el páramo | Gráfica | Caudal medio mensual en dos microcuencas de alta montaña |
+| 38 | SN-B-038 | Dinámica de poblaciones: crecimiento logístico | Gráfica | Crecimiento de una población de lenteja de agua en un tanque |
+| 39 | SN-B-039 | Dinámica de poblaciones: estimación por captura y recaptura | Experimento | Datos en el contexto |
+| 41 | SN-B-041 | Relaciones ecológicas: competencia interespecífica | Tabla | Biomasa de dos plantas acuáticas después de 6 semanas (datos ficticios con fines didácticos) |
+| 44 | SN-B-044 | Biodiversidad: riqueza y equidad de especies | Tabla | Número de árboles por especie en dos parcelas de bosque seco (datos ficticios con fines didácticos) |
+| 45 | SN-B-045 | Adaptaciones: hojas muertas del frailejón y temperatura del tallo | Gráfica | Temperatura del aire y del tallo de un frailejón durante un día |
+| 46 | SN-B-046 | Distribución de especies: rango de tolerancia a la salinidad en el manglar | Gráfica | Crecimiento de dos especies de mangle según la salinidad |
+| 47 | SN-B-047 | Alteración de ecosistemas: especie invasora en arrecifes | Tabla | Peces en cuatro arrecifes durante dos años (datos ficticios con fines didácticos) |
+| 49 | SN-B-049 | Contaminación del agua: materia orgánica y oxígeno disuelto aguas abajo | Gráfica | Oxígeno disuelto a lo largo del río |
+| 51 | SN-B-051 | Análisis de datos ambientales: tendencia y ciclo estacional del CO₂ | Gráfica | Concentración de CO₂ en una estación de monitoreo hipotética |
+| 52 | SN-B-052 | Contaminación del aire: lluvia ácida | Tabla | pH promedio de la lluvia alrededor de una central térmica (datos ficticios con fines didácticos) |
+| 54 | SN-B-054 | Impactos de actividades productivas: sobrepesca en una ciénaga | Tabla | Registro de pesca de una especie en una ciénaga (datos ficticios con fines didácticos) |
+| 56 | SN-B-056 | Recursos y producción de alimentos: eficiencia energética de las cadenas tróficas | Texto | Datos en el contexto |
+| 57 | SN-B-057 | Conservación de la biodiversidad: corredores biológicos | Tabla | Detecciones de un mamífero mediano con cámaras trampa (datos ficticios con fines didácticos) |
+| 58 | SN-B-058 | Ciencia, tecnología, sociedad y ambiente: evaluación de un plástico «biodegradable» | Tabla | Pérdida de masa a los 90 días (datos ficticios con fines didácticos) |
+| 60 | SN-B-060 | Contaminación del aire: material particulado y tráfico urbano | Gráfica | PM2,5 en un día hábil promedio y en el día sin carro |
+| 61 | SN-C-061 | Propiedades físicas y químicas de la materia: el magnesio | Tabla | Observaciones sobre una cinta de magnesio (datos ficticios con fines didácticos) |
+| 66 | SN-C-066 | Enlace químico: propiedades de sustancias iónicas, metálicas y covalentes | Tabla | Propiedades de cuatro sólidos (datos ficticios con fines didácticos) |
+| 68 | SN-C-068 | Sustancias puras y mezclas: curvas de calentamiento | Gráfica | Temperatura de dos líquidos durante el calentamiento |
+| 70 | SN-C-070 | Soluciones: curvas de solubilidad y purificación por cristalización | Gráfica | Solubilidad del KNO₃ y del NaCl en agua |
+| 72 | SN-C-072 | Reacciones químicas: precipitación e identificación de iones | Tabla | Pruebas con la solución desconocida (datos ficticios con fines didácticos) |
+| 73 | SN-C-073 | Conservación de la masa en la combustión de una vela | Experimento | Masas registradas (datos ficticios con fines didácticos) |
+| 76 | SN-C-076 | Estequiometría: reactivo limitante a partir de datos experimentales | Gráfica | Hidrógeno obtenido con 0,243 g de magnesio y distintos volúmenes de ácido |
+| 78 | SN-C-078 | Gases: teoría cinética y difusión | Experimento | Datos en el contexto |
+| 79 | SN-C-079 | Ácidos y bases: estimación del pH con indicadores | Tabla | Indicadores ácido-base y resultados con la muestra |
+| 80 | SN-C-080 | Ácidos y bases: neutralización de un suelo ácido con cal agrícola | Gráfica | pH del suelo cuatro semanas después de agregar cal agrícola |
+| 81 | SN-C-081 | Oxidación y reducción: zinc en solución de sulfato de cobre(II) | Experimento | Datos en el contexto |
+| 82 | SN-C-082 | Oxidación y reducción: serie de actividad de los metales | Tabla | Formación de depósito sobre la lámina (datos ficticios con fines didácticos) |
+| 83 | SN-C-083 | Velocidad de reacción: efecto de la temperatura | Gráfica | Tiempo para que la cruz deje de verse a distintas temperaturas |
+| 84 | SN-C-084 | Velocidad de reacción: catalizadores y energía de activación | Esquema | Datos en el contexto |
+| 85 | SN-C-085 | Equilibrio químico: descomposición de la caliza en sistema cerrado y abierto | Experimento | Datos en el contexto |
+| 87 | SN-C-087 | Química del carbono: solubilidad de los alcoholes y longitud de la cadena | Gráfica | Solubilidad en agua de alcoholes lineales a 20 °C |
+| 89 | SN-C-089 | Interpretación de experimentos químicos: extracción del café y control de variables | Experimento | Condiciones y resultados de las dos preparaciones (datos ficticios con fines didácticos) |
+| 90 | SN-C-090 | Interpretación de experimentos químicos: titulación del vinagre, precisión y exactitud | Tabla | Volumen de NaOH 0,50 mol/L gastado por 10,0 mL de vinagre (datos ficticios con fines didácticos) |
 
 Los datos ficticios son internamente coherentes y plausibles, pero no provienen de investigaciones reales ni deben citarse como tales.
 
@@ -39,4 +77,12 @@ Los datos ficticios son internamente coherentes y plausibles, pero no provienen 
 | --- | --- | --- | --- |
 | 3 | SN-A-003 | Organelos: ruta de las proteínas de secreción | Urry, L. A. et al. Campbell Biology. Pearson, capítulo «A Tour of the Cell» (sistema de endomembranas). Solo el fundamento conceptual; los datos son ficticios. |
 | 17 | SN-A-017 | Mutaciones y selección: origen de la resistencia a antibióticos | Lederberg, J. y Lederberg, E. M. (1952). Replica plating and indirect selection of bacterial mutants. Journal of Bacteriology, 63(3), 399–406 (experimento clásico que inspira el procedimiento; los números del ítem son ficticios). |
+| 49 | SN-B-049 | Contaminación del agua: materia orgánica y oxígeno disuelto aguas abajo | Streeter, H. W. y Phelps, E. B. (1925). A study of the pollution and natural purification of the Ohio River. Public Health Bulletin n.º 146, U.S. Public Health Service. Solo como fundamento conceptual; los datos del ítem son ficticios. |
+| 50 | SN-B-050 | Cambio climático: mecanismo del efecto invernadero | IPCC (2021). Climate Change 2021: The Physical Science Basis. Contribución del Grupo de Trabajo I al Sexto Informe de Evaluación. Cambridge University Press. Solo como fundamento conceptual. |
+| 62 | SN-C-062 | Estructura atómica: isótopos e iones | Composición nuclear de ³⁵Cl, ³⁷Cl y ⁴⁰Ar: Comisión de Abundancias Isotópicas y Pesos Atómicos de la IUPAC (CIAAW), https://www.ciaaw.org. |
+| 63 | SN-C-063 | Estructura atómica: niveles de energía y ensayo a la llama | Fundamento conceptual: espectros de emisión y modelo de Bohr en textos de química general, p. ej., Brown, T. L., LeMay, H. E. et al. Química: la ciencia central. Pearson, capítulo «Estructura electrónica de los átomos». |
+| 64 | SN-C-064 | Tabla periódica: primera energía de ionización | Valores redondeados de la primera energía de ionización: NIST Atomic Spectra Database, Ionization Energies (https://physics.nist.gov/PhysRefData/ASD/ionEnergy.html), también tabulados en el CRC Handbook of Chemistry and Physics. |
+| 67 | SN-C-067 | Estructura molecular y polaridad: momento dipolar de los clorometanos | Momentos dipolares en fase gaseosa: CRC Handbook of Chemistry and Physics, tabla «Dipole Moments» (valores redondeados a una cifra decimal). Electronegatividades de Pauling redondeadas. |
+| 79 | SN-C-079 | Ácidos y bases: estimación del pH con indicadores | Rangos de viraje habituales de los indicadores, tabulados en textos de química analítica, p. ej., Harris, D. C. Quantitative Chemical Analysis. W. H. Freeman, tabla de indicadores ácido-base. |
+| 88 | SN-C-088 | Separación de mezclas y propiedades físicas: mercurio y oro en la minería | Temperaturas de fusión y de ebullición del mercurio y del oro: CRC Handbook of Chemistry and Physics (valores redondeados). |
 

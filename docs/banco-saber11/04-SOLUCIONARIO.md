@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30). Total: 30 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30). Total: 90 de 180 preguntas.
 
 ## Bloque A. Biología y organización de los seres vivos (preguntas 1–30)
 
@@ -609,5 +609,1225 @@ Bloques incluidos: A (30). Total: 30 de 180 preguntas.
 **Error conceptual que conviene evitar:** Afirmar que una intervención «causó» un efecto a partir de un diseño que solo muestra asociación.
 
 **Estrategia:** Pregúntate qué otras explicaciones podrían producir el mismo patrón y qué diseño (más grupos, asignación al azar) permitiría descartarlas.
+
+---
+
+## Bloque B. Ecología, ambiente y sostenibilidad (preguntas 31–60)
+
+### Pregunta 31 · Clave B
+
+*SN-B-031 · Uso comprensivo del conocimiento científico · Ecosistemas: factores bióticos y abióticos · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** Un aumento de los sedimentos en suspensión que enturbian el agua.
+
+**Justificación:** Los factores abióticos son los componentes físicos y químicos del ambiente (luz, temperatura, nutrientes, salinidad, turbidez). Los sedimentos en suspensión enturbian el agua y reducen la penetración de la luz, que es la fuente de energía de la fotosíntesis; con menos luz disponible, las algas fotosintetizan menos aunque sigan presentes. Los peces y los virus son factores bióticos, y el nitrato es un factor abiótico, pero es un nutriente que tiende a aumentar el crecimiento de las algas, no a reducirlo.
+
+**Análisis de distractores:**
+
+- **A.** Los peces son un factor biótico; reducen la cantidad de algas al consumirlas, pero no cambian las condiciones físicas o químicas en que las algas hacen fotosíntesis. *Razonamiento que origina el error:* Confundir cualquier cambio que afecta a un organismo con un cambio en un factor abiótico.
+- **C.** El virus es un ser biológico (factor biótico) que actúa como parásito de las algas; no modifica la luz, la temperatura ni los nutrientes del agua. *Razonamiento que origina el error:* Clasificar como abiótico a lo que no se ve a simple vista o a lo que algunos no consideran un ser vivo completo.
+- **D.** El nitrato sí es un factor abiótico, pero es un nutriente: su aumento suele estimular el crecimiento de las algas, no disminuir su fotosíntesis. *Razonamiento que origina el error:* Suponer que toda sustancia que llega de los cultivos perjudica a todos los organismos del ecosistema.
+
+**Error conceptual que conviene evitar:** Clasificar un factor solo por su origen (humano o natural) y no por su naturaleza física, química o biológica.
+
+**Estrategia:** Separa dos preguntas: ¿el factor es un ser vivo o una condición física o química? y ¿en qué sentido cambia el proceso que se analiza?
+
+---
+
+### Pregunta 32 · Clave D
+
+*SN-B-032 · Uso comprensivo del conocimiento científico · Redes tróficas: niveles tróficos y omnivoría · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** El cangrejo, porque come algas y también larvas que comen algas.
+
+**Justificación:** El nivel trófico depende de la posición de lo que se come: las algas son productoras (nivel 1); las larvas de efímera, que comen algas, son consumidores primarios (nivel 2). El cangrejo come algas, y en esa relación es consumidor primario (nivel 2), y come larvas de efímera, y en esa relación es consumidor secundario (nivel 3); por eso es omnívoro y ocupa dos niveles. La sardinata y la larva de libélula solo comen larvas de efímera (nivel 3), y el martín pescador solo come sardinatas (nivel 4).
+
+**Análisis de distractores:**
+
+- **A.** La sardinata solo come larvas de efímera, de modo que ocupa un único nivel (consumidor secundario, nivel 3). *Razonamiento que origina el error:* Creer que comer a un consumidor ya implica ocupar varios niveles.
+- **B.** Estar en la parte más alta no implica ocupar varios niveles: el martín pescador solo come sardinatas y ocupa el nivel 4. *Razonamiento que origina el error:* Confundir «depredador tope» con «omnívoro».
+- **C.** Ser comido por varios consumidores no cambia el nivel de la larva de efímera: solo come algas y es consumidor primario. *Razonamiento que origina el error:* Determinar el nivel de un organismo por quién se lo come, y no por lo que come.
+
+**Error conceptual que conviene evitar:** Asignar el nivel trófico según cuántas flechas salen de un organismo en lugar de según lo que consume.
+
+**Estrategia:** Recorre cada cadena desde el productor y numera los pasos; si un organismo aparece en pasos distintos en cadenas diferentes, ocupa más de un nivel.
+
+---
+
+### Pregunta 33 · Clave A
+
+*SN-B-033 · Explicación de fenómenos · Flujo de energía: eficiencia de transferencia entre niveles tróficos · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** En cada paso se transfiere menos del 10 % de la energía; el resto se disipa sobre todo como calor.
+
+**Justificación:** Eficiencias de transferencia: 2000 / 25 000 = 0,08 (8 %); 150 / 2000 = 0,075 (7,5 %); 9 / 150 = 0,06 (6 %). En cada paso solo una fracción pequeña de la energía de un nivel queda en la biomasa del siguiente: la mayor parte la usan los organismos en la respiración celular y termina como calor, y otra parte queda en restos no consumidos o en heces, que aprovechan los descomponedores (que también la disipan como calor). Por eso la energía disponible para el último nivel es apenas 9 / 25 000 ≈ 0,04 % de la de los productores y alcanza para muy pocos individuos. La «regla del 10 %» es solo una aproximación: en estos datos las eficiencias varían entre 6 % y 8 %.
+
+**Análisis de distractores:**
+
+- **B.** La energía no se recicla en el ecosistema: fluye en un solo sentido y sale como calor. Lo que se recicla es la materia (carbono, nitrógeno, etc.). *Razonamiento que origina el error:* Confundir el flujo de energía con los ciclos de la materia.
+- **C.** Los datos no muestran una pérdida fija del 90 %: las eficiencias son 8 %, 7,5 % y 6 %. Además, los organismos sí usan su alimento, pero gastan la mayor parte de esa energía en mantenerse vivos. *Razonamiento que origina el error:* Tomar la «regla del 10 %» como una ley exacta y no como una aproximación.
+- **D.** La energía no se destruye (primera ley de la termodinámica); se transforma, y la mayor parte termina como calor que no pueden usar los siguientes niveles. *Razonamiento que origina el error:* Interpretar «pérdida de energía» como desaparición de la energía.
+
+**Error conceptual que conviene evitar:** Pensar que la energía «perdida» entre niveles desaparece o vuelve a circular en el ecosistema.
+
+**Estrategia:** Calcula la eficiencia de cada paso (energía del nivel superior / energía del nivel inferior) y pregúntate en qué forma queda la energía que no pasa al siguiente nivel.
+
+---
+
+### Pregunta 34 · Clave C
+
+*SN-B-034 · Explicación de fenómenos · Contaminación por mercurio: bioacumulación y biomagnificación · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** Cada consumidor retiene el mercurio de las numerosas presas que ingiere, porque lo elimina muy lentamente.
+
+**Justificación:** La concentración aumenta en cada paso de la cadena: 60 / 20 = 3 veces, 150 / 60 = 2,5 veces y 900 / 150 = 6 veces; el pez carnívoro tiene 900 / 20 = 45 veces la concentración del fitoplancton. El mercurio (sobre todo en forma de metilmercurio) se une a los tejidos y se elimina muy lentamente, de modo que se acumula a lo largo de la vida del organismo (bioacumulación). Como cada consumidor ingiere muchas presas, recibe el mercurio de todas ellas y lo concentra; al repetirse en cada nivel, la concentración aumenta hacia los depredadores (biomagnificación). El experimento de laboratorio indica que, con alimento sin mercurio, la entrada directa desde el agua es pequeña: la vía principal es la alimentación.
+
+**Análisis de distractores:**
+
+- **A.** Los datos son concentraciones (µg por kilogramo), no cantidades totales; un cuerpo más grande no aumenta por sí mismo la cantidad de mercurio por kilogramo. *Razonamiento que origina el error:* Confundir la cantidad total de una sustancia con su concentración.
+- **B.** El mercurio es un elemento químico: los seres vivos no pueden producirlo, solo incorporarlo y transformarlo entre sus formas químicas. *Razonamiento que origina el error:* Creer que los organismos generan el contaminante en lugar de recibirlo del ambiente.
+- **D.** El experimento muestra que, en agua de la ciénaga y con alimento libre de mercurio, los peces casi no lo acumulan; la entrada por las branquias no explica las concentraciones altas. *Razonamiento que origina el error:* Proponer una explicación posible sin contrastarla con la evidencia experimental disponible.
+
+**Error conceptual que conviene evitar:** Atribuir la concentración de un contaminante en un depredador al ambiente inmediato e ignorar la transferencia por la alimentación.
+
+**Estrategia:** Calcula cuántas veces aumenta la concentración de un nivel al siguiente y usa los controles experimentales para descartar vías de entrada alternativas.
+
+---
+
+### Pregunta 35 · Clave C
+
+*SN-B-035 · Uso comprensivo del conocimiento científico · Ciclo del carbono: balance de un bosque como sumidero o fuente · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** Es sumidero: fija 30 t de carbono y libera 27 t, y acumula unas 3 t por hectárea al año.
+
+**Justificación:** Balance neto = entradas − salidas = 30 − (15 + 12) = 3 t de C por hectárea al año. Como el bosque fija más carbono del que devuelve, actúa como sumidero: el carbono se acumula en la madera, las raíces y la materia orgánica del suelo. Expresado como CO₂: 3 t de C × 44/12 ≈ 11 t de CO₂ por hectárea al año. El resultado depende de los supuestos del modelo: un incendio o la tala liberarían rápidamente parte del carbono almacenado y podrían convertir el área en fuente.
+
+**Análisis de distractores:**
+
+- **A.** Que haya respiración no basta para que el bosque sea fuente; hay que comparar magnitudes: la respiración total (27 t) es menor que la fotosíntesis (30 t). *Razonamiento que origina el error:* Decidir el balance por la presencia de un proceso y no por la comparación cuantitativa de los flujos.
+- **B.** Las plantas devuelven por respiración 15 t de las 30 t que fijan, no todo; el resto se usa en crecimiento o pasa a los descomponedores. *Razonamiento que origina el error:* Suponer que la respiración de las plantas anula exactamente su fotosíntesis.
+- **D.** Omite la respiración de los animales del suelo y de los descomponedores (12 t), que también devuelve carbono a la atmósfera. *Razonamiento que origina el error:* Olvidar que los descomponedores liberan el carbono de los restos orgánicos.
+
+**Error conceptual que conviene evitar:** Hacer el balance de un ciclo con solo una parte de los flujos de salida.
+
+**Estrategia:** En un ciclo, suma todas las entradas y todas las salidas del compartimiento y compara: si entra más de lo que sale, el compartimiento acumula.
+
+---
+
+### Pregunta 36 · Clave B
+
+*SN-B-036 · Indagación · Ciclo del nitrógeno: fijación biológica en leguminosas · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Las bacterias de los nódulos suplen en gran parte el nitrógeno que la planta no encuentra en la arena.
+
+**Justificación:** Sin nitrógeno en el sustrato y sin bacterias (tratamiento 1), las plantas casi no crecen (2,0 g). Con bacterias y sin fertilizante (tratamiento 2) alcanzan 6,5 g, cerca de los 7,0 g de las plantas fertilizadas sin bacterias (tratamiento 3): 6,5 / 7,0 ≈ 93 %. Como la única fuente posible de nitrógeno en el tratamiento 2 es el aire, los datos apoyan que las bacterias de los nódulos fijan el N₂ atmosférico y lo convierten en formas que la planta usa (amonio). El tratamiento 4 muestra además que, cuando hay fertilizante, la planta forma muchos menos nódulos (8 frente a 45).
+
+**Análisis de distractores:**
+
+- **A.** Ocurre lo contrario: con fertilizante y bacterias se formaron 8 nódulos por planta, frente a 45 sin fertilizante. *Razonamiento que origina el error:* Suponer que todo lo que aumenta el crecimiento favorece también todos los procesos de la planta.
+- **C.** La fijación ocurre en los nódulos de las raíces, donde viven las bacterias; el experimento no aporta evidencia de absorción de N₂ por las hojas, y las plantas no pueden usar directamente el N₂. *Razonamiento que origina el error:* Creer que las plantas toman el nitrógeno del aire de la misma forma que el CO₂.
+- **D.** El experimento solo incluyó fríjol, una leguminosa; la conclusión no puede extenderse a cultivos que no forman nódulos. Además, las plantas inoculadas crecieron algo menos que las fertilizadas. *Razonamiento que origina el error:* Generalizar una conclusión más allá de las condiciones y los organismos estudiados.
+
+**Error conceptual que conviene evitar:** Extender una conclusión válida para una especie y unas condiciones a todos los casos.
+
+**Estrategia:** Identifica qué cambia entre cada par de tratamientos y qué fuente de nitrógeno queda disponible en cada uno; luego verifica que la conclusión no exceda lo que se comparó.
+
+---
+
+### Pregunta 37 · Clave D
+
+*SN-B-037 · Explicación de fenómenos · Ciclo del agua: regulación hídrica en el páramo · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** El suelo y la vegetación del páramo retienen el agua de las lluvias y la liberan poco a poco.
+
+**Justificación:** Con la misma lluvia, el volumen anual es casi igual: la suma de los caudales medios mensuales es 588 en la microcuenca 1 y 603 en la 2 (promedios de 49 y ≈ 50 L/s). Lo que cambia es la distribución en el tiempo: en la microcuenca 2 el caudal pasa de 8 a 115 L/s (unas 14 veces), y en la 1, de 36 a 62 L/s (≈ 1,7 veces). Esto indica que el páramo no produce más agua, sino que la regula: sus suelos con mucha materia orgánica y su vegetación retienen el agua de las lluvias y la liberan lentamente, lo que sostiene el caudal en la sequía y reduce los picos. En los potreros, con suelo compactado y menos cobertura, más agua escurre rápido durante las lluvias. Con solo dos microcuencas, la explicación es coherente con los datos, pero confirmarla exigiría más cuencas comparables.
+
+**Análisis de distractores:**
+
+- **A.** El contexto establece que las dos microcuencas tienen el mismo régimen de lluvias; la diferencia no puede atribuirse a la precipitación. *Razonamiento que origina el error:* Explicar una diferencia con un factor que el diseño del estudio mantuvo igual.
+- **B.** Si el suelo de los potreros absorbiera y retuviera más agua, no tendría los picos más altos (110 y 115 L/s) en los meses lluviosos. *Razonamiento que origina el error:* Leer solo los meses secos e ignorar el comportamiento en los meses lluviosos.
+- **C.** Los volúmenes anuales son casi iguales (sumas de 588 y 603); el páramo no aporta más agua, sino que la distribuye de manera más uniforme a lo largo del año. *Razonamiento que origina el error:* Confundir la regularidad del caudal con una mayor cantidad total de agua.
+
+**Error conceptual que conviene evitar:** Confundir «regular el agua» con «producir más agua».
+
+**Estrategia:** Cuando compares series en el tiempo, examina por separado el total (o el promedio) y la variación entre el mínimo y el máximo.
+
+---
+
+### Pregunta 38 · Clave A
+
+*SN-B-038 · Uso comprensivo del conocimiento científico · Dinámica de poblaciones: crecimiento logístico · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** Entre los días 12 y 16; luego, la competencia por el espacio y los nutrientes del tanque frena el crecimiento.
+
+**Justificación:** Aumentos absolutos por intervalo: 0–4 días, 60 frondas; 4–8, 130; 8–12, 240; 12–16, 280; 16–20, 170; 20–24, 60; 24–28, 10. El mayor aumento ocurre entre los días 12 y 16, cuando la población está cerca de la mitad de su valor máximo (≈ 500 de 1000), como predice el modelo logístico. Después, al aumentar la densidad, cada fronda dispone de menos espacio en la superficie y de menos nutrientes (que no se reponen), y la tasa de crecimiento disminuye hasta que la población se estabiliza cerca de la capacidad de carga (≈ 1000 frondas).
+
+**Análisis de distractores:**
+
+- **B.** Entre los días 24 y 28 la población es la mayor, pero solo se añadieron 10 frondas; el tamaño de la población no es lo mismo que su aumento. *Razonamiento que origina el error:* Confundir el tamaño de la población con su rapidez de crecimiento.
+- **C.** Entre los días 0 y 4 la población se multiplicó por 2,2 (el mayor crecimiento relativo), pero solo se añadieron 60 frondas; la pregunta es por el número añadido. Además, nada indica que la luz haya disminuido. *Razonamiento que origina el error:* Confundir el crecimiento relativo (por individuo) con el crecimiento absoluto.
+- **D.** Entre los días 8 y 12 se añadieron 240 frondas, menos que las 280 del intervalo 12–16; y a los 12 días (480 frondas) la población aún está lejos de la capacidad de carga. *Razonamiento que origina el error:* Elegir el intervalo por un rasgo llamativo (la duplicación) sin comparar los aumentos de todos los intervalos.
+
+**Error conceptual que conviene evitar:** Leer la altura de la curva cuando la pregunta es por su pendiente (el cambio en cada intervalo).
+
+**Estrategia:** Calcula la diferencia entre valores consecutivos: el intervalo con la mayor diferencia es el de crecimiento más rápido.
+
+---
+
+### Pregunta 39 · Clave C
+
+*SN-B-039 · Indagación · Dinámica de poblaciones: estimación por captura y recaptura · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** La sobreestima; conviene usar un tipo de marca que el cangrejo conserve aunque mude el caparazón.
+
+**Justificación:** El método supone que la proporción de marcados en la segunda muestra (10/100) es igual a la de marcados en la población (80/N). Si algunos cangrejos marcados pierden la marca, se cuentan menos recapturados de los que realmente estaban marcados, y como el número de recapturados está en el denominador, N resulta mayor que el real: la población se sobreestima. Por ejemplo, si la mitad hubiera perdido la marca, en la muestra habría unos 20 marcados y N ≈ 80 × 100 / 20 = 400, la mitad de lo estimado. La corrección es usar una marca que no se pierda con la muda (por ejemplo, una marca permanente en una parte del cuerpo que se conserve), de modo que se cumpla el supuesto de que las marcas no se pierden.
+
+**Análisis de distractores:**
+
+- **A.** La dirección del sesgo es la opuesta: menos recapturados con marca hacen crecer el cociente, no disminuirlo. Marcar más cangrejos no evita que se pierdan las marcas. *Razonamiento que origina el error:* Razonar con el numerador e ignorar que la variable afectada está en el denominador.
+- **B.** Aunque la pérdida ocurra al azar, siempre disminuye el número de marcados que se reconocen; es un error sistemático, que no se corrige repitiendo el mismo procedimiento. *Razonamiento que origina el error:* Creer que todo error que ocurre al azar se cancela y no sesga el resultado.
+- **D.** Identifica bien el sentido del sesgo, pero esperar más días aumenta la probabilidad de muda y, con ella, la pérdida de marcas. *Razonamiento que origina el error:* Atender a un supuesto del método (la mezcla) y descuidar el que se está incumpliendo (la conservación de las marcas).
+
+**Error conceptual que conviene evitar:** Aplicar una fórmula de muestreo sin verificar que se cumplan sus supuestos.
+
+**Estrategia:** Escribe el supuesto en que se basa el método, identifica cuál se incumple y razona en qué parte de la fórmula aparece ese error.
+
+---
+
+### Pregunta 40 · Clave D
+
+*SN-B-040 · Uso comprensivo del conocimiento científico · Relaciones ecológicas: mutualismo en las micorrizas · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Mutualismo, porque cada uno obtiene un recurso que el otro le proporciona.
+
+**Justificación:** En la micorriza descrita ambas especies se benefician: el hongo recibe azúcares que no puede producir, y la planta recibe fósforo y agua que el hongo obtiene de un volumen de suelo al que sus raíces no llegan. Una relación interespecífica en la que ambas especies se benefician (+/+) es un mutualismo. Que la planta «entregue» azúcares no la hace víctima, porque recibe a cambio recursos que limitan su crecimiento.
+
+**Análisis de distractores:**
+
+- **A.** En el parasitismo el hospedero resulta perjudicado; aquí la planta recibe fósforo y agua, de modo que también se beneficia. *Razonamiento que origina el error:* Clasificar la relación mirando solo lo que obtiene uno de los organismos.
+- **B.** En el comensalismo una especie no se ve afectada; el texto indica que la planta recibe fósforo y agua del hongo. *Razonamiento que origina el error:* No considerar el beneficio que recibe el segundo organismo.
+- **C.** El hongo no compite con la planta por el agua y el fósforo: los obtiene en un volumen de suelo mayor y se los transfiere. *Razonamiento que origina el error:* Clasificar como competencia cualquier situación en la que dos especies usan el mismo ambiente.
+
+**Error conceptual que conviene evitar:** Clasificar una interacción considerando solo uno de los organismos.
+
+**Estrategia:** Escribe para cada especie si gana (+), pierde (−) o no se afecta (0), y luego busca la combinación: +/+ mutualismo, +/− parasitismo o depredación, +/0 comensalismo, −/− competencia.
+
+---
+
+### Pregunta 41 · Clave B
+
+*SN-B-041 · Indagación · Relaciones ecológicas: competencia interespecífica · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Ambas especies compiten, sobre todo por los nutrientes, y Q resulta más afectada que P en la mezcla.
+
+**Justificación:** Juntas y sin nutrientes añadidos (tanque 3), las dos especies crecen menos que solas: P alcanza 60 / 100 = 60 % de su biomasa en solitario y Q, 25 / 80 ≈ 31 %. Ambas se perjudican (−/−), lo que corresponde a competencia, y Q es la más afectada. Cuando se añaden nutrientes (tanque 4), la reducción casi desaparece (P: 95 %; Q: 70 / 80 ≈ 88 %), lo que indica que los nutrientes eran el recurso por el que competían principalmente. La pequeña reducción que persiste podría deberse a otros recursos, como el espacio en la superficie.
+
+**Análisis de distractores:**
+
+- **A.** Las plantas no se comen entre sí y ambas especies se perjudican cuando conviven; una diferencia en cuánto se afecta cada una no convierte la relación en depredación. *Razonamiento que origina el error:* Asociar con depredación cualquier interacción en la que una especie sale más perjudicada.
+- **C.** El experimento no varió la luz; en cambio, al añadir nutrientes casi desaparece el efecto negativo, lo que señala a los nutrientes como recurso principal. *Razonamiento que origina el error:* Proponer una explicación posible que no se puso a prueba e ignorar el tratamiento que sí la discrimina.
+- **D.** Sin nutrientes añadidos, P también crece menos acompañada (60 g frente a 100 g); se debe comparar el tanque 3, no solo el 4. *Razonamiento que origina el error:* Sacar conclusiones de un solo tratamiento sin compararlo con el control correspondiente.
+
+**Error conceptual que conviene evitar:** Concluir sobre la interacción con un solo tanque, sin comparar con los cultivos de cada especie sola.
+
+**Estrategia:** Compara cada especie acompañada con ella misma sola (efecto de la otra especie) y luego compara los tanques 3 y 4 (efecto de los nutrientes).
+
+---
+
+### Pregunta 42 · Clave A
+
+*SN-B-042 · Explicación de fenómenos · Sucesión ecológica: reemplazo de especies pioneras · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** Su sombra impide que prosperen sus propias plántulas, pero no las de especies tolerantes a la sombra.
+
+**Justificación:** Los yarumos y otras especies pioneras crecen rápido con luz abundante, pero al formar un dosel modifican el ambiente: reducen la luz que llega al suelo, aumentan la humedad y aportan hojarasca. En esas condiciones sus propias plántulas, que requieren mucha luz, no logran establecerse, mientras que las plántulas tolerantes a la sombra sí crecen. Cuando los pioneros mueren (suelen vivir menos), los reemplazan los árboles tardíos. Así, la propia comunidad cambia las condiciones y facilita el reemplazo de especies que caracteriza la sucesión.
+
+**Análisis de distractores:**
+
+- **B.** Si el suelo quedara incapaz de sostener vegetación, no se desarrollaría el bosque tardío; además, las pioneras suelen aumentar la materia orgánica del suelo. *Razonamiento que origina el error:* Ver a las especies pioneras solo como degradadoras del ambiente.
+- **C.** Las semillas de muchas especies tardías llegan desde temprano, pero sus plántulas solo prosperan cuando hay sombra; el reemplazo depende de las condiciones, no solo del orden de llegada. *Razonamiento que origina el error:* Pensar que la sucesión es una simple secuencia de llegada de especies.
+- **D.** Una especie no se transforma en otra durante una sucesión: lo que cambia es la composición de la comunidad, por reemplazo de unas especies por otras. *Razonamiento que origina el error:* Confundir el cambio de la comunidad con una transformación de los organismos (idea lamarckiana).
+
+**Error conceptual que conviene evitar:** Pensar que en la sucesión los organismos cambian, cuando lo que cambia es qué especies dominan.
+
+**Estrategia:** Pregúntate qué condición del ambiente modificó la comunidad anterior y qué especies se ven favorecidas por esa nueva condición.
+
+---
+
+### Pregunta 43 · Clave D
+
+*SN-B-043 · Uso comprensivo del conocimiento científico · Sucesión primaria y secundaria · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Primaria en la zona 1 y secundaria en la 2; será más rápida en la 2, porque conserva suelo y semillas.
+
+**Justificación:** La sucesión primaria ocurre donde no hay suelo, como en la roca expuesta por el deslizamiento: primero deben llegar organismos pioneros (líquenes, musgos) y formarse suelo, lo que puede tardar mucho tiempo. La sucesión secundaria ocurre donde la vegetación se pierde pero el suelo permanece, como en la zona quemada: el suelo conserva nutrientes, semillas y raíces capaces de rebrotar, por lo que la vegetación se recupera mucho más rápido.
+
+**Análisis de distractores:**
+
+- **A.** El criterio no es la pérdida de vegetación, sino la presencia de suelo: en la zona 2 el suelo permanece, así que la sucesión es secundaria. *Razonamiento que origina el error:* Clasificar la sucesión solo por la desaparición de la vegetación.
+- **B.** Invierte los tipos de sucesión: sin suelo (zona 1) la sucesión es primaria. La ausencia de competidores no compensa la falta de suelo, nutrientes y semillas. *Razonamiento que origina el error:* Asociar «primaria» con «la primera perturbación» o con la presencia de vegetación previa.
+- **C.** Los tipos están bien clasificados, pero la roca desnuda no tiene suelo ni semillas; que no se haya quemado no la hace más favorable para las plantas. *Razonamiento que origina el error:* Considerar el fuego como un daño mayor que la pérdida completa del suelo.
+
+**Error conceptual que conviene evitar:** Clasificar la sucesión por el tipo de perturbación (incendio, deslizamiento) y no por lo que queda después.
+
+**Estrategia:** Pregunta qué quedó después de la perturbación: si quedó suelo, la sucesión es secundaria; si no, es primaria y será mucho más lenta.
+
+---
+
+### Pregunta 44 · Clave C
+
+*SN-B-044 · Uso comprensivo del conocimiento científico · Biodiversidad: riqueza y equidad de especies · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** Es incorrecta: la riqueza es igual, pero en la parcela 2 los árboles se reparten de forma más equitativa.
+
+**Justificación:** La diversidad de especies tiene dos componentes: la riqueza (número de especies) y la equidad (qué tan parejas son sus abundancias). Las dos parcelas tienen la misma riqueza (5 especies), pero en la parcela 1 una especie reúne el 85 % de los árboles, mientras que en la parcela 2 cada especie tiene entre 19 % y 22 %. Con el índice de Simpson (1 − Σp²): parcela 1, 1 − (0,85² + 0,05² + 0,04² + 0,03² + 0,03²) = 1 − 0,7284 ≈ 0,27; parcela 2, 1 − 0,2006 ≈ 0,80. Ese índice es la probabilidad de que dos árboles tomados al azar sean de especies distintas: mucho mayor en la parcela 2.
+
+**Análisis de distractores:**
+
+- **A.** La riqueza es solo un componente de la diversidad; con la misma riqueza, una comunidad dominada por una especie es menos diversa que una equitativa. *Razonamiento que origina el error:* Reducir la biodiversidad al número de especies.
+- **B.** Que una especie domine reduce la equidad y, con ella, la diversidad: en la parcela 1 casi todos los árboles son de la misma especie. *Razonamiento que origina el error:* Confundir el éxito de una especie con la diversidad de la comunidad.
+- **D.** Las dos parcelas tienen 100 árboles; el total de individuos no es lo que diferencia la diversidad de los sitios. *Razonamiento que origina el error:* Confundir la abundancia total con la diversidad.
+
+**Error conceptual que conviene evitar:** Comparar diversidad solo con el número de especies e ignorar cómo se reparten los individuos.
+
+**Estrategia:** Calcula la proporción de cada especie: si una sola reúne casi todos los individuos, la comunidad es poco diversa aunque tenga varias especies.
+
+---
+
+### Pregunta 45 · Clave B
+
+*SN-B-045 · Explicación de fenómenos · Adaptaciones: hojas muertas del frailejón y temperatura del tallo · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Funcionan como aislante: amortiguan los cambios de temperatura y evitan que el tallo se congele de noche.
+
+**Justificación:** La temperatura del aire varía 17 °C en el día (de −3 a 14 °C), mientras que la del tallo varía solo 6 °C (de 3 a 9 °C). De noche el tallo está más caliente que el aire y no llega a congelarse (3 °C cuando el aire está a −3 °C); al mediodía está más frío que el aire (8 °C frente a 14 °C). Este patrón corresponde a un aislante térmico, que reduce el intercambio de calor en ambos sentidos, y no a una fuente de calor. En el páramo, donde las heladas nocturnas son frecuentes, proteger el tallo del congelamiento favorece la supervivencia de la planta.
+
+**Análisis de distractores:**
+
+- **A.** Si las hojas produjeran calor, el tallo estaría más caliente que el aire también al mediodía; a las 12 h el tallo está a 8 °C y el aire a 14 °C. *Razonamiento que origina el error:* Explicar con una fuente de calor un patrón que solo indica aislamiento.
+- **C.** Durante el día el tallo está más frío que el aire, y la fotosíntesis ocurre sobre todo en las hojas vivas, no en el tallo cubierto. *Razonamiento que origina el error:* Proponer una función sin contrastarla con los datos de las horas de sol.
+- **D.** La temperatura del tallo no cambia igual: su variación (6 °C) es mucho menor que la del aire (17 °C). *Razonamiento que origina el error:* Mirar solo la forma general de las curvas (ambas suben y bajan) sin comparar su amplitud.
+
+**Error conceptual que conviene evitar:** Confundir un aislante, que amortigua los cambios, con una fuente de calor.
+
+**Estrategia:** Compara las curvas en el momento más frío y en el más cálido, y calcula la diferencia entre el máximo y el mínimo de cada una.
+
+---
+
+### Pregunta 46 · Clave A
+
+*SN-B-046 · Uso comprensivo del conocimiento científico · Distribución de especies: rango de tolerancia a la salinidad en el manglar · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** La especie Y, porque es la única que crece con una salinidad de 50 g/L.
+
+**Justificación:** A 50 g/L la especie X no crece (0 cm/año): esa salinidad está fuera de su rango de tolerancia. La especie Y crece 14 cm/año a 50 g/L, porque su rango de tolerancia se extiende hasta salinidades mayores (todavía crece 6 cm/año a 60 g/L). Por tanto, considerando solo la salinidad, en la zona interna se espera la especie Y. En la naturaleza también influyen la inundación, el tipo de sedimento y la competencia, por lo que la distribución real no depende solo de este factor.
+
+**Análisis de distractores:**
+
+- **B.** El máximo de X (35 cm/año) ocurre a 10 g/L; a 50 g/L su crecimiento es nulo. La pregunta es por una salinidad concreta, no por el máximo de la gráfica. *Razonamiento que origina el error:* Leer el valor más alto de la gráfica sin ubicar la condición que plantea la pregunta.
+- **C.** Las curvas muestran que cada especie tiene su propio rango de tolerancia; X no crece a 50 g/L. *Razonamiento que origina el error:* Atribuir a todas las especies de un grupo la misma tolerancia.
+- **D.** Crecer menos que en el óptimo no significa no crecer: a 50 g/L la especie Y aún crece 14 cm/año. *Razonamiento que origina el error:* Confundir el óptimo con el rango de tolerancia.
+
+**Error conceptual que conviene evitar:** Confundir el óptimo de una especie con todo su rango de tolerancia.
+
+**Estrategia:** Ubica en el eje horizontal la condición que pide la pregunta y lee el valor de cada curva justo allí.
+
+---
+
+### Pregunta 47 · Clave C
+
+*SN-B-047 · Explicación de fenómenos · Alteración de ecosistemas: especie invasora en arrecifes · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** La depredación del pez león, que siguió abundante donde no se retiró, redujo los peces nativos pequeños.
+
+**Justificación:** Los peces nativos pequeños disminuyeron mucho solo donde el pez león siguió abundante: R3, (42 − 15) / 42 ≈ 64 %; R4, (38 − 16) / 38 ≈ 58 %. Donde se retiró (R1 y R2), la disminución fue pequeña: 5 % y ≈ 3 %. Como la temperatura fue similar en los cuatro arrecifes, la diferencia acompaña a la presencia del depredador invasor. Esto es coherente con lo que se sabe del pez león en el Caribe: depreda peces pequeños, tiene pocos depredadores naturales allí y sus presas no lo reconocen como amenaza. La evidencia es limitada (solo cuatro arrecifes, sin asignación al azar), pero de las explicaciones propuestas es la que mejor se sustenta.
+
+**Análisis de distractores:**
+
+- **A.** La temperatura fue similar en los cuatro arrecifes y la disminución ocurrió solo en dos de ellos; un factor que no varió no explica la diferencia. *Razonamiento que origina el error:* Elegir una causa ambiental conocida sin verificar si varía entre los sitios comparados.
+- **B.** Es al revés: donde hubo remoción, los peces nativos casi no disminuyeron (de 40 a 38 y de 36 a 35). *Razonamiento que origina el error:* Leer la tabla al revés o atribuir el efecto al tratamiento sin mirar sus resultados.
+- **D.** Los datos no incluyen peces nativos grandes; la explicación no tiene evidencia que la sustente, mientras que la del pez león sí la tiene. *Razonamiento que origina el error:* Preferir una explicación plausible pero sin datos frente a una sustentada por las mediciones.
+
+**Error conceptual que conviene evitar:** Aceptar una explicación porque es conocida o plausible, sin revisar si los datos la sustentan.
+
+**Estrategia:** Para cada explicación, pregunta: ¿qué debería observarse si fuera cierta? y ¿lo muestran los datos? Descarta las que contradicen los datos o no tienen evidencia.
+
+---
+
+### Pregunta 48 · Clave A
+
+*SN-B-048 · Explicación de fenómenos · Fragmentación del hábitat: efecto de borde · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** Al dividir el bosque aumenta la proporción de borde, y el interior baja de 64 ha a 36 ha.
+
+**Justificación:** Interior de un cuadrado = (lado − 2 × 100 m)². Paisaje 1: (1000 − 200)² = 800² = 640 000 m² = 64 ha (64 % del bosque). Cada fragmento del paisaje 2: (500 − 200)² = 300² = 90 000 m² = 9 ha; los cuatro suman 4 × 9 = 36 ha (36 % del bosque). Con la misma área total, la fragmentación aumenta la proporción de borde y reduce el hábitat de interior en 64 − 36 = 28 ha, casi a la mitad, de modo que la especie dispone de mucho menos sitio para anidar. El modelo es una simplificación: la penetración del efecto de borde varía según la especie y la variable (decenas a cientos de metros), y los fragmentos reales no son cuadrados.
+
+**Análisis de distractores:**
+
+- **B.** Los bordes aumentan, pero esta especie no anida en ellos; para ella, más borde significa menos hábitat útil. *Razonamiento que origina el error:* Pensar que más borde es siempre más hábitat para todas las especies.
+- **C.** Usa el interior de un solo fragmento (9 ha) y olvida multiplicar por los cuatro fragmentos: el interior total es 36 ha. *Razonamiento que origina el error:* Aplicar bien la fórmula a una parte del sistema, pero no completar el cálculo para todo el paisaje.
+- **D.** El área total es igual, pero la especie solo usa el interior, que es 64 ha en el paisaje 1 y 36 ha en el paisaje 2. *Razonamiento que origina el error:* Suponer que la calidad del hábitat es la misma en todo el fragmento y que solo importa el área total.
+
+**Error conceptual que conviene evitar:** Comparar paisajes solo por su área total, sin considerar la forma y el tamaño de los fragmentos.
+
+**Estrategia:** Dibuja el fragmento, resta la franja de borde por cada lado y calcula el área que queda; repite para cada fragmento y suma.
+
+---
+
+### Pregunta 49 · Clave B
+
+*SN-B-049 · Explicación de fenómenos · Contaminación del agua: materia orgánica y oxígeno disuelto aguas abajo · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Las bacterias consumen oxígeno al descomponer la materia orgánica mientras el agua avanza; después, el aire lo repone.
+
+**Justificación:** La materia orgánica vertida es alimento para bacterias aerobias, que la descomponen consumiendo oxígeno. Ese consumo no es instantáneo: ocurre durante horas o días, mientras el agua recorre kilómetros. Al principio el consumo supera la entrada de oxígeno desde el aire (reaireación) y el oxígeno baja hasta un mínimo (2,4 mg/L a 6 km). A medida que se agota la materia orgánica, el consumo disminuye, la reaireación predomina y el oxígeno se recupera (7,0 mg/L a 20 km, cerca del valor de aguas arriba). Esta «curva de oxígeno» es la que describe, por ejemplo, el modelo clásico de Streeter y Phelps.
+
+**Análisis de distractores:**
+
+- **A.** Si la causa fuera el bajo oxígeno del agua vertida, el valor más bajo estaría en el punto de mezcla (0 km), y allí el oxígeno es 7,5 mg/L. *Razonamiento que origina el error:* Atribuir el efecto a la dilución de un agua pobre en oxígeno y no a un proceso que transcurre en el tiempo.
+- **C.** Nada indica que haya más peces aguas abajo; además, con 2,4 mg/L de oxígeno muchas especies de peces no podrían vivir allí. *Razonamiento que origina el error:* Atribuir el consumo de oxígeno solo a los animales visibles e ignorar a los microorganismos.
+- **D.** La descomposición aerobia consume oxígeno y libera CO₂; no produce oxígeno. El aumento después del km 6 se debe a la reaireación. *Razonamiento que origina el error:* Confundir la descomposición con la fotosíntesis.
+
+**Error conceptual que conviene evitar:** Suponer que el efecto de un vertimiento es máximo donde ocurre, sin considerar que los procesos biológicos tardan.
+
+**Estrategia:** Piensa en el río como una cinta transportadora: la distancia equivale a tiempo transcurrido desde el vertimiento.
+
+**Fuente:** Streeter, H. W. y Phelps, E. B. (1925). A study of the pollution and natural purification of the Ohio River. Public Health Bulletin n.º 146, U.S. Public Health Service. Solo como fundamento conceptual; los datos del ítem son ficticios.
+
+---
+
+### Pregunta 50 · Clave D
+
+*SN-B-050 · Explicación de fenómenos · Cambio climático: mecanismo del efecto invernadero · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Porque el CO₂ absorbe parte de la radiación infrarroja que emite la superficie y reenvía una fracción hacia ella.
+
+**Justificación:** La superficie calentada por el Sol emite radiación infrarroja. El CO₂ y los demás gases de efecto invernadero son casi transparentes a la luz visible, pero absorben parte de la radiación infrarroja y la reemiten en todas las direcciones, incluida la superficie. Al aumentar su concentración, sale menos energía al espacio de la que entra, y la superficie y la baja atmósfera se calientan hasta alcanzar un nuevo balance a mayor temperatura. El adelgazamiento de la capa de ozono es otro problema: aumenta la radiación ultravioleta que llega al suelo, pero no es la causa principal del calentamiento global.
+
+**Análisis de distractores:**
+
+- **A.** La radiación ultravioleta la absorbe sobre todo el ozono de la estratosfera, no el CO₂ cerca del suelo. *Razonamiento que origina el error:* Atribuir al CO₂ la función de la capa de ozono.
+- **B.** El CO₂ no destruye la capa de ozono (eso lo hacen sobre todo compuestos como los CFC), y el adelgazamiento del ozono afecta la radiación ultravioleta, no el balance infrarrojo que causa el calentamiento. *Razonamiento que origina el error:* Confundir el efecto invernadero con el «agujero» de la capa de ozono.
+- **C.** El CO₂ no refleja la luz visible; la deja pasar. Lo que absorbe y reemite es la radiación infrarroja que emite la superficie. *Razonamiento que origina el error:* Imaginar los gases de efecto invernadero como un espejo para la luz solar.
+
+**Error conceptual que conviene evitar:** Mezclar el efecto invernadero (radiación infrarroja) con la capa de ozono (radiación ultravioleta).
+
+**Estrategia:** Identifica en el esquema qué tipo de radiación interviene en cada proceso y qué sustancia la absorbe.
+
+**Fuente:** IPCC (2021). Climate Change 2021: The Physical Science Basis. Contribución del Grupo de Trabajo I al Sexto Informe de Evaluación. Cambridge University Press. Solo como fundamento conceptual.
+
+---
+
+### Pregunta 51 · Clave D
+
+*SN-B-051 · Indagación · Análisis de datos ambientales: tendencia y ciclo estacional del CO₂ · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** Comparar los valores de un mismo mes en años sucesivos, para que la oscilación estacional no influya.
+
+**Justificación:** La serie combina dos señales: una oscilación estacional (en el hemisferio norte, la vegetación absorbe más CO₂ en primavera y verano y lo libera en otoño e invierno) y una tendencia creciente. Comparar el mismo mes en años sucesivos elimina la oscilación: mayo de 2021, 413,8 ppm; mayo de 2022, 416,2 ppm; mayo de 2023, 418,6 ppm; aumento de 416,2 − 413,8 = 2,4 ppm y 418,6 − 416,2 = 2,4 ppm por año. Con los mínimos de noviembre se obtiene lo mismo: 411,4 − 409,0 = 2,4 ppm. La diferencia entre el máximo y el mínimo de un año (unos 5 ppm) mide la amplitud estacional, no la tendencia.
+
+**Análisis de distractores:**
+
+- **A.** La diferencia entre el máximo y el mínimo de un año (413,8 − 408,5 ≈ 5,3 ppm en 2021) refleja sobre todo la oscilación estacional, no el aumento de un año al siguiente (2,4 ppm). *Razonamiento que origina el error:* Confundir la variación dentro de un ciclo con la tendencia entre ciclos.
+- **B.** De mayo a noviembre la concentración baja (de 413,8 a 409,0 ppm) por el ciclo estacional; esa comparación daría incluso un «aumento» negativo. *Razonamiento que origina el error:* Comparar puntos de distinta fase de un ciclo como si fueran equivalentes.
+- **C.** El promedio de toda la serie (≈ 413,4 ppm) es un nivel, no una rapidez de cambio; no dice cuánto aumenta la concentración por año. *Razonamiento que origina el error:* Confundir un valor medio con una tasa de cambio.
+
+**Error conceptual que conviene evitar:** Medir una tendencia con datos que están en fases distintas de un ciclo periódico.
+
+**Estrategia:** Cuando una serie tenga ciclos, compara puntos en la misma fase del ciclo (el mismo mes, la misma hora) para estimar la tendencia.
+
+---
+
+### Pregunta 52 · Clave C
+
+*SN-B-052 · Uso comprensivo del conocimiento científico · Contaminación del aire: lluvia ácida · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** En E3 la lluvia tiene unas 20 veces más iones H⁺ que en E1, por los óxidos de azufre y de nitrógeno.
+
+**Justificación:** El pH es logarítmico: [H⁺] = 10^(−pH). En E1, [H⁺] = 10^(−5,6) mol/L; en E3, 10^(−4,3) mol/L. La razón es 10^(5,6 − 4,3) = 10^1,3 ≈ 20: la lluvia de E3 tiene unas 20 veces más iones H⁺. Como E1 no recibe las emisiones y tiene el pH de la lluvia natural, la acidez adicional a favor del viento se atribuye a los óxidos de azufre y de nitrógeno, que en la atmósfera forman ácido sulfúrico y ácido nítrico (ácidos fuertes). La acidez es mayor a 10 km que junto a la central porque la transformación del SO₂ y los NOₓ en ácidos toma tiempo mientras el viento los transporta; a 40 km el efecto disminuye por la dispersión.
+
+**Análisis de distractores:**
+
+- **A.** Un pH de 5,6 es ácido (menor que 7); es la acidez natural de la lluvia debida al CO₂ disuelto. Lo que indica es que en E1 no hay acidez adicional. *Razonamiento que origina el error:* Creer que la lluvia sin contaminar es neutra (pH 7).
+- **B.** En la escala de pH, cada unidad equivale a un factor de 10 en la concentración de H⁺; 1,3 unidades equivalen a unas 20 veces. *Razonamiento que origina el error:* Leer la escala de pH como si fuera lineal.
+- **D.** El CO₂ solo forma ácido carbónico, un ácido débil que lleva la lluvia a pH ≈ 5,6; no explica valores de 4,3. Los responsables son los óxidos de azufre y de nitrógeno. *Razonamiento que origina el error:* Atribuir la lluvia ácida al CO₂, confundiéndola con el efecto invernadero.
+
+**Error conceptual que conviene evitar:** Tratar el pH como una escala lineal y atribuir la lluvia ácida al CO₂.
+
+**Estrategia:** Para comparar acidez, calcula 10 elevado a la diferencia de pH; luego busca qué sustancias pueden formar ácidos fuertes en la atmósfera.
+
+---
+
+### Pregunta 53 · Clave A
+
+*SN-B-053 · Indagación · Degradación del suelo: erosión en cultivos de ladera · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** Tener la misma pendiente, el mismo tipo de suelo y la misma área.
+
+**Justificación:** La variable independiente es la forma de sembrar (suelo desnudo, surcos a favor de la pendiente o en curvas de nivel) y la dependiente es la masa de suelo arrastrado. Para atribuir las diferencias a la forma de sembrar, deben mantenerse iguales los demás factores que influyen en la erosión: la pendiente (más inclinación, más arrastre), el tipo de suelo, el área de la parcela y la lluvia que reciben (por eso se miden en el mismo período y en el mismo lugar).
+
+**Análisis de distractores:**
+
+- **B.** El manejo del cultivo es justamente la variable que se quiere comparar; si fuera igual en las tres parcelas, el experimento no respondería la pregunta. *Razonamiento que origina el error:* Confundir la variable independiente con una variable que se debe controlar.
+- **C.** Igualar el abono no basta: si la inclinación cambia entre parcelas, la pendiente, que influye mucho en el arrastre de suelo, se confunde con la forma de sembrar. *Razonamiento que origina el error:* Controlar una variable cualquiera y dejar sin controlar la que más influye en el resultado.
+- **D.** Representar la finca es útil para generalizar, pero si cada forma de sembrar está en una pendiente distinta no se sabe si la diferencia se debe a la siembra o a la inclinación. *Razonamiento que origina el error:* Confundir la representatividad de la muestra con el control de variables en una comparación.
+
+**Error conceptual que conviene evitar:** Confundir la variable que se manipula con las variables que deben mantenerse constantes.
+
+**Estrategia:** Escribe la pregunta de investigación, señala la variable que cambia a propósito y luego enumera todo lo demás que podría afectar el resultado: eso es lo que hay que igualar.
+
+---
+
+### Pregunta 54 · Clave B
+
+*SN-B-054 · Indagación · Impactos de actividades productivas: sobrepesca en una ciénaga · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (B):** No se sostiene: con más faenas la captura total bajó, y la captura por faena cayó más de lo que explica el reparto.
+
+**Justificación:** Si solo se repartieran los mismos peces entre más faenas, la captura total se mantendría y la captura por faena bajaría en proporción inversa: con 1,5 veces más faenas (de 10 000 a 15 000), bajaría a 50 / 1,5 ≈ 33 kg. En cambio, bajó a 24 kg (−52 %) y la captura total cayó de 500 t a 360 t (−28 %) pese al mayor esfuerzo. Los datos son coherentes entre sí (faenas × captura por faena: 10 000 × 50 kg = 500 t; 15 000 × 24 kg = 360 t). La caída de la captura por unidad de esfuerzo, junto con la disminución de la talla media hasta la talla de primera reproducción (25 cm), indica que hay menos peces y más pequeños, un signo de sobrepesca. La afirmación del pescador no se sostiene, aunque los datos no permiten descartar otras causas que se sumen a la pesca, como cambios en el hábitat.
+
+**Análisis de distractores:**
+
+- **A.** Que el esfuerzo suba mientras la captura por faena baja es compatible con el reparto, pero no basta: la captura total también cayó, lo que no ocurriría si los peces fueran los mismos. *Razonamiento que origina el error:* Aceptar una explicación porque es coherente con una parte de los datos e ignorar el indicador que la contradice.
+- **C.** No hace falta un censo: la captura por unidad de esfuerzo es un indicador indirecto de la abundancia que permite evaluar la afirmación. *Razonamiento que origina el error:* Creer que solo una medición directa y completa permite sacar conclusiones.
+- **D.** Las faenas aumentaron 50 %, pero la captura por faena bajó 52 % (de 50 a 24 kg); si fuera solo un reparto, habría bajado a unos 33 kg (−33 %). *Razonamiento que origina el error:* Comparar porcentajes de aumento y de disminución como si fueran simétricos, sin calcular la relación inversa.
+
+**Error conceptual que conviene evitar:** Evaluar una afirmación con un solo indicador cuando varios indicadores juntos permiten ponerla a prueba.
+
+**Estrategia:** Calcula qué valor esperarías si la afirmación fuera cierta (aquí, captura total constante) y compáralo con el valor observado.
+
+---
+
+### Pregunta 55 · Clave D
+
+*SN-B-055 · Explicación de fenómenos · Gestión de residuos: compostaje y emisión de metano · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Porque al voltear la pila entra oxígeno y predomina la descomposición aerobia, que produce CO₂.
+
+**Justificación:** En el relleno, los residuos enterrados y compactados quedan sin oxígeno; allí actúan microorganismos anaerobios, y algunos de ellos (arqueas metanógenas) producen metano. En una pila de compost que se voltea, entra aire y predominan los microorganismos aerobios, que descomponen la materia orgánica liberando sobre todo CO₂ y agua. Como el metano retiene mucho más calor por molécula, desviar la descomposición hacia la vía aerobia reduce el impacto sobre el efecto invernadero. Si la pila no se airea, pueden formarse zonas sin oxígeno que también emiten algo de metano.
+
+**Análisis de distractores:**
+
+- **A.** En el compostaje la materia orgánica sí se descompone: los microorganismos la transforman y liberan CO₂, agua y calor; el compost es el resultado de esa descomposición. *Razonamiento que origina el error:* Creer que el compost es materia orgánica conservada y no transformada.
+- **B.** El compost no capta metano del aire; la diferencia está en el gas que se produce durante la descomposición, según haya o no oxígeno. *Razonamiento que origina el error:* Atribuir al compost una función de sumidero de gases que no tiene.
+- **C.** En el relleno no hay combustión: el metano se forma por descomposición microbiana sin oxígeno. *Razonamiento que origina el error:* Confundir la descomposición anaerobia con la combustión.
+
+**Error conceptual que conviene evitar:** Pensar que toda descomposición produce los mismos gases, sin importar la presencia de oxígeno.
+
+**Estrategia:** Pregunta siempre si hay o no oxígeno donde ocurre la descomposición: de eso depende qué microorganismos actúan y qué gases liberan.
+
+---
+
+### Pregunta 56 · Clave B
+
+*SN-B-056 · Uso comprensivo del conocimiento científico · Recursos y producción de alimentos: eficiencia energética de las cadenas tróficas · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (B):** El maíz consumido directamente cubre unos 3000 días-persona, y a través de los pollos solo unos 450.
+
+**Justificación:** Consumo directo: 30 000 MJ / 10 MJ por persona y día = 3000 días-persona. A través de los pollos: 30 000 MJ × 0,15 = 4500 MJ en la carne y los huevos; 4500 / 10 = 450 días-persona, unas 6,7 veces menos. Al agregar un eslabón a la cadena, la mayor parte de la energía (85 % en este supuesto) la usan los pollos para respirar, moverse y mantener su temperatura, y se disipa como calor; la energía se conserva, pero ya no está disponible como alimento. El cálculo solo compara la energía: la carne y los huevos aportan proteínas y otros nutrientes que el ítem no considera, y la eficiencia real varía según el animal y el sistema de producción.
+
+**Análisis de distractores:**
+
+- **A.** Aunque la carne tenga más energía por kilogramo, se obtiene mucha menos masa de carne que de maíz; el total de energía disponible es 4500 MJ frente a 30 000 MJ. *Razonamiento que origina el error:* Comparar la energía por unidad de masa en lugar de la energía total disponible.
+- **C.** Invierte el porcentaje: el 15 % es lo que queda en el alimento, no lo que se pierde. 30 000 × 0,85 / 10 = 2550 corresponde a ese error. *Razonamiento que origina el error:* Confundir la fracción transferida con la fracción perdida.
+- **D.** La energía se conserva, pero la que los pollos gastan en sus procesos vitales se disipa como calor y no queda disponible como alimento. *Razonamiento que origina el error:* Interpretar la conservación de la energía como conservación de la energía aprovechable.
+
+**Error conceptual que conviene evitar:** Interpretar la conservación de la energía como si toda la energía siguiera disponible en el siguiente eslabón.
+
+**Estrategia:** Multiplica la energía inicial por la fracción que pasa al siguiente eslabón y luego divide entre la necesidad diaria; revisa si la fracción dada es la que se transfiere o la que se pierde.
+
+---
+
+### Pregunta 57 · Clave C
+
+*SN-B-057 · Indagación · Conservación de la biodiversidad: corredores biológicos · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** Comparar varios fragmentos con y sin corredor, de igual área y a distancias similares de la carretera.
+
+**Justificación:** F1 se diferencia de F2 no solo por el corredor, sino también por la distancia a la carretera y a los caseríos (5,0 km frente a 0,5 km), que pueden influir por la cacería, el ruido o los atropellamientos; F3 además es más pequeño. Con un solo fragmento conectado no se puede separar el efecto del corredor del de esas variables de confusión. Comparar varios fragmentos con y sin corredor, con área y distancia a la carretera similares, permitiría atribuir la diferencia al corredor con más confianza (idealmente, también midiendo antes y después de crear un corredor).
+
+**Análisis de distractores:**
+
+- **A.** Más cámaras en F1 darían una estimación más precisa de F1, pero no separarían el efecto del corredor del efecto de la distancia a la carretera. *Razonamiento que origina el error:* Creer que aumentar las mediciones de un mismo sitio resuelve un problema de variables de confusión.
+- **B.** La riqueza de otras especies responde una pregunta distinta y no ayuda a atribuir al corredor la frecuencia de este mamífero. *Razonamiento que origina el error:* Recolectar más datos sin relación con la pregunta causal planteada.
+- **D.** Ubicar las cámaras de forma distinta en un solo fragmento introduce un sesgo: aumentaría las detecciones en F1 por el método, no por el corredor. *Razonamiento que origina el error:* No reconocer que el procedimiento de muestreo debe ser el mismo en todos los sitios comparados.
+
+**Error conceptual que conviene evitar:** Atribuir una diferencia a un factor cuando los sitios comparados difieren también en otros factores.
+
+**Estrategia:** Haz una lista de todas las diferencias entre los sitios comparados; si hay más de una, busca un diseño en el que solo varíe el factor que te interesa.
+
+---
+
+### Pregunta 58 · Clave A
+
+*SN-B-058 · Indagación · Ciencia, tecnología, sociedad y ambiente: evaluación de un plástico «biodegradable» · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** Solo se sostiene en compostaje industrial; en el suelo y en el mar la bolsa casi no se degradó en 90 días.
+
+**Justificación:** En compostaje industrial (58 °C) la bolsa perdió 92 % de su masa en 90 días, de modo que la afirmación se cumple en esas condiciones. En el suelo (10 %) y en el mar (2 %) casi no se degradó. El papel de celulosa sirve como control positivo: en el suelo y en el mar perdió 70 % y 40 %, lo que muestra que en esos ambientes sí había microorganismos activos capaces de degradar materia orgánica. Por tanto, la baja degradación de la bolsa se debe a las propiedades del material en esas condiciones, no a que los ambientes estuvieran «inactivos». La afirmación publicitaria, sin especificar condiciones, puede llevar a creer que la bolsa desaparece si se abandona en el ambiente, lo cual no está sustentado.
+
+**Análisis de distractores:**
+
+- **B.** Que el material pueda degradarse en una condición no implica que lo haga en todas: en el mar perdió solo 2 % de su masa en 90 días. *Razonamiento que origina el error:* Generalizar un resultado obtenido en condiciones específicas a cualquier ambiente.
+- **C.** En compostaje industrial la bolsa perdió 92 % de su masa, lo que contradice que no pueda degradarse. *Razonamiento que origina el error:* Rechazar por completo una afirmación porque no se cumple en todas las condiciones.
+- **D.** En el suelo la bolsa perdió solo 10 %; la degradación fue mucho mayor en compostaje industrial, a 58 °C. *Razonamiento que origina el error:* Suponer, sin mirar los datos, que la degradación es mayor en el ambiente más «natural».
+
+**Error conceptual que conviene evitar:** Aceptar o rechazar una afirmación tecnológica sin precisar en qué condiciones fue puesta a prueba.
+
+**Estrategia:** Antes de evaluar una afirmación, pregunta «¿en qué condiciones?» y usa los controles para verificar que el ensayo podía detectar el efecto.
+
+---
+
+### Pregunta 59 · Clave B
+
+*SN-B-059 · Indagación · Indagación ambiental: polinizadores y bosques cerca de los cultivos · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** ¿Cambia la proporción de flores de café que forman fruto según la distancia al bosque?
+
+**Justificación:** Una pregunta investigable relaciona variables que se pueden observar o medir con un procedimiento definido. La proporción de flores que forman fruto puede contarse en cafetales a distintas distancias del bosque; la distancia es medible. Con esos datos se puede responder la pregunta y, después, diseñar estudios para comprobar si los polinizadores explican la relación (por ejemplo, contando visitas de insectos o cubriendo flores con mallas).
+
+**Análisis de distractores:**
+
+- **A.** La belleza es una valoración personal: no existe una medición que dé una respuesta objetiva y verificable. *Razonamiento que origina el error:* Confundir una apreciación estética con una pregunta científica.
+- **C.** Es una pregunta sobre qué se debe hacer; depende de valores, costos e intereses. La ciencia puede aportar evidencia, pero no responde por sí sola qué decisión tomar. *Razonamiento que origina el error:* Confundir una pregunta de decisión o normativa con una pregunta investigable.
+- **D.** Da por cierto algo no verificado (que las abejas prefieren siempre el café) y pide explicarlo; primero habría que investigar si esa preferencia existe. *Razonamiento que origina el error:* Formular preguntas que presuponen como hecho lo que aún no se ha comprobado.
+
+**Error conceptual que conviene evitar:** Considerar investigable cualquier pregunta interesante, aunque no tenga variables medibles o dé por cierto lo que se quiere averiguar.
+
+**Estrategia:** Pregúntate qué medirías para responderla; si no puedes nombrar variables observables o la pregunta da por cierta la respuesta, no es investigable tal como está.
+
+---
+
+### Pregunta 60 · Clave D
+
+*SN-B-060 · Indagación · Contaminación del aire: material particulado y tráfico urbano · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** Los carros particulares aportan buena parte del PM2,5 en horas pico, pero no son la única fuente.
+
+**Justificación:** En las horas pico, sin carros particulares, el PM2,5 fue mucho menor: 24 frente a 45 µg/m³ a las 9 h (≈ 47 % menos) y 25 frente a 48 µg/m³ a las 18 h (≈ 48 % menos), lo que indica que esos carros aportan una parte importante del contaminante en esas horas. Pero la concentración no bajó a cero: en la madrugada, cuando casi no circulan carros, los dos días tienen valores similares (12–14 µg/m³), y en el día sin carro persisten picos menores, atribuibles a los buses, taxis, vehículos de carga y otras fuentes (industria, polvo, quemas). La conclusión del concejal no se sostiene. Como solo hay un día sin carro, el resultado debería confirmarse con más días comparables.
+
+**Análisis de distractores:**
+
+- **A.** El PM2,5 no bajó en todas las horas: a las 3 h fue igual (12 µg/m³), y en ningún momento llegó a cero; hay otras fuentes. *Razonamiento que origina el error:* Concluir que un factor es la única causa porque su ausencia reduce el efecto.
+- **B.** En la madrugada casi no circulan carros, así que su ausencia no puede notarse a esa hora; en las horas pico la diferencia es grande. *Razonamiento que origina el error:* Evaluar el efecto de un factor justo en el momento en que ese factor casi no actúa.
+- **C.** Los picos coinciden en la hora porque es cuando hay más tráfico, pero su altura es mucho menor sin carros particulares (24 frente a 45 µg/m³ a las 9 h). *Razonamiento que origina el error:* Atribuir a la hora un efecto que se explica por la actividad que ocurre a esa hora.
+
+**Error conceptual que conviene evitar:** Pasar de «este factor contribuye» a «este factor es la única causa».
+
+**Estrategia:** Compara las curvas en las horas en que el factor actúa más y en las que casi no actúa, y verifica si el efecto desaparece por completo o solo disminuye.
+
+---
+
+## Bloque C. Química y transformaciones de la materia (preguntas 61–90)
+
+### Pregunta 61 · Clave B
+
+*SN-C-061 · Uso comprensivo del conocimiento científico · Propiedades físicas y químicas de la materia: el magnesio · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** Las observaciones 4 y 6.
+
+**Justificación:** Una propiedad química describe la capacidad de una sustancia para transformarse en otras sustancias. En la observación 4 el magnesio se combina con el oxígeno del aire y forma óxido de magnesio, el polvo blanco (2 Mg + O₂ → 2 MgO). En la observación 6 reacciona con el ácido y forma cloruro de magnesio e hidrógeno gaseoso (Mg + 2 HCl → MgCl₂ + H₂). Las demás observaciones (color, brillo, densidad, capacidad de doblarse y temperatura de fusión) se determinan sin que el magnesio deje de ser magnesio: el metal fundido sigue siendo magnesio. Son propiedades físicas.
+
+**Análisis de distractores:**
+
+- **A.** La densidad y la temperatura de fusión se miden sin cambiar la composición de la sustancia: son propiedades físicas. *Razonamiento que origina el error:* Creer que toda propiedad que se expresa con un número o que requiere calentar es química.
+- **C.** La observación 6 sí es química, pero la fusión (observación 5) es un cambio de estado: el líquido sigue siendo magnesio. *Razonamiento que origina el error:* Pensar que cualquier cambio producido al calentar es un cambio químico.
+- **D.** La observación 4 sí es química, pero doblarse sin romperse es una propiedad mecánica: cambia la forma, no la sustancia. *Razonamiento que origina el error:* Confundir un cambio de forma o de aspecto con la formación de una sustancia nueva.
+
+**Error conceptual que conviene evitar:** Clasificar una propiedad por el instrumento o por el calentamiento, y no por si aparece una sustancia nueva.
+
+**Estrategia:** Pregúntate: después de observar la propiedad, ¿sigue estando la misma sustancia? Si la respuesta es no, la propiedad es química.
+
+---
+
+### Pregunta 62 · Clave D
+
+*SN-C-062 · Uso comprensivo del conocimiento científico · Estructura atómica: isótopos e iones · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** I y IV son isótopos, y II es un ion negativo del mismo elemento.
+
+**Justificación:** El elemento queda determinado por el número de protones (número atómico Z). I, II y IV tienen 17 protones (cloro); III tiene 18 (argón). I y IV tienen el mismo Z pero distinto número de neutrones (18 y 20), así que son isótopos, con números de masa A = 17 + 18 = 35 y A = 17 + 20 = 37. II tiene 17 protones y 18 electrones: su carga es 17 − 18 = −1, es un anión cloruro (Cl⁻). II y III tienen 18 electrones cada una (son isoelectrónicas), pero son elementos distintos.
+
+**Análisis de distractores:**
+
+- **A.** I tiene 17 protones y III tiene 18: son elementos distintos. Además, sus números de masa (35 y 40) no son iguales. *Razonamiento que origina el error:* Definir los isótopos por la masa parecida y no por el mismo número de protones.
+- **B.** El número de electrones cambia al formar iones; el elemento lo define el número de protones (17 en II y 18 en III). *Razonamiento que origina el error:* Identificar el elemento por los electrones en lugar de por los protones.
+- **C.** El número de masa es protones + neutrones: 35 para I y 37 para IV. El mismo número de protones solo indica el mismo elemento. *Razonamiento que origina el error:* Confundir el número atómico con el número de masa.
+
+**Error conceptual que conviene evitar:** Usar los electrones o la masa para decidir a qué elemento pertenece una partícula.
+
+**Estrategia:** Revisa en orden: protones → elemento; protones + neutrones → número de masa; protones − electrones → carga.
+
+**Fuente:** Composición nuclear de ³⁵Cl, ³⁷Cl y ⁴⁰Ar: Comisión de Abundancias Isotópicas y Pesos Atómicos de la IUPAC (CIAAW), https://www.ciaaw.org.
+
+---
+
+### Pregunta 63 · Clave A
+
+*SN-C-063 · Explicación de fenómenos · Estructura atómica: niveles de energía y ensayo a la llama · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** La llama excita electrones del metal, que al volver a niveles inferiores emiten luz de energías propias de cada elemento.
+
+**Justificación:** Según el modelo de niveles de energía (Bohr), la energía de la llama excita electrones de los átomos del metal a niveles superiores; al volver a niveles inferiores emiten fotones cuya energía es igual a la diferencia entre niveles (E = h·f). Como los niveles son fijos y distintos en cada elemento, la luz forma unas pocas líneas características y no un espectro continuo. Las observaciones descartan las demás explicaciones: NaCl y NaNO₃ dan el mismo color con aniones distintos, y LiCl y KCl dan colores distintos con el mismo anión, así que el color depende del metal; Li⁺, Na⁺ y K⁺ tienen la misma carga (+1) y colores distintos; y el espectro de líneas excluye la incandescencia, que da un espectro continuo.
+
+**Análisis de distractores:**
+
+- **B.** NaCl y NaNO₃ (aniones distintos) dan el mismo color, y LiCl y KCl (mismo anión) dan colores distintos: el color no lo determina el anión. *Razonamiento que origina el error:* Atribuir el color a la parte de la sal que «se quema», sin comparar los ensayos que comparten un ion.
+- **C.** Litio, sodio y potasio forman iones de la misma carga (+1) y producen colores diferentes. *Razonamiento que origina el error:* Buscar una regularidad en una propiedad (la carga) que no varía entre los casos comparados.
+- **D.** La incandescencia produce un espectro continuo; el espectroscopio muestra pocas líneas separadas, distintas para cada metal. *Razonamiento que origina el error:* Confundir la emisión de los átomos excitados con el brillo de un sólido caliente.
+
+**Error conceptual que conviene evitar:** Aceptar una explicación porque es compatible con una observación, sin revisar si contradice las demás.
+
+**Estrategia:** Pon cada explicación a prueba con todos los datos: busca pares de ensayos que cambien una sola cosa (el anión, el metal) y mira qué cambia en el resultado.
+
+**Fuente:** Fundamento conceptual: espectros de emisión y modelo de Bohr en textos de química general, p. ej., Brown, T. L., LeMay, H. E. et al. Química: la ciencia central. Pearson, capítulo «Estructura electrónica de los átomos».
+
+---
+
+### Pregunta 64 · Clave C
+
+*SN-C-064 · Uso comprensivo del conocimiento científico · Tabla periódica: primera energía de ionización · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** En cada período la energía tiende a subir y cae en Z = 3, 11 y 19, cuando el electrón está en un nivel nuevo.
+
+**Justificación:** Dentro de un período los electrones externos están en el mismo nivel y la carga nuclear crece, así que cuesta más quitarlos: la energía tiende a aumentar (de 520 kJ/mol en el Li a 2081 kJ/mol en el Ne). Después de cada gas noble hay una caída brusca (2372 → 520, 2081 → 496 y 1521 → 419 kJ/mol), porque el electrón externo del metal alcalino ocupa un nivel nuevo, más alejado del núcleo y apantallado por los electrones internos. Por eso, al bajar en el grupo 1 la energía disminuye (Li 520 > Na 496 > K 419 kJ/mol). Las pequeñas caídas en Z = 5, 8, 13 y 16 no alteran la tendencia general.
+
+**Análisis de distractores:**
+
+- **A.** La gráfica no es creciente en todo su recorrido: cae en Z = 3, 11 y 19 y también, menos, en Z = 5, 8, 13 y 16. *Razonamiento que origina el error:* Suponer que una propiedad crece sin excepción con el número de protones, sin mirar los datos.
+- **B.** Los metales alcalinos tienen los valores más bajos de su período (520, 496 y 419 kJ/mol): su único electrón externo se quita con facilidad. *Razonamiento que origina el error:* Confundir «tener que perder un solo electrón» con «necesitar mucha energía para perderlo».
+- **D.** Los datos muestran lo contrario: Li 520 > Na 496 > K 419 kJ/mol. El electrón externo está cada vez más lejos del núcleo. *Razonamiento que origina el error:* Pensar que más electrones significan electrones más retenidos, sin considerar la distancia y el apantallamiento.
+
+**Error conceptual que conviene evitar:** Leer la gráfica como una tendencia única y no por períodos y grupos.
+
+**Estrategia:** Separa la gráfica en tramos que empiezan en un metal alcalino y terminan en un gas noble; compara luego los valores de un mismo grupo.
+
+**Fuente:** Valores redondeados de la primera energía de ionización: NIST Atomic Spectra Database, Ionization Energies (https://physics.nist.gov/PhysRefData/ASD/ionEnergy.html), también tabulados en el CRC Handbook of Chemistry and Physics.
+
+---
+
+### Pregunta 65 · Clave A
+
+*SN-C-065 · Explicación de fenómenos · Propiedades periódicas: radio atómico en un período · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** El cloro tiene más protones, y sus electrones externos, en el mismo nivel que los del sodio, son atraídos con más fuerza.
+
+**Justificación:** Los dos átomos tienen sus electrones externos en el tercer nivel (Na: 2, 8, 1; Cl: 2, 8, 7), y los electrones internos apantallan de forma parecida. Pero el núcleo del cloro tiene 17 protones frente a 11 del sodio: la carga nuclear que sienten los electrones externos es mayor en el cloro, que los atrae más cerca del núcleo. Por eso el radio disminuye de izquierda a derecha en un período, aunque aumente el número de electrones.
+
+**Análisis de distractores:**
+
+- **B.** Ambos están en el tercer período: tienen ocupados tres niveles de energía. *Razonamiento que origina el error:* Confundir la tendencia en un grupo (más niveles al bajar) con la tendencia en un período.
+- **C.** El radio atómico es una propiedad del átomo aislado; el comportamiento de los electrones en el metal sólido no explica la diferencia. *Razonamiento que origina el error:* Atribuir a un átomo propiedades del material que forman muchos átomos.
+- **D.** Los neutrones no tienen carga y no empujan a los electrones; además, el núcleo más común del sodio tiene 12 neutrones y el del cloro 18. *Razonamiento que origina el error:* Asignar a los neutrones un efecto eléctrico sobre los electrones.
+
+**Error conceptual que conviene evitar:** Pensar que más electrones implican siempre un átomo más grande.
+
+**Estrategia:** Para comparar tamaños, mira dos cosas: en qué nivel están los electrones externos y cuánta carga nuclear los atrae.
+
+---
+
+### Pregunta 66 · Clave D
+
+*SN-C-066 · Indagación · Enlace químico: propiedades de sustancias iónicas, metálicas y covalentes · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** W, porque conduce fundido o disuelto, pero no en estado sólido.
+
+**Justificación:** En un sólido iónico los iones ocupan posiciones fijas de la red cristalina y no pueden desplazarse, así que el sólido no conduce; al fundirse o disolverse los iones quedan libres y la sustancia conduce. Ese patrón, junto con una temperatura de fusión alta (801 °C) y la solubilidad en agua, corresponde a W (valores como los del cloruro de sodio). X conduce en estado sólido, lo que indica enlace metálico (electrones deslocalizados). Y se disuelve pero su solución no conduce: es una sustancia molecular (como el azúcar). Z, de fusión muy alta, insoluble y no conductora, corresponde a un sólido covalente reticular (como el dióxido de silicio).
+
+**Análisis de distractores:**
+
+- **A.** Una temperatura de fusión muy alta también la tienen los sólidos covalentes reticulares; Z no conduce ni fundido, lo que descarta los iones móviles. *Razonamiento que origina el error:* Tomar «alto punto de fusión» como rasgo exclusivo de los compuestos iónicos.
+- **B.** La conducción en estado sólido se debe a electrones móviles, propios del enlace metálico; un sólido iónico no conduce mientras es sólido. *Razonamiento que origina el error:* Creer que todo lo que conduce la corriente es iónico.
+- **C.** Muchas sustancias moleculares (como el azúcar) son solubles; la solución de Y no conduce, así que no libera iones. *Razonamiento que origina el error:* Usar la solubilidad como criterio suficiente de enlace iónico.
+
+**Error conceptual que conviene evitar:** Usar una sola propiedad para clasificar el enlace, sin buscar la que distingue a un tipo de los demás.
+
+**Estrategia:** Compara la conductividad en estado sólido con la conductividad fundido o disuelto: ese contraste separa los sólidos iónicos de los metálicos y de los moleculares.
+
+---
+
+### Pregunta 67 · Clave B
+
+*SN-C-067 · Explicación de fenómenos · Estructura molecular y polaridad: momento dipolar de los clorometanos · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Sus cuatro dipolos C–Cl son iguales y apuntan a los vértices de un tetraedro, de modo que se anulan entre sí.
+
+**Justificación:** La diferencia de electronegatividad C–Cl (3,2 − 2,6 = 0,6) hace polar cada enlace, como lo confirma el momento dipolar del CH₃Cl (1,9 D). La polaridad de la molécula es la suma vectorial de los dipolos de enlace. En el CCl₄ los cuatro dipolos son iguales y apuntan a los vértices de un tetraedro regular: su suma es cero. En CH₃Cl, CH₂Cl₂ y CHCl₃ los enlaces no son todos iguales y la suma no se anula. El metano tiene momento cero por la misma razón de simetría, aunque no tenga cloro.
+
+**Análisis de distractores:**
+
+- **A.** Una diferencia de 0,6 da un enlace covalente polar; el CH₃Cl, con un solo enlace C–Cl, tiene 1,9 D. *Razonamiento que origina el error:* Confundir la polaridad de la molécula con la polaridad de cada enlace.
+- **C.** La regla no se cumple en la tabla: el CH₄, sin enlaces C–Cl, también tiene momento cero. Lo que importa es la simetría. *Razonamiento que origina el error:* Extrapolar una tendencia de los datos sin buscar la causa que la produce.
+- **D.** Que los cuatro enlaces sean iguales no hace apolar a cada uno: en cada enlace C–Cl el cloro atrae más los electrones. *Razonamiento que origina el error:* Pensar que la simetría de la molécula elimina la polaridad de cada enlace, en vez de compensarla.
+
+**Error conceptual que conviene evitar:** Decidir si una molécula es polar mirando solo los enlaces, sin considerar su geometría.
+
+**Estrategia:** Dibuja los dipolos de enlace como flechas sobre la geometría de la molécula y súmalos: si se compensan, la molécula es apolar.
+
+**Fuente:** Momentos dipolares en fase gaseosa: CRC Handbook of Chemistry and Physics, tabla «Dipole Moments» (valores redondeados a una cifra decimal). Electronegatividades de Pauling redondeadas.
+
+---
+
+### Pregunta 68 · Clave C
+
+*SN-C-068 · Indagación · Sustancias puras y mezclas: curvas de calentamiento · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** Q es probablemente una mezcla, porque su temperatura sigue subiendo mientras hierve.
+
+**Justificación:** A presión constante, una sustancia pura hierve a temperatura constante: el calor que recibe se usa para el cambio de estado, y la gráfica muestra una meseta, como en P (100 °C de los 8 a los 14 min). En Q la temperatura sigue subiendo durante la ebullición (de 101 a 103,1 °C), lo que es propio de una solución con un soluto poco volátil: al evaporarse el disolvente, la solución se concentra y su temperatura de ebullición aumenta. Por eso Q es probablemente una mezcla. Los datos de P son coherentes con una sustancia pura (como el agua), aunque la gráfica por sí sola no identifica la sustancia.
+
+**Análisis de distractores:**
+
+- **A.** La meseta durante la ebullición es lo que se espera de una sustancia pura: la energía se usa en el cambio de estado y no en subir la temperatura. *Razonamiento que origina el error:* Interpretar la temperatura constante como señal de que «algo no reacciona» o de que hay varias sustancias.
+- **B.** Si Q fuera una sustancia pura, su temperatura sería constante durante la ebullición, cualquiera que fuera su valor; en Q sigue subiendo. *Razonamiento que origina el error:* Fijarse solo en el valor de la temperatura de ebullición y no en si se mantiene constante.
+- **D.** Un ritmo de calentamiento parecido no identifica una sustancia; durante la ebullición P y Q se comportan de manera distinta. *Razonamiento que origina el error:* Usar una semejanza parcial de los datos como prueba de identidad.
+
+**Error conceptual que conviene evitar:** Comparar solo los valores de temperatura y no la forma de la curva durante el cambio de estado.
+
+**Estrategia:** En una curva de calentamiento, busca las mesetas: una meseta nítida durante el cambio de estado indica sustancia pura; una pendiente durante la ebullición indica mezcla.
+
+---
+
+### Pregunta 69 · Clave D
+
+*SN-C-069 · Uso comprensivo del conocimiento científico · Soluciones: concentración porcentual y dilución · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Tomar 200 mL del blanqueador y completar con agua hasta 10 L.
+
+**Justificación:** Al diluir, la cantidad de soluto no cambia: C₁·V₁ = C₂·V₂. Entonces V₁ = (0,1 % × 10 000 mL) / 5 % = 200 mL. Comprobación con masas: la solución final debe tener 0,1 g por cada 100 mL, es decir, 0,1 × 10 000 / 100 = 10 g de hipoclorito; 200 mL del blanqueador al 5 % m/v contienen 200 × 5 / 100 = 10 g. Se toman 200 mL y se completa con agua hasta 10 L (no se agregan 10 L de agua). Por seguridad, el blanqueador nunca se mezcla con ácidos ni con productos amoniacales.
+
+**Análisis de distractores:**
+
+- **A.** Con 50 mL hay 2,5 g de hipoclorito en 10 L: la solución queda al 0,025 %. El 50 sale del cociente 5 / 0,1, que es el factor de dilución, no un volumen. *Razonamiento que origina el error:* Usar el factor de dilución como si fuera el volumen que hay que medir.
+- **B.** Con 2 mL hay 0,1 g de hipoclorito en 10 L (0,001 %): es un error de un factor 100 al convertir litros en mililitros. *Razonamiento que origina el error:* Equivocarse en la conversión de unidades o en la posición de la coma.
+- **C.** 500 mL es el 5 % de 10 L; con ese volumen hay 25 g de hipoclorito y la solución queda al 0,25 %. *Razonamiento que origina el error:* Interpretar el porcentaje de la etiqueta como la fracción del volumen final que hay que tomar.
+
+**Error conceptual que conviene evitar:** Aplicar una fórmula de dilución sin comprobar que la masa de soluto sea la misma antes y después.
+
+**Estrategia:** Después de calcular, verifica con masas: cuántos gramos de soluto necesita la solución final y cuántos aporta el volumen que vas a medir.
+
+---
+
+### Pregunta 70 · Clave A
+
+*SN-C-070 · Uso comprensivo del conocimiento científico · Soluciones: curvas de solubilidad y purificación por cristalización · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** Unos 48 g de cristales de KNO₃, sin NaCl, porque el NaCl sigue disuelto.
+
+**Justificación:** A 80 °C caben 169 g de KNO₃ y 38,4 g de NaCl en 100 g de agua, así que 80 g y 30 g se disuelven por completo. A 20 °C solo caben 32 g de KNO₃: el exceso cristaliza, 80 g − 32 g = 48 g. Para el NaCl caben 36,0 g a 20 °C y hay solo 30 g: la solución no está saturada de NaCl y no se forman cristales de esta sal. Por eso el filtro retiene unos 48 g de KNO₃ prácticamente sin NaCl: así funciona la purificación por cristalización de una sal cuya solubilidad cambia mucho con la temperatura.
+
+**Análisis de distractores:**
+
+- **B.** 32 g es la masa de KNO₃ que queda disuelta a 20 °C, no la que cristaliza (80 − 32 = 48 g). *Razonamiento que origina el error:* Confundir el valor de solubilidad leído en la gráfica con la masa de cristales.
+- **C.** «Soluble» no significa que se disuelva cualquier cantidad: a 20 °C solo caben 32 g de KNO₃ por 100 g de agua y hay 80 g. *Razonamiento que origina el error:* Tratar la solubilidad como una propiedad de sí o no y no como una cantidad máxima.
+- **D.** La solubilidad del NaCl baja de 38,4 a 36,0 g, pero en la solución solo hay 30 g: no llega a saturarse y no cristaliza. *Razonamiento que origina el error:* Restar las solubilidades sin comparar con la masa de soluto realmente presente.
+
+**Error conceptual que conviene evitar:** Leer la solubilidad como la masa que cristaliza, o suponer que toda sal menos soluble en frío forma cristales.
+
+**Estrategia:** Para cada soluto, compara la masa presente con la solubilidad a la temperatura final: solo cristaliza el exceso.
+
+---
+
+### Pregunta 71 · Clave C
+
+*SN-C-071 · Explicación de fenómenos · Cambios físicos y químicos: la elaboración de la panela · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** Aparecen un color pardo y un aroma nuevos que no desaparecen al enfriar.
+
+**Justificación:** Un cambio químico forma sustancias nuevas, con propiedades distintas de las iniciales. Con el calentamiento prolongado, parte de los azúcares del jugo se transforman (caramelización y reacciones de pardeamiento no enzimático) en sustancias nuevas de color pardo y aroma característico, que permanecen al enfriar o al disolver la panela. En cambio, la pérdida de volumen es la evaporación del agua, la solidificación es un cambio de estado y la disolución es una mezcla homogénea: en ninguno de esos casos cambia la identidad de las sustancias.
+
+**Análisis de distractores:**
+
+- **A.** La disminución del volumen se debe a la evaporación del agua, un cambio de estado. *Razonamiento que origina el error:* Considerar químico cualquier cambio que ocurre al calentar.
+- **B.** Solidificarse al enfriar es un cambio de estado: la miel y la panela tienen las mismas sustancias. *Razonamiento que origina el error:* Confundir el cambio de estado con la formación de una sustancia nueva.
+- **D.** Disolver la panela forma una mezcla homogénea; si se evapora el agua se recupera el sólido. *Razonamiento que origina el error:* Pensar que al disolverse una sustancia «desaparece» o se transforma en otra.
+
+**Error conceptual que conviene evitar:** Tomar cualquier cambio visible como evidencia de reacción química.
+
+**Estrategia:** Busca propiedades nuevas (color, olor, gas, sólido) que persisten y que no se revierten con un proceso físico sencillo como enfriar, calentar o agregar agua.
+
+---
+
+### Pregunta 72 · Clave B
+
+*SN-C-072 · Indagación · Reacciones químicas: precipitación e identificación de iones · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Na₂SO₄; Ba²⁺(ac) + SO₄²⁻(ac) → BaSO₄(s)
+
+**Justificación:** La prueba 1 descarta NaCl y NaNO₃: con iones bario solo precipitan el sulfato y el carbonato. La prueba 2 (sin burbujas con ácido) descarta el carbonato, y la prueba 3 lo confirma: el precipitado no se disuelve en ácido, como corresponde al sulfato de bario y no al carbonato de bario. La sal es Na₂SO₄. El precipitado se forma por la unión de los iones bario y sulfato: Ba²⁺(ac) + SO₄²⁻(ac) → BaSO₄(s); los iones Na⁺ y Cl⁻ quedan disueltos (iones espectadores).
+
+**Análisis de distractores:**
+
+- **A.** El carbonato explicaría la prueba 1, pero habría producido burbujas de CO₂ en la prueba 2 y su precipitado se habría disuelto en la prueba 3. *Razonamiento que origina el error:* Aceptar la primera hipótesis compatible con una prueba sin contrastarla con las demás.
+- **C.** El BaCl₂ es el reactivo agregado y es soluble; con NaCl no habría precipitado. *Razonamiento que origina el error:* Escribir como precipitado una sal que se sabe soluble, sin consultar la información de solubilidad.
+- **D.** La sal es la correcta, pero el sulfato de sodio es soluble: el sólido blanco es BaSO₄, formado por los iones del reactivo y de la muestra. *Razonamiento que origina el error:* No distinguir los iones que forman el precipitado de los iones espectadores.
+
+**Error conceptual que conviene evitar:** Concluir con una sola prueba cuando hay varias hipótesis que producen el mismo resultado.
+
+**Estrategia:** Haz una tabla de hipótesis contra pruebas y tacha las que contradicen algún resultado; la que queda es la mejor sustentada.
+
+---
+
+### Pregunta 73 · Clave D
+
+*SN-C-073 · Explicación de fenómenos · Conservación de la masa en la combustión de una vela · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** Los productos atrapados incluyen oxígeno tomado del aire, que no se pesó al inicio en el montaje.
+
+**Justificación:** La parafina reacciona con el oxígeno del aire: parafina + O₂ → CO₂ + H₂O. El oxígeno entra al montaje desde afuera y no estaba en la balanza al inicio. Los absorbentes retienen los productos, cuya masa es la de la parafina quemada más la del oxígeno consumido. Por eso el cambio del montaje es −0,50 g (vela) + (0,50 g + m de O₂) = + m de O₂, y m de O₂ ≈ 1,72 g. El control (+0,01 g) muestra que la humedad del aire casi no influye. Comprobación con un modelo de parafina (C₂₅H₅₂, M ≈ 352,7 g/mol): 0,50 g consumen unos 1,72 g de O₂ y producen 1,56 g de CO₂ y 0,66 g de H₂O; reactivos 0,50 + 1,72 = 2,22 g y productos 1,56 + 0,66 = 2,22 g. La masa total se conserva.
+
+**Análisis de distractores:**
+
+- **A.** En una reacción química la masa total de reactivos y productos se conserva; la masa equivalente a la energía liberada es inmedible con una balanza escolar. *Razonamiento que origina el error:* Pensar que la energía de la llama se convierte en materia que se pueda pesar.
+- **B.** El control con la vela apagada, en el mismo tiempo, solo ganó 0,01 g: la humedad del aire no explica 1,72 g. *Razonamiento que origina el error:* Proponer una explicación alternativa sin revisar el control diseñado para descartarla.
+- **C.** Sin otra sustancia no podría aumentar la masa: la parafina sola pesa 0,50 g. El exceso proviene del oxígeno, que se incorpora a los productos. *Razonamiento que origina el error:* Olvidar que el oxígeno del aire es un reactivo de la combustión.
+
+**Error conceptual que conviene evitar:** Aplicar la conservación de la masa a un sistema abierto sin contar las sustancias que entran o salen.
+
+**Estrategia:** Antes de comparar masas, define el sistema: qué estaba en la balanza al inicio, qué entró y qué salió durante el proceso.
+
+---
+
+### Pregunta 74 · Clave A
+
+*SN-C-074 · Uso comprensivo del conocimiento científico · Balanceo de ecuaciones: reducción del óxido de hierro · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂
+
+**Justificación:** En Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂ hay a cada lado 2 átomos de Fe, 3 de C y 6 de O (3 + 3 a la izquierda y 3 × 2 a la derecha). Además, se respetan las fórmulas de las sustancias. Balancear consiste en ajustar coeficientes, nunca subíndices: cambiar un subíndice cambia la sustancia.
+
+**Análisis de distractores:**
+
+- **B.** Los átomos cuentan bien (2 Fe, 1 C y 4 O a cada lado), pero se cambió la fórmula del producto: CO₄ no es el dióxido de carbono. *Razonamiento que origina el error:* Balancear modificando subíndices en lugar de coeficientes.
+- **C.** Hay 2 Fe y 2 C a cada lado, pero 5 átomos de O a la izquierda (3 + 2) y 4 a la derecha. *Razonamiento que origina el error:* Balancear solo algunos elementos y no comprobar el oxígeno, que aparece en varias sustancias.
+- **D.** Fe y C están balanceados, pero hay 9 átomos de O a la izquierda (6 + 3) y 6 a la derecha. *Razonamiento que origina el error:* Ajustar el primer coeficiente sin volver a contar los átomos de los demás elementos.
+
+**Error conceptual que conviene evitar:** Dar por balanceada una ecuación después de igualar uno o dos elementos.
+
+**Estrategia:** Al terminar, haz una tabla con todos los elementos y cuenta los átomos de cada lado; revisa también que no hayas cambiado ninguna fórmula.
+
+---
+
+### Pregunta 75 · Clave A
+
+*SN-C-075 · Uso comprensivo del conocimiento científico · Estequiometría: fermentación alcohólica del jugo de caña · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** 460 g
+
+**Justificación:** Masa de glucosa: 6000 g × 0,15 = 900 g. Cantidad de glucosa: 900 g / 180 g/mol = 5,00 mol. Por la ecuación, 1 mol de glucosa produce 2 mol de etanol: 2 × 5,00 = 10,0 mol de etanol. Masa: 10,0 mol × 46 g/mol = 460 g. Con masas molares más precisas (180,16 y 46,07 g/mol) el resultado es prácticamente el mismo (460,3 g). En la práctica se obtiene menos, porque parte del azúcar se usa en otros procesos de las levaduras.
+
+**Análisis de distractores:**
+
+- **B.** 230 g resulta de usar una relación 1 : 1 (5,00 mol × 46 g/mol), sin el coeficiente 2 del etanol. *Razonamiento que origina el error:* Ignorar los coeficientes de la ecuación balanceada en la relación molar.
+- **C.** 3,07 kg resulta de tomar los 6,0 kg de jugo como si todo fuera glucosa (6000 / 180 × 2 × 46 ≈ 3067 g). *Razonamiento que origina el error:* Omitir la composición porcentual de la mezcla de partida.
+- **D.** 440 g es la masa del CO₂ que se forma (10,0 mol × 44 g/mol), no la del etanol. *Razonamiento que origina el error:* Usar la masa molar de otro producto de la misma ecuación.
+
+**Error conceptual que conviene evitar:** Pasar directamente de gramos de una sustancia a gramos de otra sin pasar por moles.
+
+**Estrategia:** Sigue la cadena: masa de la mezcla → masa del reactivo → moles del reactivo → moles del producto (coeficientes) → masa del producto.
+
+---
+
+### Pregunta 76 · Clave C
+
+*SN-C-076 · Indagación · Estequiometría: reactivo limitante a partir de datos experimentales · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** Hasta unos 20 mL el ácido es el limitante; desde ahí lo es el magnesio, y más ácido no produce más H₂.
+
+**Justificación:** 0,0100 mol de Mg necesitan 2 × 0,0100 = 0,0200 mol de HCl, es decir, 20,0 mL de ácido 1,00 mol/L. Con menos de 20 mL el ácido se agota primero (es el limitante) y el H₂ crece en proporción al ácido: cada mL aporta 0,00100 mol de HCl y produce 0,000500 mol de H₂, unos 12,2 mL a 25 °C y 1 atm (V = nRT/P = 0,000500 × 0,082 × 298 / 1 L). Desde 20 mL el magnesio se agota primero: el máximo es 0,0100 mol de H₂ = 0,0100 × 0,082 × 298 / 1 ≈ 0,244 L = 244 mL, coherente con la meseta de 242–245 mL.
+
+**Análisis de distractores:**
+
+- **A.** La reacción del magnesio con el ácido se completa; la meseta aparece porque se acaba el magnesio, como muestra el cálculo de 244 mL máximos. *Razonamiento que origina el error:* Atribuir al equilibrio químico el final de una reacción que se detiene porque se agota un reactivo.
+- **B.** El limitante se decide comparando cantidades en moles según la ecuación, no masas. Con 5–15 mL hay menos de 0,0200 mol de HCl y el ácido se agota primero. *Razonamiento que origina el error:* Elegir el reactivo limitante por la masa o el volumen y no por la relación molar.
+- **D.** Es al revés: si el ácido fuera el limitante, agregar más ácido produciría más gas. Que el gas no aumente indica que el ácido está en exceso. *Razonamiento que origina el error:* Invertir la relación entre la meseta de la gráfica y el reactivo que se agota.
+
+**Error conceptual que conviene evitar:** Interpretar una meseta como «la reacción se detuvo sola» sin preguntar qué reactivo se agotó.
+
+**Estrategia:** Calcula cuánto de un reactivo necesita el otro según la ecuación y ubica ese valor en la gráfica: el cambio de pendiente debe aparecer allí.
+
+---
+
+### Pregunta 77 · Clave D
+
+*SN-C-077 · Uso comprensivo del conocimiento científico · Gases ideales y estequiometría: el biogás de un biodigestor · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** 1,76 kg
+
+**Justificación:** Temperatura absoluta: T = 27 + 273 = 300 K. Cantidad de metano: n = PV / RT = (0,80 atm × 1230 L) / (0,082 atm·L/(mol·K) × 300 K) = 984 / 24,6 = 40,0 mol. Según la ecuación, 1 mol de CH₄ produce 1 mol de CO₂: se forman 40,0 mol de CO₂. Masa: 40,0 mol × 44,0 g/mol = 1760 g = 1,76 kg.
+
+**Análisis de distractores:**
+
+- **A.** 0,64 kg es la masa del metano (40,0 mol × 16,0 g/mol), no la del CO₂ que se produce. *Razonamiento que origina el error:* Detenerse en un resultado intermedio o usar la masa molar del reactivo.
+- **B.** 2,42 kg resulta de usar 22,4 L/mol (1230 / 22,4 ≈ 54,9 mol), un valor válido solo a 0 °C y 1 atm, no a 27 °C y 0,80 atm. *Razonamiento que origina el error:* Aplicar el volumen molar de condiciones normales a cualquier presión y temperatura.
+- **C.** 19,6 kg resulta de usar 27 en lugar de 300 K en PV = nRT (n ≈ 444 mol). *Razonamiento que origina el error:* Usar la temperatura en grados Celsius en las leyes de los gases.
+
+**Error conceptual que conviene evitar:** Usar la temperatura en °C o el volumen molar de 22,4 L/mol fuera de sus condiciones.
+
+**Estrategia:** Convierte primero a kelvin y verifica que las unidades de R coincidan con las de P y V; después usa los coeficientes para pasar de moles de reactivo a moles de producto.
+
+---
+
+### Pregunta 78 · Clave B
+
+*SN-C-078 · Explicación de fenómenos · Gases: teoría cinética y difusión · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** A igual temperatura, las moléculas de NH₃, de menor masa, se mueven en promedio más rápido que las de HCl.
+
+**Justificación:** Según el modelo cinético-molecular, a la misma temperatura todas las moléculas de un gas tienen la misma energía cinética promedio, Ec = ½ m v². Si la energía es igual, las moléculas de menor masa tienen mayor rapidez media: v(NH₃) / v(HCl) = √(36,5 / 17) ≈ 1,47. Por eso el amoníaco avanza más en el mismo tiempo y los gases se encuentran más cerca del extremo del HCl (unos 59 cm desde el amoníaco y 41 cm desde el ácido; 59 / 41 ≈ 1,44). La difusión a través del aire es más lenta que el movimiento de cada molécula, pero conserva esa diferencia.
+
+**Análisis de distractores:**
+
+- **A.** En un gas las moléculas se mueven en todas direcciones y se mezclan por difusión; la gravedad no impide su avance horizontal en un tubo de 100 cm. *Razonamiento que origina el error:* Aplicar a las moléculas de un gas la idea de que lo pesado «se hunde».
+- **C.** A igual temperatura la energía cinética promedio es la misma para los dos gases; lo que cambia es la rapidez, por la diferencia de masa. *Razonamiento que origina el error:* Confundir energía cinética con rapidez.
+- **D.** La rapidez de difusión depende de la masa de las moléculas y de la temperatura, no de que la sustancia sea ácida o básica. *Razonamiento que origina el error:* Generalizar a partir de un solo caso una propiedad química que no está relacionada con el fenómeno.
+
+**Error conceptual que conviene evitar:** Pensar que, a igual temperatura, las moléculas más livianas tienen más energía.
+
+**Estrategia:** Recuerda: la temperatura fija la energía cinética promedio; con la misma energía, la masa decide la rapidez.
+
+---
+
+### Pregunta 79 · Clave C
+
+*SN-C-079 · Indagación · Ácidos y bases: estimación del pH con indicadores · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** Entre 4,4 y 6,0
+
+**Justificación:** El anaranjado de metilo está amarillo, su color por encima del rango: pH > 4,4. El azul de bromotimol está amarillo, su color por debajo del rango: pH < 6,0. La fenolftaleína incolora indica pH < 8,2, lo que ya estaba incluido. Combinando las tres condiciones: 4,4 < pH < 6,0. Los indicadores solo permiten acotar un intervalo; para un valor preciso se necesita un pH-metro.
+
+**Análisis de distractores:**
+
+- **A.** Entre 7,6 y 8,2 el azul de bromotimol estaría azul, no amarillo. *Razonamiento que origina el error:* Combinar los extremos de dos rangos sin comprobar el color de cada indicador.
+- **B.** Dentro de 6,0–7,6 el azul de bromotimol tendría un color intermedio (verde); amarillo indica pH menor que 6,0. *Razonamiento que origina el error:* Tomar el rango de viraje del indicador como el intervalo donde está la muestra, sin interpretar el color.
+- **D.** En ese intervalo el anaranjado de metilo tendría un color intermedio (anaranjado); amarillo indica pH mayor que 4,4. *Razonamiento que origina el error:* Leer el rango del primer indicador sin usar su color para saber de qué lado del rango está la muestra.
+
+**Error conceptual que conviene evitar:** Leer el rango de viraje como el valor del pH, sin ubicar la muestra a un lado u otro del rango.
+
+**Estrategia:** Con cada indicador escribe una desigualdad (pH > o < un valor) y luego busca el intervalo que cumple todas.
+
+**Fuente:** Rangos de viraje habituales de los indicadores, tabulados en textos de química analítica, p. ej., Harris, D. C. Quantitative Chemical Analysis. W. H. Freeman, tabla de indicadores ácido-base.
+
+---
+
+### Pregunta 80 · Clave D
+
+*SN-C-080 · Indagación · Ácidos y bases: neutralización de un suelo ácido con cal agrícola · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** En este suelo y con estas dosis, el pH sube con la cal, pero cada gramo adicional lo sube menos.
+
+**Justificación:** Los aumentos de pH por gramo de cal son cada vez menores: 0,8 entre 0 y 1 g; 0,5 entre 1 y 2 g; 0,25 por gramo entre 2 y 4 g, y 0,075 por gramo entre 4 y 8 g. El pH sube con la cal, pero con rendimiento decreciente. La conclusión se limita a este suelo y a este rango de dosis. Además, con una sola maceta por dosis, sin plantas y sin medir el crecimiento del café, el ensayo no permite elegir una «mejor dosis» para el cultivo; para fortalecer la evidencia convendría repetir cada tratamiento y medir variables del cultivo.
+
+**Análisis de distractores:**
+
+- **A.** Con 1 g el pH sube 0,8 y con 2 g sube 1,3 (no 1,6); con 8 g sube 2,1, no ocho veces 0,8. *Razonamiento que origina el error:* Suponer una relación proporcional sin calcular los aumentos en cada tramo.
+- **B.** El experimento midió el pH, no el crecimiento ni la producción del café; un pH más alto no es necesariamente mejor para el cultivo. *Razonamiento que origina el error:* Convertir una variable medida (pH) en una conclusión sobre otra que no se midió (rendimiento del cultivo).
+- **C.** La cal es una base: consume iones H⁺ (CaCO₃ + 2 H⁺ → Ca²⁺ + CO₂ + H₂O). Aportar H⁺ bajaría el pH. *Razonamiento que origina el error:* Confundir la neutralización con la adición de iones H⁺.
+
+**Error conceptual que conviene evitar:** Extrapolar una tendencia fuera del rango estudiado o sacar conclusiones sobre variables que no se midieron.
+
+**Estrategia:** Antes de aceptar una conclusión, pregúntate: ¿qué se midió?, ¿en qué rango?, ¿con cuántas repeticiones? La conclusión no debe ir más allá de esas respuestas.
+
+---
+
+### Pregunta 81 · Clave A
+
+*SN-C-081 · Uso comprensivo del conocimiento científico · Oxidación y reducción: zinc en solución de sulfato de cobre(II) · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** El zinc se oxidó y se depositaron unos 0,64 g de cobre, porque cada Zn cede 2 e⁻ a un ion Cu²⁺.
+
+**Justificación:** La ecuación iónica es Zn(s) + Cu²⁺(ac) → Zn²⁺(ac) + Cu(s). El zinc pierde electrones (Zn → Zn²⁺ + 2 e⁻): se oxida. El ion cobre(II) los gana (Cu²⁺ + 2 e⁻ → Cu): se reduce y se deposita como metal; por eso la solución pierde color azul, que se debe al ion Cu²⁺. Zinc disuelto: 5,000 − 4,346 = 0,654 g = 0,654 / 65,4 = 0,0100 mol. La relación es 1 : 1, así que se depositan 0,0100 mol de Cu = 0,0100 × 63,5 = 0,635 g ≈ 0,64 g.
+
+**Análisis de distractores:**
+
+- **B.** La masa calculada es correcta, pero el cobre pasa de Cu²⁺ a Cu: gana electrones, es decir, se reduce. *Razonamiento que origina el error:* Asociar la oxidación con la aparición de un sólido o de un color, y no con la pérdida de electrones.
+- **C.** Cada Zn cede 2 electrones y cada Cu²⁺ necesita 2: la relación es 1 : 1, no 2 : 1. *Razonamiento que origina el error:* Equivocar la relación molar al no igualar los electrones cedidos y ganados.
+- **D.** Perder masa al pasar a la solución como Zn²⁺ es oxidarse; además 1,27 g es el doble de lo que permite la relación 1 : 1. *Razonamiento que origina el error:* Relacionar «reducción» con «disminución de masa».
+
+**Error conceptual que conviene evitar:** Decidir qué se oxida por cambios de masa o de color, sin seguir los electrones.
+
+**Estrategia:** Escribe las semirreacciones: quien pierde electrones se oxida y quien los gana se reduce; iguala los electrones para obtener la relación molar.
+
+---
+
+### Pregunta 82 · Clave B
+
+*SN-C-082 · Indagación · Oxidación y reducción: serie de actividad de los metales · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Mg > Zn > X > Cu; el zinc.
+
+**Justificación:** Un depósito indica que el metal de la lámina se oxidó y redujo al ion de la solución: el metal de la lámina tiene mayor tendencia a oxidarse. El Mg desplaza a los otros tres (3 reacciones), el Zn a dos (X y Cu), X solo al Cu y el Cu a ninguno: Mg > Zn > X > Cu. Para recuperar X de una solución de X²⁺ se necesita un metal que se oxide con más facilidad que X: el zinc (o el magnesio), según la reacción Zn + X²⁺ → Zn²⁺ + X.
+
+**Análisis de distractores:**
+
+- **A.** El orden está invertido: el cobre no reacciona con ninguna solución, así que es el que menos tiende a oxidarse, y no puede desplazar a X. *Razonamiento que origina el error:* Contar las reacciones de cada solución en vez de las de cada lámina, o leer «No» como mayor reactividad.
+- **C.** X no desplaza al Zn (no hay depósito con Zn²⁺) y el Zn sí desplaza a X: el Zn está por encima de X. *Razonamiento que origina el error:* Ubicar el metal desconocido sin comparar las dos reacciones posibles entre él y el zinc.
+- **D.** El orden es correcto, pero el cobre no reduce los iones X²⁺: en la tabla, la lámina de Cu no forma depósito con X²⁺. *Razonamiento que origina el error:* No aplicar el orden obtenido para hacer la predicción.
+
+**Error conceptual que conviene evitar:** Leer la tabla por columnas cuando la pregunta es sobre los metales de las láminas.
+
+**Estrategia:** Cuenta cuántas soluciones desplaza cada lámina: el que más desplaza es el que más se oxida. Luego usa ese orden para predecir.
+
+---
+
+### Pregunta 83 · Clave D
+
+*SN-C-083 · Indagación · Velocidad de reacción: efecto de la temperatura · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Entre 20 y 50 °C, cada aumento de 10 °C reduce el tiempo a cerca de la mitad: la velocidad casi se duplica.
+
+**Justificación:** Como en todos los ensayos se mide el tiempo hasta formar la misma cantidad de azufre, la velocidad es inversamente proporcional al tiempo. Los cocientes de tiempos entre temperaturas separadas por 10 °C son 120 / 61 ≈ 1,97; 61 / 31 ≈ 1,97 y 31 / 16 ≈ 1,94: cada aumento de 10 °C reduce el tiempo a cerca de la mitad y casi duplica la velocidad, en el intervalo de 20 a 50 °C. Según la teoría de colisiones, a mayor temperatura aumenta la fracción de choques con energía suficiente para reaccionar.
+
+**Análisis de distractores:**
+
+- **A.** De 20 °C a 40 °C el tiempo pasa de 120 s a 31 s: se divide entre casi 4, no entre 2. La escala Celsius no es proporcional a la energía de las partículas. *Razonamiento que origina el error:* Suponer proporcionalidad inversa con la temperatura en °C sin comprobarla con los datos.
+- **B.** El diseño fija la cantidad de azufre: la cruz deja de verse cuando se forma la misma cantidad. Lo que cambia es la rapidez con que se forma. *Razonamiento que origina el error:* Confundir la cantidad de producto con la velocidad a la que se produce.
+- **C.** Un tiempo menor para formar la misma cantidad de producto significa mayor velocidad. *Razonamiento que origina el error:* Confundir el tiempo de reacción con la velocidad de reacción.
+
+**Error conceptual que conviene evitar:** Leer «menos tiempo» como «menos velocidad».
+
+**Estrategia:** Cuando el experimento mide el tiempo para llegar a un mismo punto, piensa en la velocidad como 1/tiempo y compara cocientes.
+
+---
+
+### Pregunta 84 · Clave C
+
+*SN-C-084 · Explicación de fenómenos · Velocidad de reacción: catalizadores y energía de activación · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** El yoduro permite un camino de menor energía de activación, sin cambiar la energía de reactivos ni productos.
+
+**Justificación:** En el esquema, con el catalizador la barrera de energía baja de 75 a 56 kJ/mol, mientras los niveles de reactivos y productos no cambian (la reacción libera 98 kJ/mol de H₂O₂ en los dos casos). Con una energía de activación menor, una fracción mucho mayor de los choques tiene energía suficiente para reaccionar a la misma temperatura, y la reacción es más rápida. El catalizador participa en pasos intermedios, pero se regenera: por eso el yoduro sigue en la solución al final.
+
+**Análisis de distractores:**
+
+- **A.** Los productos están en el mismo nivel con y sin catalizador: la energía liberada (98 kJ/mol) no cambia. *Razonamiento que origina el error:* Pensar que el catalizador modifica la energía de la reacción en lugar de la barrera.
+- **B.** El catalizador no cambia la energía de los reactivos (su nivel en el esquema es el mismo); lo que cambia es la altura de la barrera. *Razonamiento que origina el error:* Confundir el efecto de un catalizador con el de aumentar la temperatura.
+- **D.** El yoduro sigue en la solución al final: no se consume. Tampoco aporta energía, pues los niveles inicial y final no cambian. *Razonamiento que origina el error:* Tratar al catalizador como un reactivo que se gasta.
+
+**Error conceptual que conviene evitar:** Atribuir al catalizador cambios en la energía de reactivos o productos.
+
+**Estrategia:** En un diagrama de energía, compara por separado la altura de la barrera (activación) y la diferencia entre el inicio y el final (energía de reacción).
+
+---
+
+### Pregunta 85 · Clave A
+
+*SN-C-085 · Explicación de fenómenos · Equilibrio químico: descomposición de la caliza en sistema cerrado y abierto · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** En el recipiente cerrado el CO₂ acumulado favorece la reacción inversa hasta igualar velocidades; en el horno el aire lo retira.
+
+**Justificación:** En el recipiente cerrado el CO₂ se acumula y la reacción inversa (CaO + CO₂ → CaCO₃) se hace cada vez más rápida, hasta igualar a la directa: se alcanza un equilibrio dinámico, con una presión de CO₂ fija para esa temperatura, aunque quede caliza. En el horno abierto la corriente de aire arrastra el CO₂; su presión nunca llega al valor de equilibrio y, según el principio de Le Châtelier, el sistema sigue produciendo CO₂ hasta que se transforma toda la caliza. Las otras explicaciones contradicen los datos: la ecuación no incluye oxígeno, quedaba caliza en el montaje 1 y la temperatura era la misma.
+
+**Análisis de distractores:**
+
+- **B.** La ecuación de la descomposición no incluye oxígeno: la caliza se descompone por el calor, con o sin aire. *Razonamiento que origina el error:* Pensar que todo proceso que ocurre en un horno con aire es una combustión que necesita oxígeno.
+- **C.** Los datos dicen que en el recipiente cerrado quedaba mucha caliza y que ambos montajes tenían la misma masa. *Razonamiento que origina el error:* Creer que una reacción solo se detiene cuando se agota un reactivo, sin considerar el equilibrio.
+- **D.** El contexto establece que los dos montajes estaban a la misma temperatura; la diferencia está en que se retire o no el CO₂. *Razonamiento que origina el error:* Proponer una variable distinta de la que se cambió en la comparación.
+
+**Error conceptual que conviene evitar:** Pensar que una reacción en equilibrio está detenida, o que solo termina cuando se acaba un reactivo.
+
+**Estrategia:** Pregúntate si algún producto se acumula o se retira del sistema: retirar un producto desplaza el equilibrio hacia la formación de más producto.
+
+---
+
+### Pregunta 86 · Clave B
+
+*SN-C-086 · Uso comprensivo del conocimiento científico · Química del carbono: grupos funcionales en la fermentación del café · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** I es un alcohol, II un ácido carboxílico y III un éster, que se puede obtener haciendo reaccionar I con II.
+
+**Justificación:** I tiene un grupo –OH unido a un carbono saturado: es un alcohol (etanol). II tiene el grupo carboxilo –COOH: es un ácido carboxílico (ácido acético). III tiene el grupo –COO– entre dos cadenas de carbono: es un éster (acetato de etilo). El éster se puede obtener por la reacción de esterificación entre el ácido y el alcohol: CH₃–COOH + CH₃–CH₂–OH ⇌ CH₃–COO–CH₂–CH₃ + H₂O. Esa es la relación química entre las tres estructuras; en la fermentación, los microorganismos producen el acetato de etilo por rutas enzimáticas propias, de modo que la ecuación no describe el mecanismo biológico. Los ésteres de baja masa molar suelen tener olores afrutados.
+
+**Análisis de distractores:**
+
+- **A.** II tiene –COOH (carboxilo), no –CHO (aldehído); III tiene el grupo –COO–, con un C=O, propio de los ésteres y no de los éteres (C–O–C). *Razonamiento que origina el error:* Reconocer solo la presencia de oxígeno, sin distinguir los grupos que lo contienen.
+- **C.** I tiene un –OH terminal (alcohol), no un oxígeno entre dos carbonos (éter); III no es una cetona, porque su C=O está unido a otro oxígeno. *Razonamiento que origina el error:* Clasificar por la posición del oxígeno sin mirar a qué átomos está unido.
+- **D.** En II el C=O está unido a un –OH, lo que forma un carboxilo; en una cetona el C=O está entre dos carbonos. *Razonamiento que origina el error:* Confundir el grupo carbonilo de las cetonas con el carboxilo de los ácidos.
+
+**Error conceptual que conviene evitar:** Clasificar compuestos oxigenados solo por contener oxígeno o un C=O, sin mirar los átomos vecinos.
+
+**Estrategia:** Localiza cada oxígeno y anota a qué está unido: C–OH (alcohol), C–O–C (éter), C(=O)H (aldehído), C–C(=O)–C (cetona), C(=O)OH (ácido) y C(=O)O–C (éster).
+
+---
+
+### Pregunta 87 · Clave D
+
+*SN-C-087 · Explicación de fenómenos · Química del carbono: solubilidad de los alcoholes y longitud de la cadena · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** Cada molécula tiene un solo –OH que interactúa con el agua, mientras crece su cadena apolar.
+
+**Justificación:** El grupo –OH forma puentes de hidrógeno con el agua y favorece la disolución; la cadena de carbonos e hidrógenos es apolar y solo interactúa débilmente con el agua. Todos estos alcoholes tienen un único –OH, pero la parte apolar crece con cada carbono. Al disolver la molécula, el agua debe abrir espacio a una cadena cada vez mayor con la que no forma puentes de hidrógeno, y la solubilidad cae: de 7,7 g (4 C) a 0,2 g (7 C) por 100 g de agua. En los alcoholes de 1 a 3 carbonos predomina el efecto del –OH y son miscibles.
+
+**Análisis de distractores:**
+
+- **A.** Todos los alcoholes de la gráfica conservan su grupo –OH; lo que cambia es la longitud de la cadena. *Razonamiento que origina el error:* Pensar que una propiedad cambia porque desaparece un grupo funcional que en realidad sigue presente.
+- **B.** La solubilidad no depende de que las moléculas se hundan; además, estos alcoholes son menos densos que el agua. *Razonamiento que origina el error:* Confundir la solubilidad con la densidad o el peso de las moléculas.
+- **C.** Cada molécula tiene un solo –OH en todos los casos, así que el número de puentes de hidrógeno por molécula no aumenta con la cadena. *Razonamiento que origina el error:* Asociar mayor masa molar con más puentes de hidrógeno, sin mirar la estructura.
+
+**Error conceptual que conviene evitar:** Clasificar una molécula como «polar» o «apolar» sin considerar el tamaño relativo de sus partes.
+
+**Estrategia:** Compara el tamaño de la parte polar (grupo funcional) con el de la parte apolar (cadena) para predecir la solubilidad en agua.
+
+---
+
+### Pregunta 88 · Clave A
+
+*SN-C-088 · Explicación de fenómenos · Separación de mezclas y propiedades físicas: mercurio y oro en la minería · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** El mercurio hierve a una temperatura mucho menor que el oro; en la retorta su vapor se condensa y se recupera.
+
+**Justificación:** La separación es física y se basa en la volatilidad: a unos 357 °C el mercurio hierve, mientras que el oro sigue sólido (funde a 1064 °C y hierve a 2856 °C). En el montaje 1 el vapor de mercurio, tóxico, pasa al aire, lo respiran quienes están cerca y luego se deposita en suelos y ríos. En la retorta el vapor viaja por un tubo frío, se condensa (cambio de gas a líquido) y se recoge, lo que reduce mucho las emisiones y permite reutilizarlo. La retorta disminuye el riesgo, pero no lo elimina: la alternativa más segura son los métodos de beneficio sin mercurio.
+
+**Análisis de distractores:**
+
+- **B.** El oro no se descompone: es un elemento. A 357 °C sigue sólido, y lo que se separa es el mercurio, en forma de vapor. *Razonamiento que origina el error:* Confundir un elemento con un compuesto que el calor puede descomponer.
+- **C.** El método no separa por densidad: el mercurio sale como vapor. Además, el mercurio líquido es muy denso (unos 13,5 g/cm³) y no «flota». *Razonamiento que origina el error:* Aplicar un método de separación (decantación) que no corresponde al procedimiento descrito.
+- **D.** El mercurio no «desaparece»: se evapora y sigue existiendo en el aire. La retorta es cerrada, precisamente para que el vapor no escape. *Razonamiento que origina el error:* Creer que lo que se evapora o «se quema» deja de existir y no contamina.
+
+**Error conceptual que conviene evitar:** Pensar que lo que se evapora desaparece y deja de ser un problema ambiental.
+
+**Estrategia:** Identifica qué propiedad difiere entre los componentes de la mezcla (aquí, la temperatura de ebullición) y sigue a cada sustancia hasta su destino final.
+
+**Fuente:** Temperaturas de fusión y de ebullición del mercurio y del oro: CRC Handbook of Chemistry and Physics (valores redondeados).
+
+---
+
+### Pregunta 89 · Clave C
+
+*SN-C-089 · Indagación · Interpretación de experimentos químicos: extracción del café y control de variables · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** Usar la misma molienda en las dos preparaciones, mantener igual lo demás y repetir cada una varias veces.
+
+**Justificación:** En el diseño original cambian a la vez la temperatura y la molienda. Una molienda más fina aumenta la superficie de contacto y, por sí sola, puede aumentar la extracción; por eso la diferencia de 13,5 frente a 8,0 g/L no se puede atribuir solo a la temperatura (las variables están confundidas). Para poner a prueba la hipótesis hay que cambiar solo la temperatura y mantener constantes la molienda, la masa de café, el volumen de agua y el tiempo. Repetir cada preparación permite además estimar la variación entre ensayos.
+
+**Análisis de distractores:**
+
+- **A.** Repetir mejora la precisión, pero si la molienda sigue siendo distinta, el efecto de la temperatura sigue confundido con el de la molienda. *Razonamiento que origina el error:* Creer que repetir un diseño corrige una variable no controlada.
+- **B.** Medir otra variable de respuesta no separa los efectos de la temperatura y de la molienda; el problema está en las condiciones. *Razonamiento que origina el error:* Pensar que más mediciones de salida resuelven un problema de control de variables.
+- **D.** Cambiar otra variable al mismo tiempo agrega una confusión más: no se podría atribuir el resultado a ninguna de ellas. *Razonamiento que origina el error:* Intentar estudiar varias variables cambiándolas todas a la vez en los mismos ensayos.
+
+**Error conceptual que conviene evitar:** Atribuir un resultado a la variable que interesa cuando en la comparación cambiaron varias.
+
+**Estrategia:** Revisa la tabla de condiciones fila por fila: en una comparación válida solo debe cambiar la variable independiente.
+
+---
+
+### Pregunta 90 · Clave B
+
+*SN-C-090 · Indagación · Interpretación de experimentos químicos: titulación del vinagre, precisión y exactitud · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (B):** Los grupos 1 y 2 coinciden con la etiqueta, y el desvío repetible del grupo 3 sugiere un error sistemático.
+
+**Justificación:** Si el vinagre tiene 5 % m/v, 10,0 mL contienen 0,50 g de ácido acético = 0,50 / 60 = 0,00833 mol, que requieren 0,00833 / 0,50 = 0,0167 L = 16,7 mL de NaOH. Los grupos 1 y 2 obtienen 16,7 mL en promedio: 0,50 × 0,0167 = 0,00835 mol → 0,501 g en 10,0 mL → 5,0 % m/v, de acuerdo con la etiqueta. El grupo 3 obtiene 19,0 mL (≈ 5,7 % m/v) con poca dispersión (0,2 mL): sus datos son precisos pero no exactos, lo que sugiere un error sistemático (por ejemplo, pasarse del punto final o una solución de NaOH más diluida de lo rotulado). Dos grupos independientes que coinciden entre sí y con la etiqueta sustentan mejor la conclusión.
+
+**Análisis de distractores:**
+
+- **A.** Se basa solo en el grupo 3, cuyo resultado discrepa de dos grupos independientes que coinciden con la etiqueta. *Razonamiento que origina el error:* Aceptar un resultado aislado sin contrastarlo con las demás mediciones.
+- **C.** La repetibilidad (precisión) no garantiza la exactitud: un error sistemático desplaza todos los ensayos en la misma dirección. *Razonamiento que origina el error:* Confundir precisión con exactitud.
+- **D.** Las diferencias dentro de los grupos 1 y 2 son pequeñas (hasta 0,4 mL) y sus promedios coinciden; la variación no invalida todos los datos. *Razonamiento que origina el error:* Pensar que cualquier variación entre mediciones hace inútiles los resultados.
+
+**Error conceptual que conviene evitar:** Preferir los datos más repetibles como si fueran los más exactos.
+
+**Estrategia:** Separa dos preguntas: ¿qué tan parecidos son los ensayos de un grupo? (precisión) y ¿qué tan cerca están del valor esperado o de otros grupos independientes? (exactitud).
 
 ---

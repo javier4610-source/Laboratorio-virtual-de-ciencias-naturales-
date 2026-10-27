@@ -14,12 +14,13 @@ import { ReportBody } from './ReportPage';
 import { progressPercent } from '../lib/progress';
 import { emptyValidation, exportValidations, loadValidations, mergeValidations, saveValidations, type CurricularValidation, type ValidationStatus } from '../lib/validation';
 import { TrackingTab } from './TrackingTab';
+import { LmsExportTab } from './LmsExportTab';
 import { api, defaultServerUrl, loadTeacherSession, saveServerUrl, saveTeacherSession, type ServerCourse, type TeacherSession } from '../lib/api';
 
 const KEY = 'lvcn:docente';
 interface TeacherData { assignments: Assignment[]; lists: PracticeList[]; reports: StudentReport[]; }
 
-type Tab = 'resumen' | 'catalogo' | 'validacion' | 'asignaciones' | 'listas' | 'informes' | 'seguimiento' | 'servidor' | 'rubrica';
+type Tab = 'resumen' | 'catalogo' | 'validacion' | 'asignaciones' | 'listas' | 'informes' | 'seguimiento' | 'exportar' | 'servidor' | 'rubrica';
 
 function useTeacherData() {
   const [data, setData] = useState<TeacherData>(() => ({ assignments: [], lists: [], reports: [], ...loadJSON<Partial<TeacherData>>(KEY, {}) }));
@@ -591,7 +592,7 @@ function RubricTab() {
   );
 }
 
-const TAB_IDS: Tab[] = ['resumen', 'catalogo', 'validacion', 'asignaciones', 'listas', 'informes', 'seguimiento', 'servidor', 'rubrica'];
+const TAB_IDS: Tab[] = ['resumen', 'catalogo', 'validacion', 'asignaciones', 'listas', 'informes', 'seguimiento', 'exportar', 'servidor', 'rubrica'];
 
 /** Pestaña inicial desde la dirección (#/docente?seccion=informes), para los accesos directos del inicio. */
 function initialTab(): Tab {
@@ -608,6 +609,7 @@ function OverviewTab({ data, go }: { data: TeacherData; go: (t: Tab) => void }) 
     { tab: 'listas', icon: 'preparacion', title: 'Armar una lista por unidad', text: 'Reúne varias prácticas en un solo código para una unidad didáctica.', stat: `${data.lists.length} ${data.lists.length === 1 ? 'lista' : 'listas'}` },
     { tab: 'informes', icon: 'datos', title: 'Recibir y revisar informes', text: 'Importa los archivos .json de los estudiantes, revisa respuestas y exporta la tabla de notas.', stat: `${data.reports.length} ${data.reports.length === 1 ? 'informe' : 'informes'}` },
     { tab: 'seguimiento', icon: 'analisis', title: 'Seguir el avance del curso', text: 'Con el servidor del colegio: quién trabaja, en qué etapa va y qué preguntas fallan.' },
+    { tab: 'exportar', icon: 'descargar', title: 'Publicar en Moodle o Classroom', text: 'Descarga preguntas en Moodle XML o GIFT, y comparte prácticas en Google Classroom con su texto de tarea.' },
     { tab: 'catalogo', icon: 'experimento', title: 'Explorar el catálogo docente', text: `Las ${PRACTICES.length} prácticas con tema, competencias, duración y DBA propuesto.` },
     { tab: 'validacion', icon: 'escudo', title: 'Validar la alineación curricular', text: 'Marca cada DBA propuesto como validado, ajustado o pendiente, con observaciones.' },
     { tab: 'rubrica', icon: 'evaluacion', title: 'Rúbrica de evaluación', text: 'Niveles de desempeño Superior, Alto, Básico y Bajo por criterio.' },
@@ -638,7 +640,7 @@ export function TeacherPage() {
   const go = (t: Tab) => { setTab(t); requestAnimationFrame(() => document.getElementById(`tab-docente-${t}`)?.focus()); };
   const tabs: { id: Tab; label: string }[] = [
     { id: 'resumen', label: 'Inicio' }, { id: 'catalogo', label: 'Catálogo' }, { id: 'validacion', label: 'Validación curricular' }, { id: 'asignaciones', label: `Asignaciones (${data.assignments.length})` },
-    { id: 'listas', label: `Listas por unidad (${data.lists.length})` }, { id: 'informes', label: `Informes (${data.reports.length})` }, { id: 'seguimiento', label: 'Seguimiento del curso' }, { id: 'servidor', label: 'Servidor' }, { id: 'rubrica', label: 'Rúbrica' },
+    { id: 'listas', label: `Listas por unidad (${data.lists.length})` }, { id: 'informes', label: `Informes (${data.reports.length})` }, { id: 'seguimiento', label: 'Seguimiento del curso' }, { id: 'exportar', label: 'Moodle y Classroom' }, { id: 'servidor', label: 'Servidor' }, { id: 'rubrica', label: 'Rúbrica' },
   ];
   return (
     <div className="stack teacher">
@@ -660,6 +662,7 @@ export function TeacherPage() {
       {tab === 'listas' && <ListsTab data={data} setData={setData} />}
       {tab === 'informes' && <ReportsTab data={data} setData={setData} />}
       {tab === 'seguimiento' && <TrackingTab key={trackCourse ?? 'ultimo'} initialCourseId={trackCourse} onGoServer={() => setTab('servidor')} />}
+      {tab === 'exportar' && <LmsExportTab />}
       {tab === 'servidor' && <ServerTab data={data} setData={setData} onTrack={(id) => { setTrackCourse(id); setTab('seguimiento'); }} />}
       {tab === 'rubrica' && <RubricTab />}
     </div>

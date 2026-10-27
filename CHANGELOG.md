@@ -7,6 +7,15 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+- **Exportación para Moodle y Google Classroom** (panel docente → «Moodle y Classroom», todo en el navegador): preguntas
+  del banco Saber 11 y de las evaluaciones de las prácticas en **Moodle XML** y **GIFT**, filtradas por origen, grado,
+  área y práctica, con la opción correcta marcada, retroalimentación por opción, explicación y enlace a la práctica como
+  retroalimentación general, categorías por grado y práctica, y etiquetas. Para Classroom, el enlace oficial
+  «Compartir en Classroom» de cada práctica, el texto de la tarea para pegar y un CSV de enlaces por grado. Generadores
+  puros en `src/lib/lmsExport.ts` con pruebas (escape XML y GIFT, una correcta por pregunta, XML bien formado),
+  prueba E2E `tests/e2e/exportar-lms.spec.ts` y guía [docs/EXPORTAR-LMS.md](docs/EXPORTAR-LMS.md). Sin SCORM ni IMS
+  Common Cartridge.
+
 ## [2.9.0] · 2026-10-26
 
 Rediseño, paso siguiente (ADR 0007): cada aviso de condición dice su causa y cómo corregirla, y las lecturas directas

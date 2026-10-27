@@ -172,6 +172,7 @@ Módulos del enunciado → código: A navegación (`App.tsx`, `lib/router.ts`), 
 | Servidor · seguimiento | Servidor del colegio (SQLite) + cola local sin conexión | Inscritos, activos hoy y en 7 días, ingresos por día, mapa de calor estudiantes × prácticas, detalle por estudiante (etapas, datos, conclusión, respuestas, línea de tiempo), análisis por pregunta y competencia, alertas y CSV | Automático: resumen de cada práctica con antirrebote; si no hay red, se envía al volver |
 
 - **Validación curricular:** pestaña del panel docente para registrar, por práctica, el DBA y el estándar verificados en los documentos oficiales, exportable para el equipo de área.
+- **Moodle y Google Classroom:** pestaña del panel docente que exporta, sin servidor, las preguntas del banco Saber 11 y de las prácticas en Moodle XML o GIFT (filtradas por práctica, grado y área, con la respuesta correcta y la retroalimentación), y por práctica el enlace oficial «Compartir en Classroom», el texto de la tarea y un CSV de enlaces por grado. Guía paso a paso y límites en [docs/EXPORTAR-LMS.md](docs/EXPORTAR-LMS.md).
 - **Usabilidad:** cada práctica incluye una encuesta breve de opinión que viaja en el informe; el protocolo para pruebas con estudiantes está en [docs/PROTOCOLO-USABILIDAD.md](docs/PROTOCOLO-USABILIDAD.md).
 
 ## Interfaz y sistema de diseño

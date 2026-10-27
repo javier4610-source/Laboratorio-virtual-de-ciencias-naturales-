@@ -27,11 +27,13 @@ export const fmtAxis = (v: number) => {
 };
 
 /** Marcas «redondas» (1, 2 o 5 × 10ⁿ) que cubren [lo, hi]. */
-export function niceTicks(lo: number, hi: number, target = 5): number[] {
+export function niceTicks(lo: number, hi: number, target = 5, integer = false): number[] {
   if (!(hi > lo)) { hi = lo + 1; }
   const raw = (hi - lo) / target;
   const p = 10 ** Math.floor(Math.log10(raw));
-  const step = [1, 2, 2.5, 5, 10].map((m) => m * p).find((s) => s >= raw) ?? 10 * p;
+  // Con datos enteros (meses, días, individuos…) las marcas también son enteras: sin «2,5» ni «7,5».
+  const mults = integer ? [1, 2, 5, 10] : [1, 2, 2.5, 5, 10];
+  const step = Math.max(integer ? 1 : 0, mults.map((m) => m * p).find((s) => s >= raw) ?? 10 * p);
   const start = Math.floor(lo / step) * step;
   const ticks: number[] = [];
   for (let v = start; v <= hi + step * 1e-9; v += step) ticks.push(Math.round(v / step) * step);
@@ -69,7 +71,7 @@ export function AdvancedChart({ chart }: { chart: ItemChart }) {
   const cats = bars ? chart.categories ?? all.map((p) => fmtAxis(p[0])) : [];
   const nCats = bars ? Math.max(cats.length, ...chart.series.map((s) => s.points.length)) : 0;
   const xs = all.map((p) => p[0]);
-  const xT = bars ? [] : niceTicks(Math.min(...xs), Math.max(...xs));
+  const xT = bars ? [] : niceTicks(Math.min(...xs), Math.max(...xs), 5, xs.every((x) => Number.isInteger(x)));
   const x0 = xT[0] ?? 0;
   const x1 = xT[xT.length - 1] ?? 1;
   const sx = (v: number) => M.l + ((v - x0) / (x1 - x0)) * pw;
@@ -94,7 +96,11 @@ export function AdvancedChart({ chart }: { chart: ItemChart }) {
             <text x={sx(v)} y={M.t + ph + 18} textAnchor="middle">{fmtAxis(v)}</text>
           </g>
         ))}
-        {bars && cats.map((c, i) => <text key={`c${i}`} x={M.l + band * (i + 0.5)} y={M.t + ph + 18} textAnchor="middle">{c}</text>)}
+        {bars && cats.map((c, i) => (
+          <text key={`c${i}`} className="cat" x={M.l + band * (i + 0.5)} y={M.t + ph + 16} textAnchor="middle">
+            {splitAxisLabel(c, 12).map((t, j) => <tspan key={j} x={M.l + band * (i + 0.5)} dy={j === 0 ? 0 : '1.1em'}>{t}</tspan>)}
+          </text>
+        ))}
         <line className="axis" x1={M.l} x2={W - M.r} y1={M.t + ph} y2={M.t + ph} />
         <line className="axis" x1={M.l} x2={M.l} y1={M.t} y2={M.t + ph} />
         <text className="axis-title" x={M.l + pw / 2} y={H - 8} textAnchor="middle">{chart.xLabel}</text>

@@ -1268,6 +1268,7 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 .adv-chart .adv-chart-svg { display: block; width: 100%; max-width: 640px; height: auto; overflow: visible; }
 .adv-legend svg { flex: none; width: 22px; height: 14px; }
 .adv-chart svg text { fill: var(--ink-2); font-family: var(--font-data); font-size: 13px; }
+.adv-chart svg text.cat { font-size: 12px; }
 .adv-chart svg .axis-title { fill: var(--ink); font-family: var(--font-body); font-size: 14px; font-weight: 700; }
 .adv-chart svg .gridline { stroke: color-mix(in srgb, var(--line) 80%, transparent); stroke-width: 1; }
 .adv-chart svg .axis, .adv-chart svg .tick { stroke: var(--line-strong); stroke-width: 1.2; }

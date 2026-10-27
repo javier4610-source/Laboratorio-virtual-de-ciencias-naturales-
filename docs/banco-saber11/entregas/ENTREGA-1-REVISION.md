@@ -39,10 +39,10 @@ Recurso «texto» significa que basta con el contexto y el enunciado. Los demás
 | 22 | SN-A-022 | Homeostasis: regulación de la glucosa en sangre | Explicación | Explica mecanismos de regulación fisiológica mediante el modelo de retroalimentación negativa. | Relaciona los cambios de la glucosa y la insulina después de una comida con un mecanismo de retroalimentación negativa. | 2 | salud-publica | grafica | Sí | **C** |
 | 23 | SN-A-023 | Homeostasis: regulación de la temperatura corporal | Uso comprensivo | Usa conceptos de regulación fisiológica para interpretar las respuestas del organismo ante cambios del ambiente. | Identifica las respuestas fisiológicas que favorecen la pérdida de calor durante el ejercicio en un ambiente cálido. | 1 | cotidiano | texto | No | **D** |
 | 24 | SN-A-024 | Sistemas del cuerpo humano: integración respiratoria, circulatoria y renal en la altura | Explicación | Explica respuestas del organismo integrando el funcionamiento de varios sistemas y compara explicaciones con base en evidencias. | Selecciona, entre explicaciones alternativas, la que integra los cambios respiratorios, cardíacos y sanguíneos observados al pasar a vivir en la altura. | 3 | salud-publica | tabla | Sí | **B** |
-| 25 | SN-A-025 | Sistema nervioso: arco reflejo | Explicación | Explica el funcionamiento del sistema nervioso a partir de la organización de sus vías. | Explica por qué un reflejo de retirada ocurre antes de la percepción consciente del dolor. | 1 | cotidiano | texto | No | **A** |
+| 25 | SN-A-025 | Sistema nervioso: arco reflejo | Explicación | Explica el funcionamiento del sistema nervioso a partir de la organización de sus vías. | Explica por qué un reflejo de retirada ocurre antes de la percepción consciente del dolor. | 1 | cotidiano | texto | No | **D** |
 | 26 | SN-A-026 | Reproducción en plantas: polinización y formación de frutos | Indagación | Interpreta resultados experimentales para obtener conclusiones sustentadas en los datos. | Compara tratamientos de polinización para concluir sobre el origen del polen necesario para la formación de frutos. | 2 | agricola-ambiental | tabla | Sí | **C** |
 | 27 | SN-A-027 | Reproducción humana y desarrollo: origen de los gemelos | Uso comprensivo | Usa conceptos de fecundación y desarrollo embrionario para interpretar situaciones de la reproducción humana. | Relaciona el origen de gemelos de distinto sexo con la fecundación de dos óvulos distintos. | 1 | cotidiano | texto | No | **D** |
-| 28 | SN-A-028 | Microorganismos: fermentación láctica | Indagación | Interpreta resultados experimentales con controles para establecer conclusiones sobre procesos biológicos. | Usa un control con cultivo hervido y la comparación entre temperaturas para atribuir el descenso del pH a la actividad de microorganismos vivos. | 2 | experimento-escolar | tabla | Sí | **B** |
+| 28 | SN-A-028 | Microorganismos: fermentación láctica | Indagación | Interpreta resultados experimentales con controles para establecer conclusiones sobre procesos biológicos. | Usa un control con cultivo hervido y la comparación entre temperaturas para atribuir el descenso del pH a la actividad de microorganismos vivos. | 2 | experimento-escolar | tabla | Sí | **A** |
 | 29 | SN-A-029 | Microorganismos y salud: antibióticos, bacterias y virus | Uso comprensivo | Usa conocimientos sobre la estructura de bacterias y virus para fundamentar decisiones relacionadas con la salud. | Relaciona el modo de acción de los antibióticos con estructuras propias de las bacterias para justificar por qué no son eficaces contra los virus. | 1 | salud-publica | texto | No | **A** |
 | 30 | SN-A-030 | Salud desde la evidencia: evaluación de una intervención escolar | Indagación | Evalúa la validez de conclusiones en estudios de salud, distinguiendo asociación de causalidad y reconociendo limitaciones del diseño. | Juzga el alcance de una conclusión sobre el efecto de una intervención a partir de datos de dos colegios que no se asignaron al azar. | 3 | salud-publica | tabla | Sí | **C** |
 
@@ -97,15 +97,20 @@ Los ítems de nivel 3 se concentran en indagación (evaluar conclusiones, diseñ
 
 | Letra | Ítems | Cantidad |
 |---|---|---|
-| A | 2, 7, 12, 16, 21, 25, 29 | 7 |
-| B | 3, 5, 10, 14, 18, 19, 24, 28 | 8 |
+| A | 2, 7, 12, 16, 21, 28, 29 | 7 |
+| B | 3, 5, 10, 14, 18, 19, 24 | 7 |
 | C | 1, 6, 11, 13, 17, 22, 26, 30 | 8 |
-| D | 4, 8, 9, 15, 20, 23, 27 | 7 |
+| D | 4, 8, 9, 15, 20, 23, 25, 27 | 8 |
 
-Secuencia: C A B D B C A D D B C A C B D A C B B D A C D B A C D B A C.
+Secuencia: C A B D B C A D D B C A C B D A C B B D A C D B D C D A A C.
 
-- Cada letra aparece entre 6 y 9 veces. La racha más larga es de 2 (8–9: D D; 18–19: B B), así que no hay más de 3 claves iguales seguidas.
-- No hay un ciclo mecánico: ningún bloque de 4 claves consecutivas se repite de forma periódica.
+- Cada letra aparece entre 6 y 9 veces. La racha más larga es de 2 (8–9: D D; 18–19: B B; 28–29: A A), así que no hay más de 3 claves iguales seguidas.
+- No hay un ciclo mecánico. En la revisión del integrador, el validador detectó el ciclo A C D B repetido desde el ítem 21
+  (21–30: A C D B A C D B A C); se rompió intercambiando el orden de las opciones en el ítem 25 (clave A → D) y en el
+  ítem 28 (clave B → A), sin cambiar su contenido.
+- Revisión del integrador, ítem 26: la clave decía «La mayoría de los frutos se forma cuando…», que puede leerse como
+  una afirmación sobre el total de frutos; se cambió a «La formación de frutos depende sobre todo de que la flor reciba
+  polen de otra planta».
 - **Longitud de la clave.** En el primer borrador la clave era la opción más larga en 20 de 30 ítems (pista involuntaria). Se reescribieron opciones en 15 ítems. En la versión final la clave es estrictamente la más larga en 8 de 30 ítems (lo esperable por azar es ≈ 7,5). Su posición por longitud queda así: 9 veces 1.ª (empates incluidos), 7 veces 2.ª, 9 veces 3.ª y 5 veces 4.ª. La prueba unitaria limita a 10 los ítems en que la clave es la opción más larga.
 
 ## 4. Registro de revisión (segunda y tercera pasada)

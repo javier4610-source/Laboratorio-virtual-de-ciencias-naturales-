@@ -8,9 +8,18 @@ import type { ItemChart } from '../../assessment/avanzado/types';
  */
 const W = 480;
 const H = 300;
-const M = { l: 58, r: 14, t: 14, b: 50 };
+const M = { l: 72, r: 14, t: 14, b: 50 };
 const COLORS = ['var(--series-2)', 'var(--series-1)', 'var(--series-3)', 'var(--series-4)'];
 const SHAPES = ['círculo', 'cuadrado', 'triángulo', 'rombo'] as const;
+
+/** Parte un rótulo largo del eje y en dos líneas (magnitud y unidad) para que quepa a lo alto del área de datos. */
+export function splitAxisLabel(label: string, max = 30): string[] {
+  if (label.length <= max) return [label];
+  const i = label.lastIndexOf(' (');
+  if (i > 0) return [label.slice(0, i), label.slice(i + 1)];
+  const mid = label.lastIndexOf(' ', Math.ceil(label.length / 2));
+  return mid > 0 ? [label.slice(0, mid), label.slice(mid + 1)] : [label];
+}
 
 export const fmtAxis = (v: number) => {
   const r = Math.abs(v) >= 100 ? Math.round(v) : Math.round(v * 1000) / 1000;
@@ -53,6 +62,7 @@ export function AdvancedChart({ chart }: { chart: ItemChart }) {
   const y1 = yT[yT.length - 1];
   const pw = W - M.l - M.r;
   const ph = H - M.t - M.b;
+  const yLines = splitAxisLabel(chart.yLabel);
   const sy = (v: number) => M.t + ph - ((v - y0) / (y1 - y0)) * ph;
 
   // Eje x: numérico (línea, dispersión) o por categorías (barras).
@@ -88,7 +98,9 @@ export function AdvancedChart({ chart }: { chart: ItemChart }) {
         <line className="axis" x1={M.l} x2={W - M.r} y1={M.t + ph} y2={M.t + ph} />
         <line className="axis" x1={M.l} x2={M.l} y1={M.t} y2={M.t + ph} />
         <text className="axis-title" x={M.l + pw / 2} y={H - 8} textAnchor="middle">{chart.xLabel}</text>
-        <text className="axis-title" transform={`translate(14 ${M.t + ph / 2}) rotate(-90)`} textAnchor="middle">{chart.yLabel}</text>
+        <text className="axis-title" transform={`translate(${yLines.length > 1 ? 12 : 18} ${M.t + ph / 2}) rotate(-90)`} textAnchor="middle">
+          {yLines.map((t, i) => <tspan key={i} x={0} dy={i === 0 ? 0 : '1.15em'}>{t}</tspan>)}
+        </text>
         {chart.series.map((s, si) => {
           const color = COLORS[si % COLORS.length];
           if (bars) {

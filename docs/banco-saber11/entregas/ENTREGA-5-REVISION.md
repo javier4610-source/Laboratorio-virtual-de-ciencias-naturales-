@@ -186,3 +186,10 @@ Pendientes: entregas 4 (D, física mecánica, en curso) y 6 (F, indagación e in
 - **Ítem 145.** «Atravesar el cuerpo» se explica por la energía de los fotones y la interacción con la materia; el ítem no entra en detalles (absorción fotoeléctrica, número atómico) que exceden la media.
 - **Ítem 149.** Las eficiencias son de orden de magnitud realista (hidroeléctrica ≈ 85–90 %, térmica de carbón ≈ 35–40 %, paneles comerciales ≈ 15–22 %), pero se presentan como datos ficticios; la «energía que entra» a una central solar se define aquí como la luz que llega a los paneles, que es una convención del ítem.
 - **Ítem 150.** La afirmación de que cerca del ecuador convienen inclinaciones pequeñas es cualitativa y no se cuantifica; además, en Apartadó (≈ 8° N) el Sol del mediodía pasa al norte del cenit parte del año, de modo que la orientación al sur no es óptima todo el año. El ítem no depende de ello: su clave es la variable de confusión.
+
+
+## Revisión del integrador
+
+- Los 30 ítems se revisaron sin cambios (cálculos de 127, 130, 132, 133, 135, 140, 142, 143, 145, 147, 148 y 149 verificados).
+- Coincidencia aceptada con el bloque D: los ítems 142 (olas, texto), 143 (gráfica desplazamiento-tiempo) y el D-113
+  (forma de la cuerda) usan v = λ·f, pero cada uno exige leer una representación distinta; se conservan.

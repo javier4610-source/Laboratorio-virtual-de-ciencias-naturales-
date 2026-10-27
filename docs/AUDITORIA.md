@@ -543,3 +543,12 @@ Capturas de revisión (claro y oscuro, 1280 y 390 px) revisadas por el integrado
 | Entrega 3 (química) | Revisión de 15 criterios del autor con guion de cálculos; revisión del integrador (combustión de la vela, gases, titulación, dilución); `tests/unit/bloqueC.test.ts` | 10/10/10, 10/12/8, 23 ítems con datos | Ninguno en la revisión del integrador | — | Correcto; no validado psicométricamente |
 | Gráficas | Capturas claro/oscuro, 1280 y 390 px; `tests/unit/advancedChart.test.ts` | Correcto | Marcas «2,5» en un eje de meses; rótulos de barras encimados a 390 px | Marcas enteras; rótulos en dos líneas; margen inferior mayor | Corregido |
 | Regresión | `tsc -b`; 1355 pruebas unitarias; `npm run build`; E2E completo (201 pasan, 1 se omite por diseño) | Correcto | — | — | Correcto |
+
+# Banco avanzado tipo Saber 11.°: entregas 4 y 5 (versión 2.13.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Entrega 4 (física mecánica) | Revisión de 15 criterios con guion de cálculos; revisión ítem por ítem del integrador; `tests/unit/bloqueD.test.ts` | 10/10/10, 10/12/8, 22 ítems con datos | Ninguno en la revisión del integrador | — | Correcto; no validado psicométricamente |
+| Entrega 5 (electricidad, ondas y energía) | Igual; `tests/unit/bloqueE.test.ts` | 10/10/10, 10/12/8, 22 ítems con datos | Tres ítems con v = λ·f (D-113, E-142, E-143) | Se conservan: cada uno usa una representación distinta | Correcto |
+| Validador | `npm run banco` | 150 ítems, 0 errores, 0 avisos | Enunciado del ítem 17 igual al del 7 | Enunciado propio | Corregido |
+| Regresión | `tsc -b`; 1384 pruebas unitarias; `npm run build`; E2E completo (201 pasan, 1 se omite por diseño) | Correcto | — | — | Correcto |

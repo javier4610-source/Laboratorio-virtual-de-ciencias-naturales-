@@ -116,8 +116,8 @@ entrega (`entregas/`). Para cada ítem incluye:
 | 1 | 1–30 | A · Biología | Publicada (versión 2.11.0) |
 | 2 | 31–60 | B · Ecología, ambiente y sostenibilidad | Publicada (versión 2.12.0) |
 | 3 | 61–90 | C · Química | Publicada (versión 2.12.0) |
-| 4 | 91–120 | D · Física y fenómenos mecánicos | Pendiente |
-| 5 | 121–150 | E · Electricidad, magnetismo, ondas y energía | Pendiente |
+| 4 | 91–120 | D · Física y fenómenos mecánicos | Publicada (versión 2.13.0) |
+| 5 | 121–150 | E · Electricidad, magnetismo, ondas y energía | Publicada (versión 2.13.0) |
 | 6 | 151–180 | F · Indagación, integración y CTS | Pendiente |
 
 **Al terminar cada entrega se comprueba:**

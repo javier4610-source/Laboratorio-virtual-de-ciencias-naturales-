@@ -7,6 +7,21 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.13.0] · 2026-10-27
+
+Banco avanzado tipo Saber 11.°: entregas 4 y 5 (150 de 180 ítems).
+
+### Añadido
+- **Entrega 4 (ítems 91–120, física y fenómenos mecánicos):** 10/10/10 por competencia, niveles 10/12/8, 22 ítems con
+  gráficas de posición y velocidad, diagramas de cuerpo libre descritos, tablas y experimentos (movimiento, leyes de
+  Newton, energía con rozamiento, impulso, presión, Arquímedes, sonido, espejos, ley de Snell y lentes).
+- **Entrega 5 (ítems 121–150, electricidad, magnetismo, ondas y energía):** 10/10/10, niveles 10/12/8, 22 ítems con
+  datos (inducción electrostática, circuitos en serie y en paralelo, consumo en kWh con tarifas ficticias, inducción
+  electromagnética, ondas, calor y eficiencia de centrales).
+
+### Cambiado
+- Ítem 17: enunciado propio (antes era igual al del ítem 7); el validador ya no da avisos.
+
 ## [2.12.0] · 2026-10-27
 
 Banco avanzado tipo Saber 11.°: entregas 2 y 3 (90 de 180 ítems).

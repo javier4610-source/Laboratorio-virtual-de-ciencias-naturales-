@@ -552,3 +552,12 @@ Capturas de revisión (claro y oscuro, 1280 y 390 px) revisadas por el integrado
 | Entrega 5 (electricidad, ondas y energía) | Igual; `tests/unit/bloqueE.test.ts` | 10/10/10, 10/12/8, 22 ítems con datos | Tres ítems con v = λ·f (D-113, E-142, E-143) | Se conservan: cada uno usa una representación distinta | Correcto |
 | Validador | `npm run banco` | 150 ítems, 0 errores, 0 avisos | Enunciado del ítem 17 igual al del 7 | Enunciado propio | Corregido |
 | Regresión | `tsc -b`; 1384 pruebas unitarias; `npm run build`; E2E completo (201 pasan, 1 se omite por diseño) | Correcto | — | — | Correcto |
+
+# Banco avanzado tipo Saber 11.°: entrega 6 y banco completo (versión 2.14.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Entrega 6 (indagación, integración y CTS) | Revisión de 15 criterios con guion de cálculos; revisión ítem por ítem del integrador (correlación del ítem 175 = −0,068; promedios por década del 178; DBO del 177; promedios del 180); `tests/unit/bloqueF.test.ts` | 10/10/10, 10/12/8, 23 ítems con datos | Ninguno en la revisión del integrador | — | Correcto; no validado psicométricamente |
+| Fuente externa | Valor guía de la OMS para nitrato (50 mg/L como ion nitrato, *Guidelines for drinking-water quality*, 4.ª ed. con adendas, 2022) | Coincide con el valor conocido | — | — | Correcto |
+| Banco completo | `npm run banco` con metas globales | 180 ítems, 0 errores, 0 avisos; 60/60/60; 60/72/48; 134 con datos | — | — | Correcto |
+| Regresión | `tsc -b`; 1401 pruebas unitarias; `npm run build`; E2E completo (201 pasan, 1 se omite por diseño) | Correcto | — | — | Correcto |

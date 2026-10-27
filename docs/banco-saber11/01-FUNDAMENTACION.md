@@ -118,7 +118,7 @@ entrega (`entregas/`). Para cada ítem incluye:
 | 3 | 61–90 | C · Química | Publicada (versión 2.12.0) |
 | 4 | 91–120 | D · Física y fenómenos mecánicos | Publicada (versión 2.13.0) |
 | 5 | 121–150 | E · Electricidad, magnetismo, ondas y energía | Publicada (versión 2.13.0) |
-| 6 | 151–180 | F · Indagación, integración y CTS | Pendiente |
+| 6 | 151–180 | F · Indagación, integración y CTS | Publicada (versión 2.14.0) |
 
 **Al terminar cada entrega se comprueba:**
 - que estén todos los números del lote;
@@ -128,6 +128,14 @@ entrega (`entregas/`). Para cada ítem incluye:
 - el estado de revisión de cada ítem.
 
 Después se actualiza el balance global. El banco no se declara completo hasta que estén las seis entregas.
+
+**Estado (versión 2.14.0): banco completo.** 180 ítems; 60/60/60 por competencia; 60/72/48 por nivel; 134 ítems con
+interpretación de datos; claves A 45 · B 44 · C 44 · D 47, sin rachas de más de dos ni ciclos. El validador da 0 errores y
+0 avisos con las metas globales. El balance por bloque está en `entregas/ENTREGA-6-REVISION.md` (sección 7).
+
+**Pasos recomendados antes de usarlo para calificar:** contrastar las afirmaciones y evidencias con el marco de
+referencia oficial del ICFES cuando se pueda consultar, y hacer una aplicación piloto con estudiantes para obtener
+índices de dificultad y discriminación reales.
 
 ### 9. Criterios de construcción
 

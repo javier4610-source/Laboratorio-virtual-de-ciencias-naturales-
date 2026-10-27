@@ -39,12 +39,6 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       plano inclinado (9.º, `trabajo`).
 - [x] **Lote 9:** empuje y flotación (7.º, `flotacion`) · movimiento y distancia recorrida (6.º, `movimiento`) · circuitos simples con
       pilas, interruptores y bombillos (7.º, física, `circuitos-simples`).
-- [ ] **Banco avanzado Saber 11.° (pedido del docente, 2026-10-27):** 180 ítems originales en seis entregas de 30
-      (A biología · B ecología y ambiente · C química · D física mecánica · E electricidad, ondas y energía · F indagación,
-      integración y CTS) según el prompt maestro del docente; fundamentación en `docs/banco-saber11/01-FUNDAMENTACION.md`,
-      esquema y matriz en `src/assessment/avanzado/types.ts`. Una entrega por ronda, con revisión de 15 criterios,
-      validador automático y revisión del integrador. Estado: entregas 1 a 5 publicadas (v2.13.0, 150 ítems);
-      siguiente: entrega 6 (bloque F, indagación, integración y CTS). Documentos oficiales del ICFES y del MEN no accesibles desde el entorno.
 - [ ] **T3 · Retroalimentación del docente** (espera T2: necesita el servidor publicado): comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.
 - [x] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
@@ -66,6 +60,10 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] v2.14.0 · Banco avanzado Saber 11.° completo (pedido del docente): 180 ítems originales en seis bloques, tres
+  modalidades de uso, validador con metas globales y documentos (fundamentación, cuadernillo, clave, solucionario,
+  instrumentos y referencias) en `docs/banco-saber11/`. Pendiente del docente: contrastar con el marco oficial del ICFES
+  y pilotaje con estudiantes.
 - [x] v2.13.0 · Banco avanzado Saber 11.°: entregas 4 (física mecánica) y 5 (electricidad, magnetismo, ondas y energía); 150 de 180 ítems.
 - [x] v2.12.0 · Banco avanzado Saber 11.°: entregas 2 (ecología, ambiente y sostenibilidad) y 3 (química); 90 de 180 ítems.
 - [x] v2.11.0 · Banco avanzado Saber 11.°: tres modalidades (práctica guiada, simulacro, refuerzo), validador, documentos

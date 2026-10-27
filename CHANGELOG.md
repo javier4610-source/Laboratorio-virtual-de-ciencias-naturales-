@@ -7,6 +7,19 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.14.0] · 2026-10-27
+
+Banco avanzado tipo Saber 11.° completo: entrega 6 y 180 ítems validados con las metas globales.
+
+### Añadido
+- **Entrega 6 (ítems 151–180, indagación científica, integración y ciencia, tecnología y sociedad):** 10/10/10, niveles
+  10/12/8, 23 ítems con datos. Va más allá del control de variables: prueba a ciegas, grupo con producto simulado,
+  asignación al azar por bloques, observación e inferencia, significado de «teoría», replicación y revisión por pares,
+  resolución e incertidumbre, ejes truncados, correlación y causalidad (inversa, tercera variable, desfase, relación no
+  lineal), límites de los modelos, selección interesada de datos y decisiones tecnológicas.
+- **Banco completo:** 180 ítems, 60/60/60 por competencia, 60/72/48 por nivel, 134 con datos, claves A 45 · B 44 · C 44 ·
+  D 47, sin rachas de más de dos ni ciclos. Documentos 02–06 regenerados.
+
 ## [2.13.0] · 2026-10-27
 
 Banco avanzado tipo Saber 11.°: entregas 4 y 5 (150 de 180 ítems).

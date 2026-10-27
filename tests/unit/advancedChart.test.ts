@@ -17,3 +17,9 @@ describe('gráficas del banco avanzado', () => {
     expect(splitAxisLabel('Butan-1-ol (4 C)', 12)).toEqual(['Butan-1-ol', '(4 C)']);
   });
 });
+
+describe('eje de meses', () => {
+  it('de 1 a 12 usa marcas cada 3 meses, sin pasar de 12', () => {
+    expect(niceTicks(1, 12, 5, true)).toEqual([0, 3, 6, 9, 12]);
+  });
+});

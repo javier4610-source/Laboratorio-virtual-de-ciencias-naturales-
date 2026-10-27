@@ -534,3 +534,12 @@ Capturas de revisión (claro y oscuro, 1280 y 390 px) revisadas por el integrado
 | Interfaz | `tests/e2e/banco-avanzado.spec.ts` (axe claro y oscuro, 390 px); capturas del integrador | Correcto | El rótulo del eje y se montaba sobre el título de la gráfica | Rótulo en dos líneas (`splitAxisLabel`) | Corregido |
 | Documentos oficiales | Consulta de icfes.gov.co y mineducacion.gov.co | No accesibles desde el entorno; solo se confirmó su existencia con un buscador | — | Declarado en la Parte I; afirmaciones y evidencias como formulaciones propias | Limitación declarada |
 | Regresión | `tsc -b`; `vitest run`; `npm run build`; E2E completo | 1330 pruebas unitarias; E2E 201 pasan y 1 se omite por diseño | — | — | Correcto |
+
+# Banco avanzado tipo Saber 11.°: entregas 2 y 3 (versión 2.12.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Entrega 2 (ecología) | Revisión de 15 criterios del autor; revisión ítem por ítem del integrador; `tests/unit/bloqueB.test.ts` | 10/10/10, 10/12/8, 23 ítems con datos, cálculos verificados | Ítem 53: dos distractores poco plausibles | Reemplazados por errores frecuentes de control de variables | Correcto; no validado psicométricamente |
+| Entrega 3 (química) | Revisión de 15 criterios del autor con guion de cálculos; revisión del integrador (combustión de la vela, gases, titulación, dilución); `tests/unit/bloqueC.test.ts` | 10/10/10, 10/12/8, 23 ítems con datos | Ninguno en la revisión del integrador | — | Correcto; no validado psicométricamente |
+| Gráficas | Capturas claro/oscuro, 1280 y 390 px; `tests/unit/advancedChart.test.ts` | Correcto | Marcas «2,5» en un eje de meses; rótulos de barras encimados a 390 px | Marcas enteras; rótulos en dos líneas; margen inferior mayor | Corregido |
+| Regresión | `tsc -b`; 1355 pruebas unitarias; `npm run build`; E2E completo (201 pasan, 1 se omite por diseño) | Correcto | — | — | Correcto |

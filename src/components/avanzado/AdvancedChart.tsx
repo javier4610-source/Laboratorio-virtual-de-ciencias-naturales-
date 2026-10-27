@@ -8,7 +8,7 @@ import type { ItemChart } from '../../assessment/avanzado/types';
  */
 const W = 480;
 const H = 300;
-const M = { l: 72, r: 14, t: 14, b: 50 };
+const M = { l: 72, r: 14, t: 14, b: 60 };
 const COLORS = ['var(--series-2)', 'var(--series-1)', 'var(--series-3)', 'var(--series-4)'];
 const SHAPES = ['círculo', 'cuadrado', 'triángulo', 'rombo'] as const;
 
@@ -32,7 +32,7 @@ export function niceTicks(lo: number, hi: number, target = 5, integer = false): 
   const raw = (hi - lo) / target;
   const p = 10 ** Math.floor(Math.log10(raw));
   // Con datos enteros (meses, días, individuos…) las marcas también son enteras: sin «2,5» ni «7,5».
-  const mults = integer ? [1, 2, 5, 10] : [1, 2, 2.5, 5, 10];
+  const mults = integer ? [1, 2, 3, 4, 5, 10] : [1, 2, 2.5, 5, 10];
   const step = Math.max(integer ? 1 : 0, mults.map((m) => m * p).find((s) => s >= raw) ?? 10 * p);
   const start = Math.floor(lo / step) * step;
   const ticks: number[] = [];
@@ -103,7 +103,7 @@ export function AdvancedChart({ chart }: { chart: ItemChart }) {
         ))}
         <line className="axis" x1={M.l} x2={W - M.r} y1={M.t + ph} y2={M.t + ph} />
         <line className="axis" x1={M.l} x2={M.l} y1={M.t} y2={M.t + ph} />
-        <text className="axis-title" x={M.l + pw / 2} y={H - 8} textAnchor="middle">{chart.xLabel}</text>
+        <text className="axis-title" x={M.l + pw / 2} y={H - 6} textAnchor="middle">{chart.xLabel}</text>
         <text className="axis-title" transform={`translate(${yLines.length > 1 ? 12 : 18} ${M.t + ph / 2}) rotate(-90)`} textAnchor="middle">
           {yLines.map((t, i) => <tspan key={i} x={0} dy={i === 0 ? 0 : '1.15em'}>{t}</tspan>)}
         </text>

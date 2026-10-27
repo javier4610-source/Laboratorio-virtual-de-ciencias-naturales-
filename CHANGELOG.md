@@ -7,6 +7,22 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.12.0] · 2026-10-27
+
+Banco avanzado tipo Saber 11.°: entregas 2 y 3 (90 de 180 ítems).
+
+### Añadido
+- **Entrega 2 (ítems 31–60, ecología, ambiente y sostenibilidad):** 10/10/10 por competencia, niveles 10/12/8, 23 ítems
+  con tablas, gráficas, esquemas, experimentos o modelos (páramo, manglar, ciénagas, minería, pesca, cambio climático,
+  calidad del aire). Revisión en `docs/banco-saber11/entregas/ENTREGA-2-REVISION.md`.
+- **Entrega 3 (ítems 61–90, química y transformaciones de la materia):** 10/10/10 por competencia, niveles 10/12/8, 23
+  ítems con datos; todos los cálculos verificados con un guion (estequiometría, gases, diluciones, titulación,
+  solubilidad). Revisión en `docs/banco-saber11/entregas/ENTREGA-3-REVISION.md`.
+
+### Cambiado
+- Gráficas del banco: marcas enteras en ejes de datos enteros (meses), rótulos de barras en dos líneas y más margen
+  inferior para que no se encimen en el celular.
+
 ## [2.11.0] · 2026-10-27
 
 Banco avanzado tipo Saber 11.° de Ciencias Naturales (pedido del docente): infraestructura completa y entrega 1 de 6.

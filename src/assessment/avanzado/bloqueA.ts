@@ -833,7 +833,7 @@ export const BLOQUE_A: AdvancedItem[] = [
     options: {
       A: 'La bolsa daña las flores, y por eso las flores embolsadas casi no forman frutos.',
       B: 'Las flores forman frutos aunque no reciban polen, siempre que estén al aire libre.',
-      C: 'La mayoría de los frutos se forma cuando las flores reciben polen de otra planta.',
+      C: 'La formación de frutos depende sobre todo de que la flor reciba polen de otra planta.',
       D: 'El polen de la misma planta es tan eficaz como el de otra planta para formar frutos.',
     },
     key: 'C',

@@ -7,6 +7,15 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+### Añadido
+- **Pista de control de variables al guardar un ensayo** (todas las prácticas): si respecto al ensayo anterior
+  cambiaron dos o más variables de entrada a la vez, una nota debajo de «Guardar ensayo en la tabla» dice cuáles
+  cambiaron, por qué así no se sabe cuál causó el efecto y qué hacer («vuelve la arista a 3,0 cm y guarda otro
+  ensayo»). No bloquea el registro, se cierra con «Entendido» y no se repite para la misma combinación. Los diseños
+  que cambian varias entradas a propósito (talleres, ejercicios, reto de indagación, metabolismo, secuencias…) y las
+  entradas que dependen de otra se declaran en las tablas de datos (`multiInput`, `notIndependent`);
+  `src/lib/controlVariables.ts` con pruebas unitarias y `tests/e2e/control-variables.spec.ts`.
+
 ## [2.9.0] · 2026-10-26
 
 Rediseño, paso siguiente (ADR 0007): cada aviso de condición dice su causa y cómo corregirla, y las lecturas directas

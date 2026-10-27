@@ -120,6 +120,11 @@
 .condition-nota .condition-icon { background: color-mix(in srgb, var(--info) 14%, var(--surface)); color: var(--info); }
 .condition-nota .condition-level { color: var(--info); }
 
+/* ---------- Botón de registro y pista de control de variables (sin animación ni sonido propios) ---------- */
+.record-block { display: grid; gap: 10px; min-width: 0; }
+.control-hint { min-width: 0; overflow-wrap: anywhere; }
+.control-hint .btn-row { margin-top: 4px; }
+
 /* ---------- Lecturas con resolución y estado ---------- */
 .readout .r { display: flex; flex-wrap: wrap; gap: 4px 8px; margin-top: 3px; font-size: var(--fs-xs); color: var(--ink-2); font-family: var(--font-data); }
 .r-state { font-family: var(--font-body); font-weight: var(--fw-bold); border-radius: var(--radius-pill); padding: 0 7px; }

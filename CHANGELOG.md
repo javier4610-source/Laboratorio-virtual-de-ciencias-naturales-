@@ -7,6 +7,13 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.14.1] · 2026-10-27
+
+### Corregido
+- Banco avanzado en el celular (390 px): 19 preguntas con gráfica y la pregunta 64 (dirección web larga en la fuente) se
+  salían de la pantalla al abrir la retroalimentación. Las gráficas y sus tablas de datos ya no ensanchan la página y las
+  palabras largas se parten. Nueva prueba que recorre las 180 preguntas a 390 px (antes solo se revisaban 10 al azar).
+
 ## [2.14.0] · 2026-10-27
 
 Banco avanzado tipo Saber 11.° completo: entrega 6 y 180 ítems validados con las metas globales.

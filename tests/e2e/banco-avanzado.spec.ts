@@ -90,7 +90,8 @@ test('simulacro: no muestra claves hasta terminar; luego puntaje, tabla por comp
   await page.getByRole('button', { name: 'Ver el solucionario' }).click();
   const sol = page.locator('details.adv-sol');
   await expect(sol).toHaveCount(n);
-  await sol.first().locator('summary').click();
+  // Solo el resumen propio del solucionario: el ítem puede traer además el desplegable de su gráfica.
+  await sol.first().locator(':scope > summary').click();
   await expect(sol.first().locator('.adv-feedback')).toContainText('Por qué las otras opciones no lo son');
   // El refuerzo propone preguntas a partir del simulacro.
   await page.getByRole('button', { name: 'Practicar lo sugerido (refuerzo)' }).click();

@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30), F (30). Total: 180 de 180 preguntas.
 
 ## Tabla consolidada
 
@@ -25,6 +25,9 @@ Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 pre
 | 121: C | 122: A | 123: D | 124: B | 125: B | 126: D | 127: A | 128: C | 129: A | 130: D |
 | 131: C | 132: B | 133: D | 134: A | 135: A | 136: C | 137: B | 138: D | 139: C | 140: A |
 | 141: D | 142: B | 143: C | 144: A | 145: B | 146: D | 147: B | 148: C | 149: A | 150: D |
+| 151: B | 152: C | 153: A | 154: D | 155: C | 156: B | 157: B | 158: A | 159: D | 160: C |
+| 161: A | 162: D | 163: B | 164: C | 165: C | 166: A | 167: B | 168: D | 169: A | 170: C |
+| 171: B | 172: D | 173: A | 174: B | 175: C | 176: D | 177: B | 178: A | 179: C | 180: D |
 
 ## Detalle por pregunta
 
@@ -180,6 +183,36 @@ Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 pre
 | 148 | SN-E-148 | E | Indagación | 3 | C |
 | 149 | SN-E-149 | E | Indagación | 3 | A |
 | 150 | SN-E-150 | E | Indagación | 3 | D |
+| 151 | SN-F-151 | F | Uso comprensivo del conocimiento científico | 1 | B |
+| 152 | SN-F-152 | F | Indagación | 1 | C |
+| 153 | SN-F-153 | F | Explicación de fenómenos | 2 | A |
+| 154 | SN-F-154 | F | Uso comprensivo del conocimiento científico | 1 | D |
+| 155 | SN-F-155 | F | Indagación | 2 | C |
+| 156 | SN-F-156 | F | Explicación de fenómenos | 2 | B |
+| 157 | SN-F-157 | F | Uso comprensivo del conocimiento científico | 1 | B |
+| 158 | SN-F-158 | F | Explicación de fenómenos | 2 | A |
+| 159 | SN-F-159 | F | Indagación | 2 | D |
+| 160 | SN-F-160 | F | Uso comprensivo del conocimiento científico | 2 | C |
+| 161 | SN-F-161 | F | Explicación de fenómenos | 1 | A |
+| 162 | SN-F-162 | F | Indagación | 1 | D |
+| 163 | SN-F-163 | F | Uso comprensivo del conocimiento científico | 2 | B |
+| 164 | SN-F-164 | F | Explicación de fenómenos | 1 | C |
+| 165 | SN-F-165 | F | Indagación | 2 | C |
+| 166 | SN-F-166 | F | Uso comprensivo del conocimiento científico | 2 | A |
+| 167 | SN-F-167 | F | Explicación de fenómenos | 2 | B |
+| 168 | SN-F-168 | F | Indagación | 1 | D |
+| 169 | SN-F-169 | F | Uso comprensivo del conocimiento científico | 1 | A |
+| 170 | SN-F-170 | F | Explicación de fenómenos | 3 | C |
+| 171 | SN-F-171 | F | Indagación | 2 | B |
+| 172 | SN-F-172 | F | Uso comprensivo del conocimiento científico | 2 | D |
+| 173 | SN-F-173 | F | Explicación de fenómenos | 3 | A |
+| 174 | SN-F-174 | F | Indagación | 3 | B |
+| 175 | SN-F-175 | F | Uso comprensivo del conocimiento científico | 3 | C |
+| 176 | SN-F-176 | F | Explicación de fenómenos | 3 | D |
+| 177 | SN-F-177 | F | Indagación | 3 | B |
+| 178 | SN-F-178 | F | Explicación de fenómenos | 1 | A |
+| 179 | SN-F-179 | F | Uso comprensivo del conocimiento científico | 3 | C |
+| 180 | SN-F-180 | F | Indagación | 3 | D |
 
 ## Distribución de claves y revisión de patrones
 
@@ -190,6 +223,7 @@ Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 pre
 | Bloque C | 8 | 7 | 7 | 8 | 2 (A desde 74) | No |
 | Bloque D | 8 | 7 | 7 | 8 | 2 (B desde 94) | No |
 | Bloque E | 8 | 7 | 7 | 8 | 2 (B desde 124) | No |
-| Total | 38 | 36 | 36 | 40 | 2 (D desde 8) | No |
+| Bloque F | 7 | 8 | 8 | 7 | 2 (B desde 156) | No |
+| Total | 45 | 44 | 44 | 47 | 2 (D desde 8) | No |
 
 Criterio del banco (decisión metodológica, no regla oficial): en cada bloque, cada letra entre 6 y 9 veces y nunca más de 3 claves iguales seguidas. La calidad científica del ítem prevalece sobre la distribución de claves.

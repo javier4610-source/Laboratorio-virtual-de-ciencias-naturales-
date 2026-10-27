@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30), F (30). Total: 180 de 180 preguntas.
 
 ## Instrucciones para el estudiante
 
@@ -3345,5 +3345,693 @@ En Apartadó, un grupo quiere saber qué inclinación de un panel solar pequeño
 - **B.** Es válida, aunque convendría repetir las mismas mediciones con un instrumento que tenga más cifras decimales.
 - **C.** No es válida, porque el panel debería estar vertical (90°) para recibir más luz y nunca se midió esa inclinación.
 - **D.** No es válida, porque la hora cambió junto con la inclinación; habría que medir todas casi a la misma hora.
+
+---
+
+## Bloque F. Indagación científica, integración y ciencia, tecnología y sociedad (preguntas 151–180)
+
+### Pregunta 151
+
+Durante una salida de campo a una quebrada, después de dos días de lluvia, una estudiante escribe cuatro enunciados en su libreta. I: «El agua se ve de color café y no se alcanza a ver el fondo, que ayer sí se veía». II: «El color café se debe a la tierra que la lluvia arrastró desde los potreros de la parte alta». III: «Si el color se debe a tierra arrastrada, una muestra de esta agua dejada en reposo en un frasco formará un sedimento en el fondo». IV: «La próxima semana la quebrada seguirá igual de turbia».
+
+**¿Cuál enunciado es una observación y cuál es una inferencia que propone una causa de lo observado?**
+
+- **A.** Observación: II. Inferencia que propone la causa: I.
+- **B.** Observación: I. Inferencia que propone la causa: II.
+- **C.** Observación: III. Inferencia que propone la causa: II.
+- **D.** Observación: I. Inferencia que propone la causa: III.
+
+---
+
+### Pregunta 152
+
+Un grupo quiere saber si las personas distinguen un jugo de lulo endulzado con panela de otro endulzado con azúcar refinada, preparados con la misma fruta y con el mismo nivel de dulzor. Su plan es que 20 compañeros prueben dos vasos rotulados «panela» y «azúcar», siempre en ese orden, y digan cuál prefieren y si notan diferencia.
+
+**¿Qué cambio en el procedimiento hace más confiable la comparación?**
+
+- **A.** Que 60 compañeros prueben los vasos rotulados, para que el resultado sea más representativo.
+- **B.** Que un cocinero experto pruebe los dos vasos rotulados y decida cuál de los dos jugos es el mejor de ellos.
+- **C.** Rotular los vasos con códigos que los catadores no conozcan y sortear cuál vaso se prueba primero.
+- **D.** Servir siempre el vaso de panela primero, para que todos los catadores sigan el mismo orden.
+
+---
+
+### Pregunta 153
+
+> *Datos ficticios con finalidad didáctica.*
+
+En una feria se venden pulseras que, según el vendedor, «mejoran el equilibrio gracias a un holograma energético». Un grupo de estudiantes repartió por sorteo a 45 voluntarios en tres grupos de 15. Cada voluntario se paró en un pie con los ojos cerrados y se midió cuánto tiempo mantuvo el equilibrio, dos veces, con una semana de diferencia. Grupo 1: sin pulsera en las dos mediciones. Grupo 2: en la segunda medición llevó una pulsera de caucho común con un adhesivo idéntico al holograma, y se le dijo que era la pulsera del vendedor. Grupo 3: en la segunda medición llevó la pulsera del vendedor. Ningún voluntario de los grupos 2 y 3 sabía cuál pulsera llevaba (datos ficticios con fines didácticos).
+
+**Tiempo medio de equilibrio en un pie, por grupo (datos ficticios con fines didácticos)**
+
+| Grupo | Primera medición (s) | Segunda medición (s) | Cambio (s) |
+| --- | --- | --- | --- |
+| 1. Sin pulsera | 24,1 | 26,0 | +1,9 |
+| 2. Pulsera común con adhesivo | 23,8 | 29,5 | +5,7 |
+| 3. Pulsera del vendedor | 24,3 | 30,1 | +5,8 |
+
+**¿Qué explicación de los resultados está mejor sustentada?**
+
+- **A.** La mejora extra de los grupos 2 y 3 no se debe al holograma, porque la pulsera sin holograma produjo la misma mejora.
+- **B.** El holograma mejora el equilibrio, porque el grupo 3, que llevó la pulsera del vendedor, fue el que más mejoró su tiempo.
+- **C.** Ninguna pulsera tuvo efecto alguno, porque los tres grupos mejoraron y esa mejora se explica solo por la práctica.
+- **D.** La pulsera común también tiene propiedades energéticas, porque produjo casi la misma mejora que la del vendedor.
+
+---
+
+### Pregunta 154
+
+> *Datos ficticios con finalidad didáctica.*
+
+En una práctica de química, un grupo seca un precipitado y mide su masa tres veces en una balanza digital cuya pantalla muestra una sola cifra decimal (resolución de 0,1 g). Al promediar, la calculadora muestra 12,333333 (datos ficticios con fines didácticos).
+
+**Masa del precipitado seco medida tres veces (datos ficticios con fines didácticos)**
+
+| Medición | Masa (g) |
+| --- | --- |
+| 1 | 12,3 |
+| 2 | 12,4 |
+| 3 | 12,3 |
+
+**¿Cómo deben informar la masa del precipitado?**
+
+- **A.** 12,333333 g, porque conservar todas las cifras de la calculadora hace que el resultado sea más exacto.
+- **B.** 12 g, porque una masa se informa en gramos enteros para que el resultado no tenga incertidumbre.
+- **C.** 12,33 g, porque promediar tres mediciones hace la incertidumbre diez veces menor que la resolución.
+- **D.** 12,3 g, porque la balanza no distingue cambios menores de 0,1 g y los datos varían en esa cifra.
+
+---
+
+### Pregunta 155
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una publicación en redes sociales promociona un filtro casero de agua con una gráfica de barras y el mensaje «¡Reduce la turbidez a la tercera parte!». La turbidez se mide en NTU (unidades nefelométricas de turbidez): cuanto mayor es el valor, más turbia está el agua (datos ficticios con fines didácticos).
+
+*Esquema:* Gráfica de barras de la publicación. Barra «Antes del filtro»: rotulada 5,2 NTU, mide 6 cm de alto. Barra «Después del filtro»: rotulada 4,8 NTU, mide 2 cm de alto. El eje vertical empieza en 4,6 NTU (no en cero) y termina en 5,2 NTU, con marcas cada 0,1 NTU separadas 1 cm entre sí.
+
+**¿Qué evaluación del mensaje de la publicación es correcta?**
+
+- **A.** Es correcto, porque la barra de después mide la tercera parte de la barra de antes del filtro.
+- **B.** Es correcto, porque la turbidez bajó 0,4 NTU, y esa reducción equivale a dos tercios de 0,6 NTU.
+- **C.** Es engañoso: la turbidez bajó de 5,2 a 4,8 NTU, menos del 10 %, y el eje truncado exagera el cambio.
+- **D.** No se puede evaluar, porque en NTU no es posible calcular qué fracción de la turbidez inicial se eliminó.
+
+---
+
+### Pregunta 156
+
+> *Datos ficticios con finalidad didáctica.*
+
+En una región con transmisión de malaria, un programa de salud (situación hipotética) entregó en 2024 toldillos tratados con insecticida. La cantidad de toldillos para cada vereda se decidió según los casos de malaria registrados en 2023: las veredas con más casos recibieron más. En 2025, un estudiante encuentra que las veredas con más toldillos son las que tienen más casos, y concluye: «Los toldillos no sirven; incluso parecen aumentar la malaria» (datos ficticios con fines didácticos).
+
+**Casos de malaria y toldillos entregados por vereda (datos ficticios con fines didácticos)**
+
+| Vereda | Casos en 2023 (por 1 000 habitantes) | Toldillos entregados en 2024 (por cada 10 hogares) | Casos en 2025 (por 1 000 habitantes) |
+| --- | --- | --- | --- |
+| P | 4 | 2 | 3 |
+| Q | 10 | 5 | 6 |
+| R | 18 | 8 | 9 |
+| S | 30 | 10 | 14 |
+
+**¿Qué explicación de la relación entre toldillos y casos en 2025 es la más adecuada?**
+
+- **A.** Los toldillos atraen a los mosquitos hacia las viviendas, y por eso hay más casos donde se entregaron más.
+- **B.** Las veredas con más toldillos ya tenían más casos antes de recibirlos; la relación refleja cómo se repartieron.
+- **C.** Los toldillos no sirven, porque si sirvieran las veredas que recibieron más tendrían menos casos que las demás.
+- **D.** La malaria se transmite de persona a persona por contacto, así que los toldillos no influyen en los casos.
+
+---
+
+### Pregunta 157
+
+En un debate escolar, un estudiante afirma: «La evolución por selección natural es solo una teoría, es decir, una suposición que nadie ha comprobado; cuando por fin se compruebe, pasará a ser una ley».
+
+**¿Qué afirmación sobre el significado de «teoría» en ciencias es correcta?**
+
+- **A.** Es una hipótesis aún sin pruebas, que se convierte en ley cuando los experimentos la confirman.
+- **B.** Es una explicación amplia, sustentada por muchas evidencias, que puede revisarse con datos nuevos.
+- **C.** Es la opinión de un científico famoso, que la comunidad acepta por la autoridad de quien la propuso.
+- **D.** Es una explicación definitiva que ya no puede cambiar, porque se demostró de manera absoluta.
+
+---
+
+### Pregunta 158
+
+> *Datos ficticios con finalidad didáctica.*
+
+En un estanque de cultivo de tilapias con abundantes microalgas (agua verde) se midió el oxígeno disuelto cada 3 horas, desde las 6:00 de un día soleado hasta las 6:00 del día siguiente. El agua estaba a 30 °C a las 15:00 y a 26 °C a las 6:00. A esas temperaturas, el agua en contacto con el aire, sin seres vivos, disolvería unos 7,6 mg/L y 8,1 mg/L de oxígeno, respectivamente. Los piscicultores saben que, cuando los peces mueren por falta de oxígeno, suele ser al amanecer (datos ficticios con fines didácticos).
+
+**Gráfica: Oxígeno disuelto en el estanque durante 24 horas (datos ficticios con fines didácticos)**
+
+*Descripción:* Gráfica de línea del oxígeno disuelto (mg/L) contra el tiempo (h) contado desde las 6:00. A las 0 h (6:00) hay 2,1 mg/L; a las 3 h (9:00), 4,8; a las 6 h (12:00), 8,9; a las 9 h (15:00), el máximo, 10,2; a las 12 h (18:00), 7,6; a las 15 h (21:00), 5,0; a las 18 h (0:00), 3,3; a las 21 h (3:00), 2,2; y a las 24 h (6:00 del día siguiente), el mínimo, 1,6 mg/L. El oxígeno sube durante las horas de luz y baja de forma continua durante toda la noche.
+
+*Oxígeno disuelto*
+
+| Tiempo desde las 6:00 del primer día (h) | Oxígeno disuelto (mg/L) |
+| --- | --- |
+| 0 | 2,1 |
+| 3 | 4,8 |
+| 6 | 8,9 |
+| 9 | 10,2 |
+| 12 | 7,6 |
+| 15 | 5 |
+| 18 | 3,3 |
+| 21 | 2,2 |
+| 24 | 1,6 |
+
+**¿Qué explicación del mínimo de oxígeno al amanecer es coherente con los datos y con los procesos del estanque?**
+
+- **A.** De noche las algas, los peces y los microorganismos solo respiran, sin fotosíntesis que reponga el oxígeno, que se agota hasta que vuelve la luz.
+- **B.** En la madrugada el agua está más fría, y el agua fría disuelve menos oxígeno que la caliente; por eso el oxígeno es mínimo al amanecer.
+- **C.** Al amanecer las algas inician la fotosíntesis y consumen el oxígeno del agua para fabricar glucosa, hasta que el sol calienta el estanque.
+- **D.** En la tarde los peces descansan y casi no consumen oxígeno; al amanecer se activan y lo consumen en pocas horas, hasta agotarlo.
+
+---
+
+### Pregunta 159
+
+> *Datos ficticios con finalidad didáctica.*
+
+En un bosque húmedo, unos estudiantes marcaron siete parcelas de 10 m × 10 m. En cada una midieron la humedad relativa del aire cerca del suelo y contaron los hongos de sombrero visibles y las ranas. Un estudiante concluye: «Los hongos atraen a las ranas, porque donde hay más hongos hay más ranas» (datos ficticios con fines didácticos).
+
+**Humedad, hongos y ranas en siete parcelas (datos ficticios con fines didácticos)**
+
+| Parcela | Humedad relativa (%) | Hongos (número) | Ranas (número) |
+| --- | --- | --- | --- |
+| 1 | 62 | 3 | 1 |
+| 2 | 70 | 6 | 2 |
+| 3 | 78 | 11 | 4 |
+| 4 | 79 | 4 | 4 |
+| 5 | 85 | 15 | 6 |
+| 6 | 91 | 22 | 8 |
+| 7 | 92 | 8 | 8 |
+
+**¿Qué conclusión se sustenta mejor en los datos?**
+
+- **A.** Los hongos atraen a las ranas, porque en las parcelas con más hongos casi siempre se contaron más ranas.
+- **B.** Las ranas favorecen el crecimiento de los hongos, porque donde hay más ranas casi siempre hay más hongos.
+- **C.** No hay relación entre las variables, porque las parcelas 4 y 7 no siguen el patrón que muestran las demás parcelas.
+- **D.** La relación puede deberse a la humedad: con humedad parecida (3 y 4; 6 y 7) las ranas no cambian con los hongos.
+
+---
+
+### Pregunta 160
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un grupo cuelga masas de un resorte y mide cuánto se alarga. Con los primeros datos proponen el modelo «el alargamiento es proporcional a la masa colgada: 2,0 cm por cada 100 g». Después de colgar 600 g y retirar todas las masas, el resorte quedó 1,5 cm más largo que al comienzo (datos ficticios con fines didácticos).
+
+**Gráfica: Alargamiento del resorte según la masa colgada (datos ficticios con fines didácticos)**
+
+*Descripción:* Gráfica de dispersión del alargamiento (cm) contra la masa colgada (g), con dos series. Medido: 0 g, 0 cm; 100 g, 2,0 cm; 200 g, 4,0 cm; 300 g, 6,1 cm; 400 g, 8,0 cm; 500 g, 10,9 cm; 600 g, 15,0 cm. Modelo (2,0 cm por cada 100 g): 0; 2,0; 4,0; 6,0; 8,0; 10,0 y 12,0 cm para las mismas masas. Hasta 400 g los puntos medidos coinciden con el modelo; con 500 g y 600 g los medidos quedan por encima del modelo.
+
+*Medido*
+
+| Masa colgada (g) | Alargamiento (cm) |
+| --- | --- |
+| 0 | 0 |
+| 100 | 2 |
+| 200 | 4 |
+| 300 | 6,1 |
+| 400 | 8 |
+| 500 | 10,9 |
+| 600 | 15 |
+
+*Modelo: 2,0 cm por cada 100 g*
+
+| Masa colgada (g) | Alargamiento (cm) |
+| --- | --- |
+| 0 | 0 |
+| 100 | 2 |
+| 200 | 4 |
+| 300 | 6 |
+| 400 | 8 |
+| 500 | 10 |
+| 600 | 12 |
+
+**¿Qué conclusión sobre el modelo es correcta?**
+
+- **A.** El modelo es falso, porque no describe los datos de 500 g y 600 g, y por eso no sirve para hacer ninguna predicción.
+- **B.** El modelo vale para cualquier masa; los datos de 500 g y 600 g son errores de medición y se descartan.
+- **C.** El modelo describe el resorte hasta unos 400 g; con masas mayores predice alargamientos menores que los reales.
+- **D.** El modelo vale solo para masas mayores de 400 g, porque allí el resorte se alarga más por cada 100 g.
+
+---
+
+### Pregunta 161
+
+Dos personas hacen el mismo trabajo físico durante una hora a la misma temperatura del aire, 32 °C: una en un lugar con aire muy húmedo y la otra en un lugar con aire seco. Las dos sudan, pero la primera termina con la ropa empapada y siente más calor que la segunda.
+
+**¿Qué explica que en el aire muy húmedo el sudor refresque menos?**
+
+- **A.** El sudor enfría al evaporarse, porque el agua toma energía de la piel para pasar a vapor; en aire húmedo se evapora más despacio.
+- **B.** El sudor enfría porque sale más frío que la piel; en el aire húmedo el cuerpo produce un sudor más caliente que en el aire seco.
+- **C.** En el aire húmedo el cuerpo deja de producir sudor, y por eso no hay agua sobre la piel que pueda enfriarla durante el trabajo.
+- **D.** El vapor de agua del aire húmedo le transfiere frío al cuerpo, pero lo hace más despacio que el aire seco, y por eso refresca menos.
+
+---
+
+### Pregunta 162
+
+> *Datos ficticios con finalidad didáctica.*
+
+Para estimar qué porcentaje de granos de café de un lote de 2 hectáreas está atacado por la broca (un pequeño escarabajo que perfora el grano), un estudiante revisó 200 granos de los cafetos ubicados a lado y lado del camino de entrada, porque allí era más fácil recogerlos. Los granos atacados se reconocen sin dificultad por un orificio visible en la punta. Encontró un 10 % de granos perforados (datos ficticios con fines didácticos).
+
+**¿Cuál es la principal limitación de este muestreo y cómo se corrige?**
+
+- **A.** Se revisaron pocos granos; se corrige tomando 2 000 granos de los mismos cafetos que están junto al camino.
+- **B.** Se revisó a simple vista; se corrige volviendo a examinar con lupa los mismos 200 granos.
+- **C.** Se muestreó un solo día; se corrige repitiendo cada semana el muestreo en los cafetos del camino.
+- **D.** Los cafetos del camino pueden no representar el lote; se corrige eligiendo al azar cafetos de todo el lote.
+
+---
+
+### Pregunta 163
+
+> *Datos ficticios con finalidad didáctica.*
+
+Dos grupos miden el periodo de un mismo péndulo con cronómetros manuales. El tiempo de reacción de quien inicia y detiene el cronómetro introduce una incertidumbre de unos 0,2 s en cada intervalo medido, sin importar cuánto dure ese intervalo. El grupo 1 mide la duración de una sola oscilación y obtiene 1,4 s. El grupo 2 mide la duración de 20 oscilaciones seguidas, obtiene 28,0 s y divide entre 20 (datos ficticios con fines didácticos).
+
+**¿Qué incertidumbre aproximada tiene el periodo obtenido por cada grupo y qué procedimiento es mejor?**
+
+- **A.** Ambos tienen ± 0,2 s en el periodo, porque usaron el mismo tipo de cronómetro; los dos procedimientos son igual de buenos.
+- **B.** Grupo 1: ± 0,2 s (unos 14 %); grupo 2: ± 0,01 s (menos del 1 %); es mejor medir muchas oscilaciones seguidas.
+- **C.** Grupo 1: ± 0,2 s; grupo 2: ± 4 s, porque en 20 oscilaciones se suman veinte errores de reacción; es mejor medir una.
+- **D.** El grupo 2 tiene más incertidumbre, porque una lectura de 28,0 s tiene más cifras y es más difícil de leer en el cronómetro.
+
+---
+
+### Pregunta 164
+
+Un grupo de investigación (situación hipotética) anuncia que un material nuevo retiene el doble de colorante de las aguas residuales de una curtiembre que el carbón activado. Antes de aceptar el resultado, la revista a la que enviaron el artículo pide a especialistas independientes que revisen el método, y otros laboratorios intentan repetir el experimento siguiendo la descripción publicada.
+
+**¿Por qué la comunidad científica da tanta importancia a que otros laboratorios repitan el experimento?**
+
+- **A.** Porque un resultado solo es válido si lo obtienen tres laboratorios del mismo país que el grupo que lo publicó.
+- **B.** Porque así los laboratorios que repiten el experimento comparten el reconocimiento por el descubrimiento.
+- **C.** Porque si grupos independientes obtienen lo mismo, es menos probable que el resultado se deba a un error.
+- **D.** Porque los primeros resultados de un experimento siempre son incorrectos y solo las repeticiones son ciertas.
+
+---
+
+### Pregunta 165
+
+Un agricultor quiere comparar el rendimiento de una variedad nueva de fríjol con el de la variedad que siembra siempre. Tiene 12 parcelas del mismo tamaño, pero no todas son iguales: las de la zona baja, cerca del río, tienen el suelo más húmedo y fértil que las de la ladera.
+
+*Esquema:* Plano de la finca: dos filas de 6 parcelas cada una. Fila inferior (zona baja, junto al río): parcelas 1 a 6, suelo húmedo y fértil. Fila superior (ladera): parcelas 7 a 12, suelo más seco y menos fértil. Todas las parcelas tienen el mismo tamaño y recibirán el mismo manejo.
+
+**¿Qué diseño permite atribuir con más confianza una diferencia de rendimiento a la variedad?**
+
+- **A.** Sembrar la variedad nueva en las 6 parcelas de la zona baja y la tradicional en las 6 de la ladera.
+- **B.** Sembrar una sola parcela de cada variedad, elegidas por sorteo, y dejar las otras 10 con el cultivo usual.
+- **C.** En cada zona, sortear 3 parcelas para la variedad nueva y 3 para la tradicional, y comparar los promedios.
+- **D.** Sembrar este año la variedad nueva en las 12 parcelas y comparar con la variedad tradicional del año pasado.
+
+---
+
+### Pregunta 166
+
+Un anuncio en redes sociales afirma: «Nuestra agua alcalina, de pH 9, neutraliza la acidez de tu sangre y la vuelve más alcalina». Se sabe que el jugo gástrico del estómago tiene un pH aproximado entre 1,5 y 3,5, y que la sangre de una persona sana se mantiene entre pH 7,35 y 7,45 gracias a sustancias amortiguadoras, a la respiración y al trabajo de los riñones.
+
+**¿Qué evaluación del anuncio se basa en conocimientos científicos?**
+
+- **A.** No se sustenta: el ácido del estómago neutraliza la escasa alcalinidad del agua, y el pH de la sangre se regula en un rango estrecho.
+- **B.** Se sustenta: una sustancia de pH 9 es básica, y toda base que se toma aumenta el pH de la sangre en la misma proporción en que se ingiere.
+- **C.** Se sustenta en parte: el agua alcalina sí vuelve básica la sangre, pero solo cuando se toma en ayunas y en cantidades muy grandes.
+- **D.** No se sustenta, porque el agua de pH 9 es más ácida que la sangre, y por eso la volvería todavía más ácida en lugar de alcalina.
+
+---
+
+### Pregunta 167
+
+> *Datos ficticios con finalidad didáctica.*
+
+En un municipio cálido, la oficina de salud (situación hipotética) graficó los casos de dengue de un año por mes, contados según la fecha en que empezaron los síntomas. Ese año las lluvias fueron intensas en abril y mayo (meses 4 y 5) y en octubre y noviembre (meses 10 y 11); el resto del año fue seco. El dengue se transmite por la picadura del mosquito Aedes aegypti, que pone sus huevos en recipientes con agua estancada (datos ficticios con fines didácticos).
+
+**Gráfica: Casos de dengue por mes de inicio de síntomas (datos ficticios con fines didácticos)**
+
+*Descripción:* Gráfica de línea de los casos de dengue (número) por mes (1 = enero, 12 = diciembre). Enero, 12; febrero, 9; marzo, 8; abril, 10; mayo, 18; junio, 35; julio, 41; agosto, 22; septiembre, 12; octubre, 14; noviembre, 24; diciembre, 38. Los casos son bajos de enero a abril, suben a partir de mayo con un máximo en julio, bajan hasta septiembre y vuelven a subir desde octubre hasta diciembre. Las lluvias intensas ocurrieron en los meses 4 y 5 y en los meses 10 y 11.
+
+*Casos de dengue*
+
+| Mes del año (número) | Casos de dengue (número de casos) |
+| --- | --- |
+| 1 | 12 |
+| 2 | 9 |
+| 3 | 8 |
+| 4 | 10 |
+| 5 | 18 |
+| 6 | 35 |
+| 7 | 41 |
+| 8 | 22 |
+| 9 | 12 |
+| 10 | 14 |
+| 11 | 24 |
+| 12 | 38 |
+
+**¿Qué explicación del desfase entre las lluvias y los picos de casos es la más coherente?**
+
+- **A.** El agua de lluvia arrastra el virus del dengue hasta las viviendas, y el virus tarda unos dos meses en recorrer todo el municipio.
+- **B.** La lluvia llena recipientes donde se crían los mosquitos; su población crece en semanas y el virus tarda en pasar de mosquitos a personas.
+- **C.** Con las lluvias los mosquitos pican más, pero las personas enferman solo cuando vuelve el tiempo seco, porque el calor activa el virus.
+- **D.** Durante las lluvias la gente sale menos de casa y consulta más tarde, y por eso los casos se registran con dos meses de retraso.
+
+---
+
+### Pregunta 168
+
+Una estudiante observa una fila de hormigas arrieras que va del hormiguero a un árbol. Propone la hipótesis: «Las hormigas encuentran el camino siguiendo una sustancia que otras hormigas dejan en el suelo». Para ponerla a prueba, planea pasar un algodón con alcohol por el suelo, atravesando la fila en un tramo de 5 cm, cuando no haya hormigas en ese tramo. El alcohol disuelve muchas sustancias y se evapora en pocos segundos; el suelo no cambia de aspecto.
+
+**Si la hipótesis es correcta, ¿qué se espera observar en los minutos siguientes?**
+
+- **A.** Las hormigas siguen la fila sin cambios, porque pueden ver a las hormigas que caminan justo delante de ellas en la fila.
+- **B.** Las hormigas se detienen en toda la fila, incluso lejos del tramo limpiado, porque las ahuyenta el alcohol.
+- **C.** Las hormigas abandonan ese árbol y buscan otro, porque el alcohol daña las hojas que estaban cortando.
+- **D.** Las que llegan al tramo limpiado se desorientan y lo cruzan con dificultad, hasta que la fila se restablece.
+
+---
+
+### Pregunta 169
+
+Un grupo midió, en 25 quebradas de una cuenca, el porcentaje de la orilla cubierto por bosque y la temperatura del agua a mediodía (°C). Quieren una representación que permita ver si la temperatura del agua tiende a cambiar con la cobertura de bosque.
+
+**¿Qué representación es la más adecuada para ese propósito?**
+
+- **A.** Un diagrama de dispersión: cobertura en un eje, temperatura en el otro y un punto por quebrada.
+- **B.** Un diagrama circular con un sector para cada quebrada, proporcional a su temperatura del agua.
+- **C.** Una gráfica de barras con la temperatura de cada quebrada, ordenadas alfabéticamente por nombre.
+- **D.** Una gráfica de línea que una las 25 temperaturas en el orden en que se visitaron las quebradas.
+
+---
+
+### Pregunta 170
+
+> *Datos ficticios con finalidad didáctica.*
+
+Dos colegios (situación hipotética) estudiaron si un extracto acuoso de hojas de una planta mata larvas de mosquito. El colegio 1 informó una mortalidad alta; el colegio 2, siguiendo la misma receta, obtuvo una mortalidad baja. Al comparar los procedimientos, encontraron las condiciones de la tabla. Al conocer la diferencia, el colegio 1 hizo un ensayo adicional con extracto guardado tres semanas. Los dos colegios usaron 20 larvas por recipiente y tres recipientes por tratamiento (datos ficticios con fines didácticos).
+
+**Condiciones y resultados de los dos colegios (datos ficticios con fines didácticos)**
+
+| Condición o resultado | Colegio 1 | Colegio 2 |
+| --- | --- | --- |
+| Concentración del extracto | 10 g de hojas por litro | 10 g de hojas por litro |
+| Tiempo entre la preparación y el uso del extracto | 1 hora | 3 semanas, a temperatura ambiente |
+| Edad de las larvas | 3 días | 3 días |
+| Agua usada | De la llave, reposada | De la llave, reposada |
+| Mortalidad en 24 h con el extracto (%) | 85 | 12 |
+| Mortalidad en 24 h en el control con agua (%) | 5 | 6 |
+| Ensayo adicional: mortalidad con extracto guardado 3 semanas (%) | 15 | No se hizo |
+
+**¿Qué explicación de los resultados contradictorios está mejor sustentada?**
+
+- **A.** El colegio 2 contó mal las larvas, porque su resultado no coincide con el que el colegio 1 publicó primero.
+- **B.** El extracto no tiene ningún efecto, porque si lo tuviera los dos colegios habrían obtenido el mismo resultado.
+- **C.** El efecto del extracto disminuye con el almacenamiento, porque el extracto guardado tres semanas falló en ambos colegios.
+- **D.** Las larvas del colegio 2 eran más resistentes, porque las larvas de más edad toleran mejor las sustancias tóxicas.
+
+---
+
+### Pregunta 171
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una fundación (situación hipotética) compara dos modelos de estufa eficiente de leña, X e Y, para veredas que cocinan con leña. Con cada estufa se midió 5 veces la masa de leña necesaria para hervir 5 L de agua, con la misma leña seca y la misma olla. Un técnico concluye: «La estufa Y ahorra leña frente a la X» (datos ficticios con fines didácticos).
+
+**Leña usada para hervir 5 L de agua (datos ficticios con fines didácticos)**
+
+| Ensayo | Estufa X (kg) | Estufa Y (kg) |
+| --- | --- | --- |
+| 1 | 1,10 | 1,00 |
+| 2 | 0,95 | 1,20 |
+| 3 | 1,25 | 0,85 |
+| 4 | 0,90 | 1,15 |
+| 5 | 1,30 | 0,90 |
+| Promedio | 1,10 | 1,02 |
+
+**¿Qué evaluación de la conclusión del técnico es correcta?**
+
+- **A.** Es correcta, porque el promedio de Y es menor que el de X, y cualquier diferencia entre promedios indica un efecto real.
+- **B.** No se sustenta: la diferencia de promedios, 0,08 kg, es pequeña frente a la variación entre ensayos, y los rangos se superponen.
+- **C.** Es correcta, porque Y nunca necesitó más de 1,20 kg, mientras que la estufa X llegó a necesitar 1,30 kg en un ensayo.
+- **D.** No se sustenta, porque para comparar estufas se debe medir la temperatura final del agua y no la masa de leña usada.
+
+---
+
+### Pregunta 172
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una familia que se mudó de Cartagena a Bogotá nota que, en olla abierta, los fríjoles tardan mucho más en ablandarse, aunque el agua «hierve» en las dos ciudades. La tabla resume valores aproximados de presión atmosférica y de temperatura de ebullición del agua, y tiempos de cocción de una misma cantidad de fríjoles remojados (datos ficticios con fines didácticos; presiones y temperaturas aproximadas).
+
+**Presión, ebullición y cocción de fríjoles en olla abierta (datos ficticios con fines didácticos; presiones y temperaturas aproximadas)**
+
+| Ciudad (altitud aproximada) | Presión atmosférica (kPa) | Temperatura de ebullición del agua (°C) | Tiempo de cocción de los fríjoles (min) |
+| --- | --- | --- | --- |
+| Cartagena (nivel del mar) | 101 | 100 | 60 |
+| Medellín (1 500 m) | 85 | 95 | 80 |
+| Bogotá (2 600 m) | 75 | 92 | 105 |
+
+**¿Qué explicación integra correctamente los datos?**
+
+- **A.** En Bogotá el agua necesita más energía para hervir y por eso, en olla abierta, llega a una temperatura mayor que en Cartagena.
+- **B.** El agua hierve a la misma temperatura en todas partes, pero en Bogotá la estufa calienta menos por la falta de oxígeno del aire.
+- **C.** Los fríjoles que se consiguen en Bogotá tienen otra composición química, porque se cultivan en suelos fríos que endurecen el almidón.
+- **D.** A menor presión el agua hierve a menor temperatura; a 92 °C los cambios químicos que ablandan el fríjol son más lentos que a 100 °C.
+
+---
+
+### Pregunta 173
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un modelo sencillo predice el caudal máximo de una quebrada después de un aguacero: supone que una fracción fija de la lluvia escurre hasta la quebrada y el resto se infiltra en el suelo o queda retenida en la vegetación. El modelo se ajustó con aguaceros de 2015 a 2018, cuando la cuenca estaba cubierta de bosque. En 2019 y 2020 se taló gran parte de ese bosque para potreros. Los medidores de lluvia y de caudal se revisaron y calibraron en 2021 (datos ficticios con fines didácticos).
+
+**Gráfica: Caudal máximo de la quebrada según la lluvia de cada aguacero (datos ficticios con fines didácticos)**
+
+*Descripción:* Gráfica de dispersión del caudal máximo (m³/s) contra la lluvia de cada aguacero (mm), con tres series. Predicción del modelo: 2,4; 4,2; 6,0; 7,8 y 9,6 m³/s para 20, 35, 50, 65 y 80 mm. Medido con bosque (2015–2018), para las mismas lluvias: 2,3; 4,3; 6,1; 7,6 y 9,8 m³/s, muy cerca del modelo. Medido después de la tala (2021–2023): 4,1; 7,5; 10,6; 14,0 y 17,2 m³/s, entre 1,7 y 1,8 veces lo que predice el modelo para la misma lluvia.
+
+*Predicción del modelo*
+
+| Lluvia del aguacero (mm) | Caudal máximo (m³/s) |
+| --- | --- |
+| 20 | 2,4 |
+| 35 | 4,2 |
+| 50 | 6 |
+| 65 | 7,8 |
+| 80 | 9,6 |
+
+*Medido con bosque (2015–2018)*
+
+| Lluvia del aguacero (mm) | Caudal máximo (m³/s) |
+| --- | --- |
+| 20 | 2,3 |
+| 35 | 4,3 |
+| 50 | 6,1 |
+| 65 | 7,6 |
+| 80 | 9,8 |
+
+*Medido después de la tala (2021–2023)*
+
+| Lluvia del aguacero (mm) | Caudal máximo (m³/s) |
+| --- | --- |
+| 20 | 4,1 |
+| 35 | 7,5 |
+| 50 | 10,6 |
+| 65 | 14 |
+| 80 | 17,2 |
+
+**¿Qué explicación de la diferencia entre el modelo y los caudales medidos después de la tala está mejor sustentada?**
+
+- **A.** El modelo supone una retención de agua que dependía del bosque; sin él, el suelo infiltra y retiene menos y más lluvia escurre a la quebrada.
+- **B.** El modelo estuvo mal planteado desde el comienzo, porque sus predicciones nunca coincidieron con los caudales que se midieron en la quebrada.
+- **C.** Los medidores de caudal se descalibraron después de 2020, y por eso todos los caudales medidos en los años posteriores resultan mayores.
+- **D.** La tala hizo que lloviera más en la cuenca, y el modelo sigue usando la cantidad de lluvia que caía cuando la cuenca tenía bosque.
+
+---
+
+### Pregunta 174
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una junta de acueducto veredal toma agua de un pozo cercano a cultivos fertilizados. Como referencia usa el valor guía de 50 mg/L de nitrato para el agua de consumo. Un laboratorio escolar midió 6 veces la misma muestra con un kit colorimétrico; según el fabricante, cada medición del kit tiene una incertidumbre de ± 5 mg/L. El presidente de la junta concluye: «El agua cumple, porque el promedio está por debajo de 50 mg/L» (datos ficticios con fines didácticos).
+
+**Nitrato medido en una misma muestra de agua del pozo (datos ficticios con fines didácticos)**
+
+| Medición | 1 | 2 | 3 | 4 | 5 | 6 | Promedio |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Nitrato (mg/L) | 46 | 52 | 47 | 50 | 44 | 49 | 48 |
+
+**¿Qué evaluación de la conclusión del presidente es la más adecuada?**
+
+- **A.** Es correcta, porque promediar varias mediciones elimina la incertidumbre del kit, y 48 mg/L es menor que el valor guía de 50 mg/L.
+- **B.** No se sustenta: 48 mg/L está demasiado cerca de 50 mg/L para la variación de los datos; hace falta medir mejor y más veces.
+- **C.** Es incorrecta, porque una medición dio 52 mg/L, y basta un solo valor por encima de 50 mg/L para saber que no cumple.
+- **D.** Es correcta, porque cuatro de las seis mediciones están por debajo de 50 mg/L y la mayoría de los datos es la que decide.
+
+---
+
+### Pregunta 175
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un estudiante midió la actividad de una enzima (rapidez con la que se produce un gas en la reacción que cataliza) a siete temperaturas. Con una hoja de cálculo obtuvo el coeficiente de correlación lineal entre la temperatura y la actividad: −0,07, un valor muy cercano a 0. Concluye: «La temperatura no influye en la actividad de esta enzima» (datos ficticios con fines didácticos).
+
+**Gráfica: Actividad de la enzima según la temperatura (datos ficticios con fines didácticos)**
+
+*Descripción:* Gráfica de línea de la actividad de la enzima (mL de gas por minuto) contra la temperatura (°C). A 10 °C, 0,8; a 20 °C, 1,9; a 30 °C, 3,2; a 40 °C, el máximo, 4,5; a 50 °C, 3,9; a 60 °C, 1,6; y a 70 °C, 0,3 mL por minuto. La actividad aumenta hasta 40 °C y luego disminuye con rapidez.
+
+*Actividad*
+
+| Temperatura (°C) | Actividad (mL de gas por minuto) |
+| --- | --- |
+| 10 | 0,8 |
+| 20 | 1,9 |
+| 30 | 3,2 |
+| 40 | 4,5 |
+| 50 | 3,9 |
+| 60 | 1,6 |
+| 70 | 0,3 |
+
+**¿Qué evaluación de la conclusión del estudiante es correcta?**
+
+- **A.** Es correcta, porque un coeficiente de correlación cercano a cero indica que la actividad no depende de la temperatura.
+- **B.** Es incorrecta, porque la actividad aumenta siempre con la temperatura, como muestran los datos entre 10 °C y 40 °C.
+- **C.** Es incorrecta: la actividad depende mucho de la temperatura, con un máximo cerca de 40 °C que el coeficiente lineal no detecta.
+- **D.** Es incorrecta, porque a temperaturas altas la enzima se activa más, y la caída de los últimos datos es un error de medición.
+
+---
+
+### Pregunta 176
+
+> *Datos ficticios con finalidad didáctica.*
+
+Aguas abajo de una mina de carbón abandonada, cuyas rocas contienen pirita (FeS₂), sale un drenaje ácido. Unos estudiantes midieron cuatro puntos de una quebrada: P1, antes de la mina; P2, en la salida del drenaje; P3, 1 km aguas abajo; y P4, justo después de que llega un afluente que atraviesa rocas calizas (CaCO₃). El afluente lleva un caudal parecido al de la quebrada, tiene pH 8,0 y casi no tiene hierro. En P4, las piedras del fondo están cubiertas por un depósito anaranjado (datos ficticios con fines didácticos).
+
+**pH, hierro disuelto y peces en cuatro puntos de la quebrada (datos ficticios con fines didácticos)**
+
+| Punto | pH | Hierro disuelto (mg/L) | Peces observados en 30 min (número) |
+| --- | --- | --- | --- |
+| P1 (antes de la mina) | 7,1 | 0,2 | 14 |
+| P2 (salida del drenaje) | 3,0 | 45 | 0 |
+| P3 (1 km aguas abajo) | 3,2 | 38 | 0 |
+| P4 (después del afluente calizo) | 6,4 | 1,5 | 3 |
+
+**¿Qué explicación de los cambios entre P3 y P4 se sustenta mejor en todos los datos?**
+
+- **A.** El afluente solo diluye el agua de la quebrada, y por eso el hierro disminuye y el pH sube, sin que ocurra ninguna reacción química.
+- **B.** Los peces que hay en P4 consumen el hierro disuelto y liberan sustancias básicas, y por eso el agua se recupera aguas abajo.
+- **C.** El hierro disuelto se evapora al mezclarse con el afluente, y el depósito anaranjado es arena que el afluente trae de las calizas.
+- **D.** Los carbonatos del afluente neutralizan el ácido; al subir el pH, el hierro deja de estar disuelto y se deposita como un sólido.
+
+---
+
+### Pregunta 177
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un municipio (situación hipotética) puso en funcionamiento en enero de 2025 una planta de tratamiento para las aguas residuales que antes llegaban sin tratar al río. Se midió la demanda bioquímica de oxígeno (DBO), un indicador de materia orgánica en el agua (mayor DBO, peor calidad), en dos sitios: C, aguas arriba del municipio, al que no llegan sus vertimientos; e I, aguas abajo del punto de descarga. Cada valor es el promedio de 6 muestras de la temporada seca de cada año. Un concejal afirma: «La planta redujo a la mitad la contaminación del río» (datos ficticios con fines didácticos).
+
+**DBO promedio de la temporada seca, antes y después de la planta (datos ficticios con fines didácticos)**
+
+| Sitio | DBO en 2024, antes (mg/L) | DBO en 2025, después (mg/L) |
+| --- | --- | --- |
+| C (aguas arriba, sin vertimientos del municipio) | 4,0 | 3,0 |
+| I (aguas abajo de la descarga) | 12,0 | 6,0 |
+
+**¿Qué conclusión sobre el efecto de la planta de tratamiento se sustenta mejor?**
+
+- **A.** La planta redujo la DBO a la mitad, porque en el sitio I bajó de 12,0 a 6,0 mg/L después de que la planta empezó a operar.
+- **B.** La DBO bajó también donde la planta no influye; parte de la mejora en I no se debe a la planta, aunque en I bajó más que en C.
+- **C.** La planta no tuvo ningún efecto, porque la DBO también bajó en el sitio C, que está aguas arriba de la descarga del municipio.
+- **D.** La planta empeoró el río, porque en 2025 la DBO del sitio I sigue siendo el doble de la DBO que se midió en el sitio C.
+
+---
+
+### Pregunta 178
+
+> *Datos ficticios con finalidad didáctica.*
+
+Una publicación en redes sociales afirma: «El año pasado fue más frío que el anterior en nuestra ciudad; eso demuestra que el calentamiento es un invento». Para revisarla, un grupo graficó la temperatura media anual registrada en la estación meteorológica de esa ciudad durante 20 años (datos ficticios con fines didácticos).
+
+**Gráfica: Temperatura media anual de la estación, 2005–2024 (datos ficticios con fines didácticos)**
+
+*Descripción:* Gráfica de línea de la temperatura media anual (°C) de 2005 a 2024. Valores: 2005, 24,0; 2006, 24,2; 2007, 23,9; 2008, 24,1; 2009, 24,3; 2010, 24,4; 2011, 24,0; 2012, 24,3; 2013, 24,4; 2014, 24,2; 2015, 24,6; 2016, 24,8; 2017, 24,4; 2018, 24,5; 2019, 24,7; 2020, 24,6; 2021, 24,5; 2022, 24,8; 2023, 25,0; 2024, 24,7. La serie sube y baja de un año a otro (en 7 años la temperatura fue menor que la del año anterior), pero en conjunto aumenta: el promedio de 2005 a 2014 es 24,18 °C y el de 2015 a 2024, 24,66 °C. El último año, 2024, fue más frío que 2023.
+
+*Temperatura media anual*
+
+| Año (año calendario) | Temperatura media anual (°C) |
+| --- | --- |
+| 2005 | 24 |
+| 2006 | 24,2 |
+| 2007 | 23,9 |
+| 2008 | 24,1 |
+| 2009 | 24,3 |
+| 2010 | 24,4 |
+| 2011 | 24 |
+| 2012 | 24,3 |
+| 2013 | 24,4 |
+| 2014 | 24,2 |
+| 2015 | 24,6 |
+| 2016 | 24,8 |
+| 2017 | 24,4 |
+| 2018 | 24,5 |
+| 2019 | 24,7 |
+| 2020 | 24,6 |
+| 2021 | 24,5 |
+| 2022 | 24,8 |
+| 2023 | 25 |
+| 2024 | 24,7 |
+
+**¿Qué explicación sobre la afirmación es coherente con la gráfica?**
+
+- **A.** Un año más frío que el anterior es parte de la variación entre años; la tendencia se ve en muchos años, y los recientes son más cálidos.
+- **B.** La afirmación es correcta, porque si hubiera calentamiento cada año tendría que ser más caliente que el anterior, sin ninguna excepción.
+- **C.** La afirmación es correcta, porque el último año de la serie es el dato más reciente y por eso es el que decide si la temperatura cambia.
+- **D.** La afirmación es correcta en parte, porque la temperatura sube unos años y baja otros, y así no es posible saber si hay alguna tendencia.
+
+---
+
+### Pregunta 179
+
+Una escuela rural toma el agua de una quebrada que, después de las lluvias, llega muy turbia. La escuela no tiene electricidad estable y guarda el agua en tanques durante dos días antes de consumirla. Para escoger cómo tratarla, el grupo de ciencias resumió en una tabla características generales de cuatro métodos.
+
+**Características generales de cuatro métodos de tratamiento de agua para consumo**
+
+| Método | ¿Reduce la turbidez? | ¿Elimina o inactiva microorganismos? | ¿Protege el agua contra una nueva contaminación durante el almacenamiento? | Requisito principal |
+| --- | --- | --- | --- | --- |
+| Hervir | No | Sí | No | Combustible |
+| Cloración | No | Sí, pero pierde eficacia si el agua está turbia | Sí (cloro residual) | Dosis adecuada |
+| Sedimentación y filtración en arena | Sí | Solo en parte | No | Mantenimiento del filtro |
+| Desinfección solar en botellas transparentes | No | Sí, si el agua es clara y hay sol suficiente | No | Botellas y varias horas de sol |
+
+**¿Qué combinación de métodos responde mejor a las condiciones de la escuela?**
+
+- **A.** Solo hervir el agua, porque elimina los microorganismos y no necesita ningún paso adicional ni ningún insumo.
+- **B.** Solo la desinfección solar, porque no necesita combustible ni electricidad y la luz del sol no tiene ningún costo para la escuela.
+- **C.** Sedimentar y filtrar primero para reducir la turbidez, y luego clorar para desinfectar y proteger el agua almacenada.
+- **D.** Clorar primero y filtrar después en arena, para que el filtro retenga el cloro sobrante y el agua no tenga su sabor.
+
+---
+
+### Pregunta 180
+
+> *Datos ficticios con finalidad didáctica.*
+
+Un folleto de un biofertilizante para maíz dice: «¡Hasta 35 % más de cosecha! Parcela con biofertilizante: 5,4 t/ha; parcela sin biofertilizante: 4,0 t/ha». Un grupo consiguió los datos completos del ensayo de la empresa: 12 parcelas, 6 con biofertilizante y 6 sin él, asignadas por sorteo y con el mismo manejo (datos ficticios con fines didácticos).
+
+**Rendimiento de maíz en las 12 parcelas del ensayo (datos ficticios con fines didácticos)**
+
+| Tratamiento | Parcela 1 (t/ha) | Parcela 2 (t/ha) | Parcela 3 (t/ha) | Parcela 4 (t/ha) | Parcela 5 (t/ha) | Parcela 6 (t/ha) |
+| --- | --- | --- | --- | --- | --- | --- |
+| Con biofertilizante | 4,1 | 5,4 | 3,8 | 4,9 | 5,2 | 3,6 |
+| Sin biofertilizante | 4,0 | 4,8 | 4,6 | 4,2 | 4,7 | 4,7 |
+
+**¿Qué conclusión se sustenta en los datos completos del ensayo?**
+
+- **A.** El biofertilizante aumenta la cosecha hasta 35 %, como ocurrió al comparar la mejor parcela tratada con una parcela sin tratar.
+- **B.** El biofertilizante disminuye la cosecha, porque las dos parcelas de menor rendimiento del ensayo eran parcelas tratadas.
+- **C.** El ensayo no sirve para nada, porque las parcelas tratadas tuvieron rendimientos muy distintos entre sí, de 3,6 a 5,4 t/ha.
+- **D.** Los promedios son iguales (4,5 t/ha); el folleto eligió los datos favorables, y el ensayo no muestra un efecto del producto.
 
 ---

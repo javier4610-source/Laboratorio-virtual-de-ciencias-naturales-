@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30), F (30). Total: 180 de 180 preguntas.
 
 ## Bloque A. Biología y organización de los seres vivos (preguntas 1–30)
 
@@ -3037,5 +3037,611 @@ Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 pre
 **Error conceptual que conviene evitar:** Atribuir un efecto a la variable estudiada cuando otra variable (la hora) cambió al mismo tiempo.
 
 **Estrategia:** Haz una lista de todo lo que cambió entre una medición y otra; si cambia algo además de la variable estudiada, el diseño no permite atribuirle el efecto.
+
+---
+
+## Bloque F. Indagación científica, integración y ciencia, tecnología y sociedad (preguntas 151–180)
+
+### Pregunta 151 · Clave B
+
+*SN-F-151 · Uso comprensivo del conocimiento científico · Naturaleza de la indagación: observación, inferencia y predicción · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** Observación: I. Inferencia que propone la causa: II.
+
+**Justificación:** Una observación registra lo que se percibe directamente con los sentidos o con instrumentos: el enunciado I describe el color del agua y el hecho de no ver el fondo. Una inferencia va más allá de lo percibido y propone una interpretación; el enunciado II atribuye el color a la tierra arrastrada desde los potreros, algo que la estudiante no vio, sino que supone para explicar la observación (es una explicación tentativa o hipótesis). El enunciado III es una predicción deducida de esa hipótesis: dice qué debería pasar en una prueba que todavía no se ha hecho, y sirve para ponerla a prueba. El enunciado IV es un pronóstico sin una causa que lo sustente.
+
+**Análisis de distractores:**
+
+- **A.** Invierte los papeles: II no se percibe directamente (nadie vio la tierra llegar desde los potreros), mientras que I sí registra lo que se ve. *Razonamiento que origina el error:* Creer que un enunciado es una observación porque suena razonable o porque lo afirma quien estuvo en el lugar.
+- **C.** III todavía no ha ocurrido: es una predicción condicional («si…, formará…») que se deduce de la hipótesis para ponerla a prueba, no un registro de lo percibido. *Razonamiento que origina el error:* Confundir una predicción, que describe un resultado esperado, con una observación ya realizada.
+- **D.** I sí es la observación, pero III no propone una causa: es la consecuencia que se espera si la causa propuesta en II es cierta. *Razonamiento que origina el error:* Confundir la predicción que se deriva de una hipótesis con la hipótesis misma.
+
+**Error conceptual que conviene evitar:** Llamar «observación» a cualquier afirmación sobre la situación, aunque incluya una causa supuesta o un resultado que todavía no se ha visto.
+
+**Estrategia:** Pregúntate de cada enunciado: ¿lo percibió alguien directamente (observación), lo supone para explicar algo (inferencia o hipótesis) o dice qué pasaría en una prueba (predicción)?
+
+---
+
+### Pregunta 152 · Clave C
+
+*SN-F-152 · Indagación · Diseño experimental: prueba a ciegas y orden aleatorio en una prueba de sabor · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** Rotular los vasos con códigos que los catadores no conozcan y sortear cuál vaso se prueba primero.
+
+**Justificación:** Si los catadores leen «panela» o «azúcar», su respuesta puede depender de lo que creen de cada endulzante y no del sabor (sesgo de expectativa). Rotular con códigos que no conocen (prueba a ciegas) elimina esa información. Además, probar siempre en el mismo orden puede influir: el primer sabor cambia la percepción del segundo. Sortear el orden reparte ese efecto por igual entre los dos jugos. Así, una diferencia en las respuestas puede atribuirse al endulzante.
+
+**Análisis de distractores:**
+
+- **A.** Más catadores reducen la influencia del azar, pero si todos ven los rótulos, el sesgo de expectativa sigue presente en todas las respuestas: un sesgo no desaparece al aumentar la muestra. *Razonamiento que origina el error:* Creer que una muestra grande corrige cualquier defecto del diseño.
+- **B.** Un experto también tiene expectativas sobre la panela y el azúcar, y al ver los rótulos puede sesgarse; además, una sola persona no responde si «las personas» distinguen los jugos. *Razonamiento que origina el error:* Reemplazar el control del diseño por la autoridad de un experto.
+- **D.** Fijar el orden no elimina el efecto del orden: lo concentra siempre en el mismo jugo. Y los catadores siguen viendo los rótulos. *Razonamiento que origina el error:* Confundir «hacer lo mismo con todos» con controlar una variable que puede sesgar el resultado.
+
+**Error conceptual que conviene evitar:** Pensar que un diseño es justo solo porque todos los participantes siguen el mismo procedimiento, aunque sepan qué están probando.
+
+**Estrategia:** Pregúntate qué saben los participantes que podría cambiar su respuesta y cómo ocultarlo; y si el orden puede influir, sortéalo.
+
+---
+
+### Pregunta 153 · Clave A
+
+*SN-F-153 · Explicación de fenómenos · Control con pulsera simulada: expectativa y práctica frente al efecto de un producto · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** La mejora extra de los grupos 2 y 3 no se debe al holograma, porque la pulsera sin holograma produjo la misma mejora.
+
+**Justificación:** Cada grupo de comparación separa una causa posible. El grupo 1 mejoró 1,9 s sin pulsera: esa mejora se debe a la práctica o a otros factores comunes a todos. Los grupos 2 y 3 mejoraron unos 3,8 s más que el grupo 1 (5,7 − 1,9 = 3,8 s y 5,8 − 1,9 = 3,9 s), pero entre ellos la diferencia es de solo 0,1 s, despreciable frente a la variación esperable entre personas. Lo único que distingue al grupo 3 del grupo 2 es el holograma, así que el holograma no explica la mejora extra. Esa mejora se debe a algo que comparten los grupos 2 y 3: creer que llevan la pulsera «energética» (efecto de expectativa, parecido al efecto placebo) o simplemente llevar algo en la muñeca. Para separar esas dos causas haría falta un cuarto grupo con una pulsera común presentada como común.
+
+**Análisis de distractores:**
+
+- **B.** El grupo 3 mejoró solo 0,1 s más que el grupo 2, que no tenía holograma; esa diferencia mínima no permite atribuir un efecto al holograma. *Razonamiento que origina el error:* Mirar solo el grupo que recibió el producto y no compararlo con un grupo que recibió una imitación.
+- **C.** La práctica explica la mejora del grupo 1 (1,9 s), pero los grupos 2 y 3 mejoraron unos 3,8 s más; algo asociado a llevar la pulsera sí cambió el resultado. *Razonamiento que origina el error:* Ignorar la diferencia entre grupos y atribuir todo el cambio a una sola causa.
+- **D.** La pulsera común es de caucho sin holograma; su efecto, igual al de la del vendedor, indica que la causa no es una propiedad especial de la pulsera, sino algo común a las dos situaciones. *Razonamiento que origina el error:* Aceptar que un objeto tiene la propiedad anunciada en lugar de buscar la explicación más simple compatible con los controles.
+
+**Error conceptual que conviene evitar:** Concluir que un producto funciona porque quienes lo usan mejoran, sin compararlos con quienes usan una imitación sin la propiedad anunciada.
+
+**Estrategia:** Identifica qué diferencia hay entre cada par de grupos y atribúyele a esa diferencia solo el cambio que separa sus resultados.
+
+---
+
+### Pregunta 154 · Clave D
+
+*SN-F-154 · Uso comprensivo del conocimiento científico · Incertidumbre de medición: resolución del instrumento y cifras significativas · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** 12,3 g, porque la balanza no distingue cambios menores de 0,1 g y los datos varían en esa cifra.
+
+**Justificación:** Las cifras de un resultado deben reflejar lo que realmente se conoce. La balanza solo distingue décimas de gramo, y las tres mediciones difieren precisamente en la cifra de las décimas (12,3 g y 12,4 g), así que esa cifra ya es incierta. El promedio (12,3 + 12,4 + 12,3) / 3 = 12,33… g se redondea a 12,3 g. Escribir más decimales sugiere una precisión que el procedimiento no tiene; escribir menos descarta información confiable. Promediar ayuda a reducir el efecto de las variaciones al azar, pero con solo tres datos esa reducción es pequeña (no es de diez veces).
+
+**Análisis de distractores:**
+
+- **A.** Las cifras que añade la calculadora no provienen de la medición: la balanza no puede detectar millonésimas de gramo. Informarlas da una falsa impresión de precisión. *Razonamiento que origina el error:* Creer que más cifras decimales significan un resultado más exacto.
+- **B.** Redondear a gramos enteros descarta la cifra de las décimas, que la balanza sí mide; y ninguna forma de escribir el resultado elimina su incertidumbre. *Razonamiento que origina el error:* Pensar que redondear hace desaparecer la incertidumbre de una medición.
+- **C.** Promediar n mediciones reduce el efecto de la variación al azar aproximadamente en un factor √n (con tres datos, menos de 2 veces), no 10 veces; y no puede superar la resolución del instrumento para justificar una cifra más. *Razonamiento que origina el error:* Suponer que promediar unas pocas mediciones agrega automáticamente cifras confiables.
+
+**Error conceptual que conviene evitar:** Copiar todas las cifras que da la calculadora como si todas fueran medidas.
+
+**Estrategia:** Antes de informar un resultado, mira la resolución del instrumento y en qué cifra varían las mediciones repetidas: esa es la última cifra que vale la pena escribir.
+
+---
+
+### Pregunta 155 · Clave C
+
+*SN-F-155 · Indagación · Gráficas engañosas: eje vertical truncado en una publicidad · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** Es engañoso: la turbidez bajó de 5,2 a 4,8 NTU, menos del 10 %, y el eje truncado exagera el cambio.
+
+**Justificación:** Las alturas de las barras solo son proporcionales a los valores si el eje empieza en cero. Aquí empieza en 4,6 NTU, de modo que cada barra representa la diferencia con 4,6 NTU: antes, 5,2 − 4,6 = 0,6 NTU (6 cm); después, 4,8 − 4,6 = 0,2 NTU (2 cm). La razón 2 cm / 6 cm = 1/3 es un efecto del eje truncado. Con los valores rotulados, la turbidez bajó 5,2 − 4,8 = 0,4 NTU, que es 0,4 / 5,2 ≈ 0,077, es decir, cerca del 8 %: el agua filtrada conserva un 92 % de la turbidez inicial, no un tercio. Además, una sola medición antes y después no muestra si el filtro funciona de forma repetible.
+
+**Análisis de distractores:**
+
+- **A.** La razón entre las alturas solo coincide con la razón entre los valores cuando el eje empieza en cero; aquí empieza en 4,6 NTU. *Razonamiento que origina el error:* Leer las alturas de las barras sin revisar dónde empieza el eje.
+- **B.** Los 0,6 NTU son la distancia entre el inicio del eje y la barra de antes, no la turbidez inicial; la reducción debe compararse con 5,2 NTU. *Razonamiento que origina el error:* Calcular el cambio relativo respecto a un valor arbitrario (el inicio del eje) en lugar del valor inicial.
+- **D.** La turbidez en NTU es una magnitud que parte de cero (agua sin partículas), así que la fracción 0,4 / 5,2 sí tiene sentido. *Razonamiento que origina el error:* Creer que las unidades poco conocidas impiden comparar valores.
+
+**Error conceptual que conviene evitar:** Confiar en la impresión visual de una gráfica sin leer la escala ni los valores.
+
+**Estrategia:** Antes de interpretar una gráfica, revisa dónde empieza cada eje y calcula el cambio con los valores rotulados, no con las alturas dibujadas.
+
+---
+
+### Pregunta 156 · Clave B
+
+*SN-F-156 · Explicación de fenómenos · Correlación y causalidad: causalidad inversa en la evaluación de una medida de salud pública · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Las veredas con más toldillos ya tenían más casos antes de recibirlos; la relación refleja cómo se repartieron.
+
+**Justificación:** La causa va en sentido contrario al que supone el estudiante: no son los toldillos los que producen casos, sino que los casos previos determinaron cuántos toldillos recibió cada vereda (causalidad inversa o sesgo de asignación). Como la malaria tiende a persistir donde las condiciones favorecen al mosquito, las veredas con más casos en 2023 siguen teniendo más en 2025, y también son las que recibieron más toldillos. La tabla no apoya la idea de que los toldillos aumenten la malaria: los casos bajaron en todas las veredas (P −25 %, Q −40 %, R −50 %, S −53 %). Pero tampoco prueba que los toldillos funcionen, porque no hay veredas comparables sin toldillos. Los toldillos tratados son una medida de prevención reconocida por las autoridades de salud; para evaluar un programa se necesitan grupos de comparación adecuados.
+
+**Análisis de distractores:**
+
+- **A.** Supone una causa sin ninguna evidencia y no tiene en cuenta que los toldillos se repartieron según los casos previos; además, los casos bajaron en todas las veredas. *Razonamiento que origina el error:* Interpretar una correlación como causa directa en el sentido que primero se le ocurre a uno.
+- **C.** Compara veredas que eran distintas desde antes; la comparación justa es con lo que habría pasado en cada vereda sin toldillos, y esos datos no están. De hecho, las mayores reducciones relativas ocurrieron donde hubo más toldillos. *Razonamiento que origina el error:* Esperar que una medida eficaz produzca una correlación negativa aunque se haya aplicado preferentemente donde el problema era mayor.
+- **D.** La malaria se transmite por la picadura de mosquitos Anopheles infectados, no por contacto entre personas; por eso una barrera contra los mosquitos sí puede influir. *Razonamiento que origina el error:* Desconocer el mecanismo de transmisión de una enfermedad transmitida por vectores.
+
+**Error conceptual que conviene evitar:** Concluir que A causa B (o que A no sirve) a partir de una correlación, sin preguntar cómo se decidió quién recibió A.
+
+**Estrategia:** Ante una correlación, pregúntate si B pudo causar A (causalidad inversa) y si los grupos que se comparan eran iguales antes de la intervención.
+
+---
+
+### Pregunta 157 · Clave B
+
+*SN-F-157 · Uso comprensivo del conocimiento científico · Naturaleza de la ciencia: significado de «teoría científica» · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (B):** Es una explicación amplia, sustentada por muchas evidencias, que puede revisarse con datos nuevos.
+
+**Justificación:** En ciencias, una teoría es una explicación amplia de un conjunto de fenómenos, que integra hechos, leyes e hipótesis puestas a prueba y que está sustentada por muchas evidencias independientes; la evolución por selección natural se apoya en datos del registro fósil, la anatomía comparada, la genética y observaciones directas. Una ley describe una regularidad (con frecuencia, una relación matemática), mientras que una teoría explica por qué ocurre; por eso una teoría no «asciende» a ley. Las teorías son sólidas, pero no son dogmas: pueden ajustarse o reemplazarse si aparecen evidencias que no explican.
+
+**Análisis de distractores:**
+
+- **A.** Una hipótesis sin pruebas no es una teoría; y las teorías no se convierten en leyes, porque cumplen funciones distintas (explicar frente a describir regularidades). *Razonamiento que origina el error:* Usar «teoría» en su sentido cotidiano de «suposición» y creer en una jerarquía hipótesis → teoría → ley.
+- **C.** Una teoría se acepta por la evidencia y por haber resistido pruebas, no por el prestigio de quien la propuso. *Razonamiento que origina el error:* Confundir la aceptación científica con un argumento de autoridad.
+- **D.** Ningún conocimiento científico es absolutamente definitivo: una teoría bien sustentada es muy confiable, pero sigue abierta a revisión ante nuevas evidencias. *Razonamiento que origina el error:* Creer que lo científico es verdad absoluta e inmutable.
+
+**Error conceptual que conviene evitar:** Pensar que «es solo una teoría» significa que algo es dudoso o no comprobado.
+
+**Estrategia:** Distingue cuatro palabras: hipótesis (explicación tentativa por probar), ley (regularidad descrita), teoría (explicación amplia y sustentada) y hecho (observación confirmada).
+
+---
+
+### Pregunta 158 · Clave A
+
+*SN-F-158 · Explicación de fenómenos · Integración biología-química-física: ciclo diario del oxígeno disuelto en un estanque de peces · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** De noche las algas, los peces y los microorganismos solo respiran, sin fotosíntesis que reponga el oxígeno, que se agota hasta que vuelve la luz.
+
+**Justificación:** Con luz, las microalgas hacen fotosíntesis y liberan oxígeno más rápido de lo que lo consumen todos los organismos: a las 15:00 hay 10,2 mg/L, por encima de los 7,6 mg/L que disolvería el agua a 30 °C solo por contacto con el aire (sobresaturación, unos 134 %), lo que muestra una fuente biológica. Sin luz no hay fotosíntesis, pero la respiración de algas, peces y bacterias continúa toda la noche: el oxígeno baja sin interrupción desde las 18:00 y llega al mínimo justo antes de que vuelva la luz. La física descarta la temperatura como causa: el agua más fría del amanecer podría disolver más oxígeno (8,1 mg/L a 26 °C), no menos. Por eso los piscicultores airean los estanques en la madrugada.
+
+**Análisis de distractores:**
+
+- **B.** Invierte la relación: la solubilidad de los gases en el agua aumenta al bajar la temperatura. A 26 °C el agua podría disolver más oxígeno que a 30 °C. *Razonamiento que origina el error:* Creer que el agua fría disuelve menos gas, por analogía con los sólidos que se disuelven mejor en caliente.
+- **C.** La fotosíntesis libera oxígeno; no lo consume. Además, el mínimo se alcanza al final de una caída que empieza al anochecer, cuando no hay luz. *Razonamiento que origina el error:* Confundir los reactivos y los productos de la fotosíntesis.
+- **D.** Los datos muestran un descenso continuo durante toda la noche, no una caída brusca al amanecer; y no explica el aumento por encima de la saturación en la tarde. *Razonamiento que origina el error:* Atribuir el cambio a un solo grupo de organismos sin contrastar la forma completa de la curva.
+
+**Error conceptual que conviene evitar:** Explicar un cambio diario solo con la temperatura o solo con los peces, sin considerar el balance entre producción y consumo de oxígeno.
+
+**Estrategia:** Para una sustancia que sube y baja en un ciclo, identifica qué procesos la producen y cuáles la consumen, y cuándo actúa cada uno.
+
+---
+
+### Pregunta 159 · Clave D
+
+*SN-F-159 · Indagación · Correlación y causalidad: tercera variable en un estudio de campo · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** La relación puede deberse a la humedad: con humedad parecida (3 y 4; 6 y 7) las ranas no cambian con los hongos.
+
+**Justificación:** La humedad aumenta junto con los hongos y con las ranas, y ambos dependen de ella (los hongos necesitan humedad para fructificar; las ranas, para no deshidratarse a través de la piel). Una tercera variable así puede crear una correlación entre dos variables que no se influyen. Los datos permiten examinarlo: en parcelas con casi la misma humedad, la cantidad de hongos cambia mucho (11 frente a 4 en las parcelas 3 y 4; 22 frente a 8 en las 6 y 7), pero las ranas son las mismas (4 y 4; 8 y 8). La conclusión debe ser prudente («puede deberse»), porque son pocas parcelas; para confirmarla habría que muestrear más parcelas con humedad parecida y distinta cantidad de hongos.
+
+**Análisis de distractores:**
+
+- **A.** La correlación general existe, pero al comparar parcelas con humedad parecida la diferencia de hongos no se acompaña de una diferencia de ranas; la humedad explica mejor el patrón. *Razonamiento que origina el error:* Tomar una correlación como prueba de que una variable causa la otra.
+- **B.** Invertir el sentido de la causa no resuelve el problema: en las parcelas 6 y 7, con 8 ranas cada una, los hongos son 22 y 8. *Razonamiento que origina el error:* Cambiar la dirección de la causa sin considerar una tercera variable.
+- **C.** Las parcelas 4 y 7 no rompen la relación entre humedad y ranas, que es muy estrecha; muestran que los hongos no son lo que la explica. *Razonamiento que origina el error:* Pensar que una excepción anula toda relación entre las variables.
+
+**Error conceptual que conviene evitar:** Concluir que dos variables se causan entre sí porque aumentan juntas, sin buscar una variable que influya en ambas.
+
+**Estrategia:** Cuando dos variables cambian juntas, busca una tercera que pueda afectar a ambas y compara casos en los que esa tercera variable sea parecida.
+
+---
+
+### Pregunta 160 · Clave C
+
+*SN-F-160 · Uso comprensivo del conocimiento científico · Evaluación de modelos: rango de validez de un modelo lineal (resorte) · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** El modelo describe el resorte hasta unos 400 g; con masas mayores predice alargamientos menores que los reales.
+
+**Justificación:** Entre 0 g y 400 g los datos siguen la proporcionalidad (2,0 cm por cada 100 g; la diferencia de 0,1 cm en 300 g es propia de la medición). Con 500 g el modelo predice 10,0 cm y se midieron 10,9 cm; con 600 g predice 12,0 cm y se midieron 15,0 cm: el modelo subestima el alargamiento. Que el resorte no recuperara su longitud original indica que superó su límite elástico y se deformó de manera permanente, así que la condición del modelo (comportamiento elástico) dejó de cumplirse. Un modelo no es «verdadero» o «falso» en general: es útil dentro de un rango de validez que hay que conocer.
+
+**Análisis de distractores:**
+
+- **A.** Fallar fuera de un intervalo no invalida el modelo dentro de él: entre 0 g y 400 g predice muy bien los datos. *Razonamiento que origina el error:* Pensar que un modelo debe valer en todas las condiciones o no vale nada.
+- **B.** Descartar datos solo porque no coinciden con el modelo es un uso irresponsable de la evidencia; además, la deformación permanente confirma que el resorte sí cambió su comportamiento. *Razonamiento que origina el error:* Ajustar los datos al modelo en lugar de revisar el modelo con los datos.
+- **D.** Por encima de 400 g el alargamiento por cada 100 g ya no es constante (2,9 cm y luego 4,1 cm), así que allí la proporcionalidad no se cumple. *Razonamiento que origina el error:* Confundir el intervalo en que el modelo falla con el intervalo en que se cumple.
+
+**Error conceptual que conviene evitar:** Usar un modelo fuera de las condiciones en que se comprobó, como si fuera una descripción completa de la realidad.
+
+**Estrategia:** Compara las predicciones del modelo con los datos punto por punto y anota dónde dejan de coincidir: ese es el límite de su validez.
+
+---
+
+### Pregunta 161 · Clave A
+
+*SN-F-161 · Explicación de fenómenos · Integración biología-física: el sudor, la evaporación y la humedad del aire · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** El sudor enfría al evaporarse, porque el agua toma energía de la piel para pasar a vapor; en aire húmedo se evapora más despacio.
+
+**Justificación:** Para pasar de líquido a vapor, el agua necesita energía (calor de vaporización); cuando el sudor se evapora sobre la piel, esa energía sale del cuerpo y la piel se enfría. La rapidez de la evaporación depende de cuánto vapor de agua tiene ya el aire: si el aire está casi saturado, se evapora poco sudor. En el aire húmedo el sudor se acumula y escurre (la ropa empapada) sin evaporarse, y el cuerpo pierde menos energía. El sudor que escurre o se seca con una toalla casi no enfría.
+
+**Análisis de distractores:**
+
+- **B.** El sudor sale aproximadamente a la temperatura de la piel; lo que enfría es su evaporación, no que esté frío. *Razonamiento que origina el error:* Creer que el sudor enfría por contacto, como un líquido frío.
+- **C.** El contexto dice que la persona en el aire húmedo termina con la ropa empapada: sí produce sudor, incluso más, pero se evapora poco. *Razonamiento que origina el error:* No usar la información del contexto que contradice la explicación.
+- **D.** El frío no es algo que se transfiera; la energía pasa del cuerpo al sudor que se evapora. El vapor del aire no enfría el cuerpo. *Razonamiento que origina el error:* Pensar en el «frío» como una sustancia que fluye.
+
+**Error conceptual que conviene evitar:** Pensar que sudar más siempre significa enfriarse más, sin tener en cuenta si el sudor se evapora.
+
+**Estrategia:** En los fenómenos de enfriamiento, pregúntate qué cambio de estado ocurre y de dónde sale la energía que ese cambio necesita.
+
+---
+
+### Pregunta 162 · Clave D
+
+*SN-F-162 · Indagación · Muestreo: sesgo de selección al estimar el ataque de la broca del café · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Los cafetos del camino pueden no representar el lote; se corrige eligiendo al azar cafetos de todo el lote.
+
+**Justificación:** Para estimar una proporción en todo el lote, la muestra debe representar el lote. Los cafetos junto al camino pueden ser distintos de los demás (más sol, más polvo, cosechas más frecuentes o más revisiones), y elegirlos por comodidad introduce un sesgo de selección que no se corrige revisando más granos de esos mismos cafetos. Elegir los cafetos al azar en todo el lote (por ejemplo, numerando los surcos y sorteando) da a cada parte del lote la misma oportunidad de quedar en la muestra. Con una muestra al azar, aumentar el tamaño sí mejora la estimación.
+
+**Análisis de distractores:**
+
+- **A.** Con más granos de los mismos cafetos se obtiene una estimación más estable… del borde del camino, no del lote: el sesgo se mantiene. *Razonamiento que origina el error:* Creer que una muestra más grande corrige una muestra mal escogida.
+- **B.** El contexto indica que los granos atacados se reconocen sin dificultad, así que la detección no es el problema principal. *Razonamiento que origina el error:* Atender a la precisión de la medición e ignorar a qué población representa la muestra.
+- **C.** Repetir en el tiempo informa sobre cambios en el borde del camino, pero sigue sin representar el resto del lote. *Razonamiento que origina el error:* Confundir la repetición en el tiempo con la representatividad en el espacio.
+
+**Error conceptual que conviene evitar:** Tomar las muestras donde es más fácil y generalizar el resultado a toda la población.
+
+**Estrategia:** Pregunta siempre: ¿todas las partes de la población tenían la misma oportunidad de quedar en la muestra?
+
+---
+
+### Pregunta 163 · Clave B
+
+*SN-F-163 · Uso comprensivo del conocimiento científico · Incertidumbre de medición: tiempo de reacción y medición de muchas oscilaciones · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** Grupo 1: ± 0,2 s (unos 14 %); grupo 2: ± 0,01 s (menos del 1 %); es mejor medir muchas oscilaciones seguidas.
+
+**Justificación:** El tiempo de reacción afecta solo el inicio y el final del intervalo, no cada oscilación intermedia, así que en los dos casos la incertidumbre del intervalo medido es de unos 0,2 s. Grupo 1: T = 1,4 s ± 0,2 s; la incertidumbre relativa es 0,2 / 1,4 ≈ 0,14 (14 %). Grupo 2: T = 28,0 s / 20 = 1,40 s, y la incertidumbre se reparte entre las 20 oscilaciones: 0,2 s / 20 = 0,01 s, es decir, 0,01 / 1,40 ≈ 0,007 (0,7 %). Medir muchas oscilaciones y dividir reduce la incertidumbre relativa sin cambiar de instrumento, siempre que no se pierda la cuenta de las oscilaciones.
+
+**Análisis de distractores:**
+
+- **A.** La incertidumbre de 0,2 s es la del intervalo medido; al dividir 28,0 s entre 20, también se divide la incertidumbre. *Razonamiento que origina el error:* Confundir la incertidumbre del instrumento con la incertidumbre del resultado calculado.
+- **C.** El cronómetro se pone en marcha y se detiene una sola vez; el error de reacción no se repite en cada oscilación. *Razonamiento que origina el error:* Creer que la incertidumbre de una medición única de un intervalo largo se acumula como si fueran muchas mediciones.
+- **D.** El número de cifras de la pantalla no cambia la dificultad de leerla; lo que importa es cómo se compara la incertidumbre con el valor medido. *Razonamiento que origina el error:* Asociar la incertidumbre con la cantidad de cifras que se leen.
+
+**Error conceptual que conviene evitar:** Medir un intervalo muy corto con un cronómetro manual y no tener en cuenta que el tiempo de reacción es comparable al intervalo.
+
+**Estrategia:** Compara siempre la incertidumbre con el tamaño de lo que mides (incertidumbre relativa) y busca procedimientos que aumenten lo medido sin aumentar la incertidumbre.
+
+---
+
+### Pregunta 164 · Clave C
+
+*SN-F-164 · Explicación de fenómenos · Reproducibilidad y revisión por pares en la construcción del conocimiento científico · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (C):** Porque si grupos independientes obtienen lo mismo, es menos probable que el resultado se deba a un error.
+
+**Justificación:** Un resultado obtenido por un solo grupo puede deberse a un error de procedimiento, a una contaminación, a un instrumento mal calibrado, al azar o a una condición particular de ese laboratorio que nadie notó. Cuando grupos independientes, con otros equipos y otras personas, siguen el método publicado y obtienen el mismo resultado, esas explicaciones alternativas se vuelven poco probables. Por eso los artículos deben describir el método con detalle (para que sea reproducible) y la revisión por pares examina si el diseño sustenta las conclusiones. Si la repetición no da el mismo resultado, se revisan los métodos y se obtienen más datos: así la ciencia corrige sus propios errores.
+
+**Análisis de distractores:**
+
+- **A.** No existe una regla de «tres laboratorios del mismo país»; lo que importa es la independencia de quienes repiten y la calidad del método, no su nacionalidad ni un número fijo. *Razonamiento que origina el error:* Imaginar la validación científica como el cumplimiento de un trámite formal.
+- **B.** La replicación no busca repartir el crédito, sino poner a prueba el resultado; de hecho, puede contradecir al grupo original. *Razonamiento que origina el error:* Atribuir las prácticas científicas a intereses personales y no a su función epistémica.
+- **D.** Un primer resultado puede ser correcto; las repeticiones no son «ciertas» por ser posteriores, sino que aumentan o reducen la confianza según coincidan o no. *Razonamiento que origina el error:* Creer que hay un orden que garantiza la verdad, en lugar de un balance de evidencias.
+
+**Error conceptual que conviene evitar:** Aceptar como establecido un resultado nuevo e impactante antes de que otros lo hayan podido reproducir.
+
+**Estrategia:** Ante un resultado sorprendente, pregunta: ¿lo han repetido grupos independientes?, ¿el método está descrito de forma que otros puedan hacerlo igual?
+
+---
+
+### Pregunta 165 · Clave C
+
+*SN-F-165 · Indagación · Diseño experimental en el campo: asignación al azar, bloques y réplicas · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (C):** En cada zona, sortear 3 parcelas para la variedad nueva y 3 para la tradicional, y comparar los promedios.
+
+**Justificación:** Como las zonas difieren en humedad y fertilidad, el diseño debe evitar que la variedad quede mezclada con la zona. Repartir los tratamientos dentro de cada zona (3 y 3 en la baja, 3 y 3 en la ladera) hace que las dos variedades enfrenten las mismas condiciones; sortear cuáles parcelas reciben cada variedad evita que, sin querer, se elijan las mejores para una de ellas; y tener 6 parcelas por variedad (réplicas) permite estimar cuánto varía el rendimiento entre parcelas iguales y no confundir esa variación con un efecto de la variedad.
+
+**Análisis de distractores:**
+
+- **A.** La variedad nueva quedaría siempre en el mejor suelo: una diferencia de rendimiento podría deberse a la zona y no a la variedad (variables confundidas). *Razonamiento que origina el error:* Pensar que usar todas las parcelas basta, aunque los tratamientos queden asociados a condiciones distintas.
+- **B.** Con una parcela por variedad no se puede saber si la diferencia supera la variación natural entre parcelas; el sorteo ayuda, pero sin réplicas el azar puede decidir el resultado. *Razonamiento que origina el error:* Creer que el sorteo reemplaza la necesidad de repetir el tratamiento en varias unidades.
+- **D.** Entre un año y otro cambian la lluvia, la temperatura y las plagas; la diferencia no podría atribuirse a la variedad. *Razonamiento que origina el error:* Usar una comparación con el pasado como si fuera un grupo de control simultáneo.
+
+**Error conceptual que conviene evitar:** Asignar el tratamiento a las mejores unidades experimentales, o usar una sola unidad por tratamiento.
+
+**Estrategia:** Cuando las unidades no son iguales, agrúpalas por sus diferencias, sortea los tratamientos dentro de cada grupo y repite cada tratamiento varias veces.
+
+---
+
+### Pregunta 166 · Clave A
+
+*SN-F-166 · Uso comprensivo del conocimiento científico · Análisis crítico de afirmaciones publicitarias: «agua alcalina» y pH de la sangre · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (A):** No se sustenta: el ácido del estómago neutraliza la escasa alcalinidad del agua, y el pH de la sangre se regula en un rango estrecho.
+
+**Justificación:** El anuncio falla en varios puntos. La sangre no es ácida: su pH (7,35–7,45) es ligeramente básico. Un agua de pH 9 tiene una concentración de iones OH⁻ muy baja (unos 10⁻⁵ mol/L), y al llegar al estómago, con pH entre 1,5 y 3,5, esa pequeña alcalinidad es neutralizada por el ácido clorhídrico del jugo gástrico. Además, el pH de la sangre no cambia según lo que se bebe: los amortiguadores (como el sistema del bicarbonato), la respiración y los riñones lo mantienen en un rango estrecho; salir de él es una alteración que requiere atención médica, no un efecto de una bebida. Este ítem no es una recomendación de salud: cualquier duda sobre la alimentación debe consultarse con profesionales.
+
+**Análisis de distractores:**
+
+- **B.** Ignora la neutralización en el estómago y la regulación del pH sanguíneo; lo que se ingiere no pasa a la sangre con el mismo pH. *Razonamiento que origina el error:* Imaginar el cuerpo como un recipiente donde lo ingerido se mezcla directamente con la sangre.
+- **C.** Ninguna condición de consumo cambia el hecho de que el pH de la sangre se regula; la expresión «en parte» da apariencia de equilibrio a una afirmación sin fundamento. *Razonamiento que origina el error:* Creer que una afirmación sin evidencia se vuelve aceptable si se le añaden condiciones.
+- **D.** Un pH de 9 es más básico que el de la sangre (7,4), no más ácido: en la escala de pH, valores mayores indican menor acidez. *Razonamiento que origina el error:* Leer la escala de pH al revés.
+
+**Error conceptual que conviene evitar:** Aceptar una afirmación porque usa términos científicos («alcalino», «neutralizar») sin revisar si es coherente con lo que se sabe.
+
+**Estrategia:** Ante un anuncio, identifica el mecanismo que propone y contrástalo con lo que sabes de cada paso (qué pasa en el estómago, cómo se regula la sangre).
+
+---
+
+### Pregunta 167 · Clave B
+
+*SN-F-167 · Explicación de fenómenos · Relaciones con desfase temporal: lluvias, mosquitos y casos de dengue · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** La lluvia llena recipientes donde se crían los mosquitos; su población crece en semanas y el virus tarda en pasar de mosquitos a personas.
+
+**Justificación:** El desfase se explica con una cadena de procesos que toman tiempo. La lluvia llena recipientes (llantas, tarros, tanques destapados) donde las hembras de Aedes ponen huevos; en clima cálido, el paso de huevo a adulto toma alrededor de una a dos semanas, y la población de mosquitos crece durante varias generaciones. Un mosquito que pica a una persona infectada necesita además alrededor de una semana o más para poder transmitir el virus, y la persona picada tarda días en presentar síntomas. La suma de estos tiempos ubica los picos de casos varias semanas después de las lluvias (julio después de abril-mayo; diciembre después de octubre-noviembre). Como los casos se cuentan por fecha de inicio de síntomas, el desfase no se debe a demoras en las consultas. Eliminar los recipientes con agua estancada interrumpe esta cadena.
+
+**Análisis de distractores:**
+
+- **A.** El virus del dengue no se transmite por el agua: lo transmite la picadura de un mosquito infectado. El agua solo es el lugar donde se desarrollan las larvas. *Razonamiento que origina el error:* Confundir el lugar de cría del vector con el medio de transmisión del virus.
+- **C.** Las personas enferman días después de la picadura infectante, no cuando cambia el clima; el calor no «activa» un virus que ya está en una persona. *Razonamiento que origina el error:* Atribuir el desfase a una causa sin mecanismo, en lugar de a los tiempos de desarrollo y de incubación.
+- **D.** Los casos se cuentan por la fecha en que empezaron los síntomas, así que una consulta tardía no cambia el mes en que se registran. *Razonamiento que origina el error:* Proponer un artefacto de registro sin revisar cómo se construyeron los datos.
+
+**Error conceptual que conviene evitar:** Esperar que una causa y su efecto coincidan en el tiempo, sin considerar los procesos intermedios.
+
+**Estrategia:** Cuando el efecto aparece después de la causa, reconstruye la cadena de procesos y estima cuánto tarda cada eslabón.
+
+---
+
+### Pregunta 168 · Clave D
+
+*SN-F-168 · Indagación · Hipótesis y predicción: el rastro químico de las hormigas arrieras · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (D):** Las que llegan al tramo limpiado se desorientan y lo cruzan con dificultad, hasta que la fila se restablece.
+
+**Justificación:** Una predicción se deduce de la hipótesis: si las hormigas se guían por una sustancia en el suelo, al retirarla en un tramo deberían perder la orientación justo allí, mientras que el resto de la fila sigue igual. Luego, a medida que algunas hormigas cruzan y depositan de nuevo la sustancia, la fila se restablece. Esto coincide con lo que se sabe de las hormigas, que se comunican con feromonas de rastro. Un buen diseño añade un control: pasar un algodón seco o con agua en otro tramo, para descartar que el simple roce o el olor del alcohol expliquen la desorientación.
+
+**Análisis de distractores:**
+
+- **A.** Ese resultado contradice la hipótesis: si las hormigas siguieran la fila sin cambios, el camino no dependería de la sustancia retirada. *Razonamiento que origina el error:* Confundir el resultado que apoyaría la hipótesis con uno que la contradice.
+- **B.** Un efecto en toda la fila, lejos del tramo tratado, no se deduce de la hipótesis; el alcohol se evapora en segundos y se aplicó solo en 5 cm. *Razonamiento que origina el error:* Predecir un efecto que no se relaciona con el mecanismo propuesto.
+- **C.** El alcohol se pasó por el suelo, no por el árbol ni por las hojas, así que la predicción no se relaciona con la manipulación. *Razonamiento que origina el error:* No identificar qué se manipula en el experimento.
+
+**Error conceptual que conviene evitar:** Hacer un experimento sin haber decidido antes qué resultado apoyaría la hipótesis y cuál la contradiría.
+
+**Estrategia:** Antes de experimentar, escribe: «Si la hipótesis es correcta y hago X, entonces debería observar Y». Luego compara con lo observado.
+
+---
+
+### Pregunta 169 · Clave A
+
+*SN-F-169 · Uso comprensivo del conocimiento científico · Representación de datos: elección de la gráfica adecuada para una relación entre variables · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** Un diagrama de dispersión: cobertura en un eje, temperatura en el otro y un punto por quebrada.
+
+**Justificación:** Para ver si una variable cuantitativa cambia con otra, medidas en los mismos objetos, se usa un diagrama de dispersión: cada quebrada es un punto con coordenadas (cobertura, temperatura), y la forma de la nube de puntos muestra si hay una tendencia (por ejemplo, menor temperatura con más bosque) y qué tan fuerte es. Un diagrama circular representa partes de un todo; las barras por nombre muestran valores individuales, pero no los relacionan con la cobertura; y una línea une puntos que siguen un orden con sentido, como el tiempo.
+
+**Análisis de distractores:**
+
+- **B.** Un diagrama circular muestra cómo se reparte un total entre partes; la suma de temperaturas de varias quebradas no es un total con sentido, y la cobertura ni siquiera aparece. *Razonamiento que origina el error:* Elegir una gráfica por su apariencia sin considerar qué tipo de datos representa.
+- **C.** Las barras muestran la temperatura de cada quebrada, pero el orden alfabético no tiene relación con la cobertura de bosque, que queda fuera de la gráfica. *Razonamiento que origina el error:* Representar solo una de las dos variables cuya relación se quiere estudiar.
+- **D.** El orden de visita no es una variable del problema; unir los puntos sugiere una continuidad que no existe y omite la cobertura. *Razonamiento que origina el error:* Usar gráficas de línea para cualquier serie de datos, aunque el eje horizontal no sea una variable continua con sentido.
+
+**Error conceptual que conviene evitar:** Escoger el tipo de gráfica por costumbre y no por la pregunta que se quiere responder.
+
+**Estrategia:** Pregúntate qué quieres mostrar: partes de un todo (circular), comparación entre categorías (barras), cambio en el tiempo (línea) o relación entre dos variables (dispersión).
+
+---
+
+### Pregunta 170 · Clave C
+
+*SN-F-170 · Explicación de fenómenos · Resultados contradictorios: comparación de métodos entre dos grupos que repiten un experimento · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** El efecto del extracto disminuye con el almacenamiento, porque el extracto guardado tres semanas falló en ambos colegios.
+
+**Justificación:** Para explicar una discrepancia hay que buscar qué diferencia hay entre los procedimientos. La tabla muestra que coinciden la concentración, la edad de las larvas, el agua y el número de larvas; la única diferencia es el tiempo de almacenamiento del extracto (1 hora frente a 3 semanas). Los controles con agua (5 % y 6 %) muestran que las larvas de ambos colegios estaban en condiciones parecidas. El ensayo adicional pone a prueba esa explicación: cuando el colegio 1 usó extracto guardado 3 semanas, la mortalidad bajó a 15 %, cerca del 12 % del colegio 2. Así, los dos resultados son compatibles: el extracto fresco tuvo efecto y el guardado perdió casi todo. El mecanismo (descomposición de la sustancia activa, acción de microorganismos u otra causa) no se conoce con estos datos y requeriría otros experimentos.
+
+**Análisis de distractores:**
+
+- **A.** Publicar primero no hace correcto un resultado; además, el ensayo adicional del colegio 1 reproduce el resultado del colegio 2 en las mismas condiciones. *Razonamiento que origina el error:* Resolver una contradicción por prioridad o autoridad en lugar de por la evidencia.
+- **B.** El extracto fresco tuvo 85 % de mortalidad frente a 5 % del control; una repetición con una condición distinta no anula ese resultado, sino que señala la variable que importa. *Razonamiento que origina el error:* Pensar que un resultado contradictorio invalida todo, en lugar de buscar qué cambió entre los dos procedimientos.
+- **D.** La tabla indica que las larvas de ambos colegios tenían la misma edad (3 días). *Razonamiento que origina el error:* Proponer una explicación plausible en general sin verificar si los datos la permiten.
+
+**Error conceptual que conviene evitar:** Decidir cuál de dos resultados contradictorios es el «verdadero» sin comparar los métodos.
+
+**Estrategia:** Ante resultados que no coinciden, haz una tabla de las condiciones de cada estudio, busca la diferencia y diseña un ensayo que la ponga a prueba.
+
+---
+
+### Pregunta 171 · Clave B
+
+*SN-F-171 · Indagación · Análisis de datos: promedio y dispersión al comparar dos estufas eficientes de leña · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (B):** No se sustenta: la diferencia de promedios, 0,08 kg, es pequeña frente a la variación entre ensayos, y los rangos se superponen.
+
+**Justificación:** Los promedios son 1,10 kg (X) y 1,02 kg (Y): una diferencia de 0,08 kg. Pero con una misma estufa la leña varía mucho de un ensayo a otro: X va de 0,90 a 1,30 kg (0,40 kg de rango) e Y de 0,85 a 1,20 kg (0,35 kg). Los rangos se superponen casi por completo, y la diferencia de promedios es mucho menor que la variación entre ensayos; con solo 5 ensayos, otro conjunto de mediciones podría invertir el orden. Para decidir, haría falta reducir la variación (por ejemplo, controlar mejor el tamaño de los trozos de leña o el viento) o hacer más ensayos.
+
+**Análisis de distractores:**
+
+- **A.** Dos promedios casi nunca son idénticos, aunque no haya ningún efecto; hay que comparar la diferencia con la variación de los datos. *Razonamiento que origina el error:* Creer que cualquier diferencia entre promedios es una diferencia real.
+- **C.** Compara solo los valores extremos, que dependen mucho del azar; el valor máximo de una serie no resume su comportamiento. *Razonamiento que origina el error:* Sacar conclusiones con un solo dato de cada serie, el más llamativo.
+- **D.** Todas las mediciones llevan 5 L de agua hasta la ebullición, así que la masa de leña necesaria es una medida directa del consumo; la temperatura final es la misma en todos los ensayos. *Razonamiento que origina el error:* No identificar cuál es la variable dependiente adecuada para la pregunta.
+
+**Error conceptual que conviene evitar:** Comparar promedios sin mirar cuánto varían los datos de cada grupo.
+
+**Estrategia:** Junto al promedio, mira el rango (mínimo y máximo) de cada grupo: si se superponen mucho, una diferencia pequeña de promedios no basta para concluir.
+
+---
+
+### Pregunta 172 · Clave D
+
+*SN-F-172 · Uso comprensivo del conocimiento científico · Integración física-química-biología: presión atmosférica, temperatura de ebullición y cocción · Nivel 2 · análisis e integración*
+
+**Respuesta correcta (D):** A menor presión el agua hierve a menor temperatura; a 92 °C los cambios químicos que ablandan el fríjol son más lentos que a 100 °C.
+
+**Justificación:** El agua hierve cuando la presión de su vapor iguala la presión atmosférica. En la altura la presión es menor (75 kPa en Bogotá frente a 101 kPa en Cartagena), así que el agua hierve a menor temperatura (unos 92 °C) y, por más que se aumente el fuego, en olla abierta no supera esa temperatura. Ablandar el fríjol requiere cambios químicos y físicos en sus células (el almidón absorbe agua y se gelatiniza, y se degradan sustancias de las paredes celulares que unen las células), y la rapidez de esos procesos aumenta con la temperatura. A 92 °C son más lentos, y la cocción tarda más (los tiempos de la tabla son ficticios, pero muestran esa tendencia). Por eso una olla a presión, que eleva la presión y la temperatura de ebullición, acorta tanto la cocción en la altura.
+
+**Análisis de distractores:**
+
+- **A.** Los datos muestran lo contrario: en Bogotá el agua hierve a 92 °C, por debajo de los 100 °C de Cartagena. *Razonamiento que origina el error:* Asociar «tardar más» con «llegar a una temperatura mayor».
+- **B.** La tabla muestra que la temperatura de ebullición cambia con la presión; además, aunque la estufa entregara más energía, el agua hirviendo en olla abierta no superaría su temperatura de ebullición. *Razonamiento que origina el error:* Pensar que la temperatura de ebullición del agua es siempre 100 °C.
+- **C.** La familia puede cocinar fríjoles de la misma procedencia en las dos ciudades; la tabla relaciona la cocción con la presión y la temperatura, no con el origen del fríjol. *Razonamiento que origina el error:* Buscar una causa ajena a los datos en lugar de usar la relación que muestran.
+
+**Error conceptual que conviene evitar:** Creer que «hervir» significa estar siempre a 100 °C.
+
+**Estrategia:** En situaciones que mezclan física, química y biología, sigue la cadena: qué condición física cambia, cómo afecta la temperatura y cómo la temperatura afecta la rapidez de los procesos.
+
+---
+
+### Pregunta 173 · Clave A
+
+*SN-F-173 · Explicación de fenómenos · Evaluación de modelos: un modelo hidrológico que falla después de la deforestación · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (A):** El modelo supone una retención de agua que dependía del bosque; sin él, el suelo infiltra y retiene menos y más lluvia escurre a la quebrada.
+
+**Justificación:** Con bosque, los caudales medidos coinciden con el modelo (por ejemplo, 6,1 frente a 6,0 m³/s con 50 mm), de modo que el modelo era adecuado para esas condiciones. Después de la tala, para la misma lluvia el caudal es entre 1,7 y 1,8 veces el predicho: el caudal máximo por cada milímetro de lluvia pasó de unos 0,12 a unos 0,21 m³/s, lo que indica que ahora escurre una fracción mayor de la lluvia. El modelo supone que esa fracción es fija, pero la fracción depende de la cobertura: el bosque intercepta lluvia en el follaje y la hojarasca, y sus raíces y la materia orgánica mantienen un suelo poroso que infiltra; en un potrero compactado, más agua corre por la superficie y llega rápido a la quebrada. Un modelo calibrado en unas condiciones no sirve cuando cambian sus supuestos; habría que recalibrarlo o incluir la cobertura del suelo como variable.
+
+**Análisis de distractores:**
+
+- **B.** La gráfica muestra que, con bosque, las predicciones coincidieron muy bien con los caudales medidos (diferencias de 0,1 a 0,2 m³/s). *Razonamiento que origina el error:* Concluir que un modelo siempre estuvo mal porque falla en condiciones nuevas.
+- **C.** El contexto indica que los medidores se revisaron y calibraron en 2021; además, el aumento tiene una causa física coherente con el cambio de cobertura. *Razonamiento que origina el error:* Atribuir a errores de medición cualquier dato que no se ajusta a lo esperado.
+- **D.** El eje horizontal es la lluvia medida en cada aguacero: la comparación se hace para la misma cantidad de lluvia, así que más lluvia no explica la diferencia. *Razonamiento que origina el error:* No leer qué variable está en cada eje de la gráfica.
+
+**Error conceptual que conviene evitar:** Usar un modelo calibrado en ciertas condiciones como si sus supuestos se cumplieran siempre.
+
+**Estrategia:** Cuando un modelo que funcionaba deja de hacerlo, haz una lista de sus supuestos y pregunta cuál cambió en la realidad.
+
+---
+
+### Pregunta 174 · Clave B
+
+*SN-F-174 · Indagación · Incertidumbre y decisiones: nitrato en el agua de un pozo cerca de un valor guía · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (B):** No se sustenta: 48 mg/L está demasiado cerca de 50 mg/L para la variación de los datos; hace falta medir mejor y más veces.
+
+**Justificación:** Las mediciones de la misma muestra van de 44 a 52 mg/L: la variación entre mediciones (unos ± 4 mg/L alrededor del promedio) es parecida a la incertidumbre que declara el fabricante (± 5 mg/L). El promedio, (46 + 52 + 47 + 50 + 44 + 49) / 6 = 288 / 6 = 48 mg/L, está a solo 2 mg/L del valor guía, una distancia menor que esa variación: el valor real podría estar por encima o por debajo de 50 mg/L. Además, una sola muestra no representa el pozo a lo largo del año, y el nitrato puede cambiar con la fertilización y las lluvias. Una decisión responsable requiere un método más preciso (por ejemplo, un laboratorio especializado), varias muestras en distintas fechas y, mientras tanto, prudencia.
+
+**Análisis de distractores:**
+
+- **A.** Promediar reduce el efecto de la variación al azar, pero no la elimina; con 6 mediciones que varían varios mg/L, una diferencia de 2 mg/L con el valor guía no es concluyente. *Razonamiento que origina el error:* Creer que el promedio es un valor exacto, sin incertidumbre.
+- **C.** El 52 mg/L es una medición de la misma muestra que dio también 44 mg/L: su diferencia con 50 mg/L es menor que la incertidumbre. Concluir que no cumple también excede la evidencia. *Razonamiento que origina el error:* Decidir con el valor más alarmante e ignorar la variación de las mediciones.
+- **D.** Contar cuántas mediciones están a cada lado del valor guía no tiene en cuenta cuánto se alejan de él ni su incertidumbre; además, una medición dio exactamente 50 mg/L. *Razonamiento que origina el error:* Tratar una decisión basada en mediciones como una votación.
+
+**Error conceptual que conviene evitar:** Comparar un promedio con un límite como si ambos fueran exactos.
+
+**Estrategia:** Antes de decir si un valor está por encima o por debajo de un límite, compara la distancia al límite con la incertidumbre de la medición.
+
+**Fuente:** Organización Mundial de la Salud (OMS). Guidelines for drinking-water quality, 4.ª edición que incorpora el primer y el segundo addendum (Ginebra, 2022): valor guía del nitrato de 50 mg/L, expresado como ion nitrato.
+
+---
+
+### Pregunta 175 · Clave C
+
+*SN-F-175 · Uso comprensivo del conocimiento científico · Estadística básica: coeficiente de correlación lineal y relaciones no lineales (actividad enzimática) · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** Es incorrecta: la actividad depende mucho de la temperatura, con un máximo cerca de 40 °C que el coeficiente lineal no detecta.
+
+**Justificación:** El coeficiente de correlación lineal mide qué tan bien se ajustan los datos a una recta. Aquí la actividad sube de 0,8 a 4,5 mL/min entre 10 °C y 40 °C y baja a 0,3 mL/min a 70 °C: la relación es muy fuerte, pero tiene forma de «montaña». La parte que sube y la que baja se compensan, y el coeficiente lineal queda cerca de 0 (con estos datos, ≈ −0,07). Esta forma es la esperada para una enzima: al aumentar la temperatura, las moléculas chocan con más frecuencia y energía y la reacción se acelera; por encima de la temperatura óptima, la proteína pierde su forma (se desnaturaliza) y su sitio activo deja de funcionar. Antes de usar un coeficiente, hay que graficar los datos.
+
+**Análisis de distractores:**
+
+- **A.** Un coeficiente lineal cercano a 0 solo indica que no hay relación de tipo recta; los datos muestran una relación fuerte con un máximo. *Razonamiento que origina el error:* Interpretar «correlación lineal cercana a cero» como «no hay ninguna relación».
+- **B.** Entre 40 °C y 70 °C la actividad baja de 4,5 a 0,3 mL/min; generalizar la tendencia de una parte de los datos es un error. *Razonamiento que origina el error:* Extender a todo el rango la tendencia observada en una parte de los datos.
+- **D.** La caída es progresiva y coherente con la desnaturalización de la enzima por el calor; descartar datos porque no siguen la idea previa es un uso indebido de la evidencia. *Razonamiento que origina el error:* Considerar error de medición todo dato que contradice lo que se esperaba.
+
+**Error conceptual que conviene evitar:** Calcular un indicador estadístico sin mirar antes la forma de los datos en una gráfica.
+
+**Estrategia:** Grafica primero; usa el coeficiente de correlación lineal solo si la nube de puntos parece seguir una recta.
+
+---
+
+### Pregunta 176 · Clave D
+
+*SN-F-176 · Explicación de fenómenos · Problema socioambiental: drenaje ácido de una mina y recuperación de una quebrada · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** Los carbonatos del afluente neutralizan el ácido; al subir el pH, el hierro deja de estar disuelto y se deposita como un sólido.
+
+**Justificación:** La oxidación de la pirita expuesta al aire y al agua produce ácido sulfúrico y hierro disuelto: por eso en P2 el pH es 3,0 y hay 45 mg/L de hierro, y no hay peces. Si en P4 solo hubiera dilución con un caudal igual, el hierro bajaría a la mitad (de 38 a unos 19 mg/L) y el pH subiría solo hasta cerca de 3,5 (la concentración de H⁺ se reduciría a la mitad). Se midieron 1,5 mg/L y pH 6,4: el cambio es mucho mayor que el de la dilución. Los carbonatos que el afluente disuelve de la caliza reaccionan con el ácido (CaCO₃ + 2 H⁺ → Ca²⁺ + H₂O + CO₂), el pH sube y el hierro forma hidróxidos y óxidos poco solubles, que se depositan como el sólido anaranjado del fondo. La recuperación es parcial: en P4 hay peces, pero menos que en P1.
+
+**Análisis de distractores:**
+
+- **A.** La dilución con un caudal igual solo reduciría el hierro a la mitad (unos 19 mg/L) y llevaría el pH a cerca de 3,5; los valores medidos (1,5 mg/L y pH 6,4) y el depósito sólido muestran que hubo reacción. *Razonamiento que origina el error:* Explicar todo cambio de concentración en un río por dilución, sin comparar con lo que la dilución predice.
+- **B.** Los pocos peces de P4 son una consecuencia de la mejora del agua, no su causa; no pueden retirar decenas de mg/L de hierro de todo el caudal. *Razonamiento que origina el error:* Invertir causa y efecto entre las condiciones del agua y los organismos que viven en ella.
+- **C.** El hierro disuelto no se evapora con el agua; y el depósito aparece justo donde sube el pH, lo que se explica por la precipitación del hierro, no por arena. *Razonamiento que origina el error:* Confundir la desaparición de una sustancia disuelta con su evaporación.
+
+**Error conceptual que conviene evitar:** Atribuir a la dilución cambios que solo una reacción química puede explicar.
+
+**Estrategia:** Calcula lo que pasaría si solo hubiera mezcla (dilución) y compáralo con lo medido: si la diferencia es grande, busca una reacción.
+
+---
+
+### Pregunta 177 · Clave B
+
+*SN-F-177 · Indagación · Evaluación de impactos: comparación antes y después con un sitio de control (planta de tratamiento de aguas residuales) · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (B):** La DBO bajó también donde la planta no influye; parte de la mejora en I no se debe a la planta, aunque en I bajó más que en C.
+
+**Justificación:** El sitio C funciona como control: la planta no puede influir en él, así que su cambio refleja lo que cambió en todo el río entre los dos años (por ejemplo, más caudal por una temporada seca menos intensa, que diluye más). En C la DBO bajó 1,0 mg/L (25 %); en I bajó 6,0 mg/L (50 %). Atribuir toda la reducción de I a la planta ignora ese cambio general; a la vez, I mejoró más que C, en valor absoluto y en porcentaje, y la proporción entre los dos sitios pasó de 3 (12,0/4,0) a 2 (6,0/3,0), lo que es compatible con un efecto de la planta. Este diseño (antes y después, en un sitio de control y en uno intervenido) es más sólido que mirar solo el sitio intervenido; aun así, con un solo año antes y uno después, convendría seguir midiendo varios años.
+
+**Análisis de distractores:**
+
+- **A.** Ignora el sitio de control: parte de la reducción también ocurrió aguas arriba, donde la planta no influye. *Razonamiento que origina el error:* Atribuir a una intervención todo el cambio observado después de ella (comparación antes-después sin control).
+- **C.** Que C también mejorara no anula el efecto: I mejoró el doble en porcentaje (50 % frente a 25 %) y seis veces más en mg/L. *Razonamiento que origina el error:* Pensar que, si el control cambia, la intervención no tuvo ningún efecto.
+- **D.** Antes de la planta, la DBO de I era el triple de la de C; ahora es el doble: la diferencia entre los sitios se redujo, no aumentó. *Razonamiento que origina el error:* Comparar sitios en un solo momento en lugar de comparar sus cambios.
+
+**Error conceptual que conviene evitar:** Evaluar una intervención solo con mediciones antes y después en el sitio intervenido.
+
+**Estrategia:** Busca un sitio o grupo comparable que no recibió la intervención y resta su cambio al del sitio intervenido antes de atribuirle un efecto.
+
+---
+
+### Pregunta 178 · Clave A
+
+*SN-F-178 · Explicación de fenómenos · Análisis crítico de afirmaciones en redes: variación entre años frente a tendencia · Nivel 1 · aplicación e interpretación fundamental*
+
+**Respuesta correcta (A):** Un año más frío que el anterior es parte de la variación entre años; la tendencia se ve en muchos años, y los recientes son más cálidos.
+
+**Justificación:** La temperatura media de un año depende de muchos factores que varían de un año a otro, así que la serie sube y baja: en estos datos, 7 de los 19 cambios entre años consecutivos son descensos. Una tendencia se reconoce comparando muchos años, por ejemplo con promedios por década: 24,18 °C en 2005–2014 frente a 24,66 °C en 2015–2024. El año 2024 (24,7 °C) fue más frío que 2023 (25,0 °C), pero es más cálido que cualquier año de la primera década. Un dato aislado elegido a conveniencia no refuta una tendencia sustentada en muchos datos. A escala mundial, el calentamiento se sustenta en miles de registros independientes, no en una sola estación.
+
+**Análisis de distractores:**
+
+- **B.** Una tendencia de aumento es compatible con descensos ocasionales; la gráfica muestra varios años más fríos que el anterior en medio de un aumento general. *Razonamiento que origina el error:* Esperar que una tendencia se cumpla en cada paso, sin variación.
+- **C.** El último dato no tiene más peso que los demás; una tendencia se evalúa con el conjunto de la serie. *Razonamiento que origina el error:* Dar más importancia al dato más reciente o más llamativo.
+- **D.** La variación entre años no impide ver la tendencia: el promedio de la segunda década es casi medio grado mayor que el de la primera. *Razonamiento que origina el error:* Creer que la variabilidad hace imposible identificar una tendencia.
+
+**Error conceptual que conviene evitar:** Usar un dato aislado (un año, un día frío) para refutar una tendencia de largo plazo.
+
+**Estrategia:** Para buscar una tendencia, compara promedios de periodos largos en lugar de dos valores consecutivos.
+
+---
+
+### Pregunta 179 · Clave C
+
+*SN-F-179 · Uso comprensivo del conocimiento científico · Decisiones tecnológicas fundamentadas: tratamiento del agua de consumo en una escuela rural · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (C):** Sedimentar y filtrar primero para reducir la turbidez, y luego clorar para desinfectar y proteger el agua almacenada.
+
+**Justificación:** La decisión debe atender tres condiciones a la vez. (1) El agua llega turbia: las partículas protegen a los microorganismos de los desinfectantes y de la luz, así que primero hay que reducir la turbidez (sedimentación y filtración). (2) Hay que desinfectar: la cloración inactiva microorganismos y funciona mejor en agua clara. (3) El agua se almacena dos días: solo la cloración deja un residual que protege contra una nueva contaminación en los tanques. El orden importa: filtrar y después clorar. Ninguna opción única cumple las tres condiciones. La dosis de cloro debe seguir las indicaciones de las autoridades sanitarias, y la calidad del agua tratada debe verificarse con análisis.
+
+**Análisis de distractores:**
+
+- **A.** Hervir desinfecta, pero no reduce la turbidez, no protege el agua almacenada durante dos días y sí necesita un insumo: combustible. *Razonamiento que origina el error:* Elegir un método por su ventaja principal sin revisar todos los criterios que plantea la situación.
+- **B.** La desinfección solar requiere agua clara; con el agua turbia de la quebrada pierde eficacia, y tampoco protege el agua almacenada. *Razonamiento que origina el error:* Decidir solo por el costo, sin comprobar que el método funcione en las condiciones reales.
+- **D.** Clorar el agua turbia es poco eficaz, y retirar el cloro después elimina la protección durante el almacenamiento, que es justamente lo que se necesitaba. *Razonamiento que origina el error:* No tener en cuenta que el orden de los procesos cambia el resultado.
+
+**Error conceptual que conviene evitar:** Escoger una tecnología por un solo criterio (costo, sencillez) sin verificar que resuelva todas las condiciones del problema.
+
+**Estrategia:** Haz una lista de las condiciones que debe cumplir la solución y revisa cada opción contra todas ellas; si ninguna sirve sola, combina las que se complementan y piensa en el orden.
+
+**Fuente:** Organización Mundial de la Salud (OMS). Guidelines for drinking-water quality, 4.ª edición que incorpora el primer y el segundo addendum (Ginebra, 2022): tratamiento del agua, desinfección y efecto de la turbidez.
+
+---
+
+### Pregunta 180 · Clave D
+
+*SN-F-180 · Indagación · Uso responsable de la evidencia: selección de datos favorables en la publicidad de un biofertilizante · Nivel 3 · evaluación de evidencias y diseños*
+
+**Respuesta correcta (D):** Los promedios son iguales (4,5 t/ha); el folleto eligió los datos favorables, y el ensayo no muestra un efecto del producto.
+
+**Justificación:** Con todas las parcelas: con biofertilizante, (4,1 + 5,4 + 3,8 + 4,9 + 5,2 + 3,6) / 6 = 27,0 / 6 = 4,5 t/ha; sin biofertilizante, (4,0 + 4,8 + 4,6 + 4,2 + 4,7 + 4,7) / 6 = 27,0 / 6 = 4,5 t/ha. Los promedios son iguales. El «35 %» sale de comparar la mejor parcela tratada (5,4) con la peor sin tratar (4,0): 5,4 / 4,0 = 1,35. Elegir solo los datos que favorecen una idea (selección interesada de datos) es un uso irresponsable de la evidencia. La conclusión adecuada es prudente: este ensayo no muestra un efecto; no demuestra que el producto nunca funcione en otras condiciones.
+
+**Análisis de distractores:**
+
+- **A.** Compara dos parcelas escogidas entre doce; con todos los datos, los promedios de los dos tratamientos son iguales. *Razonamiento que origina el error:* Aceptar una comparación de casos extremos elegidos a conveniencia.
+- **B.** Comete el mismo error que el folleto, pero en sentido contrario: elige dos parcelas extremas en lugar de comparar los promedios. *Razonamiento que origina el error:* Seleccionar los datos que apoyan la conclusión contraria.
+- **C.** La variación entre parcelas es normal en un ensayo de campo; precisamente por eso se usan varias parcelas por tratamiento y se comparan promedios. *Razonamiento que origina el error:* Pensar que la variación de los datos invalida un ensayo bien diseñado.
+
+**Error conceptual que conviene evitar:** Aceptar resultados presentados con ejemplos escogidos, sin pedir los datos completos.
+
+**Estrategia:** Cuando alguien muestra pocos casos, pregunta cuántos datos había en total y compara los promedios de todos.
 
 ---

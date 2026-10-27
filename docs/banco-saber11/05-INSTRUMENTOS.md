@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30), F (30). Total: 180 de 180 preguntas.
 
 ## 1. Matriz de trazabilidad curricular
 
@@ -162,6 +162,36 @@ Las afirmaciones y evidencias son formulaciones operativas propias del banco, no
 | 148 | E | Calorimetría: calor específico de un metal y fuentes de error | Indagación | Evalúa la validez de conclusiones experimentales considerando las fuentes de error y los resultados de ensayos modificados. | Interpreta la diferencia entre un calor específico medido y el valor de referencia a partir de las pérdidas de energía, usando la mejora obtenida en un segundo ensayo. | 3 | Laboratorio | Tabla | C |
 | 149 | E | Fuentes de energía y eficiencia: centrales hidroeléctrica, solar y térmica | Indagación | Evalúa el alcance de conclusiones sobre decisiones tecnológicas a partir de datos y de los criterios que esos datos no incluyen. | Calcula la eficiencia de tres centrales y reconoce que la eficiencia, por sí sola, no basta para concluir cuál fuente es la mejor opción. | 3 | Tecnológico | Tabla | A |
 | 150 | E | Energía solar: inclinación de un panel fotovoltaico y diseño del experimento | Indagación | Reconoce limitaciones metodológicas que impiden atribuir un efecto a la variable estudiada. | Identifica que la hora de medición varía junto con la inclinación del panel y propone un procedimiento que separe los dos efectos. | 3 | Experimento escolar | Gráfica | D |
+| 151 | F | Naturaleza de la indagación: observación, inferencia y predicción | Uso comprensivo del conocimiento científico | Usa las nociones de observación, inferencia, hipótesis y predicción para analizar registros de una indagación. | Distingue, en las notas de campo de una estudiante, el enunciado que registra lo percibido del que propone una causa, y reconoce que una predicción no es una observación. | 1 | Estudio ecológico | Texto | B |
+| 152 | F | Diseño experimental: prueba a ciegas y orden aleatorio en una prueba de sabor | Indagación | Selecciona procedimientos experimentales que reducen los sesgos de quienes participan en una prueba. | Reconoce que saber qué muestra se prueba sesga el juicio y elige el enmascaramiento de las muestras con orden al azar como la mejora del procedimiento. | 1 | Experimento escolar | Experimento | C |
+| 153 | F | Control con pulsera simulada: expectativa y práctica frente al efecto de un producto | Explicación de fenómenos | Determina qué explicación está mejor sustentada por los resultados de un experimento con grupos de comparación. | Usa un grupo sin pulsera y un grupo con una pulsera simulada para separar el efecto de la práctica, el de llevar la pulsera y el atribuido al holograma. | 2 | Datos de investigación | Tabla | A |
+| 154 | F | Incertidumbre de medición: resolución del instrumento y cifras significativas | Uso comprensivo del conocimiento científico | Usa las nociones de resolución, variación de mediciones repetidas y cifras significativas para informar resultados. | Expresa el promedio de mediciones repetidas con las cifras que permiten la resolución de la balanza y la variación de los datos. | 1 | Laboratorio | Tabla | D |
+| 155 | F | Gráficas engañosas: eje vertical truncado en una publicidad | Indagación | Evalúa la validez de conclusiones presentadas mediante gráficas, considerando su escala. | Calcula el cambio real a partir de los valores rotulados en una gráfica con el eje truncado y reconoce que la diferencia de alturas exagera el efecto. | 2 | Tecnológico | Esquema | C |
+| 156 | F | Correlación y causalidad: causalidad inversa en la evaluación de una medida de salud pública | Explicación de fenómenos | Identifica los límites de una conclusión causal a partir de datos de observación. | Explica que una correlación positiva entre toldillos y casos de malaria se origina en la forma de repartir los toldillos (según los casos previos) y no en un efecto de estos. | 2 | Salud pública | Tabla | B |
+| 157 | F | Naturaleza de la ciencia: significado de «teoría científica» | Uso comprensivo del conocimiento científico | Diferencia el significado científico de teoría, hipótesis y ley de su uso cotidiano. | Reconoce que una teoría científica es una explicación amplia, sustentada por muchas evidencias y revisable, y no una suposición sin comprobar. | 1 | Cotidiano | Texto | B |
+| 158 | F | Integración biología-química-física: ciclo diario del oxígeno disuelto en un estanque de peces | Explicación de fenómenos | Explica fenómenos integrando procesos biológicos, químicos y físicos, y descarta explicaciones incompatibles con los datos. | Relaciona el máximo de oxígeno en la tarde con la fotosíntesis y el mínimo al amanecer con la respiración nocturna, y descarta la temperatura como causa del mínimo. | 2 | Agrícola o ambiental | Gráfica | A |
+| 159 | F | Correlación y causalidad: tercera variable en un estudio de campo | Indagación | Evalúa la validez de conclusiones causales obtenidas a partir de datos de observación. | Reconoce que la humedad se relaciona con los hongos y con las ranas, y usa parcelas de humedad parecida para examinar la relación entre hongos y ranas sin ese efecto. | 2 | Estudio ecológico | Tabla | D |
+| 160 | F | Evaluación de modelos: rango de validez de un modelo lineal (resorte) | Uso comprensivo del conocimiento científico | Usa modelos científicos reconociendo las condiciones en que son válidos y sus limitaciones. | Identifica en una gráfica el intervalo en que un modelo de proporcionalidad describe los datos y el sentido del error del modelo fuera de ese intervalo. | 2 | Laboratorio | Gráfica | C |
+| 161 | F | Integración biología-física: el sudor, la evaporación y la humedad del aire | Explicación de fenómenos | Explica procesos de regulación del cuerpo humano integrando conceptos de transferencia de energía y cambios de estado. | Explica que el sudor enfría al evaporarse y que la humedad del aire reduce la evaporación y, con ella, el enfriamiento. | 1 | Cotidiano | Texto | A |
+| 162 | F | Muestreo: sesgo de selección al estimar el ataque de la broca del café | Indagación | Reconoce limitaciones metodológicas en la obtención de muestras y propone cómo corregirlas. | Identifica que una muestra tomada por comodidad puede no representar el lote y elige el muestreo al azar en todo el lote. | 1 | Agrícola o ambiental | Texto | D |
+| 163 | F | Incertidumbre de medición: tiempo de reacción y medición de muchas oscilaciones | Uso comprensivo del conocimiento científico | Usa el concepto de incertidumbre para comparar procedimientos de medición. | Calcula la incertidumbre absoluta y relativa del periodo de un péndulo medido con una y con veinte oscilaciones, y elige el procedimiento más preciso. | 2 | Laboratorio | Experimento | B |
+| 164 | F | Reproducibilidad y revisión por pares en la construcción del conocimiento científico | Explicación de fenómenos | Explica el papel de la replicación independiente y de la revisión por pares en la validación de los resultados científicos. | Explica por qué la repetición por grupos independientes, siguiendo el método publicado, reduce la probabilidad de que un resultado se deba a un error o a una condición particular. | 1 | Datos de investigación | Texto | C |
+| 165 | F | Diseño experimental en el campo: asignación al azar, bloques y réplicas | Indagación | Selecciona diseños experimentales adecuados cuando no es posible igualar todas las condiciones. | Elige un diseño que reparte por sorteo los tratamientos dentro de cada zona del terreno y usa varias parcelas por tratamiento. | 2 | Agrícola o ambiental | Esquema | C |
+| 166 | F | Análisis crítico de afirmaciones publicitarias: «agua alcalina» y pH de la sangre | Uso comprensivo del conocimiento científico | Diferencia explicaciones científicas de afirmaciones sin fundamento, integrando conocimientos de química y de biología. | Usa los conceptos de pH, neutralización y regulación homeostática para evaluar un anuncio sobre el efecto del agua alcalina en la sangre. | 2 | Salud pública | Texto | A |
+| 167 | F | Relaciones con desfase temporal: lluvias, mosquitos y casos de dengue | Explicación de fenómenos | Explica relaciones entre variables ambientales y de salud mediante mecanismos biológicos con escalas de tiempo. | Explica el retraso entre las temporadas de lluvia y los picos de casos de dengue a partir del ciclo de vida del mosquito y de los tiempos de incubación del virus. | 2 | Salud pública | Gráfica | B |
+| 168 | F | Hipótesis y predicción: el rastro químico de las hormigas arrieras | Indagación | Deduce las predicciones que se derivan de una hipótesis para ponerla a prueba. | Identifica el resultado que se espera de una manipulación experimental si la hipótesis del rastro químico es correcta. | 1 | Estudio ecológico | Experimento | D |
+| 169 | F | Representación de datos: elección de la gráfica adecuada para una relación entre variables | Uso comprensivo del conocimiento científico | Usa las características de las representaciones gráficas para comunicar relaciones entre variables. | Selecciona el diagrama de dispersión para mostrar la relación entre dos variables cuantitativas medidas en los mismos objetos. | 1 | Estudio ecológico | Texto | A |
+| 170 | F | Resultados contradictorios: comparación de métodos entre dos grupos que repiten un experimento | Explicación de fenómenos | Compara explicaciones alternativas de resultados contradictorios y determina cuál está mejor sustentada. | Usa las condiciones de los dos estudios y un ensayo adicional para atribuir la discrepancia al tiempo de almacenamiento del extracto, y descarta explicaciones de autoridad o de una sola repetición. | 3 | Experimento escolar | Tabla | C |
+| 171 | F | Análisis de datos: promedio y dispersión al comparar dos estufas eficientes de leña | Indagación | Evalúa conclusiones a partir de mediciones repetidas, considerando el promedio y la variación de los datos. | Compara la diferencia entre promedios con la dispersión de los ensayos y reconoce que, si los rangos se superponen casi por completo, la diferencia no sustenta la conclusión. | 2 | Tecnológico | Tabla | B |
+| 172 | F | Integración física-química-biología: presión atmosférica, temperatura de ebullición y cocción | Uso comprensivo del conocimiento científico | Integra conocimientos de física, química y biología para interpretar situaciones cotidianas. | Relaciona la menor presión atmosférica en la altura con una menor temperatura de ebullición y esta con una menor rapidez de los cambios que ablandan los alimentos. | 2 | Cotidiano | Tabla | D |
+| 173 | F | Evaluación de modelos: un modelo hidrológico que falla después de la deforestación | Explicación de fenómenos | Explica por qué un modelo científico deja de predecir bien cuando cambian las condiciones que supone. | Relaciona el aumento de los caudales medidos respecto al modelo con la pérdida de infiltración causada por la tala, y descarta explicaciones incompatibles con los datos. | 3 | Ecosistema colombiano | Gráfica | A |
+| 174 | F | Incertidumbre y decisiones: nitrato en el agua de un pozo cerca de un valor guía | Indagación | Evalúa la validez de conclusiones que comparan mediciones con un valor de referencia, considerando su incertidumbre. | Reconoce que un promedio muy cercano al valor guía, con mediciones que varían alrededor de él, no permite concluir que el agua cumple, y propone obtener mejor evidencia. | 3 | Agrícola o ambiental | Tabla | B |
+| 175 | F | Estadística básica: coeficiente de correlación lineal y relaciones no lineales (actividad enzimática) | Uso comprensivo del conocimiento científico | Usa conocimientos de biología y de análisis de datos para evaluar la interpretación de una medida estadística. | Reconoce que un coeficiente de correlación lineal cercano a cero no implica ausencia de relación cuando la relación tiene un máximo, y lo explica con el modelo de la actividad enzimática. | 3 | Laboratorio | Gráfica | C |
+| 176 | F | Problema socioambiental: drenaje ácido de una mina y recuperación de una quebrada | Explicación de fenómenos | Explica un problema ambiental integrando reacciones químicas, mezcla de corrientes y efectos sobre los seres vivos. | Usa el cambio de pH y de hierro disuelto, comparado con lo esperado por simple dilución, para sustentar que hubo neutralización y precipitación del hierro. | 3 | Ecosistema colombiano | Tabla | D |
+| 177 | F | Evaluación de impactos: comparación antes y después con un sitio de control (planta de tratamiento de aguas residuales) | Indagación | Evalúa conclusiones sobre el efecto de una intervención ambiental usando sitios de control y mediciones antes y después. | Usa el cambio en un sitio de control para reconocer qué parte de la mejora del sitio intervenido no puede atribuirse a la planta de tratamiento. | 3 | Agrícola o ambiental | Tabla | B |
+| 178 | F | Análisis crítico de afirmaciones en redes: variación entre años frente a tendencia | Explicación de fenómenos | Identifica los límites de una conclusión basada en un dato aislado frente a una tendencia de largo plazo. | Explica, con una serie de 20 años, que un año más frío que el anterior es parte de la variación natural y no contradice una tendencia de aumento. | 1 | Datos de investigación | Gráfica | A |
+| 179 | F | Decisiones tecnológicas fundamentadas: tratamiento del agua de consumo en una escuela rural | Uso comprensivo del conocimiento científico | Usa conocimientos científicos para tomar decisiones tecnológicas que consideran varios criterios a la vez. | Combina métodos de tratamiento según la turbidez del agua, la necesidad de desinfección, la protección durante el almacenamiento y los recursos disponibles, respetando el orden de los procesos. | 3 | Tecnológico | Tabla | C |
+| 180 | F | Uso responsable de la evidencia: selección de datos favorables en la publicidad de un biofertilizante | Indagación | Evalúa afirmaciones basadas en datos considerando si se usó toda la evidencia disponible. | Compara los promedios de todas las parcelas de un ensayo al azar y reconoce que un folleto seleccionó solo los resultados favorables. | 3 | Agrícola o ambiental | Tabla | D |
 
 ## 2. Lista de control de calidad
 
@@ -337,8 +367,38 @@ Valoración interna por criterio: C = Cumple, RA = Requiere ajuste, NC = No cump
 | 148 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
 | 149 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
 | 150 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 151 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 152 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 153 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 154 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 155 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 156 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 157 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 158 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 159 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 160 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 161 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 162 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 163 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 164 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 165 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 166 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 167 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 168 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 169 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 170 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 171 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 172 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 173 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 174 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 175 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 176 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 177 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 178 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 179 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
+| 180 | C | C | C | C | C | C | C | C | C | C | C | C | C | C | C |
 
-Revisión automática (npm run banco): 0 errores y 0 avisos; las metas globales se revisan cuando estén los seis bloques.
+Revisión automática (npm run banco): 0 errores y 0 avisos, con las metas globales del banco completo.
 
 El banco está revisado con criterios técnicos, pero **no está validado psicométricamente**: no hay aplicación piloto, ni índices de dificultad, discriminación o confiabilidad. Esos indicadores solo pueden obtenerse con datos reales de aplicación.
 
@@ -346,12 +406,12 @@ El banco está revisado con criterios técnicos, pero **no está validado psicom
 
 Escribe aciertos / preguntas aplicadas en cada celda (o el porcentaje). La aplicación web genera esta tabla al terminar un simulacro y la descarga en CSV.
 
-| Competencia | Bloque A | Bloque B | Bloque C | Bloque D | Bloque E | Total |
-| --- | --- | --- | --- | --- | --- | --- |
-| Uso comprensivo del conocimiento científico |  |  |  |  |  |  |
-| Explicación de fenómenos |  |  |  |  |  |  |
-| Indagación |  |  |  |  |  |  |
-| Total |  |  |  |  |  |  |
+| Competencia | Bloque A | Bloque B | Bloque C | Bloque D | Bloque E | Bloque F | Total |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Uso comprensivo del conocimiento científico |  |  |  |  |  |  |  |
+| Explicación de fenómenos |  |  |  |  |  |  |  |
+| Indagación |  |  |  |  |  |  |  |
+| Total |  |  |  |  |  |  |  |
 
 ## 4. Plantilla para registrar aciertos, errores y dificultades
 

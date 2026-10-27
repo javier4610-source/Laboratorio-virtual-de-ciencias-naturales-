@@ -4,7 +4,7 @@
 
 *Documento generado con `npm run banco` el 2026-10-27 a partir de src/assessment/avanzado. No lo edites a mano: cambia los ítems y vuelve a generarlo.*
 
-Bloques incluidos: A (30), B (30), C (30), D (30), E (30). Total: 150 de 180 preguntas.
+Bloques incluidos: A (30), B (30), C (30), D (30), E (30), F (30). Total: 180 de 180 preguntas.
 
 Los documentos oficiales consultados (ICFES y Ministerio de Educación Nacional) y sus fechas de consulta están en 01-FUNDAMENTACION.md.
 
@@ -99,6 +99,26 @@ Los documentos oficiales consultados (ICFES y Ministerio de Educación Nacional)
 | 148 | SN-E-148 | Calorimetría: calor específico de un metal y fuentes de error | Tabla | Resultados de dos ensayos de calorimetría con 100 g de aluminio y 200 g de agua (datos ficticios con fines didácticos) |
 | 149 | SN-E-149 | Fuentes de energía y eficiencia: centrales hidroeléctrica, solar y térmica | Tabla | Energía que entra y energía eléctrica entregada en un día por tres centrales hipotéticas (datos ficticios con fines didácticos) |
 | 150 | SN-E-150 | Energía solar: inclinación de un panel fotovoltaico y diseño del experimento | Gráfica | Potencia entregada por el panel según su inclinación (cada inclinación medida a una hora distinta) |
+| 153 | SN-F-153 | Control con pulsera simulada: expectativa y práctica frente al efecto de un producto | Tabla | Tiempo medio de equilibrio en un pie, por grupo (datos ficticios con fines didácticos) |
+| 154 | SN-F-154 | Incertidumbre de medición: resolución del instrumento y cifras significativas | Tabla | Masa del precipitado seco medida tres veces (datos ficticios con fines didácticos) |
+| 155 | SN-F-155 | Gráficas engañosas: eje vertical truncado en una publicidad | Esquema | Datos en el contexto |
+| 156 | SN-F-156 | Correlación y causalidad: causalidad inversa en la evaluación de una medida de salud pública | Tabla | Casos de malaria y toldillos entregados por vereda (datos ficticios con fines didácticos) |
+| 158 | SN-F-158 | Integración biología-química-física: ciclo diario del oxígeno disuelto en un estanque de peces | Gráfica | Oxígeno disuelto en el estanque durante 24 horas (datos ficticios con fines didácticos) |
+| 159 | SN-F-159 | Correlación y causalidad: tercera variable en un estudio de campo | Tabla | Humedad, hongos y ranas en siete parcelas (datos ficticios con fines didácticos) |
+| 160 | SN-F-160 | Evaluación de modelos: rango de validez de un modelo lineal (resorte) | Gráfica | Alargamiento del resorte según la masa colgada (datos ficticios con fines didácticos) |
+| 162 | SN-F-162 | Muestreo: sesgo de selección al estimar el ataque de la broca del café | Texto | Datos en el contexto |
+| 163 | SN-F-163 | Incertidumbre de medición: tiempo de reacción y medición de muchas oscilaciones | Experimento | Datos en el contexto |
+| 167 | SN-F-167 | Relaciones con desfase temporal: lluvias, mosquitos y casos de dengue | Gráfica | Casos de dengue por mes de inicio de síntomas (datos ficticios con fines didácticos) |
+| 170 | SN-F-170 | Resultados contradictorios: comparación de métodos entre dos grupos que repiten un experimento | Tabla | Condiciones y resultados de los dos colegios (datos ficticios con fines didácticos) |
+| 171 | SN-F-171 | Análisis de datos: promedio y dispersión al comparar dos estufas eficientes de leña | Tabla | Leña usada para hervir 5 L de agua (datos ficticios con fines didácticos) |
+| 172 | SN-F-172 | Integración física-química-biología: presión atmosférica, temperatura de ebullición y cocción | Tabla | Presión, ebullición y cocción de fríjoles en olla abierta (datos ficticios con fines didácticos; presiones y temperaturas aproximadas) |
+| 173 | SN-F-173 | Evaluación de modelos: un modelo hidrológico que falla después de la deforestación | Gráfica | Caudal máximo de la quebrada según la lluvia de cada aguacero (datos ficticios con fines didácticos) |
+| 174 | SN-F-174 | Incertidumbre y decisiones: nitrato en el agua de un pozo cerca de un valor guía | Tabla | Nitrato medido en una misma muestra de agua del pozo (datos ficticios con fines didácticos) |
+| 175 | SN-F-175 | Estadística básica: coeficiente de correlación lineal y relaciones no lineales (actividad enzimática) | Gráfica | Actividad de la enzima según la temperatura (datos ficticios con fines didácticos) |
+| 176 | SN-F-176 | Problema socioambiental: drenaje ácido de una mina y recuperación de una quebrada | Tabla | pH, hierro disuelto y peces en cuatro puntos de la quebrada (datos ficticios con fines didácticos) |
+| 177 | SN-F-177 | Evaluación de impactos: comparación antes y después con un sitio de control (planta de tratamiento de aguas residuales) | Tabla | DBO promedio de la temporada seca, antes y después de la planta (datos ficticios con fines didácticos) |
+| 178 | SN-F-178 | Análisis crítico de afirmaciones en redes: variación entre años frente a tendencia | Gráfica | Temperatura media anual de la estación, 2005–2024 (datos ficticios con fines didácticos) |
+| 180 | SN-F-180 | Uso responsable de la evidencia: selección de datos favorables en la publicidad de un biofertilizante | Tabla | Rendimiento de maíz en las 12 parcelas del ensayo (datos ficticios con fines didácticos) |
 
 Los datos ficticios son internamente coherentes y plausibles, pero no provienen de investigaciones reales ni deben citarse como tales.
 
@@ -118,4 +138,6 @@ Los datos ficticios son internamente coherentes y plausibles, pero no provienen 
 | 88 | SN-C-088 | Separación de mezclas y propiedades físicas: mercurio y oro en la minería | Temperaturas de fusión y de ebullición del mercurio y del oro: CRC Handbook of Chemistry and Physics (valores redondeados). |
 | 112 | SN-D-112 | Densidad y principio de Arquímedes: ¿una figura de oro macizo? | Densidades de referencia redondeadas: Haynes, W. M. (ed.), CRC Handbook of Chemistry and Physics, CRC Press, tablas de propiedades físicas de los elementos y de aleaciones comunes. |
 | 145 | SN-E-145 | Espectro electromagnético: rapidez, frecuencia y longitud de onda | Rapidez de la luz en el vacío: c = 299 792 458 m/s (valor exacto que define el metro), NIST, CODATA Recommended Values of the Fundamental Physical Constants. Las frecuencias son valores típicos redondeados (banda FM de 88 a 108 MHz; wifi en la banda de 2,4 GHz). |
+| 174 | SN-F-174 | Incertidumbre y decisiones: nitrato en el agua de un pozo cerca de un valor guía | Organización Mundial de la Salud (OMS). Guidelines for drinking-water quality, 4.ª edición que incorpora el primer y el segundo addendum (Ginebra, 2022): valor guía del nitrato de 50 mg/L, expresado como ion nitrato. |
+| 179 | SN-F-179 | Decisiones tecnológicas fundamentadas: tratamiento del agua de consumo en una escuela rural | Organización Mundial de la Salud (OMS). Guidelines for drinking-water quality, 4.ª edición que incorpora el primer y el segundo addendum (Ginebra, 2022): tratamiento del agua, desinfección y efecto de la turbidez. |
 

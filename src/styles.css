@@ -1294,3 +1294,6 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 
 /* Fuentes con direcciones largas y fórmulas sin espacios: que se partan en pantallas angostas. */
 .adv-item { overflow-wrap: anywhere; }
+/* Solucionario: el contenido del desplegable no puede ensanchar la página (las tablas se desplazan dentro de su marco). */
+.adv-sol { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.adv-sol > div, .adv-sol > div > * { min-width: 0; max-width: 100%; }

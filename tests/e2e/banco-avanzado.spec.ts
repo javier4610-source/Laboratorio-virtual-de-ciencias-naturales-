@@ -168,5 +168,15 @@ test.describe('móvil 390 px', () => {
       if (ov > 0) bad.push(`${id} (${ov} px)`);
     }
     expect(bad, 'preguntas que desbordan').toEqual([]);
+    // El solucionario del simulacro muestra las mismas preguntas en otro contenedor: se revisa con todas abiertas.
+    await page.getByRole('tab', { name: /Simulacro/ }).click();
+    await page.getByLabel('Número de preguntas').selectOption('todas');
+    await page.getByRole('button', { name: /Empezar simulacro/ }).click();
+    const items = page.locator('[data-simulacro-item]');
+    const n = await items.count();
+    for (let i = 0; i < n; i++) await items.nth(i).locator('label.adv-option').first().click();
+    await page.getByRole('button', { name: 'Terminar simulacro y ver resultados' }).click();
+    await page.locator('details.adv-sol').evaluateAll((ds) => ds.forEach((d) => d.setAttribute('open', '')));
+    expect(await overflow(page), 'solucionario con todas las preguntas').toBeLessThanOrEqual(0);
   });
 });

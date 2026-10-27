@@ -13,6 +13,8 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 - Banco avanzado en el celular (390 px): 19 preguntas con gráfica y la pregunta 64 (dirección web larga en la fuente) se
   salían de la pantalla al abrir la retroalimentación. Las gráficas y sus tablas de datos ya no ensanchan la página y las
   palabras largas se parten. Nueva prueba que recorre las 180 preguntas a 390 px (antes solo se revisaban 10 al azar).
+- Solucionario del simulacro en el celular: las tablas de 50 preguntas ensanchaban la página; ahora se desplazan dentro
+  de su marco. La prueba nueva también abre el solucionario con las 180 preguntas.
 
 ## [2.14.0] · 2026-10-27
 

@@ -113,7 +113,7 @@ entrega (`entregas/`). Para cada ítem incluye:
 
 | Entrega | Ítems | Bloque | Estado |
 |---|---|---|---|
-| 1 | 1–30 | A · Biología | En elaboración |
+| 1 | 1–30 | A · Biología | Publicada (versión 2.11.0) |
 | 2 | 31–60 | B · Ecología, ambiente y sostenibilidad | Pendiente |
 | 3 | 61–90 | C · Química | Pendiente |
 | 4 | 91–120 | D · Física y fenómenos mecánicos | Pendiente |

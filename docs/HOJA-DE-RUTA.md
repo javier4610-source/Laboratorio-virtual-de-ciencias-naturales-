@@ -43,7 +43,8 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       (A biología · B ecología y ambiente · C química · D física mecánica · E electricidad, ondas y energía · F indagación,
       integración y CTS) según el prompt maestro del docente; fundamentación en `docs/banco-saber11/01-FUNDAMENTACION.md`,
       esquema y matriz en `src/assessment/avanzado/types.ts`. Una entrega por ronda, con revisión de 15 criterios,
-      validador automático y revisión del integrador. Estado: entrega 1 en elaboración.
+      validador automático y revisión del integrador. Estado: infraestructura y entrega 1 publicadas (v2.11.0);
+      siguiente: entrega 2 (bloque B). Documentos oficiales del ICFES y del MEN no accesibles desde el entorno.
 - [ ] **T3 · Retroalimentación del docente** (espera T2: necesita el servidor publicado): comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.
 - [x] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
@@ -65,6 +66,8 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] v2.11.0 · Banco avanzado Saber 11.°: tres modalidades (práctica guiada, simulacro, refuerzo), validador, documentos
+  generados y entrega 1 (30 ítems de biología revisados).
 - [x] v2.10.0 · Mejoras: exportación para Moodle (XML y GIFT) y Google Classroom (enlace oficial de compartir, texto de
   la tarea y CSV de enlaces) desde el panel docente; pista de control de variables al guardar un ensayo con dos o más
   variables cambiadas, con excepciones declaradas en las tablas de datos.

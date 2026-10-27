@@ -524,3 +524,13 @@ Capturas de revisión (claro y oscuro, 1280 y 390 px) revisadas por el integrado
 | Moodle XML y GIFT (`src/lib/lmsExport.ts`) | 17 pruebas unitarias con analizador XML estricto; `xmllint --noout` sobre las 347 preguntas; E2E con DOMParser del navegador | Bien formado; una opción correcta por pregunta; escape de `\ ~ = # { } :` en GIFT | — | — | Correcto; falta probar la importación en un Moodle real |
 | Google Classroom | Unitarias y E2E: enlace `classroom.google.com/share` con el enlace permanente; texto de la tarea; CSV por grado | Correcto | — | — | Correcto; Classroom no importa cuestionarios desde archivo (limitación declarada) |
 | Pista de control de variables (`src/lib/controlVariables.ts`) | 14 pruebas unitarias; E2E en densidad (claro y oscuro) y gases; axe | Aparece con dos entradas cambiadas, no con una; no bloquea el registro; sin región `status` nueva; foco devuelto con «Entendido» | — | — | Correcto; excepciones (`multiInput`, `notIndependent`) pendientes de revisión del docente |
+
+# Banco avanzado tipo Saber 11.°: infraestructura y entrega 1 (versión 2.11.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Entrega 1 (30 ítems de biología) | Revisión de 15 criterios del autor; revisión ítem por ítem del integrador (ciencia, clave única, cálculos); `tests/unit/bloqueA.test.ts` | Matriz 10/10/10 y 10/12/8; 21 ítems con datos; cálculos verificados | Ítem 24 con un error de fisiología en el borrador; ítem 26 con una clave ambigua («la mayoría de los frutos»); ciclo de claves A C D B desde el ítem 21 | Datos del ítem 24 rehechos; clave del 26 reformulada; orden de opciones de los ítems 25 y 28 cambiado | Correcto; no validado psicométricamente |
+| Validador y documentos | `tests/unit/bancoAvanzado.test.ts`; `npm run banco` | 0 errores; 1 aviso (enunciado genérico repetido en los ítems 7 y 17, con contextos distintos) | — | — | Correcto |
+| Interfaz | `tests/e2e/banco-avanzado.spec.ts` (axe claro y oscuro, 390 px); capturas del integrador | Correcto | El rótulo del eje y se montaba sobre el título de la gráfica | Rótulo en dos líneas (`splitAxisLabel`) | Corregido |
+| Documentos oficiales | Consulta de icfes.gov.co y mineducacion.gov.co | No accesibles desde el entorno; solo se confirmó su existencia con un buscador | — | Declarado en la Parte I; afirmaciones y evidencias como formulaciones propias | Limitación declarada |
+| Regresión | `tsc -b`; `vitest run`; `npm run build`; E2E completo | 1330 pruebas unitarias; E2E 201 pasan y 1 se omite por diseño | — | — | Correcto |

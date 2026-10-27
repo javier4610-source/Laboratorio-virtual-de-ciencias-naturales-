@@ -7,6 +7,29 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.11.0] · 2026-10-27
+
+Banco avanzado tipo Saber 11.° de Ciencias Naturales (pedido del docente): infraestructura completa y entrega 1 de 6.
+Material original de práctica: no es oficial del ICFES ni está avalado por el ICFES o el MEN; revisado con criterios
+técnicos y no validado psicométricamente.
+
+### Añadido
+- **Banco avanzado** (`#/banco/avanzado`, desde «Banco Saber 11»): práctica guiada con retroalimentación comentada
+  (por qué cada distractor es incorrecto, error que conviene evitar y estrategia), simulacro sin claves hasta terminar
+  (cronómetro opcional rotulado como no oficial; resultados por competencia y bloque, CSV y solucionario) y refuerzo
+  personalizado por competencia, bloque y nivel, con sugerencias tras el simulacro. Gráficas SVG accesibles con su
+  descripción textual y sus datos en tabla.
+- **Entrega 1 (ítems 1–30, biología):** 10 de uso comprensivo, 10 de explicación y 10 de indagación; niveles 10/12/8;
+  21 con tablas, gráficas, esquemas, experimentos o modelos; claves 7/7/8/8 sin rachas de más de 2 ni ciclos. Revisión
+  de 15 criterios ítem por ítem en `docs/banco-saber11/entregas/ENTREGA-1-REVISION.md`.
+- **Fundamentación y documentos del banco** (`docs/banco-saber11/`): Parte I escrita a mano (documentos oficiales y su
+  estado de consulta, matriz global, criterios) y Partes II a VI generadas con `npm run banco` desde los mismos datos
+  de la aplicación (cuadernillo sin claves, clave, solucionario, instrumentos docentes, referencias y datos simulados).
+- **Validador del banco** (`src/assessment/avanzado/validate.ts`): estructura de cada ítem, matriz por bloque, claves,
+  rachas y ciclos, enunciados y contextos repetidos y rótulo de datos ficticios; la prueba unitaria exige cero errores.
+- **Panel docente → Moodle y Classroom:** exportación del banco avanzado a Moodle XML y GIFT y plantilla CSV para
+  registrar respuestas por estudiante.
+
 ## [2.10.0] · 2026-10-27
 
 Mejoras: exportación para Moodle y Google Classroom y pista de control de variables al guardar ensayos.

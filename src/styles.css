@@ -1263,9 +1263,10 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 .adv-feedback p { margin: 0; }
 .adv-distractors { margin: 4px 0 0; }
 .adv-distractors li.chosen { font-weight: 600; }
-.adv-chart { margin: 0; display: grid; gap: 8px; min-width: 0; }
+.adv-chart { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; min-width: 0; max-width: 100%; }
+.adv-chart > * { min-width: 0; }
 .adv-chart-title { font-weight: 700; }
-.adv-chart .adv-chart-svg { display: block; width: 100%; max-width: 640px; height: auto; overflow: visible; }
+.adv-chart .adv-chart-svg { display: block; width: 100%; max-width: 640px; height: auto; overflow: hidden; }
 .adv-legend svg { flex: none; width: 22px; height: 14px; }
 .adv-chart svg text { fill: var(--ink-2); font-family: var(--font-data); font-size: 13px; }
 .adv-chart svg text.cat { font-size: 12px; }
@@ -1275,7 +1276,8 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 .adv-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.9rem; }
 .adv-legend li { display: inline-flex; align-items: center; gap: 6px; }
 .adv-chart-text > p { margin: 8px 0; }
-.adv-chart-text .table-wrap { margin-top: 8px; }
+.adv-chart-text .table-wrap { margin-top: 8px; max-width: 100%; overflow-x: auto; }
+.adv-chart-text th, .adv-chart-text td { white-space: normal; overflow-wrap: anywhere; }
 .adv-sim-bar { position: sticky; top: calc(var(--header-h, 64px) + 4px); z-index: 5; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; justify-content: space-between; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-1); }
 .adv-sim-bar [role="timer"] { font-family: var(--font-data); font-weight: 700; }
 .adv-blocks { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; display: grid; gap: 8px; margin: 0; min-width: 0; }
@@ -1289,3 +1291,6 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 .adv-mode-text { margin: 0; font-weight: 600; }
 .adv-planned { text-align: left; }
 .adv-tabs { flex: none; flex-wrap: wrap; overflow: visible; border-bottom: 1px solid var(--line); }
+
+/* Fuentes con direcciones largas y fórmulas sin espacios: que se partan en pantallas angostas. */
+.adv-item { overflow-wrap: anywhere; }

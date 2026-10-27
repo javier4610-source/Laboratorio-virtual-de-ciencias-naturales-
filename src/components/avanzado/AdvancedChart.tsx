@@ -8,7 +8,7 @@ import type { ItemChart } from '../../assessment/avanzado/types';
  */
 const W = 480;
 const H = 300;
-const M = { l: 72, r: 14, t: 14, b: 60 };
+const M = { l: 72, r: 24, t: 14, b: 60 };
 const COLORS = ['var(--series-2)', 'var(--series-1)', 'var(--series-3)', 'var(--series-4)'];
 const SHAPES = ['círculo', 'cuadrado', 'triángulo', 'rombo'] as const;
 

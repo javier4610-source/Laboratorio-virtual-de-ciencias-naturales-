@@ -150,4 +150,23 @@ test.describe('móvil 390 px', () => {
     await page.getByRole('tab', { name: /Refuerzo/ }).click();
     expect(await overflow(page), 'refuerzo').toBeLessThanOrEqual(0);
   });
+
+  // El simulacro elige preguntas al azar: este recorrido revisa TODAS, con la retroalimentación y los desplegables abiertos.
+  test('ninguna pregunta desborda a 390 px con la retroalimentación abierta', async ({ page }) => {
+    test.setTimeout(300_000);
+    test.skip(!(await open(page)), EMPTY_MSG);
+    const jump = page.locator('#adv-g-jump');
+    const ids = await jump.locator('option').evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
+    const bad: string[] = [];
+    for (const id of ids) {
+      await jump.selectOption(id);
+      const card = page.locator('article.adv-item').first();
+      await card.locator('label.adv-option').first().click();
+      await card.getByRole('button', { name: 'Comprobar respuesta' }).click();
+      await page.locator('details').evaluateAll((ds) => ds.forEach((d) => d.setAttribute('open', '')));
+      const ov = await overflow(page);
+      if (ov > 0) bad.push(`${id} (${ov} px)`);
+    }
+    expect(bad, 'preguntas que desbordan').toEqual([]);
+  });
 });

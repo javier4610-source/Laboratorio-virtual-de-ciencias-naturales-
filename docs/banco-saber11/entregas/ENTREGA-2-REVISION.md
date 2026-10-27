@@ -182,3 +182,13 @@ Pendientes: entregas 3 (C, química), 4 (D, física mecánica), 5 (E, electricid
 - **Ítem 52.** La disminución de la acidez a 40 km se atribuye a la dispersión; también podrían influir la deposición seca y otras fuentes. El ítem no depende de ese detalle.
 - **Ítem 56.** La eficiencia del 15 % es un supuesto didáctico; la eficiencia real de conversión del alimento en energía comestible varía mucho entre especies y sistemas de producción, y el ítem solo compara energía.
 - **Ítem 60.** Un solo día sin carro no permite controlar todas las condiciones meteorológicas; el contexto las declara similares y la justificación pide más días comparables.
+
+
+## Revisión del integrador
+
+- Ítem 53: los distractores C («recibir cantidades distintas de lluvia») y D («medirse en meses diferentes») eran poco
+  plausibles para estudiantes de la media. Se reemplazaron por dos errores frecuentes de control de variables: igualar
+  una variable secundaria (el abono) sin controlar la pendiente, y confundir representatividad con control. La clave no
+  cambió.
+- Los otros 29 ítems se revisaron sin cambios: cálculos (33, 34, 35, 38, 39, 44, 48, 51, 52, 54, 56, 60), clave única y
+  ausencia de pistas.

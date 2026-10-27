@@ -2,6 +2,7 @@ import type { AdvancedItem } from './types';
 import { BLOQUE_A } from './bloqueA';
 import { BLOQUE_B } from './bloqueB';
 import { BLOQUE_C } from './bloqueC';
+import { BLOQUE_D } from './bloqueD';
 
 /**
  * Registro de los bloques publicados del banco avanzado. Es el ÚNICO lugar que hay que tocar al incorporar un bloque:
@@ -13,4 +14,4 @@ import { BLOQUE_C } from './bloqueC';
  * bloque registrado y las metas globales (180 ítems) solo cuando están los seis.
  * La muestra de pruebas (tests/fixtures/avanzado-muestra.ts) NUNCA se registra aquí.
  */
-export const BLOQUES: readonly (readonly AdvancedItem[])[] = [BLOQUE_A, BLOQUE_B, BLOQUE_C];
+export const BLOQUES: readonly (readonly AdvancedItem[])[] = [BLOQUE_A, BLOQUE_B, BLOQUE_C, BLOQUE_D];

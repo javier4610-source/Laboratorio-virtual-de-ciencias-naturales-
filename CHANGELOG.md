@@ -7,6 +7,11 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.10.0] · 2026-10-27
+
+Mejoras: exportación para Moodle y Google Classroom y pista de control de variables al guardar ensayos.
+
+### Añadido
 - **Exportación para Moodle y Google Classroom** (panel docente → «Moodle y Classroom», todo en el navegador): preguntas
   del banco Saber 11 y de las evaluaciones de las prácticas en **Moodle XML** y **GIFT**, filtradas por origen, grado,
   área y práctica, con la opción correcta marcada, retroalimentación por opción, explicación y enlace a la práctica como
@@ -15,6 +20,13 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
   puros en `src/lib/lmsExport.ts` con pruebas (escape XML y GIFT, una correcta por pregunta, XML bien formado),
   prueba E2E `tests/e2e/exportar-lms.spec.ts` y guía [docs/EXPORTAR-LMS.md](docs/EXPORTAR-LMS.md). Sin SCORM ni IMS
   Common Cartridge.
+- **Pista de control de variables al guardar un ensayo** (todas las prácticas): si respecto al ensayo anterior
+  cambiaron dos o más variables de entrada a la vez, una nota debajo de «Guardar ensayo en la tabla» dice cuáles
+  cambiaron, por qué así no se sabe cuál causó el efecto y qué hacer («vuelve la arista a 3,0 cm y guarda otro
+  ensayo»). No bloquea el registro, se cierra con «Entendido» y no se repite para la misma combinación. Los diseños
+  que cambian varias entradas a propósito (talleres, ejercicios, reto de indagación, metabolismo, secuencias…) y las
+  entradas que dependen de otra se declaran en las tablas de datos (`multiInput`, `notIndependent`);
+  `src/lib/controlVariables.ts` con pruebas unitarias y `tests/e2e/control-variables.spec.ts`.
 
 ## [2.9.0] · 2026-10-26
 

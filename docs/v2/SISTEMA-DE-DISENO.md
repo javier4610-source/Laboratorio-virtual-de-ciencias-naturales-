@@ -352,6 +352,27 @@ error, estadística de repeticiones, propagación de incertidumbre y, desde esta
 (diferencia B − A, variación relativa y aviso sobre qué variables de entrada cambiaron; `src/lib/compare.ts`) y
 **Descargar JSON** (`lvcn-datos-v1`: columnas con unidad y resolución, ensayos numerados, modo de medición).
 
+### Pista de control de variables al guardar (`RecordButton`, `ControlHint.tsx`, `src/lib/controlVariables.ts`)
+
+Al pulsar «Guardar ensayo en la tabla», si respecto al ensayo anterior del mismo conjunto cambiaron **dos o más
+variables de entrada** (`input: true`), aparece debajo del botón una `ConditionAlert` de nivel `nota` (rol `note`,
+no crea otra región de estado): qué variables cambiaron (por su rótulo, con valor anterior y nuevo), por qué así no
+se puede atribuir el efecto a una sola causa (prueba justa) y una sugerencia concreta («vuelve la arista a 3,0 cm,
+deja la muestra en «Hierro» y guarda otro ensayo»). Es una pista, no un bloqueo: el ensayo se guarda igual. El
+anuncio para lector de pantalla va en la misma región `aria-live` del botón («Ensayo guardado… Pista: …»).
+
+- **Sin código por laboratorio:** `LabHost` (página de la práctica) envuelve la sesión con `useControlHints`; cada
+  `addTrial` se compara con los ensayos anteriores y el `RecordButton` que hizo el registro recoge la pista.
+- **Detección pura y probada:** números con tolerancia (relativa 10⁻⁶), textos por igualdad; el primer ensayo nunca
+  la dispara; una entrada vacía en uno de los dos ensayos (no aplica) no cuenta; tampoco hay pista si algún ensayo
+  anterior difiere en una sola variable (el estudiante volvió a una referencia y cambió una sola cosa).
+- **Excepciones declaradas en los datos:** `Dataset.multiInput` (texto con el motivo: talleres, ejercicios, reto de
+  indagación, metabolismo, secuencias, proteínas, variantes, pruebas de identificación), `Column.notIndependent`
+  (entrada que se deduce de otra —gravedad del lugar, resistividad de la muestra, aumento del objetivo—, ajuste del
+  instrumento o tiempo de observación) y los grupos `x` + `allowVary` de las relaciones de la práctica.
+- **Sin insistir:** la misma combinación de variables se señala una sola vez por visita a la práctica; «Entendido» la
+  cierra y devuelve el foco al botón. Sin animación ni sonido propios (solo el sonido de confirmación de siempre).
+
 ## 8. Patrones
 
 - **Estados vacíos**: ilustración o ícono, frase que explica qué aparecerá y una acción para salir (cuaderno, catálogo,

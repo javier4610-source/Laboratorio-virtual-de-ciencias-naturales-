@@ -55,11 +55,14 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       con dos átomos centrales (S₂Cl₂, N₂F₄) si hay geometría fiable.
 - [ ] **Rediseño, paso siguiente** (ADR 0007): medir con Lighthouse cuando haya red para instalarlo; revisar con
       estudiantes la barra de simulación, los atajos, el inicio por perfiles y los avisos con «Cómo corregirlo».
-- [ ] **Mejoras:** pistas contextuales al cambiar dos variables a la vez; auditoría de rendimiento en equipos
-      modestos; exportación para Google Classroom y Moodle; pruebas de regresión visual.
+- [ ] **Mejoras:** auditoría de rendimiento en equipos modestos; pruebas de regresión visual; revisión por el docente
+      de las excepciones de la pista de control de variables y prueba de importación en el Moodle del colegio.
 
 ## Hecho
 
+- [x] v2.10.0 · Mejoras: exportación para Moodle (XML y GIFT) y Google Classroom (enlace oficial de compartir, texto de
+  la tarea y CSV de enlaces) desde el panel docente; pista de control de variables al guardar un ensayo con dos o más
+  variables cambiadas, con excepciones declaradas en las tablas de datos.
 - [x] v2.9.0 · Rediseño, siguiente paso (ADR 0007): «Cómo corregirlo» propio de cada modelo en los avisos de 19 prácticas
   (nivel «no válida», «atención» o «nota», calculado con el mismo umbral del modelo y comprobado en pruebas) y resolución del
   instrumento en las lecturas de 17 prácticas más, con estado «fuera de rango» solo donde el modelo define el rango.

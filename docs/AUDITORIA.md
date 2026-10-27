@@ -514,3 +514,13 @@ Elemento de la hoja de ruta (ADR 0007). Capturas de revisión (gases, enzimas, d
 | Resolución y estado en lecturas (17 prácticas más) | Resolución tomada de las fichas de instrumentos o de constantes del modelo; estado solo con rango definido (300 kPa, 3 A, Decreto 1076, absorbancia, 2,5 bar, Tm de Wallace…) | Correcto; sin números nuevos (`NO2_MAX_PRESSURE` y `COLORIMETER_RES` solo dan nombre a umbrales existentes) | — | — | Correcto |
 | Optimización infactible (metabolismo) | Revisión | La corrección lee los controles actuales, que pueden diferir del último cálculo hasta pulsar «Calcular el óptimo» | — | — | Limitación conocida |
 | Regresión | `tsc -b`; `vitest run`; `npm run build`; E2E completo con axe | Sin errores; 1264 pruebas unitarias (72 archivos); compilación correcta; E2E 188 pasan y 1 se omite por diseño | — | — | Correcto |
+
+# Mejoras: exportación para Moodle y Classroom y pista de control de variables (versión 2.10.0)
+
+Capturas de revisión (claro y oscuro, 1280 y 390 px) revisadas por el integrador.
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Moodle XML y GIFT (`src/lib/lmsExport.ts`) | 17 pruebas unitarias con analizador XML estricto; `xmllint --noout` sobre las 347 preguntas; E2E con DOMParser del navegador | Bien formado; una opción correcta por pregunta; escape de `\ ~ = # { } :` en GIFT | — | — | Correcto; falta probar la importación en un Moodle real |
+| Google Classroom | Unitarias y E2E: enlace `classroom.google.com/share` con el enlace permanente; texto de la tarea; CSV por grado | Correcto | — | — | Correcto; Classroom no importa cuestionarios desde archivo (limitación declarada) |
+| Pista de control de variables (`src/lib/controlVariables.ts`) | 14 pruebas unitarias; E2E en densidad (claro y oscuro) y gases; axe | Aparece con dos entradas cambiadas, no con una; no bloquea el registro; sin región `status` nueva; foco devuelto con «Entendido» | — | — | Correcto; excepciones (`multiInput`, `notIndependent`) pendientes de revisión del docente |

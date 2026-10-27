@@ -4,6 +4,7 @@ import type { Dataset } from '../core/types';
 const FORGE_DATASETS: Dataset[] = [
   {
     id: 'taller', label: 'Taller de compuestos', defaultX: 'elementosN', defaultY: 'atomos',
+    multiInput: 'Taller de formación: cada fila es un compuesto distinto que se arma eligiendo la ruta y los elementos; no es un experimento de una sola variable.',
     columns: [
       { key: 'ruta', label: 'Ruta de formación', numeric: false, input: true },
       { key: 'elementos', label: 'Elementos elegidos (número de oxidación)', numeric: false, input: true },
@@ -99,7 +100,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'gen', label: 'Secuencia', numeric: false, input: true },
       { key: 'tipo', label: 'Tipo', numeric: false, input: true },
       { key: 'posicion', label: 'Posición (base)', numeric: true, decimals: 0, input: true },
-      { key: 'cambio', label: 'Cambio', numeric: false, input: true },
+      { key: 'cambio', label: 'Cambio', numeric: false, input: true, notIndependent: true },
       { key: 'efecto', label: 'Efecto', numeric: false },
       { key: 'aaCambiados', label: 'Aminoácidos distintos', numeric: true, decimals: 0 },
       { key: 'identidad', label: 'Identidad de la proteína', unit: '%', numeric: true, decimals: 1 },
@@ -339,7 +340,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     { key: 'masa', label: 'Masa', unit: 'kg', numeric: true, decimals: 2, input: true },
     { key: 'altura', label: 'Altura inicial', unit: 'm', numeric: true, decimals: 2, input: true },
     { key: 'v0', label: 'Velocidad inicial (+ hacia arriba)', unit: 'm/s', numeric: true, decimals: 2, input: true },
-    { key: 'g', label: 'Gravedad', unit: 'm/s²', numeric: true, decimals: 2, input: true },
+    { key: 'g', label: 'Gravedad', unit: 'm/s²', numeric: true, decimals: 2, input: true, notIndependent: true },
     { key: 'aire', label: 'Resistencia del aire', numeric: false, input: true },
     { key: 'coefAire', label: 'Coeficiente de arrastre (b en kg/s o c en kg/m)', numeric: true, decimals: 3, input: true },
     { key: 'metodo', label: 'Método de integración', numeric: false, input: true },
@@ -359,7 +360,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'muestra', label: 'Muestra', numeric: false, input: true },
       { key: 'tincion', label: 'Tinción', numeric: false, input: true },
       { key: 'objetivo', label: 'Objetivo', numeric: false, input: true },
-      { key: 'aumento', label: 'Aumento total', unit: '×', numeric: true, decimals: 0, input: true },
+      { key: 'aumento', label: 'Aumento total', unit: '×', numeric: true, decimals: 0, input: true, notIndependent: true },
       { key: 'campo', label: 'Diámetro del campo', unit: 'µm', numeric: true, decimals: 0 },
       { key: 'celulas', label: 'Células en el diámetro', numeric: true, decimals: 1 },
       { key: 'tamano', label: 'Tamaño estimado', unit: 'µm', numeric: true, decimals: 1 },
@@ -425,7 +426,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     columns: [
       { key: 'muestra', label: 'Muestra', numeric: false, input: true },
       { key: 'voltaje', label: 'Voltaje de la fuente', unit: 'V', numeric: true, decimals: 1, input: true },
-      { key: 'log10Resistividad', label: 'log₁₀ de la resistividad (ρ en Ω·m)', numeric: true, decimals: 2, input: true },
+      { key: 'log10Resistividad', label: 'log₁₀ de la resistividad (ρ en Ω·m)', numeric: true, decimals: 2, input: true, notIndependent: true },
       { key: 'prediccion', label: 'Predicción', numeric: false },
       { key: 'corriente', label: 'Corriente', unit: 'mA', numeric: true, decimals: 1, resolution: 0.1 },
       { key: 'brillo', label: 'Brillo del bombillo', unit: '%', numeric: true, decimals: 1 },
@@ -436,7 +437,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     id: 'bolsas', label: 'Bolsas de descomposición', defaultX: 'semana', defaultY: 'perdida',
     columns: [
       { key: 'material', label: 'Material', numeric: false, input: true },
-      { key: 'semana', label: 'Semana', unit: 'semanas', numeric: true, decimals: 0, input: true },
+      { key: 'semana', label: 'Semana', unit: 'semanas', numeric: true, decimals: 0, input: true, notIndependent: true },
       { key: 'temperatura', label: 'Temperatura', unit: '°C', numeric: true, decimals: 0, input: true },
       { key: 'humedad', label: 'Humedad', unit: '%', numeric: true, decimals: 0, input: true },
       { key: 'aireacion', label: 'Volteo (aireación)', numeric: false, input: true },
@@ -594,7 +595,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       id: 'poleas', label: 'Ensayos con poleas', defaultX: 'cuerdas', defaultY: 'fuerza',
       columns: [
         { key: 'montaje', label: 'Montaje de poleas', numeric: false, input: true },
-        { key: 'cuerdas', label: 'Tramos que sostienen la carga (n)', numeric: true, decimals: 0, input: true },
+        { key: 'cuerdas', label: 'Tramos que sostienen la carga (n)', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'masa', label: 'Masa de la carga', unit: 'g', numeric: true, decimals: 0, input: true },
         { key: 'masaPolea', label: 'Masa de la polea o bloque móvil', unit: 'g', numeric: true, decimals: 0, input: true },
         { key: 'eficienciaPolea', label: 'Eficiencia de cada polea', numeric: true, decimals: 2, input: true },
@@ -639,11 +640,11 @@ export const DATASETS: Record<string, Dataset[]> = {
       columns: [
         { key: 'montaje', label: 'Montaje', numeric: false, input: true },
         { key: 'liquido', label: 'Líquido', numeric: false, input: true },
-        { key: 'densidad', label: 'Densidad del líquido', unit: 'kg/m³', numeric: true, decimals: 0, input: true },
+        { key: 'densidad', label: 'Densidad del líquido', unit: 'kg/m³', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'profundidad', label: 'Profundidad de la membrana', unit: 'cm', numeric: true, decimals: 1, input: true, resolution: 0.1 },
         { key: 'orientacion', label: 'Orientación de la membrana (0° arriba)', unit: '°', numeric: true, decimals: 0, input: true },
         { key: 'lugar', label: 'Lugar', numeric: false, input: true },
-        { key: 'altitud', label: 'Altitud del lugar', unit: 'm', numeric: true, decimals: 0, input: true },
+        { key: 'altitud', label: 'Altitud del lugar', unit: 'm', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'atmosfera', label: 'Modelo de la atmósfera', numeric: false, input: true },
         { key: 'desnivel', label: 'Desnivel del manómetro Δh', unit: 'mm', numeric: true, decimals: 0, resolution: 1 },
         { key: 'pMan', label: 'Presión manométrica ρ_m·g·Δh', unit: 'Pa', numeric: true, decimals: 0 },
@@ -672,8 +673,8 @@ export const DATASETS: Record<string, Dataset[]> = {
     {
       id: 'frasco', label: 'Mediciones del ecosistema en el frasco', defaultX: 'dia', defaultY: 'od',
       columns: [
-        { key: 'dia', label: 'Día de la medición', unit: 'día', numeric: true, decimals: 0, input: true },
-        { key: 'hora', label: 'Hora de la lectura', numeric: false, input: true },
+        { key: 'dia', label: 'Día de la medición', unit: 'día', numeric: true, decimals: 0, input: true, notIndependent: true },
+        { key: 'hora', label: 'Hora de la lectura', numeric: false, input: true, notIndependent: true },
         { key: 'horasLuz', label: 'Horas de luz por día', unit: 'h', numeric: true, decimals: 0, input: true },
         { key: 'intensidad', label: 'Intensidad de la lámpara', unit: '%', numeric: true, decimals: 0, input: true },
         { key: 'distancia', label: 'Distancia de la lámpara al frasco', unit: 'cm', numeric: true, decimals: 0, input: true },
@@ -697,6 +698,7 @@ export const DATASETS: Record<string, Dataset[]> = {
   ],
   balanceo: [{
     id: 'intentos', label: 'Intentos de balanceo verificados', defaultX: 'desbalance', defaultY: 'difMasaAbs',
+    multiInput: 'Ejercicio de balanceo: los coeficientes cambian en cada intento y cada reacción tiene los suyos.',
     columns: [
       { key: 'reaccion', label: 'Reacción', numeric: false, input: true },
       { key: 'sumaCoef', label: 'Suma de los coeficientes', numeric: true, decimals: 0, input: true },
@@ -718,7 +720,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'empalme', label: 'Modo de empalme', numeric: false, input: true },
       { key: 'tipo', label: 'Tipo de mutación', numeric: false, input: true },
       { key: 'posicion', label: 'Posición de la base en el fragmento', unit: 'base', numeric: true, decimals: 0, input: true },
-      { key: 'cambio', label: 'Cambio', numeric: false, input: true },
+      { key: 'cambio', label: 'Cambio', numeric: false, input: true, notIndependent: true },
       { key: 'region', label: 'Región del gen', numeric: false },
       { key: 'codon', label: 'Codón afectado (Met = 1)', numeric: true, decimals: 0 },
       { key: 'clase', label: 'Clase de mutación', numeric: false },
@@ -737,8 +739,8 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'material', label: 'Material de la varilla', numeric: false, input: true },
       { key: 'funda', label: 'Recubrimiento', numeric: false, input: true },
       { key: 'tBano', label: 'Temperatura del baño', unit: '°C', numeric: true, decimals: 0, input: true, resolution: 1 },
-      { key: 'k', label: 'Conductividad térmica k', unit: 'W/(m·K)', numeric: true, decimals: 2, input: true },
-      { key: 'alfa', label: 'Difusividad térmica α', unit: 'mm²/s', numeric: true, decimals: 3, input: true },
+      { key: 'k', label: 'Conductividad térmica k', unit: 'W/(m·K)', numeric: true, decimals: 2, input: true, notIndependent: true },
+      { key: 'alfa', label: 'Difusividad térmica α', unit: 'mm²/s', numeric: true, decimals: 3, input: true, notIndependent: true },
       { key: 'nTachuelas', label: 'Tachuelas pegadas', numeric: true, decimals: 0, input: true },
       { key: 'x1', label: 'Posición del termopar 1', unit: 'cm', numeric: true, decimals: 1, input: true, resolution: 0.1 },
       { key: 'x2', label: 'Posición del termopar 2', unit: 'cm', numeric: true, decimals: 1, input: true, resolution: 0.1 },
@@ -762,9 +764,9 @@ export const DATASETS: Record<string, Dataset[]> = {
         { key: 'frecuencia', label: 'Frecuencia de la fuente', unit: 'Hz', numeric: true, decimals: 1, input: true },
         { key: 'temperatura', label: 'Temperatura del aire', unit: '°C', numeric: true, decimals: 1, input: true },
         { key: 'diametro', label: 'Diámetro interno del tubo', unit: 'cm', numeric: true, decimals: 1, input: true },
-        { key: 'longitud', label: 'Longitud de la columna de aire (regla)', unit: 'cm', numeric: true, decimals: 1, input: true, resolution: 0.1 },
-        { key: 'tiempoDiv', label: 'Base de tiempo', unit: 'ms/div', numeric: true, decimals: 1, input: true },
-        { key: 'voltsDiv', label: 'Sensibilidad vertical', unit: 'mV/div', numeric: true, decimals: 0, input: true },
+        { key: 'longitud', label: 'Longitud de la columna de aire (regla)', unit: 'cm', numeric: true, decimals: 1, input: true, notIndependent: true, resolution: 0.1 },
+        { key: 'tiempoDiv', label: 'Base de tiempo', unit: 'ms/div', numeric: true, decimals: 1, input: true, notIndependent: true },
+        { key: 'voltsDiv', label: 'Sensibilidad vertical', unit: 'mV/div', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'periodo', label: 'Periodo (osciloscopio)', unit: 'ms', numeric: true, decimals: 3 },
         { key: 'frecuenciaMedida', label: 'Frecuencia medida 1/T', unit: 'Hz', numeric: true, decimals: 1 },
         { key: 'amplitud', label: 'Amplitud del micrófono', unit: 'mV', numeric: true, decimals: 1 },
@@ -805,7 +807,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       id: 'rampa', label: 'Subidas por la rampa', defaultX: 'angulo', defaultY: 'fuerza',
       columns: [
         { key: 'superficie', label: 'Superficie de la rampa', numeric: false, input: true },
-        { key: 'mu', label: 'Coeficiente de rozamiento μ', numeric: true, decimals: 2, input: true },
+        { key: 'mu', label: 'Coeficiente de rozamiento μ', numeric: true, decimals: 2, input: true, notIndependent: true },
         { key: 'angulo', label: 'Ángulo de la rampa', unit: '°', numeric: true, decimals: 0, input: true },
         { key: 'masa', label: 'Masa del bloque con pesas', unit: 'kg', numeric: true, decimals: 2, input: true },
         { key: 'traccion', label: 'Forma de jalar', numeric: false, input: true },
@@ -869,7 +871,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'cronometraje', label: 'Cronometraje', numeric: false, input: true },
       { key: 'inicio', label: 'Cono de salida', unit: 'm', numeric: true, decimals: 0, input: true, resolution: 1 },
       { key: 'meta', label: 'Bandera de meta', unit: 'm', numeric: true, decimals: 0, input: true, resolution: 1 },
-      { key: 'distancia', label: 'Distancia recorrida (cinta)', unit: 'm', numeric: true, decimals: 2, input: true, resolution: 0.01 },
+      { key: 'distancia', label: 'Distancia recorrida (cinta)', unit: 'm', numeric: true, decimals: 2, input: true, notIndependent: true, resolution: 0.01 },
       { key: 'tiempo', label: 'Tiempo medido', unit: 's', numeric: true, decimals: 2, resolution: 0.01 },
       { key: 'rapidez', label: 'Rapidez media (distancia/tiempo)', unit: 'm/s', numeric: true, decimals: 2 },
       { key: 'rapidezKmh', label: 'Rapidez media en km/h', unit: 'km/h', numeric: true, decimals: 1 },
@@ -883,7 +885,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       columns: [
         { key: 'fuente', label: 'Fuente de luz', numeric: false, input: true },
         { key: 'elemento', label: 'Diapositiva', numeric: false, input: true },
-        { key: 'lambda', label: 'Longitud de onda nominal λ', unit: 'nm', numeric: true, decimals: 0, input: true },
+        { key: 'lambda', label: 'Longitud de onda nominal λ', unit: 'nm', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'a', label: 'Ancho de la rendija a', unit: 'µm', numeric: true, decimals: 0, input: true },
         { key: 'd', label: 'Separación entre rendijas o periodo d', unit: 'µm', numeric: true, decimals: 3, input: true },
         { key: 'D', label: 'Diámetro del agujero D', unit: 'µm', numeric: true, decimals: 0, input: true },
@@ -903,7 +905,7 @@ export const DATASETS: Record<string, Dataset[]> = {
         { key: 'fuente', label: 'Fuente de luz', numeric: false, input: true },
         { key: 'elemento', label: 'Diapositiva', numeric: false, input: true },
         { key: 'L', label: 'Distancia rendija–pantalla L (riel)', unit: 'cm', numeric: true, decimals: 1, input: true, resolution: 0.1 },
-        { key: 'posicion', label: 'Posición del sensor y', unit: 'mm', numeric: true, decimals: 2, input: true, resolution: 0.05 },
+        { key: 'posicion', label: 'Posición del sensor y', unit: 'mm', numeric: true, decimals: 2, input: true, notIndependent: true, resolution: 0.05 },
         { key: 'intensidad', label: 'Intensidad relativa al máximo central', unit: '%', numeric: true, decimals: 1, resolution: 0.1 },
       ],
     },
@@ -998,7 +1000,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       columns: [
         { key: 'secuencia', label: "Hebra molde (5'→3')", numeric: false, input: true },
         { key: 'orientacion', label: 'Orientación de la hebra nueva', numeric: false, input: true },
-        { key: 'n', label: 'Longitud', unit: 'nt', numeric: true, decimals: 0, input: true },
+        { key: 'n', label: 'Longitud', unit: 'nt', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'correctos', label: 'Pares correctos', numeric: true, decimals: 0 },
         { key: 'puentes', label: 'Puentes de hidrógeno', numeric: true, decimals: 0 },
         { key: 'gc', label: '%GC', unit: '%', numeric: true, decimals: 1 },
@@ -1047,6 +1049,7 @@ export const DATASETS: Record<string, Dataset[]> = {
   reto: [
     {
       id: 'rio', label: 'Río con un vertimiento (datos sintéticos)', defaultX: 'distancia', defaultY: 'od',
+      multiInput: 'El reto de indagación genera las muestras según el diseño del estudiante (con la variable de confusión incluida a propósito); el control de variables se analiza en el propio reto.',
       columns: [
         { key: 'distancia', label: 'Distancia aguas abajo del vertimiento', unit: 'km', numeric: true, decimals: 1, input: true },
         { key: 'confusion', label: 'Manejo de la variable de confusión', numeric: false, input: true },
@@ -1059,6 +1062,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     },
     {
       id: 'suelo', label: 'Suelo de una bananera bajo sombra (datos sintéticos)', defaultX: 'sombra', defaultY: 'tempSuelo',
+      multiInput: 'El reto de indagación genera las muestras según el diseño del estudiante (con la variable de confusión incluida a propósito); el control de variables se analiza en el propio reto.',
       columns: [
         { key: 'sombra', label: 'Cobertura de sombra', unit: '%', numeric: true, decimals: 0, input: true },
         { key: 'confusion', label: 'Manejo de la variable de confusión', numeric: false, input: true },
@@ -1071,6 +1075,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     },
     {
       id: 'lluvia', label: 'Quebrada después de la lluvia (datos sintéticos)', defaultX: 'lluvia', defaultY: 'turbidez',
+      multiInput: 'El reto de indagación genera las muestras según el diseño del estudiante (con la variable de confusión incluida a propósito); el control de variables se analiza en el propio reto.',
       columns: [
         { key: 'lluvia', label: 'Lluvia acumulada en 24 h', unit: 'mm', numeric: true, decimals: 0, input: true },
         { key: 'confusion', label: 'Manejo de la variable de confusión', numeric: false, input: true },
@@ -1084,6 +1089,7 @@ export const DATASETS: Record<string, Dataset[]> = {
   ],
   geometria: [{
     id: 'mediciones', label: 'Distancias y ángulos en confórmeros 3D', defaultX: 'paresLibres', defaultY: 'angulo',
+    multiInput: 'Cada fila es una molécula distinta: el tipo de geometría y el número de átomos vienen con la molécula.',
     columns: [
       { key: 'molecula', label: 'Molécula', numeric: false, input: true },
       { key: 'formula', label: 'Fórmula', numeric: false },
@@ -1104,6 +1110,7 @@ export const DATASETS: Record<string, Dataset[]> = {
   secuencias: [
     {
       id: 'comparaciones', label: 'Comparaciones de secuencias (alineamientos)', defaultX: 'apertura', defaultY: 'aperturas',
+      multiInput: 'Herramienta de bioinformática: se exploran combinaciones de secuencias y parámetros, no el efecto de una sola variable.',
       columns: [
         { key: 'sec1', label: 'Secuencia A', numeric: false, input: true },
         { key: 'sec2', label: 'Secuencia B', numeric: false, input: true },
@@ -1121,6 +1128,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     },
     {
       id: 'traducciones', label: 'Traducciones y marcos de lectura abiertos', defaultX: 'minimo', defaultY: 'orfs',
+      multiInput: 'Herramienta de bioinformática: se exploran combinaciones de secuencias y parámetros, no el efecto de una sola variable.',
       columns: [
         { key: 'secuencia', label: 'Secuencia', numeric: false, input: true },
         { key: 'tabla', label: 'Tabla del código genético (NCBI)', numeric: true, decimals: 0, input: true },
@@ -1136,6 +1144,7 @@ export const DATASETS: Record<string, Dataset[]> = {
   ],
   rastreo: [{
     id: 'variantes', label: 'Variantes y su consecuencia en la proteína', defaultX: 'posicion', defaultY: 'longitudProteina',
+    multiInput: 'Cada variante (de ClinVar o hipotética) fija a la vez el gen, el tipo, la posición y la base.',
     columns: [
       { key: 'gen', label: 'Gen', numeric: false, input: true },
       { key: 'origen', label: 'Origen de la variante', numeric: false, input: true },
@@ -1172,6 +1181,7 @@ export const DATASETS: Record<string, Dataset[]> = {
   }],
   proteinas: [{
     id: 'distancias', label: 'Distancias medidas en estructuras 3D', defaultX: 'separacion', defaultY: 'distancia',
+    multiInput: 'Exploración de una estructura: cada fila es una medición distinta (átomos o residuos elegidos), no un ensayo con variables.',
     columns: [
       { key: 'estructura', label: 'Estructura (código)', numeric: false, input: true },
       { key: 'nombre', label: 'Proteína', numeric: false },
@@ -1188,6 +1198,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     ],
   }, {
     id: 'residuos', label: 'Residuos analizados', defaultX: 'distanciaCentro', defaultY: 'factorB',
+    multiInput: 'Exploración de una estructura: cada fila es una medición distinta (átomos o residuos elegidos), no un ensayo con variables.',
     columns: [
       { key: 'estructura', label: 'Estructura (código)', numeric: false, input: true },
       { key: 'origen', label: 'Origen de las coordenadas', numeric: false },
@@ -1206,6 +1217,7 @@ export const DATASETS: Record<string, Dataset[]> = {
   }],
   metabolismo: [{
     id: 'condiciones', label: 'Condiciones calculadas con el FBA', defaultX: 'oxigeno', defaultY: 'crecimiento',
+    multiInput: 'Cada condición se compara con la referencia (no con el ensayo anterior) y las combinaciones de fuente de carbono, oxígeno y genes eliminados son parte del diseño.',
     columns: [
       { key: 'condicion', label: 'Condición', numeric: false },
       { key: 'carbono', label: 'Fuente de carbono', numeric: false, input: true },
@@ -1246,7 +1258,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       id: 'gravitatoria', label: 'Estación 2: energía potencial gravitatoria (torre de caída)', defaultX: 'alturaMedida', defaultY: 'ep',
       columns: [
         { key: 'lugar', label: 'Lugar', numeric: false, input: true },
-        { key: 'g', label: 'Gravedad', unit: 'm/s²', numeric: true, decimals: 2, input: true },
+        { key: 'g', label: 'Gravedad', unit: 'm/s²', numeric: true, decimals: 2, input: true, notIndependent: true },
         { key: 'masa', label: 'Masa del objeto', unit: 'kg', numeric: true, decimals: 2, input: true },
         { key: 'altura', label: 'Altura elegida', unit: 'm', numeric: true, decimals: 2, input: true },
         { key: 'aire', label: 'Coeficiente de arrastre c (0 = sin aire)', unit: 'kg/m', numeric: true, decimals: 3, input: true },
@@ -1356,6 +1368,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     },
     {
       id: 'retos', label: 'Retos de nombrar y formular', defaultX: 'reto', defaultY: 'aciertos',
+      multiInput: 'Ejercicios de nomenclatura: cada fila es un reto distinto.',
       columns: [
         { key: 'reto', label: 'Reto', numeric: true, decimals: 0, input: true },
         { key: 'tipo', label: 'Tipo de reto', numeric: false, input: true },
@@ -1389,7 +1402,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       columns: [
         { key: 'compuesto', label: 'Compuesto', numeric: false, input: true },
         { key: 'enlace', label: 'Enlace', numeric: false },
-        { key: 'ordenEnlace', label: 'Orden de enlace', numeric: true, decimals: 0, input: true },
+        { key: 'ordenEnlace', label: 'Orden de enlace', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'longitud', label: 'Longitud medida (promedio)', unit: 'Å', numeric: true, decimals: 3 },
         { key: 'hibridacion', label: 'Hibridación', numeric: false },
         { key: 'angulo', label: 'Ángulo medio en ese carbono', unit: '°', numeric: true, decimals: 1 },
@@ -1403,7 +1416,7 @@ export const DATASETS: Record<string, Dataset[]> = {
         { key: 'grupo', label: 'Fórmula del grupo', numeric: false },
         { key: 'compuesto', label: 'Isómero', numeric: false, input: true },
         { key: 'formula', label: 'Fórmula molecular', numeric: false },
-        { key: 'cadenaPrincipal', label: 'Carbonos en la cadena principal', numeric: true, decimals: 0, input: true },
+        { key: 'cadenaPrincipal', label: 'Carbonos en la cadena principal', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'ramificaciones', label: 'Carbonos fuera de la cadena principal', numeric: true, decimals: 0 },
         { key: 'tEb', label: 'Temperatura de ebullición (experimental)', unit: '°C', numeric: true, decimals: 2 },
         { key: 'tFus', label: 'Temperatura de fusión (experimental)', unit: '°C', numeric: true, decimals: 2 },
@@ -1414,7 +1427,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       id: 'combustion', label: 'Combustión', defaultX: 'n', defaultY: 'dHc',
       columns: [
         { key: 'compuesto', label: 'Combustible', numeric: false, input: true },
-        { key: 'n', label: 'Número de carbonos', numeric: true, decimals: 0, input: true },
+        { key: 'n', label: 'Número de carbonos', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'tipo', label: 'Tipo de combustión', numeric: false, input: true },
         { key: 'ecuacion', label: 'Ecuación balanceada', numeric: false },
         { key: 'o2PorMol', label: 'O₂ por mol de combustible', unit: 'mol', numeric: true, decimals: 2 },
@@ -1426,6 +1439,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     },
     {
       id: 'pruebas', label: 'Pruebas de insaturación (ilustración)', defaultX: 'insaturado', defaultY: 'insaturado',
+      multiInput: 'Pruebas de identificación: se ensaya cada compuesto con cada reactivo.',
       columns: [
         { key: 'compuesto', label: 'Sustancia', numeric: false, input: true },
         { key: 'reactivo', label: 'Reactivo', numeric: false, input: true },
@@ -1441,7 +1455,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       columns: [
         { key: 'compuesto', label: 'Compuesto', numeric: false, input: true },
         { key: 'enlace', label: 'Enlace', numeric: false },
-        { key: 'ordenFormal', label: 'Orden de enlace formal', numeric: true, decimals: 1, input: true },
+        { key: 'ordenFormal', label: 'Orden de enlace formal', numeric: true, decimals: 1, input: true, notIndependent: true },
         { key: 'longitud', label: 'Longitud medida (promedio)', unit: 'Å', numeric: true, decimals: 3 },
         { key: 'dispersion', label: 'Diferencia entre el más largo y el más corto', unit: 'Å', numeric: true, decimals: 3 },
         { key: 'fuente', label: 'Fuente de las coordenadas', numeric: false },
@@ -1489,6 +1503,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     },
     {
       id: 'ejercicios', label: 'Ejercicios: del nombre a la estructura', defaultX: 'intentos', defaultY: 'correcto',
+      multiInput: 'Ejercicios de nomenclatura: cada fila es un reto distinto.',
       columns: [
         { key: 'objetivo', label: 'Nombre pedido', numeric: false, input: true },
         { key: 'intento', label: 'Nombre de la estructura construida', numeric: false },
@@ -1502,8 +1517,8 @@ export const DATASETS: Record<string, Dataset[]> = {
       id: 'propiedades', label: 'Propiedades de compuestos oxigenados (datos de PubChem)', defaultX: 'carbonos', defaultY: 'tEb',
       columns: [
         { key: 'compuesto', label: 'Compuesto', numeric: false, input: true },
-        { key: 'familia', label: 'Familia', numeric: false, input: true },
-        { key: 'carbonos', label: 'Número de carbonos', numeric: true, decimals: 0, input: true },
+        { key: 'familia', label: 'Familia', numeric: false, input: true, notIndependent: true },
+        { key: 'carbonos', label: 'Número de carbonos', numeric: true, decimals: 0, input: true, notIndependent: true },
         { key: 'masaMolar', label: 'Masa molar', unit: 'g/mol', numeric: true, decimals: 2 },
         { key: 'donadores', label: 'Donadores de puentes de H', numeric: true, decimals: 0 },
         { key: 'aceptores', label: 'Aceptores de puentes de H', numeric: true, decimals: 0 },
@@ -1525,6 +1540,7 @@ export const DATASETS: Record<string, Dataset[]> = {
     },
     {
       id: 'pruebas', label: 'Pruebas de reconocimiento (resultado esperado según la bibliografía)', defaultX: 'positiva', defaultY: 'positiva',
+      multiInput: 'Pruebas de identificación: se ensaya cada compuesto con cada reactivo.',
       columns: [
         { key: 'compuesto', label: 'Sustancia', numeric: false, input: true },
         { key: 'prueba', label: 'Prueba', numeric: false, input: true },
@@ -1561,7 +1577,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       id: 'propiedades', label: 'Propiedades de compuestos nitrogenados (datos de PubChem)', defaultX: 'donadores', defaultY: 'tEb',
       columns: [
         { key: 'compuesto', label: 'Compuesto', numeric: false, input: true },
-        { key: 'familia', label: 'Familia', numeric: false, input: true },
+        { key: 'familia', label: 'Familia', numeric: false, input: true, notIndependent: true },
         { key: 'masaMolar', label: 'Masa molar', unit: 'g/mol', numeric: true, decimals: 2 },
         { key: 'donadores', label: 'Donadores de puentes de H', numeric: true, decimals: 0 },
         { key: 'aceptores', label: 'Aceptores de puentes de H', numeric: true, decimals: 0 },
@@ -1574,7 +1590,7 @@ export const DATASETS: Record<string, Dataset[]> = {
       id: 'geometria', label: 'Geometría medida en los confórmeros (amidas y aminas)', defaultX: 'dCN', defaultY: 'sumaN',
       columns: [
         { key: 'compuesto', label: 'Compuesto', numeric: false, input: true },
-        { key: 'tipo', label: 'Tipo', numeric: false, input: true },
+        { key: 'tipo', label: 'Tipo', numeric: false, input: true, notIndependent: true },
         { key: 'dCN', label: 'Longitud C–N', unit: 'Å', numeric: true, decimals: 3 },
         { key: 'sumaN', label: 'Suma de ángulos alrededor del N', unit: '°', numeric: true, decimals: 1 },
         { key: 'dCO', label: 'Longitud C=O (amidas)', unit: 'Å', numeric: true, decimals: 3 },

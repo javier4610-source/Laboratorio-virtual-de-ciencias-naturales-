@@ -97,8 +97,22 @@ export interface GradeInfo {
 
 /* ---------- Registro de datos de un laboratorio ---------- */
 
-export interface Column { key: string; label: string; unit?: string; numeric: boolean; decimals?: number; /** Variable que el estudiante controla (entrada del experimento). */ input?: boolean; /** Resolución del instrumento (en la unidad de la columna): se grafica como barra de ± media resolución. */ resolution?: number; }
-export interface Dataset { id: string; label: string; columns: Column[]; defaultX: string; defaultY: string; }
+export interface Column { key: string; label: string; unit?: string; numeric: boolean; decimals?: number; /** Variable que el estudiante controla (entrada del experimento). */ input?: boolean; /** Resolución del instrumento (en la unidad de la columna): se grafica como barra de ± media resolución. */ resolution?: number;
+  /**
+   * Entrada que no es una variable independiente libre: se deduce de otra elección (la resistividad de la muestra, el
+   * aumento del objetivo, la gravedad del lugar), es un ajuste del instrumento (escala del osciloscopio) o es el tiempo de
+   * observación que avanza solo. No cuenta en la pista de control de variables («cambiaste dos variables a la vez»).
+   */
+  notIndependent?: boolean;
+}
+export interface Dataset {
+  id: string; label: string; columns: Column[]; defaultX: string; defaultY: string;
+  /**
+   * Motivo por el que este conjunto cambia varias entradas a la vez a propósito (taller, ejercicios, reto de indagación,
+   * exploración de una estructura…). Si está, no se muestra la pista de control de variables al guardar un ensayo.
+   */
+  multiInput?: string;
+}
 export type TrialValue = number | string | null;
 /** Metadatos de reproducibilidad de un ensayo (programa v2, sección 12). */
 export interface TrialMeta {

@@ -1,7 +1,9 @@
-import { useId, useState, type ReactNode } from 'react';
+import { useId, useRef, useState, type ReactNode } from 'react';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { playSound } from '../lib/sound';
 import { ConditionAlert } from './ConditionAlert';
+import { ControlHintNote, useControlHintBus } from './ControlHint';
+import type { ControlHint } from '../lib/controlVariables';
 import { sortConditions, type ModelCondition } from '../models/conditions';
 
 interface SliderProps {
@@ -160,16 +162,33 @@ export function Warnings({ list, fix }: { list: WarningItem[]; fix?: ReactNode }
   );
 }
 
-/** Botón de registro de ensayo con confirmación accesible. */
+/**
+ * Botón de registro de ensayo con confirmación accesible. Si el ensayo cambió dos o más variables de entrada a la vez
+ * respecto al anterior, muestra debajo la pista de control de variables (una nota que se cierra con «Entendido»; el
+ * ensayo se guarda igual). La confirmación y la pista se anuncian en la misma región `aria-live` del botón.
+ */
 export function RecordButton({ onRecord, disabled, label = 'Guardar ensayo en la tabla' }: { onRecord: () => void; disabled?: boolean; label?: string }) {
   const [saved, setSaved] = useState(0);
+  const [hint, setHint] = useState<ControlHint | null>(null);
+  const bus = useControlHintBus();
+  const btn = useRef<HTMLButtonElement>(null);
+  const record = () => {
+    bus?.begin();
+    onRecord();
+    setHint(bus?.take() ?? null);
+    setSaved((n) => n + 1);
+    playSound('confirm');
+  };
   return (
-    <div className="btn-row">
-      <button type="button" className="btn data" disabled={disabled} onClick={() => { onRecord(); setSaved((n) => n + 1); playSound('confirm'); }}>
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h8l2 2v10H3z M5 2v4h6V2 M5 10h6" fill="none" stroke="currentColor" strokeWidth="1.6" /></svg>
-        {label}
-      </button>
-      <span className="small muted" aria-live="polite">{saved > 0 ? `Ensayo guardado (${saved} en esta sesión).` : ''}</span>
+    <div className="record-block">
+      <div className="btn-row">
+        <button ref={btn} type="button" className="btn data" disabled={disabled} onClick={record}>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h8l2 2v10H3z M5 2v4h6V2 M5 10h6" fill="none" stroke="currentColor" strokeWidth="1.6" /></svg>
+          {label}
+        </button>
+        <span className="small muted" aria-live="polite">{saved > 0 ? `Ensayo guardado (${saved} en esta sesión).${hint ? ' Pista: cambiaste varias variables a la vez; lee la nota debajo del botón.' : ''}` : ''}</span>
+      </div>
+      {hint && <ControlHintNote hint={hint} onDismiss={() => { setHint(null); btn.current?.focus(); }} />}
     </div>
   );
 }

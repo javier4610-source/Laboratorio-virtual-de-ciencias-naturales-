@@ -25,15 +25,17 @@ import { queuePracticeOpen, queueProgress, getEnrollment, useClassroom } from '.
 import { buildSyncSummary, useActiveTime } from '../lib/syncSummary';
 import { CourseNote, SyncChip } from '../components/ClassroomUi';
 import { MeasurementPanel, MeasurementProvider } from '../components/Measurement';
+import { ControlHintProvider, useControlHints } from '../components/ControlHint';
 import { AdvancedProvider, AdvancedToggle, ModelEquationsPanel, useAdvancedApi } from '../components/Advanced';
 import type { SessionApi } from '../lib/session';
 import type { LabProps } from '../labs/registry';
 import type { ComponentType } from 'react';
 
-/** Monta el laboratorio con la sesión envuelta por el modo avanzado (marca los ensayos con parámetros modificados). */
+/** Monta el laboratorio con la sesión envuelta por el modo avanzado (marca los ensayos con parámetros modificados) y por la pista de control de variables. */
 function LabHost({ Lab, api, practice }: { Lab: ComponentType<LabProps>; api: SessionApi; practice: PracticeDef }) {
-  const labApi = useAdvancedApi(api);
-  return <Lab api={labApi} practice={practice} />;
+  // Pista de control de variables al guardar (común a todas las prácticas; las excepciones se declaran en los datos).
+  const hints = useControlHints(useAdvancedApi(api), DATASETS[practice.id], practice.relations);
+  return <ControlHintProvider bus={hints.bus}><Lab api={hints.api} practice={practice} /></ControlHintProvider>;
 }
 
 const MODE_HELP: Record<Mode, string> = {

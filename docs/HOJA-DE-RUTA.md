@@ -39,6 +39,10 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       plano inclinado (9.º, `trabajo`).
 - [x] **Lote 9:** empuje y flotación (7.º, `flotacion`) · movimiento y distancia recorrida (6.º, `movimiento`) · circuitos simples con
       pilas, interruptores y bombillos (7.º, física, `circuitos-simples`).
+- [ ] **Programa curricular y 3D (pedido del docente, 2026-11-01):** (1) análisis de la malla del MEN (Estándares
+      Básicos de Competencias y DBA de Ciencias Naturales, 6.º a 11.º) frente a las 65 prácticas, con brechas y mejoras,
+      en `docs/v2/ANALISIS-CURRICULAR.md`; (2) kit de escenas 3D para física y biología (además del kit químico);
+      (3) prácticas nuevas de química, física y biología según las brechas; (4) visor 3D en todas las prácticas, por lotes.
 - [ ] **T3 · Retroalimentación del docente** (espera T2: necesita el servidor publicado): comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.
 - [x] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
@@ -55,7 +59,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       con dos átomos centrales (S₂Cl₂, N₂F₄) si hay geometría fiable.
 - [ ] **Rediseño, paso siguiente** (ADR 0007): revisar con estudiantes la barra de simulación, los atajos, el inicio
       por perfiles y los avisos con «Cómo corregirlo». (La medición con Lighthouse ya se hizo: `docs/v2/RENDIMIENTO.md`.)
-- [ ] **Rendimiento, siguiente paso** (`docs/v2/RENDIMIENTO.md`): panel docente sin cargar las 65 fichas completas;
+- [ ] **Rendimiento, siguiente paso (panel docente en pausa por decisión del docente, 2026-11-01)** (`docs/v2/RENDIMIENTO.md`): panel docente sin cargar las 65 fichas completas;
       banco tipo Saber fuera de cada práctica; costo de pintar el catálogo; medir en un equipo real del colegio.
 - [ ] **Revisión del docente:** excepciones de la pista de control de variables y prueba de importación en el Moodle
       del colegio.

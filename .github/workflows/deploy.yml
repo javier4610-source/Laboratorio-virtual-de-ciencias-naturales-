@@ -35,6 +35,8 @@ jobs:
         env:
           # Dirección del servidor de seguimiento (variable del repositorio API_URL); vacía = sin servidor.
           VITE_API_URL: ${{ vars.API_URL }}
+      # Presupuesto de tamaños de la compilación (determinista, sin tiempos): ver docs/v2/RENDIMIENTO.md.
+      - run: npm run perf
       - name: Pruebas de interfaz
         run: |
           npx playwright install --with-deps chromium

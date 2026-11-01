@@ -3,7 +3,7 @@ import type { PracticeDef } from '../core/types';
 import type { SessionApi } from '../lib/session';
 import { flag } from '../lib/flags';
 import { buildExperimentRecord, importExperimentRecord, validateExperimentRecord, type ExperimentRecord } from '../lib/experimentRecord';
-import { downloadText } from '../lib/report';
+import { downloadText } from '../lib/download';
 import { Icon } from './icons';
 
 /** Exportar e importar el registro reproducible del experimento (programa v2, sección 12; ADR 0003). */

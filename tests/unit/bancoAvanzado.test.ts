@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ADVANCED_BANK, blocksIn, scoreAnswers, suggestReinforcement, weakest } from '../../src/assessment/avanzado';
 import { BLOQUES } from '../../src/assessment/avanzado/bloques';
+import { loadAdvancedBank } from '../../src/assessment/avanzado/cargar';
 import { advancedToExportItem, crossTable, resultsCsv, studentTemplateCsv } from '../../src/assessment/avanzado/instruments';
 import { claveMd, cuadernilloMd, renderDocs, solucionarioMd, instrumentosMd } from '../../src/assessment/avanzado/markdown';
 import { BLOCK_TARGET, BLOCKS, type AdvancedItem, type BlockId, type Key } from '../../src/assessment/avanzado/types';
@@ -34,6 +35,12 @@ describe('banco avanzado publicado (lo que haya registrado en bloques.ts)', () =
   it('el banco está ordenado por número y no incluye la muestra de pruebas', () => {
     expect(ADVANCED_BANK.map((it) => it.n)).toEqual([...ADVANCED_BANK.map((it) => it.n)].sort((a, b) => a - b));
     for (const m of MUESTRA_AVANZADO) expect(ADVANCED_BANK.find((it) => it.id === m.id && it.context === m.context)).toBeUndefined();
+  });
+
+  it('la carga bajo demanda de la página (cargar.ts) arma el mismo banco que el registro (bloques.ts)', async () => {
+    const loaded = await loadAdvancedBank();
+    expect(loaded.map((it) => it.id)).toEqual(ADVANCED_BANK.map((it) => it.id));
+    expect(loaded).toEqual(ADVANCED_BANK);
   });
 
   it('los documentos se generan sin claves en el cuadernillo', () => {

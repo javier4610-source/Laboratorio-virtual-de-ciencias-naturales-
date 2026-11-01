@@ -106,7 +106,7 @@ No requiere servicios de pago, cuentas ni base de datos. Las fuentes tipográfic
 
 ## Sin conexión e instalable
 
-Después de la primera visita con internet, la aplicación completa queda guardada en el navegador (service worker generado en la compilación por `scripts/build-sw.mjs`) y todas las prácticas abren sin conexión. Se puede instalar como aplicación en Windows, Android, iPhone y Chromebook (botón «Instalar la aplicación» en el inicio y en Ayuda). Cuando se publica una versión nueva aparece un aviso para actualizar; el trabajo guardado se conserva. Enviar informes al servidor sí requiere conexión.
+Después de la primera visita con internet, la aplicación completa queda guardada en el navegador (service worker generado en la compilación por `scripts/build-sw.mjs`) y todas las prácticas abren sin conexión. La precarga va en dos fases: el núcleo (~5,4 MB) al instalar y los archivos más pesados de pocas prácticas (~4,2 MB: visores 3D, proteínas, taller de compuestos, química orgánica) en segundo plano cuando la página está desocupada; con «ahorro de datos» activado esos se guardan solo al usarlos (ver `docs/v2/RENDIMIENTO.md`). Se puede instalar como aplicación en Windows, Android, iPhone y Chromebook (botón «Instalar la aplicación» en el inicio y en Ayuda). Cuando se publica una versión nueva aparece un aviso para actualizar; el trabajo guardado se conserva. Enviar informes al servidor sí requiere conexión.
 
 ## Guías de trabajo en PDF
 

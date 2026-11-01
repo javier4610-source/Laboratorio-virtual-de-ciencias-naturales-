@@ -98,7 +98,7 @@ export function HelpPage({ prefs, setPrefs }: { prefs: Prefs; setPrefs: (p: Pref
       </section>
       <section className="card stack-sm">
         <h2>Usar sin conexión e instalar</h2>
-        <p>Después de abrir el laboratorio una vez con internet, queda guardado en este navegador y las prácticas funcionan sin conexión. Cuando hay una versión nueva, aparece un aviso para actualizar; tu trabajo se conserva.</p>
+        <p>Después de abrir el laboratorio una vez con internet, queda guardado en este navegador y las prácticas funcionan sin conexión. Los archivos más pesados (visores 3D, proteínas, taller de compuestos y química orgánica) terminan de guardarse en segundo plano poco después, según la velocidad de la conexión; si el navegador tiene activado el ahorro de datos, se guardan solo cuando abres esas prácticas. Cuando hay una versión nueva, aparece un aviso para actualizar; tu trabajo se conserva.</p>
         <p>También puedes instalarlo como aplicación para abrirlo desde el escritorio o la pantalla de inicio. En Chrome o Edge usa el botón de abajo o el ícono de instalar en la barra de direcciones; en Android, el menú ⋮ → «Instalar aplicación»; en iPhone o iPad, Compartir → «Agregar a la pantalla de inicio».</p>
         <div className="btn-row"><InstallButton className="btn primary" /></div>
         <p className="small muted">Enviar informes al docente por internet sí necesita conexión; sin ella, descarga el informe y entrégalo después.</p>

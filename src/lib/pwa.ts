@@ -70,6 +70,23 @@ function watchInstalling(sw: ServiceWorker, firstInstall: boolean) {
   });
 }
 
+/** Ejecuta `fn` cuando el navegador está desocupado (o a más tardar en `timeout` ms). */
+function whenIdle(fn: () => void, timeout: number) {
+  const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+  if (ric) ric(fn, { timeout });
+  else setTimeout(fn, Math.min(timeout, 2000));
+}
+
+/**
+ * Segunda fase de la precarga (archivos grandes de pocas prácticas, ver scripts/sw-template.js): se pide cuando la
+ * página está desocupada y no se pide si el navegador indica ahorro de datos (entonces se guardan al usarlos).
+ */
+function requestDeferredPrecache(sw: ServiceWorkerContainer) {
+  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+  if (saveData) return;
+  sw.ready.then((reg) => whenIdle(() => reg.active?.postMessage('PRECACHE_DEFERRED'), 10_000)).catch(() => {});
+}
+
 export function initPwa() {
   if (typeof window === 'undefined') return;
   const standalone = window.matchMedia?.('(display-mode: standalone)').matches || (navigator as Navigator & { standalone?: boolean }).standalone === true;
@@ -80,7 +97,10 @@ export function initPwa() {
   if (!import.meta.env.PROD || import.meta.env.MODE === 'single' || !('serviceWorker' in navigator) || !location.protocol.startsWith('http')) return;
   const sw = navigator.serviceWorker;
   sw.addEventListener('controllerchange', () => { if (reloading) location.reload(); });
-  window.addEventListener('load', async () => {
+  // El registro espera a que la página cargue y quede desocupada: así la precarga no compite con los archivos de la
+  // práctica que el estudiante está abriendo en una conexión lenta.
+  window.addEventListener('load', () => whenIdle(register, 5_000));
+  const register = async () => {
     try {
       const firstInstall = !sw.controller;
       const reg = await sw.register('./sw.js');
@@ -90,8 +110,9 @@ export function initPwa() {
       reg.addEventListener('updatefound', () => { if (reg.installing) watchInstalling(reg.installing, !sw.controller); });
       // Buscar versiones nuevas al volver a la pestaña (sin costo si no hay cambios).
       document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') reg.update().catch(() => {}); });
+      requestDeferredPrecache(sw);
     } catch {
       /* Sin service worker la aplicación sigue funcionando en línea. */
     }
-  });
+  };
 }

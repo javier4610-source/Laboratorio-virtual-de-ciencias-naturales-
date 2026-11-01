@@ -6,7 +6,7 @@ import {
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { playSound } from '../lib/sound';
-import { copyText, downloadText, slug } from '../lib/report';
+import { copyText, downloadText, slug } from '../lib/download';
 import { Lcd } from '../labs/kit';
 import type { FitModel } from '../lib/fit';
 import { Chart, niceTicks } from './Chart';

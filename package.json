@@ -15,7 +15,8 @@
     "test:e2e": "playwright test",
     "server": "node server/index.mjs",
     "guias": "node scripts/guias/exportar.mjs && python3 scripts/guias/generar_guias.py",
-    "banco": "node scripts/banco-avanzado.mjs"
+    "banco": "node scripts/banco-avanzado.mjs",
+    "perf": "node scripts/presupuesto-rendimiento.mjs"
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "5.2.6",

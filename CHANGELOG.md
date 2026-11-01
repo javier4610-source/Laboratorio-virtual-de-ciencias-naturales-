@@ -7,6 +7,17 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+### Mejorado
+- Rendimiento en equipos modestos, medido con Lighthouse (móvil, CPU 4×, «Slow 4G»; detalle en
+  `docs/v2/RENDIMIENTO.md`): el banco Saber 11 ya no descarga el currículo completo (JS inicial de 917 a 180 KB, LCP de
+  9,8 a 3,2 s); el banco avanzado se pinta antes de recibir los 180 ítems, que llegan en seis archivos por bloque, y no
+  trae el banco tipo Saber ni los datos de las prácticas (LCP de 4,6 a 3,6 s); el pie de página ya no salta al cargar
+  (CLS de 0,21–0,50 a 0–0,06); el service worker se registra cuando la página está desocupada y precarga primero el
+  núcleo (5,4 MB en vez de 9,6 MB) y después, en segundo plano, los archivos grandes de visores 3D, proteínas, taller de
+  compuestos y química orgánica (no lo hace si el navegador pide ahorro de datos).
+- Presupuesto de rendimiento en CI: `npm run perf` falla si la entrada o el JS inicial de una ruta superan los límites
+  escritos (solo tamaños de la compilación, sin tiempos).
+
 ## [2.14.1] · 2026-10-27
 
 ### Corregido

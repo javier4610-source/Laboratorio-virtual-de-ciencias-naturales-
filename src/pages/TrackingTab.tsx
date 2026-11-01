@@ -7,7 +7,7 @@ import { api, ApiError, loadTeacherSession, saveTeacherSession, type CourseTrack
 import { FIT_LABEL, type FitModel } from '../lib/fit';
 import { fmt, fmtDate } from '../lib/format';
 import { STAGES } from '../lib/progress';
-import { copyText, downloadText, slug } from '../lib/report';
+import { copyText, downloadText, slug } from '../lib/download';
 import { loadJSON, saveJSON } from '../lib/storage';
 import { niceTicks } from '../components/Chart';
 import { ConfirmButton, Notice, Select } from '../components/ui';

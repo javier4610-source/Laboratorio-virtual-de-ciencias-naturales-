@@ -7,7 +7,8 @@ import { BLOQUE_E } from './bloqueE';
 import { BLOQUE_F } from './bloqueF';
 
 /**
- * Registro de los bloques publicados del banco avanzado. Es el ÚNICO lugar que hay que tocar al incorporar un bloque:
+ * Registro de los bloques publicados del banco avanzado. Al incorporar un bloque se toca aquí y en ./cargar.ts (la
+ * carga bajo demanda de la página; una prueba unitaria verifica que ambos arman el mismo banco):
  *
  *   import { BLOQUE_A } from './bloqueA';
  *   export const BLOQUES: readonly (readonly AdvancedItem[])[] = [BLOQUE_A, BLOQUE_B, BLOQUE_C, BLOQUE_D, BLOQUE_E, BLOQUE_F];

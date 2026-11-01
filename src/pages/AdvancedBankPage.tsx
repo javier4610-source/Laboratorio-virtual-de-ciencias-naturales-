@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import type { Competency } from '../core/types';
-import { ADVANCED_BANK, blockName, blocksIn, pct, scoreAnswers, suggestReinforcement, weakest, type Answers } from '../assessment/avanzado';
+import { blockName, blocksIn, pct, scoreAnswers, suggestReinforcement, weakest, type Answers } from '../assessment/avanzado/scoring';
+import { loadAdvancedBank } from '../assessment/avanzado/cargar';
 import { crossTable, resultsCsv } from '../assessment/avanzado/instruments';
 import { COMPETENCIES, COMPETENCY_NAME, DISCLAIMER, LEVELS, LEVEL_NAME, TIMER_NOTE } from '../assessment/avanzado/labels';
 import { BLOCKS, type AdvancedItem, type BlockId, type Key, type Level } from '../assessment/avanzado/types';
@@ -8,7 +9,7 @@ import { GuidedItem, ItemBody, OptionsRadio, SolutionPanel, type GuidedRecord } 
 import { ConfirmButton, Notice, Segmented, Select } from '../components/ui';
 import { Icon } from '../components/icons';
 import { onTabListKeyDown } from '../lib/a11y';
-import { downloadText } from '../lib/report';
+import { downloadText } from '../lib/download';
 import { href, parseHash } from '../lib/router';
 import { loadJSON, removeKey, saveJSON } from '../lib/storage';
 
@@ -364,7 +365,10 @@ const MODE_TEXT: Record<Mode, string> = {
 };
 
 export function AdvancedBankPage() {
-  const [bank, setBank] = useState<readonly AdvancedItem[]>(ADVANCED_BANK);
+  // Los 180 ítems llegan por bloques (src/assessment/avanzado/cargar.ts): el encabezado se pinta sin esperarlos.
+  const [bank, setBank] = useState<readonly AdvancedItem[] | null>(null);
+  const [loadError, setLoadError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const [sample, setSample] = useState(false);
   const [mode, setModeState] = useState<Mode>(initialMode);
   const [records, setRecordsState] = useState<Records>(() => loadJSON<Records>(GUIDED_KEY, {}));
@@ -373,10 +377,15 @@ export function AdvancedBankPage() {
   useEffect(() => { document.title = 'Banco avanzado Saber 11 · Laboratorio Virtual'; }, []);
   // Solo en desarrollo: «?muestra=1» carga la muestra de pruebas para revisar la interfaz sin bloques publicados.
   useEffect(() => {
+    let alive = true;
+    setLoadError(false);
     if (import.meta.env.DEV && parseHash(window.location.hash).query.get('muestra') === '1') {
-      void import('../../tests/fixtures/avanzado-muestra').then((m) => { setBank(m.MUESTRA_AVANZADO); setSample(true); });
+      void import('../../tests/fixtures/avanzado-muestra').then((m) => { if (alive) { setBank(m.MUESTRA_AVANZADO); setSample(true); } });
+    } else {
+      loadAdvancedBank().then((b) => { if (alive) setBank(b); }, () => { if (alive) setLoadError(true); });
     }
-  }, []);
+    return () => { alive = false; };
+  }, [attempt]);
   const setRecords = (fn: (r: Records) => Records) => setRecordsState((r) => { const n = fn(r); saveJSON(GUIDED_KEY, n); return n; });
   const setSim = (s: SimState | null) => { setSimState(s); if (s) saveJSON(SIM_KEY, s); else removeKey(SIM_KEY); };
   const setMode = (m: Mode) => {
@@ -385,7 +394,7 @@ export function AdvancedBankPage() {
     if (m === 'guiada') q.delete('modo'); else q.set('modo', m);
     try { window.history.replaceState(null, '', `#/banco/avanzado${q.toString() ? `?${q}` : ''}`); } catch { /* sin historial */ }
   };
-  const blocks = blocksIn(bank);
+  const blocks = bank ? blocksIn(bank) : [];
   return (
     <div className="stack bank adv-bank">
       <header className="page-head">
@@ -396,12 +405,27 @@ export function AdvancedBankPage() {
         <p className="lead muted">Preguntas de selección múltiple con única respuesta, con contextos, tablas y gráficas, organizadas en seis bloques y tres competencias: uso comprensivo del conocimiento científico, explicación de fenómenos e indagación.</p>
       </header>
       <Notice kind="warn"><strong>Material original de práctica, no oficial.</strong> {DISCLAIMER.replace(/^Material original de práctica elaborado para este laboratorio\. /, '')}</Notice>
-      {sample && <Notice>Vista de desarrollo con la muestra de pruebas ({bank.length} preguntas). No es el banco publicado.</Notice>}
-      <p className="small muted">
-        Bloques disponibles: {blocks.length ? blocks.map((b) => `${b} (${bank.filter((it) => it.block === b).length})`).join(', ') : 'ninguno todavía'} · {bank.length} de 180 preguntas.
-        {' '}Matriz del banco (decisión propia, no ponderación oficial): en cada bloque, 10 preguntas por competencia y niveles 1, 2 y 3 en proporción 10/12/8.
-      </p>
-      {bank.length === 0 ? (
+      {sample && bank && <Notice>Vista de desarrollo con la muestra de pruebas ({bank.length} preguntas). No es el banco publicado.</Notice>}
+      {bank && (
+        <p className="small muted">
+          Bloques disponibles: {blocks.length ? blocks.map((b) => `${b} (${bank.filter((it) => it.block === b).length})`).join(', ') : 'ninguno todavía'} · {bank.length} de 180 preguntas.
+          {' '}Matriz del banco (decisión propia, no ponderación oficial): en cada bloque, 10 preguntas por competencia y niveles 1, 2 y 3 en proporción 10/12/8.
+        </p>
+      )}
+      {!bank ? (
+        loadError ? (
+          <div className="notice bad stack-sm" role="alert">
+            <strong>No se pudieron cargar las preguntas del banco avanzado.</strong>
+            <span className="small">Revisa tu conexión a internet: si ya abriste el banco antes, funciona sin conexión; si es la primera vez, necesita descargarse una vez.</span>
+            <div className="btn-row"><button type="button" className="btn" onClick={() => setAttempt((n) => n + 1)}>Reintentar</button></div>
+          </div>
+        ) : (
+          <div className="loading-state">
+            <p role="status" className="loading-text"><span className="spinner" aria-hidden="true" />Cargando las 180 preguntas…</p>
+            <div className="skeleton" aria-hidden="true"><span className="sk-line w40" /><span className="sk-line w70" /><span className="sk-block" /></div>
+          </div>
+        )
+      ) : bank.length === 0 ? (
         <div className="empty-state" role="status" data-testid="banco-avanzado-vacio">
           <Icon name="banco" size={32} />
           <p className="empty-title">Los bloques del banco avanzado se están incorporando</p>

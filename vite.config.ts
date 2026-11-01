@@ -14,6 +14,8 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: mode === 'single' ? 'dist-single' : 'dist',
     target: 'es2020',
+    // Manifiesto de fragmentos (dist/.vite/manifest.json): lo usa `npm run perf` para medir el JS de cada ruta.
+    manifest: mode !== 'single',
     rollupOptions: mode === 'single' ? { output: { inlineDynamicImports: true } } : undefined,
   },
   test: {

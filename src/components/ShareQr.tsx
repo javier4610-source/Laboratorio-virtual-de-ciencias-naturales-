@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { Icon } from './icons';
-import { copyText, downloadBlob } from '../lib/report';
+import { copyText, downloadBlob } from '../lib/download';
 import { practicePermalink } from '../lib/permalink';
 
 /**

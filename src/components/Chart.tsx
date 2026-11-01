@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent as RPointerEvent, type ReactNode } from 'react';
 import { fmt, fmtSig } from '../lib/format';
 import { FIT_LABEL, FIT_MODELS, equationWithValues, fitModel, formatWithUncertainty, type FitModel, type FitOutcome } from '../lib/fit';
-import { copyText, downloadBlob, slug } from '../lib/report';
+import { copyText, downloadBlob, slug } from '../lib/download';
 import { Icon } from './icons';
 
 export interface ChartPoint {

@@ -3,7 +3,7 @@ import type { Area, GradeId } from '../core/types';
 import { PRACTICES } from '../curriculum';
 import { SABER_BANK } from '../assessment/bank';
 import { AREA_LABEL, GRADES } from '../curriculum/grades';
-import { copyText, downloadBlob, downloadText, slug } from '../lib/report';
+import { copyText, downloadBlob, downloadText, slug } from '../lib/download';
 import { assignmentText, catalogLinksCsv, classroomShareUrl, selectQuestions, toGift, toMoodleXml, type QuestionSource } from '../lib/lmsExport';
 import { practicePermalink } from '../lib/permalink';
 import { Notice, Select } from '../components/ui';

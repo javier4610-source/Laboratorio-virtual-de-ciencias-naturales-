@@ -9,7 +9,7 @@ import { AMINO_ACIDS } from '../models/dna';
 import { aaClass } from '../models/geneExpression';
 import { STATUS_HELP, type EpistemicStatus } from '../lib/provenance';
 import { fmt } from '../lib/format';
-import { downloadText } from '../lib/report';
+import { downloadText } from '../lib/download';
 import { StatusChip } from '../components/Provenance';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';

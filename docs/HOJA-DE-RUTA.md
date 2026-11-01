@@ -53,13 +53,18 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       refinamiento publicado (AMCSD/ICSD) y SrO con una densidad publicada; revisión humana, con un químico, de los
       registros que quedan como «fórmula registrada sin coincidencia de nombre»; ampliar los binarios entre no metales
       con dos átomos centrales (S₂Cl₂, N₂F₄) si hay geometría fiable.
-- [ ] **Rediseño, paso siguiente** (ADR 0007): medir con Lighthouse cuando haya red para instalarlo; revisar con
-      estudiantes la barra de simulación, los atajos, el inicio por perfiles y los avisos con «Cómo corregirlo».
-- [ ] **Mejoras:** auditoría de rendimiento en equipos modestos; pruebas de regresión visual; revisión por el docente
-      de las excepciones de la pista de control de variables y prueba de importación en el Moodle del colegio.
+- [ ] **Rediseño, paso siguiente** (ADR 0007): revisar con estudiantes la barra de simulación, los atajos, el inicio
+      por perfiles y los avisos con «Cómo corregirlo». (La medición con Lighthouse ya se hizo: `docs/v2/RENDIMIENTO.md`.)
+- [ ] **Rendimiento, siguiente paso** (`docs/v2/RENDIMIENTO.md`): panel docente sin cargar las 65 fichas completas;
+      banco tipo Saber fuera de cada práctica; costo de pintar el catálogo; medir en un equipo real del colegio.
+- [ ] **Mejoras:** pruebas de regresión visual; revisión por el docente de las excepciones de la pista de control de
+      variables y prueba de importación en el Moodle del colegio.
 
 ## Hecho
 
+- [x] Sin publicar · Auditoría de rendimiento en equipos modestos con Lighthouse (móvil, CPU 4×, «Slow 4G»):
+  banco Saber 11 y banco avanzado más livianos, sin saltos del pie de página (CLS), precarga sin conexión en dos fases y
+  presupuesto de tamaños en CI (`npm run perf`). Ver `docs/v2/RENDIMIENTO.md`.
 - [x] v2.14.0 · Banco avanzado Saber 11.° completo (pedido del docente): 180 ítems originales en seis bloques, tres
   modalidades de uso, validador con metas globales y documentos (fundamentación, cuadernillo, clave, solucionario,
   instrumentos y referencias) en `docs/banco-saber11/`. Pendiente del docente: contrastar con el marco oficial del ICFES

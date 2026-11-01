@@ -3,7 +3,7 @@ import { ADVANCED_BANK, blockName, blocksIn } from '../assessment/avanzado';
 import { advancedToExportItem, studentTemplateCsv } from '../assessment/avanzado/instruments';
 import { DISCLAIMER } from '../assessment/avanzado/labels';
 import { toGift, toMoodleXml } from '../lib/lmsExport';
-import { downloadBlob, downloadText } from '../lib/report';
+import { downloadBlob, downloadText } from '../lib/download';
 import { href } from '../lib/router';
 import { Select } from '../components/ui';
 import { Icon } from '../components/icons';

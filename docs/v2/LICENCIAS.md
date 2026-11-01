@@ -26,6 +26,7 @@ Se distribuyen con la aplicación publicada.
 | `@fontsource/jetbrains-mono` | 5.2.6 | OFL-1.1 | Ídem |
 | `3dmol` (3Dmol.js) | 2.5.5 | BSD-3-Clause | Conservar el aviso de copyright y la licencia: se publica en `licencias/3dmol-LICENSE.txt` (copia de `node_modules/3dmol/LICENSE`). Incorpora código de GLmol, Three.js y jQuery según su LICENSE; el fragmento minificado parece incluir pako (licencia **por verificar**). Citar: Rego, N. y Koes, D. (2015), *Bioinformatics* 31(8), doi:10.1093/bioinformatics/btu829 (tomado de su `CITATION.cff`). Se carga solo en la práctica de geometría; se incluye en la descarga para uso sin conexión. Sin WebGL o sin 3Dmol.js, la práctica usa una vista de respaldo en SVG propia |
 | `qrcode` | 1.5.4 | MIT | Conservar el aviso de copyright; se carga bajo demanda al abrir el código QR |
+| `three` (three.js) | 0.186.1 | MIT | Conservar el aviso de copyright y la licencia: se publica en `licencias/three-LICENSE.txt` (copia de `node_modules/three/LICENSE`). Motor del kit de escenas 3D (`src/three/`, `docs/v2/KIT-3D.md`); se descarga aparte, solo al abrir una práctica con escena 3D en un equipo con WebGL |
 
 Dependencia transitiva de ejecución: `scheduler` (MIT), requerida por `react-dom`.
 
@@ -47,6 +48,7 @@ Se usan para compilar y probar; **no** se distribuyen en el sitio publicado.
 | `@types/node` | 22.15.30 | MIT |
 | `@types/react` | 19.3.0 | MIT |
 | `@types/react-dom` | 19.3.0 | MIT |
+| `@types/three` | 0.186.0 | MIT |
 | `@vitejs/plugin-react` | 5.2.0 | MIT |
 | `typescript` | 5.9.3 | Apache-2.0 |
 | `vite` | 7.3.7 | MIT |
@@ -56,6 +58,11 @@ Resumen de las 146 entradas de `package-lock.json` (directas y transitivas) por 
 Apache-2.0 6, ISC 5, OFL-1.1 3, MPL-2.0 2 (`axe-core` 4.10.3 y `@axe-core/playwright`), BSD-3-Clause 1
 (`source-map-js`), CC-BY-4.0 1 (`caniuse-lite`, base de datos de compatibilidad de navegadores usada en la
 compilación). Ninguna tiene licencia de copyleft fuerte (GPL o AGPL).
+
+Kit de escenas 3D (2026-11-01): se añadieron `three` 0.186.1 (MIT, ejecución) y, solo para los tipos de TypeScript en
+desarrollo, `@types/three` 0.186.0 con sus dependencias `@dimforge/rapier3d-compat` 0.12.0 (Apache-2.0),
+`@tweenjs/tween.js` 23.1.3, `@types/stats.js` 0.17.4, `@types/webxr` 0.5.24, `fflate` 0.8.3 y `meshoptimizer` 1.1.1
+(MIT). Ninguna de las de desarrollo llega al sitio publicado.
 
 ## 4. Herramientas fuera de `package.json`
 

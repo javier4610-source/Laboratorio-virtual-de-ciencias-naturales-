@@ -1297,3 +1297,15 @@ math.mml .m-unit, .math-fallback { font-family: var(--font-data); font-size: 0.8
 /* Solucionario: el contenido del desplegable no puede ensanchar la página (las tablas se desplazan dentro de su marco). */
 .adv-sol { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 .adv-sol > div, .adv-sol > div > * { min-width: 0; max-width: 100%; }
+
+/* Kit de escenas 3D (src/three, docs/v2/KIT-3D.md) */
+.scene3d-view { position: absolute; inset: 0; touch-action: pan-y; cursor: grab; border-radius: inherit; }
+.scene3d-view:active { cursor: grabbing; }
+.scene3d-view:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+.scene3d-label { position: absolute; transform: translateY(-100%); pointer-events: none; white-space: nowrap; font-size: var(--fs-xs); color: var(--ink); background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius-pill); padding: 0 6px; line-height: 1.5; }
+.scene3d-svg-label { font-size: 12px; paint-order: stroke; stroke-width: 3px; stroke-linejoin: round; }
+.scene3d-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.scene3d-tools .btn[aria-label] { min-width: 36px; }
+.scene3d-legend { display: flex; flex-wrap: wrap; gap: 4px 10px; list-style: none; padding: 0; margin: 8px 0 0; }
+.scene3d-legend li > span { display: inline-flex; align-items: center; }
+.scene3d-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--line-strong); margin-right: 6px; flex: none; }

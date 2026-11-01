@@ -92,6 +92,18 @@ KB comprimidos con gzip nivel 9; «ruta» = entrada + todo lo que la ruta import
 El script además falla si el banco Saber 11, el catálogo o el inicio vuelven a cargar el currículo completo, o si la
 página del banco avanzado vuelve a arrastrar los ítems, el banco tipo Saber o los datos de las prácticas.
 
+**Kit de escenas 3D (2026-11-01, `docs/v2/KIT-3D.md`).** Se añadieron dos medidas sin subir ningún límite existente:
+
+| Medida | Medido | Límite |
+|---|---|---|
+| Ruta: práctica con escena 3D (péndulo: página + ficha + laboratorio + `<Scene3D>`) | 303,7 (29 archivos) | 350 |
+| Motor 3D diferido (three.js r186, fragmento `renderer-*.js`) | 135,0 (549 KB crudos) | 155 |
+
+El motor no cuenta en ninguna ruta porque se pide con `import()` solo al montar una escena con WebGL; el script falla si
+aparece en el JS estático del inicio, la práctica liviana, la del péndulo, la 3D de química o el panel docente. Con el
+kit, la entrada sigue en 122,6 KB, el CSS de entrada pasó de 25,6 a 25,7 KB (reglas `.scene3d-*`) y la precarga del
+service worker de 5,43 a 5,46 MB (el componente y los pilotos; three.js, por pasar de 150 KB, va a la segunda fase).
+
 ## 4. Cambios
 
 1. **Banco Saber 11 sin el currículo completo** (`src/pages/BankPage.tsx`). El título de la práctica relacionada sale

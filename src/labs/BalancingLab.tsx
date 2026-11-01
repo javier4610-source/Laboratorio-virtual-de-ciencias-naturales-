@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import {
   allSpecies, atomRadius, checkEquation, COEF_LIMITS, CPK, ELEMENT_NAME, equationText, hintFor, LAYOUTS, layoutBox,
   LEVEL_NAME, prettyFormula, reactionById, REACTIONS, solveBalance, tiltAngle,
@@ -11,6 +11,9 @@ import { Notice, Readout, RecordButton, Select } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd, shade } from './kit';
 import { keyboardValue, ManipHint, ManipScene, useSvgDrag, type Pt, type RangeSpec } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const BalanceoView3D = lazy(() => import('./lote3d/BalanceoView3D'));
 
 /* ------------------------------------------------------------------ textos */
 
@@ -546,6 +549,9 @@ export default function BalancingLab({ api }: LabProps) {
           </Notice>
         )}
         {activeHint && <Notice kind="info"><strong>Pista:</strong> {activeHint.text}</Notice>}
+        <Panel3D title="moléculas y conteo de átomos" summary="Las mismas moléculas en 3D: cada coeficiente añade o quita copias reales y la tabla cuenta los átomos de la escena a cada lado.">
+          <BalanceoView3D reaction={rx} coefs={coefs} mark={mark} rows={check.rows} />
+        </Panel3D>
       </div>
 
       <div className="controls">

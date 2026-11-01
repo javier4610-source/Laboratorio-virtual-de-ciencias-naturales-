@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   ATOMIC_MASS_DECIMALS, AVOGADRO, BALANCE, BOAT_MASS, MOLE_INSTRUMENTS, MOLE_LIMITS, SUBSTANCES, countEntities, findMolReaction, findSubstance,
   molarMassInfo, molarVolumeL, readingDuring, readingSigFigs, ROOM, runMolReaction, STP, weigh,
@@ -18,6 +18,9 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { Beaker, BenchTop, ContactShadow, Lcd, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const MolView3D = lazy(() => import('./lote3d/MolView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -674,6 +677,9 @@ export default function MoleLab({ api }: LabProps) {
             {phase === 'despues' && isVinegar && <Notice>En un experimento real es probable que la pérdida medida quede algo por debajo de {fmt(rx.co2Mass, 3)} g, porque una parte del CO₂ queda disuelta en el vinagre. El modelo supone que todo el gas escapa.</Notice>}
           </>
         )}
+        <Panel3D title={activity === 'contar' ? 'la entidad que se cuenta' : 'la ecuación en moles'} summary={activity === 'contar' ? 'Una molécula, unidad fórmula o átomo de la sustancia en 3D: su masa en u es la masa molar en g/mol, y la tabla pasa de una entidad a tu muestra.' : 'La ecuación de la reacción en 3D: cada copia representa 1 mol y los átomos solo se reorganizan.'}>
+          <MolView3D activity={activity} formula={s.formula} name={s.name} entity={s.entity} counted={counted} reaction={rx.def} />
+        </Panel3D>
       </div>
 
       <div className="controls">

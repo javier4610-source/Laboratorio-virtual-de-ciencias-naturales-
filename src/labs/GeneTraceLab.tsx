@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from 'react';
+import { lazy, useId, useMemo, useState } from 'react';
 import {
   CONSEQUENCE_LABEL, EVIDENCE_HELP, EVIDENCE_LABEL, GENES, GENES_RETRIEVED, GENE_INFO_ES, STEP_ORDER, STEP_TITLE,
   consequenceFromHgvs, ecoLabel, findGenes, geneStructure, singleBaseVariant, traceSteps, variantConsequence,
@@ -9,6 +9,9 @@ import { StatusChip } from '../components/Provenance';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+const RastreoView3D = lazy(() => import('./lote3d/RastreoView3D'));
 
 /* ------------------------------------------------------------------ paleta (solo variables de tema) */
 const EV_COLOR: Record<EvidenceKind, string> = {
@@ -424,6 +427,9 @@ export default function GeneTraceLab({ api }: LabProps) {
           <p style={{ margin: 0 }}>{es.perturbation}</p>
           <p className="small muted" style={{ margin: 0 }}>No es una eliminación experimental publicada ni una perturbación modelada: el laboratorio no calcula efectos sobre la célula o el organismo.</p>
         </section>
+        <Panel3D title="la proteína del gen" summary="La estructura 3D del producto del gen que ya está en el laboratorio (HBB, INS u OCA2) con la variante analizada marcada en su residuo.">
+          <RastreoView3D gene={gene} variant={current ? current.result : null} />
+        </Panel3D>
       </div>
 
       <div className="controls">

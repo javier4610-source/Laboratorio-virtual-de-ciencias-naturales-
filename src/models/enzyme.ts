@@ -49,12 +49,17 @@ export function findEnzyme(id: string): EnzymeInfo {
   return e;
 }
 
+/** Fracción de enzima en su forma nativa (plegada) a una temperatura: el término de desnaturalización de f_T. */
+export function nativeFraction(e: EnzymeInfo, tempC: number): number {
+  return 1 / (1 + Math.exp((tempC - e.tm) / e.w));
+}
+
 export function temperatureFactor(e: EnzymeInfo, tempC: number): number {
   const T = celsiusToKelvin(tempC);
   const Tref = celsiusToKelvin(T_REF);
   const arrhenius = Math.exp((-e.ea / R_GAS) * (1 / T - 1 / Tref));
-  const native = 1 / (1 + Math.exp((tempC - e.tm) / e.w));
-  const nativeRef = 1 / (1 + Math.exp((T_REF - e.tm) / e.w));
+  const native = nativeFraction(e, tempC);
+  const nativeRef = nativeFraction(e, T_REF);
   return (arrhenius * native) / nativeRef;
 }
 

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import { FLASK_VOLUMES, PIPETTE_VOLUMES, prepareSolution, SOLUTES, solutionColor, unknownAbsorbance, SOLUTION_LIMITS, ABSORBANCE_MAX, COLORIMETER_RES, solutionConditions } from '../models/solutions';
 import { resolutionText } from '../components/Experiment';
 import { prettyFormula } from '../models/chemistry';
@@ -7,6 +7,9 @@ import { Notice, Readout, RecordButton, Select, Warnings } from '../components/u
 import type { LabProps } from './registry';
 import { BenchTop, DigitalBalance, Lcd, shade } from './kit';
 import { playSound } from '../lib/sound';
+import { Panel3D } from './lote3d/Panel3D';
+
+const SolucionesView3D = lazy(() => import('./lote3d/SolucionesView3D'));
 
 /* ---------------------------------------------------------------- instrumentos locales */
 
@@ -244,6 +247,9 @@ export default function SolutionsLab({ api }: LabProps) {
             {guessMsg && <p className="small" role="status">{guessMsg}</p>}
           </div>
         )}
+        <Panel3D title="iones y agua" summary="La disolución a escala de partículas: iones rodeados de agua y cuántas unidades del soluto hay en un cubo de 5 nm con tu concentración.">
+          {ok ? <SolucionesView3D formula={solute.formula} name={solute.name} molarity={ok.molarity} finalMolarity={ok.finalMolarity} diluted={dilute} /> : <p className="small">Escribe una masa válida para preparar la solución.</p>}
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

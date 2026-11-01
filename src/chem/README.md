@@ -133,6 +133,15 @@ Lo que no se incluye y por qué: `CRYSTALS_NOT_INCLUDED` (CaSO₄, SrO, sales de
 Controles: «Bloque de celdas», «Tamaño de los iones» (solo redes iónicas), «Coordinación de», «Mostrar las aristas
 de la celda» y el panel «Fuentes de la estructura y de la densidad».
 
+## 4 bis. `<SpeciesScene3D>` — escena de varias especies
+
+`buildScene(blocks)` (`sceneLayout.ts`, puro) coloca N copias de cada especie en bloques (sin deformar las geometrías) y
+devuelve átomos, enlaces, rótulos y cajas; `sceneCounts` cuenta átomos por bloque. `<SpeciesScene3D atoms bonds lines
+labels idPrefix title description caption frameKey framePoints?>` lo dibuja con formas de 3Dmol (una forma por color) o
+con `ProjectedSvg` sin WebGL. Lo atenuado (`dim`) mezcla su color con el fondo (`mixHex`): las formas translúcidas de
+3Dmol no se dibujan en todos los motores de WebGL; lo resaltado (`mark`) lleva una malla de alambre. Lo usan las vistas
+del lote 3D-1 (`src/labs/lote3d/`).
+
 ## 5. Motor y respaldo
 
 `engine3d.ts`: `load3Dmol()` (importación diferida de `3dmol/build/3Dmol.es6-min.js`, el mismo fragmento que

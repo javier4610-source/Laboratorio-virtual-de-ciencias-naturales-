@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import {
   CDS_START, GENE_LENGTH, GENE_SEQ, GEL_RANGE_KDA, HBB_SEGMENTS, IVS2_JOIN, LANDMARKS, POLYA_SIGNAL, PROMOTER_ELEMENTS, SEGMENT_RANGES, TSS,
   aaClass, analyzeGeneMutation, expressGene, gelMigration, locate, migrationForMass, proteinMassKDa, relativeToTss, validateMutation,
@@ -13,6 +13,9 @@ import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, Lcd } from './kit';
 import { ManipHint, useSvgDrag } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const ExpresionView3D = lazy(() => import('./lote3d/ExpresionView3D'));
 
 /* ------------------------------------------------------------------ paleta
  * Bases con los mismos tonos que el laboratorio de ADN (A rojo, T/U ámbar, G verde, C azul) y texto casi negro. */
@@ -786,6 +789,9 @@ export default function ExpressionLab({ api }: LabProps) {
             <ProteinBars wild={wild.protein} mutant={cur.protein} />
           </div>
         )}
+        <Panel3D title="la proteína plegada" summary="La hemoglobina real (PDB 2HHB) con las cadenas β del gen HBB: el codón elegido o mutado se marca en la proteína plegada.">
+          <ExpresionView3D wildProtein={wild.protein} analysis={done ? analysis : null} focusCodon={selLoc.codon} />
+        </Panel3D>
       </div>
 
       <div className="controls">

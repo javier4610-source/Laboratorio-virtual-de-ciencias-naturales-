@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   airDensity, extentAt, reactionById, readingAt, REACTIONS, simulateConservation, conservationConditions,
   type ReactionId, type SystemId, type ConservationInput,
@@ -11,6 +11,9 @@ import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } fr
 import { SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, Beaker, DigitalBalance, Erlenmeyer, shade, TestTube } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+const ConservacionView3D = lazy(() => import('./lote3d/ConservacionView3D'));
 
 /* ------------------------------------------------------------------ textos de la interfaz */
 
@@ -482,6 +485,9 @@ export default function ConservationLab({ api }: LabProps) {
             ? `El sistema ganó ${fmt(res.oxygenFixed, 2)} g: es el oxígeno del aire que se combinó con el hierro (3 Fe + 2 O₂ → Fe₃O₄).`
             : `El sistema perdió la masa del CO₂ que escapó al aire (${fmt(res.gasProduced, 2)} g calculados). Ciérralo para comprobar que la masa se conserva.`}</Notice>
         )}
+        <Panel3D title="partículas dentro y fuera del sistema" summary="El mismo recipiente a escala de partículas: con el avance de la reacción se ve qué gas sale (o entra) por el borde del sistema y cuánta masa queda adentro.">
+          <ConservacionView3D input={consInput} extent={extent} started={started} />
+        </Panel3D>
       </div>
 
       <div className="controls">

@@ -435,7 +435,9 @@
           "batch": "3d-1",
           "priority": 2
         }
-      ]
+      ],
+      "status": "hecho",
+      "statusNote": "Implementado (2026-11-01) con el kit químico (src/chem, SpeciesScene3D nuevo) y 3Dmol con las estructuras del repositorio; desviaciones en docs/v2/ANALISIS-CURRICULAR.md, §6.3."
     },
     {
       "batch": "3d-2",

@@ -17,6 +17,13 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
   compuestos y química orgánica (no lo hace si el navegador pide ahorro de datos).
 - Presupuesto de rendimiento en CI: `npm run perf` falla si la entrada o el JS inicial de una ruta superan los límites
   escritos (solo tamaños de la compilación, sin tiempos).
+### Añadido
+- Pruebas de regresión visual (`npm run test:visual`, configuración aparte en `playwright.visual.config.ts`): 36 capturas
+  de nueve pantallas (inicio, catálogo, banco Saber 11, banco avanzado con gráfica y con retroalimentación, densidad,
+  geometría molecular con el visor 3D enmascarado, panel docente → Moodle y Classroom, ayuda) en escritorio y celular,
+  tema claro y oscuro. Hora fija, azar con semilla, sin animaciones y tolerancia de 250 píxeles por captura. Se corren
+  antes de cada versión, no en la integración continua (las capturas dependen de las fuentes del sistema); ver
+  `docs/v2/REGRESION-VISUAL.md`.
 
 ## [2.14.1] · 2026-10-27
 

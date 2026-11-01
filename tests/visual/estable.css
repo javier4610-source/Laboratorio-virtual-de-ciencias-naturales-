@@ -1,0 +1,11 @@
+/*
+ * Hoja que Playwright inyecta SOLO al tomar las capturas de regresión visual (playwright.visual.config.ts).
+ * Quita lo que cambia entre ejecuciones sin ser un cambio de diseño. No se usa en la aplicación.
+ */
+*, *::before, *::after {
+  transition: none !important;
+  animation: none !important;
+  caret-color: transparent !important;
+}
+/* Avisos de la aplicación instalable (además se bloquea el service worker): no deben tapar el contenido. */
+.pwa-toast { display: none !important; }

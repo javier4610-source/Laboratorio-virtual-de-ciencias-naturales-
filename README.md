@@ -97,6 +97,7 @@ Pruebas:
 ```bash
 npm test             # pruebas unitarias (Vitest): fórmulas, currículo, utilidades
 npm run test:e2e     # interfaz, servidor real y auditoría de accesibilidad WCAG 2.1 AA (Playwright + axe-core)
+npm run test:visual  # regresión visual (36 capturas; después de npm run build; ver docs/v2/REGRESION-VISUAL.md)
 npm run server       # servidor institucional opcional (ver server/README.md)
 ```
 
@@ -144,6 +145,7 @@ server/                    Servidor institucional opcional (Node.js sin dependen
 tests/unit/                Pruebas de modelos, currículo y utilidades
 tests/server/              Pruebas del servidor
 tests/e2e/                 Pruebas de interfaz de extremo a extremo y de accesibilidad
+tests/visual/              Regresión visual: capturas de referencia por plataforma (no corre en la integración continua)
 docs/                      Auditoría técnica, científica y pedagógica
 ```
 

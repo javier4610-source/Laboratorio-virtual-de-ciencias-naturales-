@@ -13,6 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:visual": "playwright test -c playwright.visual.config.ts",
+    "test:visual:update": "playwright test -c playwright.visual.config.ts --update-snapshots",
     "server": "node server/index.mjs",
     "guias": "node scripts/guias/exportar.mjs && python3 scripts/guias/generar_guias.py",
     "banco": "node scripts/banco-avanzado.mjs",

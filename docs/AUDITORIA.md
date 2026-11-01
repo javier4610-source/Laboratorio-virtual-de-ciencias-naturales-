@@ -562,3 +562,12 @@ Capturas de revisión (claro y oscuro, 1280 y 390 px) revisadas por el integrado
 | Banco completo | `npm run banco` con metas globales | 180 ítems, 0 errores, 0 avisos; 60/60/60; 60/72/48; 134 con datos | — | — | Correcto |
 | Regresión | `tsc -b`; 1401 pruebas unitarias; `npm run build`; E2E completo (201 pasan, 1 se omite por diseño) | Correcto | — | — | Correcto |
 | Corrección 2.14.1: desbordamiento a 390 px | Recorrido de las 180 preguntas con la retroalimentación abierta (nueva prueba E2E) | 0 preguntas desbordan; E2E completo 202 pasan, 1 se omite por diseño | La 2.14.0 se subió con una ejecución local que había fallado en esta comprobación (error del integrador); 20 preguntas desbordaban | Ancho de gráficas y tablas acotado, palabras largas partidas; la prueba ya no depende del azar | Corregido |
+
+# Rendimiento y regresión visual (versión 2.15.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Rendimiento | Lighthouse 12.8.2, móvil, CPU 4×, «Slow 4G», mediana de 3 corridas (`docs/v2/RENDIMIENTO.md`) | Banco Saber 11: LCP 9,8 → 3,2 s, JS 917 → 180 KB; banco avanzado: 4,6 → 3,6 s; CLS ≈ 0 en casi todas las páginas | El banco Saber 11 cargaba el currículo completo; el pie de página saltaba al cargar | Carga diferida, ayudantes de descarga separados, banco avanzado por bloques, altura mínima del estado de carga | Correcto; panel docente aún lento (siguiente paso) |
+| Presupuesto de tamaño | `npm run perf` en CI (solo tamaños de compilación) | Dentro del presupuesto | — | — | Correcto |
+| Regresión visual | `npm run test:visual` (36 capturas) 5 veces seguidas; cambios deliberados de color y de relleno | Estable; detecta los cambios deliberados | La página de ayuda cambió de altura por el texto nuevo del modo sin conexión (cambio intencional) | Referencias de ayuda actualizadas tras revisarlas | Correcto; no se corre en CI (fuentes del sistema) |
+| Regresión | `tsc -b`; 1402 pruebas unitarias; `npm run build`; E2E completo (202 pasan, 1 se omite por diseño) | Correcto | — | — | Correcto |

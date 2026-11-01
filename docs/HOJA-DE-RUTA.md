@@ -57,11 +57,14 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       por perfiles y los avisos con «Cómo corregirlo». (La medición con Lighthouse ya se hizo: `docs/v2/RENDIMIENTO.md`.)
 - [ ] **Rendimiento, siguiente paso** (`docs/v2/RENDIMIENTO.md`): panel docente sin cargar las 65 fichas completas;
       banco tipo Saber fuera de cada práctica; costo de pintar el catálogo; medir en un equipo real del colegio.
-- [ ] **Mejoras:** pruebas de regresión visual; revisión por el docente de las excepciones de la pista de control de
-      variables y prueba de importación en el Moodle del colegio.
+- [ ] **Revisión del docente:** excepciones de la pista de control de variables y prueba de importación en el Moodle
+      del colegio.
 
 ## Hecho
 
+- [x] v2.15.0 · Rendimiento medido con Lighthouse en perfil de equipo modesto (banco Saber 11: carga de 9,8 s a 3,2 s;
+  banco avanzado por bloques; sin saltos del pie; precarga sin conexión en dos fases) con presupuesto de tamaño en CI, y
+  pruebas de regresión visual (36 capturas, `npm run test:visual`, se corren antes de cada versión).
 - [x] Sin publicar · Auditoría de rendimiento en equipos modestos con Lighthouse (móvil, CPU 4×, «Slow 4G»):
   banco Saber 11 y banco avanzado más livianos, sin saltos del pie de página (CLS), precarga sin conexión en dos fases y
   presupuesto de tamaños en CI (`npm run perf`). Ver `docs/v2/RENDIMIENTO.md`.

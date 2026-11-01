@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.15.0] · 2026-11-01
+
+Mejoras: rendimiento en equipos modestos (medido con Lighthouse) y pruebas de regresión visual.
+
 ### Mejorado
 - Rendimiento en equipos modestos, medido con Lighthouse (móvil, CPU 4×, «Slow 4G»; detalle en
   `docs/v2/RENDIMIENTO.md`): el banco Saber 11 ya no descarga el currículo completo (JS inicial de 917 a 180 KB, LCP de

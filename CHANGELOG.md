@@ -7,6 +7,13 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+### Añadido
+- Análisis curricular de las 65 prácticas frente a la estructura de los Estándares del MEN (entornos) y la malla
+  institucional de `grades.ts`, con brechas por área y grado, 26 prácticas nuevas propuestas (8 de química, 8 de física,
+  8 de biología y 2 de ambiente), 14 mejoras y el plan de visor 3D en 7 lotes para las 54 prácticas sin 3D
+  (`docs/v2/ANALISIS-CURRICULAR.md` y `docs/v2/plan-curricular.json`). Los DBA no se pudieron leer en el documento
+  oficial: todos los anclajes quedan como formulación propia por verificar.
+
 ## [2.15.0] · 2026-11-01
 
 Mejoras: rendimiento en equipos modestos (medido con Lighthouse) y pruebas de regresión visual.

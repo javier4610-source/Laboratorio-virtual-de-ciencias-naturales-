@@ -10,6 +10,8 @@ import { playSound } from '../lib/sound';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
+import { Scene3D } from '../three';
+import { cellScene, microscopeStatus } from './cell3d';
 
 /* Geometría de la ilustración (px) */
 const W = 660, H = 420, CX = 210, CY = 210, R = 180;
@@ -210,6 +212,11 @@ export default function MicroscopeLab({ api }: LabProps) {
     setCheck(checkClassification(sampleId, classification));
   };
 
+  // Escena 3D de una célula de la muestra elegida, enlazada con la observación actual (qué se ve y por qué no).
+  const [part, setPart] = useState<string | null>(null);
+  const cell = useMemo(() => cellScene(sampleId, part), [sampleId, part]);
+  const chosen = cell.parts.find((p) => p.id === part) ?? null;
+
   const visibleNames = obs.structures.filter((v) => v.visible).map((v) => v.structure.name.toLowerCase());
   const desc = `${obs.sample.name}, ${obs.stain.name.toLowerCase()}, aumento total ${obs.magnification}×, campo de ${fmt(obs.fieldUm, 0)} µm de diámetro. `
     + `${obs.focus.inFocus ? 'Imagen nítida.' : 'Imagen borrosa.'} Estructuras visibles: ${visibleNames.length ? visibleNames.join(', ') : 'ninguna'}.`
@@ -300,6 +307,20 @@ export default function MicroscopeLab({ api }: LabProps) {
             ))}
           </ul>
         </div>
+        <section className="card" aria-labelledby="cel-3d-h">
+          <h3 id="cel-3d-h">Vista 3D: la célula y sus estructuras</h3>
+          <Scene3D idPrefix="cel" title={`Modelo 3D de una célula: ${obs.sample.name}`} items={cell.items} extent={cell.extent} description={cell.description}
+            height={320} initialOrbit={{ yaw: 0.6, pitch: 0.5 }} selectedId={part} onSelect={(id) => setPart((p) => (p === id ? null : id))}
+            status="ilustracion" statusNote="Proporciones aproximadas a partir de los tamaños de la práctica; solo se dibujan las estructuras que se estudian (y la membrana). Los colores identifican cada estructura; no son los reales.">
+            <div className="small" aria-live="polite" style={{ marginTop: 8 }}>
+              {chosen ? (
+                <div className="notice">
+                  <strong>{chosen.name}.</strong> {chosen.fn} <span className="muted">{microscopeStatus(chosen, obs)}</span>
+                </div>
+              ) : <p className="muted" style={{ margin: 0 }}>Elige una estructura (tócala en la escena o usa los botones de la lista) para ver su función y si se ve con la preparación actual.</p>}
+            </div>
+          </Scene3D>
+        </section>
       </div>
       <div className="controls">
         <div className="card stack">

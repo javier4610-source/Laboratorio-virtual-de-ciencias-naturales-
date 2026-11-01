@@ -12,6 +12,8 @@ import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { BenchTop, Lcd, shade, Stopwatch } from './kit';
 import { clockAngle, DragHandle, ManipHint, ManipScene } from './manipulate';
+import { Scene3D } from '../three';
+import { pendulumScene } from './pendulum3d';
 
 type AnimSpeed = 'real' | 'x4';
 type RunMode = 'libre' | 'cronometro' | 'fotopuerta';
@@ -318,6 +320,12 @@ export default function PendulumLab({ api }: LabProps) {
   });
   const oscCount = mode === 'cronometro' && released ? Math.min(OSCILLATIONS_TIMED, Math.floor(Math.max(0, passagesSoFar - 1) / 2)) : null;
 
+  // Escena 3D: la MISMA corrida y el mismo instante que el banco 2D (se detiene con «Pausar» de SimControls).
+  const scene3d = useMemo(() => pendulumScene({
+    run, length, massG, amplitudeDeg: amplitude, theta, t: tNow, released, bobRadiusM: bobRadius(massG, bob.density),
+    bobColor: bob.color, bobName: bob.name, placeName: place.name, damped: dampingId === 'aceite',
+  }), [run, length, massG, amplitude, theta, tNow, released, bob, place, dampingId]);
+
   const result = done && meas ? analyzePeriod(length, meas.period) : null;
   const record = () => {
     if (!meas || !result) return;
@@ -416,6 +424,12 @@ export default function PendulumLab({ api }: LabProps) {
           { k: 'g = 4π²L/T² (este ensayo)', v: result ? `${fmt(result.gCalculated, 2)} m/s²` : '—', data: true },
           { k: 'Instrumento', v: meas ? (meas.kind === 'cronometro' ? 'cronómetro manual (0,01 s)' : 'fotopuerta (0,001 s)') : '—' },
         ]} />
+        <section className="card" aria-labelledby="pen-3d-h">
+          <h3 id="pen-3d-h">Vista 3D: movimiento, velocidad y fuerzas</h3>
+          <Scene3D idPrefix="pen" title="Péndulo en 3D con los vectores de velocidad, tensión y peso" items={scene3d.items} extent={scene3d.extent}
+            target={scene3d.target} description={scene3d.description} height={340} initialOrbit={{ yaw: 0.4, pitch: 0.22 }} status="modelo"
+            statusNote="Posición, velocidad y fuerzas calculadas en cada instante con el mismo modelo del banco; flechas con escala fija en cada corrida (velocidad y fuerzas por separado). La lenteja se dibuja con un radio mínimo para que se vea." />
+        </section>
         <Notice>
           Para calcular g con varios ensayos: guarda el período para al menos cinco longitudes, grafica T² contra L en el cuaderno y ajusta una recta.
           Como T² = (4π²/g)·L, la pendiente vale 4π²/g, de modo que <strong>g = 4π²/pendiente</strong>. Compara con {fmt(place.g, 2)} m/s².

@@ -24,12 +24,14 @@ const BUDGETS = {
     catalogo: 145, // 126,0
     'practica liviana (densidad)': 335, // 291,2 (página + ficha + laboratorio)
     'practica 3D (oxidos-hidroxidos)': 430, // 374,5 (el visor 3Dmol se carga aparte, solo si se abre)
+    'practica con escena 3D (pendulo)': 350, // 303,7 (página + ficha + laboratorio + <Scene3D>; three.js va aparte)
     'banco Saber 11': 200, // 172,4 (antes 860,7: cargaba el currículo completo)
     'banco avanzado: página': 160, // 139,3 (antes 373,0 con los ítems, el banco Saber y los datos de prácticas)
     'banco avanzado: con los 180 ítems': 365, // 316,5
     'panel docente': 1075, // 933,8: carga las 65 fichas completas (pendiente, ver RENDIMIENTO.md)
   },
   mayorFragmento: 185, // ningún archivo JS debería pasar de esto: 158,4 (modelo AlphaFold de la práctica de proteínas)
+  motorThree: 155, // fragmento diferido con three.js r186 (kit de escenas 3D): 135,0
   precargaInstalacionMB: 6.4, // MB crudos que el service worker descarga al instalarse: 5,43 (antes 9,6)
 };
 
@@ -39,6 +41,7 @@ const ROUTES = {
   catalogo: ['src/pages/CatalogPages.tsx'],
   'practica liviana (densidad)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/densidad.ts', 'src/labs/DensityLab.tsx'],
   'practica 3D (oxidos-hidroxidos)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/oxidos-hidroxidos.ts', 'src/labs/OxidesHydroxidesLab.tsx'],
+  'practica con escena 3D (pendulo)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/pendulo.ts', 'src/labs/PendulumLab.tsx'],
   'banco Saber 11': ['src/pages/BankPage.tsx'],
   'banco avanzado: página': ['src/pages/AdvancedBankPage.tsx'],
   'banco avanzado: con los 180 ítems': ['src/pages/AdvancedBankPage.tsx', ...['A', 'B', 'C', 'D', 'E', 'F'].map((b) => `src/assessment/avanzado/bloque${b}.ts`)],
@@ -50,7 +53,12 @@ const FORBIDDEN = {
   'banco Saber 11': ['src/curriculum/index.ts'],
   'banco avanzado: página': ['src/curriculum/index.ts', ...['A', 'B', 'C', 'D', 'E', 'F'].map((b) => `src/assessment/avanzado/bloque${b}.ts`)],
   catalogo: ['src/curriculum/index.ts'],
-  inicio: ['src/curriculum/index.ts', 'src/pages/CatalogPages.tsx'],
+  inicio: ['src/curriculum/index.ts', 'src/pages/CatalogPages.tsx', 'src/three/renderer.ts'],
+  // three.js (kit de escenas 3D, docs/v2/KIT-3D.md) solo se descarga con import() diferido al montar una escena con WebGL.
+  'practica liviana (densidad)': ['src/three/renderer.ts'],
+  'practica con escena 3D (pendulo)': ['src/three/renderer.ts'],
+  'practica 3D (oxidos-hidroxidos)': ['src/three/renderer.ts'],
+  'panel docente': ['src/three/renderer.ts'],
 };
 /** Nombres de fragmentos compartidos que una ruta no debe incluir (p. ej. el banco tipo Saber o los datos de prácticas). */
 const FORBIDDEN_NAMES = {
@@ -122,6 +130,9 @@ for (const [route, keys] of Object.entries(ROUTES)) {
 
 const biggest = Object.values(manifest).filter((c) => c.file.endsWith('.js')).map((c) => [c.file, gzipKb(c.file)]).sort((a, b) => b[1] - a[1])[0];
 check('mayor archivo JS', biggest[1], BUDGETS.mayorFragmento, 'KB gzip', biggest[0]);
+
+const threeKey = resolve('src/three/renderer.ts');
+check('motor 3D diferido (three.js)', gzipKb(manifest[threeKey].file), BUDGETS.motorThree, 'KB gzip', manifest[threeKey].file);
 
 const sw = readFileSync(join(DIST, 'sw.js'), 'utf8');
 const precache = JSON.parse(sw.match(/const PRECACHE = (\[[\s\S]*?\]);/)[1]);

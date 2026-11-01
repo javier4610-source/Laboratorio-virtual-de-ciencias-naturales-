@@ -7,6 +7,18 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+### Añadido
+- Kit de escenas 3D para física, biología y ambiente (`src/three/`, `docs/v2/KIT-3D.md`) con three.js r186
+  (`three@0.186.1`, MIT) cargado aparte solo cuando una escena se abre con WebGL (135 KB gzip; la entrada no cambia).
+  `<Scene3D>` dibuja primitivas (flechas, resortes, esferas, elipsoides, cajas, varillas, planos y partículas) con los
+  colores del tema, gira con ratón, toque, teclado (flechas, + y −, Inicio) y botones («Restablecer vista»), dibuja solo
+  cuando algo cambia, respeta el movimiento reducido, libera la GPU al salir y, sin WebGL, muestra la misma escena en
+  una vista de respaldo en 2D (SVG) con las mismas posiciones, vectores, rótulos y selección.
+- Pilotos: en el **péndulo**, vista 3D del movimiento con los vectores de velocidad, tensión y peso calculados con la
+  misma corrida del laboratorio (se congela con «Pausar»); en el **microscopio**, modelo 3D de una célula de la muestra
+  con sus estructuras elegibles, su función y si se ven con la preparación actual. Pruebas unitarias y de extremo a
+  extremo con y sin WebGL; `npm run perf` vigila que three.js no entre en ninguna ruta.
+
 ## [2.15.0] · 2026-11-01
 
 Mejoras: rendimiento en equipos modestos (medido con Lighthouse) y pruebas de regresión visual.

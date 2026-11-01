@@ -390,3 +390,5 @@ anuncio para lector de pantalla va en la misma región `aria-live` del botón (�
 4. ¿Todo estado se dice en texto además del color?
 5. ¿Pasa axe WCAG 2.2 AA en claro y oscuro? (Agregar la ruta a `tests/e2e/a11y.spec.ts`.)
 6. Si agrega colores: `python3 scripts/diseno/verificar_paleta.py`.
+7. ¿Cambia el aspecto de pantallas existentes? Correr `npm run test:visual`; si el cambio es intencional, revisar las
+   diferencias y actualizar las capturas con `npm run test:visual:update` (ver [REGRESION-VISUAL.md](REGRESION-VISUAL.md)).

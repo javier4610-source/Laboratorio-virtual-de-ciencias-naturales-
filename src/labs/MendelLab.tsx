@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import {
   chiSquareTest, findOrganism, genotypeDistribution, normalizePair, ORGANISMS, phenotypeDistribution, phenotypeOfGene, punnettSquare, ratioString, sampleOffspring,
   type Gene, type Genotype, type Organism,
@@ -6,6 +6,10 @@ import {
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Segmented, Select } from '../components/ui';
 import type { LabProps } from './registry';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const MendelView3D = lazy(() => import('./lote3d2/MendelView3D'));
 
 const N_OPTIONS = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000];
 
@@ -334,6 +338,9 @@ export default function MendelLab({ api }: LabProps) {
             </div>
           </div>
         </div>
+        <Panel3D title="cromosomas homólogos y gametos" summary="Los progenitores con sus pares de cromosomas homólogos y el locus de cada alelo; abajo, los gametos que forma cada uno (las filas y columnas del cuadro de Punnett).">
+          <MendelView3D g1={g1} g2={g2} genes={genes} />
+        </Panel3D>
         <div className="card stack">
           <div className="panel-title"><h3>Parcela de siembra</h3><span className="small muted">Azul: esperado · Naranja: observado</span></div>
           <Bars organism={organism} rows={phen.map((c) => ({ key: c.key, expected: c.probability * 100, observed: sown ? ((sown.get(c.key) ?? 0) / total) * 100 : null }))} />

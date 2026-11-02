@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, useEffect, useMemo, useState } from 'react';
 import { LIGHT_COLORS, PHOTO_LIMITS, photoConditions, simulatePhotosynthesis, type LightColor } from '../models/photosynthesis';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -9,6 +9,10 @@ import { rangeStats, type LoggerChannel, type LoggerRun } from '../lib/logger';
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, TestTube, shade } from './kit';
 import { ManipHint, ManipScene, Plunger } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const FotosintesisView3D = lazy(() => import('./lote3d2/FotosintesisView3D'));
 
 /** Riel óptico: x de la lámpara para una distancia (5 cm junto al tubo, 100 cm en el extremo). */
 const railX = (d: number) => 470 - (d / 100) * 330;
@@ -163,6 +167,9 @@ export default function PhotoLab({ api }: LabProps) {
           ]),
         ]} />
         <Warnings list={warnings} />
+        <Panel3D title="dentro del cloroplasto" summary="Un cloroplasto de la elodea en 3D: los tilacoides captan la luz, el estroma fija el CO₂ y sale O₂. Las flechas siguen las tasas del modelo y las burbujas, el ritmo del tubo.">
+          <FotosintesisView3D res={res} lampOn={lampOn} color={color} phase={phase} counted={counted !== null} />
+        </Panel3D>
         <SensorCard intro={`Sonda de oxígeno disuelto y sensor de luz junto a la planta (${fmt(PLANT_G, 0)} g de elodea en ${fmt(WATER_L * 1000, 0)} mL de agua, partiendo de la saturación). El registrador simula ${fmt(SENSOR_DURATION / 60, 0)} min con las condiciones actuales; la pendiente del oxígeno disuelto mide la fotosíntesis neta.`}>
           <DataLogger title="Interfaz de sensores · fotosíntesis" channels={sensorChannels} duration={SENSOR_DURATION} speed={30} rates={[1, 2, 5, 10]} defaultRate={1}
             resetKey={conditions} runLabel={conditions} onUseRun={setSensorRun} />

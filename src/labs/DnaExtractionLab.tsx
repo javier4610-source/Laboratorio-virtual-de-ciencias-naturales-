@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   BASES, BASE_NAME, DNA_EXTRACTION_INSTRUMENTS, EXTRACTION_LIMITS, FACTOR_LABEL, FRUITS, MAX_STRAND, MIN_STRAND, WALLACE_MAX_VALID,
   appearanceOf, baseCounts, checkDuplex, findFruit, gcPercent, normalizeSequence, simulateExtraction, wallaceTm, extractionConditions,
@@ -15,6 +15,11 @@ import { INSTRUMENTS } from './instruments';
 import { resolutionText } from '../components/Experiment';
 import { BenchTop, Beaker, ContactShadow, Stopwatch, TestTube, Thermometer, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene, useSvgDrag, type Pt } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vistas 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const ExtraccionView3D = lazy(() => import('./lote3d2/ExtraccionView3D'));
+const ComplementoView3D = lazy(() => import('./lote3d2/ComplementoView3D'));
 
 /* ================================================================== utilidades comunes */
 
@@ -511,6 +516,10 @@ function ExtractionActivity({ api, top }: { api: LabProps['api']; top: ReactNode
           son supuestos didácticos que reproducen tendencias cualitativas. El índice compara condiciones en unidades arbitrarias: no es una masa de ADN medida
           y un ensayo real puede dar resultados distintos.
         </Notice>
+        <Panel3D title="el tubo y el ADN precipitado" summary="El tubo de ensayo en 3D con las capas de cada paso: el filtrado, el alcohol frío encima y las hebras de ADN que suben en la interfase (más hebras con mayor índice del modelo).">
+          <ExtraccionView3D stage={stage} yieldIndex={model.yieldIndex} filtrate={FILTRATE} ethanol={ETHANOL} fruitName={fruit.name} ethanolT={ethanolT}
+            stageText={STAGE_TEXT[stage]} appearance={done ? appearanceOf(reading) : null} />
+        </Panel3D>
         {done && (
           <details className="card">
             <summary>Factores del modelo calculado en este ensayo</summary>
@@ -826,6 +835,9 @@ function ComplementActivity({ api, top }: { api: LabProps['api']; top: ReactNode
         {check && !check.antiparallel && <Notice kind="warn">Las dos hebras del ADN son antiparalelas: frente al extremo 5' de la molde debe quedar el extremo 3' de la hebra nueva. Cambia la orientación y verifica de nuevo.</Notice>}
         {check && check.valid && <Notice kind="ok">Doble hebra válida: cada A frente a una T (2 puentes de hidrógeno) y cada G frente a una C (3). En la doble hebra A = T y G = C, como encontró Chargaff.</Notice>}
         {check && check.mismatches > 0 && <Notice kind="bad">{`Hay ${check.mismatches} ${check.mismatches === 1 ? 'par que no es complementario' : 'pares que no son complementarios'} (marcados con ×). Recuerda: A con T y G con C.`}</Notice>}
+        <Panel3D title="la doble hélice que construyes" summary="Tu doble hebra como hélice 3D: la molde, la hebra nueva con su orientación (5′ y 3′) y, al verificar, los puentes de hidrógeno de cada par (2 en A–T y 3 en G–C).">
+          <ComplementoView3D template={template.join('')} built={built} orientation={orientation} verified={check !== null} />
+        </Panel3D>
       </div>
 
       <div className="controls">

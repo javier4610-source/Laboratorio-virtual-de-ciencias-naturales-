@@ -1,4 +1,4 @@
-import { useMemo, useState, type KeyboardEvent } from 'react';
+import { lazy, useMemo, useState, type KeyboardEvent } from 'react';
 import {
   countPhases, cycleState, estimatedDuration, expectedFractions, findTissue, generateField, mitoticIndex, MITOSIS_LIMITS, PHASE_INFO, PHASES, TISSUES, type Phase,
 } from '../models/mitosis';
@@ -6,6 +6,10 @@ import { fmt } from '../lib/format';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const MitosisView3D = lazy(() => import('./lote3d2/MitosisView3D'));
 
 /* Colores de una preparación de ápice de raíz teñida con orceína acética (cromatina magenta). */
 const STAIN = { chrom: '#6d1650', nucleus: '#c77fa6', nucleusRim: '#8a2f66', nucleolus: '#4f0d39', cyto: '#f4e3e8', cytoEdge: '#ecd2db', wall: '#a7836a', spindle: '#b98aa6' };
@@ -110,6 +114,9 @@ function CyclePart() {
           { k: 'Núcleos', v: st.nuclei },
         ]} />
         <p className="small muted">G1: la célula crece · S: se replica el ADN · G2: se prepara para dividirse · luego la mitosis. 2n = 16 en la cebolla. En anafase cada cromátida separada se cuenta como un cromosoma.</p>
+        <Panel3D title="cromosomas y huso en la etapa elegida" summary="La célula en 3D en la etapa del ciclo que eliges: cromátidas hermanas, centrómeros, placa metafásica, huso y placa celular. Gírala para ver la placa de frente y de perfil.">
+          <MitosisView3D t={t} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

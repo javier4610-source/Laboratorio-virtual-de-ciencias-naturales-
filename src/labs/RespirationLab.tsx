@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   AIR_CO2, ATMOSPHERES, CAPILLARY_INSTRUMENT, CAPILLARY_SCALE, GLUCOSE_COUNTS, HEADSPACE, RESP_LIMITS, SAMPLES, SUBSTRATES,
   analyzeReadings, atpBreakdown, atpPerGlucoseAerobic, capillaryReading, findSample, gasTimeSeries, indicatorColor, indicatorPH, respirometerModel,
@@ -15,6 +15,10 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, Beaker, ContactShadow, DigitalBalance, Lcd, Stopwatch, TestTube, Thermometer, shade } from './kit';
 import { Knob, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const RespiracionView3D = lazy(() => import('./lote3d2/RespiracionView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -353,6 +357,10 @@ export default function RespirationLab({ api }: LabProps) {
           </div>
         </div>
 
+        <Panel3D title="la mitocondria y el balance de ATP" summary="Dónde ocurre cada etapa: glucólisis en el citoplasma, ciclo de Krebs en la matriz y cadena de transporte en las crestas. El O₂ que entra y el CO₂ que sale siguen la medición del respirómetro.">
+          <RespiracionView3D atmosphere={atmosphere} alive={s.alive} substrate={s.substrate} sampleName={s.short} vO2={model.vO2} vCO2={model.vCO2}
+            progress={done ? 1 : progress} accounting={accounting} shuttle={shuttle} />
+        </Panel3D>
         <details className="card">
           <summary>Gráfica del O₂ consumido y el CO₂ producido (después de medir)</summary>
           <Chart title="Gases durante la medición" xLabel="Tiempo (min)" yLabel="Volumen de gas (µL)" xUnit="min" yUnit="µL" height={230}

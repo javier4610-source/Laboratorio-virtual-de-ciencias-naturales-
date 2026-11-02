@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CIN0, DIFFUSION_LIMITS, GLUCOSE_DETECTION_LIMIT, naclOsmolarity, OSMOSIS_LIMITS, simulateDiffusion, simulateOsmosis, type CellType,
 } from '../models/osmosis';
@@ -10,6 +10,10 @@ import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/
 import type { LabProps } from './registry';
 import { Beaker, BenchTop, Stopwatch } from './kit';
 import { SimControls } from '../components/Experiment';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const OsmosisView3D = lazy(() => import('./lote3d2/OsmosisView3D'));
 
 const STATE_TEXT: Record<string, string> = {
   'isotónica': 'Sin cambio apreciable de volumen',
@@ -291,6 +295,10 @@ function OsmosisPart({ api }: LabProps) {
             xDomain={[0, duration]} yDomain={[40, 170]}
             hLines={[{ y: 100, label: 'volumen inicial' }, ...(cellType === 'animal' ? [{ y: 155, label: 'umbral de lisis' }] : [])]} height={240} />
         </div>
+        <Panel3D title="la membrana y el agua que la cruza" summary="La misma célula en 3D, en el mismo instante de la observación: su volumen, las moléculas de agua que cruzan los canales de la membrana según el modelo y los solutos a cada lado.">
+          <OsmosisView3D cellType={cellType} volume={V} t={point.t} duration={duration} waterDirection={res.waterDirection} lysed={lysedNow}
+            externalOsm={res.externalOsm} naclPercent={nacl} tonicity={res.tonicity} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

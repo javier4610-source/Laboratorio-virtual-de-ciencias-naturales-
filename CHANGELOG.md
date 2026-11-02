@@ -33,6 +33,22 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 - Contadores del catálogo (74 prácticas; 25 de química) y referencias de la regresión visual que muestran conteos.
 - La prueba «las prácticas enlazadas existen» del banco avanzado tiene un límite de 20 s (importa el currículo completo).
 
+## [2.18.0] · 2026-11-02
+
+Lote 3D-2: vista 3D en ósmosis, mitosis, ADN, extracción de ADN, Mendel, fotosíntesis y respiración.
+
+### Añadido
+- **Lote 3D-2 «biología invisible»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas `src/three`: tarjeta
+  «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG sin WebGL, teclado,
+  tacto, descripción textual viva y estatus epistémico en `osmosis` (célula cuyo volumen y flujo de agua por las
+  acuaporinas siguen el modelo), `mitosis` (16 cromosomas, huso y placa celular en la etapa elegida), `adn` (doble hélice
+  de ADN-B con 10,5 pb por vuelta y 3,4 Å por paso con la secuencia del estudiante y sus puentes de hidrógeno),
+  `extraccion-adn` (tubo con las capas y el ADN precipitado según el paso, y la doble hebra que arma el estudiante),
+  `mendel` (homólogos con los loci y los gametos del cuadro de Punnett), `fotosintesis` (cloroplasto con flechas de luz,
+  CO₂ y O₂ del modelo y burbujas al ritmo del banco) y `respiracion` (mitocondria con crestas elegibles, balance de ATP
+  por etapa y gases sincronizados con el respirómetro). Pruebas: `tests/unit/lote3d2.test.ts` y
+  `tests/e2e/visor3d-lote2.spec.ts`.
+
 ## [2.17.0] · 2026-11-02
 
 Prácticas nuevas, ola 1a (69 prácticas): modelos atómicos, tabla periódica, enlace químico y electrostática, todas con visor 3D.

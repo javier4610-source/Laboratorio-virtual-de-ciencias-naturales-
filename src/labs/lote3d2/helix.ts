@@ -137,6 +137,8 @@ export function helixScene(input: HelixInput): HelixScene {
   const bondPts: Vec3[] = [];
   const badPts: Vec3[] = [];
 
+  // El rótulo de una nube de partículas se ancla en su primer punto: se rota la lista para que quede a media altura.
+  const fromMiddle = <T,>(arr: T[], frac: number) => { const k = Math.floor(arr.length * frac); return [...arr.slice(k), ...arr.slice(0, k)]; };
   // Columnas azúcar-fosfato.
   const col2 = input.color2 ?? 'series-7';
   for (let i = 0; i + 1 < n; i++) {
@@ -144,8 +146,8 @@ export function helixScene(input: HelixInput): HelixScene {
     const has2 = input.strand2[i] != null && input.strand2[i + 1] != null;
     items.push({ id: `${p}-c2-${i}`, kind: 'rod', from: steps[i].p2, to: steps[i + 1].p2, radius: has2 ? 0.55 : 0.25, color: col2, opacity: has2 ? 1 : 0.5 });
   }
-  items.push({ id: `${p}-f1`, kind: 'particles', points: steps.map((s) => s.p1), radius: 1.0, color: 'series-8', label: `Columna azúcar-fosfato: ${input.name1}` });
-  items.push({ id: `${p}-f2`, kind: 'particles', points: steps.filter((_, i) => input.strand2[i] != null).map((s) => s.p2), radius: 1.0, color: col2, label: `Columna azúcar-fosfato: ${input.name2}` });
+  items.push({ id: `${p}-f1`, kind: 'particles', points: fromMiddle(steps.map((s) => s.p1), 0.62), radius: 1.0, color: 'series-8', label: `Columna azúcar-fosfato: ${input.name1}` });
+  items.push({ id: `${p}-f2`, kind: 'particles', points: fromMiddle(steps.filter((_, i) => input.strand2[i] != null).map((s) => s.p2), 0.38), radius: 1.0, color: col2, label: `Columna azúcar-fosfato: ${input.name2}` });
 
   // Bases y apareamiento.
   for (let i = 0; i < n; i++) {
@@ -179,8 +181,8 @@ export function helixScene(input: HelixInput): HelixScene {
     }
     status.push(st);
   }
-  if (input.showPairing && bondPts.length) items.push({ id: `${p}-hb`, kind: 'particles', points: bondPts, radius: 0.28, color: 'ink', label: 'Puentes de hidrógeno' });
-  if (input.showPairing && badPts.length) items.push({ id: `${p}-mal`, kind: 'particles', points: badPts, radius: 0.9, color: 'bad', label: 'Par no complementario' });
+  if (input.showPairing && bondPts.length) items.push({ id: `${p}-hb`, kind: 'particles', points: fromMiddle(bondPts, 0.5), radius: 0.28, color: 'ink', label: 'Puentes de hidrógeno' });
+  if (input.showPairing && badPts.length) items.push({ id: `${p}-mal`, kind: 'particles', points: fromMiddle(badPts, 0.5), radius: 0.9, color: 'bad', label: 'Par no complementario' });
   if (input.highlight != null && input.highlight >= 0 && input.highlight < n) {
     const s = steps[input.highlight];
     items.push({ id: `${p}-hl`, kind: 'sphere', center: s.mid, radius: 2.2, color: 'data', opacity: 0.35, label: input.highlightLabel ?? 'Par marcado' });

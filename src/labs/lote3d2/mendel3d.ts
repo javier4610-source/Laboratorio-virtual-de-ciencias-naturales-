@@ -73,5 +73,5 @@ export function mendelScene(g1: Genotype, g2: Genotype, genes: Gene[]): { items:
     + 'Abajo, los gametos: en la meiosis los homólogos se separan y cada gameto lleva un solo cromosoma de cada par, con un solo alelo de cada gen. '
     + `${describeParent(g1, 'El progenitor 1')} ${describeParent(g2, 'El progenitor 2')}`
     + (nG > 1 ? ' Como los dos genes están en pares distintos, cada par se separa sin depender del otro (segregación independiente).' : '');
-  return { items, extent: 11, target: [0, 0, 0], description, gametes1: gameteLists[0], gametes2: gameteLists[1] };
+  return { items, extent: 10, target: [0, 0, 0], description, gametes1: gameteLists[0], gametes2: gameteLists[1] };
 }

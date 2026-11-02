@@ -103,7 +103,7 @@ export function respirationScene(inp: RespSceneInput): { items: SceneItem[]; ext
   else description += `Mientras avanza la medición entra O₂ a las crestas y sale CO₂ de la matriz: ${gas.o2} esferas de O₂ y ${gas.co2} de CO₂ hasta ahora (cada esfera vale lo mismo, así se comparan las dos cantidades). `;
   description += `Avance de la medición: ${fmt(Math.min(1, Math.max(0, inp.progress)) * 100, 0)} %. `;
   description += sel ? `Elegido: ${partInfo(sel, inp)}` : 'Elige la glucólisis, la matriz o una cresta para ver su balance de ATP.';
-  return { items, extent: 10, target: [-0.6, 0.3, 0], description, gas };
+  return { items, extent: 7.2, target: [-0.6, 0.3, 0], description, gas };
 }
 
 /** Compartimento al que pertenece una primitiva elegible. */

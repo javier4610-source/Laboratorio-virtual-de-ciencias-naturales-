@@ -34,7 +34,7 @@ export interface OsmosisSceneInput {
 export const SOLUTE_DOTS_PER_OSM = 60;
 /** Canales de agua dibujados. */
 export const CHANNELS = 10;
-const EXTENT = 9;
+const EXTENT = 6.6;
 
 /** Semiejes de la célula (µm de escena): glóbulo rojo aplanado o protoplasto vegetal, escalados con V^(1/3). */
 export function cellRadii(cellType: CellType, volume: number): Vec3 {
@@ -104,7 +104,7 @@ export function osmosisScene(inp: OsmosisSceneInput): { items: SceneItem[]; exte
     items.push({ id: `canal-${k}`, kind: 'rod', from: [d[0] * r * 0.9, d[1] * r * 0.9, d[2] * r * 0.9], to: [d[0] * r * 1.1, d[1] * r * 1.1, d[2] * r * 1.1], radius: 0.2, color: 'series-4', ...(k === 0 ? { label: 'Acuaporinas (canales de agua)' } : {}) });
   });
   const water = dirs.map((d, k) => waterPosition(k, d, radii, inp));
-  if (!lysed) items.push({ id: 'agua', kind: 'particles', points: water.map((w) => w.p), radius: 0.32, color: 'series-5', label: 'Moléculas de agua' });
+  if (!lysed) items.push({ id: 'agua', kind: 'particles', points: water.map((w) => w.p), radius: 0.4, color: 'series-5', label: 'Moléculas de agua' });
 
   // Solutos: afuera ∝ osmolaridad externa; adentro un número fijo que se acerca o se separa con el volumen.
   const outsideDots = Math.min(240, Math.round(inp.externalOsm * SOLUTE_DOTS_PER_OSM));
@@ -112,7 +112,7 @@ export function osmosisScene(inp: OsmosisSceneInput): { items: SceneItem[]; exte
   const rnd = seededRandom(11);
   const out: Vec3[] = [];
   for (let i = 0; i < outsideDots; i++) {
-    const u = rnd() * 2 - 1, a = rnd() * 2 * Math.PI, rr = 6.4 + rnd() * 1.9;
+    const u = rnd() * 2 - 1, a = rnd() * 2 * Math.PI, rr = 5 + rnd() * 1.5;
     const s = Math.sqrt(1 - u * u);
     out.push([rr * s * Math.cos(a), rr * u * 0.75, rr * s * Math.sin(a)]);
   }

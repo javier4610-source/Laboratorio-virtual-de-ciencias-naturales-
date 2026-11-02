@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BLOCK, DYNAMOMETER_MAX, MOTOR_MAX_SPEED, RAMP, STEP_HEIGHT, SURFACES, WORK_INSTRUMENTS, WORK_LIMITS, blockMass, rampFromReadings,
   simulateRamp, simulateStairs, type Drive, type InstrumentId, type SurfaceId, type WorkInstrumentSpec,
@@ -13,6 +13,10 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, ContactShadow, Lcd, Stopwatch } from './kit';
 import { DragHandle, ManipHint, ManipScene, zoneAt, type Pt } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const TrabajoView3D = lazy(() => import('./lote3d3/TrabajoView3D'));
 
 /* ------------------------------------------------------------------ instrumentos */
 
@@ -762,6 +766,11 @@ export default function WorkLab({ api }: LabProps) {
               ]} />
             </div>
           </div>
+        )}
+        {exp === 'rampa' && (
+          <Panel3D title="fuerzas, desplazamiento y trabajo en la rampa" summary="La rampa en 3D con el bloque en el mismo punto de la subida, las fuerzas a escala, el desplazamiento y dos rectángulos cuya área es el trabajo (F·d jalando por la rampa y m·g·h subiéndolo derecho).">
+            <TrabajoView3D ramp={ramp} slots={slots} surfaceName={surf.name} motion={motion} phase={phase} drive={drive} />
+          </Panel3D>
         )}
       </div>
 

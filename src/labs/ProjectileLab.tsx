@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   GATE_RES, TIMER_RES, STROBE_SCALE_RES, TAPE_RES,
   G, PROJECTILE_LIMITS, SPHERES, SPRING_LEVELS, STROBE_DT, TARGET_RADIUS, checkTarget, findSphere,
@@ -14,6 +14,10 @@ import { useModelParams, usePublishModel } from '../components/Advanced';
 import { SimControls, simStatusOf, resolutionText } from '../components/Experiment';
 import { BenchTop, Lcd, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const ProyectilesView3D = lazy(() => import('./lote3d3/ProyectilesView3D'));
 
 /* ------------------------------------------------------------------ geometría del banco */
 
@@ -435,6 +439,12 @@ export default function ProjectileLab({ api }: LabProps) {
           { k: 'Alcance (cinta métrica)', v: measured ? `${fmt(shot.rangeReading, 3)} m` : landed ? 'mide' : '—', data: true, resolution: resolutionText(TAPE_RES, 'm') },
           ...(withAir ? [{ k: 'Alcance ideal (sin aire)', v: measured ? `${fmt(shot.idealRange, 3)} m${shot.idealRange > 1e-9 ? ` (con aire: ${fmt(((shot.range - shot.idealRange) / shot.idealRange) * 100, 1)} %)` : ''}` : '—' }] : []),
         ]} />
+
+        <Panel3D title="trayectoria y vectores de velocidad" summary="El mismo disparo en 3D, en el mismo instante: la esfera, su trayectoria y su sombra en el suelo, con la velocidad v y sus componentes vx (horizontal) y vy (vertical).">
+          <ProyectilesView3D path={shot.path} strobe={shot.strobe} flightTime={shot.flightTime} t={t} fired={fired} landed={landed} measured={measured}
+            v0={v0} angle={angle} height={height} g={g} air={withAir} spanX={span.xs} spanY={span.ys} sphereName={sphere.name} sphereColor={sphere.color}
+            sphereDiameter={sphere.diameter} target={target} rangeReading={shot.rangeReading} idealPath={idealPath} />
+        </Panel3D>
 
         {activity === 'blanco' && target !== null && (
           measured && hit ? (

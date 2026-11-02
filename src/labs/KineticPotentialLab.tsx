@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   CART, FLAG_WIDTH, GATE_DISTANCE, GRAVITY_PRESETS, KP_INSTRUMENTS, KP_LIMITS, PLACE_LABEL, SPRINGS, cartMass, cartStateAt, dropStateAt,
   simulateCart, simulateDrop, simulateSpring, significantDigits, springStateAt,
@@ -18,6 +18,10 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, ContactShadow, DigitalBalance, Lcd } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene, Plunger, verticalDragValue } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const CineticaPotencialView3D = lazy(() => import('./lote3d3/CineticaPotencialView3D'));
 
 const PID = 'cinetica-potencial';
 
@@ -997,6 +1001,15 @@ export default function KineticPotentialLab({ api }: LabProps) {
             series={charts.b.series} fit={charts.b.series[0].points.length >= 2 ? charts.b.fit : undefined} exportName={`${PID}-${station}-b`} emptyText="Guarda ensayos para ver la gráfica." />
         </div>
         <p className="small muted" aria-live="polite">{charts.note}</p>
+
+        <Panel3D title="el movimiento y las energías" summary="La estación elegida en 3D en el mismo instante del banco (el carrito en el riel, el objeto en la torre o el resorte que lanza el carrito) con la fotopuerta y las mismas barras de energía.">
+          <CineticaPotencialView3D station={station}
+            position={station === 'cinetica' ? (phase === 'listo' ? 0 : s1.x) : s3.q} objY={objY} height={height}
+            v={station === 'cinetica' ? (phase === 'listo' ? 0 : s1.v) : station === 'gravitatoria' ? (inMotion || measured ? s2.v : 0) : s3.v}
+            vMax={station === 'cinetica' ? launchActual : station === 'gravitatoria' ? Math.sqrt(2 * g * height) : comp * Math.sqrt(spring.k / m3)}
+            ep={bars.items.find((b) => b.k === 'ep')!.v} ek={bars.items.find((b) => b.k === 'ec')!.v} heat={bars.items.find((b) => b.k === 'q')!.v}
+            total={bars.scale} compression={comp} caption={bars.caption} massKg={station === 'cinetica' ? m1 : station === 'gravitatoria' ? dropMass : m3} />
+        </Panel3D>
 
         <IdeasPanel ideas={ideas} ctx={{ m1, m2: dropMass, h: height, g }} />
       </div>

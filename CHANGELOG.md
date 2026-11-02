@@ -14,6 +14,15 @@ sistema circulatorio, todas con visor 3D. Kit 3D: en pantallas angostas con much
 elemento elegido.
 
 ### Añadido
+- **Lote 3D-3 «mecánica»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas `src/three`: tarjeta «Vista 3D»
+  que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG sin WebGL, teclado, tacto,
+  descripción textual viva y estatus «Modelo calculado» en `proyectiles` (trayectoria, sombra y vectores v, vx y vy del
+  mismo instante), `newton` (diagrama de cuerpo libre 3D y aceleración), `choques` (cantidad de movimiento de cada
+  deslizador y total sobre el centro de masa, antes y después), `energia` (montaña rusa con barras de Ep, Ec y disipada),
+  `trabajo` (rampa con fuerzas, desplazamiento y el área F·d frente a m·g·h), `maquinas` (palanca con brazos y fuerzas;
+  poleas con la cuerda jalada y la subida de la carga) y `cinetica-potencial` (riel, torre de caída y resorte con las
+  barras de energía). El kit admite cajas giradas (`rotationZ`). Pruebas: `tests/unit/lote3d3.test.ts` y
+  `tests/e2e/visor3d-lote3.spec.ts`.
 - **Ola 1b de prácticas nuevas** (las prioridad 1 que faltaban del análisis curricular; 74 prácticas en total), con el
   mismo estándar de la ola 1a: modelo probado en `src/models`, valores dorados, conjuntos de datos con relaciones,
   5 preguntas tipo Saber originales por práctica y 1 de transferencia en el banco, ideas erróneas con retroalimentación,

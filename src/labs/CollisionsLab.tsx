@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BALANCE_RES, COLLISION_LIMITS, COLLISION_TYPES, FLAG_LENGTH, RAIL, contactSamples, simulateCollision, stateAt, timeline, TIMER_RES,
   type CollisionType,
@@ -12,6 +12,10 @@ import { ConditionAlert, SimControls, simStatusOf, resolutionText } from '../com
 import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { BenchTop, DigitalBalance, Lcd } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const ChoquesView3D = lazy(() => import('./lote3d3/ChoquesView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -425,6 +429,10 @@ export default function CollisionsLab({ api }: LabProps) {
             ]} />
           </div>
         </div>
+
+        <Panel3D title="cantidad de movimiento antes y después" summary="Los dos deslizadores en 3D en el mismo instante del banco, con las flechas de cantidad de movimiento de cada uno y la del total sobre el centro de masa.">
+          <ChoquesView3D res={res} st={st} pastContact={pastContact} done={done} typeName={typeName.short} />
+        </Panel3D>
 
         <details className="card">
           <summary>Gráficas de p(t) y Ec(t) durante el contacto (después de lanzar)</summary>

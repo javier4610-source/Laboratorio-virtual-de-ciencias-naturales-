@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import { ENERGY_LIMITS, simulateTrack, trackHeight, TRACK_X } from '../models/energy';
 import { fmt, fmtSig } from '../lib/format';
 import { flag } from '../lib/flags';
@@ -14,6 +14,10 @@ import type { LabProps } from './registry';
 import { useModelParams, usePublishModel } from '../components/Advanced';
 import { G as G_ENERGY } from '../models/energy';
 import { BenchTop } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const EnergiaView3D = lazy(() => import('./lote3d3/EnergiaView3D'));
 import { SimControls, simStatusOf } from '../components/Experiment';
 
 const W = 640, H = 260, X0 = 72;
@@ -178,6 +182,9 @@ function TrackActivity({ api }: LabProps) {
             { k: 'Energía disipada', v: done ? `${fmt(last.ef, 3)} J` : '—' },
           ]} />
         </div>
+        <Panel3D title="la montaña rusa y sus energías" summary="La pista en 3D con la esfera en el mismo punto del banco y barras de energía potencial, cinética y disipada que siempre suman la energía total.">
+          <EnergiaView3D h0={h0} hc={hc} point={p} total={E} passesHill={res.passesHill} stopX={res.stopX} done={done} mass={mass} rolling={rolling} />
+        </Panel3D>
         <details className="card">
           <summary>Gráfica de energías a lo largo de la pista (después de soltar)</summary>
           <Chart title="Energía en función de la posición" xLabel="Posición horizontal (m)" yLabel="Energía (J)" height={240}

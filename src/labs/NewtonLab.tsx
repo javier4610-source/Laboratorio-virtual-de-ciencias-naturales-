@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import { NEWTON_LIMITS, positionAt, simulateCart, SURFACES, TRACK_LENGTH } from '../models/newton';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -8,6 +8,10 @@ import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, Lcd } from './kit';
 import { ManipHint, ManipScene, Plunger } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const NewtonView3D = lazy(() => import('./lote3d3/NewtonView3D'));
 
 /** Alargamiento del dinamómetro (px por newton): el anillo se aleja del carrito al tirar más fuerte. */
 const PX_PER_N = 5;
@@ -316,6 +320,10 @@ export default function NewtonLab({ api }: LabProps) {
             { k: 'Fricción máxima estática', v: `${fmt(SURFACES.find((s) => s.id === surface)!.muS * res.normal, 2)} N` },
           ]} />
         </div>
+        <Panel3D title="diagrama de cuerpo libre y aceleración" summary="El carrito en 3D en el mismo instante del banco, con la fuerza aplicada, la normal, el peso y el rozamiento a escala, y la aceleración que producen.">
+          <NewtonView3D mass={mass} force={force} surfaceId={surface} surfaceName={SURFACES.find((s) => s.id === surface)!.name} moves={res.moves}
+            weight={res.weight} normal={res.normal} friction={res.friction} netForce={res.netForce} acceleration={res.acceleration} x={x} t={t} running={running} done={done} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

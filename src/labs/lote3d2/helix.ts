@@ -147,7 +147,8 @@ export function helixScene(input: HelixInput): HelixScene {
     items.push({ id: `${p}-c2-${i}`, kind: 'rod', from: steps[i].p2, to: steps[i + 1].p2, radius: has2 ? 0.55 : 0.25, color: col2, opacity: has2 ? 1 : 0.5 });
   }
   items.push({ id: `${p}-f1`, kind: 'particles', points: fromMiddle(steps.map((s) => s.p1), 0.62), radius: 1.0, color: 'series-8', label: `Columna azúcar-fosfato: ${input.name1}` });
-  items.push({ id: `${p}-f2`, kind: 'particles', points: fromMiddle(steps.filter((_, i) => input.strand2[i] != null).map((s) => s.p2), 0.38), radius: 1.0, color: col2, label: `Columna azúcar-fosfato: ${input.name2}` });
+  const p2pts = steps.filter((_, i) => input.strand2[i] != null).map((s) => s.p2);
+  if (p2pts.length) items.push({ id: `${p}-f2`, kind: 'particles', points: fromMiddle(p2pts, 0.38), radius: 1.0, color: col2, label: `Columna azúcar-fosfato: ${input.name2}` });
 
   // Bases y apareamiento.
   for (let i = 0; i < n; i++) {

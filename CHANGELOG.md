@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.17.0] · 2026-11-02
+
+Prácticas nuevas, ola 1a (69 prácticas): modelos atómicos, tabla periódica, enlace químico y electrostática, todas con visor 3D.
+
 ### Añadido
 - **Ola 1a de prácticas nuevas** del análisis curricular (69 prácticas en total), cada una con su modelo probado, valores
   dorados, conjuntos de datos con relaciones, evaluación tipo Saber original, ideas erróneas con retroalimentación,

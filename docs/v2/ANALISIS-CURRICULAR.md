@@ -543,7 +543,7 @@ adelante, el orden sigue el valor pedagógico del 3D: primero lo invisible o esp
 partículas), después mecánica y ondas, y al final los temas en que el 3D aporta menos (ecología y datos). Complejidad:
 S ≈ 1–2 días, M ≈ 3–5 días, L ≈ más de una semana (estimación para una persona, incluidas pruebas).
 
-#### Lote 3D-1 · Química y biomoléculas con lo que ya existe (kit químico y 3Dmol) (8 prácticas)
+#### Lote 3D-1 · Química y biomoléculas con lo que ya existe (kit químico y 3Dmol) (8 prácticas) — hecho
 
 | Práctica | Grado | Escena 3D propuesta (qué ve y manipula el estudiante) | Tecnología | Complejidad | Prioridad |
 |---|---|---|---|---|---|
@@ -555,6 +555,26 @@ S ≈ 1–2 días, M ≈ 3–5 días, L ≈ más de una semana (estimación para
 | `enzimas` Actividad enzimática: temperatura, pH y concentración | 10.º | Lisozima de T4 (PDB 2LZM, ya en el repo) con el sitio activo resaltado; deslizador de temperatura que aumenta el factor B / la agitación para explicar la desnaturalización (indicada como modelo cualitativo). | 3Dmol.js con estructura PDB ya incluida en el repo | S | 1 |
 | `expresion` Expresión génica y efecto de mutaciones en la proteína | 11.º | Hemoglobina (PDB 2HHB, ya en el repo) con la posición 6 de la cadena β resaltada: el estudiante liga la mutación del codón con el cambio de residuo en la proteína plegada. | 3Dmol.js con estructura PDB ya incluida en el repo | S | 1 |
 | `rastreo` Rastreo génico: del gen a la proteína y su función | 11.º | Estructura 3D del producto del gen rastreado (2HHB o el modelo AlphaFold de OCA2 ya incluido) con la variante marcada y su confianza (pLDDT). | 3Dmol.js con estructura PDB ya incluida en el repo | S | 2 |
+
+**Estado del lote 3D-1: hecho (2026-11-01).** Cada práctica tiene una tarjeta «Vista 3D» que se abre a pedido (el código
+de la vista y 3Dmol.js se descargan solo entonces), con respaldo SVG sin WebGL, giro con ratón, dedo y teclado
+(flechas, + y −, Inicio), descripción textual viva y sin desbordamiento a 390 px. Código: `src/labs/lote3d/` (vistas y
+correspondencias puras `mappings.ts` y `scenes.ts`), `src/chem/SpeciesScene3D.tsx` y `src/chem/sceneLayout.ts` (escena
+de varias especies del kit). Pruebas: `tests/unit/lote3d.test.ts` y `tests/e2e/visor3d-lote1.spec.ts`.
+
+| Práctica | Qué muestra la vista 3D (implementado) | Desviación respecto de la propuesta |
+|---|---|---|
+| `balanceo` | Una copia 3D por unidad de cada coeficiente (reactivos a la izquierda, productos a la derecha), tabla de átomos contados en la escena sincronizada con los coeficientes, resaltado del elemento elegido o de la pista; con la ecuación balanceada, la reacción animada (Reaction3D). | Reaction3D exige ecuación balanceada: con coeficientes erróneos se muestran las moléculas y el desbalance, no la animación. El ion acetato no tiene confórmero propio: se obtiene del confórmero del ácido acético quitando el H del –COOH (rotulado como ilustración). |
+| `conservacion` | Recipiente (aristas; sin tapa si es abierto) con partículas en la proporción de las cantidades del laboratorio y el avance de su reacción; el CO₂ que sale (o el O₂ que entra) cruza el borde y un contador suma las masas atómicas de lo que queda adentro; reactivo sobrante visible. | Recipiente con aristas del kit químico (sin kit general). La pastilla efervescente se dibuja con la ecuación iónica neta HCO₃⁻ + H₃O⁺ → 2 H₂O + CO₂: no hay geometría del ácido cítrico ni del citrato en el repositorio. |
+| `estequiometria` | Antes / después a escala de paquetes (la mayor cantidad = 4 unidades de reacción, el limitante se consume entero, la regla n/ν del modelo); exceso que sobra y, atenuado, el reactivo que no llegó a producto por el rendimiento; tabla de átomos antes y después. | Escena estática antes/después en lugar de Reaction3D animada (la animación no admite sobrantes). |
+| `mol` | «Contar pesando»: la entidad que se cuenta (molécula, unidad fórmula o átomo) con su masa en u y la tabla de una entidad a la muestra leída; «Reacción»: Reaction3D de la ecuación en moles. | Sin comparador de volúmenes de 1 mol (necesita el kit general y densidades que el modelo no tiene). La sacarosa no tiene confórmero en el repositorio: se dice y solo se cuenta su composición; los metales se dibujan como átomo aislado (no hay redes metálicas en el kit). |
+| `soluciones` | Capa de hidratación (6 aguas de PubChem en octaedro a la suma de radios de Shannon; O hacia el catión, H hacia el anión) y cubo de 5 nm con N = c·N_A·V unidades del soluto (madre o diluida). | El Cu²⁺ no tiene radio iónico en la tabla del kit y los iones poliatómicos no se orientan con esta regla: para CuSO₄ se muestra la capa del NaCl como ejemplo (opción también para KMnO₄). Las aguas del cubo no se dibujan. |
+| `enzimas` | Lisozima del fago T4 (2LZM) con Glu11 y Asp20 marcados; cinta por sitio activo o por factor B medido; la fracción nativa del modelo de la enzima elegida (temperatura) aclara la cinta y el factor de pH se informa. | La enzima del laboratorio (amilasa, pepsina, catalasa) no tiene estructura en el repositorio: la lisozima es una enzima modelo, rotulada así. La «agitación» no se anima (sería inventada): se muestra el factor B medido y la fracción nativa del mismo modelo. |
+| `expresion` | Hemoglobina 2HHB con las cadenas β (gen HBB) en azul: el codón elegido o mutado se marca como residuo β(c − 1) en las dos cadenas β; mutaciones sin sentido o de corrimiento atenúan lo que ya no se fabricaría. | Ninguna. |
+| `rastreo` | Producto del gen con estructura incluida: HBB → 2HHB, INS → 3I40 (cadenas B = codones 25–54 y A = 90–110) y OCA2 → modelo de AlphaFold coloreado por pLDDT, con la variante analizada marcada (y su pLDDT). | LCT y lacZ no tienen estructura en el repositorio: se dice, sin descargar nada. En 3I40 el residuo B30 es Ala (el archivo lo declara frente a UniProt): se avisa si la variante cae ahí. |
+
+Nota técnica: en 3Dmol.js las formas translúcidas no se dibujan en todos los motores de WebGL (se comprobó con
+SwiftShader), así que lo atenuado mezcla su color con el del fondo y lo resaltado lleva una malla de alambre.
 
 #### Lote 3D-2 · Biología: lo que no se ve a simple vista (8 prácticas)
 
@@ -646,5 +666,5 @@ barras de energía** (toda la mecánica).
 1. El docente valida o corrige los DBA con el documento oficial en el panel docente; con esos datos se pasa
    `anchorVerified` a `true` y se reemplaza la «formulación propia» por el texto oficial.
 2. Implementar M1–M5 (cambios pequeños de datos y textos).
-3. Lote 3D-1 en paralelo con la ola `nuevas-1` (química básica, electrostática y fisiología).
+3. ~~Lote 3D-1~~ (hecho el 2026-11-01, ver §6.3); sigue la ola `nuevas-1` (química básica, electrostática y fisiología).
 4. Al terminar el kit general de escenas 3D, seguir con los lotes 2 a 7 y las olas `nuevas-2` y `nuevas-3`.

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import { ENZYME_LIMITS, ENZYMES, initialRate, simulateEnzyme, findEnzyme, temperatureFactor, enzymeConditions } from '../models/enzyme';
 import { fmt } from '../lib/format';
 import { Chart } from '../components/Chart';
@@ -6,6 +6,9 @@ import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } fr
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, Lcd, TestTube, Thermometer, shade } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const EnzimasView3D = lazy(() => import('./lote3d/EnzimasView3D'));
 
 const TANK = 'M36 128 L36 266 Q36 276 46 276 L286 276 Q296 276 296 266 L296 128';
 
@@ -251,6 +254,9 @@ export default function EnzymeLab({ api }: LabProps) {
             <p className="small muted">Compárala con tus datos. Temperatura óptima del modelo: {fmt(res.optimalT, 1)} °C.</p>
           </details>
         </div>
+        <Panel3D title="estructura de una enzima y su sitio activo" summary="Una enzima real en 3D (lisozima, PDB 2LZM, enzima modelo) con su sitio activo; la temperatura y el pH del baño se leen con el mismo modelo de la práctica.">
+          <EnzimasView3D enzyme={e} temperature={temperature} pH={pH} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

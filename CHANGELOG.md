@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.16.0] · 2026-11-02
+
+Programa curricular y 3D (pedido del docente): análisis de la malla, kit de escenas 3D y primer lote de visores 3D.
+
 ### Añadido
 - Análisis curricular de las 65 prácticas frente a la estructura de los Estándares del MEN (entornos) y la malla
   institucional de `grades.ts`, con brechas por área y grado, 26 prácticas nuevas propuestas (8 de química, 8 de física,
@@ -23,6 +27,20 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
   misma corrida del laboratorio (se congela con «Pausar»); en el **microscopio**, modelo 3D de una célula de la muestra
   con sus estructuras elegibles, su función y si se ven con la preparación actual. Pruebas unitarias y de extremo a
   extremo con y sin WebGL; `npm run perf` vigila que three.js no entre en ninguna ruta.
+- **Lote 3D-1** del plan de visor 3D: tarjeta «Vista 3D» (se descarga solo al abrirla) en `balanceo` (copias 3D por
+  coeficiente con el conteo de átomos de la escena y la reacción animada cuando está balanceada), `conservacion`
+  (recipiente abierto o cerrado con las partículas, el gas que sale o entra y la masa de adentro), `estequiometria`
+  (paquetes antes y después: limitante, exceso y lo que no llegó a producto por el rendimiento), `mol` (la entidad que
+  se cuenta y la ecuación en moles), `soluciones` (capa de hidratación y partículas en un cubo de 5 nm con la
+  concentración del laboratorio), `enzimas` (lisozima 2LZM con el sitio activo Glu11/Asp20 y la fracción nativa del
+  modelo), `expresion` (hemoglobina 2HHB con el codón marcado en las cadenas β) y `rastreo` (2HHB, 3I40 o el modelo de
+  AlphaFold de OCA2 con la variante marcada). Solo con el kit químico y las estructuras ya incluidas; sin WebGL, respaldo
+  SVG con las mismas posiciones. Nuevo en el kit: `SpeciesScene3D` y `sceneLayout`. Desviaciones del plan en
+  `docs/v2/ANALISIS-CURRICULAR.md` (§6.3). Pruebas: `tests/unit/lote3d.test.ts` y `tests/e2e/visor3d-lote1.spec.ts`.
+
+### Cambiado
+- `massConservation.ts` expone `reactantAmounts` y `enzyme.ts` expone `nativeFraction` (los mismos cálculos de antes,
+  ahora reutilizados por las vistas 3D; sin cambios en los resultados).
 
 ## [2.15.0] · 2026-11-01
 

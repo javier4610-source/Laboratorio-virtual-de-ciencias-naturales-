@@ -203,6 +203,38 @@ export interface ConservationResult {
   warnings: string[];
 }
 
+export interface ReactantAmount { name: string; moles: number; coef: number; molarMass: number }
+
+/**
+ * Los dos reactivos de cada reacción con sus moles y coeficientes (lo que compara `limitingReagent`). Oxidación: en el
+ * sistema abierto el O₂ del aire es ilimitado; en el frasco sellado solo hay el O₂ de 500 mL de aire.
+ * También lo usa la vista 3D de la práctica para dibujar las partículas en la misma proporción.
+ */
+export function reactantAmounts(input: ConservationInput): [ReactantAmount, ReactantAmount] {
+  const r = reactionById(input.reaction);
+  const m = input.reactantMass;
+  const liquidVolume = r.liquid ? input.liquidVolume : 0;
+  if (r.id === 'bicarbonato') return [
+    { name: 'bicarbonato de sodio', moles: m / MOLAR_MASS.NaHCO3, coef: 1, molarMass: MOLAR_MASS.NaHCO3 },
+    { name: 'ácido acético del vinagre', moles: (liquidVolume * VINEGAR_ACID) / MOLAR_MASS.CH3COOH, coef: 1, molarMass: MOLAR_MASS.CH3COOH },
+  ];
+  if (r.id === 'efervescente') return [
+    { name: 'bicarbonato de la pastilla', moles: (m * TABLET.NaHCO3) / MOLAR_MASS.NaHCO3, coef: 3, molarMass: MOLAR_MASS.NaHCO3 },
+    { name: 'ácido cítrico de la pastilla', moles: (m * TABLET.C6H8O7) / MOLAR_MASS.C6H8O7, coef: 1, molarMass: MOLAR_MASS.C6H8O7 },
+  ];
+  if (r.id === 'precipitacion') return [
+    { name: 'carbonato de sodio', moles: m / MOLAR_MASS.Na2CO3, coef: 1, molarMass: MOLAR_MASS.Na2CO3 },
+    { name: 'cloruro de calcio de la solución', moles: (liquidVolume * CACL2_CONC) / MOLAR_MASS.CaCl2, coef: 1, molarMass: MOLAR_MASS.CaCl2 },
+  ];
+  const T = celsiusToKelvin(T_C);
+  const nFe = m / MOLAR_MASS.Fe;
+  const nO2 = input.system === 'abierto' ? Infinity : (X_O2 * P_ATM * 1000 * ((JAR_VOLUME - m / 7.87) * 1e-6)) / (R_GAS * T);
+  return [
+    { name: 'hierro de la lana de acero', moles: nFe, coef: 3, molarMass: MOLAR_MASS.Fe },
+    { name: input.system === 'abierto' ? 'oxígeno del aire (ilimitado)' : 'oxígeno del aire del frasco', moles: nO2, coef: 2, molarMass: MOLAR_MASS.O2 },
+  ];
+}
+
 /** Simula la reacción completa en el sistema elegido. Función pura y determinista. */
 export function simulateConservation(input: ConservationInput): ConservationResult {
   const r = reactionById(input.reaction);
@@ -219,34 +251,17 @@ export function simulateConservation(input: ConservationInput): ConservationResu
   let jarPressure: number | null = null;
   const T = celsiusToKelvin(T_C);
 
+  const [ra, rb] = reactantAmounts(input);
+  limiting = limitingReagent(ra, rb);
   if (r.id === 'bicarbonato') {
-    limiting = limitingReagent(
-      { name: 'bicarbonato de sodio', moles: m / MOLAR_MASS.NaHCO3, coef: 1, molarMass: MOLAR_MASS.NaHCO3 },
-      { name: 'ácido acético del vinagre', moles: (liquidVolume * VINEGAR_ACID) / MOLAR_MASS.CH3COOH, coef: 1, molarMass: MOLAR_MASS.CH3COOH },
-    );
     gasProduced = limiting.extent * MOLAR_MASS.CO2;
     productMass = limiting.extent * MOLAR_MASS.CH3COONa; productName = 'acetato de sodio (disuelto)';
   } else if (r.id === 'efervescente') {
-    limiting = limitingReagent(
-      { name: 'bicarbonato de la pastilla', moles: (m * TABLET.NaHCO3) / MOLAR_MASS.NaHCO3, coef: 3, molarMass: MOLAR_MASS.NaHCO3 },
-      { name: 'ácido cítrico de la pastilla', moles: (m * TABLET.C6H8O7) / MOLAR_MASS.C6H8O7, coef: 1, molarMass: MOLAR_MASS.C6H8O7 },
-    );
     gasProduced = 3 * limiting.extent * MOLAR_MASS.CO2;
     productMass = limiting.extent * MOLAR_MASS.Na3C6H5O7; productName = 'citrato de sodio (disuelto)';
   } else if (r.id === 'precipitacion') {
-    limiting = limitingReagent(
-      { name: 'carbonato de sodio', moles: m / MOLAR_MASS.Na2CO3, coef: 1, molarMass: MOLAR_MASS.Na2CO3 },
-      { name: 'cloruro de calcio de la solución', moles: (liquidVolume * CACL2_CONC) / MOLAR_MASS.CaCl2, coef: 1, molarMass: MOLAR_MASS.CaCl2 },
-    );
     productMass = limiting.extent * MOLAR_MASS.CaCO3; productName = 'carbonato de calcio (precipitado)';
   } else {
-    // Oxidación: en sistema abierto el O₂ del aire es ilimitado; en el frasco sellado solo hay el O₂ de 500 mL de aire.
-    const nFe = m / MOLAR_MASS.Fe;
-    const nO2 = input.system === 'abierto' ? Infinity : (X_O2 * P_ATM * 1000 * ((JAR_VOLUME - m / 7.87) * 1e-6)) / (R_GAS * T);
-    limiting = limitingReagent(
-      { name: 'hierro de la lana de acero', moles: nFe, coef: 3, molarMass: MOLAR_MASS.Fe },
-      { name: input.system === 'abierto' ? 'oxígeno del aire (ilimitado)' : 'oxígeno del aire del frasco', moles: nO2, coef: 2, molarMass: MOLAR_MASS.O2 },
-    );
     if (!Number.isFinite(limiting.excessLeft)) limiting = { ...limiting, excessLeft: 0 };
     oxygenFixed = 2 * limiting.extent * MOLAR_MASS.O2;
     productMass = limiting.extent * MOLAR_MASS.Fe3O4; productName = 'Fe₃O₄ (óxido negro)';

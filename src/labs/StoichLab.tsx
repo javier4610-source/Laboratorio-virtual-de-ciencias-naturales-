@@ -1,10 +1,13 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import { checkBalance, findReaction, REACTIONS, simulateStoichiometry, STOICH_LIMITS, type Reaction } from '../models/stoichiometry';
 import { prettyFormula } from '../models/chemistry';
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, DigitalBalance, Erlenmeyer, shade } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+const EstequiometriaView3D = lazy(() => import('./lote3d/EstequiometriaView3D'));
 
 /* ---------------------------------------------------------------- dibujo del banco */
 
@@ -195,6 +198,9 @@ export default function StoichLab({ api }: LabProps) {
               </tbody>
             </table>
           </div>
+          <Panel3D title="reactivo limitante en moléculas" summary="Paquetes de moléculas en la proporción de los moles: el reactivo en exceso queda sin reaccionar y, con rendimiento menor al 100 %, parte no llega a producto.">
+            <EstequiometriaView3D res={res} yieldPercent={yieldP} />
+          </Panel3D>
         </div>
         <div className="controls">
           <div className="card stack">

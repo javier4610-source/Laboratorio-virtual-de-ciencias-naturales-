@@ -1842,4 +1842,29 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'sistema-nervioso': [
+    {
+      id: 'reaccion', label: 'Estación 1: tiempo de reacción con la regla que cae', defaultX: 'distancia', defaultY: 'tiempo',
+      columns: [
+        { key: 'mano', label: 'Mano', numeric: false, input: true },
+        { key: 'estimulo', label: 'Señal para atrapar', numeric: false, input: true },
+        { key: 'origen', label: 'Origen del dato (propio o de ejemplo)', numeric: false, input: true, notIndependent: true },
+        { key: 'distancia', label: 'Distancia de caída d', unit: 'cm', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'tiempo', label: 'Tiempo de reacción t = √(2d/g)', unit: 's', numeric: true, decimals: 3 },
+      ],
+    },
+    {
+      id: 'potencial', label: 'Estación 2: potencial de acción y conducción', defaultX: 'estimulo', defaultY: 'pico',
+      columns: [
+        { key: 'estimulo', label: 'Despolarización del estímulo', unit: 'mV', numeric: true, decimals: 0, input: true },
+        { key: 'fibra', label: 'Tipo de fibra', numeric: false, input: true },
+        { key: 'longitud', label: 'Longitud del recorrido', unit: 'm', numeric: true, decimals: 2, input: true },
+        { key: 'pico', label: 'Pico del potencial', unit: 'mV', numeric: true, decimals: 1 },
+        { key: 'disparo', label: 'Se disparó (1 = sí)', numeric: true, decimals: 0 },
+        { key: 'velocidad', label: 'Velocidad de conducción', unit: 'm/s', numeric: true, decimals: 1 },
+        { key: 'tiempoConduccion', label: 'Tiempo de conducción', unit: 'ms', numeric: true, decimals: 2 },
+        { key: 'reflejo', label: 'Tiempo del arco reflejo', unit: 'ms', numeric: true, decimals: 1 },
+      ],
+    },
+  ],
 };

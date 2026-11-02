@@ -1492,6 +1492,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Meiosis, entrecruzamiento y variabilidad genética», usa la calculadora de 2ⁿ con n = 4, 7 y 23.',
     transfer: '¿Cuántas combinaciones tendría un organismo con 2n = 12? ¿Cuántos cigotos distintos podría formar una pareja de esa especie solo por segregación independiente?',
   },
+  {
+    id: 'saber-ner-1', grade: 8, topic: 'Respuesta voluntaria y reflejo', competency: 'explicacion', component: 'biologico',
+    skill: 'Explicar la diferencia de tiempo entre un reflejo y una respuesta voluntaria', difficulty: 'media', practiceId: 'sistema-nervioso',
+    context: 'En la clase de ciencias de un colegio de Chigorodó, los estudiantes midieron su tiempo de reacción con una regla que cae y lo compararon con el tiempo de un reflejo de retirada calculado con las velocidades de conducción de los nervios.',
+    table: {
+      caption: 'Tiempos medidos y calculados',
+      headers: ['Respuesta', 'Tiempo'],
+      rows: [['Atrapar la regla (media del grupo, t = √(2d/g))', '0,21 s'], ['Reflejo de retirada (cálculo con 0,8 m de recorrido)', '0,066 s']],
+    },
+    stem: '¿Por qué atrapar la regla tarda unas tres veces más que el reflejo?',
+    options: [
+      { id: 'a', text: 'Porque los nervios de la mano conducen más lento cuando la persona está atenta.', feedback: 'La velocidad de las fibras no depende de la atención.' },
+      { id: 'b', text: 'Porque la respuesta voluntaria necesita que la información llegue al encéfalo, se procese y se decida el movimiento; el reflejo se coordina en la médula espinal.', feedback: 'Correcto: el procesamiento en el encéfalo es la mayor parte del tiempo de reacción.' },
+      { id: 'c', text: 'Porque el reflejo usa impulsos más altos que la respuesta voluntaria.', feedback: 'Los potenciales de acción tienen siempre la misma altura (todo o nada).' },
+      { id: 'd', text: 'Porque la regla cae más rápido que la mano.', feedback: 'El tiempo de reacción mide cuánto tarda la persona en responder, no la rapidez de la regla.' },
+    ],
+    correct: 'b',
+    explanation: 'En el reflejo la vía es corta (receptor → médula → músculo) y tiene pocas sinapsis. En la respuesta voluntaria, la señal visual va al encéfalo, donde intervienen muchas neuronas y sinapsis antes de enviar la orden a los músculos.',
+    review: 'En la práctica «Sistema nervioso: neurona, arco reflejo y tiempo de reacción», compara tu tiempo de reacción con el arco reflejo de la vista 3D.',
+    transfer: 'Si el estímulo del reflejo lo detectaran fibras C (1 m/s) en lugar de Aδ, ¿cuánto tardaría el reflejo con 0,8 m de recorrido? ¿Seguiría siendo más rápido que atrapar la regla?',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

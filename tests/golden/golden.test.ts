@@ -16,6 +16,7 @@ import { chargesFrom, coulombStation, fieldAt, PRESETS } from '../../src/models/
 import { analyzeBoxes, aufbauOccupancy, groundState, hundBoxes, nobleGasString, tablePlace } from '../../src/models/electronConfiguration';
 import { cell as galvanicCell, discharge as galvanicDischarge, FARADAY } from '../../src/models/electrochemicalCell';
 import { expectedFrequencies, gameteCombinations, meiosisGametes, stageCounts } from '../../src/models/meiosis';
+import { actionPotential, reactionTime, reflexArc } from '../../src/models/nervousSystem';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -400,6 +401,11 @@ export const GOLDEN: GoldenCase[] = [
     expect(stageCounts(5, 4)).toMatchObject({ cells: 2, chromosomes: 2, dnaC: 2 }); expect(stageCounts(9, 4)).toMatchObject({ cells: 4, chromosomes: 2, dnaC: 1 });
     expect(expectedFrequencies(1, 20)).toEqual({ AB: 0.4, ab: 0.4, Ab: 0.1, aB: 0.1 });
     expect(meiosisGametes({ pairs: 1, crossover: 0.5, orientation: [true], nondisjunction: 'ninguna' }).filter((g) => g.recombinant)).toHaveLength(2);
+  } },
+  { id: 'sistema-nervioso', origin: 'independiente', what: 'regla que cae: d = 23,7 cm → t = √(2·0,237/9,8) = 0,2199 s; potencial de acción de umbral (−70 + 10 = −60 mV < −55: sin disparo; con 20 mV, pico +30 mV); arco reflejo 0,8 m con Aδ (15 m/s) y Aα (80 m/s) + 3 ms = 66,3 ms', run: () => {
+    close(reactionTime(23.7), Math.sqrt((2 * 0.237) / 9.8), 1e-12);
+    expect(actionPotential(10).fired).toBe(false); close(actionPotential(20).peak, 30, 1e-6);
+    close(reflexArc(0.8, 'ad').totalMs, (0.8 / 15) * 1000 + (0.8 / 80) * 1000 + 3, 1e-9);
   } },
 ];
 

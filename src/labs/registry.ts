@@ -81,4 +81,5 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   'configuracion-electronica': lazy(() => import('./ElectronConfigLab')),
   'pila-electroquimica': lazy(() => import('./GalvanicCellLab')),
   meiosis: lazy(() => import('./MeiosisLab')),
+  'sistema-nervioso': lazy(() => import('./NervousSystemLab')),
 };

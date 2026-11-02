@@ -281,6 +281,9 @@ export function Scene3D({
   const overlay = engine === 'disponible' && width > 0
     ? spreadLabels(labelled.map((it) => ({ it, text: it.label ?? '', ...projectPerspective(labelAnchor(it), orbit, tgt, extent, width, h) })).filter((p) => p.visible), width, h)
     : [];
+  // En pantallas angostas, muchos rótulos tapan la escena: se muestra solo el del elemento elegido y la leyenda nombra el resto.
+  const compactLabels = width > 0 && width < 520 && overlay.length > 4;
+  const shownLabels = compactLabels ? overlay.filter(({ item: { it } }) => it.id === selectedId) : overlay;
   const fullDescription = `${description} Cámara: ${describeOrbit(orbit)}.`;
   const name = `${title}${fallback ? ' (vista de respaldo en 2D con las mismas posiciones)' : ''}. Arrastra o usa las flechas para girar; + y − acercan o alejan; Inicio restablece la vista.`;
   const reduce = reduced();
@@ -294,9 +297,10 @@ export function Scene3D({
             <FallbackSvg items={items} orbit={orbit} target={tgt} extent={extent} width={width} height={h} palette={palette} selectedId={selectedId} />
           </div>
         )}
-        {overlay.map(({ item: { it }, left, bottom }) => (
+        {shownLabels.map(({ item: { it }, left, bottom }) => (
           <span key={it.id} className="scene3d-label" aria-hidden="true" style={{ left, top: bottom, borderColor: paletteColor(palette, it.color), fontWeight: it.id === selectedId ? 800 : 700 }}>{it.label}</span>
         ))}
+        {compactLabels && <span className="scene3d-label" aria-hidden="true" data-compact-hint style={{ left: 8, top: 30, fontWeight: 600, opacity: 0.9 }}>Nombres en la leyenda</span>}
         {engine === 'cargando' && <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}><p role="status" className="small">Cargando la vista 3D…</p></div>}
         <div ref={viewRef} className="scene3d-view" id={`${idPrefix}-s3d`} role="img" tabIndex={0} aria-label={name} aria-describedby={descId}
           onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onKeyDown={onKeyDown} />

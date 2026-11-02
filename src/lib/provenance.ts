@@ -95,6 +95,27 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
         ? 'Fuerzas, campos y potenciales de la ley de Coulomb (k = 8,99 × 10⁹ N·m²/C²) con ruido de medición sintético y reproducible (modo «Instrumento real»); no son mediciones reales. Líneas de campo y equipotenciales 3D: calculadas con el mismo modelo.'
         : 'Fuerzas, campos y potenciales de la ley de Coulomb (k = 8,99 × 10⁹ N·m²/C²), redondeados a la resolución del instrumento; no son mediciones reales. Líneas de campo y equipotenciales 3D: calculadas con el mismo modelo.' };
   }
+  if (practiceId === 'configuracion-electronica') {
+    return { data: 'experimental', scene: 'modelo',
+      detail: 'Estados fundamentales medidos: configuraciones de la tabla periódica de PubChem descargada el 2026-11-01 (las mismas que publica el NIST). Predicción del principio de construcción, Pauli y Hund, desapareados y ubicación en la tabla: modelo calculado. Nubes 3D: |ψ|² del átomo de hidrógeno (forma y orientación; tamaño comprimido), ilustración cualitativa calculada.' };
+  }
+  if (practiceId === 'pila-electroquimica') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: (measurement === 'real' ? 'Voltajes y masas con ruido de medición sintético y reproducible (modo «Instrumento real»); no son mediciones reales. ' : 'Voltajes y masas redondeados a la resolución del instrumento; no son mediciones reales. ')
+        + 'Potenciales estándar de reducción: valores publicados (CRC Handbook, serie electroquímica de Vanýsek); fem con la ecuación de Nernst a 25 °C y masas con la ley de Faraday: modelo calculado. Celda 3D: posiciones de un modelo; el cambio de grosor de los electrodos se exagera para que se vea.' };
+  }
+  if (practiceId === 'meiosis') {
+    return { data: 'modelo', scene: 'ilustracion',
+      detail: 'Gametos de un modelo de meiosis con segregación independiente y entrecruzamiento (frecuencia de recombinación = distancia/100 cM, Morgan) muestreados con semilla reproducible; no son datos de un organismo real. Cromosomas 3D: ilustración sin escala que sigue las etapas y los alelos del modelo.' };
+  }
+  if (practiceId === 'sistema-nervioso') {
+    return { data: 'modelo', scene: 'ilustracion',
+      detail: 'Tiempo de reacción calculado con t = √(2d/g) a partir de la distancia de caída que mide el estudiante (dato propio) o de datos de ejemplo generados por un modelo con semilla. Potencial de acción: modelo de umbral simplificado con los valores de los textos (reposo −70 mV, umbral −55 mV, pico +30 mV); velocidades de conducción: rangos de manual. Neurona y arco reflejo 3D: ilustración sin escala.' };
+  }
+  if (practiceId === 'sistema-circulatorio') {
+    return { data: 'modelo', scene: 'ilustracion',
+      detail: 'Frecuencia cardíaca, volumen sistólico, gasto cardíaco y presión con el ejercicio: modelo educativo simplificado con relaciones de los manuales (gasto = FC × VS; reserva de Karvonen; FC máxima de Tanaka); los pulsos propios del estudiante son datos suyos y no se envían. No es un diagnóstico ni un consejo médico. Corazón 3D: ilustración sincronizada con el ciclo del modelo.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

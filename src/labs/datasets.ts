@@ -1757,4 +1757,22 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'configuracion-electronica': [{
+    id: 'configuraciones', label: 'Configuraciones electrónicas construidas', defaultX: 'z', defaultY: 'desapareados',
+    multiInput: 'Cada fila es un elemento distinto: al pasar de uno a otro cambian a la vez Z, el período y el grupo. Para ver una relación, guarda elementos del mismo período o del mismo grupo.',
+    columns: [
+      { key: 'simbolo', label: 'Elemento', numeric: false, input: true },
+      { key: 'z', label: 'Número atómico Z', numeric: true, decimals: 0, input: true },
+      { key: 'electrones', label: 'Electrones colocados', numeric: true, decimals: 0 },
+      { key: 'configuracion', label: 'Configuración del diagrama', numeric: false },
+      { key: 'abreviada', label: 'Notación abreviada', numeric: false },
+      { key: 'desapareados', label: 'Electrones desapareados', numeric: true, decimals: 0 },
+      { key: 'valencia', label: 'Electrones de valencia (o externos ns + (n − 1)d)', numeric: true, decimals: 0 },
+      { key: 'periodo', label: 'Período (n mayor)', numeric: true, decimals: 0 },
+      { key: 'grupo', label: 'Grupo deducido', numeric: true, decimals: 0 },
+      { key: 'bloque', label: 'Bloque', numeric: false },
+      { key: 'coincideNist', label: 'Coincide con el estado fundamental medido (1 = sí)', numeric: true, decimals: 0 },
+      { key: 'excepcion', label: 'El elemento es excepción de la regla de Madelung (1 = sí)', numeric: true, decimals: 0 },
+    ],
+  }],
 };

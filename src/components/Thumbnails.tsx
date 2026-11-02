@@ -772,6 +772,78 @@ const SCENES: Record<string, () => ReactNode> = {
       <circle cx={162} cy={30} r={6} fill="var(--series-4)" /><Arrow x1={162} y1={30} x2={196} y2={30} color="var(--data)" />
     </>
   ),
+  'configuracion-electronica': () => (
+    <>
+      <ellipse cx={92} cy={80} rx={14} ry={46} fill="var(--series-2)" opacity="0.35" />
+      <ellipse cx={92} cy={80} rx={46} ry={14} fill="var(--series-3)" opacity="0.35" />
+      <circle cx={92} cy={80} r={20} fill="var(--series-1)" opacity="0.3" />
+      <circle cx={92} cy={80} r={4} fill="var(--ink)" />
+      {['1s', '2s', '2p', '3s', '3p'].map((k, i) => (
+        <g key={k} transform={`translate(170 ${26 + i * 24})`}>
+          <text x={0} y={14} style={{ fontSize: 12, fill: 'var(--ink)', fontFamily: 'var(--font-data)' }}>{k}</text>
+          {Array.from({ length: k.endsWith('p') ? 3 : 1 }, (_, j) => (
+            <g key={j} transform={`translate(${26 + j * 24} 0)`}>
+              <rect width={20} height={18} rx={3} fill="var(--surface)" stroke="var(--line-strong)" />
+              <text x={10} y={14} textAnchor="middle" style={{ fontSize: 11, fill: 'var(--qui)', fontWeight: 700 }}>{i < 3 || (i === 3) || j < 1 ? '↑↓' : '↑'}</text>
+            </g>
+          ))}
+        </g>
+      ))}
+    </>
+  ),
+  'pila-electroquimica': () => (
+    <>
+      <Bench />
+      <rect x={40} y={70} width={80} height={70} rx={6} fill="#cfd8dc" opacity="0.6" stroke="var(--ink-2)" />
+      <rect x={200} y={70} width={80} height={70} rx={6} fill="#4fa3e0" opacity="0.5" stroke="var(--ink-2)" />
+      <rect x={70} y={44} width={12} height={84} fill="#9e9e9e" stroke="var(--ink-2)" />
+      <rect x={238} y={44} width={12} height={84} fill="#c77d3b" stroke="var(--ink-2)" />
+      <path d="M100 78 V54 Q160 30 220 54 V78" fill="none" stroke="#e0e0e0" strokeWidth="12" opacity="0.9" />
+      <path d="M76 44 V22 H244 V44" fill="none" stroke="var(--ink-2)" strokeWidth="2" />
+      <rect x={140} y={10} width={40} height={24} rx={4} fill="var(--surface)" stroke="var(--ink)" />
+      <text x={160} y={27} textAnchor="middle" style={{ fontSize: 10, fill: 'var(--ink)', fontFamily: 'var(--font-data)' }}>1,10 V</text>
+      {[100, 120, 200, 220].map((x) => <circle key={x} cx={x} cy={22} r={3} fill="var(--data)" />)}
+    </>
+  ),
+  meiosis: () => (
+    <>
+      {[[60, 'var(--series-1)'], [76, 'var(--series-2)']].map(([x, c]) => (
+        <g key={String(x)}>
+          <rect x={Number(x)} y={30} width={10} height={90} rx={5} fill={String(c)} opacity="0.85" />
+          <rect x={Number(x) + 0} y={30} width={10} height={90} rx={5} fill="none" stroke="var(--ink-2)" />
+        </g>
+      ))}
+      <rect x={76} y={30} width={10} height={30} rx={5} fill="var(--series-1)" opacity="0.85" />
+      {[0, 1, 2, 3].map((i) => (
+        <g key={i} transform={`translate(${150 + (i % 2) * 80} ${18 + Math.floor(i / 2) * 68})`}>
+          <circle cx={30} cy={30} r={28} fill="var(--surface)" stroke="var(--bio)" strokeWidth="1.5" opacity="0.9" />
+          <rect x={22} y={14} width={7} height={32} rx={3} fill={i % 2 ? 'var(--series-2)' : 'var(--series-1)'} />
+          <rect x={33} y={14} width={7} height={32} rx={3} fill={i < 2 ? 'var(--series-2)' : 'var(--series-1)'} />
+        </g>
+      ))}
+    </>
+  ),
+  'sistema-nervioso': () => (
+    <>
+      <circle cx={50} cy={80} r={18} fill="var(--bio)" opacity="0.7" />
+      {[[-30, -26], [-34, 8], [-14, 30], [-8, -32]].map(([dx, dy]) => <line key={`${dx}${dy}`} x1={50} y1={80} x2={50 + dx} y2={80 + dy} stroke="var(--bio)" strokeWidth="3" />)}
+      <line x1={68} y1={80} x2={290} y2={80} stroke="var(--ink-2)" strokeWidth="3" />
+      {[0, 1, 2, 3, 4].map((i) => <rect key={i} x={80 + i * 42} y={72} width={34} height={16} rx={8} fill="#f3e5ab" stroke="var(--ink-3)" />)}
+      <circle cx={207} cy={80} r={7} fill="var(--data)" />
+      <path d="M40 140 V118 H70 L76 100 L82 140 L88 118 H140" fill="none" stroke="var(--data)" strokeWidth="2" />
+      <rect x={250} y={100} width={14} height={50} fill="var(--surface)" stroke="var(--ink)" />
+    </>
+  ),
+  'sistema-circulatorio': () => (
+    <>
+      <path d="M160 140 C100 110 80 70 110 46 C130 30 155 40 160 58 C165 40 190 30 210 46 C240 70 220 110 160 140 Z" fill="#c62828" opacity="0.8" stroke="var(--ink-2)" />
+      <path d="M160 58 V128" stroke="var(--surface)" strokeWidth="3" />
+      <path d="M132 50 C126 26 110 20 96 18" fill="none" stroke="#1565c0" strokeWidth="7" />
+      <path d="M186 50 C192 24 214 18 230 20" fill="none" stroke="#c62828" strokeWidth="7" />
+      <path d="M40 120 L60 120 L66 100 L72 140 L78 112 L84 120 L110 120" fill="none" stroke="var(--data)" strokeWidth="2" />
+      <text x={244} y={100} style={{ fontSize: 13, fill: 'var(--ink)', fontFamily: 'var(--font-data)', fontWeight: 700 }}>72 lpm</text>
+    </>
+  ),
   geometria: () => {
     const c: [number, number] = [160, 82];
     const ends: [number, number][] = [[160, 22], [100, 116], [216, 122], [186, 64]];

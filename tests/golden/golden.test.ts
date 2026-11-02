@@ -13,6 +13,7 @@ import { closestApproachFm, rutherfordAngle, rutherfordRate, rutherfordSetup, tr
 import { periodicElement, slaterZeff, trend, periodMembers } from '../../src/models/periodicTrends';
 import { checkLewis, classifyBond, lewisById } from '../../src/models/chemicalBonding';
 import { chargesFrom, coulombStation, fieldAt, PRESETS } from '../../src/models/electrostatics';
+import { analyzeBoxes, aufbauOccupancy, groundState, hundBoxes, nobleGasString, tablePlace } from '../../src/models/electronConfiguration';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -379,6 +380,12 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'electrostatica', origin: 'independiente', what: 'ley de Coulomb con k = 8,99 × 10⁹ N·m²/C²: 2 µC y −3 µC a 30 cm → F = 8,99e9·6e-12/0,09 = 0,5993 N de atracción; dos cargas de +2 µC a ±10 cm → E = 0 en el punto medio', run: () => {
     const r = coulombStation({ q1uC: 2, q2uC: -3, rCm: 30 }); close(r.magnitude, (8.99e9 * 6e-12) / 0.09, 1e-12); expect(r.kind).toBe('atracción');
     const E = fieldAt(chargesFrom(PRESETS.find((p) => p.id === 'iguales')!.charges), [0, 0, 0]); expect(Math.hypot(...E)).toBeLessThan(1e-6);
+  } },
+  { id: 'configuracion-electronica', origin: 'referencia', what: 'Fe (Z = 26) por Madelung: [Ar] 4s² 3d⁶, 4 desapareados, período 4, grupo 8 (cálculo a mano); Cr y Cu: el estado fundamental medido (PubChem, 2026-11-01) es [Ar] 4s¹ 3d⁵ (6 desapareados) y [Ar] 4s¹ 3d¹⁰ (1), distinto de la predicción [Ar] 4s² 3d⁴ y [Ar] 4s² 3d⁹', run: () => {
+    expect(nobleGasString(aufbauOccupancy(26))).toBe('[Ar] 4s² 3d⁶'); expect(analyzeBoxes(hundBoxes(aufbauOccupancy(26)), 26).unpaired).toBe(4);
+    expect(tablePlace(26)).toMatchObject({ period: 4, group: 8, block: 'd' });
+    expect(nobleGasString(groundState(24))).toBe('[Ar] 4s¹ 3d⁵'); expect(analyzeBoxes(hundBoxes(groundState(24)), 24).unpaired).toBe(6);
+    expect(nobleGasString(aufbauOccupancy(24))).toBe('[Ar] 4s² 3d⁴'); expect(nobleGasString(groundState(29))).toBe('[Ar] 4s¹ 3d¹⁰'); expect(nobleGasString(aufbauOccupancy(29))).toBe('[Ar] 4s² 3d⁹');
   } },
 ];
 

@@ -1429,6 +1429,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Carga, ley de Coulomb y campo eléctrico», mide la fuerza a 10, 20, 30 y 40 cm y grafica F contra 1/r².',
     transfer: '¿Qué fuerza esperas a 50 cm? ¿Y si a 20 cm se duplicara una de las cargas? Justifícalo con la ley.',
   },
+  {
+    id: 'saber-cfg-1', grade: 10, topic: 'Configuración electrónica y energía de ionización', competency: 'explicacion', component: 'quimico',
+    skill: 'Explicar una irregularidad de una propiedad periódica con la regla de Hund', difficulty: 'alta', practiceId: 'configuracion-electronica',
+    context: 'Un grupo de 10.º de Carepa consultó en la tabla periódica de PubChem la primera energía de ionización (la energía para arrancar un electrón externo) de los elementos del período 2 y encontró una irregularidad entre el nitrógeno y el oxígeno.',
+    table: {
+      caption: 'Primera energía de ionización y configuración (PubChem, consulta del 2026-11-01)',
+      headers: ['Elemento', 'Configuración', '1.ª energía de ionización (eV)'],
+      rows: [['C (Z = 6)', '[He] 2s² 2p²', '11,260'], ['N (Z = 7)', '[He] 2s² 2p³', '14,534'], ['O (Z = 8)', '[He] 2s² 2p⁴', '13,618'], ['F (Z = 9)', '[He] 2s² 2p⁵', '17,423']],
+    },
+    stem: '¿Por qué el oxígeno tiene una energía de ionización MENOR que el nitrógeno, aunque tiene un protón más?',
+    options: [
+      { id: 'a', text: 'Porque el oxígeno tiene menos electrones de valencia que el nitrógeno.', feedback: 'El oxígeno tiene 6 electrones de valencia y el nitrógeno 5.' },
+      { id: 'b', text: 'Porque en el oxígeno el cuarto electrón 2p tiene que aparearse en un orbital ya ocupado; la repulsión entre los dos electrones de ese orbital facilita arrancar uno.', feedback: 'Correcto: en el N los tres electrones 2p están solos (Hund); en el O hay un par en un mismo orbital.' },
+      { id: 'c', text: 'Porque el electrón externo del oxígeno está en la capa 3, más lejos del núcleo.', feedback: 'Los dos tienen sus electrones externos en la capa 2 (2p).' },
+      { id: 'd', text: 'Porque los datos de PubChem tienen un error en el nitrógeno.', feedback: 'La irregularidad es real y se repite en el período 3 (P → S): es una pista sobre la estructura electrónica.' },
+    ],
+    correct: 'b',
+    explanation: 'Según Hund, el nitrógeno tiene un electrón en cada orbital 2p, todos con el mismo espín. En el oxígeno el cuarto electrón 2p comparte orbital con otro: se repelen más y basta menos energía para arrancarlo. La tendencia general del período (aumenta) se interrumpe en ese punto.',
+    review: 'En la práctica «Configuración electrónica», construye el N y el O y compara los diagramas de cajas del subnivel 2p.',
+    transfer: 'Predice si el fósforo ([Ne] 3s² 3p³) o el azufre ([Ne] 3s² 3p⁴) tendrá la mayor energía de ionización y compruébalo en la práctica «Tabla periódica».',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

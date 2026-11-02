@@ -66,6 +66,8 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] v2.16.0 · Análisis curricular (`docs/v2/ANALISIS-CURRICULAR.md`), kit de escenas 3D con three.js (pilotos: péndulo y
+  microscopio) y lote 3D-1 (balanceo, conservación, estequiometría, mol, soluciones, enzimas, expresión y rastreo).
 - [x] v2.15.0 · Rendimiento medido con Lighthouse en perfil de equipo modesto (banco Saber 11: carga de 9,8 s a 3,2 s;
   banco avanzado por bloques; sin saltos del pie; precarga sin conexión en dos fases) con presupuesto de tamaño en CI, y
   pruebas de regresión visual (36 capturas, `npm run test:visual`, se corren antes de cada versión).

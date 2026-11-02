@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.16.0] · 2026-11-02
+
+Programa curricular y 3D (pedido del docente): análisis de la malla, kit de escenas 3D y primer lote de visores 3D.
+
 ### Añadido
 - Análisis curricular de las 65 prácticas frente a la estructura de los Estándares del MEN (entornos) y la malla
   institucional de `grades.ts`, con brechas por área y grado, 26 prácticas nuevas propuestas (8 de química, 8 de física,

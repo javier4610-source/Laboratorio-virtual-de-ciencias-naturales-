@@ -571,3 +571,12 @@ Capturas de revisión (claro y oscuro, 1280 y 390 px) revisadas por el integrado
 | Presupuesto de tamaño | `npm run perf` en CI (solo tamaños de compilación) | Dentro del presupuesto | — | — | Correcto |
 | Regresión visual | `npm run test:visual` (36 capturas) 5 veces seguidas; cambios deliberados de color y de relleno | Estable; detecta los cambios deliberados | La página de ayuda cambió de altura por el texto nuevo del modo sin conexión (cambio intencional) | Referencias de ayuda actualizadas tras revisarlas | Correcto; no se corre en CI (fuentes del sistema) |
 | Regresión | `tsc -b`; 1402 pruebas unitarias; `npm run build`; E2E completo (202 pasan, 1 se omite por diseño) | Correcto | — | — | Correcto |
+
+# Programa curricular y 3D, primera entrega (versión 2.16.0)
+
+| Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
+|---|---|---|---|---|---|
+| Análisis curricular | Inventario de las 65 prácticas frente a la estructura de los Estándares y a la malla institucional | 26 prácticas nuevas propuestas, 14 mejoras, plan 3D en 7 lotes | Documentos oficiales del MEN no accesibles desde el entorno; 63 prácticas citan EBC 2006 y 2 citan 2004 | Anclajes marcados «por verificar»; inconsistencia anotada como mejora | Limitación declarada |
+| Kit 3D (three.js 0.186.1) | Unitarias (14) y E2E con y sin WebGL, axe, 390 px, teclado | Correcto; three.js diferido (135 KB gzip) fuera de la carga inicial | — | — | Correcto |
+| Lote 3D-1 (8 prácticas) | Unitarias (27: átomos por fórmula, conteos, reactivo limitante, conservación, codones frente a 2HHB/3I40/OCA2) y E2E (16); capturas revisadas por el integrador | Correcto | El archivo 3I40 trae Ala en B30 (no Thr humana) | La vista avisa si una variante cae allí | Correcto, con desviaciones del plan documentadas |
+| Regresión | `tsc -b`; vitest (1443); build; `npm run perf`; visual 36/36; E2E completo (224 pasan, 1 se omite) | Correcto | — | — | Correcto |

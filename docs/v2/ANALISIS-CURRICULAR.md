@@ -185,8 +185,8 @@ está por validar).
 | 7.º | «Nutrición, circulación, respiración y excreción» | — | **No cubierto** → `sistema-circulatorio`, `nutricion-digestion` |
 | 7.º | «Reproducción celular: introducción a mitosis y meiosis» | `mitosis` | Parcial → `meiosis` |
 | 7.º | «Relaciones ecológicas y ciclos biogeoquímicos» | `descomposicion` (`ecosistema`, `redes` en 6.º) | Parcial → `ciclo-del-carbono` |
-| 7.º | «Estructura del átomo y tabla periódica» | — | **No cubierto** → `modelos-atomicos`, `tabla-periodica` |
-| 7.º | «Enlaces químicos introductorios» | — | **No cubierto** → `enlace-quimico` |
+| 7.º | «Estructura del átomo y tabla periódica» | — | **No cubierto** → `modelos-atomicos`, `tabla-periodica` (construidas, ola 1a) |
+| 7.º | «Enlaces químicos introductorios» | — | **Cubierto en la ola 1a** → `enlace-quimico` |
 | 7.º | «Densidad, presión, temperatura y transferencia de calor» | `presion`, `flotacion`, `conduccion` | Cubierto |
 | 7.º | «Electricidad básica y circuitos simples» | `circuitos-simples`, `conductores` | Cubierto (con solapamiento) |
 | 8.º | «Reproducción sexual y asexual» | — | **No cubierto** → `meiosis` (parcial) |
@@ -219,7 +219,7 @@ está por validar).
 | 11.º | «Ecología, biodiversidad, contaminación y cambio climático» | `agua`, `poblacion` | Parcial (sin cambio climático) → `efecto-invernadero` |
 | 11.º | «Estequiometría avanzada» · «Equilibrio químico introductorio» · «Ácidos, bases y pH» | `estequiometria`, `equilibrio`, `ph` | Cubierto |
 | 11.º | «Oxidación-reducción» | — | **No cubierto** → `pila-electroquimica` |
-| 11.º | «Electricidad, circuitos y magnetismo» | `circuitos`, `induccion` | Parcial (sin electrostática) → `electrostatica` |
+| 11.º | «Electricidad, circuitos y magnetismo» | `circuitos`, `induccion` | Cubierto en la ola 1a → `electrostatica` |
 | 11.º | «Ondas, óptica y fenómenos físicos» | `interferencia` | Cubierto → `efecto-doppler` amplía |
 | 11.º | «Diseño experimental, análisis de datos e interpretación de evidencias» | `reto` | Cubierto |
 
@@ -250,30 +250,30 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 
 | Prioridad | id | Grado | Título | Ola |
 |---|---|---|---|---|
-| P1 | `modelos-atomicos` | 7.º | Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford | nuevas-1 |
-| P1 | `tabla-periodica` | 8.º | Tabla periódica y propiedades periódicas | nuevas-1 |
-| P1 | `enlace-quimico` | 9.º | Enlace iónico, covalente y metálico: estructura y propiedades | nuevas-1 |
+| P1 | `modelos-atomicos` | 7.º | Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford | nuevas-1 · **construida (ola 1a)** |
+| P1 | `tabla-periodica` | 8.º | Tabla periódica y propiedades periódicas | nuevas-1 · **construida (ola 1a)** |
+| P1 | `enlace-quimico` | 9.º | Enlace iónico, covalente y metálico: estructura y propiedades | nuevas-1 · **construida (ola 1a)** |
 | P1 | `configuracion-electronica` | 10.º | Configuración electrónica y orbitales atómicos | nuevas-1 |
 | P1 | `pila-electroquimica` | 11.º | Oxidación-reducción: pila de Daniell y electrólisis | nuevas-1 |
 | P2 | `estados-de-la-materia` | 6.º | Estados de la materia y curva de calentamiento del agua | nuevas-2 |
 | P2 | `cambios-quimicos` | 7.º | Cambios físicos y químicos: evidencias de una reacción | nuevas-2 |
 | P3 | `termoquimica` | 10.º | Termoquímica: calor de disolución y de neutralización | nuevas-3 |
 
-**`modelos-atomicos` · Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford** (7.º, P1)
+**`modelos-atomicos` (construida en la ola 1a; ver `src/curriculum/practices/modelos-atomicos.ts`) · Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford** (7.º, P1)
 
 - **Anclaje:** EBC 6.º–7.º, entorno físico: estructura de la materia y modelos que la explican (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 7.º): «Estructura del átomo y tabla periódica».
 - **Meta de aprendizaje:** Explica por qué el modelo de Thomson no predice la dispersión observada por Geiger y Marsden y cómo el modelo nuclear y el de Bohr explican los espectros de líneas del hidrógeno.
 - **Modelo científico y validación:** Dispersión de Rutherford (número de partículas por ángulo ∝ 1/sen⁴(θ/2)); niveles de Bohr Eₙ = −13,6 eV/n² y fórmula de Rydberg 1/λ = R·(1/n₁² − 1/n₂²). Validación: líneas de Balmer de la base NIST ASD; Geiger y Marsden (1913).
 - **Vista 3D (obligatoria):** Lámina de oro 3D atravesada por un haz de partículas alfa con detector esférico alrededor: el estudiante gira el detector y cuenta rebotes a cada ángulo; luego un átomo de Bohr 3D con transiciones que emiten fotones del color de la línea.
 
-**`tabla-periodica` · Tabla periódica y propiedades periódicas** (8.º, P1)
+**`tabla-periodica` (construida en la ola 1a; ver `src/curriculum/practices/tabla-periodica.ts`) · Tabla periódica y propiedades periódicas** (8.º, P1)
 
 - **Anclaje:** EBC 8.º–9.º, entorno físico: organización de los elementos y relación entre su estructura y sus propiedades (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 8.º): «Tabla periódica y propiedades periódicas».
 - **Meta de aprendizaje:** Predice y comprueba con datos reales las tendencias del radio atómico, la energía de ionización y la electronegatividad en grupos y períodos, y las explica con la carga nuclear efectiva.
 - **Modelo científico y validación:** Carga nuclear efectiva (reglas de Slater). Datos de radio, primera energía de ionización y electronegatividad de Pauling de la tabla periódica de PubChem (accesible desde el entorno) y NIST, con fecha de consulta y procedencia visibles.
 - **Vista 3D (obligatoria):** Tabla periódica 3D en «relieve»: cada casilla es una columna cuya altura es la propiedad elegida; al girarla se ven a la vez la tendencia del período y la del grupo. Esferas atómicas a escala de radio al seleccionar elementos.
 
-**`enlace-quimico` · Enlace iónico, covalente y metálico: estructura y propiedades** (9.º, P1)
+**`enlace-quimico` (construida en la ola 1a; ver `src/curriculum/practices/enlace-quimico.ts`) · Enlace iónico, covalente y metálico: estructura y propiedades** (9.º, P1)
 
 - **Anclaje:** EBC 8.º–9.º, entorno físico: relación entre el tipo de enlace y las propiedades de las sustancias (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts): «Enlaces químicos introductorios» (7.º) y «Enlaces químicos y reacciones» (8.º).
 - **Meta de aprendizaje:** Clasifica sustancias (NaCl, sacarosa, cobre, cuarzo, parafina) por pruebas de conductividad, punto de fusión y solubilidad, y justifica el resultado con el tipo de enlace y la diferencia de electronegatividad.
@@ -319,7 +319,7 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 
 | Prioridad | id | Grado | Título | Ola |
 |---|---|---|---|---|
-| P1 | `electrostatica` | 11.º | Carga, ley de Coulomb y campo eléctrico | nuevas-1 |
+| P1 | `electrostatica` | 11.º | Carga, ley de Coulomb y campo eléctrico | nuevas-1 · **construida (ola 1a)** |
 | P2 | `magnetismo-imanes` | 7.º | Imanes, brújula y campo magnético | nuevas-2 |
 | P2 | `lentes` | 9.º | Lentes, formación de imágenes y el ojo humano | nuevas-2 |
 | P2 | `movimiento-circular` | 10.º | Movimiento circular uniforme y fuerza centrípeta | nuevas-2 |
@@ -328,7 +328,7 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | P3 | `termodinamica` | 11.º | Primera ley de la termodinámica y máquinas térmicas | nuevas-3 |
 | P3 | `efecto-doppler` | 11.º | Efecto Doppler y barrera del sonido | nuevas-3 |
 
-**`electrostatica` · Carga, ley de Coulomb y campo eléctrico** (11.º, P1)
+**`electrostatica` (construida en la ola 1a; ver `src/curriculum/practices/electrostatica.ts`) · Carga, ley de Coulomb y campo eléctrico** (11.º, P1)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos físicos): interacción entre cargas y campo eléctrico (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 11.º): «Electricidad, circuitos y magnetismo».
 - **Meta de aprendizaje:** Calcula fuerzas entre cargas con la ley de Coulomb, representa el campo y el potencial de distribuciones sencillas y explica la electrización por frotamiento e inducción.

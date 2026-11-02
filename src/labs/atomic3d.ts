@@ -100,15 +100,15 @@ export function modelsScene(p: ModelsSceneInput): AtomScene {
     { id: 'rutherford-borde', kind: 'sphere', center: [xs[2], 0, 0], radius: 1, color: 'ink-3', opacity: 0.1 },
     { id: 'rutherford-n', kind: 'sphere', center: [xs[2], 0, 0], radius: 0.08, color: 'series-1', label: 'Rutherford: núcleo diminuto' },
     { id: 'rutherford-e', kind: 'particles', radius: 0.09, color: 'series-2', points: [[0.9, 0.2, 0.3], [-0.7, 0.6, -0.2], [0.1, -0.95, 0.2], [-0.3, 0.1, 0.92], [0.4, 0.5, -0.75], [-0.6, -0.5, -0.5]].map(([x, y, z]) => [xs[2] + x, y, z] as Vec3) },
-    { id: 'bohr-n', kind: 'sphere', center: [xs[3], 0, 0], radius: 0.08, color: 'series-1', label: 'Bohr: órbitas con energía fija' },
+    { id: 'bohr-n', kind: 'sphere', center: [xs[3], 0, 0], radius: 0.12, color: 'series-1', label: 'Bohr: órbitas con energía fija' },
   ];
-  const rOf = (n: number) => (1.2 * n * n) / 16; // radios ∝ n² (rₙ = n²·a₀), n = 4 mide 1,2
+  const rOf = (n: number) => (1.5 * n * n) / 16; // radios ∝ n² (rₙ = n²·a₀), n = 4 mide 1,5
   for (let n = 1; n <= 4; n++) {
-    items.push({ id: `orbita-${n}`, kind: 'particles', radius: 0.022, color: n === p.nUpper || n === p.nLower ? 'ink-2' : 'ink-3',
-      points: Array.from({ length: 24 + 12 * n }, (_, i) => { const a = (2 * Math.PI * i) / (24 + 12 * n); return [xs[3] + rOf(n) * Math.cos(a), 0, rOf(n) * Math.sin(a)] as Vec3; }) });
+    items.push({ id: `orbita-${n}`, kind: 'particles', radius: 0.045, color: n === p.nUpper || n === p.nLower ? 'ink-2' : 'ink-3',
+      points: Array.from({ length: 24 + 12 * n }, (_, i) => { const a = (2 * Math.PI * i) / (24 + 12 * n); return [xs[3] + rOf(n) * Math.cos(a), rOf(n) * Math.sin(a), 0] as Vec3; }) });
   }
   const shown = Math.min(4, p.emitted ? p.nLower : p.nUpper);
-  const eAt: Vec3 = [xs[3] + rOf(Math.max(1, shown)) * Math.cos(0.6), 0, rOf(Math.max(1, shown)) * Math.sin(0.6)];
+  const eAt: Vec3 = [xs[3] + rOf(Math.max(1, shown)) * Math.cos(0.6), rOf(Math.max(1, shown)) * Math.sin(0.6), 0];
   const t = transition(p.nUpper, p.nLower);
   const upTxt = p.nUpper > 4 ? ` (el nivel ${p.nUpper} queda fuera del dibujo)` : '';
   items.push({ id: 'bohr-e', kind: 'sphere', center: eAt, radius: 0.1, color: 'series-2', label: `electrón en n = ${p.emitted ? p.nLower : p.nUpper}` });
@@ -117,7 +117,7 @@ export function modelsScene(p: ModelsSceneInput): AtomScene {
     items.push({ id: 'foton', kind: 'arrow', from: eAt, vector: [0.9, 1.1, 0.4], radius: 0.05, color, label: `fotón de ${fmt(t.lambdaAirNm, 1)} nm (${t.colorName})` });
   }
   return {
-    items, extent: 6.6, target: [0, 0, 0], status: 'ilustracion',
+    items, extent: 5.9, target: [0, 0, 0], status: 'ilustracion',
     description: `Los cuatro modelos lado a lado: Dalton, una esfera maciza; Thomson, una esfera de carga positiva con electrones incrustados; Rutherford, un núcleo diminuto con los electrones lejos y mucho espacio vacío; Bohr, órbitas circulares de radios proporcionales a n². ` +
       (p.emitted ? `El electrón bajó del nivel ${p.nUpper} al ${p.nLower}${upTxt} y emitió un fotón de ${fmt(t.lambdaAirNm, 1)} nm (${t.colorName}, ${fmt(t.energyEV, 2)} eV).` : `El electrón está en el nivel ${p.nUpper}${upTxt}, listo para bajar al ${p.nLower}.`),
     note: 'Ilustración sin escala (el núcleo real es unas 10 000 veces más pequeño que el átomo); en Bohr los radios de las órbitas sí guardan la proporción n² y el color del fotón sale de su longitud de onda.',

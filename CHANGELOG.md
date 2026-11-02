@@ -7,6 +7,29 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+### Añadido
+- **Ola 1a de prácticas nuevas** del análisis curricular (69 prácticas en total), cada una con su modelo probado, valores
+  dorados, conjuntos de datos con relaciones, evaluación tipo Saber original, ideas erróneas con retroalimentación,
+  procedencia de los datos, guía en PDF y vista 3D (kit `src/three` o kit de química):
+  - `modelos-atomicos` (7.º): experimento de la lámina de oro con detector de centelleo (conteo de Poisson, barra de
+    simulación), predicciones de Thomson y de Rutherford en una gráfica logarítmica con los datos de Geiger y Marsden
+    (1913), aviso de la fuerza nuclear con su corrección y átomo de Bohr con las líneas de Balmer del NIST. 3D: montaje
+    con las alfas desviadas en el espacio, trayectorias hiperbólicas exactas cerca del núcleo y los cuatro modelos.
+  - `tabla-periodica` (8.º): tabla de 118 elementos navegable con el teclado y datos reales de PubChem (consulta del
+    2026-11-01, `scripts/validacion/tabla_periodica_pubchem.mjs`) y de Pyykkö; carga nuclear efectiva de Slater;
+    tendencias con sus excepciones (Mg → Al, P → S). 3D: relieve periódico con esferas a escala del radio covalente.
+  - `enlace-quimico` (9.º): ΔEN y carácter iónico, estructuras de Lewis verificadas, polaridad por suma de dipolos sobre
+    la geometría de PubChem, y pruebas de fusión, solubilidad y conductividad de cinco sustancias con datos de PubChem.
+    3D: cargas parciales y dipolos (three.js), visor molecular, redes del NaCl y del cuarzo, sacarosa y cobre.
+  - `electrostatica` (11.º): ley de Coulomb con dinamómetro (modo «Instrumento real»), aviso de fuera de escala con su
+    corrección, campo y potencial de 1 a 3 cargas con líneas y equipotenciales. 3D: líneas de campo en el espacio,
+    superficie equipotencial y fuerza sobre la carga de prueba.
+- 4 preguntas de transferencia en el banco tipo Saber 11 y 4 casos dorados; pruebas unitarias (modelos y escenas 3D) y
+  E2E (flujo, valor de referencia en la interfaz, 3D con y sin WebGL, axe en claro y oscuro, 390 px).
+
+### Cambiado
+- Contadores del catálogo (69 prácticas; 23 de química) y referencias de la regresión visual que muestran conteos.
+
 ## [2.16.0] · 2026-11-02
 
 Programa curricular y 3D (pedido del docente): análisis de la malla, kit de escenas 3D y primer lote de visores 3D.

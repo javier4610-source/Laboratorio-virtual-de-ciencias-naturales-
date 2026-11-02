@@ -66,6 +66,9 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] Sin publicar · Ola 1a de prácticas nuevas (`modelos-atomicos`, `tabla-periodica`, `enlace-quimico`,
+  `electrostatica`), cada una con su vista 3D. Faltan de la ola nuevas-1: `configuracion-electronica`,
+  `pila-electroquimica` y las de biología y ambiente.
 - [x] v2.16.0 · Análisis curricular (`docs/v2/ANALISIS-CURRICULAR.md`), kit de escenas 3D con three.js (pilotos: péndulo y
   microscopio) y lote 3D-1 (balanceo, conservación, estequiometría, mol, soluciones, enzimas, expresión y rastreo).
 - [x] v2.15.0 · Rendimiento medido con Lighthouse en perfil de equipo modesto (banco Saber 11: carga de 9,8 s a 3,2 s;

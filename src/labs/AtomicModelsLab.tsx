@@ -303,7 +303,7 @@ export default function AtomicModelsLab({ api }: LabProps) {
           <h3 id="ato-3d-h">Vista 3D: la lámina, el núcleo y los modelos</h3>
           <Segmented<AtomView> label="Qué ver en 3D" value={view} onChange={setView}
             options={[{ value: 'experimento', label: 'Montaje y alfas' }, { value: 'nucleo', label: 'Cerca del núcleo' }, { value: 'modelos', label: 'Los cuatro modelos' }]} />
-          <Scene3D idPrefix="ato" title={view === 'experimento' ? 'Experimento de la lámina en 3D' : view === 'nucleo' ? 'Trayectorias de las alfas cerca de un núcleo' : 'Modelos atómicos de Dalton, Thomson, Rutherford y Bohr'}
+          <Scene3D key={view} idPrefix="ato" title={view === 'experimento' ? 'Experimento de la lámina en 3D' : view === 'nucleo' ? 'Trayectorias de las alfas cerca de un núcleo' : 'Modelos atómicos de Dalton, Thomson, Rutherford y Bohr'}
             items={scene.items} extent={scene.extent} target={scene.target} description={scene.description} height={340}
             initialOrbit={view === 'nucleo' ? { yaw: 0.2, pitch: 0.35 } : view === 'modelos' ? { yaw: 0, pitch: 0.25 } : { yaw: 0.5, pitch: 0.5 }}
             status={scene.status} statusNote={scene.note} />

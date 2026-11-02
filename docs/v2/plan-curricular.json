@@ -5,6 +5,7 @@
   "newPractices": [
     {
       "id": "modelos-atomicos",
+      "built": "ola 1a (2026-11-02)",
       "grade": 7,
       "area": "quimica",
       "title": "Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford",
@@ -18,6 +19,7 @@
     },
     {
       "id": "tabla-periodica",
+      "built": "ola 1a (2026-11-02)",
       "grade": 8,
       "area": "quimica",
       "title": "Tabla periódica y propiedades periódicas",
@@ -31,6 +33,7 @@
     },
     {
       "id": "enlace-quimico",
+      "built": "ola 1a (2026-11-02)",
       "grade": 9,
       "area": "quimica",
       "title": "Enlace iónico, covalente y metálico: estructura y propiedades",
@@ -109,6 +112,7 @@
     },
     {
       "id": "electrostatica",
+      "built": "ola 1a (2026-11-02)",
       "grade": 11,
       "area": "fisica",
       "title": "Carga, ley de Coulomb y campo eléctrico",

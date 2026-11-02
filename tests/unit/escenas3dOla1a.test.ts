@@ -39,7 +39,7 @@ describe('escena 3D de la lámina (modelos atómicos)', () => {
   });
   it('los modelos lado a lado: órbitas de Bohr ∝ n² y fotón al emitir', () => {
     const sc = modelsScene({ nUpper: 3, nLower: 2, emitted: true });
-    const r = (n: number) => { const p = (byId<ParticlesItem>(sc.items, `orbita-${n}`)).points[0]; return Math.hypot(p[0] - 4.8, p[2]); };
+    const r = (n: number) => { const p = (byId<ParticlesItem>(sc.items, `orbita-${n}`)).points[0]; return Math.hypot(p[0] - 4.8, p[1]); };
     expect(r(2) / r(1)).toBeCloseTo(4, 9);
     expect(byId<ArrowItem>(sc.items, 'foton').label).toMatch(/656,3 nm \(rojo\)/);
     expect(sc.status).toBe('ilustracion');

@@ -34,12 +34,13 @@
       "microscope"
     ],
     "tests": [
+      "kit3d.test.ts",
       "microscope.test.ts"
     ],
-    "nTests": 15,
+    "nTests": 29,
     "e2e": true,
     "a11y": false,
-    "loc": 324,
+    "loc": 345,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -59,12 +60,13 @@
       "density"
     ],
     "tests": [
+      "conditions.test.ts",
       "models.test.ts"
     ],
-    "nTests": 55,
+    "nTests": 89,
     "e2e": true,
     "a11y": false,
-    "loc": 240,
+    "loc": 241,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -81,15 +83,17 @@
     "area": "ambiental",
     "lab": "EcosystemLab",
     "models": [
-      "ecosystem"
+      "ecosystem",
+      "conditions"
     ],
     "tests": [
+      "conditions.test.ts",
       "ecosystem.test.ts"
     ],
-    "nTests": 13,
+    "nTests": 47,
     "e2e": true,
     "a11y": false,
-    "loc": 710,
+    "loc": 713,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -114,7 +118,7 @@
     "nTests": 14,
     "e2e": true,
     "a11y": false,
-    "loc": 800,
+    "loc": 801,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -159,9 +163,10 @@
       "motion"
     ],
     "tests": [
+      "conditions.test.ts",
       "motion.test.ts"
     ],
-    "nTests": 9,
+    "nTests": 43,
     "e2e": true,
     "a11y": false,
     "loc": 836,
@@ -209,12 +214,13 @@
       "simpleCircuits"
     ],
     "tests": [
+      "conditions.test.ts",
       "simpleCircuits.test.ts"
     ],
-    "nTests": 16,
+    "nTests": 50,
     "e2e": true,
     "a11y": false,
-    "loc": 1050,
+    "loc": 1054,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -264,7 +270,7 @@
     "nTests": 12,
     "e2e": true,
     "a11y": false,
-    "loc": 408,
+    "loc": 409,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -317,7 +323,7 @@
     "nTests": 46,
     "e2e": true,
     "a11y": false,
-    "loc": 619,
+    "loc": 620,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -351,6 +357,32 @@
     "sound": false,
     "datasets": true,
     "illustrative": true
+  },
+  {
+    "id": "modelos-atomicos",
+    "title": "Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford",
+    "grade": 7,
+    "area": "quimica",
+    "lab": "AtomicModelsLab",
+    "models": [
+      "atomicModels"
+    ],
+    "tests": [
+      "atomicModels.test.ts",
+      "escenas3dOla1a.test.ts"
+    ],
+    "nTests": 23,
+    "e2e": true,
+    "a11y": false,
+    "loc": 357,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
   },
   {
     "id": "osmosis",
@@ -394,7 +426,7 @@
     "nTests": 46,
     "e2e": true,
     "a11y": false,
-    "loc": 1042,
+    "loc": 1044,
     "measure": true,
     "advanced": true,
     "params": true,
@@ -417,12 +449,13 @@
       "balancing.test.ts",
       "compoundForge.test.ts",
       "inorganicNomenclature.test.ts",
+      "lote3d.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 76,
+    "nTests": 103,
     "e2e": true,
     "a11y": false,
-    "loc": 607,
+    "loc": 613,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -467,12 +500,14 @@
       "massConservation"
     ],
     "tests": [
+      "conditions.test.ts",
+      "lote3d.test.ts",
       "massConservation.test.ts"
     ],
-    "nTests": 12,
+    "nTests": 73,
     "e2e": true,
     "a11y": false,
-    "loc": 524,
+    "loc": 531,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -492,12 +527,13 @@
       "dnaExtraction"
     ],
     "tests": [
+      "conditions.test.ts",
       "dnaExtraction.test.ts"
     ],
-    "nTests": 12,
+    "nTests": 46,
     "e2e": true,
     "a11y": false,
-    "loc": 881,
+    "loc": 882,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -572,7 +608,7 @@
     "nTests": 21,
     "e2e": true,
     "a11y": false,
-    "loc": 200,
+    "loc": 202,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -608,6 +644,34 @@
     "illustrative": false
   },
   {
+    "id": "tabla-periodica",
+    "title": "Tabla periódica y propiedades periódicas",
+    "grade": 8,
+    "area": "quimica",
+    "lab": "PeriodicTableLab",
+    "models": [
+      "periodicTrends",
+      "periodicTable"
+    ],
+    "tests": [
+      "compoundForge.test.ts",
+      "escenas3dOla1a.test.ts",
+      "periodicBonding.test.ts"
+    ],
+    "nTests": 42,
+    "e2e": true,
+    "a11y": false,
+    "loc": 196,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
     "id": "adn",
     "title": "Del ADN a la proteína: replicación, transcripción y traducción",
     "grade": 9,
@@ -618,10 +682,11 @@
     ],
     "tests": [
       "geneExpression.test.ts",
+      "lote3d.test.ts",
       "models.test.ts",
       "sequences.test.ts"
     ],
-    "nTests": 93,
+    "nTests": 120,
     "e2e": true,
     "a11y": false,
     "loc": 496,
@@ -644,9 +709,10 @@
       "kinematics"
     ],
     "tests": [
+      "conditions.test.ts",
       "kinematics.test.ts"
     ],
-    "nTests": 12,
+    "nTests": 46,
     "e2e": true,
     "a11y": false,
     "loc": 303,
@@ -658,6 +724,33 @@
     "sound": true,
     "datasets": true,
     "illustrative": false
+  },
+  {
+    "id": "enlace-quimico",
+    "title": "Enlace iónico, covalente y metálico: estructura y propiedades",
+    "grade": 9,
+    "area": "quimica",
+    "lab": "ChemicalBondingLab",
+    "models": [
+      "chemicalBonding",
+      "periodicTrends"
+    ],
+    "tests": [
+      "escenas3dOla1a.test.ts",
+      "periodicBonding.test.ts"
+    ],
+    "nTests": 16,
+    "e2e": true,
+    "a11y": false,
+    "loc": 247,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
   },
   {
     "id": "mol",
@@ -673,12 +766,13 @@
       "balancing.test.ts",
       "compoundForge.test.ts",
       "inorganicNomenclature.test.ts",
+      "lote3d.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 76,
+    "nTests": 103,
     "e2e": true,
     "a11y": false,
-    "loc": 744,
+    "loc": 751,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -830,9 +924,10 @@
     ],
     "tests": [
       "advanced.test.ts",
+      "conditions.test.ts",
       "kinetics.test.ts"
     ],
-    "nTests": 31,
+    "nTests": 65,
     "e2e": true,
     "a11y": false,
     "loc": 337,
@@ -883,13 +978,15 @@
       "enzyme"
     ],
     "tests": [
+      "conditions.test.ts",
       "lib.test.ts",
+      "lote3d.test.ts",
       "models.test.ts"
     ],
-    "nTests": 66,
+    "nTests": 127,
     "e2e": true,
     "a11y": false,
-    "loc": 289,
+    "loc": 295,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -909,12 +1006,13 @@
       "photosynthesis"
     ],
     "tests": [
+      "conditions.test.ts",
       "models2.test.ts"
     ],
-    "nTests": 24,
+    "nTests": 58,
     "e2e": true,
     "a11y": false,
-    "loc": 205,
+    "loc": 203,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -935,12 +1033,13 @@
     ],
     "tests": [
       "advanced.test.ts",
+      "conditions.test.ts",
       "models3.test.ts"
     ],
-    "nTests": 41,
+    "nTests": 75,
     "e2e": true,
     "a11y": false,
-    "loc": 214,
+    "loc": 215,
     "measure": true,
     "advanced": true,
     "params": true,
@@ -966,9 +1065,10 @@
       "compoundForge.test.ts",
       "geometry.test.ts",
       "inorganicNomenclature.test.ts",
+      "lote3d.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 110,
+    "nTests": 137,
     "e2e": true,
     "a11y": false,
     "loc": 700,
@@ -1049,12 +1149,13 @@
     ],
     "tests": [
       "advanced.test.ts",
+      "kit3d.test.ts",
       "pendulum.test.ts"
     ],
-    "nTests": 31,
+    "nTests": 45,
     "e2e": true,
     "a11y": false,
-    "loc": 458,
+    "loc": 472,
     "measure": false,
     "advanced": true,
     "params": false,
@@ -1126,13 +1227,15 @@
       "chemistry"
     ],
     "tests": [
+      "conditions.test.ts",
+      "lote3d.test.ts",
       "models.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 73,
+    "nTests": 134,
     "e2e": true,
     "a11y": false,
-    "loc": 281,
+    "loc": 288,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1152,12 +1255,13 @@
       "waterQuality"
     ],
     "tests": [
+      "conditions.test.ts",
       "waterQuality.test.ts"
     ],
-    "nTests": 15,
+    "nTests": 49,
     "e2e": true,
     "a11y": false,
-    "loc": 637,
+    "loc": 643,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -1209,17 +1313,44 @@
       "circuits"
     ],
     "tests": [
+      "conditions.test.ts",
       "models.test.ts"
     ],
-    "nTests": 55,
+    "nTests": 89,
     "e2e": true,
     "a11y": false,
-    "loc": 342,
+    "loc": 347,
     "measure": true,
     "advanced": true,
     "params": false,
     "instr": true,
     "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "electrostatica",
+    "title": "Carga, ley de Coulomb y campo eléctrico",
+    "grade": 11,
+    "area": "fisica",
+    "lab": "ElectrostaticsLab",
+    "models": [
+      "electrostatics"
+    ],
+    "tests": [
+      "electrostatics.test.ts",
+      "escenas3dOla1a.test.ts"
+    ],
+    "nTests": 17,
+    "e2e": true,
+    "a11y": false,
+    "loc": 235,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
     "sound": true,
     "datasets": true,
     "illustrative": false
@@ -1234,12 +1365,13 @@
       "equilibrium"
     ],
     "tests": [
+      "conditions.test.ts",
       "equilibrium.test.ts"
     ],
-    "nTests": 11,
+    "nTests": 45,
     "e2e": true,
     "a11y": false,
-    "loc": 469,
+    "loc": 470,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1261,13 +1393,14 @@
     ],
     "tests": [
       "lib.test.ts",
+      "lote3d.test.ts",
       "models.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 84,
+    "nTests": 111,
     "e2e": true,
     "a11y": false,
-    "loc": 215,
+    "loc": 221,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1289,13 +1422,14 @@
     ],
     "tests": [
       "geneExpression.test.ts",
+      "lote3d.test.ts",
       "models.test.ts",
       "sequences.test.ts"
     ],
-    "nTests": 93,
+    "nTests": 120,
     "e2e": true,
     "a11y": false,
-    "loc": 865,
+    "loc": 871,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1434,12 +1568,13 @@
       "interference"
     ],
     "tests": [
+      "conditions.test.ts",
       "interference.test.ts"
     ],
-    "nTests": 19,
+    "nTests": 53,
     "e2e": true,
     "a11y": false,
-    "loc": 603,
+    "loc": 596,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -1459,12 +1594,13 @@
       "metabolism"
     ],
     "tests": [
+      "conditions.test.ts",
       "metabolism.test.ts"
     ],
-    "nTests": 20,
+    "nTests": 54,
     "e2e": true,
     "a11y": false,
-    "loc": 500,
+    "loc": 502,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1593,9 +1729,10 @@
       "protein"
     ],
     "tests": [
+      "lote3d.test.ts",
       "protein.test.ts"
     ],
-    "nTests": 16,
+    "nTests": 43,
     "e2e": true,
     "a11y": false,
     "loc": 1125,
@@ -1618,12 +1755,13 @@
       "geneTrace"
     ],
     "tests": [
-      "geneTrace.test.ts"
+      "geneTrace.test.ts",
+      "lote3d.test.ts"
     ],
-    "nTests": 17,
+    "nTests": 44,
     "e2e": true,
     "a11y": false,
-    "loc": 495,
+    "loc": 501,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1675,12 +1813,13 @@
       "inquiry"
     ],
     "tests": [
+      "conditions.test.ts",
       "inquiry.test.ts"
     ],
-    "nTests": 10,
+    "nTests": 44,
     "e2e": true,
     "a11y": false,
-    "loc": 462,
+    "loc": 458,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1702,14 +1841,16 @@
       "geneExpression"
     ],
     "tests": [
+      "conditions.test.ts",
       "geneExpression.test.ts",
+      "lote3d.test.ts",
       "models.test.ts",
       "sequences.test.ts"
     ],
-    "nTests": 93,
+    "nTests": 154,
     "e2e": true,
     "a11y": false,
-    "loc": 601,
+    "loc": 596,
     "measure": false,
     "advanced": false,
     "params": false,

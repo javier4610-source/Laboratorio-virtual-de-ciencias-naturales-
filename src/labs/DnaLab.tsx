@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import {
   AMINO_ACIDS, analyzeMutation, cleanDNA, complement, DNA_PRESETS, GENETIC_CODE, replicate, transcribe, translate, validateDNA,
   type Base, type MutationAnalysis, type MutationType,
@@ -6,6 +6,10 @@ import {
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Segmented, Select } from '../components/ui';
 import type { LabProps } from './registry';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const DnaView3D = lazy(() => import('./lote3d2/DnaView3D'));
 
 /* ------------------------------------------------------------------ paleta de bases
  * Los mismos cuatro tonos en todo el laboratorio (A rojo, T/U ámbar, G verde, C azul), igual que
@@ -488,6 +492,10 @@ export default function DnaLab({ api }: LabProps) {
               </div>
             </div>
           )}
+          <Panel3D title="la doble hélice de tu secuencia" summary="Tu secuencia como doble hélice de ADN-B (10,5 pares por vuelta, 3,4 Å por par): gírala para ver los surcos y elige un par para contar sus puentes de hidrógeno.">
+            <DnaView3D seq={seq} mutated={tab === 'mutaciones' && analysis ? mutatedSeq : undefined}
+              mutationIndex={analysis && mType !== 'delecion' ? pos - 1 : null} mutationLabel={mType === 'insercion' ? 'Base insertada' : 'Base sustituida'} />
+          </Panel3D>
         </>
       )}
     </div>

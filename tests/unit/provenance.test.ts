@@ -37,6 +37,15 @@ describe('procedencia de los datos', () => {
     expect(practiceProvenance('modelos-atomicos').detail).toMatch(/no son mediciones reales/);
     expect(practiceProvenance('electrostatica', 'real').detail).toMatch(/ruido de medición sintético/);
   });
+  it('ola 1b: configuraciones medidas de PubChem; pila, meiosis, sistema nervioso y circulatorio como modelo con su advertencia', () => {
+    expect(practiceProvenance('configuracion-electronica')).toMatchObject({ data: 'experimental', scene: 'modelo' });
+    expect(practiceProvenance('configuracion-electronica').detail).toMatch(/PubChem.*2026-11-01/);
+    expect(practiceProvenance('pila-electroquimica', 'real').detail).toMatch(/ruido de medición sintético/);
+    expect(practiceProvenance('pila-electroquimica').detail).toMatch(/CRC Handbook/);
+    expect(practiceProvenance('meiosis')).toMatchObject({ data: 'modelo', scene: 'ilustracion' });
+    expect(practiceProvenance('sistema-nervioso').detail).toMatch(/dato propio/);
+    expect(practiceProvenance('sistema-circulatorio').detail).toMatch(/No es un diagnóstico/);
+  });
   it('la geometría molecular declara sus coordenadas como predicción computacional de PubChem', () => {
     const p = practiceProvenance('geometria');
     expect(p).toMatchObject({ data: 'modelo', scene: 'prediccion' });

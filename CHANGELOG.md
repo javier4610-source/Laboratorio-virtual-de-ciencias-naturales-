@@ -7,6 +7,12 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.19.0] · 2026-11-02
+
+Prácticas nuevas, ola 1b (74 prácticas): configuración electrónica, pila electroquímica, meiosis, sistema nervioso y
+sistema circulatorio, todas con visor 3D. Kit 3D: en pantallas angostas con muchos rótulos, la escena muestra solo el del
+elemento elegido.
+
 ### Añadido
 - **Ola 1b de prácticas nuevas** (las prioridad 1 que faltaban del análisis curricular; 74 prácticas en total), con el
   mismo estándar de la ola 1a: modelo probado en `src/models`, valores dorados, conjuntos de datos con relaciones,

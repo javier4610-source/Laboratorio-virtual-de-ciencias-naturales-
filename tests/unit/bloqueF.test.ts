@@ -134,7 +134,7 @@ describe('Banco avanzado — Bloque F (entrega 6)', () => {
     const { PRACTICES } = await import('../../src/curriculum');
     const ids = new Set(PRACTICES.map((p: { id: string }) => p.id));
     for (const it of BLOQUE_F) if (it.practiceId) expect(ids.has(it.practiceId), `${it.id} → ${it.practiceId}`).toBe(true);
-  });
+  }, 30_000); // carga las fichas de todas las prácticas: con el catálogo creciendo, 5 s se quedan cortos en equipos ocupados
 
   it('pasa el validador del bloque sin errores ni avisos (incluido el ciclo de claves)', () => {
     const ps = [...BLOQUE_F.flatMap((it) => validateItem(it)), ...validateBlock('F', BLOQUE_F)];

@@ -170,7 +170,7 @@ describe('palitos · conectividad de todas las especies que se pueden dibujar', 
       expect(frameBonds(sc, 0).filter((b) => b.opacity === 1).length, where).toBe(sc.rBonds.length);
       expect(frameBonds(sc, 1).filter((b) => b.opacity === 1).length, where).toBe(sc.pBonds.length);
     }
-  });
+  }, 30_000); // recorre todas las reacciones dibujables: con más reacciones, 5 s se quedan cortos en equipos ocupados
 });
 
 describe('palitos · visibles en «esferas y palitos»', () => {

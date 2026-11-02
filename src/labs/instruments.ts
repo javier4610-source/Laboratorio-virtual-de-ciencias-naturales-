@@ -130,6 +130,11 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'regla', name: 'Regla del lanzador (1 mm)', quantity: 'Compresión x del resorte', unit: 'cm', resolution: 0.1, sigma: 0.05, nonNegative: true, note: 'Alinear el borde del carrito con la marca y paralaje.' },
     { id: 'lanzador', name: 'Lanzador de rapidez regulable', quantity: 'Rapidez real de salida (no se lee: la mide la fotopuerta)', unit: 'm/s', resolution: 0.001, relSigma: 0.01, note: 'El empujador no entrega siempre la misma rapidez: varía cerca de 1 % entre lanzamientos.' },
   ],
+  electrostatica: [
+    { id: 'dinamometro', name: 'Dinamómetro digital (±20 N, 0,001 N)', quantity: 'Fuerza entre las esferas cargadas', unit: 'N', resolution: 0.001, sigma: 0.002, relSigma: 0.01, nonNegative: true, note: 'Pérdida lenta de carga en el aire (humedad), corrientes de aire y el ruido del sensor.' },
+    { id: 'regla', name: 'Regla del riel (0,1 cm)', quantity: 'Distancia entre los centros de las esferas', unit: 'cm', resolution: 0.1, sigma: 0.05, nonNegative: true, note: 'Ubicar el centro de cada esfera sobre la escala y paralaje.' },
+    { id: 'torsion', name: 'Balanza de torsión (0,01 mN)', quantity: 'Fuerza sobre la carga de prueba', unit: 'mN', resolution: 0.01, sigma: 0.01, relSigma: 0.01, nonNegative: true, note: 'Lectura del ángulo de torsión del hilo y vibraciones de la mesa.' },
+  ],
   mol: [
     { id: 'balanza', name: 'Balanza de precisión (220 g × 0,001 g) con cámara antiviento', quantity: 'Masa', unit: 'g', resolution: 0.001, sigma: 0.0015, note: 'Corrientes de aire, vibraciones de la mesa, electricidad estática de la navecilla de plástico y objetos aún tibios.' },
   ],

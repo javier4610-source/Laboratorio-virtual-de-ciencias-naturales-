@@ -1,7 +1,7 @@
 /**
  * Estatus epistémico de datos y resultados (programa v2, sección 4.2; ADR 0002). Toda cifra que muestra o exporta
- * el laboratorio declara de dónde sale. Hoy ninguna práctica usa evidencia experimental ni predicciones de un
- * servicio externo: los resultados numéricos salen de modelos calculados y las escenas son dibujos.
+ * el laboratorio declara de dónde sale. Algunas prácticas usan datos experimentales publicados (PubChem, NIST, PDB),
+ * con su fuente y fecha; el resto de los resultados numéricos salen de modelos calculados.
  */
 export type EpistemicStatus = 'experimental' | 'prediccion' | 'modelo' | 'ilustracion' | 'sin-informacion';
 
@@ -76,6 +76,24 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
       data: 'modelo', scene: 'prediccion',
       detail: 'Coordenadas 3D: confórmeros calculados por PubChem (OMEGA + MMFF94s), no estructuras medidas; distancias, ángulos y VSEPR se calculan a partir de ellas.',
     };
+  }
+  if (practiceId === 'tabla-periodica') {
+    return { data: 'experimental', scene: 'modelo',
+      detail: 'Electronegatividad de Pauling, primera energía de ionización (NIST), radio de van der Waals y masa atómica (IUPAC): tabla periódica de PubChem descargada el 2026-11-01; radios covalentes de Pyykkö y Atsumi (2009). Carga nuclear efectiva y tendencias: modelo calculado (reglas de Slater). Relieve 3D: alturas proporcionales a esos datos.' };
+  }
+  if (practiceId === 'enlace-quimico') {
+    return { data: 'experimental', scene: 'modelo',
+      detail: 'Electronegatividades (PubChem), puntos de fusión y solubilidades (PubChem/HSDB con la obra que cita cada dato, 2026-11-01): evidencia experimental publicada. Tipo de enlace, carácter iónico, cargas parciales y dipolo: modelo calculado con ΔEN (estimación cualitativa). Geometrías 3D: confórmeros de PubChem (MMFF94s); redes del NaCl y el cuarzo: estructuras publicadas. Resultados de las pruebas (LED, disolución): ilustración del resultado esperado.' };
+  }
+  if (practiceId === 'modelos-atomicos') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Conteos de centelleos: modelo calculado de la dispersión de Rutherford (Coulomb) con la variación al azar de un conteo real (Poisson, semilla reproducible); no son mediciones reales. Predicción de Thomson: modelo calculado. Líneas del hidrógeno: modelo de Bohr con la energía de ionización del NIST, comparado con las líneas medidas del NIST. Dibujos de los cuatro modelos: ilustración sin escala.' };
+  }
+  if (practiceId === 'electrostatica') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: measurement === 'real'
+        ? 'Fuerzas, campos y potenciales de la ley de Coulomb (k = 8,99 × 10⁹ N·m²/C²) con ruido de medición sintético y reproducible (modo «Instrumento real»); no son mediciones reales. Líneas de campo y equipotenciales 3D: calculadas con el mismo modelo.'
+        : 'Fuerzas, campos y potenciales de la ley de Coulomb (k = 8,99 × 10⁹ N·m²/C²), redondeados a la resolución del instrumento; no son mediciones reales. Líneas de campo y equipotenciales 3D: calculadas con el mismo modelo.' };
   }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic

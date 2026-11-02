@@ -28,6 +28,15 @@ describe('procedencia de los datos', () => {
       expect(p.detail).toMatch(/no son mediciones reales/);
     }
   });
+  it('ola 1a: tabla periódica y enlace con datos experimentales de PubChem; Rutherford y Coulomb como modelo calculado', () => {
+    expect(practiceProvenance('tabla-periodica')).toMatchObject({ data: 'experimental', scene: 'modelo' });
+    expect(practiceProvenance('tabla-periodica').detail).toMatch(/PubChem.*2026-11-01/);
+    expect(practiceProvenance('enlace-quimico')).toMatchObject({ data: 'experimental', scene: 'modelo' });
+    expect(practiceProvenance('enlace-quimico').detail).toMatch(/ilustración del resultado esperado/);
+    expect(practiceProvenance('modelos-atomicos')).toMatchObject({ data: 'modelo', scene: 'modelo' });
+    expect(practiceProvenance('modelos-atomicos').detail).toMatch(/no son mediciones reales/);
+    expect(practiceProvenance('electrostatica', 'real').detail).toMatch(/ruido de medición sintético/);
+  });
   it('la geometría molecular declara sus coordenadas como predicción computacional de PubChem', () => {
     const p = practiceProvenance('geometria');
     expect(p).toMatchObject({ data: 'modelo', scene: 'prediccion' });

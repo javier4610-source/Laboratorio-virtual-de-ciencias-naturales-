@@ -9,6 +9,10 @@
  * La última prueba exige que toda práctica del catálogo tenga su caso.
  */
 import { forge, type ForgeInput } from '../../src/models/compoundForge';
+import { closestApproachFm, rutherfordAngle, rutherfordRate, rutherfordSetup, transition } from '../../src/models/atomicModels';
+import { periodicElement, slaterZeff, trend, periodMembers } from '../../src/models/periodicTrends';
+import { checkLewis, classifyBond, lewisById } from '../../src/models/chemicalBonding';
+import { chargesFrom, coulombStation, fieldAt, PRESETS } from '../../src/models/electrostatics';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -355,6 +359,26 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'metabolismo', origin: 'referencia', what: 'FBA de E. coli core (glucosa 10 mmol/gDW/h): crecimiento 0,8739 h⁻¹ con O₂ sin límite y 0,2117 h⁻¹ sin O₂, iguales a COBRApy 0.32.1 con GLPK (tolerancia relativa 10⁻⁶)', run: () => {
     close(runFba(REFERENCE_CONDITION).growth, 0.873921506968, 1e-6);
     close(runFba({ ...REFERENCE_CONDITION, oxygen: 0 }).growth, 0.211662949735, 1e-6);
+  } },
+  { id: 'modelos-atomicos', origin: 'referencia', what: 'oro y alfas de 5 MeV: d = 1,439964·2·79/5 = 45,50 fm; b = d/2 → θ = 90°; N(30°)/N(150°) = sen⁴(75°)/sen⁴(15°) = 194,0; Hα (3 → 2) = 656,30 nm en aire frente a 656,279 nm del NIST y Hβ = 486,14 frente a 486,135 nm', run: () => {
+    close(closestApproachFm(79, 5), (1.439964 * 158) / 5, 1e-12); close((rutherfordAngle(0.5, 1) * 180) / Math.PI, 90, 1e-9);
+    const s = rutherfordSetup({ foilId: 'oro', energyMeV: 5, thicknessUm: 0.4 });
+    close(rutherfordRate(s, 30) / rutherfordRate(s, 150), Math.sin((75 * Math.PI) / 180) ** 4 / Math.sin((15 * Math.PI) / 180) ** 4, 1e-9);
+    expect(Math.abs(transition(3, 2).lambdaAirNm - 656.279)).toBeLessThan(0.05); expect(Math.abs(transition(4, 2).lambdaAirNm - 486.135)).toBeLessThan(0.05);
+  } },
+  { id: 'tabla-periodica', origin: 'referencia', what: 'datos de PubChem: χ(F) = 3,98, EI₁(Na) = 5,139 eV, EI₁(Cl) = 12,968 eV; Slater (cálculo a mano): Z_ef(Na) = 11 − (8·0,85 + 2) = 2,20, Z_ef(Cl) = 17 − (6·0,35 + 8·0,85 + 2) = 6,10; en el período 3 el radio covalente disminuye (Na 155 → Cl 99 pm)', run: () => {
+    expect(periodicElement('F').en).toBe(3.98); expect(periodicElement('Na').ei).toBe(5.139); expect(periodicElement('Cl').ei).toBe(12.968);
+    close(slaterZeff(11).zef, 2.2, 1e-12); close(slaterZeff(17).zef, 6.1, 1e-12);
+    expect(trend(periodMembers(3), 'radioCov').direction).toBe('disminuye');
+  } },
+  { id: 'enlace-quimico', origin: 'independiente', what: 'ΔEN(Na–Cl) = 3,16 − 0,93 = 2,23 → iónico, carácter iónico de Pauling 100·(1 − e^(−2,23²/4)) = 71,2 %; ΔEN(H–Cl) = 0,96 → covalente polar; Lewis del CO₂: 16 electrones = 4 pares de enlace + 4 libres', run: () => {
+    const b = classifyBond('Na', 'Cl'); expect(b.type).toBe('iónico'); close(b.dEN, 2.23, 1e-12); close(b.ionicPct, 100 * (1 - Math.exp(-(2.23 ** 2) / 4)), 1e-9);
+    expect(classifyBond('H', 'Cl').type).toBe('covalente polar');
+    expect(checkLewis(lewisById('co2'))).toMatchObject({ valenceTotal: 16, bondingPairs: 4, lonePairs: 4, ok: true });
+  } },
+  { id: 'electrostatica', origin: 'independiente', what: 'ley de Coulomb con k = 8,99 × 10⁹ N·m²/C²: 2 µC y −3 µC a 30 cm → F = 8,99e9·6e-12/0,09 = 0,5993 N de atracción; dos cargas de +2 µC a ±10 cm → E = 0 en el punto medio', run: () => {
+    const r = coulombStation({ q1uC: 2, q2uC: -3, rCm: 30 }); close(r.magnitude, (8.99e9 * 6e-12) / 0.09, 1e-12); expect(r.kind).toBe('atracción');
+    const E = fieldAt(chargesFrom(PRESETS.find((p) => p.id === 'iguales')!.charges), [0, 0, 0]); expect(Math.hypot(...E)).toBeLessThan(1e-6);
   } },
 ];
 

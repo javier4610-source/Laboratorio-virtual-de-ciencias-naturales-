@@ -447,6 +447,6 @@ describe('adopción en las prácticas', () => {
       expect(fns.length, `${f} no usa ninguna función …Conditions`).toBeGreaterThan(0);
       for (const fn of fns) expect(doc, `${f}: ${fn}`).toContain(`\`${fn}\``);
     }
-    expect(using).toBe(19);
+    expect(using).toBe(20);
   });
 });

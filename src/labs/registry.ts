@@ -74,4 +74,8 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   cinetica: lazy(() => import('./KineticsLab')),
   cinematica: lazy(() => import('./KinematicsLab')),
   celulas: lazy(() => import('./MicroscopeLab')),
+  'modelos-atomicos': lazy(() => import('./AtomicModelsLab')),
+  'tabla-periodica': lazy(() => import('./PeriodicTableLab')),
+  'enlace-quimico': lazy(() => import('./ChemicalBondingLab')),
+  electrostatica: lazy(() => import('./ElectrostaticsLab')),
 };

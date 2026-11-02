@@ -216,6 +216,7 @@ siguen todas las prácticas adoptadas:
 | Inducción (Faraday) | `InductionLab` | Imán a velocidad constante · Introducir el imán (+ Sacar) | — | — |
 | Leyes de los gases | `GasLab` | Movimiento de las partículas · Animar las partículas | — | Antes no se podía detener (WCAG 2.2.2) |
 | Fotosíntesis | `PhotoLab` | Burbujeo de la elodea · Animar las burbujas | — | Antes no se podía detener (WCAG 2.2.2) |
+| Modelos atómicos | `AtomicModelsLab` | Detector de centelleo · Contar centelleos (Repetir = «Contar otra vez») | t del conteo (10–120 s, lo fija el estudiante) | Resolución del contador (1 cuenta); el reloj va ×10 |
 
 **Prácticas con animación pero sin dinámica que pausar** (no se inventan controles):
 
@@ -239,9 +240,9 @@ siguen todas las prácticas adoptadas:
 | Inducción (generador) | `InductionLab` | La bobina gira según las rpm elegidas (0 = detenida); la lectura es instantánea. |
 | Mitosis, población, genética de poblaciones, enzimas | `MitosisLab`, `PopulationLab`, `PopGenLab`, `EnzymeLab` | Sin animación temporal: el modelo se calcula completo y se muestra como gráfica o resultado. |
 
-Las 23 prácticas restantes (densidad, mezclas, óptica, soluciones, química inorgánica y orgánica, genómica, etc.)
-no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 23 adoptadas + 19 sin dinámica que pausar + 23 sin
-animación = 65.
+Las 26 prácticas restantes (densidad, mezclas, óptica, soluciones, química inorgánica y orgánica, genómica, tabla periódica,
+enlace químico, electrostática, etc.) no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 24
+adoptadas + 19 sin dinámica que pausar + 26 sin animación = 69.
 
 ### `ConditionAlert` (`src/components/ConditionAlert.tsx`)
 
@@ -304,6 +305,7 @@ lector de pantalla los anuncie juntos y no como regiones que compiten (las notas
 | Metabolismo | `metabolismConditions` | No factible (no válida); formiato (atención); óptimos alternativos (nota) |
 | Secuencias | `parseConditions`, `alignConditions` | BLOSUM62 con ADN (no válida); matriz simple con proteínas, «*» interno, CDS fuera de la secuencia (atención); códigos ambiguos (nota) |
 | Reto de indagación | `designConditions` | Diseño imposible y presupuesto superado (no válida); niveles que coinciden (atención: niveles máximos en el rango) |
+| Electrostática | `coulombConditions` | Fuerza sobre el alcance del dinamómetro de 20 N (no válida: distancia mínima con k·|q₁·q₂|/20 N); esfera descargada (atención); esferas a menos de 5 cm, ya no puntuales (nota) |
 
 ### `Readout` con resolución y estado (`src/components/ui.tsx`)
 
@@ -336,9 +338,11 @@ de rango»). Retrocompatible: los 65 laboratorios siguen funcionando sin cambios
 | Conductores | Amperímetro 0,1 mA | — |
 | Mol | Balanza de precisión 0,001 g | — |
 | Óptica | Transportador 1° (solo en modo real: en modo ideal la lectura no se cuantiza) | — |
+| Electrostática | Dinamómetro 0,001 N, regla 0,1 cm, balanza de torsión 0,01 mN | Fuerza: fuera de rango sobre 20 N |
+| Modelos atómicos | Contador de centelleos 1 cuenta | — |
 
 Sin resolución por no tener instrumento de lectura directa (el valor es del modelo): enzimas, fotosíntesis (las
-lecturas del registrador ya llevan su resolución), metabolismo, secuencias e indagación.
+lecturas del registrador ya llevan su resolución), metabolismo, secuencias e indagación; tampoco la tabla periódica y el enlace químico, que muestran datos publicados con su fuente.
 
 ### `RelationExplainer` (análisis)
 

@@ -732,6 +732,46 @@ const SCENES: Record<string, () => ReactNode> = {
       <text x={248} y={116} textAnchor="middle" style={{ fontSize: 13, fill: 'var(--qui)', fontWeight: 700, fontFamily: 'var(--font-data)' }}>n = m / M</text>
     </>
   ),
+  'modelos-atomicos': () => (
+    <>
+      <rect x={20} y={64} width={46} height={32} rx={4} fill="#546e7a" />
+      <line x1={66} x2={150} y1={80} y2={80} stroke="var(--series-2)" strokeWidth="4" opacity="0.6" />
+      <rect x={150} y={42} width={5} height={76} fill="#d4a017" stroke="#8d6e1a" />
+      <path d="M152 80 H290 M152 80 L280 52 M152 80 L230 132 M152 80 L96 40" fill="none" stroke="var(--series-1)" strokeWidth="2" />
+      <path d="M152 80 H290" fill="none" stroke="var(--series-2)" strokeWidth="3" opacity="0.6" />
+      <rect x={84} y={26} width={20} height={14} rx={2} fill="var(--surface)" stroke="var(--data)" strokeWidth="2" transform="rotate(-25 94 33)" />
+      <circle cx={260} cy={124} r={4} fill="var(--series-1)" />
+      {[[248, 112], [274, 116], [262, 140]].map(([x, y]) => <circle key={x} cx={x} cy={y} r={2.5} fill="var(--series-2)" />)}
+    </>
+  ),
+  'tabla-periodica': () => (
+    <>
+      {[[0, 0], [17, 0], [0, 1], [1, 1], [12, 1], [13, 1], [14, 1], [15, 1], [16, 1], [17, 1], [0, 2], [1, 2], [12, 2], [13, 2], [14, 2], [15, 2], [16, 2], [17, 2], ...Array.from({ length: 18 }, (_, c) => [c, 3]), ...Array.from({ length: 18 }, (_, c) => [c, 4])].map(([c, r]) => {
+        const h = r === 0 ? 10 : 6 + (4 - r) * 3 + (17 - c) * 1.1;
+        const fill = c < 2 ? 'var(--series-1)' : c > 11 ? 'var(--series-3)' : 'var(--series-2)';
+        return <rect key={`${c}-${r}`} x={22 + c * 15.4} y={30 + r * 22 + (22 - h)} width={13} height={h} rx={1.5} fill={fill} opacity={0.75} />;
+      })}
+    </>
+  ),
+  'enlace-quimico': () => (
+    <>
+      <circle cx={70} cy={84} r={26} fill="#e53935" opacity="0.85" />
+      <circle cx={40} cy={112} r={16} fill="#1e88e5" opacity="0.85" />
+      <circle cx={100} cy={112} r={16} fill="#1e88e5" opacity="0.85" />
+      <text x={64} y={90} style={{ fontSize: 15, fill: '#fff', fontWeight: 700 }}>δ−</text>
+      {[0, 1, 2].map((i) => [0, 1, 2].map((j) => <circle key={`${i}${j}`} cx={180 + i * 34} cy={50 + j * 34} r={(i + j) % 2 ? 9 : 14} fill={(i + j) % 2 ? '#9575cd' : '#43a047'} stroke="#455a64" />))}
+      <path d="M180 50 H248 M180 84 H248 M180 118 H248 M180 50 V118 M214 50 V118 M248 50 V118" stroke="#90a4ae" strokeWidth="1.5" opacity="0.7" />
+    </>
+  ),
+  electrostatica: () => (
+    <>
+      <circle cx={110} cy={80} r={18} fill="#e53935" /><text x={103} y={87} style={{ fontSize: 20, fill: '#fff', fontWeight: 700 }}>+</text>
+      <circle cx={214} cy={80} r={18} fill="#1e88e5" /><text x={208} y={87} style={{ fontSize: 20, fill: '#fff', fontWeight: 700 }}>−</text>
+      {[-40, -20, 0, 20, 40].map((d) => <path key={d} d={`M128 ${80 + d * 0.3} Q162 ${80 + d * 1.6} 196 ${80 + d * 0.3}`} fill="none" stroke="#78909c" strokeWidth="1.6" />)}
+      <path d="M92 80 H40 M98 64 L60 40 M98 96 L60 120 M232 80 H284 M226 64 L264 40 M226 96 L264 120" stroke="#78909c" strokeWidth="1.6" />
+      <circle cx={162} cy={30} r={6} fill="var(--series-4)" /><Arrow x1={162} y1={30} x2={196} y2={30} color="var(--data)" />
+    </>
+  ),
   geometria: () => {
     const c: [number, number] = [160, 82];
     const ends: [number, number][] = [[160, 22], [100, 116], [216, 122], [186, 64]];

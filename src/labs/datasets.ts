@@ -1804,4 +1804,42 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  meiosis: [
+    {
+      id: 'etapas', label: 'Estación 1: cromosomas y ADN en cada etapa', defaultX: 'etapa', defaultY: 'adn',
+      columns: [
+        { key: 'etapa', label: 'Etapa (1 = G1 … 10 = telofase II)', numeric: true, decimals: 0, input: true },
+        { key: 'nombre', label: 'Nombre de la etapa', numeric: false },
+        { key: 'dosN', label: 'Cromosomas de la célula madre (2n)', numeric: true, decimals: 0, input: true },
+        { key: 'celulas', label: 'Células', numeric: true, decimals: 0 },
+        { key: 'cromosomas', label: 'Cromosomas por célula', numeric: true, decimals: 0 },
+        { key: 'cromatidas', label: 'Cromátidas por célula', numeric: true, decimals: 0 },
+        { key: 'adn', label: 'ADN por célula (múltiplos de c)', numeric: true, decimals: 0 },
+        { key: 'entrecruzamiento', label: 'Entrecruzamiento', numeric: false, input: true },
+        { key: 'gametos', label: 'Gametos obtenidos', numeric: false },
+      ],
+    },
+    {
+      id: 'gametos', label: 'Estación 2: gametos de muchas meiosis', defaultX: 'distancia', defaultY: 'recombinantes',
+      columns: [
+        { key: 'distancia', label: 'Distancia entre A y B', unit: 'cM', numeric: true, decimals: 0, input: true },
+        { key: 'meiosis', label: 'Células que hacen meiosis', numeric: true, decimals: 0, input: true },
+        { key: 'pares', label: 'Pares de cromosomas', numeric: true, decimals: 0, input: true },
+        { key: 'gametos', label: 'Gametos contados', numeric: true, decimals: 0 },
+        { key: 'recombinantes', label: 'Gametos recombinantes', unit: '%', numeric: true, decimals: 1 },
+        { key: 'esperado', label: 'Recombinantes esperados (d/100)', unit: '%', numeric: true, decimals: 0 },
+        { key: 'tipos', label: 'Tipos de gametos distintos', numeric: true, decimals: 0 },
+        { key: 'semilla', label: 'Semilla', numeric: true, decimals: 0, input: true, notIndependent: true },
+      ],
+    },
+    {
+      id: 'combinaciones', label: 'Estación 2: combinaciones por segregación independiente', defaultX: 'n', defaultY: 'log10',
+      columns: [
+        { key: 'n', label: 'Pares de cromosomas n', numeric: true, decimals: 0, input: true },
+        { key: 'combinaciones', label: 'Combinaciones de gametos 2ⁿ', numeric: true, decimals: 0 },
+        { key: 'cigotos', label: 'Cigotos posibles (2ⁿ)²', numeric: true, decimals: 0 },
+        { key: 'log10', label: 'log₁₀ de las combinaciones', numeric: true, decimals: 3 },
+      ],
+    },
+  ],
 };

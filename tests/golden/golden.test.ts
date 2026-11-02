@@ -15,6 +15,7 @@ import { checkLewis, classifyBond, lewisById } from '../../src/models/chemicalBo
 import { chargesFrom, coulombStation, fieldAt, PRESETS } from '../../src/models/electrostatics';
 import { analyzeBoxes, aufbauOccupancy, groundState, hundBoxes, nobleGasString, tablePlace } from '../../src/models/electronConfiguration';
 import { cell as galvanicCell, discharge as galvanicDischarge, FARADAY } from '../../src/models/electrochemicalCell';
+import { expectedFrequencies, gameteCombinations, meiosisGametes, stageCounts } from '../../src/models/meiosis';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -393,6 +394,12 @@ export const GOLDEN: GoldenCase[] = [
     close(galvanicCell(d).E, 1.1037, 1e-12); close(galvanicCell({ ...d, cRight: 0.01 }).E, 1.1037 - (8.314462618 * 298.15 * Math.LN10) / FARADAY, 1e-12);
     const r = galvanicDischarge({ ...d, volumeML: 100, currentMA: 50, timeMin: 120 });
     close(r.dLeft, -(360 * 65.4) / (2 * 96485.33212), 1e-12); close(r.dRight, (360 * 63.55) / (2 * 96485.33212), 1e-12);
+  } },
+  { id: 'meiosis', origin: 'referencia', what: 'humano n = 23: 2²³ = 8 388 608 combinaciones de gametos; 2n = 4: telofase I 2 células con 2 cromosomas y 2c, gametos con 1c; d = 20 cM → AB = ab = 0,40 y Ab = aB = 0,10 (Morgan); un cruce entre A y B → 2 de 4 gametos recombinantes', run: () => {
+    expect(gameteCombinations(23)).toBe(8388608);
+    expect(stageCounts(5, 4)).toMatchObject({ cells: 2, chromosomes: 2, dnaC: 2 }); expect(stageCounts(9, 4)).toMatchObject({ cells: 4, chromosomes: 2, dnaC: 1 });
+    expect(expectedFrequencies(1, 20)).toEqual({ AB: 0.4, ab: 0.4, Ab: 0.1, aB: 0.1 });
+    expect(meiosisGametes({ pairs: 1, crossover: 0.5, orientation: [true], nondisjunction: 'ninguna' }).filter((g) => g.recombinant)).toHaveLength(2);
   } },
 ];
 

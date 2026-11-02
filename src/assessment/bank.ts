@@ -1471,6 +1471,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Oxidación-reducción: pila de Daniell…», arma una pila de cinc y hierro y observa qué electrodo pierde masa.',
     transfer: 'Si un tornillo de cobre se pone en contacto con una lámina de hierro en el agua del golfo, ¿qué metal se corroe más rápido? Compruébalo armando la pila Fe | Cu.',
   },
+  {
+    id: 'saber-mei-1', grade: 8, topic: 'Meiosis y variabilidad genética', competency: 'indagacion', component: 'biologico',
+    skill: 'Interpretar datos de cromosomas para comparar la variabilidad que produce la meiosis', difficulty: 'media', practiceId: 'meiosis',
+    context: 'Un grupo de 8.º de Necoclí comparó con una calculadora cuántas combinaciones de cromosomas pueden tener los gametos de tres especies, sin contar el entrecruzamiento.',
+    table: {
+      caption: 'Número de cromosomas (2n) y combinaciones por segregación independiente',
+      headers: ['Especie', '2n', 'Combinaciones de gametos'],
+      rows: [['Mosca de la fruta', '8', '16'], ['Arveja', '14', '128'], ['Ser humano', '46', '8 388 608']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'Las combinaciones son el doble del número de cromosomas.', feedback: 'En el ser humano 8 388 608 es mucho más que 2 × 46.' },
+      { id: 'b', text: 'Las combinaciones son 2ⁿ, con n = número de pares: cada par agregado duplica la variedad de gametos.', feedback: 'Correcto: 2⁴ = 16, 2⁷ = 128 y 2²³ = 8 388 608.' },
+      { id: 'c', text: 'La mosca no tiene variabilidad porque tiene pocos cromosomas.', feedback: 'Tiene 16 combinaciones por segregación y además el entrecruzamiento.' },
+      { id: 'd', text: 'Las combinaciones dependen del tamaño del organismo.', feedback: 'Dependen del número de pares de cromosomas, no del tamaño.' },
+    ],
+    correct: 'b',
+    explanation: 'En la metafase I cada par de homólogos se orienta al azar, de forma independiente: con n pares hay 2ⁿ combinaciones. A esto se suma el entrecruzamiento y la unión al azar de dos gametos en la fecundación.',
+    review: 'En la práctica «Meiosis, entrecruzamiento y variabilidad genética», usa la calculadora de 2ⁿ con n = 4, 7 y 23.',
+    transfer: '¿Cuántas combinaciones tendría un organismo con 2n = 12? ¿Cuántos cigotos distintos podría formar una pareja de esa especie solo por segregación independiente?',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

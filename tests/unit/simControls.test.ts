@@ -94,6 +94,8 @@ const ADOPTED = [
   'CollisionsLab', 'ConductionLab', 'ConservationLab', 'EcosystemLab', 'EnergyLab', 'ExpressionLab', 'FoodWebLab', 'GasLab', 'HeatLab',
   'InductionLab', 'InquiryLab', 'KinematicsLab', 'KineticPotentialLab', 'KineticsLab', 'MotionLab', 'NewtonLab', 'OsmosisLab', 'PendulumLab',
   'PhotoLab', 'ProjectileLab', 'RespirationLab', 'WavesLab', 'WorkLab',
+  // ola 1b
+  'ElectronConfigLab', 'GalvanicCellLab', 'MeiosisLab', 'NervousSystemLab', 'CirculatoryLab',
 ];
 
 describe('adopción de SimControls', () => {

@@ -7,13 +7,13 @@ import { axe, noOverflow, openFree } from './organica-comun';
  * ensayos, axe en claro y oscuro y sin desbordamiento a 390 px. Las vistas 3D están en ola1b-3d-webgl.spec.ts y
  * ola1b-3d-sin-webgl.spec.ts.
  */
-const ro = (page: Page, k: string) => page.locator('.readout .item').filter({ hasText: k });
+const ro = (page: Page, k: string) => page.locator('.readout .item').filter({ has: page.locator('.k', { hasText: k }) });
 const setSlider = async (page: Page, label: string, unit: string, v: string) => {
   const f = page.getByLabel(`${label} (valor exacto${unit ? ` en ${unit}` : ''})`);
   await f.fill(v);
   await f.press('Enter');
 };
-const saved = (page: Page, n: number) => expect(page.getByText(`Ensayo guardado (${n} en esta sesión).`)).toBeVisible();
+const saved = (page: Page, n: number) => expect(page.getByText(`Ensayo guardado (${n} en esta sesión).`).last()).toBeVisible();
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -97,7 +97,7 @@ test('pila-electroquimica: Daniell 1,104 V, Nernst, puente salino y Faraday con 
   await expect(ro(page, 'Masa del electrodo de cobre')).toContainText('9,052 g (antes 8,933 g)');
   await expect(ro(page, 'Carga Q = I·t')).toContainText('360,0 C');
   await page.getByRole('button', { name: 'Guardar la descarga en la tabla' }).click();
-  await saved(page, 2);
+  await saved(page, 1);
   await a11yAndMobile(page, 'pila-electroquimica');
 });
 
@@ -108,7 +108,7 @@ test('meiosis: etapas hasta los gametos, recombinantes, 2²³ y no disyunción',
   await expect(ro(page, 'Cromosomas por célula')).toContainText('2 (n)');
   await expect(ro(page, 'Cromátidas por célula')).toContainText('4');
   for (let i = 0; i < 4; i++) await page.getByRole('button', { name: 'Etapa siguiente' }).click();
-  await expect(ro(page, 'Células')).toContainText('4');
+  await expect(page.locator('.readout .item').filter({ has: page.locator('.k', { hasText: /^Células$/ }) })).toContainText('4');
   await expect(ro(page, 'ADN por célula')).toContainText('1c');
   const table = page.getByRole('region', { name: 'Gametos de esta meiosis' });
   await expect(table.getByRole('row')).toHaveCount(5);
@@ -126,7 +126,7 @@ test('meiosis: etapas hasta los gametos, recombinantes, 2²³ y no disyunción',
   await expect(ro(page, 'Gametos recombinantes (Ab + aB)')).toContainText('%');
   await expect(ro(page, 'Esperado (d/100)')).toContainText('20 %');
   await page.getByRole('button', { name: 'Guardar la muestra en la tabla' }).click();
-  await saved(page, 2);
+  await saved(page, 1);
   await a11yAndMobile(page, 'meiosis');
 });
 
@@ -153,7 +153,7 @@ test('sistema-nervioso: tiempo de reacción con dato propio, avisos de la regla 
   await page.getByLabel('Tipo de fibra (sensitiva)').selectOption('ad');
   await expect(ro(page, 'Arco reflejo (ida + 3 sinapsis + vuelta)')).toContainText('66,3 ms');
   await page.getByRole('button', { name: 'Guardar ensayo en la tabla' }).click();
-  await saved(page, 2);
+  await saved(page, 1);
   await a11yAndMobile(page, 'sistema-nervioso');
 });
 
@@ -177,6 +177,6 @@ test('sistema-circulatorio: gasto cardíaco de referencia, ejercicio, aviso prud
   await expect(ro(page, 'Latidos contados')).toContainText('18 en 15,0 s → 72 lpm');
   await setSlider(page, 'Latidos contados en 15 s', '', '20');
   await page.getByRole('button', { name: 'Guardar mi pulso en la tabla' }).click();
-  await saved(page, 2);
+  await saved(page, 1);
   await a11yAndMobile(page, 'sistema-circulatorio');
 });

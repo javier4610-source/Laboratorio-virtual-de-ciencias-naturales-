@@ -47,6 +47,7 @@
     },
     {
       "id": "configuracion-electronica",
+      "built": "ola 1b (2026-11-02)",
       "grade": 10,
       "area": "quimica",
       "title": "Configuración electrónica y orbitales atómicos",
@@ -60,6 +61,7 @@
     },
     {
       "id": "pila-electroquimica",
+      "built": "ola 1b (2026-11-02)",
       "grade": 11,
       "area": "quimica",
       "title": "Oxidación-reducción: pila de Daniell y electrólisis",
@@ -217,6 +219,7 @@
     },
     {
       "id": "meiosis",
+      "built": "ola 1b (2026-11-02)",
       "grade": 8,
       "area": "biologia",
       "title": "Meiosis, entrecruzamiento y variabilidad genética",
@@ -230,6 +233,7 @@
     },
     {
       "id": "sistema-nervioso",
+      "built": "ola 1b (2026-11-02)",
       "grade": 8,
       "area": "biologia",
       "title": "Sistema nervioso: neurona, arco reflejo y tiempo de reacción",
@@ -243,6 +247,7 @@
     },
     {
       "id": "sistema-circulatorio",
+      "built": "ola 1b (2026-11-02)",
       "grade": 7,
       "area": "biologia",
       "title": "Corazón y circulación: frecuencia cardíaca y ejercicio",

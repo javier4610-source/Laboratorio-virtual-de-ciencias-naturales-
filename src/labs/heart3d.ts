@@ -54,7 +54,7 @@ export function heartScene({ hr, beatPhase, flowPhase, co }: HeartSceneInput): {
   vessel('venas-cavas', 14, 16, 'venas cavas');
   items.push({ id: 'pulmon-der', kind: 'ellipsoid', center: [-2.8, 2.4, -0.2], radii: [0.75, 1.0, 0.6], color: 'series-5', opacity: 0.25, label: 'pulmones (recoge O₂)' });
   items.push({ id: 'pulmon-izq', kind: 'ellipsoid', center: [2.8, 2.4, -0.2], radii: [0.7, 0.95, 0.6], color: 'series-5', opacity: 0.2 });
-  items.push({ id: 'cuerpo', kind: 'box', center: [0, -3.6, 0], size: [3.8, 1.0, 1.2], color: 'surface-3', opacity: 0.35, edges: true, label: 'órganos del cuerpo (entrega O₂)' });
+  items.push({ id: 'cuerpo', kind: 'box', center: [0, -3.6, 0], size: [3.8, 1.0, 1.2], color: 'surface-3', opacity: 0.35, label: 'órganos del cuerpo (entrega O₂)' });
   const N = 28;
   const pts = Array.from({ length: N }, (_, k) => bloodAt(k / N + flowPhase));
   const ox = pts.filter((x) => x.oxy).map((x) => x.p), de = pts.filter((x) => !x.oxy).map((x) => x.p);

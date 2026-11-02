@@ -84,7 +84,7 @@ export interface ArcSceneInput { pathM: number; sensory: string; progress: numbe
 export function arcScene({ pathM, sensory, progress, active }: ArcSceneInput): { items: SceneItem[]; extent: number; target: Vec3; description: string } {
   const r = reflexArc(pathM, sensory);
   const items: SceneItem[] = [
-    { id: 'medula', kind: 'box', center: [0.3, 1.0, 0], size: [1.6, 3.6, 1.8], color: 'ink-3', opacity: 0.18, edges: true, label: 'médula espinal' },
+    { id: 'medula', kind: 'box', center: [0.3, 1.0, 0], size: [1.6, 3.6, 1.8], color: 'ink-3', opacity: 0.18, label: 'médula espinal' },
     { id: 'encefalo', kind: 'ellipsoid', center: [0.3, 4.6, 0], radii: [1.4, 0.9, 1.1], color: 'ink-3', opacity: 0.2, label: 'encéfalo' },
     { id: 'via-encefalo', kind: 'rod', from: P.astaDorsal, to: [0.3, 3.8, 0.2], radius: 0.03, color: 'line-strong', opacity: 0.8, label: 'vía hacia el encéfalo (sensación)' },
     { id: 'receptor', kind: 'sphere', center: P.receptor, radius: 0.22, color: 'series-5', label: 'receptor en la piel' },

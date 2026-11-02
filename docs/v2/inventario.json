@@ -437,6 +437,32 @@
     "illustrative": true
   },
   {
+    "id": "sistema-circulatorio",
+    "title": "Corazón y circulación: frecuencia cardíaca y ejercicio",
+    "grade": 7,
+    "area": "biologia",
+    "lab": "CirculatoryLab",
+    "models": [
+      "circulation"
+    ],
+    "tests": [
+      "circulation.test.ts",
+      "escenas3dOla1b.test.ts"
+    ],
+    "nTests": 17,
+    "e2e": true,
+    "a11y": false,
+    "loc": 171,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "balanceo",
     "title": "Balanceo de ecuaciones químicas con conteo de átomos",
     "grade": 8,
@@ -544,6 +570,32 @@
     "illustrative": true
   },
   {
+    "id": "meiosis",
+    "title": "Meiosis, entrecruzamiento y variabilidad genética",
+    "grade": 8,
+    "area": "biologia",
+    "lab": "MeiosisLab",
+    "models": [
+      "meiosis"
+    ],
+    "tests": [
+      "escenas3dOla1b.test.ts",
+      "meiosis.test.ts"
+    ],
+    "nTests": 17,
+    "e2e": true,
+    "a11y": false,
+    "loc": 229,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "mendel",
     "title": "Herencia mendeliana y cuadros de Punnett",
     "grade": 8,
@@ -619,6 +671,32 @@
     "illustrative": false
   },
   {
+    "id": "sistema-nervioso",
+    "title": "Sistema nervioso: neurona, arco reflejo y tiempo de reacción",
+    "grade": 8,
+    "area": "biologia",
+    "lab": "NervousSystemLab",
+    "models": [
+      "nervousSystem"
+    ],
+    "tests": [
+      "escenas3dOla1b.test.ts",
+      "nervousSystem.test.ts"
+    ],
+    "nTests": 16,
+    "e2e": true,
+    "a11y": false,
+    "loc": 216,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "sonido",
     "title": "Sonido y resonancia",
     "grade": 8,
@@ -655,10 +733,11 @@
     ],
     "tests": [
       "compoundForge.test.ts",
+      "electronConfiguration.test.ts",
       "escenas3dOla1a.test.ts",
       "periodicBonding.test.ts"
     ],
-    "nTests": 42,
+    "nTests": 54,
     "e2e": true,
     "a11y": false,
     "loc": 196,
@@ -736,10 +815,11 @@
       "periodicTrends"
     ],
     "tests": [
+      "electronConfiguration.test.ts",
       "escenas3dOla1a.test.ts",
       "periodicBonding.test.ts"
     ],
-    "nTests": 16,
+    "nTests": 28,
     "e2e": true,
     "a11y": false,
     "loc": 247,
@@ -936,6 +1016,35 @@
     "params": true,
     "instr": false,
     "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "configuracion-electronica",
+    "title": "Configuración electrónica y orbitales atómicos",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "ElectronConfigLab",
+    "models": [
+      "electronConfiguration",
+      "periodicTrends"
+    ],
+    "tests": [
+      "electronConfiguration.test.ts",
+      "escenas3dOla1a.test.ts",
+      "escenas3dOla1b.test.ts",
+      "periodicBonding.test.ts"
+    ],
+    "nTests": 38,
+    "e2e": true,
+    "a11y": false,
+    "loc": 237,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
     "sound": true,
     "datasets": true,
     "illustrative": true
@@ -1665,6 +1774,32 @@
     "params": false,
     "instr": false,
     "manip": true,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "pila-electroquimica",
+    "title": "Oxidación-reducción: pila de Daniell, ecuación de Nernst y ley de Faraday",
+    "grade": 11,
+    "area": "quimica",
+    "lab": "GalvanicCellLab",
+    "models": [
+      "electrochemicalCell"
+    ],
+    "tests": [
+      "electrochemicalCell.test.ts",
+      "escenas3dOla1b.test.ts"
+    ],
+    "nTests": 17,
+    "e2e": true,
+    "a11y": false,
+    "loc": 191,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
     "sound": true,
     "datasets": true,
     "illustrative": false

@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (69)
+## Prácticas implementadas (74)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -27,6 +27,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 7.º | Empuje y flotación: principio de Arquímedes | Física | Dinamómetro que se baja, vaso de rebose y balanza; densímetro; el huevo flota al agregar sal; la plastilina en bola se hunde y en barco flota; Urabá y Turbo |
 | 7.º | Circuitos simples con baterías, interruptores y bombillas | Física | Tablero de bornes: se arrastran pilas, interruptores, bombillos, LED, motor, zumbador y cables; serie y paralelo, cortocircuito, conductores y aislantes; multímetro (análisis nodal exacto) |
 | 7.º | Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford | Química | Dispersión de Rutherford (tan(θ/2) = d/2b, N ∝ Z²/(E²·sen⁴(θ/2))) frente a la dispersión múltiple del átomo de Thomson; conteo de centelleos con estadística de Poisson; datos de Geiger y Marsden (1913); niveles de Bohr con la energía de ionización del NIST y líneas de Balmer; 3D: lámina, trayectorias hiperbólicas y los cuatro modelos |
+| 7.º | Corazón y circulación: frecuencia cardíaca y ejercicio | Biología | Ciclo cardíaco con válvulas (fracción sistólica de Guyton y Hall), gasto cardíaco = FC × VS (5,04 L/min en reposo), FC máxima de Tanaka y reserva de Karvonen, presión con el ejercicio (modelo educativo, sin consejo médico), pulso propio opcional; 3D: cuatro cavidades, válvulas y circulación doble sincronizadas con el ciclo |
 | 8.º | Herencia mendeliana y cuadros de Punnett | Biología | Segregación y transmisión independiente, dominancia completa/incompleta, muestreo con semilla, χ² |
 | 8.º | Reflexión y refracción de la luz | Física | Ley de reflexión, Snell, ángulo crítico y reflexión total interna, reflectancia de Fresnel, índice desconocido por pendiente |
 | 8.º | Laboratorio de ondas | Física | v = λ·f, v = √(T/μ), onda armónica, energía ∝ A²f², sonido en el aire según la temperatura |
@@ -36,6 +37,8 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 8.º | Modelo interactivo de ADN y complementariedad | Biología | Extracción de ADN de fresa, banano o cebolla (tampón, filtrado, alcohol frío, varilla) con índice de rendimiento de un modelo calculado; doble hebra arrastrando bases, puentes de hidrógeno, antiparalelismo, %GC, regla de Wallace y reglas de Chargaff |
 | 8.º | Energía cinética y energía potencial | Física | Tres estaciones: riel de aire con fotopuerta (Ec = ½mv², linealización Ec–v²), torre de caída de 10 m con torno, sensor de fuerza y fotopuerta en la Tierra, la Luna o Marte (F·h = mgh = ½mv²; caso de referencia 98,1 J y 14,0 m/s) y lanzador de resorte (½kx²); barras de energía en vivo, rozamiento y aire en el modo avanzado, instrumento real con semilla e ideas erróneas puestas a prueba |
 | 8.º | Tabla periódica y propiedades periódicas | Química | Datos reales de PubChem (electronegatividad de Pauling, energía de ionización del NIST, radio de van der Waals, masa) y radios covalentes de Pyykkö; carga nuclear efectiva de Slater; tendencias y excepciones por período y grupo; 3D: relieve periódico con esferas a escala |
+| 8.º | Meiosis, entrecruzamiento y variabilidad genética | Biología | Diez etapas con cromosomas, cromátidas y ADN por célula frente a la mitosis; segregación independiente (2ⁿ; 2²³ = 8 388 608), entrecruzamiento (r = d/100, Morgan) muestreado con semilla, no disyunción; 3D: homólogos de colores, quiasma y cuatro gametos |
+| 8.º | Sistema nervioso: neurona, arco reflejo y tiempo de reacción | Biología | Regla que cae con datos propios (t = √(2d/g)) y aviso de anticipación (< 0,100 s); potencial de acción de umbral (−70, −55, +30 mV, todo o nada); fibras Aα, Aδ y C (Kandel) y arco reflejo; 3D: impulso saltatorio por el axón mielinizado y arco reflejo |
 | 9.º | Del ADN a la proteína | Biología | Complementariedad, replicación semiconservativa, código genético, clasificación de mutaciones (HBB Glu6Val) |
 | 9.º | Leyes de Newton | Física | F_neta = m·a, fricción estática y cinética, cinemática con fotopuertas (a = 2d/t²) |
 | 9.º | Velocidad, aceleración y movimiento | Física | MRU y MRUA, fotografía estroboscópica, gráficas x–t y v–t (pendiente y área), frenado, reto de igualar gráficas |
@@ -57,6 +60,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 10.º | Respiración celular y balance energético | Biología | Respirómetro de tres tubos con KOH y termobarómetro; Q10 y desnaturalización; cociente respiratorio; fermentación en anoxia; contabilidad del ATP (32 frente a 38) |
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |
 | 10.º | Geometría molecular en 3D y modelo VSEPR | Química | Visor 3D (3Dmol.js) con 12 confórmeros reales de PubChem (CID, fecha y huella SHA-256); medición de distancias y ángulos con el ratón o el teclado; predicción VSEPR (AXₘEₙ) frente al ángulo calculado; procedencia «Predicción computacional»; búsqueda opcional en PubChem |
+| 10.º | Configuración electrónica y orbitales atómicos | Química | Diagrama de cajas de Z = 1 a 54 con Aufbau (Madelung), Pauli y Hund verificados; estados fundamentales medidos de PubChem con las 8 excepciones (Cr, Cu, Nb, Mo, Ru, Rh, Pd, Ag); período, grupo y valencia deducidos; 3D: nubes |ψ|² hidrogenoides de s, p y d que se llenan electrón por electrón |
 | 11.º | Contaminación del agua e indicadores | Ambiental | Ríos de Urabá simulados; sonda multiparamétrica, DBO₅ y coliformes; curva de Streeter–Phelps; BMWP/Col (Roldán); índice de calidad tipo NSF; comparación con normas colombianas |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
 | 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |
@@ -79,6 +83,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 11.º | Funciones orgánicas nitrogenadas: aminas y amidas | Química | Clasificación, nombres, basicidad con pKaH reales y pH calculado, amida plana frente a amina piramidal medidas en 3D, propiedades y enlace peptídico |
 | 11.º | Reacciones orgánicas en 3D | Química | 24 reacciones balanceadas con átomos mapeados en 3D (ilustración), estequiometría, entalpías por la ley de Hess con datos citados, equilibrio de esterificación (K ≈ 4), regla de Markovnikov y oxidación de alcoholes |
 | 11.º | Carga, ley de Coulomb y campo eléctrico | Física | F = k·q₁·q₂/r² (k = 8,99 × 10⁹), dinamómetro y regla con resolución, linealización F–1/r²; superposición, campo y potencial de 1 a 3 cargas; líneas de campo (RK4) y equipotenciales; 3D: líneas en el espacio, superficie equipotencial y fuerza sobre la carga de prueba |
+| 11.º | Oxidación-reducción: pila de Daniell, ecuación de Nernst y ley de Faraday | Química | Seis semiceldas con E° del CRC Handbook (Daniell 1,104 V), Nernst a 25 °C, pila de concentración, puente salino (KNO₃/KCl con aviso de precipitado), descarga con corriente constante y balanza (m = I·t·M/(n·F)); 3D: electrones por el cable, iones por el puente y electrodos que cambian de masa |
 
 Todas las prácticas de la malla propuesta están implementadas.
 

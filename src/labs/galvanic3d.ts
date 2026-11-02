@@ -38,7 +38,7 @@ export function cellScene({ input, cell, state, phase, running }: CellSceneInput
   const items: SceneItem[] = [{ id: 'mesa', kind: 'plane', center: [0, 0, 0], size: [12, 6], color: 'surface-3', opacity: 0.7 }];
   const side = (h: typeof L, x: number, c: number, mass: number, key: 'izq' | 'der') => {
     const role = cell.anode === (key === 'izq' ? 'left' : 'right') ? 'ánodo (−): oxidación' : cell.cathode === (key === 'izq' ? 'left' : 'right') ? 'cátodo (+): reducción' : 'electrodo';
-    items.push({ id: `vaso-${key}`, kind: 'box', center: [x, 1.6, 0], size: [3, 3.2, 2.6], color: 'line-strong', opacity: 0.18, edges: true });
+    items.push({ id: `vaso-${key}`, kind: 'box', center: [x, 1.6, 0], size: [3, 3.2, 2.6], color: 'line-strong', opacity: 0.18 });
     const tint = h.metal === 'Cu' ? Math.min(0.75, 0.12 + 0.6 * Math.min(1, c)) : 0.3;
     items.push({ id: `sol-${key}`, kind: 'box', center: [x, 1.15, 0], size: [2.9, 2.3, 2.5], color: h.ionColor as SceneColor, opacity: tint, label: `${h.ion} ${fmt(c, 3)} mol/L` });
     items.push({ id: `elec-${key}`, kind: 'box', center: [x, 2.4, 0], size: [1.0, 4.2, electrodeThickness(mass, initialMass(h))], color: METAL_COLOR[h.metal], label: `${h.metal}: ${fmt(mass, 3)} g · ${role}` });
@@ -50,7 +50,7 @@ export function cellScene({ input, cell, state, phase, running }: CellSceneInput
   const wire: Vec3[] = [[anodeX, TOP, 0], [anodeX, WIRE_Y, 0], [cathX, WIRE_Y, 0], [cathX, TOP, 0]];
   const wireL: Vec3[] = [[XL, TOP, 0], [XL, WIRE_Y, 0], [XR, WIRE_Y, 0], [XR, TOP, 0]];
   for (let i = 0; i < 3; i++) items.push({ id: `cable-${i}`, kind: 'rod', from: wireL[i], to: wireL[i + 1], radius: 0.05, color: 'ink-2' });
-  items.push({ id: 'medidor', kind: 'box', center: [0, WIRE_Y, 0], size: [1.6, 0.9, 0.5], color: 'surface', edges: true,
+  items.push({ id: 'medidor', kind: 'box', center: [0, WIRE_Y, 0], size: [1.6, 0.9, 0.5], color: 'surface',
     label: input.currentMA > 0 ? `carga ${fmt(input.currentMA, 0)} mA` : `voltímetro ${fmt(cell.voltmeter, 3)} V` });
   // puente salino en U
   const bridge: Vec3[] = [[XL + 1.0, 1.0, 0], [XL + 1.0, 3.9, 0], [XR - 1.0, 3.9, 0], [XR - 1.0, 1.0, 0]];

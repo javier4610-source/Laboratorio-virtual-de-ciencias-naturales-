@@ -41,10 +41,10 @@ export function collisionsScene(inp: CollisionsSceneInput): { items: SceneItem[]
   const r = 0.011;
 
   const items: SceneItem[] = [
-    { id: 'mesa', kind: 'plane', center: [RAIL.length / 2, -0.25, 0], size: [RAIL.length + 0.5, 0.7], color: 'surface-3' },
+    { id: 'mesa', kind: 'plane', center: [RAIL.length / 2, -0.18, 0], size: [RAIL.length + 0.3, 0.5], color: 'surface-3' },
     { id: 'riel', kind: 'box', center: [RAIL.length / 2, FLOOR - 0.025, 0], size: [RAIL.length, 0.05, 0.08], color: 'series-8', edges: true },
-    { id: 'pata-1', kind: 'rod', from: [0.15, -0.25, 0], to: [0.15, FLOOR - 0.05, 0], radius: 0.015, color: 'ink-2' },
-    { id: 'pata-2', kind: 'rod', from: [RAIL.length - 0.15, -0.25, 0], to: [RAIL.length - 0.15, FLOOR - 0.05, 0], radius: 0.015, color: 'ink-2' },
+    { id: 'pata-1', kind: 'rod', from: [0.15, -0.18, 0], to: [0.15, FLOOR - 0.05, 0], radius: 0.015, color: 'ink-2' },
+    { id: 'pata-2', kind: 'rod', from: [RAIL.length - 0.15, -0.18, 0], to: [RAIL.length - 0.15, FLOOR - 0.05, 0], radius: 0.015, color: 'ink-2' },
     ...photogate('fotopuerta-1', RAIL.gate1, FLOOR, 0.24, 0.1),
     ...photogate('fotopuerta-2', RAIL.gate2, FLOOR, 0.24, 0.1),
     ...cart('carrito-1', st.x1, FLOOR, s1, 'series-1', 'Deslizador 1'),
@@ -73,5 +73,5 @@ export function collisionsScene(inp: CollisionsSceneInput): { items: SceneItem[]
   else if (!inp.pastContact) description += 'Durante el choque se intercambian cantidad de movimiento; observa si la flecha del total cambia.';
   else if (!inp.done) description += 'Las flechas tenues son las de antes del choque. La del total no cambia: el impulso que recibe un deslizador lo pierde el otro.';
   else description += `Según el modelo: antes ${kg(res.model.pBefore)} y después ${kg(res.model.pAfter)} en total (se conserva); p₁ pasó de ${fmt(res.m1 * res.model.v1, 3)} a ${fmt(res.m1 * res.model.v1f, 3)} kg·m/s y p₂ de ${fmt(res.m2 * res.model.v2, 3)} a ${fmt(res.m2 * res.model.v2f, 3)} kg·m/s (positivo = hacia la derecha). Las flechas tenues son las de antes.`;
-  return { items, extent: 1.2, target: [RAIL.length / 2, 0.1, 0], description, k, p1, p2 };
+  return { items, extent: 1.04, target: [RAIL.length / 2, 0.12, 0], description, k, p1, p2 };
 }

@@ -3,7 +3,7 @@
  * rozamiento) y la aceleración. Funciones PURAS a partir del MISMO resultado del modelo que usa el laboratorio
  * (src/models/newton.ts → simulateCart y positionAt): fuerzas, aceleración y posición x(t) = ½·a·t² del mismo instante.
  * Escalas FIJAS (no dependen de la corrida, así las flechas cambian de tamaño con los controles):
- *   fuerzas 0,04 m por newton (10 N = 0,40 m) y aceleración 0,02 m por m/s² (recortada a 40 m/s², y se avisa).
+ *   fuerzas 0,03 m por newton (10 N = 0,30 m) y aceleración 0,02 m por m/s² (recortada a 40 m/s², y se avisa).
  */
 import { fmt } from '../../lib/format';
 import { TRACK_LENGTH } from '../../models/newton';
@@ -11,7 +11,7 @@ import type { SceneColor } from '../../three/colors';
 import type { SceneItem, Vec3 } from '../../three/scene';
 import { cart, cartTop, compact, photogate, xArrow } from './mech3d';
 
-export const FORCE_SCALE = 0.04; // m de escena por N
+export const FORCE_SCALE = 0.03; // m de escena por N
 export const ACCEL_SCALE = 0.02; // m de escena por m/s²
 export const ACCEL_CAP = 40; // m/s²
 const CART: Vec3 = [0.2, 0.07, 0.12];
@@ -42,10 +42,10 @@ export function newtonScene(inp: NewtonSceneInput): { items: SceneItem[]; extent
   const top = cartTop(FLOOR, CART);
   const cy = (FLOOR + top) / 2 + 0.01;
   const items: SceneItem[] = [
-    { id: 'mesa', kind: 'plane', center: [0.55, -0.8, 0], size: [1.9, 0.7], color: 'surface-3' },
+    { id: 'mesa', kind: 'plane', center: [0.55, -0.62, 0], size: [1.7, 0.6], color: 'surface-3' },
     { id: 'pista', kind: 'box', center: [0.55, FLOOR - 0.02, 0], size: [1.6, 0.04, 0.18], color: SURFACE_COLOR[inp.surfaceId] ?? 'series-8', label: inp.surfaceId === 'colchon' ? 'Riel de aire' : inp.surfaceId === 'madera' ? 'Madera' : 'Lija' },
-    { id: 'pata-1', kind: 'rod', from: [-0.15, -0.8, 0], to: [-0.15, FLOOR - 0.04, 0], radius: 0.015, color: 'ink-2' },
-    { id: 'pata-2', kind: 'rod', from: [1.25, -0.8, 0], to: [1.25, FLOOR - 0.04, 0], radius: 0.015, color: 'ink-2' },
+    { id: 'pata-1', kind: 'rod', from: [-0.15, -0.62, 0], to: [-0.15, FLOOR - 0.04, 0], radius: 0.015, color: 'ink-2' },
+    { id: 'pata-2', kind: 'rod', from: [1.25, -0.62, 0], to: [1.25, FLOOR - 0.04, 0], radius: 0.015, color: 'ink-2' },
     ...photogate('fotopuerta-1', 0, FLOOR, 0.3, 0.12),
     ...photogate('fotopuerta-2', TRACK_LENGTH, FLOOR, 0.3, 0.12),
     ...cart('carrito', x, FLOOR, CART, 'series-2'),
@@ -72,5 +72,5 @@ export function newtonScene(inp: NewtonSceneInput): { items: SceneItem[]; extent
   if (!inp.moves) description += 'La fuerza aplicada no supera el rozamiento estático máximo: la fuerza neta es cero y el carrito no acelera.';
   else description += `Fuerza neta ${fmt(inp.netForce, 2)} N hacia la derecha: la flecha a apunta en el mismo sentido${showNumbersA ? ` y mide a = F neta / m = ${fmt(inp.acceleration, 2)} m/s²` : ''}.${capped ? ' La flecha de la aceleración está recortada a 40 m/s² para que quepa.' : ''}`;
   description += pos;
-  return { items, extent: 1.0, target: [0.55, 0.05, 0], description, accelCapped: capped };
+  return { items, extent: 0.78, target: [0.55, 0, 0], description, accelCapped: capped };
 }

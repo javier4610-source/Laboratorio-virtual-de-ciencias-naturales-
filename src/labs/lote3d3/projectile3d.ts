@@ -89,7 +89,7 @@ export function projectileScene(inp: ProjectileSceneInput): { items: SceneItem[]
     { id: 'piso', kind: 'plane', center: [inp.spanX / 2 - 0.1 * span, 0, 0], size: [inp.spanX + 0.45 * span, 2 * zW], color: 'surface-3' },
   ];
   if (tableTop > 0.03) {
-    items.push({ id: 'mesa', kind: 'box', center: [-0.12 * span, tableTop / 2, 0], size: [0.26 * span, tableTop, 0.2 * span], color: 'series-6', opacity: 0.85 });
+    items.push({ id: 'mesa', kind: 'box', center: [-0.07 * span, tableTop / 2, 0], size: [0.14 * span, tableTop, 0.12 * span], color: 'series-6', opacity: 0.85 });
   }
   // Soporte, lanzador (tubo a lo largo de la dirección de salida, por detrás de la boca) y plomada.
   items.push({ id: 'soporte', kind: 'rod', from: [0, Math.max(0, tableTop), 0], to: muzzle, radius: 0.008 * span, color: 'ink-2' });
@@ -140,7 +140,8 @@ export function projectileScene(inp: ProjectileSceneInput): { items: SceneItem[]
   }
   if (inp.target !== null) description += ` El blanco está a ${fmt(inp.target, 2)} m.`;
 
-  const extent = 0.5 * Math.hypot(inp.spanX + 0.45 * span, Math.max(inp.spanY, inp.height + 0.1)) + 0.05 * span;
-  const target: Vec3 = [inp.spanX / 2 - 0.1 * span, Math.max(inp.spanY, inp.height) / 2, 0];
+  // Encuadre fijo por corrida (depende de v₀, h y el blanco, no del ángulo): el área de vuelo del banco 2D.
+  const extent = 0.53 * Math.max(inp.spanX + 0.2 * span, Math.max(inp.spanY, inp.height + 0.1));
+  const target: Vec3 = [inp.spanX / 2 - 0.08 * span, Math.max(inp.spanY, inp.height) / 2, 0];
   return { items, extent, target, description, k, velocity: vel, position: pos };
 }

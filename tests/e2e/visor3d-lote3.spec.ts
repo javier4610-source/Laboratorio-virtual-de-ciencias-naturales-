@@ -202,7 +202,7 @@ test.describe('sin WebGL', () => {
     await openFree(page, 'proyectiles');
     await open3D(page, byName('proyectiles'));
     const v = view(page, 'pry3d');
-    await page.getByRole('slider', { name: 'Ángulo de lanzamiento' }).fill('45');
+    await page.getByRole('slider', { name: 'Ángulo de lanzamiento', exact: true }).fill('45');
     await expect.poll(() => description(v)).toContain('lanzada a 45,0°');
     expect(await description(v)).toContain('La esfera está en el lanzador');
     await page.getByRole('button', { name: 'Disparar', exact: true }).click();
@@ -219,9 +219,9 @@ test.describe('sin WebGL', () => {
     await openFree(page, 'newton');
     await open3D(page, byName('newton'));
     const v = view(page, 'nwt3d');
-    await page.getByRole('slider', { name: 'Fuerza aplicada' }).fill('5');
+    await page.getByRole('slider', { name: 'Fuerza aplicada', exact: true }).fill('5');
     await expect.poll(() => description(v)).toContain('aplicada 5,0 N');
-    await page.getByRole('slider', { name: 'Masa del carrito' }).fill('1');
+    await page.getByRole('slider', { name: 'Masa del carrito', exact: true }).fill('1');
     await expect.poll(() => description(v)).toContain('peso 9,80 N');
     await page.getByRole('button', { name: 'Soltar el carrito' }).click();
     await expect.poll(() => description(v)).toContain('llegó a la fotopuerta 2');

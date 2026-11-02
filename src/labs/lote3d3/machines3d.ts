@@ -45,8 +45,8 @@ export function leverScene(inp: LeverSceneInput): { items: SceneItem[]; extent: 
     { id: 'fulcro', kind: 'sphere', center: pivot, radius: 0.03, color: 'series-7', label: 'Fulcro' },
     { id: 'barra', kind: 'box', center: at(BAR.length / 2), size: [BAR.length, 0.025, 0.04], rotationZ: alpha, color: 'series-6' },
     // Brazos: del fulcro a la carga (dR) y del fulcro a la fuerza (dF), delante de la barra.
-    { id: 'brazo-R', kind: 'rod', from: add(pivot, [0, 0, 0.035]), to: add(at(L.xLoad), [0, 0, 0.035]), radius: 0.008, color: 'series-1', label: `dR = ${fmt(inp.dRcm, 0)} cm` },
-    { id: 'brazo-F', kind: 'rod', from: add(pivot, [0, 0, 0.06]), to: add(at(L.xEffort), [0, 0, 0.06]), radius: 0.008, color: 'series-2', label: `dF = ${fmt(inp.dFcm, 0)} cm` },
+    { id: 'brazo-R', kind: 'rod', from: add(pivot, [0, 0, 0.035]), to: add(at(L.xLoad), [0, 0, 0.035]), radius: 0.008, color: 'series-1', label: 'dR' },
+    { id: 'brazo-F', kind: 'rod', from: add(pivot, [0, 0, 0.06]), to: add(at(L.xEffort), [0, 0, 0.06]), radius: 0.008, color: 'series-2', label: 'dF' },
     // Carga colgada del agujero.
     { id: 'hilo-carga', kind: 'rod', from: loadPt, to: loadTop, radius: 0.003, color: 'ink' },
     { id: 'carga', kind: 'box', center: [loadTop[0], loadTop[1] - box / 2, 0], size: [box, box, box], color: 'series-8', edges: true },
@@ -61,7 +61,7 @@ export function leverScene(inp: LeverSceneInput): { items: SceneItem[]; extent: 
   let description = `Palanca de ${inp.className.toLowerCase()} en 3D: barra de 1,00 m con el fulcro ${L.xFulcrum > 0 ? 'en el centro' : 'en el extremo izquierdo'}, carga de ${fmt(inp.massG, 0)} g a dR = ${fmt(inp.dRcm, 0)} cm del fulcro y dinamómetro a dF = ${fmt(inp.dFcm, 0)} cm. La flecha R es el peso de la carga (${fmt(L.R, 2)} N, hacia abajo) y la flecha F, con la misma escala, es la fuerza del dinamómetro (${L.direction === 'arriba' ? 'hacia arriba' : 'hacia abajo'}); el brazo más largo necesita la fuerza más pequeña.`;
   if (deg > 0.05) description += ` La barra está girada ${fmt(deg, 1)}°: cada punto se mueve en proporción a su brazo.`;
   if (inp.measured) description += ` Según el modelo: F = ${fmt(L.F, 2)} N, R·dR = ${fmt(L.torqueLoad, 3)} N·m y F·dF = ${fmt(L.torqueEffort, 3)} N·m; al girar ${fmt(LEVER_TILT_DEG, 0)}°, la fuerza recorre ${fmt(L.sEffort * 100, 1)} cm y la carga ${fmt(L.sLoad * 100, 1)} cm.`;
-  return { items, extent: 0.72, target: [(x0 + x1) / 2, PIVOT_Y - 0.05, 0], description, k, alpha };
+  return { items, extent: 0.6, target: [(x0 + x1) / 2, PIVOT_Y - 0.08, 0], description, k, alpha };
 }
 
 export interface PulleySceneInput {

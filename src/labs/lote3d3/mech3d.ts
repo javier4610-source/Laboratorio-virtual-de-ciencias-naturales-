@@ -18,7 +18,7 @@ export interface EnergyBar {
 /**
  * Barras de energía 3D de pie sobre `base` (centro de la primera barra al ras del piso), una al lado de la otra a lo
  * largo de x. La altura de cada barra es value/total·`maxHeight` (escala FIJA por corrida: la energía total de la corrida
- * mide `maxHeight`). Detrás de cada barra hay una columna translúcida de la altura total, para leer la fracción.
+ * mide `maxHeight`). Detrás de cada barra hay un tablero translúcido de la altura total, para leer la fracción.
  */
 export function energyBars(base: Vec3, bars: readonly EnergyBar[], total: number, opts: { maxHeight: number; width: number; gap: number }): SceneItem[] {
   const items: SceneItem[] = [];
@@ -26,7 +26,8 @@ export function energyBars(base: Vec3, bars: readonly EnergyBar[], total: number
   bars.forEach((b, i) => {
     const x = base[0] + i * (opts.width + opts.gap);
     const h = Math.max(0, Math.min(1.02 * opts.maxHeight, b.value * k));
-    items.push({ id: `${b.id}-total`, kind: 'box', center: [x, base[1] + opts.maxHeight / 2, base[2]], size: [opts.width * 1.12, opts.maxHeight, opts.width * 1.12], color: 'ink-3', opacity: 0.12, edges: true });
+    // Tablero de fondo detrás de la barra (no la envuelve: así el orden de dibujo de lo translúcido es estable).
+    items.push({ id: `${b.id}-total`, kind: 'box', center: [x, base[1] + opts.maxHeight / 2, base[2] - opts.width * 0.62], size: [opts.width * 1.12, opts.maxHeight, opts.width * 0.12], color: 'ink-3', opacity: 0.22, edges: true });
     // Una barra vacía se dibuja como una lámina (altura mínima) para que su rótulo siga en su lugar.
     items.push({ id: b.id, kind: 'box', center: [x, base[1] + Math.max(h, 0.004) / 2, base[2]], size: [opts.width, Math.max(h, 0.004), opts.width], color: b.color, label: b.label });
   });

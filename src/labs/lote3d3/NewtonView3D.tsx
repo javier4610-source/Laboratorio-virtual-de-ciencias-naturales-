@@ -10,6 +10,6 @@ export default function NewtonView3D(props: NewtonSceneInput) {
   return (
     <Scene3D idPrefix="nwt3d" title="Carrito en 3D con su diagrama de cuerpo libre" items={scene.items} extent={scene.extent} target={scene.target}
       description={scene.description} height={340} initialOrbit={{ yaw: 0.4, pitch: 0.2 }} status="modelo"
-      statusNote="Fuerzas, aceleración y posición del carrito: las del modelo (a = F neta / m, x = ½·a·t²) en el mismo instante que el banco. Escalas fijas: 10 N = 0,40 m de flecha y 10 m/s² = 0,20 m (la aceleración se recorta a 40 m/s² y se avisa). Las pesas y las fotopuertas son dibujo." />
+      statusNote="Fuerzas, aceleración y posición del carrito: las del modelo (a = F neta / m, x = ½·a·t²) en el mismo instante que el banco. Escalas fijas: 10 N = 0,30 m de flecha y 10 m/s² = 0,20 m (la aceleración se recorta a 40 m/s² y se avisa). Las pesas y las fotopuertas son dibujo." />
   );
 }

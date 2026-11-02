@@ -11,7 +11,7 @@ import { BLOCK, RAMP, supportHeight, type RampResult } from '../../models/workPo
 import { add, arrowScale, scale, type SceneItem, type Vec3 } from '../../three/scene';
 
 export const WORK_FORCE_SCALE = arrowScale(12, 0.4);
-const BOARD_T = 0.02, BOARD_W = 0.2;
+const BOARD_T = 0.03, BOARD_W = 0.3;
 const BLOCK_L = 0.1, BLOCK_H = 0.05, BLOCK_W = 0.08;
 
 export interface WorkSceneInput {
@@ -49,8 +49,8 @@ export function workScene(inp: WorkSceneInput): { items: SceneItem[]; extent: nu
     { id: 'mesa', kind: 'plane', center: [0.45, -0.005, -0.15], size: [1.6, 0.9], color: 'surface-3' },
     { id: 'tabla', kind: 'box', center: along(RAMP.length / 2, -BOARD_T / 2), size: [RAMP.length, BOARD_T, BOARD_W], rotationZ: th, color: 'series-6' },
     // Soporte universal a 0,60 m de la bisagra con la pinza a la altura que da el ángulo.
-    { id: 'soporte', kind: 'rod', from: [RAMP.postDistance, 0, -0.14], to: [RAMP.postDistance, supportHeight(r.angleDeg) + 0.08, -0.14], radius: 0.008, color: 'ink-2' },
-    { id: 'pinza', kind: 'rod', from: [RAMP.postDistance, supportHeight(r.angleDeg) - BOARD_T, -0.14], to: [RAMP.postDistance, supportHeight(r.angleDeg) - BOARD_T, -0.02], radius: 0.006, color: 'ink-2' },
+    { id: 'soporte', kind: 'rod', from: [RAMP.postDistance, 0, -0.21], to: [RAMP.postDistance, supportHeight(r.angleDeg) + 0.08, -0.21], radius: 0.008, color: 'ink-2' },
+    { id: 'pinza', kind: 'rod', from: [RAMP.postDistance, supportHeight(r.angleDeg) - BOARD_T, -0.21], to: [RAMP.postDistance, supportHeight(r.angleDeg) - BOARD_T, -0.15], radius: 0.006, color: 'ink-2' },
     // Marcas de inicio (10 cm) y fin (70 cm).
     ...[RAMP.startMark, RAMP.endMark].map((m, i): SceneItem => ({ id: `marca-${i}`, kind: 'box', center: along(m, 0.001), size: [0.006, 0.003, BOARD_W * 1.05], rotationZ: th, color: 'data' })),
     { id: 'bloque', kind: 'box', center: along(s + BLOCK_L / 2, BLOCK_H / 2), size: [BLOCK_L, BLOCK_H, BLOCK_W], rotationZ: th, color: 'series-6', edges: true },
@@ -71,7 +71,7 @@ export function workScene(inp: WorkSceneInput): { items: SceneItem[]; extent: nu
   if (dNow > 0.004) {
     items.push({ id: 'd', kind: 'arrow', from: dStart, vector: scale(u, dNow), radius: 0.006, color: 'series-5', label: 'd' });
     const base = along(RAMP.startMark, 0);
-    items.push({ id: 'h', kind: 'arrow', from: [base[0] - 0.08, base[1], 0.14], vector: [0, hNow, 0], radius: 0.006, color: 'series-4', label: 'h' });
+    items.push({ id: 'h', kind: 'arrow', from: [base[0] - 0.08, base[1], 0.2], vector: [0, hNow, 0], radius: 0.006, color: 'series-4', label: 'h' });
   }
   // Rectángulos de trabajo detrás de la rampa: ancho = distancia (m), alto = fuerza × k. Área ∝ trabajo.
   if (dNow > 0.004) {
@@ -88,6 +88,6 @@ export function workScene(inp: WorkSceneInput): { items: SceneItem[]; extent: nu
     description += `, fuerza F paralela a la rampa hacia arriba y rozamiento f hacia abajo de la rampa. El bloque recorrió d = ${fmt(dNow * 100, 0)} cm sobre la rampa y subió h = ${fmt(hNow * 100, 1)} cm. Detrás, dos rectángulos: su ancho es la distancia y su alto la fuerza, así su área es el trabajo; «F·d» (jalando por la rampa) es más grande que «m·g·h» (subirlo derecho) en lo que se va en calor por el rozamiento.`;
     if (inp.phase === 'medido') description += ` Según el modelo: F·d = ${fmt(r.workIn, 3)} J, m·g·h = ${fmt(r.workLift, 3)} J y calor ${fmt(r.heat, 3)} J.`;
   }
-  return { items, extent: 0.75, target: [0.3, 0.2, -0.1], description, dNow, hNow };
+  return { items, extent: 0.62, target: [0.32, 0.22, -0.1], description, dNow, hNow };
 }
 

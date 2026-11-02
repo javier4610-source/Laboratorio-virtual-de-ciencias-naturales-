@@ -614,7 +614,7 @@ Nota técnica: con WebGL por software (SwiftShader) el orden de dibujo de piezas
 profundidad (pared celular y plano ecuatorial, por ejemplo) puede variar unos pocos píxeles de borde entre cuadros; la
 prueba E2E de «Inicio restablece la vista» tolera menos del 3 % de los píxeles pintados.
 
-#### Lote 3D-3 · Mecánica (8 prácticas)
+#### Lote 3D-3 · Mecánica (8 prácticas) — hecho
 
 | Práctica | Grado | Escena 3D propuesta (qué ve y manipula el estudiante) | Tecnología | Complejidad | Prioridad |
 |---|---|---|---|---|---|
@@ -626,6 +626,33 @@ prueba E2E de «Inicio restablece la vista» tolera menos del 3 % de los píxele
 | `trabajo` Trabajo, potencia y plano inclinado | 9.º | Plano inclinado 3D con el bloque, la fuerza aplicada y el desplazamiento; el área «fuerza × distancia» se muestra como superficie para comparar rutas. | Kit general de escenas 3D (three.js, en construcción en paralelo) | S | 2 |
 | `maquinas` Máquinas simples: palancas y poleas | 6.º | Palanca y polipasto 3D: al tirar de la cuerda se ve cuánto sube la carga y cuánta cuerda se recoge (ventaja mecánica = relación de distancias). | Kit general de escenas 3D (three.js, en construcción en paralelo) | M | 2 |
 | `cinetica-potencial` Energía cinética y energía potencial | 8.º | Torre de caída y resorte 3D con fotopuertas: la esfera atraviesa los sensores y el resorte se comprime; barras de ½mv², mgh y ½kx². | Kit general de escenas 3D (three.js, en construcción en paralelo) | S | 3 |
+
+**Estado del lote 3D-3: hecho (2026-11-02).** `pendulo` ya tenía el piloto del kit (`src/labs/pendulum3d.ts`). Las otras
+siete prácticas tienen una tarjeta «Vista 3D» cerrada que se abre a pedido (el código de la vista, el kit `src/three` y
+three.js se descargan solo entonces; `npm run perf` lo comprueba), con el mismo patrón del lote 3D-2: respaldo SVG sin
+WebGL con las mismas primitivas, giro con ratón, dedo, teclado y botones, descripción textual que cambia con el estado,
+chip «Modelo calculado» con la frase de qué es cálculo y qué es dibujo, movimiento solo si lo mueve el laboratorio (sigue
+al tiempo de la simulación: quieta en pausa de SimControls, salto al resultado con movimiento reducido) y sin
+desbordamiento ni rótulos encimados a 390 px. Código: `src/labs/lote3d3/` (funciones puras `projectile3d.ts`,
+`newton3d.ts`, `collisions3d.ts`, `energy3d.ts`, `work3d.ts`, `machines3d.ts`, `kp3d.ts`, piezas comunes en `mech3d.ts` y
+una vista diferida por práctica). Pruebas: `tests/unit/lote3d3.test.ts` y `tests/e2e/visor3d-lote3.spec.ts`. Ningún número
+científico nuevo: posiciones, velocidades, fuerzas y energías salen del modelo de cada práctica en el mismo instante que su
+banco; las escalas de las flechas y barras son fijas por corrida (o fijas del todo) y se dicen en el chip. Ampliación del
+kit: `rotationZ` opcional en las cajas (para la rampa, el bloque y la barra de la palanca), compatible con lo anterior.
+
+| Práctica | Qué muestra la vista 3D (implementado) | Estatus | Desviación respecto de la propuesta |
+|---|---|---|---|
+| `proyectiles` | Lanzador, mesa y piso; la esfera en la posición de la trayectoria del modelo en el mismo instante; la trayectoria recorrida (puntos cada 0,05 s, como la fotografía estroboscópica) y su sombra en el suelo; flechas v, vx y vy (sin aire, velocidad exacta del modelo ideal; con aire, pendiente entre las muestras de la integración RK4) con escala fija por disparo (√(v₀² + 2gh) = 0,22 del encuadre); antes de disparar, la velocidad de salida y sus componentes; blanco del reto y, tras medir con aire, la trayectoria sin aire. La descripción no dice el alcance hasta medirlo con la cinta. | Modelo calculado | Sin «vista lateral» fija: la cámara inicial es casi lateral (12°) y se puede girar. |
+| `newton` | Pista (colchón de aire, madera o lija) con las dos fotopuertas a 1,00 m; carrito con pesas en x = ½·a·t² del mismo instante; diagrama de cuerpo libre 3D: F, rozamiento, peso y normal con escala fija (10 N = 0,30 m, así cambian de tamaño con los controles) y la aceleración (10 m/s² = 0,20 m; su valor se dice al terminar la corrida). | Modelo calculado | Carrito en pista horizontal (el de la práctica), no un bloque en un plano. La flecha de la aceleración se recorta a 40 m/s² (posible con 0,1 kg y 10 N en el colchón) y el rótulo lo avisa. |
+| `choques` | Riel de aire con fotopuertas y los dos deslizadores en las posiciones del modelo (también durante el contacto); flechas p₁ = m₁v₁, p₂ = m₂v₂ y p total sobre la varilla del centro de masa, con escala fija por ensayo (la mayor cantidad de movimiento = 0,45 m); después del choque quedan, tenues, las flechas de antes; al terminar, p antes y después del modelo. | Modelo calculado | La cámara no viaja con el centro de masa (marearía y el teclado ya gira la escena): el centro de masa se marca con una varilla que se mueve con él. |
+| `energia` | Pista con colinas en metros reales (trackHeight del modelo) con postes, la esfera en el punto del banco con su rapidez, y barras 3D de Ep, Ec y disipada sobre tableros de la altura total (energía total = 1,2 m); siempre suman la total. | Modelo calculado | La esfera se dibuja con radio 0,1 m para que se vea. Solo en la actividad de la pista (la caída con método numérico, detrás de una bandera, no tiene 3D). |
+| `trabajo` | Rampa al ángulo elegido con el soporte universal y las marcas de 10 y 70 cm; bloque con sus pesas en el punto de la subida; P, N, F (paralela a la rampa) y f con escala fija (12 N = 0,40 m); desplazamiento d y altura ganada h; detrás, dos rectángulos de ancho = distancia (m) y alto = fuerza: su área es F·d y m·g·h. Con el dinamómetro fuera de escala, el bloque no sube. | Modelo calculado | El área se muestra como dos rectángulos (rampa frente a subirlo derecho), no como una superficie de rutas. La actividad de la escalera no tiene 3D. |
+| `maquinas` | Palanca: barra de 1,00 m que gira 10° al medir, fulcro, carga en su agujero, brazos dR y dF marcados y fuerzas R y F (con el sentido del modelo) a la misma escala (la mayor = 0,40 m); peso de la barra si se tiene en cuenta. Poleas: fija, móvil o polipasto con los n tramos que sostienen la carga; al medir, la mano jala s de cuerda y la carga sube h = s/n (flechas de distancia en metros reales) con F y R a escala. | Modelo calculado | — |
+| `cinetica-potencial` | Las tres estaciones: riel de aire con lanzador, carrito, bandera, fotopuerta a 0,60 m y flecha v; torre de caída con electroimán, objeto a la altura del modelo sobre el haz y flecha v; lanzador de resorte con el resorte comprimido x que empuja al carrito hasta su largo natural. En todas, las mismas barras de energía del banco (Ep o Ep elástica, Ec y disipada) con la energía de la corrida como altura total. | Modelo calculado | Se agregó la estación de energía cinética (riel) además de la torre y el resorte de la propuesta. |
+
+Nota técnica: los rótulos HTML se reparten con la estimación de ancho del kit; donde dos rótulos largos quedaban cerca
+(brazos de la palanca), se usan rótulos cortos («dR», «dF») y los valores van en la descripción. La prueba E2E comprueba a
+390 px que los rótulos visibles no se encimen ni se salgan del lienzo.
 
 #### Lote 3D-4 · Electricidad, campos y partículas (8 prácticas)
 

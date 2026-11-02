@@ -550,6 +550,8 @@
     {
       "batch": "3d-3",
       "name": "Lote 3D-3 · Mecánica",
+      "status": "hecho",
+      "statusNote": "Implementado (2026-11-02) con el kit de escenas src/three: pendulo (piloto) y proyectiles, newton, choques, energia, trabajo, maquinas y cinetica-potencial en src/labs/lote3d3/; desviaciones en docs/v2/ANALISIS-CURRICULAR.md, §6.3.",
       "practices": [
         {
           "id": "pendulo",
@@ -560,7 +562,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-3",
-          "priority": 1
+          "priority": 1,
+          "built3d": "piloto del kit (2026-11-01)"
         },
         {
           "id": "proyectiles",
@@ -571,7 +574,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-3",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-3 (2026-11-02)"
         },
         {
           "id": "newton",
@@ -582,7 +586,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-3",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-3 (2026-11-02)"
         },
         {
           "id": "choques",
@@ -593,7 +598,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-3",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-3 (2026-11-02)"
         },
         {
           "id": "energia",
@@ -604,7 +610,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-3",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-3 (2026-11-02)"
         },
         {
           "id": "trabajo",
@@ -615,7 +622,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-3",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-3 (2026-11-02)"
         },
         {
           "id": "maquinas",
@@ -626,7 +634,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-3",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-3 (2026-11-02)"
         },
         {
           "id": "cinetica-potencial",
@@ -637,7 +646,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-3",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-3 (2026-11-02)"
         }
       ]
     },

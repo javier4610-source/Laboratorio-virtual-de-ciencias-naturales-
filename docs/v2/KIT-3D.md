@@ -43,7 +43,7 @@ src/three/
 |---|---|---|
 | `sphere` | `center`, `radius` | lenteja, partícula grande, núcleo |
 | `ellipsoid` | `center`, `radii` | células, organelos, gotas |
-| `box` | `center`, `size`, `edges?` | pared celular, recipientes, bloques |
+| `box` | `center`, `size`, `edges?`, `rotationZ?` | pared celular, recipientes, bloques; con `rotationZ` (rad, de +x hacia +y alrededor de un eje paralelo a z por su centro), tablas de un plano inclinado y barras de palanca (lote 3D-3) |
 | `rod` | `from`, `to`, `radius` | hilos, varillas, soportes |
 | `arrow` | `from`, `vector`, `radius?` | vectores (velocidad, fuerza, campo) |
 | `spring` | `from`, `to`, `coils`, `radius`, `wire?` | resortes (ley de Hooke, osciladores) |

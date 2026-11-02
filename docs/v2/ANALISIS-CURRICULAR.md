@@ -576,7 +576,7 @@ de varias especies del kit). Pruebas: `tests/unit/lote3d.test.ts` y `tests/e2e/v
 Nota técnica: en 3Dmol.js las formas translúcidas no se dibujan en todos los motores de WebGL (se comprobó con
 SwiftShader), así que lo atenuado mezcla su color con el del fondo y lo resaltado lleva una malla de alambre.
 
-#### Lote 3D-2 · Biología: lo que no se ve a simple vista (8 prácticas)
+#### Lote 3D-2 · Biología: lo que no se ve a simple vista (8 prácticas) — hecho
 
 | Práctica | Grado | Escena 3D propuesta (qué ve y manipula el estudiante) | Tecnología | Complejidad | Prioridad |
 |---|---|---|---|---|---|
@@ -588,6 +588,31 @@ SwiftShader), así que lo atenuado mezcla su color con el del fondo y lo resalta
 | `mendel` Herencia mendeliana y cuadros de Punnett | 8.º | Par de cromosomas homólogos 3D con los loci de los alelos; en el dihíbrido, dos pares en cromosomas distintos que se separan de forma independiente al formar gametos. | Kit general de escenas 3D (three.js, en construcción en paralelo) | M | 2 |
 | `fotosintesis` Fotosíntesis: luz, CO₂ y temperatura | 10.º | Hoja en corte 3D → cloroplasto con tilacoides y estroma; flechas de luz, CO₂ y O₂ cuyo grosor sigue la tasa calculada por el modelo. | Kit general de escenas 3D (three.js, en construcción en paralelo) | M | 2 |
 | `respiracion` Respiración celular y balance energético | 10.º | Mitocondria 3D con crestas seleccionables: glucólisis en el citoplasma, ciclo de Krebs en la matriz y cadena de transporte en la membrana interna, con el balance de ATP por etapa. | Kit general de escenas 3D (three.js, en construcción en paralelo) | M | 2 |
+
+**Estado del lote 3D-2: hecho (2026-11-02).** `celulas` ya tenía el piloto del kit (`src/labs/cell3d.ts`). Las otras siete
+prácticas tienen una tarjeta «Vista 3D» cerrada que se abre a pedido (el código de la vista, el kit `src/three` y
+three.js se descargan solo entonces; `npm run perf` lo comprueba), hecha con el kit de escenas `src/three`: respaldo SVG
+sin WebGL con las mismas primitivas, giro con ratón, dedo, teclado (flechas, + y −, Inicio) y botones, descripción
+textual que cambia con el estado, chip «Modelo calculado» o «Ilustración educativa» con la frase de qué es cálculo y qué
+es dibujo, movimiento solo si lo mueve el laboratorio (en pausa o con movimiento reducido la escena queda quieta) y sin
+desbordamiento a 390 px. Código: `src/labs/lote3d2/` (funciones puras `helix.ts`, `osmosis3d.ts`, `mitosis3d.ts`,
+`extraction3d.ts`, `mendel3d.ts`, `photo3d.ts`, `respiration3d.ts` y una vista diferida por práctica). Pruebas:
+`tests/unit/lote3d2.test.ts` y `tests/e2e/visor3d-lote2.spec.ts`. Ningún número científico nuevo: todo sale del modelo de
+cada práctica, salvo los parámetros geométricos estándar del ADN-B, que se documentan.
+
+| Práctica | Qué muestra la vista 3D (implementado) | Estatus | Desviación respecto de la propuesta |
+|---|---|---|---|
+| `osmosis` | Glóbulo rojo o protoplasto vegetal (con pared y vacuola) cuyo volumen es V(t) del modelo en el mismo instante del banco (V^⅓ por eje; el protoplasto no pasa la pared); 10 acuaporinas con moléculas de agua que las cruzan en el sentido del flujo neto del modelo (sin flujo neto: la mitad entra y la mitad sale) al ritmo del tiempo simulado; solutos del medio ∝ osmolaridad (60 por Osm/L, como el campo 2D) y solutos internos fijos; lisis con la membrana rota y el contenido afuera. | Modelo calculado | Una célula entera con canales en lugar de un parche de bicapa lipídica (se ve a la vez el volumen y el flujo). La actividad de difusión en bolsa no tiene 3D. |
+| `mitosis` | Célula del meristemo de cebolla con 16 cromosomas (8 pares de homólogos, un color por par) en la etapa del ciclo elegida con el deslizador o los botones: cromatina descondensada en G1, segunda cromátida que crece con el ADN del modelo en S, cromátidas hermanas en G2 y profase, placa metafásica con una fibra del huso por cinetocoro, anafase con las cromátidas en V hacia los polos según el avance dentro de la fase, telofase con dos núcleos y placa celular. | Ilustración educativa | Va en la actividad «Ciclo celular y ADN»; en la actividad de conteo no hay 3D para no adelantar la fase de la célula que el estudiante debe clasificar. Huso sin centríolos (célula vegetal). |
+| `adn` | Doble hélice de ADN-B generada con 10,5 pb por vuelta, 3,4 Å por par y fosfatos a 10 Å del eje con la secuencia escrita por el estudiante (hasta 24 pares) y su complementaria; bases por color, extremos 5′ y 3′ antiparalelos, surcos mayor y menor, puentes de hidrógeno (2 en A–T, 3 en G–C); cada par se elige (en la escena o en una lista) y su ficha dice las bases y los puentes. En «Mutaciones», tras aplicar una, la hélice mutada con el par cambiado marcado. | Modelo calculado | No hay coordenadas atómicas de un ADN-B en el repositorio: la hélice es geométrica (modelo de palitos) y el desfase de ≈ 140° entre las columnas que forma los surcos es una aproximación. Sin horquilla de replicación, ARN polimerasa ni ribosoma en 3D (siguen en 2D). |
+| `extraccion-adn` | Extracción: tubo de ensayo con las capas de cada etapa (vacío, filtrado, alcohol encima) a las alturas del banco 2D y hebras de ADN en la interfase cuyo número crece con √índice del modelo (igual que el precipitado 2D); al enrollar, la varilla con el ovillo. Complementariedad: la doble hebra que arma el estudiante como hélice (molde y hebra nueva con su orientación 5′/3′); los puentes de hidrógeno y los pares que no son complementarios aparecen solo al verificar, como las lecturas. | Ilustración (tubo) · Modelo calculado (hélice) | Se agregó el tubo (pedido del docente) además de la hélice que proponía el plan. |
+| `mendel` | Los dos progenitores con un par de cromosomas homólogos por gen (en el dihíbrido, dos pares distintos) y el locus con su alelo (color dominante/recesivo y rótulo del genotipo); debajo, los gametos que forma cada uno (las filas y columnas del cuadro de Punnett), cada uno con un cromosoma de cada par; la descripción da sus probabilidades del modelo. | Ilustración educativa | Sin cuadro de Punnett 3D (la tabla 2D ya lo muestra); la posición real de los loci no está en la práctica, así que es dibujo. |
+| `fotosintesis` | Cloroplasto con doble membrana, estroma y grana de tilacoides; flechas de luz efectiva, CO₂ fijado (fotosíntesis bruta) y O₂ (neta; hacia adentro si la respiración gana) con escalas fijas calculadas con el propio modelo (mayor luz y mayor tasa posibles en la práctica); burbujas de O₂ con la misma fase de animación del banco (quietas en pausa o con movimiento reducido). Los valores numéricos solo se dicen después de «Contar burbujas». | Ilustración educativa | Sin la hoja en corte (solo el cloroplasto). |
+| `respiracion` | Mitocondria con membrana externa, matriz (ciclo de Krebs) y crestas (cadena de transporte) con ATP sintasa, y el citoplasma con la glucólisis; elegibles, con el balance de ATP de la tabla de la práctica según la relación P/O y la lanzadera elegidas. O₂ que entra y CO₂ que sale acumulados con el avance del respirómetro (la mayor de las dos cantidades = 12 esferas, así se ve el cociente respiratorio sin adelantar los µL); en N₂ la cadena se detiene y el CO₂ sale de la fermentación en el citoplasma; las semillas hervidas no intercambian gases. | Ilustración educativa | — |
+
+Nota técnica: con WebGL por software (SwiftShader) el orden de dibujo de piezas translúcidas que coinciden en
+profundidad (pared celular y plano ecuatorial, por ejemplo) puede variar unos pocos píxeles de borde entre cuadros; la
+prueba E2E de «Inicio restablece la vista» tolera menos del 3 % de los píxeles pintados.
 
 #### Lote 3D-3 · Mecánica (8 prácticas)
 

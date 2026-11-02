@@ -456,7 +456,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "L",
           "batch": "3d-2",
-          "priority": 1
+          "priority": 1,
+          "built3d": "piloto del kit (2026-11-01)"
         },
         {
           "id": "osmosis",
@@ -467,7 +468,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-2",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-2 (2026-11-02)"
         },
         {
           "id": "mitosis",
@@ -478,7 +480,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-2",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-2 (2026-11-02)"
         },
         {
           "id": "adn",
@@ -489,7 +492,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo) o 3Dmol con coordenadas de ADN-B generadas",
           "complexity": "L",
           "batch": "3d-2",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-2 (2026-11-02)"
         },
         {
           "id": "extraccion-adn",
@@ -500,7 +504,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo) (reutiliza la hélice de «adn»)",
           "complexity": "S",
           "batch": "3d-2",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-2 (2026-11-02)"
         },
         {
           "id": "mendel",
@@ -511,7 +516,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-2",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-2 (2026-11-02)"
         },
         {
           "id": "fotosintesis",
@@ -522,7 +528,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-2",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-2 (2026-11-02)"
         },
         {
           "id": "respiracion",
@@ -533,9 +540,12 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-2",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-2 (2026-11-02)"
         }
-      ]
+      ],
+      "status": "hecho",
+      "statusNote": "Implementado (2026-11-02) con el kit de escenas src/three: celulas (piloto) y osmosis, mitosis, adn, extraccion-adn (tubo y doble hélice), mendel, fotosintesis y respiracion en src/labs/lote3d2/; desviaciones en docs/v2/ANALISIS-CURRICULAR.md, §6.3."
     },
     {
       "batch": "3d-3",

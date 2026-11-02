@@ -103,7 +103,8 @@ async function axeBoth(page: Page, where: string) {
   const errors: string[] = [];
   for (const scheme of ['light', 'dark'] as const) {
     await page.emulateMedia({ colorScheme: scheme });
-    await page.waitForTimeout(250);
+    // Espera a que terminen las transiciones de color del tema: axe con colores a medio camino da falsos contrastes.
+    await page.waitForTimeout(800);
     errors.push(...(await axe(page, `${where} ${scheme}`)));
   }
   await page.emulateMedia({ colorScheme: 'light' });

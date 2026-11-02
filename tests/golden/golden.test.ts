@@ -17,6 +17,7 @@ import { analyzeBoxes, aufbauOccupancy, groundState, hundBoxes, nobleGasString, 
 import { cell as galvanicCell, discharge as galvanicDischarge, FARADAY } from '../../src/models/electrochemicalCell';
 import { expectedFrequencies, gameteCombinations, meiosisGametes, stageCounts } from '../../src/models/meiosis';
 import { actionPotential, reactionTime, reflexArc } from '../../src/models/nervousSystem';
+import { cycleAt, exercise, hrMax } from '../../src/models/circulation';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -406,6 +407,11 @@ export const GOLDEN: GoldenCase[] = [
     close(reactionTime(23.7), Math.sqrt((2 * 0.237) / 9.8), 1e-12);
     expect(actionPotential(10).fired).toBe(false); close(actionPotential(20).peak, 30, 1e-6);
     close(reflexArc(0.8, 'ad').totalMs, (0.8 / 15) * 1000 + (0.8 / 80) * 1000 + 3, 1e-9);
+  } },
+  { id: 'sistema-circulatorio', origin: 'referencia', what: 'gasto cardíaco 72 lpm × 70 mL = 5,04 L/min (Guyton y Hall: ≈ 5 L/min); FC máx de Tanaka a los 15 años = 208 − 0,7·15 = 197,5 lpm; Karvonen al 50 %: 72 + 0,5·125,5 = 134,75 lpm; a 72 lpm la sístole dura 0,4·60/72 = 0,333 s con las válvulas AV cerradas', run: () => {
+    close(exercise({ age: 15, hrRest: 72, svRest: 70, intensity: 0 }).co, 5.04, 1e-12); close(hrMax(15), 197.5, 1e-12);
+    close(exercise({ age: 15, hrRest: 72, svRest: 70, intensity: 50 }).hr, 134.75, 1e-12);
+    const c = cycleAt(0.1, 72); close(c.systoleS, 0.4 * 60 / 72, 1e-12); expect(c.avOpen).toBe(false); expect(c.semilunarOpen).toBe(true);
   } },
 ];
 

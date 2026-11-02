@@ -1867,4 +1867,31 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'sistema-circulatorio': [
+    {
+      id: 'ejercicio', label: 'Pulso, presión y gasto cardíaco con el ejercicio (modelo)', defaultX: 'intensidad', defaultY: 'fc',
+      columns: [
+        { key: 'intensidad', label: 'Intensidad del ejercicio', unit: '%', numeric: true, decimals: 0, input: true },
+        { key: 'edad', label: 'Edad', unit: 'años', numeric: true, decimals: 0, input: true },
+        { key: 'fcReposo', label: 'FC en reposo', unit: 'lpm', numeric: true, decimals: 0, input: true },
+        { key: 'vsReposo', label: 'Volumen sistólico en reposo', unit: 'mL', numeric: true, decimals: 0, input: true },
+        { key: 'fc', label: 'Frecuencia cardíaca (pulsioxímetro)', unit: 'lpm', numeric: true, decimals: 0, resolution: 1 },
+        { key: 'vs', label: 'Volumen sistólico', unit: 'mL', numeric: true, decimals: 1 },
+        { key: 'gasto', label: 'Gasto cardíaco', unit: 'L/min', numeric: true, decimals: 2 },
+        { key: 'pas', label: 'Presión sistólica', unit: 'mmHg', numeric: true, decimals: 0, resolution: 1 },
+        { key: 'pad', label: 'Presión diastólica', unit: 'mmHg', numeric: true, decimals: 0, resolution: 1 },
+        { key: 'fcMax', label: 'FC máxima estimada', unit: 'lpm', numeric: true, decimals: 1 },
+      ],
+    },
+    {
+      id: 'pulso', label: 'Mi pulso (datos propios, opcionales)', defaultX: 'minuto', defaultY: 'fc',
+      columns: [
+        { key: 'momento', label: 'Momento de la medición', numeric: false, input: true },
+        { key: 'minuto', label: 'Minuto respecto al final de la marcha (−1 = reposo)', numeric: true, decimals: 0, input: true },
+        { key: 'latidos15', label: 'Latidos en 15 s', numeric: true, decimals: 0, resolution: 1 },
+        { key: 'fc', label: 'Frecuencia cardíaca (× 4)', unit: 'lpm', numeric: true, decimals: 0 },
+        { key: 'origen', label: 'Origen del dato', numeric: false },
+      ],
+    },
+  ],
 };

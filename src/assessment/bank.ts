@@ -1513,6 +1513,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Sistema nervioso: neurona, arco reflejo y tiempo de reacción», compara tu tiempo de reacción con el arco reflejo de la vista 3D.',
     transfer: 'Si el estímulo del reflejo lo detectaran fibras C (1 m/s) en lugar de Aδ, ¿cuánto tardaría el reflejo con 0,8 m de recorrido? ¿Seguiría siendo más rápido que atrapar la regla?',
   },
+  {
+    id: 'saber-crc-1', grade: 7, topic: 'Gasto cardíaco y ejercicio', competency: 'indagacion', component: 'biologico',
+    skill: 'Usar una relación entre variables para interpretar datos fisiológicos', difficulty: 'media', practiceId: 'sistema-circulatorio',
+    context: 'En la clase de educación física de un colegio de Turbo se usó un modelo educativo para estimar cómo cambia el trabajo del corazón de un adolescente de referencia con el ejercicio (gasto cardíaco = frecuencia cardíaca × volumen sistólico).',
+    table: {
+      caption: 'Valores del modelo educativo (no son mediciones de una persona)',
+      headers: ['Situación', 'Frecuencia cardíaca (lpm)', 'Volumen sistólico (mL)', 'Gasto cardíaco (L/min)'],
+      rows: [['Reposo', '72', '70', '5,0'], ['Marcha suave', '97', '84', '8,2'], ['Trote', '135', '105', '14,1']],
+    },
+    stem: '¿Qué conclusión se apoya en los datos?',
+    options: [
+      { id: 'a', text: 'El gasto cardíaco aumenta solo porque el corazón late más rápido.', feedback: 'El volumen sistólico también aumenta (de 70 a 105 mL).' },
+      { id: 'b', text: 'El gasto cardíaco aumenta porque suben tanto la frecuencia como el volumen sistólico: al trotar, el corazón bombea casi el triple de sangre por minuto que en reposo.', feedback: 'Correcto: 14,1/5,0 ≈ 2,8.' },
+      { id: 'c', text: 'Al trotar el corazón bombea menos sangre porque no alcanza a llenarse.', feedback: 'Los datos muestran que el gasto aumenta.' },
+      { id: 'd', text: 'Los datos permiten saber si el estudiante está sano.', feedback: 'Son valores de un modelo de referencia y no sirven para diagnosticar.' },
+    ],
+    correct: 'b',
+    explanation: 'GC = FC × VS. Durante el ejercicio los músculos necesitan más oxígeno; el corazón responde latiendo más rápido y expulsando más sangre por latido. Los dos efectos se multiplican.',
+    review: 'En la práctica «Corazón y circulación», mide el pulso con 0, 25 y 50 % de intensidad y compara el gasto cardíaco.',
+    transfer: 'Si una persona entrenada tiene en reposo un volumen sistólico de 90 mL, ¿qué frecuencia cardíaca necesitaría para tener un gasto de 5 L/min? ¿Por qué los deportistas suelen tener el pulso en reposo más bajo?',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

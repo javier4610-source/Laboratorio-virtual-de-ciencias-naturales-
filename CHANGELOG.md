@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.18.0] · 2026-11-02
+
+Lote 3D-2: vista 3D en ósmosis, mitosis, ADN, extracción de ADN, Mendel, fotosíntesis y respiración.
+
 ### Añadido
 - **Lote 3D-2 «biología invisible»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas `src/three`: tarjeta
   «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG sin WebGL, teclado,

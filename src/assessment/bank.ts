@@ -1450,6 +1450,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Configuración electrónica», construye el N y el O y compara los diagramas de cajas del subnivel 2p.',
     transfer: 'Predice si el fósforo ([Ne] 3s² 3p³) o el azufre ([Ne] 3s² 3p⁴) tendrá la mayor energía de ionización y compruébalo en la práctica «Tabla periódica».',
   },
+  {
+    id: 'saber-pil-1', grade: 11, topic: 'Corrosión y potenciales de reducción', competency: 'explicacion', component: 'quimico',
+    skill: 'Usar potenciales estándar para explicar la protección contra la corrosión', difficulty: 'alta', practiceId: 'pila-electroquimica',
+    context: 'En el muelle de Turbo, los cascos de acero de las lanchas llevan atornillados bloques de un metal que se reemplazan cada cierto tiempo porque se van gastando. Un estudiante consultó los potenciales estándar de reducción del CRC Handbook.',
+    table: {
+      caption: 'Potenciales estándar de reducción a 25 °C (CRC Handbook, serie de Vanýsek)',
+      headers: ['Semirreacción', 'E° (V)'],
+      rows: [['Zn²⁺ + 2 e⁻ → Zn', '−0,7618'], ['Fe²⁺ + 2 e⁻ → Fe', '−0,447'], ['Cu²⁺ + 2 e⁻ → Cu', '+0,3419']],
+    },
+    stem: '¿Qué metal conviene usar en los bloques para proteger el acero (hierro) y por qué?',
+    options: [
+      { id: 'a', text: 'Cobre, porque tiene el mayor potencial y no se oxida.', feedback: 'Unido al hierro, el cobre sería el cátodo: el hierro se oxidaría MÁS rápido.' },
+      { id: 'b', text: 'Cinc, porque tiene menor potencial de reducción que el hierro: se oxida él (ánodo de sacrificio) y el hierro queda como cátodo.', feedback: 'Correcto: en la «pila» cinc–hierro el cinc se disuelve y el hierro no.' },
+      { id: 'c', text: 'Cualquier metal, porque los bloques solo aumentan el peso del casco.', feedback: 'El efecto es electroquímico: depende de los potenciales de los metales.' },
+      { id: 'd', text: 'Hierro, para que el casco y el bloque se oxiden por igual.', feedback: 'Un bloque del mismo metal no forma una pila que proteja el casco.' },
+    ],
+    correct: 'b',
+    explanation: 'Dos metales en contacto dentro de agua salada forman una pila. El de menor E° (cinc, −0,7618 V) es el ánodo y se oxida; el de mayor E° (hierro, −0,447 V) actúa como cátodo y no se corroe. Por eso el bloque de cinc se gasta y hay que cambiarlo.',
+    review: 'En la práctica «Oxidación-reducción: pila de Daniell…», arma una pila de cinc y hierro y observa qué electrodo pierde masa.',
+    transfer: 'Si un tornillo de cobre se pone en contacto con una lámina de hierro en el agua del golfo, ¿qué metal se corroe más rápido? Compruébalo armando la pila Fe | Cu.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

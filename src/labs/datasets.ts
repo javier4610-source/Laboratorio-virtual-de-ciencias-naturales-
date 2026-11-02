@@ -1775,4 +1775,33 @@ export const DATASETS: Record<string, Dataset[]> = {
       { key: 'excepcion', label: 'El elemento es excepción de la regla de Madelung (1 = sí)', numeric: true, decimals: 0 },
     ],
   }],
+  'pila-electroquimica': [
+    {
+      id: 'voltajes', label: 'Voltaje de la pila (circuito abierto)', defaultX: 'logQ', defaultY: 'voltaje',
+      columns: [
+        { key: 'izquierda', label: 'Electrodo izquierdo', numeric: false, input: true },
+        { key: 'derecha', label: 'Electrodo derecho', numeric: false, input: true },
+        { key: 'cIzq', label: 'Concentración izquierda', unit: 'mol/L', numeric: true, decimals: 3, input: true },
+        { key: 'cDer', label: 'Concentración derecha', unit: 'mol/L', numeric: true, decimals: 3, input: true },
+        { key: 'puente', label: 'Puente salino', numeric: false, input: true },
+        { key: 'E0', label: 'E° de la pila (tabla)', unit: 'V', numeric: true, decimals: 4 },
+        { key: 'voltaje', label: 'Voltaje medido', unit: 'V', numeric: true, decimals: 3, resolution: 0.001 },
+        { key: 'Enernst', label: 'fem con Nernst', unit: 'V', numeric: true, decimals: 4 },
+        { key: 'logQ', label: 'log₁₀ Q', numeric: true, decimals: 3 },
+      ],
+    },
+    {
+      id: 'descarga', label: 'Descarga con corriente constante y masa de los electrodos', defaultX: 'carga', defaultY: 'dmDer',
+      columns: [
+        { key: 'pila', label: 'Pila', numeric: false, input: true },
+        { key: 'corriente', label: 'Corriente', unit: 'mA', numeric: true, decimals: 0, input: true },
+        { key: 'tiempo', label: 'Tiempo', unit: 'min', numeric: true, decimals: 1, input: true },
+        { key: 'carga', label: 'Carga Q = I·t', unit: 'C', numeric: true, decimals: 1 },
+        { key: 'dmIzq', label: 'Cambio de masa del electrodo izquierdo (balanza)', unit: 'g', numeric: true, decimals: 3, resolution: 0.001 },
+        { key: 'dmDer', label: 'Cambio de masa del electrodo derecho (balanza)', unit: 'g', numeric: true, decimals: 3, resolution: 0.001 },
+        { key: 'dmTeoricaCatodo', label: 'Δm del cátodo con Faraday', unit: 'g', numeric: true, decimals: 4 },
+        { key: 'fem', label: 'fem al final (Nernst)', unit: 'V', numeric: true, decimals: 4 },
+      ],
+    },
+  ],
 };

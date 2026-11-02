@@ -61,19 +61,19 @@ export function orbitalScene({ boxes, view }: OrbitalSceneInput): OrbitalScene {
     const b = boxById(id);
     const spins = boxes[id] ?? [];
     items.push({
-      id: `orb-${id}`, kind: 'particles', points: orbitalPoints(id), radius: b.l === 0 ? 0.075 : 0.07,
+      id: `orb-${id}`, kind: 'particles', points: orbitalPoints(id), radius: b.l === 0 ? 0.11 : 0.1,
       color: COLOR[b.real] ?? 'accent', opacity: spins.length >= 2 ? 0.9 : 0.4,
       label: `${b.n}${b.real} ${spinText(spins)}`,
     });
   }
   // ejes de referencia (x, y, z del orbital)
-  items.push({ id: 'eje-x', kind: 'arrow', from: [0, 0, 0], vector: [6.4, 0, 0], radius: 0.015, color: 'line-strong', label: 'x' });
-  items.push({ id: 'eje-z', kind: 'arrow', from: [0, 0, 0], vector: [0, 6.4, 0], radius: 0.015, color: 'line-strong', label: 'z' });
-  items.push({ id: 'eje-y', kind: 'arrow', from: [0, 0, 0], vector: [0, 0, -6.4], radius: 0.015, color: 'line-strong', label: 'y' });
+  items.push({ id: 'eje-x', kind: 'arrow', from: [0, 0, 0], vector: [4.6, 0, 0], radius: 0.015, color: 'line-strong', label: 'x' });
+  items.push({ id: 'eje-z', kind: 'arrow', from: [0, 0, 0], vector: [0, 4.6, 0], radius: 0.015, color: 'line-strong', label: 'z' });
+  items.push({ id: 'eje-y', kind: 'arrow', from: [0, 0, 0], vector: [0, 0, -4.6], radius: 0.015, color: 'line-strong', label: 'y' });
   const list = shown.map((id) => { const b = boxById(id); return `${b.n}${b.real} con ${(boxes[id] ?? []).length === 2 ? '2 electrones' : '1 electrón'}`; });
   const description = shown.length === 0
     ? 'Solo el núcleo: todavía no hay electrones en el diagrama de cajas.'
     : `Nubes de probabilidad de ${shown.length} orbital${shown.length > 1 ? 'es' : ''}: ${list.join('; ')}. Los orbitales s son esféricos; los p tienen dos lóbulos a lo largo de x, y o z; los d tienen cuatro lóbulos (el dz², dos lóbulos y un anillo).` +
       (inner.length ? ` La esfera tenue representa los ${inner.length} orbitales internos ocupados.` : '') + ' Nube intensa: orbital con 2 electrones; tenue: con 1.';
-  return { items, extent: 7.2, target: [0, 0, 0], description, shown };
+  return { items, extent: 5, target: [0, 0, 0], description, shown };
 }

@@ -14,6 +14,7 @@ import { periodicElement, slaterZeff, trend, periodMembers } from '../../src/mod
 import { checkLewis, classifyBond, lewisById } from '../../src/models/chemicalBonding';
 import { chargesFrom, coulombStation, fieldAt, PRESETS } from '../../src/models/electrostatics';
 import { analyzeBoxes, aufbauOccupancy, groundState, hundBoxes, nobleGasString, tablePlace } from '../../src/models/electronConfiguration';
+import { cell as galvanicCell, discharge as galvanicDischarge, FARADAY } from '../../src/models/electrochemicalCell';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -386,6 +387,12 @@ export const GOLDEN: GoldenCase[] = [
     expect(tablePlace(26)).toMatchObject({ period: 4, group: 8, block: 'd' });
     expect(nobleGasString(groundState(24))).toBe('[Ar] 4s¹ 3d⁵'); expect(analyzeBoxes(hundBoxes(groundState(24)), 24).unpaired).toBe(6);
     expect(nobleGasString(aufbauOccupancy(24))).toBe('[Ar] 4s² 3d⁴'); expect(nobleGasString(groundState(29))).toBe('[Ar] 4s¹ 3d¹⁰'); expect(nobleGasString(aufbauOccupancy(29))).toBe('[Ar] 4s² 3d⁹');
+  } },
+  { id: 'pila-electroquimica', origin: 'referencia', what: 'pila de Daniell con E° del CRC (Vanýsek): 0,3419 − (−0,7618) = 1,1037 V; [Cu²⁺] = 0,010 M → 1,1037 − 0,05916 = 1,0445 V; 50 mA durante 120 min → 360 C, Zn −360·65,4/(2·96 485) = −0,1220 g, Cu +360·63,55/(2·96 485) = +0,1186 g', run: () => {
+    const d = { left: 'zn', right: 'cu', cLeft: 1, cRight: 1, bridge: 'KNO3' as const };
+    close(galvanicCell(d).E, 1.1037, 1e-12); close(galvanicCell({ ...d, cRight: 0.01 }).E, 1.1037 - (8.314462618 * 298.15 * Math.LN10) / FARADAY, 1e-12);
+    const r = galvanicDischarge({ ...d, volumeML: 100, currentMA: 50, timeMin: 120 });
+    close(r.dLeft, -(360 * 65.4) / (2 * 96485.33212), 1e-12); close(r.dRight, (360 * 63.55) / (2 * 96485.33212), 1e-12);
   } },
 ];
 

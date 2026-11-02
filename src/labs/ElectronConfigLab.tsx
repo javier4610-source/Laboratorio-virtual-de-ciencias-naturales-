@@ -45,7 +45,7 @@ function DiagonalRule({ next }: { next: string | null }) {
         const pts = [0, 1, 2].map((l) => ({ n: s - l, l })).filter((p) => p.n >= 1 && p.n <= 5 && p.l < p.n);
         if (pts.length < 2) return null;
         const a = pts[0], b = pts[pts.length - 1];
-        return <line key={s} x1={cx(a.l) + 10} y1={cy(a.n) - 6} x2={cx(b.l) - 10} y2={cy(b.n) + 6} stroke="var(--ink-3)" strokeWidth="1.2" markerEnd="url(#cfg-arr)" />;
+        return <line key={s} x1={cx(b.l) - 10} y1={cy(b.n) + 6} x2={cx(a.l) + 12} y2={cy(a.n) - 8} stroke="var(--ink-3)" strokeWidth="1.2" markerEnd="url(#cfg-arr)" />;
       })}
       <defs><marker id="cfg-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="var(--ink-3)" /></marker></defs>
       {rows.flatMap((n) => [0, 1, 2].filter((l) => l < n && ORDER.some((s) => s.n === n && s.l === l)).map((l) => {

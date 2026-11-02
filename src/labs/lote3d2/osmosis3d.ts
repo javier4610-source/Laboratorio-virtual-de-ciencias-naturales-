@@ -130,7 +130,7 @@ export function osmosisScene(inp: OsmosisSceneInput): { items: SceneItem[]; exte
   } else items.push({ id: 'soluto-dentro', kind: 'particles', points: inn, radius: 0.24, color: 'series-1', label: 'Solutos de la célula' });
 
   const who = animal ? 'Glóbulo rojo' : 'Célula vegetal';
-  let description = `${who} en 3D en NaCl al ${fmt(inp.naclPercent, 2)} % (medio ${inp.tonicity}). Tiempo ${fmt(inp.t, 0)} s de ${fmt(inp.duration, 0)} s. Volumen ${fmt(inp.volume * 100, 1)} % del inicial. `;
+  let description = `${who} en 3D en NaCl al ${fmt(inp.naclPercent, 2)} % (solución ${inp.tonicity}). Tiempo ${fmt(inp.t, 0)} s de ${fmt(inp.duration, 0)} s. Volumen ${fmt(inp.volume * 100, 1)} % del inicial. `;
   if (lysed) description += 'La membrana se rompió (lisis): el contenido sale al medio y el agua ya no queda retenida. ';
   else {
     description += `Según el modelo, ${PHRASE[inp.waterDirection]}. `;

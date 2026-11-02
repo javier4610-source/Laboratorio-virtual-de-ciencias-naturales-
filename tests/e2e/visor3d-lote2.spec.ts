@@ -44,8 +44,9 @@ const CASES: Case[] = [
     name: 'fotosintesis', id: 'fotosintesis', prefix: 'fot3d', title: /dentro del cloroplasto/,
     // Se detiene la animación de las burbujas para comparar imágenes estables.
     prepare: async (page) => {
-      const pause = page.getByRole('button', { name: 'Pausar' });
-      if (await pause.count()) await pause.first().click();
+      const sim = page.locator('.sim-controls').filter({ hasText: 'Burbujeo de la elodea' });
+      await sim.getByRole('button', { name: 'Pausar' }).click();
+      await expect(sim.getByRole('button', { name: 'Reanudar' })).toBeVisible();
     },
   },
   { name: 'respiracion', id: 'respiracion', prefix: 'res3d', title: /la mitocondria y el balance de ATP/ },
@@ -245,7 +246,7 @@ test.describe('sin WebGL', () => {
     await open3D(page, CASES[0]);
     const v = view(page, 'osm3d');
     await page.getByRole('slider', { name: 'NaCl en el medio' }).fill('0.3');
-    await expect.poll(() => description(v)).toContain('medio hipotónico');
+    await expect.poll(() => description(v)).toContain('solución hipotónica');
     await page.getByRole('button', { name: 'Iniciar' }).first().click();
     await expect.poll(() => description(v)).toContain('el agua entra');
     const vol = (await page.locator('.readout .item').filter({ hasText: 'Volumen celular' }).locator('.v').textContent())!.trim();

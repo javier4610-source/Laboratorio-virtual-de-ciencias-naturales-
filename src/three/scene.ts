@@ -27,8 +27,12 @@ interface ItemBase {
 export interface SphereItem extends ItemBase { kind: 'sphere'; center: Vec3; radius: number }
 /** Elipsoide alineado con los ejes (organelos, células). */
 export interface EllipsoidItem extends ItemBase { kind: 'ellipsoid'; center: Vec3; radii: Vec3 }
-/** Caja alineada con los ejes; `edges` dibuja sus aristas (pared celular, recipientes). */
-export interface BoxItem extends ItemBase { kind: 'box'; center: Vec3; size: Vec3; edges?: boolean }
+/**
+ * Caja alineada con los ejes; `edges` dibuja sus aristas (pared celular, recipientes). `rotationZ` (rad, opcional) la
+ * gira alrededor de un eje paralelo a z que pasa por su centro, en sentido antihorario visto desde +z (de +x hacia +y):
+ * tablas de un plano inclinado, barras de una palanca, bloques sobre una rampa.
+ */
+export interface BoxItem extends ItemBase { kind: 'box'; center: Vec3; size: Vec3; edges?: boolean; rotationZ?: number }
 /** Varilla o hilo: cilindro entre dos puntos. */
 export interface RodItem extends ItemBase { kind: 'rod'; from: Vec3; to: Vec3; radius: number }
 /** Vector: flecha desde `from` con la dirección y la longitud (en unidades de la escena) de `vector`. */
@@ -51,6 +55,8 @@ export const dot = (a: Vec3, b: Vec3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
 export const cross = (a: Vec3, b: Vec3): Vec3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
 export const length = (a: Vec3) => Math.hypot(a[0], a[1], a[2]);
 export const normalize = (a: Vec3): Vec3 => { const l = length(a); return l > 1e-12 ? scale(a, 1 / l) : [0, 0, 0]; };
+/** Gira un vector un ángulo `a` (rad) alrededor del eje z (de +x hacia +y). */
+export const rotateZ = (v: Vec3, a: number): Vec3 => (a ? [v[0] * Math.cos(a) - v[1] * Math.sin(a), v[0] * Math.sin(a) + v[1] * Math.cos(a), v[2]] : v);
 
 /**
  * Escala para dibujar magnitudes físicas como flechas: la mayor magnitud esperada (`maxMagnitude`, en su unidad)
@@ -172,7 +178,7 @@ export function labelAnchor(it: SceneItem): Vec3 {
   switch (it.kind) {
     case 'sphere': return add(it.center, [0, it.radius * 1.15, 0]);
     case 'ellipsoid': return add(it.center, [0, it.radii[1] * 1.1, 0]);
-    case 'box': return add(it.center, [0, it.size[1] / 2, 0]);
+    case 'box': return add(it.center, rotateZ([0, it.size[1] / 2, 0], it.rotationZ ?? 0));
     case 'rod': case 'spring': return scale(add(it.from, it.to), 0.5);
     case 'arrow': return add(it.from, it.vector);
     case 'plane': return it.center;

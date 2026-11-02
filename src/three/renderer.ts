@@ -153,7 +153,7 @@ export function createSceneRenderer(host: HTMLElement): SceneRenderer {
     switch (it.kind) {
       case 'sphere': o.position.copy(v3(it.center)); o.scale.setScalar(it.radius); break;
       case 'ellipsoid': o.position.copy(v3(it.center)); o.scale.set(...it.radii); break;
-      case 'box': o.position.copy(v3(it.center)); o.scale.set(...it.size); break;
+      case 'box': o.position.copy(v3(it.center)); o.scale.set(...it.size); o.rotation.set(0, 0, it.rotationZ ?? 0); break;
       case 'plane': o.position.copy(v3(it.center)); o.scale.set(it.size[0], 1, it.size[1]); break;
       case 'rod': {
         const d = sub(it.to, it.from);

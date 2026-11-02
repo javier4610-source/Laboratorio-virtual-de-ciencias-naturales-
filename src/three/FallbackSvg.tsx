@@ -1,6 +1,6 @@
 import { memo, type ReactNode } from 'react';
 import { paletteColor, type Palette } from './colors';
-import { add, labelAnchor, length, pixelsPerUnit, projectOrtho, scale, spreadLabels, sub, viewBasis, type Orbit, type SceneItem, type Vec3 } from './scene';
+import { add, labelAnchor, rotateZ, length, pixelsPerUnit, projectOrtho, scale, spreadLabels, sub, viewBasis, type Orbit, type SceneItem, type Vec3 } from './scene';
 
 /**
  * Vista de respaldo del kit (sin WebGL o sin el fragmento de three.js): dibuja LAS MISMAS primitivas con la misma cámara
@@ -64,7 +64,7 @@ export const FallbackSvg = memo(function FallbackSvg({ items, orbit, target, ext
       }
       case 'box': {
         const h = scale(it.size, 0.5);
-        const corners = [0, 1, 2, 3, 4, 5, 6, 7].map((n) => P(add(it.center, [n & 1 ? h[0] : -h[0], n & 2 ? h[1] : -h[1], n & 4 ? h[2] : -h[2]])));
+        const corners = [0, 1, 2, 3, 4, 5, 6, 7].map((n) => P(add(it.center, rotateZ([n & 1 ? h[0] : -h[0], n & 2 ? h[1] : -h[1], n & 4 ? h[2] : -h[2]], it.rotationZ ?? 0))));
         const edges = it.edges ? [[0, 1], [2, 3], [4, 5], [6, 7], [0, 2], [1, 3], [4, 6], [5, 7], [0, 4], [1, 5], [2, 6], [3, 7]] : [];
         // Una caja suele ser un recipiente (pared celular, pecera): se dibuja detrás de lo que contiene.
         draw.push({ depth: Math.min(...corners.map((q) => q.depth)), node: (

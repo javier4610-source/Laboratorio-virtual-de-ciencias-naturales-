@@ -130,6 +130,17 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'regla', name: 'Regla del lanzador (1 mm)', quantity: 'Compresión x del resorte', unit: 'cm', resolution: 0.1, sigma: 0.05, nonNegative: true, note: 'Alinear el borde del carrito con la marca y paralaje.' },
     { id: 'lanzador', name: 'Lanzador de rapidez regulable', quantity: 'Rapidez real de salida (no se lee: la mide la fotopuerta)', unit: 'm/s', resolution: 0.001, relSigma: 0.01, note: 'El empujador no entrega siempre la misma rapidez: varía cerca de 1 % entre lanzamientos.' },
   ],
+  'pila-electroquimica': [
+    { id: 'voltimetro', name: 'Voltímetro digital de alta impedancia (0,001 V)', quantity: 'Fuerza electromotriz de la pila (circuito abierto)', unit: 'V', resolution: 0.001, sigma: 0.002, note: 'Contacto de las pinzas con los electrodos, temperatura de las soluciones y polarización de los electrodos.' },
+    { id: 'balanza', name: 'Balanza de precisión (0,001 g)', quantity: 'Masa del electrodo (lavado y seco)', unit: 'g', resolution: 0.001, sigma: 0.0015, nonNegative: true, note: 'Electrodo mal secado (agua o sal adherida), depósito que se desprende y corrientes de aire.' },
+  ],
+  'sistema-nervioso': [
+    { id: 'regla', name: 'Regla de 30 cm (0,1 cm)', quantity: 'Distancia que cae la regla antes de atraparla', unit: 'cm', resolution: 0.1, sigma: 0.2, nonNegative: true, note: 'Lectura en el borde superior de los dedos y posición inicial de la mano.' },
+  ],
+  'sistema-circulatorio': [
+    { id: 'pulsometro', name: 'Pulsioxímetro de dedo (1 lpm)', quantity: 'Frecuencia cardíaca', unit: 'lpm', resolution: 1, sigma: 2, nonNegative: true, note: 'Movimiento de la mano, dedos fríos y la variación natural de un latido a otro.' },
+    { id: 'tensiometro', name: 'Tensiómetro digital de brazo (1 mmHg)', quantity: 'Presión arterial', unit: 'mmHg', resolution: 1, sigma: 3, nonNegative: true, note: 'Tamaño del brazalete, posición del brazo y hablar o moverse durante la medición.' },
+  ],
   electrostatica: [
     { id: 'dinamometro', name: 'Dinamómetro digital (±20 N, 0,001 N)', quantity: 'Fuerza entre las esferas cargadas', unit: 'N', resolution: 0.001, sigma: 0.002, relSigma: 0.01, nonNegative: true, note: 'Pérdida lenta de carga en el aire (humedad), corrientes de aire y el ruido del sensor.' },
     { id: 'regla', name: 'Regla del riel (0,1 cm)', quantity: 'Distancia entre los centros de las esferas', unit: 'cm', resolution: 0.1, sigma: 0.05, nonNegative: true, note: 'Ubicar el centro de cada esfera sobre la escala y paralaje.' },

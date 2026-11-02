@@ -17,6 +17,36 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
   poleas con la cuerda jalada y la subida de la carga) y `cinetica-potencial` (riel, torre de caída y resorte con las
   barras de energía). El kit admite cajas giradas (`rotationZ`). Pruebas: `tests/unit/lote3d3.test.ts` y
   `tests/e2e/visor3d-lote3.spec.ts`.
+- **Ola 1b de prácticas nuevas** (las prioridad 1 que faltaban del análisis curricular; 74 prácticas en total), con el
+  mismo estándar de la ola 1a: modelo probado en `src/models`, valores dorados, conjuntos de datos con relaciones,
+  5 preguntas tipo Saber originales por práctica y 1 de transferencia en el banco, ideas erróneas con retroalimentación,
+  avisos con «Cómo corregirlo», procedencia de los datos, guía en PDF y vista 3D (kit `src/three`):
+  - `configuracion-electronica` (10.º): diagrama de cajas de Z = 1 a 54 con Aufbau (Madelung), Pauli y Hund verificados,
+    llenado paso a paso (SimControls), comparación con los estados fundamentales medidos de PubChem (8 excepciones hasta
+    el xenón) y período, grupo y valencia deducidos (coinciden con la IUPAC en los 54). 3D: nubes |ψ|² hidrogenoides de
+    los orbitales s, p y d ocupados (ilustración cualitativa calculada).
+  - `pila-electroquimica` (11.º): seis semiceldas con E° del CRC Handbook (Vanýsek), voltímetro (Daniell 1,104 V),
+    Nernst a 25 °C, puente salino (aviso de precipitado con KCl y Ag⁺/Pb²⁺), descarga con corriente constante y balanza
+    (Faraday: 50 mA × 120 min → −0,1220 g de Zn, +0,1186 g de Cu). 3D: electrones por el cable, iones por el puente,
+    electrodos cuyo grosor sigue la masa.
+  - `meiosis` (8.º): diez etapas con cromosomas, cromátidas y ADN frente a la mitosis, orientación y entrecruzamiento
+    elegibles, no disyunción, muestreo de gametos (r = d/100) y 2ⁿ (2²³ = 8 388 608). 3D: homólogos, quiasma y gametos.
+  - `sistema-nervioso` (8.º): regla que cae con datos propios (t = √(2d/g), aviso de anticipación), potencial de acción
+    de umbral (todo o nada), fibras Aα/Aδ/C y arco reflejo. 3D: impulso saltatorio y arco reflejo.
+  - `sistema-circulatorio` (7.º): ciclo cardíaco y válvulas, gasto cardíaco (5,04 L/min), ejercicio con Tanaka y
+    Karvonen (modelo educativo prudente, sin consejo médico), pulso propio opcional. 3D: corazón con circulación doble.
+- 5 preguntas de transferencia en el banco y 5 casos dorados; pruebas unitarias (modelos y escenas 3D) y E2E (flujo,
+  valor de referencia en la interfaz, 3D con y sin WebGL, axe en claro y oscuro, 390 px).
+
+### Cambiado
+- Contadores del catálogo (74 prácticas; 25 de química) y referencias de la regresión visual que muestran conteos.
+- La prueba «las prácticas enlazadas existen» del banco avanzado tiene un límite de 20 s (importa el currículo completo).
+
+## [2.18.0] · 2026-11-02
+
+Lote 3D-2: vista 3D en ósmosis, mitosis, ADN, extracción de ADN, Mendel, fotosíntesis y respiración.
+
+### Añadido
 - **Lote 3D-2 «biología invisible»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas `src/three`: tarjeta
   «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG sin WebGL, teclado,
   tacto, descripción textual viva y estatus epistémico en `osmosis` (célula cuyo volumen y flujo de agua por las

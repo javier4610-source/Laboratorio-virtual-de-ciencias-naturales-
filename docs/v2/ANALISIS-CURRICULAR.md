@@ -182,17 +182,17 @@ está por validar).
 | 6.º | «Temperatura, calor, luz y sonido» | `calor` | Parcial (luz y sonido en 8.º) |
 | 6.º | «Cuidado del agua y del ambiente» | `ecosistema` (`agua` en 11.º) | Parcial |
 | 7.º | «Membrana celular, difusión y ósmosis» | `osmosis` | Cubierto |
-| 7.º | «Nutrición, circulación, respiración y excreción» | — | **No cubierto** → `sistema-circulatorio`, `nutricion-digestion` |
-| 7.º | «Reproducción celular: introducción a mitosis y meiosis» | `mitosis` | Parcial → `meiosis` |
+| 7.º | «Nutrición, circulación, respiración y excreción» | `sistema-circulatorio` (ola 1b) | Parcial (circulación cubierta en la ola 1b) → `nutricion-digestion` |
+| 7.º | «Reproducción celular: introducción a mitosis y meiosis» | `mitosis`, `meiosis` (ola 1b) | Cubierto en la ola 1b |
 | 7.º | «Relaciones ecológicas y ciclos biogeoquímicos» | `descomposicion` (`ecosistema`, `redes` en 6.º) | Parcial → `ciclo-del-carbono` |
 | 7.º | «Estructura del átomo y tabla periódica» | — | **No cubierto** → `modelos-atomicos`, `tabla-periodica` (construidas, ola 1a) |
 | 7.º | «Enlaces químicos introductorios» | — | **Cubierto en la ola 1a** → `enlace-quimico` |
 | 7.º | «Densidad, presión, temperatura y transferencia de calor» | `presion`, `flotacion`, `conduccion` | Cubierto |
 | 7.º | «Electricidad básica y circuitos simples» | `circuitos-simples`, `conductores` | Cubierto (con solapamiento) |
-| 8.º | «Reproducción sexual y asexual» | — | **No cubierto** → `meiosis` (parcial) |
+| 8.º | «Reproducción sexual y asexual» | `meiosis` (ola 1b) | Parcial (reproducción sexual cubierta en la ola 1b; falta la asexual) |
 | 8.º | «ADN, genes y cromosomas» | `extraccion-adn`, `mendel` | Cubierto |
 | 8.º | «Leyes de Mendel: cruces monohíbridos y dihíbridos» | `mendel` | Cubierto |
-| 8.º | «Sistemas nervioso y endocrino» | — | **No cubierto** → `sistema-nervioso` (endocrino: `homeostasis-glucosa` en 10.º) |
+| 8.º | «Sistemas nervioso y endocrino» | `sistema-nervioso` (ola 1b) | Parcial (nervioso cubierto en la ola 1b; endocrino: `homeostasis-glucosa` en 10.º) |
 | 8.º | «Selección natural e introducción a la evolución» | `seleccion` (9.º) | Cubierto (en 9.º) |
 | 8.º | «Tabla periódica y propiedades periódicas» | — | **No cubierto** → `tabla-periodica` |
 | 8.º | «Enlaces químicos y reacciones» | `balanceo`, `conservacion` | Parcial (sin enlace) → `enlace-quimico` |
@@ -208,7 +208,7 @@ está por validar).
 | 10.º | «Fotosíntesis y respiración celular» · «Metabolismo y transformación de energía» | `fotosintesis`, `respiracion` (`metabolismo` en 11.º) | Cubierto |
 | 10.º | «Biotecnología y aplicaciones de la biología molecular» | `secuencias`, `rastreo` (11.º, bioinformática) | Parcial → `biotecnologia-pcr` |
 | 10.º | «Fisiología humana» | — | **No cubierto** → `homeostasis-glucosa` |
-| 10.º | «Configuración electrónica y periodicidad química» | — | **No cubierto** → `configuracion-electronica` |
+| 10.º | «Configuración electrónica y periodicidad química» | `configuracion-electronica` (ola 1b) | Cubierto en la ola 1b |
 | 10.º | «Soluciones, concentración, molaridad y gases» | `soluciones`, `gases` | Cubierto |
 | 10.º | «Reacciones químicas y relaciones cuantitativas» | `cinetica`, `oxidos-hidroxidos`, `acidos-sales` | Cubierto → `termoquimica` amplía |
 | 10.º | «Movimiento, dinámica, energía y conservación» | `proyectiles`, `choques`, `energia`, `pendulo` | Parcial (sin movimiento circular ni gravitación) |
@@ -218,7 +218,7 @@ está por validar).
 | 11.º | «Fisiología humana, inmunología y homeostasis» | — | **No cubierto** → `sistema-inmune`, `homeostasis-glucosa` |
 | 11.º | «Ecología, biodiversidad, contaminación y cambio climático» | `agua`, `poblacion` | Parcial (sin cambio climático) → `efecto-invernadero` |
 | 11.º | «Estequiometría avanzada» · «Equilibrio químico introductorio» · «Ácidos, bases y pH» | `estequiometria`, `equilibrio`, `ph` | Cubierto |
-| 11.º | «Oxidación-reducción» | — | **No cubierto** → `pila-electroquimica` |
+| 11.º | «Oxidación-reducción» | `pila-electroquimica` (ola 1b) | Cubierto en la ola 1b (pila galvánica y Faraday; la electrólisis con fuente externa queda pendiente) |
 | 11.º | «Electricidad, circuitos y magnetismo» | `circuitos`, `induccion` | Cubierto en la ola 1a → `electrostatica` |
 | 11.º | «Ondas, óptica y fenómenos físicos» | `interferencia` | Cubierto → `efecto-doppler` amplía |
 | 11.º | «Diseño experimental, análisis de datos e interpretación de evidencias» | `reto` | Cubierto |
@@ -253,8 +253,8 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | P1 | `modelos-atomicos` | 7.º | Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford | nuevas-1 · **construida (ola 1a)** |
 | P1 | `tabla-periodica` | 8.º | Tabla periódica y propiedades periódicas | nuevas-1 · **construida (ola 1a)** |
 | P1 | `enlace-quimico` | 9.º | Enlace iónico, covalente y metálico: estructura y propiedades | nuevas-1 · **construida (ola 1a)** |
-| P1 | `configuracion-electronica` | 10.º | Configuración electrónica y orbitales atómicos | nuevas-1 |
-| P1 | `pila-electroquimica` | 11.º | Oxidación-reducción: pila de Daniell y electrólisis | nuevas-1 |
+| P1 | `configuracion-electronica` | 10.º | Configuración electrónica y orbitales atómicos | nuevas-1 · **construida (ola 1b)** |
+| P1 | `pila-electroquimica` | 11.º | Oxidación-reducción: pila de Daniell y electrólisis | nuevas-1 · **construida (ola 1b)** |
 | P2 | `estados-de-la-materia` | 6.º | Estados de la materia y curva de calentamiento del agua | nuevas-2 |
 | P2 | `cambios-quimicos` | 7.º | Cambios físicos y químicos: evidencias de una reacción | nuevas-2 |
 | P3 | `termoquimica` | 10.º | Termoquímica: calor de disolución y de neutralización | nuevas-3 |
@@ -280,14 +280,14 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** Diferencia de electronegatividad de Pauling como criterio orientativo (convención de manual, no frontera exacta); propiedades físicas de tablas (CRC Handbook) con procedencia; redes cristalinas del kit (src/chem/crystal.ts).
 - **Vista 3D (obligatoria):** Comparador 3D lado a lado: red iónica del NaCl (Crystal3D), red covalente del cuarzo, cristal molecular de sacarosa y metal con «mar de electrones»; al «fundir» o «disolver» se ve qué se separa (iones, moléculas) y qué no.
 
-**`configuracion-electronica` · Configuración electrónica y orbitales atómicos** (10.º, P1)
+**`configuracion-electronica` (construida en la ola 1b; ver `src/curriculum/practices/configuracion-electronica.ts`) · Configuración electrónica y orbitales atómicos** (10.º, P1)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos químicos): estructura del átomo según la teoría cuántica y su relación con la tabla periódica (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 10.º): «Configuración electrónica y periodicidad química».
 - **Meta de aprendizaje:** Construye configuraciones con el principio de Aufbau, Pauli y Hund, reconoce las excepciones (Cr, Cu) y relaciona la capa de valencia con el grupo y el período.
 - **Modelo científico y validación:** Regla de Madelung (n + l); configuraciones del estado fundamental de NIST para validar las excepciones; formas de los orbitales a partir de las funciones hidrogenoides de los manuales (Atkins, Química física).
 - **Vista 3D (obligatoria):** Orbitales s, p y d como superficies de probabilidad 3D superpuestas en el mismo núcleo; el estudiante los llena electrón por electrón y ve la orientación de pₓ, p_y, p_z y de los d. Aquí el 3D es imprescindible: la forma y orientación no se entienden en 2D.
 
-**`pila-electroquimica` · Oxidación-reducción: pila de Daniell y electrólisis** (11.º, P1)
+**`pila-electroquimica` (construida en la ola 1b; ver `src/curriculum/practices/pila-electroquimica.ts`; la electrólisis con fuente externa queda pendiente) · Oxidación-reducción: pila de Daniell y electrólisis** (11.º, P1)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos químicos): reacciones de óxido-reducción y su aprovechamiento (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 11.º): «Oxidación-reducción».
 - **Meta de aprendizaje:** Identifica oxidación y reducción en una pila, predice su voltaje con potenciales estándar, observa el efecto de la concentración (Nernst) y calcula la masa depositada en una electrólisis (Faraday).
@@ -388,30 +388,30 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 
 | Prioridad | id | Grado | Título | Ola |
 |---|---|---|---|---|
-| P1 | `sistema-circulatorio` | 7.º | Corazón y circulación: frecuencia cardíaca y ejercicio | nuevas-1 |
-| P1 | `meiosis` | 8.º | Meiosis, entrecruzamiento y variabilidad genética | nuevas-1 |
-| P1 | `sistema-nervioso` | 8.º | Sistema nervioso: neurona, arco reflejo y tiempo de reacción | nuevas-1 |
+| P1 | `sistema-circulatorio` | 7.º | Corazón y circulación: frecuencia cardíaca y ejercicio | nuevas-1 · **construida (ola 1b)** |
+| P1 | `meiosis` | 8.º | Meiosis, entrecruzamiento y variabilidad genética | nuevas-1 · **construida (ola 1b)** |
+| P1 | `sistema-nervioso` | 8.º | Sistema nervioso: neurona, arco reflejo y tiempo de reacción | nuevas-1 · **construida (ola 1b)** |
 | P2 | `clasificacion-seres-vivos` | 6.º | Clasificación de los seres vivos con claves dicotómicas | nuevas-2 |
 | P2 | `homeostasis-glucosa` | 10.º | Homeostasis: regulación de la glucosa por insulina y glucagón | nuevas-2 |
 | P3 | `nutricion-digestion` | 7.º | Digestión: enzimas y pH a lo largo del tubo digestivo | nuevas-3 |
 | P3 | `biotecnologia-pcr` | 10.º | Biotecnología: PCR y electroforesis en gel | nuevas-3 |
 | P3 | `sistema-inmune` | 11.º | Sistema inmune, vacunas e inmunidad colectiva | nuevas-3 |
 
-**`sistema-circulatorio` · Corazón y circulación: frecuencia cardíaca y ejercicio** (7.º, P1)
+**`sistema-circulatorio` (construida en la ola 1b; ver `src/curriculum/practices/sistema-circulatorio.ts`) · Corazón y circulación: frecuencia cardíaca y ejercicio** (7.º, P1)
 
 - **Anclaje:** EBC 6.º–7.º, entorno vivo: funciones de nutrición en los seres vivos (circulación) (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 7.º): «Nutrición, circulación, respiración y excreción».
 - **Meta de aprendizaje:** Mide la frecuencia cardíaca en reposo y después de ejercicio, calcula el gasto cardíaco y explica la circulación doble y el papel de las válvulas.
 - **Modelo científico y validación:** Gasto cardíaco = frecuencia cardíaca × volumen sistólico (≈ 5 L/min en reposo según Guyton y Hall); datos del estudiante con su consentimiento o datos de ejemplo rotulados.
 - **Vista 3D (obligatoria):** Corazón 3D seccionable con las cuatro cavidades y válvulas; sangre oxigenada (roja) y desoxigenada (azul) animadas en la circulación pulmonar y sistémica; ritmo sincronizado con la frecuencia elegida.
 
-**`meiosis` · Meiosis, entrecruzamiento y variabilidad genética** (8.º, P1)
+**`meiosis` (construida en la ola 1b; ver `src/curriculum/practices/meiosis.ts`) · Meiosis, entrecruzamiento y variabilidad genética** (8.º, P1)
 
 - **Anclaje:** EBC 8.º–9.º, entorno vivo: reproducción y transmisión de características hereditarias (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 7.º): «Reproducción celular: introducción a mitosis y meiosis».
 - **Meta de aprendizaje:** Compara mitosis y meiosis, explica cómo el entrecruzamiento y la segregación independiente generan variabilidad y relaciona la no disyunción con trisomías.
 - **Modelo científico y validación:** 2ⁿ combinaciones por segregación independiente (n = 23 en humanos → 8 388 608); frecuencia de recombinación proporcional a la distancia entre genes (1 cM ≈ 1 %, Morgan).
 - **Vista 3D (obligatoria):** Cromosomas homólogos 3D que se aparean, forman quiasmas e intercambian segmentos de color; el estudiante elige el punto de cruce y sigue las cuatro cromátidas hasta los gametos.
 
-**`sistema-nervioso` · Sistema nervioso: neurona, arco reflejo y tiempo de reacción** (8.º, P1)
+**`sistema-nervioso` (construida en la ola 1b; ver `src/curriculum/practices/sistema-nervioso.ts`) · Sistema nervioso: neurona, arco reflejo y tiempo de reacción** (8.º, P1)
 
 - **Anclaje:** EBC 8.º–9.º, entorno vivo: sistemas de coordinación y control (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 8.º): «Sistemas nervioso y endocrino».
 - **Meta de aprendizaje:** Mide su propio tiempo de reacción con la regla que cae (dato real del estudiante), compara con un reflejo y explica el recorrido del impulso nervioso.

@@ -217,6 +217,11 @@ siguen todas las prácticas adoptadas:
 | Leyes de los gases | `GasLab` | Movimiento de las partículas · Animar las partículas | — | Antes no se podía detener (WCAG 2.2.2) |
 | Fotosíntesis | `PhotoLab` | Burbujeo de la elodea · Animar las burbujas | — | Antes no se podía detener (WCAG 2.2.2) |
 | Modelos atómicos | `AtomicModelsLab` | Detector de centelleo · Contar centelleos (Repetir = «Contar otra vez») | t del conteo (10–120 s, lo fija el estudiante) | Resolución del contador (1 cuenta); el reloj va ×10 |
+| Configuración electrónica | `ElectronConfigLab` | Llenado electrón por electrón · Llenar paso a paso | electrones colocados (0–Z) | Un electrón cada 0,42 s; con movimiento reducido salta al final |
+| Pila electroquímica | `GalvanicCellLab` | Pila conectada a la carga · Conectar la carga | t de la descarga (0–300 min) | El reloj va 10 min por segundo; la escena 3D queda quieta en pausa |
+| Meiosis | `MeiosisLab` | Reproducción de la meiosis · Reproducir la meiosis (+ «Etapa anterior/siguiente») | etapa (1–10) | 1,8 s por etapa; las anafases se animan |
+| Sistema nervioso | `NervousSystemLab` | Impulso nervioso · Estimular | recorrido del impulso (0–100 %) | Cámara lenta: 3 s en pantalla |
+| Sistema circulatorio | `CirculatoryLab` | Latido y medición del pulso · Hacer latir y contar 15 s | t (0–15 s) | Latidos a la frecuencia del modelo; la sangre avanza ×6 |
 
 **Prácticas con animación pero sin dinámica que pausar** (no se inventan controles):
 
@@ -241,8 +246,8 @@ siguen todas las prácticas adoptadas:
 | Mitosis, población, genética de poblaciones, enzimas | `MitosisLab`, `PopulationLab`, `PopGenLab`, `EnzymeLab` | Sin animación temporal: el modelo se calcula completo y se muestra como gráfica o resultado. |
 
 Las 26 prácticas restantes (densidad, mezclas, óptica, soluciones, química inorgánica y orgánica, genómica, tabla periódica,
-enlace químico, electrostática, etc.) no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 24
-adoptadas + 19 sin dinámica que pausar + 26 sin animación = 69.
+enlace químico, electrostática, etc.) no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 29
+adoptadas (con las 5 de la ola 1b) + 19 sin dinámica que pausar + 26 sin animación = 74.
 
 ### `ConditionAlert` (`src/components/ConditionAlert.tsx`)
 
@@ -340,9 +345,12 @@ de rango»). Retrocompatible: los 65 laboratorios siguen funcionando sin cambios
 | Óptica | Transportador 1° (solo en modo real: en modo ideal la lectura no se cuantiza) | — |
 | Electrostática | Dinamómetro 0,001 N, regla 0,1 cm, balanza de torsión 0,01 mN | Fuerza: fuera de rango sobre 20 N |
 | Modelos atómicos | Contador de centelleos 1 cuenta | — |
+| Pila electroquímica | Voltímetro 0,001 V, balanza 0,001 g | Voltaje negativo: «en el límite» (cables invertidos) |
+| Sistema nervioso | Regla 0,1 cm | Tiempo menor que 0,100 s: «en el límite» (anticipación) |
+| Sistema circulatorio | Pulsioxímetro 1 lpm, tensiómetro 1 mmHg | — |
 
 Sin resolución por no tener instrumento de lectura directa (el valor es del modelo): enzimas, fotosíntesis (las
-lecturas del registrador ya llevan su resolución), metabolismo, secuencias e indagación; tampoco la tabla periódica y el enlace químico, que muestran datos publicados con su fuente.
+lecturas del registrador ya llevan su resolución), metabolismo, secuencias e indagación; tampoco la tabla periódica y el enlace químico, que muestran datos publicados con su fuente, ni la configuración electrónica y la meiosis (conteos exactos del modelo).
 
 ### `RelationExplainer` (análisis)
 

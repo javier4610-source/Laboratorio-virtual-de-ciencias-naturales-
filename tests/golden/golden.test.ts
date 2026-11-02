@@ -13,6 +13,11 @@ import { closestApproachFm, rutherfordAngle, rutherfordRate, rutherfordSetup, tr
 import { periodicElement, slaterZeff, trend, periodMembers } from '../../src/models/periodicTrends';
 import { checkLewis, classifyBond, lewisById } from '../../src/models/chemicalBonding';
 import { chargesFrom, coulombStation, fieldAt, PRESETS } from '../../src/models/electrostatics';
+import { analyzeBoxes, aufbauOccupancy, groundState, hundBoxes, nobleGasString, tablePlace } from '../../src/models/electronConfiguration';
+import { cell as galvanicCell, discharge as galvanicDischarge, FARADAY } from '../../src/models/electrochemicalCell';
+import { expectedFrequencies, gameteCombinations, meiosisGametes, stageCounts } from '../../src/models/meiosis';
+import { actionPotential, reactionTime, reflexArc } from '../../src/models/nervousSystem';
+import { cycleAt, exercise, hrMax } from '../../src/models/circulation';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -379,6 +384,34 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'electrostatica', origin: 'independiente', what: 'ley de Coulomb con k = 8,99 × 10⁹ N·m²/C²: 2 µC y −3 µC a 30 cm → F = 8,99e9·6e-12/0,09 = 0,5993 N de atracción; dos cargas de +2 µC a ±10 cm → E = 0 en el punto medio', run: () => {
     const r = coulombStation({ q1uC: 2, q2uC: -3, rCm: 30 }); close(r.magnitude, (8.99e9 * 6e-12) / 0.09, 1e-12); expect(r.kind).toBe('atracción');
     const E = fieldAt(chargesFrom(PRESETS.find((p) => p.id === 'iguales')!.charges), [0, 0, 0]); expect(Math.hypot(...E)).toBeLessThan(1e-6);
+  } },
+  { id: 'configuracion-electronica', origin: 'referencia', what: 'Fe (Z = 26) por Madelung: [Ar] 4s² 3d⁶, 4 desapareados, período 4, grupo 8 (cálculo a mano); Cr y Cu: el estado fundamental medido (PubChem, 2026-11-01) es [Ar] 4s¹ 3d⁵ (6 desapareados) y [Ar] 4s¹ 3d¹⁰ (1), distinto de la predicción [Ar] 4s² 3d⁴ y [Ar] 4s² 3d⁹', run: () => {
+    expect(nobleGasString(aufbauOccupancy(26))).toBe('[Ar] 4s² 3d⁶'); expect(analyzeBoxes(hundBoxes(aufbauOccupancy(26)), 26).unpaired).toBe(4);
+    expect(tablePlace(26)).toMatchObject({ period: 4, group: 8, block: 'd' });
+    expect(nobleGasString(groundState(24))).toBe('[Ar] 4s¹ 3d⁵'); expect(analyzeBoxes(hundBoxes(groundState(24)), 24).unpaired).toBe(6);
+    expect(nobleGasString(aufbauOccupancy(24))).toBe('[Ar] 4s² 3d⁴'); expect(nobleGasString(groundState(29))).toBe('[Ar] 4s¹ 3d¹⁰'); expect(nobleGasString(aufbauOccupancy(29))).toBe('[Ar] 4s² 3d⁹');
+  } },
+  { id: 'pila-electroquimica', origin: 'referencia', what: 'pila de Daniell con E° del CRC (Vanýsek): 0,3419 − (−0,7618) = 1,1037 V; [Cu²⁺] = 0,010 M → 1,1037 − 0,05916 = 1,0445 V; 50 mA durante 120 min → 360 C, Zn −360·65,4/(2·96 485) = −0,1220 g, Cu +360·63,55/(2·96 485) = +0,1186 g', run: () => {
+    const d = { left: 'zn', right: 'cu', cLeft: 1, cRight: 1, bridge: 'KNO3' as const };
+    close(galvanicCell(d).E, 1.1037, 1e-12); close(galvanicCell({ ...d, cRight: 0.01 }).E, 1.1037 - (8.314462618 * 298.15 * Math.LN10) / FARADAY, 1e-12);
+    const r = galvanicDischarge({ ...d, volumeML: 100, currentMA: 50, timeMin: 120 });
+    close(r.dLeft, -(360 * 65.4) / (2 * 96485.33212), 1e-12); close(r.dRight, (360 * 63.55) / (2 * 96485.33212), 1e-12);
+  } },
+  { id: 'meiosis', origin: 'referencia', what: 'humano n = 23: 2²³ = 8 388 608 combinaciones de gametos; 2n = 4: telofase I 2 células con 2 cromosomas y 2c, gametos con 1c; d = 20 cM → AB = ab = 0,40 y Ab = aB = 0,10 (Morgan); un cruce entre A y B → 2 de 4 gametos recombinantes', run: () => {
+    expect(gameteCombinations(23)).toBe(8388608);
+    expect(stageCounts(5, 4)).toMatchObject({ cells: 2, chromosomes: 2, dnaC: 2 }); expect(stageCounts(9, 4)).toMatchObject({ cells: 4, chromosomes: 2, dnaC: 1 });
+    expect(expectedFrequencies(1, 20)).toEqual({ AB: 0.4, ab: 0.4, Ab: 0.1, aB: 0.1 });
+    expect(meiosisGametes({ pairs: 1, crossover: 0.5, orientation: [true], nondisjunction: 'ninguna' }).filter((g) => g.recombinant)).toHaveLength(2);
+  } },
+  { id: 'sistema-nervioso', origin: 'independiente', what: 'regla que cae: d = 23,7 cm → t = √(2·0,237/9,8) = 0,2199 s; potencial de acción de umbral (−70 + 10 = −60 mV < −55: sin disparo; con 20 mV, pico +30 mV); arco reflejo 0,8 m con Aδ (15 m/s) y Aα (80 m/s) + 3 ms = 66,3 ms', run: () => {
+    close(reactionTime(23.7), Math.sqrt((2 * 0.237) / 9.8), 1e-12);
+    expect(actionPotential(10).fired).toBe(false); close(actionPotential(20).peak, 30, 1e-6);
+    close(reflexArc(0.8, 'ad').totalMs, (0.8 / 15) * 1000 + (0.8 / 80) * 1000 + 3, 1e-9);
+  } },
+  { id: 'sistema-circulatorio', origin: 'referencia', what: 'gasto cardíaco 72 lpm × 70 mL = 5,04 L/min (Guyton y Hall: ≈ 5 L/min); FC máx de Tanaka a los 15 años = 208 − 0,7·15 = 197,5 lpm; Karvonen al 50 %: 72 + 0,5·125,5 = 134,75 lpm; a 72 lpm la sístole dura 0,4·60/72 = 0,333 s con las válvulas AV cerradas', run: () => {
+    close(exercise({ age: 15, hrRest: 72, svRest: 70, intensity: 0 }).co, 5.04, 1e-12); close(hrMax(15), 197.5, 1e-12);
+    close(exercise({ age: 15, hrRest: 72, svRest: 70, intensity: 50 }).hr, 134.75, 1e-12);
+    const c = cycleAt(0.1, 72); close(c.systoleS, 0.4 * 60 / 72, 1e-12); expect(c.avOpen).toBe(false); expect(c.semilunarOpen).toBe(true);
   } },
 ];
 

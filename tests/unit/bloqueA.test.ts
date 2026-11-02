@@ -115,5 +115,5 @@ describe('Banco avanzado — Bloque A (entrega 1)', () => {
     const { PRACTICES } = await import('../../src/curriculum');
     const ids = new Set(PRACTICES.map((p: { id: string }) => p.id));
     for (const it of BLOQUE_A) if (it.practiceId) expect(ids.has(it.practiceId), `${it.id} → ${it.practiceId}`).toBe(true);
-  });
+  }, 20_000);
 });

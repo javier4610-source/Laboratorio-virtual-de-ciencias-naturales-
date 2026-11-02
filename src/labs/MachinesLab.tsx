@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   BAR, DYNAMOMETER_MAX, LEVER_CLASSES, LEVER_TILT_DEG, MACHINE_INSTRUMENTS, MACHINE_LIMITS, PULLEY_SETUPS, armRange,
   leverOrderError, sheaveCounts, simulateLever, simulatePulley, type LeverClass, type MachineInstrumentSpec, type PulleySetup,
@@ -13,6 +13,10 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop } from './kit';
 import { ManipHint, ManipScene, Plunger } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const MaquinasView3D = lazy(() => import('./lote3d3/MaquinasView3D'));
 
 /* ------------------------------------------------------------------ instrumentos */
 
@@ -748,6 +752,12 @@ export default function MachinesLab({ api }: LabProps) {
           </div>
         </div>
         {measured && overload && <Notice kind="warn">La fuerza necesaria supera los 10 N del dinamómetro. Reduce la carga, aleja el dinamómetro del fulcro o usa más tramos de cuerda.</Notice>}
+        <Panel3D title={machine === 'palanca' ? 'la palanca, sus fuerzas y sus brazos' : 'las poleas, la cuerda y la carga'}
+          summary={machine === 'palanca' ? 'La palanca en 3D con la carga y el dinamómetro en sus agujeros, los brazos dR y dF y las fuerzas R y F a escala; al medir, la barra gira como en el banco.' : 'Las poleas en 3D con los tramos de cuerda que sostienen la carga; al medir se ve cuánta cuerda se jala y cuánto sube la carga.'}>
+          <MaquinasView3D
+            lever={machine === 'palanca' && lever ? { lever, ease, measured, dRcm: dR, dFcm: dF, massG, className: classInfo.name } : null}
+            pulley={machine === 'poleas' ? { pulley, ease, measured, setupName: setupInfo.name, fixedSheaves: sheaveCounts(setup, pulley.n).fixed, movableSheaves: sheaveCounts(setup, pulley.n).movable } : null} />
+        </Panel3D>
       </div>
 
       <div className="controls">

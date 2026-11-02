@@ -9,7 +9,6 @@
 import { fmt } from '../../lib/format';
 import { BLOCK, RAMP, supportHeight, type RampResult } from '../../models/workPower';
 import { add, arrowScale, scale, type SceneItem, type Vec3 } from '../../three/scene';
-import { compact } from './mech3d';
 
 export const WORK_FORCE_SCALE = arrowScale(12, 0.4);
 const BOARD_T = 0.02, BOARD_W = 0.2;

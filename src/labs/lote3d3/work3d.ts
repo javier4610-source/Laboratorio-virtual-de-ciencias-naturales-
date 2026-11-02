@@ -60,7 +60,8 @@ export function workScene(inp: WorkSceneInput): { items: SceneItem[]; extent: nu
   // Fuerzas desde el centro del bloque (la normal y el rozamiento, en la cara de contacto).
   const c = along(s + BLOCK_L / 2, (BLOCK_H + stack) / 2);
   const rad = 0.009;
-  items.push({ id: 'P', kind: 'arrow', from: c, vector: [0, -r.weight * k, 0], radius: rad, color: 'ink', label: 'P' });
+  // El peso se dibuja junto al borde delantero de la tabla (a la altura del centro del bloque) para que la tabla no lo tape.
+  items.push({ id: 'P', kind: 'arrow', from: [c[0], c[1], BOARD_W / 2 + 0.03], vector: [0, -r.weight * k, 0], radius: rad, color: 'ink', label: 'P' });
   items.push({ id: 'N', kind: 'arrow', from: along(s + BLOCK_L * 0.25, BLOCK_H + stack + 0.005), vector: scale(n, r.normal * k), radius: rad, color: 'ok', label: 'N' });
   if (moving || inp.phase === 'medido') {
     items.push({ id: 'F', kind: 'arrow', from: along(s + BLOCK_L, BLOCK_H / 2), vector: scale(u, r.F * k), radius: rad, color: 'fis', label: 'F' });

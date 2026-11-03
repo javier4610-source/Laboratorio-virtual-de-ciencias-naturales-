@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import { AMMETER_RES_MA, CLASS_LABELS, SAMPLES, testSample, type ConductorClass, type Sample } from '../models/conductors';
 import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -9,6 +9,10 @@ import type { LabProps } from './registry';
 import { useMeasure } from '../components/Measurement';
 import { instrument } from './instruments';
 import { BenchTop, Beaker, Lcd, shade } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const ConductoresView3D = lazy(() => import('./lote3d4/ConductoresView3D'));
 
 /* ------------------------------------------------------------------ geometría del banco */
 
@@ -372,6 +376,9 @@ export default function ConductorsLab({ api }: LabProps) {
           { k: 'Resistencia de la muestra', v: measured ? `${fmtSig(res.sampleR, 2)} Ω` : '—' },
           { k: 'Clasificación según la medición', v: measured ? CLASS_LABELS[res.classification] : '—' },
         ]} />
+        <Panel3D title="las cargas dentro de la muestra" summary="Una vista ampliada de la muestra: electrones libres en los conductores, ligados en los aislantes e iones en el agua; con el circuito cerrado avanzan tanto como diga la corriente medida.">
+          <ConductoresView3D res={res} closed={closed} glow={glow} />
+        </Panel3D>
         {measured && match !== null && (
           <Notice kind={match ? 'ok' : 'warn'}>
             {match

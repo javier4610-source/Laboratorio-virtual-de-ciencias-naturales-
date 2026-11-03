@@ -18,6 +18,11 @@ import { cell as galvanicCell, discharge as galvanicDischarge, FARADAY } from '.
 import { expectedFrequencies, gameteCombinations, meiosisGametes, stageCounts } from '../../src/models/meiosis';
 import { actionPotential, reactionTime, reflexArc } from '../../src/models/nervousSystem';
 import { cycleAt, exercise, hrMax } from '../../src/models/circulation';
+import { boilingPointC, heatingCurve, plateau } from '../../src/models/statesOfMatter';
+import { evaluateChange } from '../../src/models/chemicalChanges';
+import { carOnCurve, ucm } from '../../src/models/circularMotion';
+import { eyeImage, thinLens } from '../../src/models/lenses';
+import { electromagnet, wireField } from '../../src/models/magnetism';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -412,6 +417,30 @@ export const GOLDEN: GoldenCase[] = [
     close(exercise({ age: 15, hrRest: 72, svRest: 70, intensity: 0 }).co, 5.04, 1e-12); close(hrMax(15), 197.5, 1e-12);
     close(exercise({ age: 15, hrRest: 72, svRest: 70, intensity: 50 }).hr, 134.75, 1e-12);
     const c = cycleAt(0.1, 72); close(c.systoleS, 0.4 * 60 / 72, 1e-12); expect(c.avOpen).toBe(false); expect(c.semilunarOpen).toBe(true);
+  } },
+  { id: 'estados-de-la-materia', origin: 'independiente', what: '200 g de hielo a −20 °C con 500 W: 200·2,09·20 = 8360 J; meseta de fusión 200·334/500 = 133,6 s; de ebullición 200·2256/500 = 902,4 s; ebullición a 101 325 Pa = 99,97 °C (tablas de vapor IAPWS)', run: () => {
+    const c = heatingCurve({ mass: 200, power: 500, t0: -20, tEnd: 110, place: 'apartado' });
+    close(c.segments[0].q1, 8360, 1e-9); close(plateau(c, 'fusion')!.duration, 133.6, 1e-9); close(plateau(c, 'ebullicion')!.duration, 902.4, 1e-9);
+    close(boilingPointC(101325), 99.974, 0.002);
+  } },
+  { id: 'cambios-quimicos', origin: 'independiente', what: '20 mL de CaCl₂ 0,10 M + 10 mL de Na₂CO₃ 0,10 M → 1,00 mmol × 100,086 g/mol = 0,1001 g de CaCO₃; vinagre: 2,0 g/84,006 g/mol = 23,81 mmol de CO₂ (bicarbonato límite)', run: () => {
+    const p = evaluateChange({ id: 'precipitado', a: 20, b: 10, t: 10 });
+    close(p.quantities.find((q) => q.key === 'mCaCO3')!.value, 0.100086 * p.progress, 1e-12); close(p.progress, 1, 1e-4);
+    const v = evaluateChange({ id: 'vinagre-bicarbonato', a: 2, b: 50, t: 30 });
+    expect(v.limiting).toBe('el bicarbonato'); close(v.quantities.find((q) => q.key === 'nCO2')!.value, (2 / 84.006) * 1000 * v.progress, 1e-9);
+  } },
+  { id: 'movimiento-circular', origin: 'independiente', what: 'r = 0,50 m, m = 200 g, T = 1,00 s: v = π m/s, a = 2π² = 19,739 m/s², F = 3,948 N; curva de 50 m con μ = 1,0: √(9,78·50) = 22,11 m/s = 79,6 km/h', run: () => {
+    const r = ucm({ radius: 0.5, massG: 200, period: 1 });
+    close(r.v, Math.PI, 1e-12); close(r.ac, 19.7392, 1e-4); close(r.force, 3.94784, 1e-5);
+    close(carOnCurve({ radius: 50, surface: 'seco', speedKmh: 60, massKg: 1000 }).vmaxKmh, 79.608, 1e-3);
+  } },
+  { id: 'lentes', origin: 'referencia', what: 'Hecht: f = 10 cm, d_o = 30 cm → d_i = 15 cm, M = −0,5; d_o = 5 cm → d_i = −10 cm, M = +2; miopía con punto remoto 50 cm corregida con −2,0 D', run: () => {
+    close(thinLens(10, 30).di, 15, 1e-12); close(thinLens(10, 30).M, -0.5, 1e-12); close(thinLens(10, 5).di, -10, 1e-12); close(thinLens(10, 5).M, 2, 1e-12);
+    expect(eyeImage('miopia', Infinity).where).toBe('delante'); expect(eyeImage('miopia', Infinity, -2).where).toBe('retina');
+  } },
+  { id: 'magnetismo-imanes', origin: 'independiente', what: 'Biot-Savart: cable con 1 A a 2 cm, B = 2·10⁻⁷·1/0,02 = 1,0 × 10⁻⁵ T; con H = 26 967 nT (WMM2025, Apartadó) la brújula se desvía arctan(10/26,967) = 20,35°', run: () => {
+    close(wireField(1, 0.02), 1e-5, 1e-18);
+    close(electromagnet({ source: 'cable', turns: 50, current: 1, distanceCm: 2 }).deflection, (Math.atan(10 / 26.967) * 180) / Math.PI, 1e-9);
   } },
 ];
 

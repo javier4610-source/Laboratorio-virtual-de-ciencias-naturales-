@@ -29,7 +29,7 @@ const o2m = () => singleAtom('o2-', 'Ion óxido', 'O', -2, 'O²⁻');
 /** Nota de cada reacción 3D (qué se dibuja y qué se simplifica). */
 export const REACTION_NOTE: Partial<Record<ChangeId, string>> = {
   'vinagre-bicarbonato': 'El ácido acético cede su H al bicarbonato; el H₂CO₃ que se formaría se descompone enseguida en H₂O y CO₂ (aquí se dibuja la reacción global).',
-  precipitado: 'Iones dibujados por separado: en el CaCO₃ sólido forman una red, y el NaCl queda disuelto (Na⁺ y Cl⁻ sueltos en el agua).',
+  precipitado: 'Intercambio de iones: el Ca²⁺ se junta con el CO₃²⁻ y el Na⁺ con el Cl⁻ sin romper enlaces covalentes (el CO₃²⁻ queda entero). Se forma una sustancia nueva, el CaCO₃ sólido; los iones se dibujan por separado (en el sólido forman una red).',
   'oxidacion-hierro': 'Herrumbre simplificada a Fe₂O₃ anhidro (la real tiene agua) con sus iones dibujados por separado.',
   vela: 'La parafina es una mezcla de alcanos de cadena larga (≈ C₂₅H₅₂) sin confórmero 3D en PubChem: se dibuja la combustión del propano, un alcano de la misma familia que arde igual (C y H se unen al O).',
   'quemar-azucar': 'Carbonización simplificada: C₁₂H₂₂O₁₁ → 12 C + 11 H₂O; el carbono se dibuja como átomos sueltos (en el carbón forman capas).',

@@ -926,6 +926,69 @@ const SCENES: Record<string, () => ReactNode> = {
       <MiniPlot x={196} y={8} w={110} h={66} d="M0 4 L86 40" points={[[0, 4], [28, 16], [58, 26], [86, 40]]} color="var(--amb)" />
     </>
   ),
+  'estados-de-la-materia': () => (
+    <>
+      <Bench />
+      <Beaker x={40} y={56} w={76} h={82} fill={0.45} liquid="#7fb6e6">
+        {[0, 1, 2].map((k) => <rect key={k} x={52 + k * 18} y={96 - (k % 2) * 8} width={14} height={12} rx={3} fill="#e6f2fb" stroke="#8fb8d8" />)}
+      </Beaker>
+      <Thermometer x={128} y={30} h={108} min={-30} max={120} value={0} />
+      <MiniPlot x={168} y={22} w={136} h={96} d="M0 66 L14 50 L44 50 L66 22 L104 22 L114 8" />
+    </>
+  ),
+  'cambios-quimicos': () => (
+    <>
+      <Bench />
+      <path d="M52 140 V92 Q52 80 66 72 V56 H82 V72 Q96 80 96 92 V140 Z" fill="#eef6fb" stroke={INK} strokeWidth="1.4" />
+      <rect x="54" y="112" width="40" height="27" fill="#f4e7c3" opacity="0.9" />
+      <ellipse cx="74" cy="34" rx="18" ry="24" fill="var(--series-4)" opacity="0.8" />
+      <Bubbles pts={[[64, 118, 3], [78, 124, 2.5], [86, 114, 2]]} />
+      <TestTube x={140} y={46} h={92} fill={0.6} liquid="#f7f7f2">
+        <rect x={142} y={120} width={18} height={10} fill="#ffffff" stroke="var(--line-strong)" />
+      </TestTube>
+      <circle cx="220" cy="80" r="8" fill="var(--series-1)" /><circle cx="236" cy="80" r="6" fill="var(--series-2)" />
+      <Arrow x1={248} y1={80} x2={266} y2={80} />
+      <circle cx="280" cy="72" r="8" fill="var(--series-1)" /><circle cx="292" cy="88" r="6" fill="var(--series-2)" />
+    </>
+  ),
+  'movimiento-circular': () => (
+    <>
+      <ellipse cx="120" cy="88" rx="96" ry="40" fill="var(--surface)" stroke="var(--line-strong)" />
+      <ellipse cx="120" cy="88" rx="62" ry="26" fill="none" stroke={INK} strokeDasharray="4 4" />
+      <circle cx="120" cy="88" r="5" fill={INK} />
+      <path d="M120 88 L172 74" stroke={INK} strokeWidth="1.5" />
+      <ellipse cx="174" cy="74" rx="11" ry="6" fill="var(--series-4)" />
+      <Arrow x1={176} y1={74} x2={196} y2={104} color="var(--data)" w={2.4} />
+      <Arrow x1={170} y1={74} x2={146} y2={81} color="var(--series-2)" w={2.4} />
+      <MiniPlot x={212} y={30} w={96} h={72} d="M0 50 L74 4" points={[[12, 42], [30, 31], [52, 18], [70, 7]]} />
+    </>
+  ),
+  lentes: () => (
+    <>
+      <line x1="10" y1="90" x2="310" y2="90" stroke="var(--line-strong)" strokeDasharray="4 4" />
+      <rect x="40" y="62" width="8" height="28" fill="#f2efe6" stroke={INK} />
+      <ellipse cx="44" cy="56" rx="4" ry="8" fill="#f2a32b" />
+      <ellipse cx="150" cy="90" rx="9" ry="50" fill="#7fc8dc" opacity="0.65" stroke={INK} />
+      <path d="M44 50 L150 50 L250 112" fill="none" stroke="var(--series-1)" strokeWidth="1.6" />
+      <path d="M44 50 L250 112" fill="none" stroke="var(--series-2)" strokeWidth="1.6" />
+      <path d="M44 50 L150 112 L250 112" fill="none" stroke="var(--series-3)" strokeWidth="1.6" />
+      <rect x="250" y="40" width="5" height="100" fill={INK} />
+      <Arrow x1={246} y1={90} x2={246} y2={112} color="var(--data)" w={2.4} />
+    </>
+  ),
+  'magnetismo-imanes': () => (
+    <>
+      {[-1, 1].flatMap((sy) => [22, 40, 60].map((r) => <path key={`${sy}-${r}`} d={`M196 90 C 196 ${90 - sy * r * 1.6}, 124 ${90 - sy * r * 1.6}, 124 90`} fill="none" stroke="var(--ink-3)" strokeWidth="1.2" />))}
+      <rect x="124" y="80" width="36" height="20" fill="var(--series-2)" />
+      <rect x="160" y="80" width="36" height="20" fill="var(--series-1)" />
+      <text x="178" y="95" textAnchor="middle" style={{ fontSize: 12, fill: '#fff', fontWeight: 700 }}>N</text>
+      <text x="142" y="95" textAnchor="middle" style={{ fontSize: 12, fill: '#fff', fontWeight: 700 }}>S</text>
+      <circle cx="252" cy="62" r="18" fill="var(--surface)" stroke={INK} />
+      <Arrow x1={242} y1={70} x2={262} y2={54} color="var(--data)" w={2.4} />
+      <circle cx="64" cy="62" r="18" fill="var(--surface)" stroke={INK} />
+      <Arrow x1={74} y1={70} x2={54} y2={54} color="var(--data)" w={2.4} />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

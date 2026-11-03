@@ -46,6 +46,15 @@ describe('procedencia de los datos', () => {
     expect(practiceProvenance('sistema-nervioso').detail).toMatch(/dato propio/);
     expect(practiceProvenance('sistema-circulatorio').detail).toMatch(/No es un diagnóstico/);
   });
+  it('ola 2a: las cinco prácticas son modelo calculado con su fuente y su advertencia', () => {
+    expect(practiceProvenance('estados-de-la-materia')).toMatchObject({ data: 'modelo', scene: 'modelo' });
+    expect(practiceProvenance('estados-de-la-materia').detail).toMatch(/IAPWS-IF97/);
+    expect(practiceProvenance('cambios-quimicos', 'real').detail).toMatch(/ruido de medición sintético/);
+    expect(practiceProvenance('cambios-quimicos')).toMatchObject({ scene: 'ilustracion' });
+    expect(practiceProvenance('movimiento-circular').detail).toMatch(/Serway/);
+    expect(practiceProvenance('lentes').detail).toMatch(/no sirve para formular gafas/);
+    expect(practiceProvenance('magnetismo-imanes').detail).toMatch(/WMM2025/);
+  });
   it('la geometría molecular declara sus coordenadas como predicción computacional de PubChem', () => {
     const p = practiceProvenance('geometria');
     expect(p).toMatchObject({ data: 'modelo', scene: 'prediccion' });

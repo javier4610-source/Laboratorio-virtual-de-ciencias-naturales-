@@ -12,6 +12,11 @@ export const ro = (page: Page, k: string) => page.locator('.readout .item').filt
 export async function axe(page: Page, where: string): Promise<string[]> {
   // PENDIENTE DEL KIT (scratchpad/chem-kit-pedidos.md, pedido 6): en tema claro, el lado inactivo de la ecuación de <Reaction3D>
   // usa opacity 0.6 y queda en 4,46:1 (< 4,5:1). Se excluye SOLO ese span del kit hasta que se corrija allí; el resto se analiza.
+  // Tras cambiar de tema, los colores pasan por una transición CSS: si axe mide a mitad de camino reporta contrastes
+  // intermedios que no existen en reposo (falla intermitente en CI). Se espera a que terminen las transiciones finitas.
+  await page.evaluate(() => Promise.all(document.getAnimations()
+    .filter((a) => (a.effect?.getTiming().iterations ?? 1) !== Infinity)
+    .map((a) => a.finished.catch(() => undefined))));
   const r = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
   return r.violations.map((v) => `${where} · ${v.id}: ${v.help} → ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
 }

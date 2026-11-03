@@ -654,7 +654,7 @@ Nota técnica: los rótulos HTML se reparten con la estimación de ancho del kit
 (brazos de la palanca), se usan rótulos cortos («dR», «dF») y los valores van en la descripción. La prueba E2E comprueba a
 390 px que los rótulos visibles no se encimen ni se salgan del lienzo.
 
-#### Lote 3D-4 · Electricidad, campos y partículas (8 prácticas)
+#### Lote 3D-4 · Electricidad, campos y partículas (8 prácticas) — hecho
 
 | Práctica | Grado | Escena 3D propuesta (qué ve y manipula el estudiante) | Tecnología | Complejidad | Prioridad |
 |---|---|---|---|---|---|
@@ -666,6 +666,38 @@ Nota técnica: los rótulos HTML se reparten con la estimación de ancho del kit
 | `cinetica` Factores que afectan la velocidad de reacción | 10.º | Choques moleculares 3D: solo los choques con energía y orientación suficientes reaccionan; la temperatura cambia la distribución de rapideces y el catalizador baja la barrera. | Kit general de escenas 3D (three.js, en construcción en paralelo) | M | 2 |
 | `equilibrio` Equilibrio químico y principio de Le Châtelier | 11.º | Recipiente 3D con N₂O₄ ⇌ 2 NO₂ (u otro sistema del modelo): reacciones directa e inversa ocurriendo a la vez; al perturbar se ve el desplazamiento y el color cambia. | Kit general de escenas 3D (three.js, en construcción en paralelo) + especies de src/chem | M | 2 |
 | `ph` pH, dilución y neutralización ácido-base | 11.º | Vista molecular 3D de la solución: H₃O⁺ y OH⁻ contados en un volumen fijo, que cambia al diluir y al neutralizar en la titulación. | Kit químico 3D (src/chem: Molecule3D/Reaction3D/Crystal3D sobre 3Dmol.js) + kit general | S | 3 |
+
+**Estado del lote 3D-4: hecho (2026-11-03).** Las ocho prácticas tienen una tarjeta «Vista 3D» cerrada que se abre a
+pedido (el código de la vista, el kit `src/three` y three.js se descargan solo entonces; `npm run perf` lo comprueba), con
+el patrón de los lotes 3D-2 y 3D-3: respaldo SVG sin WebGL con las mismas primitivas, giro con ratón, dedo, teclado y
+botones, descripción textual que cambia con el estado, chip «Modelo calculado» con la frase de qué es cálculo y qué es
+dibujo, sin desbordamiento ni rótulos encimados a 390 px. Código: `src/labs/lote3d4/` (funciones puras
+`simpleCircuits3d.ts`, `circuits3d.ts`, `conductors3d.ts`, `induction3d.ts`, `gas3d.ts`, `kinetics3d.ts`,
+`equilibrium3d.ts`, `ph3d.ts`; piezas comunes en `elec3d.ts`: electrones a lo largo de un conductor, bombillos que
+brillan, partículas que rebotan; y `flow.tsx`, el reloj de la animación de cargas). Pruebas: `tests/unit/lote3d4.test.ts`
+y `tests/e2e/visor3d-lote4.spec.ts`. Ningún número científico nuevo: corrientes, voltajes, brillo, flujo, fem, presión,
+volumen, temperatura, Eₐ, cantidades de equilibrio y pH salen del modelo de cada práctica con el mismo estado que su
+banco; las escalas de dibujo son fijas y se dicen en el chip.
+
+Movimiento: las prácticas de circuitos y conductores no tienen reloj propio, así que su vista trae los botones «Mover los
+electrones / las cargas» y «Pausar» (arranca quieta, se pausa —WCAG 2.2.2— y está desactivada con movimiento reducido; la
+descripción dice igual hacia dónde van las cargas). Inducción, gases, cinética y equilibrio siguen el tiempo de su
+laboratorio (quietas en su pausa; con movimiento reducido saltan al resultado como el banco).
+
+| Práctica | Qué muestra la vista 3D (implementado) | Estatus | Desviación respecto de la propuesta |
+|---|---|---|---|
+| `circuitos-simples` | La mesa de bornes con las mismas piezas y cables de la netlist del banco (pila con su polo + de cobre, interruptores abiertos o cerrados, bombillos, LED, resistor, motor, zumbador, materiales de prueba y multímetro). Los bombillos brillan según P/Pₙ del modelo (color de la ampolla y halo). Electrones (puntos) en cada tramo con corriente, en sentido contrario a la convencional, con rapidez proporcional a la corriente del modelo EN ESE TRAMO (0,3 A = 1 casilla/s; tope 4 casillas/s en un cortocircuito) y la misma densidad de puntos en todos los tramos, así que en los nudos se conserva la corriente. | Modelo calculado | Los cables son arcos rectos entre bornes (no la curva exacta del dibujo 2D). Rapidez de deriva exagerada y rotulada como tal. |
+| `circuitos` | «Paisaje de potencial»: el circuito con la forma del esquema del banco (serie, paralelo o mixto); la altura de cada cable es su potencial respecto del polo − (1 V = 0,1 de alto). La pila sube el potencial al voltaje de sus bornes, cada bombillo es una rampa que baja su caída V = I·R del modelo, un interruptor abierto es un escalón. Electrones con rapidez ∝ corriente de cada tramo (0,25 A = 1 unidad/s), que se reparte y se vuelve a juntar en los nudos. | Modelo calculado | Con varios interruptores abiertos en serie, los tramos que quedan aislados se dibujan a 0 V (su potencial no está definido). |
+| `conductores` | Vista ampliada de la muestra entre los caimanes, con la pila y el bombillo (que brilla como en el banco): red de iones del material; si el modelo lo clasifica como conductor, electrones libres que avanzan hacia el caimán del polo +; si es aislante, electrones ligados a sus átomos; en los líquidos, iones + y − (las mismas cantidades ilustrativas del banco) que van a electrodos opuestos. Rapidez ∝ I/I_cc del modelo: en el agua de la llave es mil veces menor y no se nota, como dice la medición. | Modelo calculado | No se usó Crystal3D: la red es un dibujo cúbico simple (lo que enseña es libre frente a ligado, no la estructura cristalina). |
+| `induccion` | Imán (polos N rojo y S azul) en el tubo guía, bobina con sus vueltas, galvanómetro y líneas de campo del dipolo en seis planos alrededor del eje, con 1/r₀ igualmente espaciados: el número de líneas que cruzan la espira central es proporcional a su flujo (propiedad exacta del dipolo) y se resaltan. La aguja y cuatro flechas tangentes a la bobina siguen la fem del modelo en el mismo instante (sentido = signo; 1000 mV = 2,2 cm), con la flecha «B inducido» en el eje: la cara que mira al imán se comporta como el polo que se opone al cambio (Lenz). Medidas en centímetros reales. | Modelo calculado | Solo en la actividad «Ley de Faraday» (campo magnético, generador y transformador no tienen 3D en este lote). La cuenta de líneas usa la espira central; el flujo enlazado de la descripción es el del modelo (41 planos). |
+| `gases` | La jeringa como caja de partículas: el émbolo en el volumen del modelo (200 mL = 6 unidades), 40 partículas que rebotan con rapidez ∝ √T (a 25 °C, 1,6 unidades/s) y se mueven con «Animar las partículas» del banco, flecha de la fuerza del gas ∝ presión (300 kPa = 1,6), baño termostatizado en Charles y Gay-Lussac. La descripción compara la presión que «da el dibujo» —(choques/s ∝ v/L)·(empuje ∝ v) = (T/T₀)(V₀/V)— con la del manómetro del modelo: coinciden. | Modelo calculado | Partículas a rapidez común (sin distribución de Maxwell). En el banco 2D la animación escala la rapidez con el largo del gas; en 3D la rapidez es absoluta para que el número de choques sí dependa del volumen. |
+| `cinetica` | El erlenmeyer con el reactivo disuelto (H⁺ del HCl o H₂O₂; partículas ∝ concentración, rapidez ∝ √T mientras corre el cronómetro), el mármol que se gasta (trozos, granulado o polvo) o el catalizador, la jeringa con 1 punto por cada mL de gas que da el modelo en ese instante (el resultado de los choques efectivos) y el perfil de energía con la barrera Eₐ del modelo a escala (80 kJ/mol = 1,2) y, con catalizador, la barrera sin él, tenue. La descripción da la fracción e^(−Eₐ/RT) y cuántas veces cambia respecto de 25 °C. | Modelo calculado | No se cuentan choques individuales ni se colorean partículas «con energía suficiente»: la fracción real (≈ 10⁻⁸ a 10⁻¹³) no dejaría ver ninguna en una muestra dibujable, así que se dice con su número y se muestran sus consecuencias (gas producido). El nivel de los productos en el perfil es dibujo (el modelo no tiene ΔH). |
+| `equilibrio` | Sistema A: el tubo con 1 punto por µmol de Fe³⁺, SCN⁻ y FeSCN²⁺ (cantidad = concentración × volumen), el AgSCN precipitado y el color del líquido del banco. Sistema B (la propuesta): la jeringa con NO₂ (pardo) y N₂O₄ (pares incoloros), 1 molécula por 0,05 mmol como en el banco, largo = volumen y tinte ∝ intensidad del color. En ambos, los valores que muestra el banco en cada instante, también durante la relajación tras una perturbación (Le Châtelier). | Modelo calculado | La relajación es la ilustrativa del laboratorio; las posiciones de las partículas son fijas (dibujo), no un movimiento molecular. |
+| `ph` | El erlenmeyer (titulación, con el color del indicador) o el vaso (dilución) con H₃O⁺ y OH⁻ en escala LOGARÍTMICA explicada: 3 puntos por cada potencia de 10 desde 10⁻¹⁴ mol/L, así que H₃O⁺ tiene 3·(14 − pH) y OH⁻ 3·pH (21 y 21 a pH 7); dos columnas con una marca por potencia de 10. La descripción da las concentraciones reales y cuántas veces más hay de uno que del otro. | Modelo calculado | Escala logarítmica en lugar de «contados en un volumen fijo»: en proporción real, a pH 1 habría 10¹² H₃O⁺ por cada OH⁻. Se hizo con el kit general, no con 3Dmol (las moléculas no aportan aquí). |
+
+Kit: las aristas de las cajas (`edges: true`) se dibujan siempre opacas, también en el primer cuadro (antes nacían opacas
+y se volvían translúcidas en el siguiente dibujo, así que «Restablecer vista» no devolvía la misma imagen que la inicial;
+lo registró la auditoría de la ola 1b). Al elegir con el rayo, las aristas no cuentan como «sólido».
 
 #### Lote 3D-5 · Ondas, luz y fluidos (7 prácticas)
 

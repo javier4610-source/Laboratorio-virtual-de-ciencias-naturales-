@@ -11,6 +11,8 @@ import { description, figureOf, pixels, view, waitEngine } from './escenas-3d-co
 const SHOTS = process.env.OLA2A_SHOTS ?? '';
 const exe = process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : {};
 test.use({ launchOptions: { ...exe, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } });
+// SwiftShader dibuja sin GPU: las capturas y axe en dos temas tardan; margen amplio.
+test.setTimeout(150_000);
 
 const setSlider = async (page: Page, label: string, unit: string, v: string) => {
   const f = page.getByLabel(`${label} (valor exacto en ${unit})`);

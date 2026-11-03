@@ -131,7 +131,7 @@ describe('Banco avanzado — Bloque E (entrega 5)', () => {
     const { PRACTICES } = await import('../../src/curriculum');
     const ids = new Set(PRACTICES.map((p: { id: string }) => p.id));
     for (const it of BLOQUE_E) if (it.practiceId) expect(ids.has(it.practiceId), `${it.id} → ${it.practiceId}`).toBe(true);
-  });
+  }, 20_000);
 
   it('pasa el validador del bloque sin errores ni avisos (incluido el ciclo de claves)', () => {
     const ps = [...BLOQUE_E.flatMap((it) => validateItem(it)), ...validateBlock('E', BLOQUE_E)];

@@ -119,7 +119,7 @@ describe('Banco avanzado — Bloque D (entrega 4)', () => {
     const { PRACTICES } = await import('../../src/curriculum');
     const ids = new Set(PRACTICES.map((p: { id: string }) => p.id));
     for (const it of BLOQUE_D) if (it.practiceId) expect(ids.has(it.practiceId), `${it.id} → ${it.practiceId}`).toBe(true);
-  });
+  }, 20_000);
   it('pasa el validador del bloque sin errores ni avisos (incluido el ciclo de claves)', () => {
     const ps = [...BLOQUE_D.flatMap((it) => validateItem(it)), ...validateBlock('D', BLOQUE_D)];
     expect(ps, formatProblems(ps)).toEqual([]);

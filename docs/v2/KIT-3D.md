@@ -43,7 +43,7 @@ src/three/
 |---|---|---|
 | `sphere` | `center`, `radius` | lenteja, partícula grande, núcleo |
 | `ellipsoid` | `center`, `radii` | células, organelos, gotas |
-| `box` | `center`, `size`, `edges?`, `rotationZ?` | pared celular, recipientes, bloques; con `rotationZ` (rad, de +x hacia +y alrededor de un eje paralelo a z por su centro), tablas de un plano inclinado y barras de palanca (lote 3D-3) |
+| `box` | `center`, `size`, `edges?`, `rotationZ?` | pared celular, recipientes, bloques; con `rotationZ` (rad, de +x hacia +y alrededor de un eje paralelo a z por su centro), tablas de un plano inclinado y barras de palanca (lote 3D-3). Las aristas (`edges`) son siempre opacas, aunque la caja sea translúcida (desde el lote 3D-4: así el primer cuadro y «Restablecer vista» dan la misma imagen) |
 | `rod` | `from`, `to`, `radius` | hilos, varillas, soportes |
 | `arrow` | `from`, `vector`, `radius?` | vectores (velocidad, fuerza, campo) |
 | `spring` | `from`, `to`, `coils`, `radius`, `wire?` | resortes (ley de Hooke, osciladores) |
@@ -179,6 +179,10 @@ dibuja y devuelve la imagen del lienzo sin `preserveDrawingBuffer`).
 - No dice el reino (vegetal, animal, hongo): clasificar sigue siendo tarea del estudiante.
 
 ## 7. Límites conocidos
+
+- Animación sin reloj del laboratorio (lote 3D-4): si la práctica no tiene tiempo propio (circuitos, conductores), la vista
+  usa `useFlowClock` y `FlowControls` de `src/labs/lote3d4/flow.tsx`: arranca quieta, la inicia la persona, se pausa
+  (WCAG 2.2.2) y queda desactivada con movimiento reducido. No la uses si el laboratorio ya tiene `SimControls`.
 
 - La vista de respaldo es ortográfica y ordena por profundidad del objeto (no por píxel): con objetos que se
   cruzan puede dibujar uno delante de otro de forma aproximada. Las cajas y elipsoides translúcidos se tratan como

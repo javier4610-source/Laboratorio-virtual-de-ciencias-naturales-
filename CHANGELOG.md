@@ -7,6 +7,23 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+### Añadido
+- **Lote 3D-4 «electricidad, campos y partículas»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas
+  `src/three`: tarjeta «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG
+  sin WebGL, teclado, tacto, descripción textual viva y estatus «Modelo calculado» en `circuitos-simples` (la mesa de
+  bornes con electrones cuya rapidez sigue la corriente de cada tramo y bombillos que brillan según su potencia),
+  `circuitos` (paisaje de potencial: la altura de cada cable es su voltaje), `conductores` (electrones libres, ligados o
+  iones según la clasificación del modelo), `induccion` (ley de Faraday: líneas de campo que cruzan la bobina en número
+  proporcional al flujo y corriente inducida sincronizada con la fem), `gases` (caja de partículas con émbolo; rapidez ∝
+  √T), `cinetica` (reactivo, barrera Eₐ, catalizador y gas producido mL a mL), `equilibrio` (Fe³⁺/SCN⁻/FeSCN²⁺ y
+  NO₂/N₂O₄ en las proporciones del equilibrio, con Le Châtelier) y `ph` (H₃O⁺ y OH⁻ en escala logarítmica explicada).
+  Los electrones de circuitos y conductores se mueven solo con «Mover los electrones», se pausan y quedan quietos con
+  movimiento reducido. Pruebas: `tests/unit/lote3d4.test.ts` y `tests/e2e/visor3d-lote4.spec.ts`.
+
+### Corregido
+- Kit 3D: las aristas de una caja translúcida (`edges: true`) se dibujan opacas desde el primer cuadro; antes cambiaban
+  de opacidad en el segundo dibujo y «Restablecer vista» no devolvía la misma imagen que la inicial.
+
 ## [2.20.0] · 2026-11-03
 
 Lote 3D-3: vista 3D en proyectiles, Newton, choques, energía, trabajo, máquinas y energía cinética y potencial.

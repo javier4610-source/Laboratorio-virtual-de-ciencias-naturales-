@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, useEffect, useMemo, useState } from 'react';
 import { GAS_LIMITS, INITIAL, simulateGas, gasConditions, type GasLaw } from '../models/gases';
 import { R_GAS, seededRandom } from '../models/math';
 import { useModelParams, usePublishModel } from '../components/Advanced';
@@ -12,6 +12,10 @@ import { SimControls, resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { BenchTop, GasSyringe, Lcd, Thermometer } from './kit';
 import { Knob, ManipHint, ManipScene, Plunger } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const GasesView3D = lazy(() => import('./lote3d4/GasesView3D'));
 
 /* Geometría de la jeringa (200 mL en 380 px). */
 const SYR = { x: 176, y: 98, len: 380, h: 46, cap: 200 };
@@ -193,6 +197,9 @@ export default function GasLab({ api }: LabProps) {
           { k: law === 'boyle' ? 'P·V' : law === 'charles' ? 'V/T' : 'P/T', v: law === 'boyle' ? `${fmt(res.pv, 0)} kPa·mL` : law === 'charles' ? `${fmt(res.vOverT, 4)} mL/K` : `${fmt(res.pOverT, 4)} kPa/K` },
         ]} />
         <Warnings list={gasConditions(res.warnings, gasInput)} />
+        <Panel3D title="las partículas dentro de la jeringa" summary="La jeringa en 3D con el émbolo en el volumen del modelo y las partículas del gas, cuya rapidez sigue la temperatura; la flecha sobre el émbolo mide la presión.">
+          <GasesView3D law={law} volume={res.volume} pressure={res.pressure} temperatureK={res.temperatureK} temperatureC={res.temperatureC} t={tick / 60} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

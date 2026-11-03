@@ -23,6 +23,8 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 ### Corregido
 - Kit 3D: las aristas de una caja translúcida (`edges: true`) se dibujan opacas desde el primer cuadro; antes cambiaban
   de opacidad en el segundo dibujo y «Restablecer vista» no devolvía la misma imagen que la inicial.
+- Pruebas: la E2E del lote 3D-2 espera 800 ms tras cambiar de tema antes de axe (falsos contrastes durante la
+  transición) y la prueba de prácticas enlazadas del bloque B tiene 20 s (importación diferida lenta con la suite completa).
 
 ## [2.20.0] · 2026-11-03
 

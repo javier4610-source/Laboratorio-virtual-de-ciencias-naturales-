@@ -117,7 +117,7 @@ describe('Banco avanzado — Bloque B (entrega 2)', () => {
     const { PRACTICES } = await import('../../src/curriculum');
     const ids = new Set(PRACTICES.map((p: { id: string }) => p.id));
     for (const it of BLOQUE_B) if (it.practiceId) expect(ids.has(it.practiceId), `${it.id} → ${it.practiceId}`).toBe(true);
-  });
+  }, 20_000); // la importación diferida del currículo tarda más de 5 s con toda la suite en paralelo
   it('pasa el validador del bloque sin errores ni avisos (incluido el ciclo de claves)', () => {
     const ps = [...BLOQUE_B.flatMap((it) => validateItem(it)), ...validateBlock('B', BLOQUE_B)];
     expect(ps, formatProblems(ps)).toEqual([]);

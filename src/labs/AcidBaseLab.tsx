@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import { ACIDS, dilutedPH, findAcid, INDICATORS, indicatorColor, titrate, titrationCurve } from '../models/acidbase';
 import { prettyFormula } from '../models/chemistry';
 import { fmt, fmtSig, parseLocaleNumber } from '../lib/format';
@@ -8,6 +8,10 @@ import type { LabProps } from './registry';
 import { BenchTop, Burette, Erlenmeyer, Lcd } from './kit';
 import { ManipHint, ManipScene, SvgSlider } from './manipulate';
 import { playSound } from '../lib/sound';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const PhView3D = lazy(() => import('./lote3d4/PhView3D'));
 
 /** Contorno del líquido dentro del Erlenmeyer del kit (misma geometría), para teñirlo con el indicador. */
 function erlLiquid(x: number, y: number, w: number, h: number, fill: number) {
@@ -190,6 +194,9 @@ function TitrationPart({ api }: LabProps) {
             ...(res.halfEquivalencePH !== null ? [{ k: 'pH en la semiequivalencia (= pKa)', v: fmt(res.halfEquivalencePH, 2) }] : []),
           ]),
         ]} />
+        <Panel3D title="los iones H₃O⁺ y OH⁻ del erlenmeyer" summary="La solución en 3D con iones H₃O⁺ y OH⁻ contados en escala logarítmica (3 puntos por cada potencia de 10): al titular se ve cómo pasan de uno a otro.">
+          <PhView3D pH={res.pH} context={`se han añadido ${fmt(vb, 2)} mL de NaOH a ${fmt(va, 0)} mL de ácido;`} indicator={ind} />
+        </Panel3D>
         {challenge && (
           <div className="card stack-sm">
             <h3>Reto: ¿cuánto ácido acético tiene el vinagre?</h3>
@@ -248,6 +255,9 @@ function DilutionPart({ api }: LabProps) {
           { k: 'Concentración final', v: `${fmtSig(c0 / factor, 3)} mol/L` },
           { k: 'pH', v: fmt(pH, 2), data: true },
         ]} />
+        <Panel3D title="los iones H₃O⁺ y OH⁻ al diluir" summary="La solución en 3D con iones H₃O⁺ y OH⁻ contados en escala logarítmica (3 puntos por cada potencia de 10): cada dilución por 10 pasa unos 3 puntos de H₃O⁺ a OH⁻ hasta acercarse a pH 7.">
+          <PhView3D pH={pH} context={`ácido de ${fmt(c0, 2)} mol/L diluido ${factor >= 1e4 ? `10^${logF}` : fmt(factor, 0)} veces;`} indicator={null} />
+        </Panel3D>
         <details className="card">
           <summary>Curva del modelo: pH contra log₁₀(factor) (ábrela después de medir)</summary>
           <Chart title="pH al diluir el ácido" xLabel="log₁₀ (factor de dilución)" yLabel="pH" height={240} xDomain={[0, 8]} yDomain={[0, 8]}

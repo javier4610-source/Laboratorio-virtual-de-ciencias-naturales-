@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState, type ReactElement } from 'react';
 import type { Competency } from '../core/types';
-import { PRACTICES, practiceById, questionById } from '../curriculum';
+import { CATALOG } from '../curriculum/catalog';
 import { AREA_LABEL, COMPETENCY_LABEL, COMPETENCY_SHORT, GRADES, PLANNED } from '../curriculum/grades';
 import { loadJSON, saveJSON, storageAvailable } from '../lib/storage';
 import { copyText, downloadText, toCSV, validateReport, type StudentReport } from '../lib/report';
@@ -13,9 +13,39 @@ import { ConfirmButton, Notice, Segmented, Select } from '../components/ui';
 import { ReportBody } from './ReportPage';
 import { progressPercent } from '../lib/progress';
 import { emptyValidation, exportValidations, loadValidations, mergeValidations, saveValidations, type CurricularValidation, type ValidationStatus } from '../lib/validation';
-import { TrackingTab } from './TrackingTab';
-import { LmsExportTab } from './LmsExportTab';
 import { api, defaultServerUrl, loadTeacherSession, saveServerUrl, saveTeacherSession, type ServerCourse, type TeacherSession } from '../lib/api';
+
+
+/*
+ * Las fichas completas de las prácticas (currículo: textos, preguntas, vínculos curriculares y modelos) pesan cerca de
+ * 1 MB comprimido. El panel abre sin ellas (inicio, asignaciones de un vistazo, rúbrica) y las descarga en segundo plano;
+ * las pestañas que las necesitan muestran «Cargando las prácticas…» mientras llegan (docs/v2/RENDIMIENTO.md).
+ */
+type Curriculum = typeof import('../curriculum');
+let curriculumCache: Curriculum | null = null;
+let curriculumPromise: Promise<Curriculum> | null = null;
+const loadCurriculum = () => (curriculumPromise ??= import('../curriculum').then((m) => (curriculumCache = m)));
+function useCurriculum(): { cur: Curriculum | null; failed: boolean; retry: () => void } {
+  const [cur, setCur] = useState<Curriculum | null>(curriculumCache);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    if (cur) return;
+    let alive = true;
+    loadCurriculum().then((m) => { if (alive) setCur(m); }).catch(() => { curriculumPromise = null; if (alive) setFailed(true); });
+    return () => { alive = false; };
+  }, [cur, attempt]);
+  return { cur, failed, retry: () => { setFailed(false); setAttempt((a) => a + 1); } };
+}
+function CurriculumGate({ render }: { render: (cur: Curriculum) => ReactElement }) {
+  const { cur, failed, retry } = useCurriculum();
+  if (cur) return render(cur);
+  return failed
+    ? <Notice kind="warn">No se pudieron descargar las fichas de las prácticas (¿sin conexión?). <button type="button" className="btn small" onClick={retry}>Reintentar</button></Notice>
+    : <p className="small muted" role="status">Cargando las prácticas…</p>;
+}
+const TrackingTab = lazy(() => import('./TrackingTab').then((m) => ({ default: m.TrackingTab })));
+const LmsExportTab = lazy(() => import('./LmsExportTab').then((m) => ({ default: m.LmsExportTab })));
 
 const KEY = 'lvcn:docente';
 interface TeacherData { assignments: Assignment[]; lists: PracticeList[]; reports: StudentReport[]; }
@@ -42,7 +72,8 @@ function CodeBox({ code }: { code: string }) {
 }
 
 /* ---------------------------- Catálogo docente ---------------------------- */
-function CatalogTab() {
+function CatalogTabBody({ cur }: { cur: Curriculum }) {
+  const { PRACTICES } = cur;
   const [grade, setGrade] = useState('');
   const [comp, setComp] = useState('');
   const [q, setQ] = useState('');
@@ -76,12 +107,16 @@ function CatalogTab() {
     </div>
   );
 }
+function CatalogTab() {
+  return <CurriculumGate render={(cur) => <CatalogTabBody cur={cur}  />} />;
+}
 
 
 /* -------------------------- Validación curricular ------------------------- */
 const STATUS_CHIP: Record<ValidationStatus, string> = { pendiente: 'warn', validado: 'ok', ajustado: 'ok', 'no corresponde': 'bad' };
 
-function ValidationTab() {
+function ValidationTabBody({ cur }: { cur: Curriculum }) {
+  const { PRACTICES } = cur;
   const [vals, setVals] = useState<Record<string, CurricularValidation>>(() => loadValidations());
   const [open, setOpen] = useState<string | null>(null);
   const [msg, setMsg] = useState('');
@@ -175,9 +210,13 @@ function ValidationTab() {
     </div>
   );
 }
+function ValidationTab() {
+  return <CurriculumGate render={(cur) => <ValidationTabBody cur={cur}  />} />;
+}
 
 /* ------------------------------ Asignaciones ------------------------------ */
-function AssignmentsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+function AssignmentsTabBody({ cur, data, setData }: { cur: Curriculum; data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+  const { PRACTICES, practiceById } = cur;
   const [form, setForm] = useState({ course: '', practiceId: PRACTICES[0].id, objectives: '', activities: '', due: '', server: loadTeacherSession()?.server ?? '', joinCode: '' });
   const [shown, setShown] = useState<string | null>(null);
   const valid = form.course.trim().length > 0;
@@ -228,9 +267,13 @@ function AssignmentsTab({ data, setData }: { data: TeacherData; setData: (fn: (d
     </div>
   );
 }
+function AssignmentsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+  return <CurriculumGate render={(cur) => <AssignmentsTabBody cur={cur} data={data} setData={setData} />} />;
+}
 
 /* --------------------------- Listas por unidad ---------------------------- */
-function ListsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+function ListsTabBody({ cur, data, setData }: { cur: Curriculum; data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+  const { PRACTICES, practiceById } = cur;
   const [name, setName] = useState('');
   const [unit, setUnit] = useState('');
   const [notes, setNotes] = useState('');
@@ -271,9 +314,13 @@ function ListsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Teac
     </div>
   );
 }
+function ListsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+  return <CurriculumGate render={(cur) => <ListsTabBody cur={cur} data={data} setData={setData} />} />;
+}
 
 /* ------------------------------- Informes -------------------------------- */
-function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+function ReportsTabBody({ cur, data, setData }: { cur: Curriculum; data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+  const { PRACTICES, practiceById, questionById } = cur;
   const [paste, setPaste] = useState('');
   const [msgs, setMsgs] = useState<string[]>([]);
   const [view, setView] = useState<number | null>(null);
@@ -448,10 +495,14 @@ function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: Te
     </div>
   );
 }
+function ReportsTab({ data, setData }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void }) {
+  return <CurriculumGate render={(cur) => <ReportsTabBody cur={cur} data={data} setData={setData} />} />;
+}
 
 
 /* ------------------------------- Servidor -------------------------------- */
-function ServerTab({ data, setData, onTrack }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void; onTrack: (courseId: number) => void }) {
+function ServerTabBody({ cur, data, setData, onTrack }: { cur: Curriculum; data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void; onTrack: (courseId: number) => void }) {
+  const { practiceById } = cur;
   const [session, setSession] = useState<TeacherSession | null>(() => loadTeacherSession());
   const [server, setServer] = useState(() => session?.server ?? defaultServerUrl());
   const [mode, setMode] = useState<'login' | 'registro'>('login');
@@ -552,6 +603,9 @@ function ServerTab({ data, setData, onTrack }: { data: TeacherData; setData: (fn
     </div>
   );
 }
+function ServerTab({ data, setData, onTrack }: { data: TeacherData; setData: (fn: (d: TeacherData) => TeacherData) => void; onTrack: (courseId: number) => void }) {
+  return <CurriculumGate render={(cur) => <ServerTabBody cur={cur} data={data} setData={setData} onTrack={onTrack} />} />;
+}
 
 /* -------------------------------- Rúbrica -------------------------------- */
 export const RUBRIC: { criterion: string; levels: [string, string, string, string] }[] = [
@@ -610,7 +664,7 @@ function OverviewTab({ data, go }: { data: TeacherData; go: (t: Tab) => void }) 
     { tab: 'informes', icon: 'datos', title: 'Recibir y revisar informes', text: 'Importa los archivos .json de los estudiantes, revisa respuestas y exporta la tabla de notas.', stat: `${data.reports.length} ${data.reports.length === 1 ? 'informe' : 'informes'}` },
     { tab: 'seguimiento', icon: 'analisis', title: 'Seguir el avance del curso', text: 'Con el servidor del colegio: quién trabaja, en qué etapa va y qué preguntas fallan.' },
     { tab: 'exportar', icon: 'descargar', title: 'Publicar en Moodle o Classroom', text: 'Descarga preguntas en Moodle XML o GIFT, y comparte prácticas en Google Classroom con su texto de tarea.' },
-    { tab: 'catalogo', icon: 'experimento', title: 'Explorar el catálogo docente', text: `Las ${PRACTICES.length} prácticas con tema, competencias, duración y DBA propuesto.` },
+    { tab: 'catalogo', icon: 'experimento', title: 'Explorar el catálogo docente', text: `Las ${CATALOG.length} prácticas con tema, competencias, duración y DBA propuesto.` },
     { tab: 'validacion', icon: 'escudo', title: 'Validar la alineación curricular', text: 'Marca cada DBA propuesto como validado, ajustado o pendiente, con observaciones.' },
     { tab: 'rubrica', icon: 'evaluacion', title: 'Rúbrica de evaluación', text: 'Niveles de desempeño Superior, Alto, Básico y Bajo por criterio.' },
     { tab: 'servidor', icon: 'sinConexion', title: 'Conectar el servidor del colegio', text: 'Cuentas de docente, cursos con código e informes enviados por internet.' },
@@ -633,6 +687,8 @@ export function TeacherPage() {
   const [tab, setTabState] = useState<Tab>(initialTab);
   const [trackCourse, setTrackCourse] = useState<number | null>(null);
   useEffect(() => { document.title = 'Panel docente · Laboratorio Virtual'; }, []);
+  // Las fichas se piden en segundo plano apenas abre el panel, para que las pestañas que las usan no esperen.
+  useEffect(() => { loadCurriculum().catch(() => { /* la pestaña que las necesite ofrece «Reintentar» */ }); }, []);
   const setTab = (t: Tab) => {
     setTabState(t);
     try { window.history.replaceState(null, '', `#/docente${t === 'resumen' ? '' : `?seccion=${t}`}`); } catch { /* sin historial */ }
@@ -661,8 +717,10 @@ export function TeacherPage() {
       {tab === 'asignaciones' && <AssignmentsTab data={data} setData={setData} />}
       {tab === 'listas' && <ListsTab data={data} setData={setData} />}
       {tab === 'informes' && <ReportsTab data={data} setData={setData} />}
-      {tab === 'seguimiento' && <TrackingTab key={trackCourse ?? 'ultimo'} initialCourseId={trackCourse} onGoServer={() => setTab('servidor')} />}
-      {tab === 'exportar' && <LmsExportTab />}
+      <Suspense fallback={<p className="small muted" role="status">Cargando…</p>}>
+        {tab === 'seguimiento' && <TrackingTab key={trackCourse ?? 'ultimo'} initialCourseId={trackCourse} onGoServer={() => setTab('servidor')} />}
+        {tab === 'exportar' && <LmsExportTab />}
+      </Suspense>
       {tab === 'servidor' && <ServerTab data={data} setData={setData} onTrack={(id) => { setTrackCourse(id); setTab('seguimiento'); }} />}
       {tab === 'rubrica' && <RubricTab />}
     </div>

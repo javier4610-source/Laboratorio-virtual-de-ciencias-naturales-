@@ -60,7 +60,7 @@ test('catálogo: los filtros viajan en la dirección, se quitan uno a uno y el e
   await page.getByLabel('Buscar').fill('zzzz');
   await expect(page.getByText('No hay prácticas con esos filtros')).toBeVisible();
   await page.getByRole('button', { name: 'Quitar todos los filtros' }).click();
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(74);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(79);
 });
 
 test('atajos de teclado: «?» abre la lista, «/» busca y los números cambian de etapa', async ({ page }) => {

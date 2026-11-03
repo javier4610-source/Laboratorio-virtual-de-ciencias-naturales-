@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.21.0] · 2026-11-03
+
+Lote 3D-4: vista 3D en circuitos simples, circuitos, conductores, inducción, gases, cinética, equilibrio y pH; el kit 3D pinta las aristas de las cajas siempre opacas.
+
 ### Añadido
 - **Lote 3D-4 «electricidad, campos y partículas»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas
   `src/three`: tarjeta «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG

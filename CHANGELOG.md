@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.20.0] · 2026-11-03
+
+Lote 3D-3: vista 3D en proyectiles, Newton, choques, energía, trabajo, máquinas y energía cinética y potencial.
+
 ## [2.19.0] · 2026-11-02
 
 Prácticas nuevas, ola 1b (74 prácticas): configuración electrónica, pila electroquímica, meiosis, sistema nervioso y

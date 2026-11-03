@@ -18,8 +18,8 @@ import { curveScene, diskScene } from './circular3d';
 
 type Station = 'mesa' | 'curva';
 const TURNS = 10;
-/** Después de cortar la cuerda, el disco se observa 0,8 s más (sale de la mesa). */
-const AFTER_CUT = 0.8;
+/** Después de cortar la cuerda, el disco se observa hasta que se aleja a 2r del eje (√3·r/v), como máximo 0,8 s. */
+const afterCut = (radius: number, v: number) => Math.min(0.8, (Math.sqrt(3) * radius) / v);
 
 const IDEAS: Idea[] = [
   { id: 'i1', text: 'Si la cuerda se rompe, el disco sale disparado hacia afuera, en la dirección del radio.', answer: 'falso', feedback: 'Sale por la TANGENTE: sin la cuerda no hay fuerza neta y el disco sigue en línea recta con la velocidad que tenía en ese instante (primera ley de Newton). Mira la recta en la vista 3D.' },
@@ -46,7 +46,7 @@ export default function CircularMotionLab({ api }: LabProps) {
   const input: UcmInput = useMemo(() => ({ radius, massG, period }), [radius, massG, period]);
   const r = useMemo(() => ucm(input), [input]);
   const conds = useMemo(() => ucmConditions(input), [input]);
-  const end = cutAt !== null ? cutAt + AFTER_CUT : TURNS * period;
+  const end = cutAt !== null ? cutAt + afterCut(radius, r.v) : TURNS * period;
   const st = useMemo(() => diskAt(input, Math.min(t, end), cutAt), [input, t, end, cutAt]);
   const sensor = instrument('movimiento-circular', 'sensor'), watch = instrument('movimiento-circular', 'cronometro');
   const Fread = measure(st.cut ? 0 : r.force, { ...sensor, key: 'fuerza' });

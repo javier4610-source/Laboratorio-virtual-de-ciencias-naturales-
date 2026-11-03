@@ -23,7 +23,7 @@ export function statesScene({ state, tBoil, phase }: StatesSceneInput): { items:
   ];
   const groups: { k: 'red' | 'liquido' | 'gas'; color: SceneItem['color']; label: string }[] = [
     { k: 'red', color: 'series-2', label: 'hielo: partículas en una red que vibran en su sitio' },
-    { k: 'liquido', color: 'series-5', label: 'líquido: partículas juntas que se deslizan' },
+    { k: 'liquido', color: 'series-3', label: 'líquido: partículas juntas que se deslizan' },
     { k: 'gas', color: 'series-1', label: 'vapor: partículas separadas que vuelan y rebotan' },
   ];
   for (const g of groups) {

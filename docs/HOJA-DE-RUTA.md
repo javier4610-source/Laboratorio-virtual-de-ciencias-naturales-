@@ -66,6 +66,9 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] Sin publicar · Ola 2a de prácticas nuevas (`estados-de-la-materia`, `cambios-quimicos`, `movimiento-circular`,
+  `lentes`, `magnetismo-imanes`), cada una con su vista 3D (79 prácticas). El panel docente abre sin las fichas completas
+  y las descarga en segundo plano. Siguen las de prioridad 2 que faltan de la ola nuevas-2.
 - [x] Sin publicar · Ola 1b de prácticas nuevas (`configuracion-electronica`, `pila-electroquimica`, `meiosis`,
   `sistema-nervioso`, `sistema-circulatorio`), cada una con su vista 3D: quedan construidas todas las prácticas de
   prioridad 1 del análisis curricular (74 prácticas). Siguen las de prioridad 2 (ola nuevas-2).

@@ -104,6 +104,24 @@ aparece en el JS estático del inicio, la práctica liviana, la del péndulo, la
 kit, la entrada sigue en 122,6 KB, el CSS de entrada pasó de 25,6 a 25,7 KB (reglas `.scene3d-*`) y la precarga del
 service worker de 5,43 a 5,46 MB (el componente y los pilotos; three.js, por pasar de 150 KB, va a la segunda fase).
 
+**Panel docente sin las fichas completas (2026-11-03, ola 2a).** Con las 79 prácticas de la ola 2a, el panel docente
+pasó de 1 050 a 1 106,3 KB y superó su límite de 1 075 KB. En lugar de subirlo, `src/pages/TeacherPage.tsx` ya no
+importa `src/curriculum/index.ts` de forma estática: el panel pinta su encabezado, el aviso, las pestañas, el inicio
+(el número de prácticas sale del catálogo liviano), las asignaciones y la rúbrica sin esperar las fichas, y pide el
+currículo con `import()` en segundo plano apenas se abre. Las pestañas que necesitan la ficha completa (catálogo con
+DBA, validación curricular, asignaciones y listas, informes, servidor) se envuelven en `CurriculumGate`, que muestra
+«Cargando las prácticas…» y, sin conexión, «Reintentar»; «Seguimiento del curso» y «Moodle y Classroom» se cargan con
+`lazy()`. El presupuesto se separa en dos medidas:
+
+| Medida | Antes | Después | Límite |
+|---|---|---|---|
+| Ruta: panel docente (lo que se descarga antes de pintar) | 1 106,3 (176 archivos) | 286,9 (22 archivos) | 330 |
+| Panel docente con las fichas completas (panel + `curriculum/index.ts`, en segundo plano) | — | 1 093,6 (174 archivos) | 1 250 |
+
+El límite de 1 250 KB deja margen para unas 25 prácticas más (≈ 6 KB comprimidos por ficha con su modelo) y el script
+falla si el panel vuelve a importar el currículo de forma estática (`FORBIDDEN`). Pendiente: una ficha docente liviana
+(vínculo curricular y preguntas sin los modelos) bajaría también la segunda medida.
+
 ## 4. Cambios
 
 1. **Banco Saber 11 sin el currículo completo** (`src/pages/BankPage.tsx`). El título de la práctica relacionada sale
@@ -149,10 +167,9 @@ mejora quedó dentro del ruido. Se retiró.
 
 ## 5. Pendientes recomendados (por impacto)
 
-1. **Panel docente** (LCP ~10 s, ~930 KB, 146 archivos): importa `src/curriculum/index.ts`, es decir, las 65 fichas
-   completas con sus modelos, aunque la mayoría de las pestañas solo necesita el catálogo liviano. Requiere separar qué
-   pestañas necesitan la ficha completa (validación curricular, informes) y cargarla bajo demanda. Cambio más grande;
-   el docente suele usar un equipo mejor, pero en el colegio puede ser el mismo.
+1. **Panel docente** (en parte resuelto en la ola 2a: abre con 287 KB y descarga las fichas en segundo plano): las 79
+   fichas completas con sus modelos siguen pesando ≈ 1,1 MB cuando se abre una pestaña que las usa. Falta una ficha
+   docente liviana (vínculo curricular y preguntas, sin los modelos).
 2. **Banco tipo Saber en cada práctica** (~44 KB comprimidos por práctica): `report.ts` → `assessment/lookup.ts` importa
    el banco completo para resolver 2–4 preguntas de transferencia. Se podría generar un índice por práctica en la
    compilación o cargar el banco al llegar a «Evaluación».

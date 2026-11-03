@@ -38,8 +38,8 @@ export function benchScene(i: BenchInput): { items: SceneItem[]; extent: number;
   const rays = b.dO > 0 ? principalRays(b.f, i.objectX, i.lensX, i.objectH * 0.85, endX) : [];
   const colors: SceneItem['color'][] = ['series-1', 'series-2', 'series-3'];
   rays.forEach((r, k) => {
-    for (let s = 0; s + 1 < r.pts.length; s++) items.push({ id: `rayo${k}-${s}`, kind: 'rod', from: p(...r.pts[s]), to: p(...r.pts[s + 1]), radius: 0.02, color: colors[k], ...(s === 0 ? { label: `rayo ${k + 1}: ${r.name}` } : {}) });
-    if (r.back) items.push({ id: `rayo${k}-virtual`, kind: 'rod', from: p(...r.back[0]), to: p(...r.back[1]), radius: 0.012, color: colors[k], opacity: 0.4 });
+    for (let s = 0; s + 1 < r.pts.length; s++) items.push({ id: `rayo${k}-${s}`, kind: 'rod', from: p(...r.pts[s]), to: p(...r.pts[s + 1]), radius: 0.035, color: colors[k], ...(s === 0 ? { label: `rayo ${k + 1}: ${r.name}` } : {}) });
+    if (r.back) items.push({ id: `rayo${k}-virtual`, kind: 'rod', from: p(...r.back[0]), to: p(...r.back[1]), radius: 0.025, color: colors[k], opacity: 0.4 });
   });
   // imagen
   let imageTxt = '';
@@ -64,7 +64,11 @@ export function benchScene(i: BenchInput): { items: SceneItem[]; extent: number;
     imageTxt = `Imagen virtual, derecha, a ${fmt(Math.abs(b.di), 1)} cm a la IZQUIERDA de la lente (aumento ${fmt(b.M, 2)}): los rayos salen separándose y sus prolongaciones (tenues) se cruzan allí. No se recoge en la pantalla.`;
   }
   const description = `Banco óptico de 120 cm: vela en ${fmt(i.objectX, 1)} cm, lente de f = ${fmt(b.f, 1)} cm en ${fmt(i.lensX, 1)} cm (d_o = ${fmt(b.dO, 1)} cm) y pantalla en ${fmt(i.screenX, 1)} cm. ${imageTxt} Se dibujan los tres rayos principales desde la punta de la llama.`;
-  return { items, extent: 6.6, target: [0, -0.3, 0], description };
+  // Encuadre: de la vela a la pantalla (o a la imagen, si cae dentro del banco); la escena es alargada y el lienzo no.
+  const xs = [i.objectX, i.lensX, i.screenX, ...(b.real && !b.atInfinity && b.imageX <= 120 ? [b.imageX] : []), ...(!b.real && !b.atInfinity ? [Math.max(0, b.imageX)] : [])];
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const extent = Math.max(2.4, ((x1 - x0) * X) / 2 + 0.6);
+  return { items, extent, target: [((x0 + x1) / 2) * X - 6, -0.3, 0], description };
 }
 
 /** Ojo reducido en corte: lente equivalente en x = 0 y retina a 1,7 cm; 1 unidad = 1 cm, alturas sin exagerar. */
@@ -83,11 +87,11 @@ export function eyeScene(eyeId: string, dCm: number, lensD: number): { items: Sc
     const startX = -2.6;
     const slope = Number.isFinite(dCm) ? h / dCm : 0; // pendiente al llegar desde el objeto
     const y0 = h - slope * (0 - startX);
-    items.push({ id: `rayo-in-${k}`, kind: 'rod', from: [startX, y0, 0], to: [0, h, 0], radius: 0.012, color: 'series-1' });
-    items.push({ id: `rayo-out-${k}`, kind: 'rod', from: [0, h, 0], to: [xi, h * (1 - xi / r.di), 0], radius: 0.012, color: 'series-1' });
+    items.push({ id: `rayo-in-${k}`, kind: 'rod', from: [startX, y0, 0], to: [0, h, 0], radius: 0.02, color: 'series-1' });
+    items.push({ id: `rayo-out-${k}`, kind: 'rod', from: [0, h, 0], to: [xi, h * (1 - xi / r.di), 0], radius: 0.02, color: 'series-1' });
   }
   items.push({ id: 'foco-imagen', kind: 'sphere', center: [r.di <= 3.2 ? r.di : 3.2, 0, 0], radius: 0.05, color: 'data', label: r.where === 'retina' ? 'imagen sobre la retina' : r.where === 'delante' ? 'imagen delante de la retina' : 'imagen detrás de la retina' });
   const where = r.where === 'retina' ? 'SOBRE la retina: se ve nítido' : r.where === 'delante' ? `DELANTE de la retina (a ${fmt(r.di * 10, 2)} mm): se ve borroso` : `DETRÁS de la retina (a ${fmt(r.di * 10, 2)} mm): se ve borroso`;
   const description = `${e.name}. Objeto ${Number.isFinite(dCm) ? `a ${fmt(dCm, 0)} cm` : 'muy lejano (infinito)'}${lensD !== 0 ? ` con una lente correctora de ${fmt(lensD, 2)} D` : ' sin gafas'}. El cristalino usa ${fmt(r.used, 1)} D (acomoda ${fmt(r.accommodation, 1)} D) y los rayos se juntan ${where}; la retina está a ${fmt(EYE.retina * 10, 0)} mm.`;
-  return { items, extent: 3.1, target: [0.4, 0, 0], description };
+  return { items, extent: 2.7, target: [0.2, 0, 0], description };
 }

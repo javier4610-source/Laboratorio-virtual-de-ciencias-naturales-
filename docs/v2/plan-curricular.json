@@ -75,6 +75,7 @@
     },
     {
       "id": "estados-de-la-materia",
+      "built": "ola 2a (2026-11-03)",
       "grade": 6,
       "area": "quimica",
       "title": "Estados de la materia y curva de calentamiento del agua",
@@ -88,6 +89,7 @@
     },
     {
       "id": "cambios-quimicos",
+      "built": "ola 2a (2026-11-03)",
       "grade": 7,
       "area": "quimica",
       "title": "Cambios físicos y químicos: evidencias de una reacción",
@@ -128,6 +130,7 @@
     },
     {
       "id": "movimiento-circular",
+      "built": "ola 2a (2026-11-03)",
       "grade": 10,
       "area": "fisica",
       "title": "Movimiento circular uniforme y fuerza centrípeta",
@@ -154,6 +157,7 @@
     },
     {
       "id": "lentes",
+      "built": "ola 2a (2026-11-03)",
       "grade": 9,
       "area": "fisica",
       "title": "Lentes, formación de imágenes y el ojo humano",
@@ -167,6 +171,7 @@
     },
     {
       "id": "magnetismo-imanes",
+      "built": "ola 2a (2026-11-03)",
       "grade": 7,
       "area": "fisica",
       "title": "Imanes, brújula y campo magnético",

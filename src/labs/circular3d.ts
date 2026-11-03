@@ -18,7 +18,7 @@ export function diskScene({ input, t, cutAt }: DiskSceneInput): { items: SceneIt
   const st = diskAt(input, t, cutAt);
   const r = ucm(input);
   const items: SceneItem[] = [
-    { id: 'mesa', kind: 'plane', center: [0, 0, 0], size: [6.4, 6.4], color: 'surface-3', opacity: 0.8 },
+    { id: 'mesa', kind: 'plane', center: [0, 0, 0], size: [Math.max(6.4, input.radius * S * 4.4), Math.max(6.4, input.radius * S * 4.4)], color: 'surface-3', opacity: 0.8 },
     { id: 'eje', kind: 'rod', from: [0, 0, 0], to: [0, 0.35, 0], radius: 0.06, color: 'ink-2', label: 'eje con el sensor de fuerza' },
   ];
   const ring = Array.from({ length: 48 }, (_, k): Vec3 => toScene([input.radius * Math.cos((k / 48) * 2 * Math.PI), input.radius * Math.sin((k / 48) * 2 * Math.PI)], 0.02));
@@ -45,7 +45,7 @@ export function diskScene({ input, t, cutAt }: DiskSceneInput): { items: SceneIt
     ? `La cuerda se cortó cuando el disco estaba a ${fmt(ang, 0)}° del eje x: desde entonces no hay fuerza neta y el disco sigue en línea recta por la TANGENTE con v = ${fmt(r.v, 2)} m/s (no sale hacia afuera en dirección radial). Ahora está a ${fmt(st.dist * 100, 0)} cm del eje.`
     : `Disco de ${fmt(input.massG, 0)} g girando en un círculo de ${fmt(input.radius * 100, 0)} cm con período ${fmt(input.period, 2)} s, a ${fmt(ang, 0)}° del eje x. La velocidad (${fmt(r.v, 2)} m/s) es tangente al círculo; la aceleración centrípeta (${fmt(r.ac, 2)} m/s²) y la tensión de la cuerda (${fmt(r.force, 2)} N) apuntan hacia el eje.`;
   // encuadre fijo por corrida (la cámara no salta al cortar la cuerda)
-  return { items, extent: Math.max(1.6, input.radius * S * 1.5 + 0.4), target: [0, 0.1, 0], description };
+  return { items, extent: Math.max(1.6, input.radius * S * 2.1 + 0.3), target: [0, 0.1, 0], description };
 }
 
 /** Carro en una curva plana: el radio se dibuja a escala reducida (2,8 unidades) y el carro con su vector velocidad. */

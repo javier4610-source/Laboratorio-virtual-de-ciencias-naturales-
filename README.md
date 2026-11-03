@@ -6,7 +6,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (74)
+## Prácticas implementadas (79)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
@@ -15,6 +15,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 6.º | Cadenas y redes alimentarias | Ambiental | Lotka-Volterra generalizado con respuesta funcional tipo II, regla del 10 %, cascadas tróficas, pirámide de biomasa (RK4) |
 | 6.º | Separación de mezclas | Química | Propiedades de cada componente (magnetismo, solubilidad, densidad); pérdidas en filtro y embudo; energía de evaporación (c·ΔT + L) |
 | 6.º | Máquinas simples: palancas y poleas | Física | Palancas de los tres géneros con dinamómetro y reglas; ley de la palanca; polea fija, móvil y polipasto con rozamiento; ventaja mecánica y conservación del trabajo; ejemplos de Urabá |
+| 6.º | Estados de la materia y curva de calentamiento del agua | Química | Curva de calentamiento con dos mesetas (c del hielo, el agua y el vapor de Serway; L_f = 334 y L_v = 2256 J/g de las entalpías del NIST); L = P·Δt/m; ebullición con la presión (IAPWS-IF97 e ISA: Apartadó 99,9 °C, Bogotá 91,2 °C, olla a presión ≈ 120 °C); 3D: caja de 27 partículas que pasa de la red del hielo al líquido y al vapor, sincronizada con la curva |
 | 6.º | Calor, temperatura y equilibrio térmico | Física | Calorímetro de icopor, vidrio o lata; Te = Σmc·T/Σmc; pérdidas con la ley de enfriamiento de Newton; calor específico de un metal desconocido; registrador de temperatura |
 | 6.º | Ecosistema: agua, luz y alimento | Ambiental | Frasco sellado con elodea, caracoles y guppys que se arrastran; fotosíntesis contra respiración; oxímetro y azul de bromotimol; capacidad de carga; descomponedores; manglar y ciénaga de Urabá |
 | 6.º | Movimiento y distancia recorrida | Física | Cancha del colegio con conos, bandera y cinta que se arrastran; fotopuertas o tu propio cronómetro (tiempo de reacción real); rapidez media, km/h, ida y vuelta, carreras |
@@ -28,6 +29,8 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 7.º | Circuitos simples con baterías, interruptores y bombillas | Física | Tablero de bornes: se arrastran pilas, interruptores, bombillos, LED, motor, zumbador y cables; serie y paralelo, cortocircuito, conductores y aislantes; multímetro (análisis nodal exacto) |
 | 7.º | Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford | Química | Dispersión de Rutherford (tan(θ/2) = d/2b, N ∝ Z²/(E²·sen⁴(θ/2))) frente a la dispersión múltiple del átomo de Thomson; conteo de centelleos con estadística de Poisson; datos de Geiger y Marsden (1913); niveles de Bohr con la energía de ionización del NIST y líneas de Balmer; 3D: lámina, trayectorias hiperbólicas y los cuatro modelos |
 | 7.º | Corazón y circulación: frecuencia cardíaca y ejercicio | Biología | Ciclo cardíaco con válvulas (fracción sistólica de Guyton y Hall), gasto cardíaco = FC × VS (5,04 L/min en reposo), FC máxima de Tanaka y reserva de Karvonen, presión con el ejercicio (modelo educativo, sin consejo médico), pulso propio opcional; 3D: cuatro cavidades, válvulas y circulación doble sincronizadas con el ciclo |
+| 7.º | Cambios físicos y químicos: evidencias de una reacción | Química | Siete procesos de aula (vinagre + bicarbonato con globo, CaCO₃ que precipita, lana de acero en la probeta, vela, azúcar que se disuelve o se carboniza, agua que hierve): evidencias calculadas con estequiometría, gases ideales, ley de Henry y entalpías del NBS (ΔT = −3,4 °C), reactivo límite y prueba de recuperación; 3D: reacciones con los átomos conservados (Reaction3D) y moléculas que solo se separan |
+| 7.º | Imanes, brújula y campo magnético | Física | Imán de barra con modelo de dos polos (tiende al dipolo), limaduras y brújula con el campo horizontal de la Tierra en Apartadó (WMM2025: 27,0 µT, declinación 7,5° O), fuerzas entre polos, materiales magnéticos, Oersted (1 A a 2 cm: 10 µT y 20°) y bobina; 3D: líneas de campo en el espacio y brújulas alineadas |
 | 8.º | Herencia mendeliana y cuadros de Punnett | Biología | Segregación y transmisión independiente, dominancia completa/incompleta, muestreo con semilla, χ² |
 | 8.º | Reflexión y refracción de la luz | Física | Ley de reflexión, Snell, ángulo crítico y reflexión total interna, reflectancia de Fresnel, índice desconocido por pendiente |
 | 8.º | Laboratorio de ondas | Física | v = λ·f, v = √(T/μ), onda armónica, energía ∝ A²f², sonido en el aire según la temperatura |
@@ -43,6 +46,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 9.º | Leyes de Newton | Física | F_neta = m·a, fricción estática y cinética, cinemática con fotopuertas (a = 2d/t²) |
 | 9.º | Velocidad, aceleración y movimiento | Física | MRU y MRUA, fotografía estroboscópica, gráficas x–t y v–t (pendiente y área), frenado, reto de igualar gráficas |
 | 9.º | Selección natural con cambios ambientales | Biología | Rasgo cuantitativo heredable, depredación por contraste, diferencial de selección y ecuación del criador R = h²·S |
+| 9.º | Lentes, formación de imágenes y el ojo humano | Física | Banco óptico de 120 cm con vela, lente y pantalla; 1/f = 1/d_o + 1/d_i y M = −d_i/d_o (Hecht), mancha borrosa fuera de foco, lupa y lente divergente, lente misteriosa (f por linealización); ojo reducido con miopía (−2,0 D) e hipermetropía (+2,67 D); 3D: los tres rayos principales y la imagen en la pantalla |
 | 9.º | Trabajo, potencia y plano inclinado | Física | Rampa de ángulo ajustable, superficies con distinto rozamiento, pesas y dinamómetro; W = F·d frente a m·g·h; eficiencia; potencia con torno; potencia humana en la escalera del colegio |
 | 9.º | Cálculos estequiométricos básicos | Química | El mol y la masa molar (pesos atómicos IUPAC); contar partículas pesando en una balanza analítica con tara; bicarbonato con vinagre y bicarbonato calentado en la balanza; conservación de la masa; volumen molar |
 | 9.º | Enlace iónico, covalente y metálico: estructura y propiedades | Química | ΔEN de Pauling (convención 0,4/1,7) y carácter iónico; estructuras de Lewis con octeto verificado; polaridad por suma de dipolos sobre la geometría de PubChem; fusión, solubilidad y conductividad de NaCl, sacarosa, cobre, cuarzo y parafina con datos de PubChem; 3D: cargas parciales, redes del NaCl y el cuarzo, mar de electrones |
@@ -56,6 +60,7 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 10.º | Factores que afectan la velocidad de reacción | Química | Mármol + HCl (concentración, temperatura de Arrhenius, superficie que se encoge) y H₂O₂ con catalizadores (MnO₂, catalasa); gas recogido en jeringa |
 | 10.º | Movimiento de proyectiles | Física | Tiro parabólico analítico y con arrastre cuadrático (RK4), ángulo óptimo con altura inicial, fotopuerta y estroboscopía |
 | 10.º | Péndulo simple y movimiento armónico | Física | Ecuación no lineal con RK4 contrastada con el período exacto, amortiguamiento, cronómetro con tiempo de reacción y fotopuerta |
+| 10.º | Movimiento circular uniforme y fuerza centrípeta | Física | Mesa de aire con sensor de fuerza: T, f, ω, v = 2πr/T, a = v²/r y F = m·v²/r (caso 3,95 N); cuerda cortada que sale por la tangente; curva plana v_máx = √(μgr) (79,6 km/h seca, 56 km/h mojada); 3D: velocidad tangente, aceleración y tensión hacia el eje |
 | 10.º | Choques y cantidad de movimiento | Física | Riel de aire con fotopuertas y balanza; choques elástico, parcial e inelástico y explosión; p se conserva y Ec se transforma; coeficiente de restitución |
 | 10.º | Respiración celular y balance energético | Biología | Respirómetro de tres tubos con KOH y termobarómetro; Q10 y desnaturalización; cociente respiratorio; fermentación en anoxia; contabilidad del ATP (32 frente a 38) |
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |

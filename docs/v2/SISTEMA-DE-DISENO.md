@@ -222,6 +222,9 @@ siguen todas las prácticas adoptadas:
 | Meiosis | `MeiosisLab` | Reproducción de la meiosis · Reproducir la meiosis (+ «Etapa anterior/siguiente») | etapa (1–10) | 1,8 s por etapa; las anafases se animan |
 | Sistema nervioso | `NervousSystemLab` | Impulso nervioso · Estimular | recorrido del impulso (0–100 %) | Cámara lenta: 3 s en pantalla |
 | Sistema circulatorio | `CirculatoryLab` | Latido y medición del pulso · Hacer latir y contar 15 s | t (0–15 s) | Latidos a la frecuencia del modelo; la sangre avanza ×6 |
+| Estados de la materia | `StatesLab` | Calentamiento del agua · Calentar | t (0 al final de la curva) | Toda la curva en ≈ 24 s; las partículas 3D quedan quietas en pausa |
+| Cambios físicos y químicos | `ChemicalChangesLab` | Observación del proceso · Iniciar el proceso | t (30 s a 72 h según el proceso) | Cada proceso en ≈ 8 s; rapidez ilustrativa |
+| Movimiento circular | `CircularMotionLab` | Disco girando · Hacer girar 10 vueltas (+ «Cortar la cuerda») | t (0 a 10 T) | Tiempo real hasta T = 1 s; 10 vueltas en ≤ 10 s |
 
 **Prácticas con animación pero sin dinámica que pausar** (no se inventan controles):
 
@@ -245,9 +248,9 @@ siguen todas las prácticas adoptadas:
 | Inducción (generador) | `InductionLab` | La bobina gira según las rpm elegidas (0 = detenida); la lectura es instantánea. |
 | Mitosis, población, genética de poblaciones, enzimas | `MitosisLab`, `PopulationLab`, `PopGenLab`, `EnzymeLab` | Sin animación temporal: el modelo se calcula completo y se muestra como gráfica o resultado. |
 
-Las 26 prácticas restantes (densidad, mezclas, óptica, soluciones, química inorgánica y orgánica, genómica, tabla periódica,
-enlace químico, electrostática, etc.) no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 29
-adoptadas (con las 5 de la ola 1b) + 19 sin dinámica que pausar + 26 sin animación = 74.
+Las 28 prácticas restantes (densidad, mezclas, óptica, soluciones, química inorgánica y orgánica, genómica, tabla periódica,
+enlace químico, electrostática, lentes, magnetismo, etc.) no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 32
+adoptadas (con las 5 de la ola 1b y 3 de la ola 2a) + 19 sin dinámica que pausar + 28 sin animación (con lentes y magnetismo) = 79.
 
 ### `ConditionAlert` (`src/components/ConditionAlert.tsx`)
 
@@ -348,6 +351,11 @@ de rango»). Retrocompatible: los 65 laboratorios siguen funcionando sin cambios
 | Pila electroquímica | Voltímetro 0,001 V, balanza 0,001 g | Voltaje negativo: «en el límite» (cables invertidos) |
 | Sistema nervioso | Regla 0,1 cm | Tiempo menor que 0,100 s: «en el límite» (anticipación) |
 | Sistema circulatorio | Pulsioxímetro 1 lpm, tensiómetro 1 mmHg | — |
+| Estados de la materia | Termómetro 0,1 °C, cronómetro 1 s | — |
+| Cambios físicos y químicos | Termómetro 0,1 °C, balanza 0,001 g, jeringa 1 mL, probeta 0,5 mL | — |
+| Movimiento circular | Sensor de fuerza 0,01 N, cronómetro 0,01 s | En la curva: «fuera de rango» si derrapa |
+| Lentes | Regla del banco 0,1 cm | — |
+| Magnetismo | Brújula 1°, teslámetro 0,1 µT | — |
 
 Sin resolución por no tener instrumento de lectura directa (el valor es del modelo): enzimas, fotosíntesis (las
 lecturas del registrador ya llevan su resolución), metabolismo, secuencias e indagación; tampoco la tabla periódica y el enlace químico, que muestran datos publicados con su fuente, ni la configuración electrónica y la meiosis (conteos exactos del modelo).

@@ -177,7 +177,7 @@ está por validar).
 | 6.º | «Diferencias entre células animales y vegetales» | `celulas` | Cubierto |
 | 6.º | «Clasificación básica de los seres vivos» | — | **No cubierto** → `clasificacion-seres-vivos` |
 | 6.º | «Ecosistemas: factores bióticos y abióticos» | `ecosistema`, `redes` | Cubierto |
-| 6.º | «Materia, propiedades físicas, mezclas y métodos de separación» | `densidad`, `mezclas` | Parcial (sin estados de la materia) → `estados-de-la-materia` |
+| 6.º | «Materia, propiedades físicas, mezclas y métodos de separación» | `densidad`, `mezclas`, `estados-de-la-materia` (ola 2a) | Cubierto en la ola 2a |
 | 6.º | «Fuerza, movimiento y máquinas simples» | `maquinas`, `movimiento` | Cubierto |
 | 6.º | «Temperatura, calor, luz y sonido» | `calor` | Parcial (luz y sonido en 8.º) |
 | 6.º | «Cuidado del agua y del ambiente» | `ecosistema` (`agua` en 11.º) | Parcial |
@@ -197,7 +197,7 @@ está por validar).
 | 8.º | «Tabla periódica y propiedades periódicas» | — | **No cubierto** → `tabla-periodica` |
 | 8.º | «Enlaces químicos y reacciones» | `balanceo`, `conservacion` | Parcial (sin enlace) → `enlace-quimico` |
 | 8.º | «Conservación de la masa» | `conservacion`, `balanceo` | Cubierto |
-| 8.º | «Ondas, sonido y óptica» | `ondas`, `sonido`, `optica` | Cubierto (sin lentes) → `lentes` |
+| 8.º | «Ondas, sonido y óptica» | `ondas`, `sonido`, `optica`, `lentes` (ola 2a, ubicada en 9.º) | Cubierto en la ola 2a |
 | 9.º | «Replicación del ADN» · «Transcripción y traducción» · «Síntesis de proteínas» · «Mutaciones y su efecto en las proteínas» | `adn` | Cubierto |
 | 9.º | «Genética mendeliana y variación genética» | `mendel` (8.º) | Cubierto |
 | 9.º | «Evolución y selección natural» | `seleccion` | Cubierto |
@@ -255,8 +255,8 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | P1 | `enlace-quimico` | 9.º | Enlace iónico, covalente y metálico: estructura y propiedades | nuevas-1 · **construida (ola 1a)** |
 | P1 | `configuracion-electronica` | 10.º | Configuración electrónica y orbitales atómicos | nuevas-1 · **construida (ola 1b)** |
 | P1 | `pila-electroquimica` | 11.º | Oxidación-reducción: pila de Daniell y electrólisis | nuevas-1 · **construida (ola 1b)** |
-| P2 | `estados-de-la-materia` | 6.º | Estados de la materia y curva de calentamiento del agua | nuevas-2 |
-| P2 | `cambios-quimicos` | 7.º | Cambios físicos y químicos: evidencias de una reacción | nuevas-2 |
+| P2 | `estados-de-la-materia` | 6.º | Estados de la materia y curva de calentamiento del agua | nuevas-2 · **construida (ola 2a)** |
+| P2 | `cambios-quimicos` | 7.º | Cambios físicos y químicos: evidencias de una reacción | nuevas-2 · **construida (ola 2a)** |
 | P3 | `termoquimica` | 10.º | Termoquímica: calor de disolución y de neutralización | nuevas-3 |
 
 **`modelos-atomicos` (construida en la ola 1a; ver `src/curriculum/practices/modelos-atomicos.ts`) · Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford** (7.º, P1)
@@ -294,14 +294,14 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** E°celda = E°cátodo − E°ánodo (Zn²⁺/Zn −0,76 V; Cu²⁺/Cu +0,34 V; tablas de Atkins o CRC); ecuación de Nernst; ley de Faraday m = Q·M/(n·F).
 - **Vista 3D (obligatoria):** Celda galvánica 3D: electrodos de Zn y Cu, iones que salen o se depositan, electrones por el cable y aniones/cationes migrando por el puente salino; acercamiento a la superficie del electrodo donde se ve el átomo de Zn pasar a Zn²⁺.
 
-**`estados-de-la-materia` · Estados de la materia y curva de calentamiento del agua** (6.º, P2)
+**`estados-de-la-materia` (construida en la ola 2a; L_v verificado: 2256 J/g, no 2257) · Estados de la materia y curva de calentamiento del agua** (6.º, P2)
 
 - **Anclaje:** EBC 6.º–7.º, entorno físico: modelo de partículas y cambios de estado (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 6.º): «Materia, propiedades físicas, mezclas y métodos de separación».
 - **Meta de aprendizaje:** Interpreta la curva de calentamiento del agua (mesetas en la fusión y la ebullición) con el modelo de partículas y calcula la energía de cada tramo.
 - **Modelo científico y validación:** Q = m·c·ΔT y Q = m·L con c(hielo) ≈ 2,09, c(agua) ≈ 4,18 J/(g·K), L_f ≈ 334 J/g y L_v ≈ 2257 J/g (CRC Handbook; verificar cifras en la edición usada). Temperatura de ebullición con la altitud de Apartadó.
 - **Vista 3D (obligatoria):** Caja 3D de moléculas de agua: red ordenada en el hielo, agregados móviles en el líquido y partículas libres en el vapor; la agitación sigue la temperatura y en las mesetas se ve que la energía rompe interacciones sin aumentar la agitación.
 
-**`cambios-quimicos` · Cambios físicos y químicos: evidencias de una reacción** (7.º, P2)
+**`cambios-quimicos` (construida en la ola 2a; sin la solubilidad de tablas del CRC: la del azúcar es de PubChem) · Cambios físicos y químicos: evidencias de una reacción** (7.º, P2)
 
 - **Anclaje:** EBC 6.º–7.º, entorno físico: diferenciar cambios físicos y químicos (formulación propia, por verificar con el documento oficial).
 - **Meta de aprendizaje:** Distingue cambios físicos de químicos por sus evidencias (gas, cambio de color, precipitado, cambio de temperatura) y relaciona el volumen de gas producido con la cantidad de reactivo.
@@ -320,9 +320,9 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | Prioridad | id | Grado | Título | Ola |
 |---|---|---|---|---|
 | P1 | `electrostatica` | 11.º | Carga, ley de Coulomb y campo eléctrico | nuevas-1 · **construida (ola 1a)** |
-| P2 | `magnetismo-imanes` | 7.º | Imanes, brújula y campo magnético | nuevas-2 |
-| P2 | `lentes` | 9.º | Lentes, formación de imágenes y el ojo humano | nuevas-2 |
-| P2 | `movimiento-circular` | 10.º | Movimiento circular uniforme y fuerza centrípeta | nuevas-2 |
+| P2 | `magnetismo-imanes` | 7.º | Imanes, brújula y campo magnético | nuevas-2 · **construida (ola 2a)** |
+| P2 | `lentes` | 9.º | Lentes, formación de imágenes y el ojo humano | nuevas-2 · **construida (ola 2a)** |
+| P2 | `movimiento-circular` | 10.º | Movimiento circular uniforme y fuerza centrípeta | nuevas-2 · **construida (ola 2a)** |
 | P3 | `gravitacion-orbitas` | 10.º | Gravitación universal, órbitas y leyes de Kepler | nuevas-3 |
 | P3 | `fluidos-bernoulli` | 10.º | Fluidos en movimiento: continuidad y Bernoulli | nuevas-3 |
 | P3 | `termodinamica` | 11.º | Primera ley de la termodinámica y máquinas térmicas | nuevas-3 |
@@ -335,21 +335,21 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** F = k·q₁·q₂/r² (k = 8,99 × 10⁹ N·m²/C²), superposición, E = F/q, V = k·q/r; validación con casos analíticos (dipolo, dos cargas iguales).
 - **Vista 3D (obligatoria):** Cargas puntuales en el espacio con líneas de campo 3D y superficies equipotenciales; una carga de prueba que el estudiante mueve con el teclado o el ratón mide la fuerza. El 3D muestra que el campo no es plano y que las equipotenciales son superficies.
 
-**`magnetismo-imanes` · Imanes, brújula y campo magnético** (7.º, P2)
+**`magnetismo-imanes` (construida en la ola 2a; modelo de dos polos propio en lugar del dipolo de «induccion», que coincide lejos del imán; campo terrestre del WMM2025) · Imanes, brújula y campo magnético** (7.º, P2)
 
 - **Anclaje:** EBC 6.º–7.º, entorno físico: fuerzas a distancia y magnetismo (formulación propia, por verificar con el documento oficial).
 - **Meta de aprendizaje:** Describe la interacción entre polos, traza el campo de un imán con una brújula y construye un electroimán cuya fuerza depende del número de espiras y de la corriente.
 - **Modelo científico y validación:** Campo de un dipolo magnético (ya implementado y probado en el modelo de «induccion»); campo de un solenoide B = μ₀·n·I.
 - **Vista 3D (obligatoria):** Imán de barra 3D con líneas de campo y una brújula que el estudiante mueve alrededor; la Tierra 3D con su campo y la brújula en Apartadó; el 3D muestra que el campo envuelve al imán y no solo el plano de la mesa.
 
-**`lentes` · Lentes, formación de imágenes y el ojo humano** (9.º, P2)
+**`lentes` (construida en la ola 2a) · Lentes, formación de imágenes y el ojo humano** (9.º, P2)
 
 - **Anclaje:** EBC 8.º–9.º, entorno físico: comportamiento de la luz e instrumentos ópticos (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 8.º): «Ondas, sonido y óptica».
 - **Meta de aprendizaje:** Encuentra la distancia focal de una lente convergente en un banco óptico, predice posición y tamaño de la imagen y explica la corrección de la miopía y la hipermetropía.
 - **Modelo científico y validación:** 1/f = 1/d_o + 1/d_i; aumento M = −d_i/d_o; potencia P = 1/f en dioptrías; validación con casos de manual (Hecht, Óptica).
 - **Vista 3D (obligatoria):** Banco óptico 3D con vela, lente y pantalla movibles y los tres rayos principales; ojo 3D seccionado donde la imagen cae antes, sobre o después de la retina y se corrige con una lente.
 
-**`movimiento-circular` · Movimiento circular uniforme y fuerza centrípeta** (10.º, P2)
+**`movimiento-circular` (construida en la ola 2a; mesa de aire en lugar de plataforma giratoria, más curva plana con fricción) · Movimiento circular uniforme y fuerza centrípeta** (10.º, P2)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos físicos): modelar movimientos y sus causas (formulación propia, por verificar con el documento oficial).
 - **Meta de aprendizaje:** Mide período, frecuencia y rapidez en un movimiento circular, y comprueba que la fuerza necesaria es m·v²/r.

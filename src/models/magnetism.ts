@@ -209,6 +209,7 @@ export function compassConditions(p: PlacedMagnet, x: number, y: number): MagCon
 export function emConditions(i: EmInput): MagCondition[] {
   const out: MagCondition[] = [];
   if (i.current > 2) out.push({ level: 'advertencia', text: `Con ${String(i.current).replace('.', ',')} A el alambre delgado se calienta y la pila se agota en minutos.`, fix: 'Usa corrientes de 1 A o menos y desconecta entre medidas; el electroimán funciona igual con más espiras.' });
+  if (i.source === 'bobina' && i.distanceCm < (COIL.length / 2) * 100 + 1.5) out.push({ level: 'invalido', text: `A ${i.distanceCm} cm del centro la brújula quedaría dentro de la bobina (mide ${COIL.length * 100} cm de largo): no cabe y la aguja no gira libre.`, fix: 'Pon la brújula a 4 cm o más del centro de la bobina, sobre su eje.' });
   if (i.current === 0) out.push({ level: 'nota', text: 'Sin corriente no hay campo magnético: la brújula apunta al norte magnético.', fix: 'Sube la corriente y observa hacia dónde gira la aguja.' });
   return out;
 }

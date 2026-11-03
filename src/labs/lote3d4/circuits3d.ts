@@ -13,7 +13,7 @@ import type { SceneItem, Vec3 } from '../../three/scene';
 import { bulb, electronsAlong, wireRods } from './elec3d';
 
 /** Altura de la escena por voltio. */
-export const V_SCALE = 0.1;
+export const V_SCALE = 0.2;
 export const DRIFT_CURRENT = 0.25;
 export const DRIFT_CAP = 4;
 export const driftSpeed = (i: number) => Math.min(DRIFT_CAP, Math.abs(i) / DRIFT_CURRENT);
@@ -162,11 +162,11 @@ export function circuitScene(inp: CircuitSceneInput): { items: SceneItem[]; exte
   if (electrons.length) items.push({ id: 'electrones', kind: 'particles', points: electrons, radius: 0.035, color: 'info' });
 
   const name = { serie: 'en serie', paralelo: 'en paralelo', mixto: 'mixto (R1 en serie con R2 y R3 en paralelo)' }[topology];
-  let description = `Circuito ${name} en 3D como paisaje de potencial: la altura de cada cable es su potencial respecto del polo − de la pila (1 V = 0,1 de alto). La pila sube el potencial a ${fmt(Vb, 2)} V (voltaje en sus bornes). `;
+  let description = `Circuito ${name} en 3D como paisaje de potencial: la altura de cada cable es su potencial respecto del polo − de la pila (1 V = 0,2 de alto). La pila sube el potencial a ${fmt(Vb, 2)} V (voltaje en sus bornes). `;
   if (res.open) description += 'El circuito está abierto: no circula corriente, los bombillos no bajan el potencial y toda la diferencia de ' + `${fmt(Vb, 2)} V queda en el interruptor abierto (el escalón). Los electrones no avanzan.`;
   else {
     description += `Cada bombillo es una rampa que baja su voltaje: ${els.map((e) => `R${e.id} ${e.active ? `${fmt(e.voltage, 2)} V con ${fmt(e.current, 3)} A` : 'sin corriente'}`).join('; ')}; al volver al polo − el potencial es 0 V. `;
     description += `Los electrones (puntos azules) salen del polo −, suben por la pila y bajan por los bombillos al revés que la corriente convencional; corriente total ${fmt(I, 3)} A. Su rapidez en cada tramo es proporcional a su corriente${topology === 'serie' ? ' (en serie es la misma en todo el circuito)' : ' (en los nudos la corriente se reparte y se vuelve a juntar)'}.`;
   }
-  return { items, extent: 2.9, target: [0, Math.max(0.25, Vb * V_SCALE * 0.45), 0], description, heights: { battery: Vb * V_SCALE, afterR: afterR.map((v) => v * V_SCALE) }, segments: segs };
+  return { items, extent: 2.5, target: [0, Math.max(0.25, Vb * V_SCALE * 0.45), 0], description, heights: { battery: Vb * V_SCALE, afterR: afterR.map((v) => v * V_SCALE) }, segments: segs };
 }

@@ -98,7 +98,7 @@ export function kineticsScene(inp: KineticsSceneInput): { items: SceneItem[]; ex
   const zb = LIQ.z0 - 0.5;
   if (inp.eaUncatalyzed !== null) items.push(...profile('sin-catalizador', inp.eaUncatalyzed, zb, 'ink-3', 0.5));
   items.push(...profile('perfil', inp.ea, zb, 'data'));
-  items.push({ id: 'Ea', kind: 'arrow', from: [-0.55, 2.0, zb], vector: [0, inp.ea * E_SCALE, 0], radius: 0.035, color: 'data', label: 'Eₐ' });
+  items.push({ id: 'Ea', kind: 'arrow', from: [0, 2.0, zb + 0.08], vector: [0, inp.ea * E_SCALE, 0], radius: 0.035, color: 'data', label: 'Eₐ' });
 
   const f = effectiveFraction(inp.ea, inp.temperature);
   const f25 = effectiveFraction(inp.ea, 25);

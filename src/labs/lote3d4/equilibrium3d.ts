@@ -91,13 +91,13 @@ export function no2Scene(inp: No2SceneInput): { items: SceneItem[]; extent: numb
     { id: 'vastago', kind: 'rod', from: [L + 0.15, 0, 0], to: [L + 1.8, 0, 0], radius: 0.1, color: 'ink-3' },
     { id: 'tapon', kind: 'rod', from: [-0.4, 0, 0], to: [0, 0, 0], radius: 0.18, color: 'ink-2' },
   ];
-  if (no2) items.push({ id: 'NO2', kind: 'particles', points: S_NO2.slice(0, no2).map(inGas), radius: 0.09, color: '#a0461e', label: 'NO₂' });
-  if (pairs.length) items.push({ id: 'N2O4', kind: 'particles', points: pairs, radius: 0.075, color: 'series-8', label: 'N₂O₄' });
+  if (no2) items.push({ id: 'NO2', kind: 'particles', points: S_NO2.slice(0, no2).map(inGas), radius: 0.11, color: '#a0461e', label: 'NO₂' });
+  if (pairs.length) items.push({ id: 'N2O4', kind: 'particles', points: pairs, radius: 0.09, color: 'series-8', label: 'N₂O₄' });
   if (inp.temperature !== 25) items.push({ id: 'bano', kind: 'box', center: [2.65, -0.1, 0], size: [6, 1.9, 1.9], color: inp.temperature > 25 ? 'series-1' : 'series-5', opacity: Math.min(0.25, 0.06 + Math.abs(inp.temperature - 25) / 250), label: `Baño ${fmt(inp.temperature, 0)} °C` });
   const q = Number.isFinite(inp.Q) ? fmtSig(inp.Q, 3) : '∞';
   let description = `Jeringa sellada en 3D con ${fmt(inp.volume, 0)} mL a ${fmt(inp.temperature, 0)} °C. Cada molécula dibujada es 0,05 mmol: ${no2} de NO₂ (pardo, colorea el gas) y ${n2o4} de N₂O₄ (pares de esferas grises, incoloro). Intensidad del color ${fmt(inp.intensity, 0)} (100 = inicial). Q = ${q} y K = ${fmtSig(inp.K, 3)} bar⁻¹. `;
   description += !inp.perturbed ? 'Las dos reacciones, 2 NO₂ → N₂O₄ y N₂O₄ → 2 NO₂, ocurren a la vez y con la misma rapidez.'
     : inp.settled ? `Tras el cambio, el sistema se desplazó ${DIR[inp.direction]} (Le Châtelier) y quedó en un nuevo equilibrio.`
       : `El sistema está respondiendo: se desplaza ${DIR[inp.direction]}.`;
-  return { items, extent: 3.3, target: [2.6, 0, 0], description, counts: { no2, n2o4 } };
+  return { items, extent: 2.7, target: [2.5, 0, 0], description, counts: { no2, n2o4 } };
 }

@@ -25,7 +25,11 @@ const CASES: Case[] = [
     name: 'induccion', id: 'induccion', prefix: 'ind3d', title: /líneas de campo y corriente inducida/,
     prepare: async (page) => { await page.getByRole('button', { name: 'Ley de Faraday', exact: true }).click(); },
   },
-  { name: 'gases', id: 'gases', prefix: 'gas3d', title: /las partículas dentro de la jeringa/ },
+  {
+    name: 'gases', id: 'gases', prefix: 'gas3d', title: /las partículas dentro de la jeringa/,
+    // La animación del banco arranca sola: se pausa para comparar imágenes estables.
+    prepare: async (page) => { const b = page.getByRole('button', { name: /^Pausar/ }); if (await b.count()) await b.first().click(); },
+  },
   { name: 'cinetica', id: 'cinetica', prefix: 'cin3d', title: /choques, barrera de energía y gas producido/ },
   { name: 'equilibrio', id: 'equilibrio', prefix: 'equ3d', title: /los iones del tubo en equilibrio/ },
   {
@@ -143,11 +147,11 @@ test.describe('con WebGL (SwiftShader)', () => {
       expect(await diffPixels(page, a.uri, b.uri)).toBeGreaterThan(0.1 * a.painted);
       await page.keyboard.press('Home');
       await page.waitForTimeout(150);
-      // Vuelve a la misma vista. Con WebGL por software, el orden de las piezas translúcidas que coinciden en
-      // profundidad puede cambiar unos pocos píxeles de borde: se tolera menos del 3 % de lo pintado.
+      // Vuelve a la misma vista. Desde que las aristas de las cajas son siempre opacas (kit, lote 3D-4) la imagen es
+      // idéntica; se deja un margen mínimo (0,5 % de lo pintado) por el WebGL por software.
       const back = await diffPixels(page, a.uri, (await pixels(v)).uri);
       console.log(`[lote3d-4] ${c.name}: ${back} píxeles distintos tras restablecer`);
-      expect(back).toBeLessThan(0.03 * a.painted);
+      expect(back).toBeLessThan(0.005 * a.painted);
       if (SHOTS) {
         await card.screenshot({ path: `${SHOTS}/${c.name}-claro-1280.png` });
         await page.emulateMedia({ colorScheme: 'dark' });
@@ -287,7 +291,9 @@ test.describe('sin WebGL', () => {
     await page.getByRole('button', { name: 'Iniciar reacción y cronómetro' }).click();
     await expect.poll(() => description(v)).toContain('A los 180 s');
     const vol = (await page.locator('.readout .item').filter({ hasText: 'Volumen a 180 s' }).locator('.v').textContent())!.trim();
-    expect(await description(v)).toContain(`${vol.replace(' mL', '')}`);
+    // La descripción da el volumen del modelo; la jeringa lo lee redondeado a 1 mL.
+    const inScene = Number(/la jeringa tiene ([\d,]+) mL/.exec(await description(v))![1].replace(',', '.'));
+    expect(Math.abs(inScene - Number(vol.replace(' mL', '').replace(',', '.')))).toBeLessThanOrEqual(0.5);
   });
 
   test('equilibrio: una gota de Fe³⁺ desplaza el equilibrio hacia los productos', async ({ page }) => {

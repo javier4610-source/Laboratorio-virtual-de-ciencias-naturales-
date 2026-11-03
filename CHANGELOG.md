@@ -7,6 +7,36 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+### Añadido
+- **Ola 2a de prácticas nuevas** (prioridad 2 del análisis curricular; 79 prácticas en total), cada una con cinco etapas,
+  modelo en `src/models` con pruebas y valores dorados, conjuntos de datos con relaciones, cinco preguntas tipo Saber
+  originales y una de transferencia en el banco, ideas erróneas con retroalimentación, avisos con «Cómo corregirlo»,
+  procedencia, vínculo curricular (formulación propia, por verificar), miniatura y vista 3D con respaldo SVG:
+  - `estados-de-la-materia` (6.º, química): curva de calentamiento del agua con dos mesetas (c de Serway; L_f = 334 y
+    L_v = 2256 J/g de las entalpías del NIST WebBook), L = P·Δt/m, ebullición con la presión (IAPWS-IF97 + ISA: Apartadó
+    99,9 °C, Bogotá 91,2 °C, olla a presión ≈ 120 °C); 3D: caja de 27 partículas (red, líquido, vapor) sincronizada con
+    la curva, cuya agitación sigue a √T y no cambia en las mesetas.
+  - `cambios-quimicos` (7.º, química): siete procesos (vinagre + bicarbonato con globo, CaCO₃, lana de acero en la
+    probeta, vela, azúcar disuelta y carbonizada, agua que hierve) con evidencias calculadas (estequiometría, gases
+    ideales, Henry, entalpías del NBS: ΔT = −3,4 °C), reactivo límite, prueba de recuperación y clasificación del
+    estudiante; 3D: `Reaction3D` con átomos conservados (confórmeros de PubChem del ácido acético y el acetato
+    descargados el 2026-11-03) y `SpeciesScene3D` con moléculas que solo se separan según el avance del modelo.
+  - `movimiento-circular` (10.º, física): mesa de aire con sensor de fuerza (v = 2πr/T, a = v²/r, F = m·v²/r; caso
+    3,95 N), cuerda que se corta y el disco sale por la tangente, curva plana v_máx = √(μgr) (μ de Serway y valores
+    ilustrativos); 3D: velocidad tangente, aceleración y tensión hacia el eje.
+  - `lentes` (9.º, física): banco óptico (1/f = 1/d_o + 1/d_i, M = −d_i/d_o, mancha borrosa, lupa, divergente, lente
+    misteriosa) y ojo reducido con miopía (−2,0 D) e hipermetropía (+2,67 D); 3D: tres rayos principales y la imagen.
+  - `magnetismo-imanes` (7.º, física): imán de dos polos (tiende al dipolo), brújula con el campo de la Tierra en
+    Apartadó del Modelo Magnético Mundial WMM2025 (H = 26 967 nT, declinación −7,5°), fuerzas entre polos, materiales,
+    Oersted y bobina (tan θ = B/H); 3D: líneas de campo integradas en el espacio y brújulas alineadas.
+  Pruebas: `tests/unit/ola2aModelos.test.ts`, `tests/unit/escenas3dOla2a.test.ts`, casos dorados y
+  `tests/e2e/ola2a*.spec.ts` (flujo, valor dorado en la interfaz, 3D con y sin WebGL, axe claro/oscuro, 390 px).
+
+### Cambiado
+- **Panel docente**: ya no importa las fichas completas de forma estática; abre con 287 KB comprimidos (antes 1 106) y
+  descarga el currículo en segundo plano. Las pestañas que lo necesitan muestran «Cargando las prácticas…» y, sin
+  conexión, «Reintentar». `npm run perf` mide aparte «panel docente: con las fichas completas» (docs/v2/RENDIMIENTO.md).
+
 ## [2.20.0] · 2026-11-03
 
 Lote 3D-3: vista 3D en proyectiles, Newton, choques, energía, trabajo, máquinas y energía cinética y potencial.

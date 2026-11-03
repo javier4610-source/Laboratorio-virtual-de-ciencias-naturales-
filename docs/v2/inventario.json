@@ -104,6 +104,32 @@
     "illustrative": false
   },
   {
+    "id": "estados-de-la-materia",
+    "title": "Estados de la materia y curva de calentamiento del agua",
+    "grade": 6,
+    "area": "quimica",
+    "lab": "StatesLab",
+    "models": [
+      "statesOfMatter"
+    ],
+    "tests": [
+      "escenas3dOla2a.test.ts",
+      "ola2aModelos.test.ts"
+    ],
+    "nTests": 32,
+    "e2e": true,
+    "a11y": false,
+    "loc": 180,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
     "id": "maquinas",
     "title": "Máquinas simples: palancas y poleas",
     "grade": 6,
@@ -113,12 +139,13 @@
       "simpleMachines"
     ],
     "tests": [
+      "lote3d3.test.ts",
       "simpleMachines.test.ts"
     ],
-    "nTests": 14,
+    "nTests": 32,
     "e2e": true,
     "a11y": false,
-    "loc": 801,
+    "loc": 811,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -201,6 +228,32 @@
     "instr": false,
     "manip": false,
     "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "cambios-quimicos",
+    "title": "Cambios físicos y químicos: evidencias de una reacción",
+    "grade": 7,
+    "area": "quimica",
+    "lab": "ChemicalChangesLab",
+    "models": [
+      "chemicalChanges"
+    ],
+    "tests": [
+      "escenas3dOla2a.test.ts",
+      "ola2aModelos.test.ts"
+    ],
+    "nTests": 32,
+    "e2e": true,
+    "a11y": false,
+    "loc": 252,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": true,
     "datasets": true,
     "illustrative": true
   },
@@ -330,6 +383,32 @@
     "instr": true,
     "manip": true,
     "sound": true,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
+    "id": "magnetismo-imanes",
+    "title": "Imanes, brújula y campo magnético",
+    "grade": 7,
+    "area": "fisica",
+    "lab": "MagnetismLab",
+    "models": [
+      "magnetism"
+    ],
+    "tests": [
+      "escenas3dOla2a.test.ts",
+      "ola2aModelos.test.ts"
+    ],
+    "nTests": 32,
+    "e2e": true,
+    "a11y": false,
+    "loc": 188,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": false,
     "datasets": true,
     "illustrative": false
   },
@@ -503,12 +582,13 @@
       "kineticPotential"
     ],
     "tests": [
-      "kineticPotential.test.ts"
+      "kineticPotential.test.ts",
+      "lote3d3.test.ts"
     ],
-    "nTests": 28,
+    "nTests": 46,
     "e2e": true,
     "a11y": false,
-    "loc": 1081,
+    "loc": 1094,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -838,6 +918,32 @@
     "illustrative": true
   },
   {
+    "id": "lentes",
+    "title": "Lentes, formación de imágenes y el ojo humano",
+    "grade": 9,
+    "area": "fisica",
+    "lab": "LensesLab",
+    "models": [
+      "lenses"
+    ],
+    "tests": [
+      "escenas3dOla2a.test.ts",
+      "ola2aModelos.test.ts"
+    ],
+    "nTests": 32,
+    "e2e": true,
+    "a11y": false,
+    "loc": 150,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
     "id": "mol",
     "title": "Cálculos estequiométricos básicos",
     "grade": 9,
@@ -878,12 +984,13 @@
     ],
     "tests": [
       "advanced.test.ts",
+      "lote3d3.test.ts",
       "models3.test.ts"
     ],
-    "nTests": 41,
+    "nTests": 59,
     "e2e": true,
     "a11y": false,
-    "loc": 337,
+    "loc": 345,
     "measure": true,
     "advanced": true,
     "params": true,
@@ -928,12 +1035,13 @@
       "workPower"
     ],
     "tests": [
+      "lote3d3.test.ts",
       "workPower.test.ts"
     ],
-    "nTests": 12,
+    "nTests": 30,
     "e2e": true,
     "a11y": false,
-    "loc": 814,
+    "loc": 823,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -983,12 +1091,13 @@
       "collisions"
     ],
     "tests": [
-      "collisions.test.ts"
+      "collisions.test.ts",
+      "lote3d3.test.ts"
     ],
-    "nTests": 13,
+    "nTests": 31,
     "e2e": true,
     "a11y": false,
-    "loc": 492,
+    "loc": 500,
     "measure": false,
     "advanced": true,
     "params": false,
@@ -1067,12 +1176,13 @@
     "tests": [
       "advanced.test.ts",
       "energyTime.test.ts",
+      "lote3d3.test.ts",
       "models3.test.ts"
     ],
-    "nTests": 56,
+    "nTests": 74,
     "e2e": true,
     "a11y": false,
-    "loc": 485,
+    "loc": 492,
     "measure": false,
     "advanced": true,
     "params": true,
@@ -1197,6 +1307,32 @@
     "illustrative": false
   },
   {
+    "id": "movimiento-circular",
+    "title": "Movimiento circular uniforme y fuerza centrípeta",
+    "grade": 10,
+    "area": "fisica",
+    "lab": "CircularMotionLab",
+    "models": [
+      "circularMotion"
+    ],
+    "tests": [
+      "escenas3dOla2a.test.ts",
+      "ola2aModelos.test.ts"
+    ],
+    "nTests": 32,
+    "e2e": true,
+    "a11y": false,
+    "loc": 181,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "nomenclatura-inorganica",
     "title": "Nomenclatura química inorgánica",
     "grade": 10,
@@ -1291,12 +1427,13 @@
     ],
     "tests": [
       "advanced.test.ts",
+      "lote3d3.test.ts",
       "projectile.test.ts"
     ],
-    "nTests": 33,
+    "nTests": 51,
     "e2e": true,
     "a11y": false,
-    "loc": 511,
+    "loc": 521,
     "measure": false,
     "advanced": true,
     "params": true,

@@ -87,7 +87,7 @@ export function no2Scene(inp: No2SceneInput): { items: SceneItem[]; extent: numb
     { id: 'mesa', kind: 'plane', center: [2.8, -1.2, 0], size: [8, 3], color: 'surface-3' },
     { id: 'jeringa', kind: 'rod', from: [0, 0, 0], to: [5.3, 0, 0], radius: 0.72, color: 'line-strong', opacity: 0.16 },
     { id: 'gas', kind: 'rod', from: [0.02, 0, 0], to: [L, 0, 0], radius: 0.68, color: '#8b3a1a', opacity: Math.min(0.45, 0.05 + 0.13 * (inp.intensity / 100)) },
-    { id: 'embolo', kind: 'rod', from: [L, 0, 0], to: [L + 0.15, 0, 0], radius: 0.7, color: '#3a4448', label: `${fmt(inp.volume, 0)} mL` },
+    { id: 'embolo', kind: 'rod', from: [L, 0, 0], to: [L + 0.15, 0, 0], radius: 0.7, color: '#3a4448', label: 'Émbolo' },
     { id: 'vastago', kind: 'rod', from: [L + 0.15, 0, 0], to: [L + 1.8, 0, 0], radius: 0.1, color: 'ink-3' },
     { id: 'tapon', kind: 'rod', from: [-0.4, 0, 0], to: [0, 0, 0], radius: 0.18, color: 'ink-2' },
   ];

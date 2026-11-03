@@ -87,7 +87,7 @@ export function kineticsScene(inp: KineticsSceneInput): { items: SceneItem[]; ex
   const xp = SY.x0 + (SY.len * vol) / SETUP.syringeMax;
   items.push({ id: 'manguera', kind: 'rod', from: [0, LIQ.y1 + 0.1, 0], to: [SY.x0, 1.0, 0], radius: 0.05, color: '#c98a4b' });
   items.push({ id: 'jeringa', kind: 'rod', from: [SY.x0, 1.0, 0], to: [SY.x0 + SY.len + 0.2, 1.0, 0], radius: 0.36, color: 'line-strong', opacity: 0.18 });
-  items.push({ id: 'embolo', kind: 'rod', from: [xp, 1.0, 0], to: [xp + 0.08, 1.0, 0], radius: 0.34, color: '#3a4448', label: `${fmt(Math.floor(vol), 0)} mL` });
+  items.push({ id: 'embolo', kind: 'rod', from: [xp, 1.0, 0], to: [xp + 0.08, 1.0, 0], radius: 0.34, color: '#3a4448', label: 'Jeringa' });
   const dots = Math.floor(vol);
   if (dots > 0) {
     const gp = GAS.slice(0, dots).map(({ p }) => [SY.x0 + 0.04 + p[0] * Math.max(0.02, xp - SY.x0 - 0.08), 1.0 + (p[1] - 0.5) * 0.44, (p[2] - 0.5) * 0.44] as Vec3);

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   COIL, EARTH_BH, FARADAY_PATH, GENERATOR, IND_LIMITS, INDUCTION_INSTRUMENTS, LAMP, MAGNETS, MU0, SOLENOID, coilLinkage, dipoleField,
   generatorEmfAt, idealSolenoidField, sampleSeries, signedMoment, simulateFaraday, simulateGenerator, simulateTransformer, solenoidField,
@@ -18,6 +18,10 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, ContactShadow, Lcd } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const InduccionView3D = lazy(() => import('./lote3d4/InduccionView3D'));
 
 /* ------------------------------------------------------------------ utilidades */
 
@@ -806,6 +810,9 @@ function FaradayActivity({ api, measure, remeasure, top }: { api: Api; measure: 
           </ManipScene>
         </div>
         <ManipHint>Pulsa los botones para mover el imán a velocidad constante, o arrástralo con la mano (también con las flechas del teclado cuando está enfocado) y mira la aguja del galvanómetro.</ManipHint>
+        <Panel3D title="líneas de campo y corriente inducida" summary="El imán y la bobina en 3D con las líneas de campo que cruzan la bobina (tantas como el flujo) y el sentido de la corriente inducida, sincronizados con la aguja del galvanómetro.">
+          <InduccionView3D magnet={magnet} pole={pole} turns={turns} xm={xm} emfMv={needle} linkage={coilLinkage(m, turns, xm)} moving={phase === 'midiendo' || phase === 'mano'} />
+        </Panel3D>
         <EmfTrace t={logged ? logged.t : run.t} e={logged ? logged.e : phase === 'listo' ? [] : emfMv}
           tMax={logged ? (logged.t[logged.t.length - 1] ?? 0) : run.duration} cursor={simT} live={!!logged}
           title={logged ? 'Registro de la fem mientras mueves el imán con la mano' : 'Registro de la fem inducida en la corrida a velocidad constante'} />

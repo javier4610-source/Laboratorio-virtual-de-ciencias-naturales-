@@ -664,6 +664,8 @@
     {
       "batch": "3d-4",
       "name": "Lote 3D-4 · Electricidad, campos y partículas",
+      "status": "hecho",
+      "statusNote": "Implementado (2026-11-03) con el kit de escenas src/three: circuitos-simples, circuitos, conductores, induccion (actividad de la ley de Faraday), gases, cinetica, equilibrio (sistemas A y B) y ph (titulación y dilución) en src/labs/lote3d4/; desviaciones en docs/v2/ANALISIS-CURRICULAR.md, §6.3.",
       "practices": [
         {
           "id": "circuitos-simples",
@@ -674,7 +676,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-4",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-4 (2026-11-03)"
         },
         {
           "id": "circuitos",
@@ -685,7 +688,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-4",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-4 (2026-11-03)"
         },
         {
           "id": "conductores",
@@ -696,7 +700,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo) (Crystal3D para las redes)",
           "complexity": "S",
           "batch": "3d-4",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-4 (2026-11-03)"
         },
         {
           "id": "induccion",
@@ -707,7 +712,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-4",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-4 (2026-11-03)"
         },
         {
           "id": "gases",
@@ -718,7 +724,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-4",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-4 (2026-11-03)"
         },
         {
           "id": "cinetica",
@@ -729,7 +736,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-4",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-4 (2026-11-03)"
         },
         {
           "id": "equilibrio",
@@ -740,7 +748,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo) + especies de src/chem",
           "complexity": "M",
           "batch": "3d-4",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-4 (2026-11-03)"
         },
         {
           "id": "ph",
@@ -751,7 +760,8 @@
           "technology": "Kit químico 3D (src/chem: Molecule3D/Reaction3D/Crystal3D sobre 3Dmol.js) + kit general",
           "complexity": "S",
           "batch": "3d-4",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-4 (2026-11-03)"
         }
       ]
     },

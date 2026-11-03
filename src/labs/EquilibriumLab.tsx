@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   ABS_MAX, ABS_RES, applyFePerturbation, compareText, INTENSITY_RES, NO2_MAX_PRESSURE, DIRECTION_TEXT, FE_INITIAL, FE_LIMITS, FE_PERTURBATION_TEXT, FE_SETUP, feResponse,
   NO2_INITIAL, NO2_LIMITS, no2Intensity, no2Q, no2Response, relaxProgress, solveFeSCN, solveNO2, feConditions, no2Conditions,
@@ -12,6 +12,10 @@ import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../c
 import { resolutionText } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { Beaker, BenchTop, GasSyringe, Lcd, TestTube, Thermometer } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const EquilibrioView3D = lazy(() => import('./lote3d4/EquilibrioView3D'));
 
 const RELAX_S = 3;
 const SYS_A = 'Fe³⁺ + SCN⁻ ⇌ FeSCN²⁺';
@@ -289,6 +293,9 @@ function FePart({ api }: LabProps) {
           { k: 'Volumen del tubo', v: `${fmt(eq.volumeML, 2)} mL` },
         ]} />
         <Warnings list={feConditions(eq.warnings)} />
+        <Panel3D title="los iones del tubo en equilibrio" summary="El tubo en 3D con un punto por cada µmol de Fe³⁺, SCN⁻ y FeSCN²⁺: al perturbar, las proporciones cambian como dice el principio de Le Châtelier.">
+          <EquilibrioView3D fe={{ fe: shown.fe, scn: shown.scn, complex: shown.complex, volumeML: eq.volumeML, precipitated: eq.precipitated, K: eq.K, Q: qNow, temperature: st.temperatura, direction, settled, perturbed: !!resp, liquid: tubeColor }} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">
@@ -433,6 +440,9 @@ function No2Part({ api }: LabProps) {
           { k: 'Presión total', v: `${fmt(eq.pTotal, 2)} bar`, state: eq.pTotal > NO2_MAX_PRESSURE ? 'bad' : 'ok' },
         ]} />
         <Warnings list={no2Conditions(eq.warnings, st)} />
+        <Panel3D title="las moléculas de NO₂ y N₂O₄" summary="La jeringa en 3D con las moléculas de NO₂ (pardo) y N₂O₄ (incoloro) en las proporciones del equilibrio; al comprimir o calentar se ve hacia dónde se desplaza.">
+          <EquilibrioView3D no2={{ nNO2, nN2O4, volume: st.volumen, temperature: st.temperatura, intensity: intensityNow, K: eq.K, Q: qNow, direction, settled, perturbed: !!resp }} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CATALYSTS, DURATION, EA_MARBLE, K_MARBLE_25, T_REF_C, findCatalyst, findParticle, KINETICS_LIMITS, PARTICLES, SETUP, simulateKinetics, SYRINGE_RES, TARGET_VOLUME, volumeAt, kineticsConditions,
   type Catalyst, type Particle, type Reaction,
@@ -16,6 +16,10 @@ import { SimControls, simStatusOf, resolutionText } from '../components/Experime
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, GasSyringe, Stopwatch, Thermometer } from './kit';
 import { Knob, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const CineticaView3D = lazy(() => import('./lote3d4/CineticaView3D'));
 
 /** Frasco reactivo de vidrio ámbar con rótulo. */
 function ReagentBottle({ x, label, conc }: { x: number; label: string; conc: string }) {
@@ -283,6 +287,11 @@ export default function KineticsLab({ api }: LabProps) {
           { k: `Tiempo para recoger ${TARGET_VOLUME} mL`, v: done ? (res.t20 === null ? 'no se alcanzó' : `${fmt(res.t20, 0)} s`) : 'mide', data: true },
         ]} />
         {done && <Warnings list={kineticsConditions(res.warnings)} />}
+        <Panel3D title="choques, barrera de energía y gas producido" summary="El recipiente en 3D: las partículas del reactivo chocan, solo los choques con energía suficiente (la barrera Eₐ) reaccionan y el gas producido llena la jeringa al ritmo del modelo.">
+          <CineticaView3D marble={marble} concentration={concentration} temperature={Math.min(temp, tLimits[1])} particle={particle} catalyst={catalyst}
+            ea={marble ? (P.ea !== undefined ? P.ea * 1000 : EA_MARBLE) : findCatalyst(catalyst).ea} eaUncatalyzed={!marble && catalyst !== 'ninguno' ? findCatalyst('ninguno').ea : null}
+            rateConstant={res.rateConstant} simT={simT} volume={vNow} remaining={remaining} speedUp={SPEED} />
+        </Panel3D>
         <Chart title="Volumen de gas recogido en función del tiempo" xLabel="Tiempo (s)" yLabel="Volumen de gas (mL)" height={240}
           xDomain={[0, DURATION]} yDomain={[0, SETUP.syringeMax]} hLines={done ? [{ y: TARGET_VOLUME, label: '20 mL' }] : undefined}
           series={done ? [{ label: 'Lecturas de la jeringa (cada 10 s)', kind: 'both', points: res.readings.map((p) => ({ x: p.t, y: p.v })) }] : []}

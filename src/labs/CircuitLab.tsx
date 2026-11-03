@@ -1,4 +1,4 @@
-import { useMemo, useState, type KeyboardEvent } from 'react';
+import { lazy, useMemo, useState, type KeyboardEvent } from 'react';
 import { brightness, CIRCUIT_LIMITS, MAX_SAFE_CURRENT, solveCircuit, circuitConditions, type Topology } from '../models/circuits';
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
@@ -9,6 +9,10 @@ import { instrument } from './instruments';
 import { resolutionText } from '../components/Experiment';
 import { Knob, ManipHint } from './manipulate';
 import { playSound, useSoundLoop } from '../lib/sound';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const CircuitosView3D = lazy(() => import('./lote3d4/CircuitosView3D'));
 
 function CircuitDefs() {
   return (
@@ -303,6 +307,9 @@ export default function CircuitLab({ api }: LabProps) {
           { k: 'Pérdida en la batería', v: `${fmt(res.internalLoss, 3)} W` },
         ]} />
         <Warnings list={circuitConditions(res.warnings, circuitInput, res)} />
+        <Panel3D title="paisaje de potencial y electrones" summary="El circuito en 3D: la altura de cada cable es su potencial; la pila lo sube y cada bombillo lo baja. Los electrones avanzan con una rapidez proporcional a la corriente de cada tramo.">
+          <CircuitosView3D topology={topology} res={res} emf={emf} closed={closed} main={main} />
+        </Panel3D>
         <div className="table-wrap">
           <table>
             <caption>Mediciones por elemento (instrumentos ideales)</caption>

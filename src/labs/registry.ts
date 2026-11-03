@@ -83,4 +83,9 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   meiosis: lazy(() => import('./MeiosisLab')),
   'sistema-nervioso': lazy(() => import('./NervousSystemLab')),
   'sistema-circulatorio': lazy(() => import('./CirculatoryLab')),
+  'estados-de-la-materia': lazy(() => import('./StatesLab')),
+  'cambios-quimicos': lazy(() => import('./ChemicalChangesLab')),
+  'movimiento-circular': lazy(() => import('./CircularMotionLab')),
+  lentes: lazy(() => import('./LensesLab')),
+  'magnetismo-imanes': lazy(() => import('./MagnetismLab')),
 };

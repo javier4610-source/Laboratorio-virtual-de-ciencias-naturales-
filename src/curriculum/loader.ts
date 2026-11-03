@@ -7,6 +7,11 @@ import { balancePractice } from '../assessment/balance';
  * ficha del modelo). Así el navegador descarga solo lo que el estudiante abre.
  */
 const LOADERS: Record<string, () => Promise<PracticeDef>> = {
+  'estados-de-la-materia': () => import('./practices/estados-de-la-materia').then((m) => m.estadosDeLaMateria),
+  'cambios-quimicos': () => import('./practices/cambios-quimicos').then((m) => m.cambiosQuimicos),
+  'movimiento-circular': () => import('./practices/movimiento-circular').then((m) => m.movimientoCircular),
+  lentes: () => import('./practices/lentes').then((m) => m.lentes),
+  'magnetismo-imanes': () => import('./practices/magnetismo-imanes').then((m) => m.magnetismoImanes),
   'sistema-circulatorio': () => import('./practices/sistema-circulatorio').then((m) => m.sistemaCirculatorio),
   'sistema-nervioso': () => import('./practices/sistema-nervioso').then((m) => m.sistemaNervioso),
   meiosis: () => import('./practices/meiosis').then((m) => m.meiosis),

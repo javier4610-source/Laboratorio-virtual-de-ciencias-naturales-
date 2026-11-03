@@ -130,6 +130,27 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'regla', name: 'Regla del lanzador (1 mm)', quantity: 'Compresión x del resorte', unit: 'cm', resolution: 0.1, sigma: 0.05, nonNegative: true, note: 'Alinear el borde del carrito con la marca y paralaje.' },
     { id: 'lanzador', name: 'Lanzador de rapidez regulable', quantity: 'Rapidez real de salida (no se lee: la mide la fotopuerta)', unit: 'm/s', resolution: 0.001, relSigma: 0.01, note: 'El empujador no entrega siempre la misma rapidez: varía cerca de 1 % entre lanzamientos.' },
   ],
+  'estados-de-la-materia': [
+    { id: 'termometro', name: 'Termómetro digital con sonda (0,1 °C)', quantity: 'Temperatura del agua', unit: '°C', resolution: 0.1, sigma: 0.2, note: 'Sonda que toca el fondo caliente o un trozo de hielo, y agitación desigual.' },
+    { id: 'cronometro', name: 'Cronómetro (1 s)', quantity: 'Duración de una meseta', unit: 's', resolution: 1, sigma: 3, nonNegative: true, note: 'Decidir a ojo cuándo empieza y termina la meseta en la curva.' },
+  ],
+  'cambios-quimicos': [
+    { id: 'termometro', name: 'Termómetro digital (0,1 °C)', quantity: 'Temperatura de la mezcla', unit: '°C', resolution: 0.1, sigma: 0.15, note: 'Agitación y contacto de la sonda con la espuma.' },
+    { id: 'balanza', name: 'Balanza de precisión (0,001 g)', quantity: 'Masa de sólidos y productos', unit: 'g', resolution: 0.001, sigma: 0.002, nonNegative: true, note: 'Sólido húmedo, corrientes de aire y polvo que queda en el papel.' },
+    { id: 'jeringa', name: 'Jeringa de 60 mL (1 mL) para medir el gas del globo', quantity: 'Volumen de gas', unit: 'mL', resolution: 1, relSigma: 0.03, nonNegative: true, note: 'Gas que se escapa al pasar el globo a la jeringa y presión del globo.' },
+    { id: 'probeta', name: 'Probeta de 100 mL (0,5 mL)', quantity: 'Subida del agua', unit: 'mL', resolution: 0.5, sigma: 0.3, nonNegative: true, note: 'Lectura del menisco y cambios de temperatura del aire encerrado.' },
+  ],
+  'movimiento-circular': [
+    { id: 'sensor', name: 'Sensor de fuerza (±50 N, 0,01 N)', quantity: 'Tensión de la cuerda', unit: 'N', resolution: 0.01, sigma: 0.02, relSigma: 0.01, nonNegative: true, note: 'Rozamiento de la cuerda en el eje y vibración del disco.' },
+    { id: 'cronometro', name: 'Cronómetro de mano (0,01 s)', quantity: 'Tiempo de 10 vueltas', unit: 's', resolution: 0.01, sigma: 0.1, nonNegative: true, note: 'Tiempo de reacción al iniciar y detener (≈ 0,1 s).' },
+  ],
+  lentes: [
+    { id: 'regla', name: 'Regla del banco óptico (0,1 cm)', quantity: 'Distancias y altura de la imagen', unit: 'cm', resolution: 0.1, sigma: 0.3, nonNegative: true, note: 'Decidir a ojo dónde la imagen se ve más nítida (profundidad de foco) y paralaje.' },
+  ],
+  'magnetismo-imanes': [
+    { id: 'brujula', name: 'Brújula de 1°', quantity: 'Dirección de la aguja', unit: '°', resolution: 1, sigma: 1.5, note: 'Fricción del pivote, paralaje al leer y objetos de hierro cercanos.' },
+    { id: 'teslametro', name: 'Teslámetro de efecto Hall (0,1 µT)', quantity: 'Campo magnético', unit: 'µT', resolution: 0.1, relSigma: 0.02, nonNegative: true, note: 'Orientación de la sonda y campo de la Tierra que se suma.' },
+  ],
   'pila-electroquimica': [
     { id: 'voltimetro', name: 'Voltímetro digital de alta impedancia (0,001 V)', quantity: 'Fuerza electromotriz de la pila (circuito abierto)', unit: 'V', resolution: 0.001, sigma: 0.002, note: 'Contacto de las pinzas con los electrodos, temperatura de las soluciones y polarización de los electrodos.' },
     { id: 'balanza', name: 'Balanza de precisión (0,001 g)', quantity: 'Masa del electrodo (lavado y seco)', unit: 'g', resolution: 0.001, sigma: 0.0015, nonNegative: true, note: 'Electrodo mal secado (agua o sal adherida), depósito que se desprende y corrientes de aire.' },

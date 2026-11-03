@@ -116,6 +116,27 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'ilustracion',
       detail: 'Frecuencia cardíaca, volumen sistólico, gasto cardíaco y presión con el ejercicio: modelo educativo simplificado con relaciones de los manuales (gasto = FC × VS; reserva de Karvonen; FC máxima de Tanaka); los pulsos propios del estudiante son datos suyos y no se envían. No es un diagnóstico ni un consejo médico. Corazón 3D: ilustración sincronizada con el ciclo del modelo.' };
   }
+  const noise = (what: string) => (measurement === 'real' ? `${what} con ruido de medición sintético y reproducible (modo «Instrumento real»); no son mediciones reales. ` : `${what} redondeadas a la resolución del instrumento; no son mediciones reales. `);
+  if (practiceId === 'estados-de-la-materia') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: noise('Temperaturas y duraciones') + 'Calores específicos (Serway, tabla 20.1) y calores latentes de las entalpías del NIST WebBook (334 y 2256 J/g); ebullición con la ecuación de saturación IAPWS-IF97 y la atmósfera estándar ISA: modelo calculado. Partículas 3D: 27 partículas cuyo estado sale de las fracciones del modelo y cuya agitación sigue a √T (sin escala).' };
+  }
+  if (practiceId === 'cambios-quimicos') {
+    return { data: 'modelo', scene: 'ilustracion',
+      detail: noise('Volúmenes, masas y temperaturas') + 'Estequiometría con masas atómicas de la IUPAC, gases ideales, ley de Henry (Sander, 2015) y entalpías de formación del NBS: modelo calculado; la rapidez de cada proceso es ilustrativa. Reacciones 3D: interpolación entre confórmeros de PubChem (ilustración educativa; no es el mecanismo).' };
+  }
+  if (practiceId === 'movimiento-circular') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: noise('Fuerzas y tiempos') + 'Movimiento circular uniforme (v = 2πr/T, a = v²/r, F = m·v²/r) y fricción en una curva plana (v = √(μgr); μ del concreto seco y del hielo de la tabla 5.1 de Serway, los demás ilustrativos): modelo calculado. Escena 3D: posiciones y vectores del mismo modelo.' };
+  }
+  if (practiceId === 'lentes') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: noise('Distancias') + 'Ecuación de las lentes delgadas y aumento (Hecht), y ojo reducido de los textos (lente a 1,7 cm de la retina, 4 D de acomodación): modelo calculado; no sirve para formular gafas. Banco 3D: rayos e imagen del mismo modelo (alturas ×5).' };
+  }
+  if (practiceId === 'magnetismo-imanes') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: noise('Ángulos y campos') + 'Campo del imán con el modelo de dos polos (momentos con remanencias típicas de fabricante), campo de la Tierra en Apartadó del Modelo Magnético Mundial WMM2025 (NOAA y BGS) y campo de una corriente con Biot-Savart: modelo calculado. Líneas de campo y brújulas 3D: calculadas con el mismo modelo.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

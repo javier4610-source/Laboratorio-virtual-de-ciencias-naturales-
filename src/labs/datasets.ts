@@ -1894,4 +1894,154 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'estados-de-la-materia': [
+    {
+      id: 'curva', label: 'Puntos de la curva de calentamiento', defaultX: 'energia', defaultY: 'temperatura',
+      columns: [
+        { key: 'lugar', label: 'Lugar', numeric: false, input: true },
+        { key: 'masa', label: 'Masa de agua', unit: 'g', numeric: true, decimals: 0, input: true },
+        { key: 'potencia', label: 'Potencia de la parrilla', unit: 'W', numeric: true, decimals: 0, input: true },
+        { key: 'tiempo', label: 'Tiempo', unit: 'min', numeric: true, decimals: 2 },
+        { key: 'energia', label: 'Energía entregada Q = P·t', unit: 'kJ', numeric: true, decimals: 2 },
+        { key: 'temperatura', label: 'Temperatura (termómetro)', unit: '°C', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'estado', label: 'Qué está pasando', numeric: false },
+      ],
+    },
+    {
+      id: 'mesetas', label: 'Mesetas de la curva', defaultX: 'masa', defaultY: 'duracion',
+      columns: [
+        { key: 'cambio', label: 'Cambio de estado', numeric: false },
+        { key: 'masa', label: 'Masa de agua', unit: 'g', numeric: true, decimals: 0, input: true },
+        { key: 'potencia', label: 'Potencia de la parrilla', unit: 'W', numeric: true, decimals: 0, input: true },
+        { key: 'duracion', label: 'Duración de la meseta (cronómetro)', unit: 's', numeric: true, decimals: 0, resolution: 1 },
+        { key: 'calorLatente', label: 'Calor latente L = P·Δt/m', unit: 'J/g', numeric: true, decimals: 0 },
+      ],
+    },
+    {
+      id: 'ebullicion', label: 'Temperatura de ebullición según el lugar', defaultX: 'presion', defaultY: 'tEbullicion',
+      columns: [
+        { key: 'lugar', label: 'Lugar', numeric: false, input: true },
+        { key: 'presion', label: 'Presión del aire', unit: 'hPa', numeric: true, decimals: 1, input: true },
+        { key: 'tEbullicion', label: 'Temperatura de ebullición', unit: '°C', numeric: true, decimals: 1 },
+      ],
+    },
+  ],
+  'cambios-quimicos': [
+    {
+      id: 'evidencias', label: 'Evidencias y clasificación de cada proceso', defaultX: 'dT', defaultY: 'correcta',
+      columns: [
+        { key: 'proceso', label: 'Proceso', numeric: false, input: true },
+        { key: 'gas', label: 'Gas', numeric: false },
+        { key: 'color', label: 'Cambio de color', numeric: false },
+        { key: 'precipitado', label: 'Precipitado', numeric: false },
+        { key: 'luz', label: 'Luz', numeric: false },
+        { key: 'dT', label: 'Cambio de temperatura', unit: '°C', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'clasificacion', label: 'Tu clasificación', numeric: false },
+        { key: 'correcta', label: 'Clasificación correcta (1 = sí)', numeric: true, decimals: 0 },
+      ],
+    },
+    {
+      id: 'gas', label: 'CO₂ del vinagre con bicarbonato', defaultX: 'bicarbonato', defaultY: 'vGas',
+      columns: [
+        { key: 'bicarbonato', label: 'Bicarbonato de sodio', unit: 'g', numeric: true, decimals: 1, input: true },
+        { key: 'vinagre', label: 'Vinagre al 5 %', unit: 'mL', numeric: true, decimals: 0, input: true },
+        { key: 'tiempo', label: 'Tiempo', unit: 's', numeric: true, decimals: 1 },
+        { key: 'vGas', label: 'Volumen de CO₂ (jeringa)', unit: 'mL', numeric: true, decimals: 0, resolution: 1 },
+        { key: 'mCO2', label: 'Masa de CO₂ formada', unit: 'g', numeric: true, decimals: 3 },
+        { key: 'dT', label: 'Cambio de temperatura', unit: '°C', numeric: true, decimals: 1, resolution: 0.1 },
+      ],
+    },
+    {
+      id: 'herrumbre', label: 'Lana de acero en la probeta invertida', defaultX: 'tiempo', defaultY: 'subida',
+      columns: [
+        { key: 'preparacion', label: 'Preparación de la lana', numeric: false, input: true },
+        { key: 'aire', label: 'Aire encerrado', unit: 'mL', numeric: true, decimals: 0, input: true },
+        { key: 'tiempo', label: 'Tiempo', unit: 'h', numeric: true, decimals: 1 },
+        { key: 'subida', label: 'Subida del agua (probeta)', unit: 'mL', numeric: true, decimals: 1, resolution: 0.5 },
+        { key: 'dm', label: 'Masa ganada por la lana (balanza)', unit: 'g', numeric: true, decimals: 3, resolution: 0.001 },
+      ],
+    },
+  ],
+  'movimiento-circular': [
+    {
+      id: 'giros', label: 'Disco girando en la mesa de aire', defaultX: 'v2', defaultY: 'fuerza',
+      columns: [
+        { key: 'radio', label: 'Radio', unit: 'm', numeric: true, decimals: 2, input: true },
+        { key: 'masa', label: 'Masa del disco', unit: 'g', numeric: true, decimals: 0, input: true },
+        { key: 'periodo', label: 'Período medido (10 vueltas / 10)', unit: 's', numeric: true, decimals: 3, resolution: 0.001 },
+        { key: 'v', label: 'Rapidez v = 2πr/T', unit: 'm/s', numeric: true, decimals: 3 },
+        { key: 'v2', label: 'v²', unit: 'm²/s²', numeric: true, decimals: 3 },
+        { key: 'fuerza', label: 'Tensión (sensor)', unit: 'N', numeric: true, decimals: 2, resolution: 0.01 },
+        { key: 'Fteorica', label: 'F = m·v²/r (modelo)', unit: 'N', numeric: true, decimals: 3 },
+      ],
+    },
+    {
+      id: 'curvas', label: 'Carro en una curva plana', defaultX: 'mu', defaultY: 'vmax',
+      columns: [
+        { key: 'superficie', label: 'Estado de la vía', numeric: false, input: true },
+        { key: 'mu', label: 'Coeficiente de fricción μ_s', numeric: true, decimals: 2, input: true },
+        { key: 'radioCurva', label: 'Radio de la curva', unit: 'm', numeric: true, decimals: 0, input: true },
+        { key: 'vmax', label: 'Rapidez máxima', unit: 'km/h', numeric: true, decimals: 1 },
+        { key: 'rapidez', label: 'Rapidez del carro', unit: 'km/h', numeric: true, decimals: 0, input: true },
+        { key: 'derrapa', label: '¿Derrapa?', numeric: false },
+      ],
+    },
+  ],
+  lentes: [
+    {
+      id: 'imagenes', label: 'Imágenes nítidas en el banco óptico', defaultX: 'invDo', defaultY: 'invDi',
+      columns: [
+        { key: 'lente', label: 'Lente', numeric: false, input: true },
+        { key: 'dO', label: 'Distancia vela–lente d_o', unit: 'cm', numeric: true, decimals: 1, input: true, resolution: 0.1 },
+        { key: 'dI', label: 'Distancia lente–imagen d_i', unit: 'cm', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'invDo', label: '1/d_o', unit: '1/cm', numeric: true, decimals: 4 },
+        { key: 'invDi', label: '1/d_i', unit: '1/cm', numeric: true, decimals: 4 },
+        { key: 'hi', label: 'Altura de la imagen', unit: 'cm', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'aumento', label: 'Aumento M = −d_i/d_o', numeric: true, decimals: 3 },
+        { key: 'fCalculada', label: 'f calculada', unit: 'cm', numeric: true, decimals: 2 },
+      ],
+    },
+    {
+      id: 'ojo', label: 'El ojo con y sin gafas', defaultX: 'lente', defaultY: 'potenciaOjo',
+      columns: [
+        { key: 'ojo', label: 'Ojo', numeric: false, input: true },
+        { key: 'distancia', label: 'Distancia del objeto', unit: 'cm', numeric: false, input: true },
+        { key: 'lente', label: 'Lente correctora', unit: 'D', numeric: true, decimals: 2, input: true },
+        { key: 'potenciaOjo', label: 'Potencia del cristalino', unit: 'D', numeric: true, decimals: 2 },
+        { key: 'imagen', label: 'Dónde cae la imagen', numeric: false },
+      ],
+    },
+  ],
+  'magnetismo-imanes': [
+    {
+      id: 'brujula', label: 'Brújula alrededor del imán', defaultX: 'distancia', defaultY: 'campo',
+      columns: [
+        { key: 'iman', label: 'Imán', numeric: false, input: true },
+        { key: 'x', label: 'Posición este x', unit: 'cm', numeric: true, decimals: 1, input: true },
+        { key: 'y', label: 'Posición norte y', unit: 'cm', numeric: true, decimals: 1, input: true },
+        { key: 'distancia', label: 'Distancia al centro del imán', unit: 'cm', numeric: true, decimals: 1 },
+        { key: 'campo', label: 'Campo del imán (teslámetro)', unit: 'µT', numeric: true, decimals: 1, resolution: 0.1 },
+        { key: 'angulo', label: 'Dirección de la aguja desde el norte', unit: '°', numeric: true, decimals: 0, resolution: 1 },
+      ],
+    },
+    {
+      id: 'electroiman', label: 'Corriente y desviación de la brújula', defaultX: 'corriente', defaultY: 'tanDesviacion',
+      columns: [
+        { key: 'fuente', label: 'Fuente', numeric: false, input: true },
+        { key: 'espiras', label: 'Espiras', numeric: true, decimals: 0, input: true },
+        { key: 'corriente', label: 'Corriente', unit: 'A', numeric: true, decimals: 1, input: true },
+        { key: 'distancia', label: 'Distancia', unit: 'cm', numeric: true, decimals: 0, input: true },
+        { key: 'campo', label: 'Campo de la corriente', unit: 'µT', numeric: true, decimals: 3 },
+        { key: 'desviacion', label: 'Desviación de la aguja', unit: '°', numeric: true, decimals: 0, resolution: 1 },
+        { key: 'tanDesviacion', label: 'tan θ', numeric: true, decimals: 4 },
+      ],
+    },
+    {
+      id: 'materiales', label: 'Materiales y el imán', defaultX: 'material', defaultY: 'atrae',
+      columns: [
+        { key: 'material', label: 'Material', numeric: false, input: true },
+        { key: 'atrae', label: '¿El imán lo atrae?', numeric: false },
+      ],
+    },
+  ],
 };

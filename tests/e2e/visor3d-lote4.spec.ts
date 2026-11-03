@@ -28,7 +28,7 @@ const CASES: Case[] = [
   {
     name: 'gases', id: 'gases', prefix: 'gas3d', title: /las partículas dentro de la jeringa/,
     // La animación del banco arranca sola: se pausa para comparar imágenes estables.
-    prepare: async (page) => { const b = page.getByRole('button', { name: /^Pausar/ }); if (await b.count()) await b.first().click(); },
+    prepare: async (page) => { await page.getByRole('button', { name: 'Pausar', exact: true }).click(); },
   },
   { name: 'cinetica', id: 'cinetica', prefix: 'cin3d', title: /choques, barrera de energía y gas producido/ },
   { name: 'equilibrio', id: 'equilibrio', prefix: 'equ3d', title: /los iones del tubo en equilibrio/ },

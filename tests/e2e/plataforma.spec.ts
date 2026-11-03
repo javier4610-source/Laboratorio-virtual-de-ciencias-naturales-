@@ -91,7 +91,7 @@ test('práctica: navegación entre prácticas del grado y migas con área', asyn
   const crumbs = page.getByRole('navigation', { name: 'Ruta de navegación' });
   await expect(crumbs.getByRole('link', { name: 'Física' })).toHaveAttribute('href', '#/catalogo?area=fisica');
   const pager = page.getByRole('navigation', { name: 'Otras prácticas del grado' });
-  await expect(pager).toContainText('Práctica 1 de 8');
+  await expect(pager).toContainText('Práctica 1 de 9');
   await pager.getByRole('link', { name: /Siguiente/ }).click();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Separación de mezclas');
 });

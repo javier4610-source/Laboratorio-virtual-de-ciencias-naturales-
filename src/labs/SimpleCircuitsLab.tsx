@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import {
   PART_INFO, SC, SIMPLE_CIRCUIT_INSTRUMENTS, lampArrangement, solveSimpleCircuit, simpleCircuitConditions,
   type MeterMode, type NetPart, type PartKind, type PartResult,
@@ -13,6 +13,10 @@ import { useMeasure } from '../components/Measurement';
 import { BenchTop, Lcd } from './kit';
 import { ManipHint, ManipScene, toSvgPoint, type Pt } from './manipulate';
 import { playSound, useLabSound, volumeToGain } from '../lib/sound';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const CircuitosSimplesView3D = lazy(() => import('./lote3d4/CircuitosSimplesView3D'));
 
 /* ------------------------------------------------------------------ mesa de bornes */
 
@@ -579,6 +583,7 @@ export default function SimpleCircuitsLab({ api }: LabProps) {
   const res = useMemo(() => solveSimpleCircuit(netlist), [netlist]);
   const arrangement = useMemo(() => lampArrangement(netlist), [netlist]);
   const meterPart = board.parts.find((p) => p.kind === 'multimetro') ?? null;
+  const wireColor = useMemo(() => Object.fromEntries(board.wires.map((w) => [w.id, w.color])), [board.wires]);
 
   /* --------------------------------------------- edición de la mesa */
   const edit = (fn: (b: Board) => Board) => setBoard((b) => { const n = fn(b); return n === b ? b : { ...n, preset: 'Montaje libre' }; });
@@ -986,6 +991,9 @@ export default function SimpleCircuitsLab({ api }: LabProps) {
           { k: 'Conexión de los bombillos', v: arrangement },
         ]} />
         <Warnings list={simpleCircuitConditions(res.warnings)} />
+        <Panel3D title="los electrones recorren el circuito" summary="La misma mesa de bornes en 3D: cada pieza en su lugar, los bombillos brillan según su potencia y los electrones avanzan con una rapidez proporcional a la corriente de cada tramo.">
+          <CircuitosSimplesView3D netlist={netlist} res={res} wireColor={wireColor} />
+        </Panel3D>
         <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla de piezas en la mesa">
           <table>
             <caption>Piezas en la mesa ({board.preset})</caption>

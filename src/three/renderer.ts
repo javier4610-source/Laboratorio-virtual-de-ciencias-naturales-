@@ -73,6 +73,9 @@ export function createSceneRenderer(host: HTMLElement): SceneRenderer {
     return m;
   };
   function paint(m: Material, hex: string, opacity: number, selected: boolean) {
+    // Las aristas de una caja (`edges`) se dibujan SIEMPRE opacas, también en el primer cuadro: antes nacían opacas y se
+    // volvían translúcidas en el siguiente `update`, y «Restablecer vista» no devolvía la misma imagen que la inicial.
+    if (m instanceof LineBasicMaterial) { m.color.set(hex); return; }
     m.transparent = opacity < 1;
     m.opacity = opacity;
     m.depthWrite = opacity >= 1;
@@ -80,7 +83,7 @@ export function createSceneRenderer(host: HTMLElement): SceneRenderer {
       m.color.set(hex);
       m.emissive.set(selected ? hex : '#000000');
       m.emissiveIntensity = selected ? 0.55 : 0;
-    } else if (m instanceof LineBasicMaterial) m.color.set(hex);
+    }
   }
 
   /** Clave de la geometría propia (resortes, partículas): si cambia, se reconstruye la malla. */
@@ -239,7 +242,7 @@ export function createSceneRenderer(host: HTMLElement): SceneRenderer {
       raycaster.setFromCamera(new Vector2(((clientX - r.left) / r.width) * 2 - 1, -((clientY - r.top) / r.height) * 2 + 1), camera);
       const hits = raycaster.intersectObjects([...entries.values()].map((e) => e.obj), true).filter((h) => h.object.userData.id && h.object.visible);
       // Lo opaco que se ve A TRAVÉS de una envoltura translúcida (núcleo dentro de la célula) gana a la envoltura.
-      const solid = hits.find((h) => { const m = (h.object as Mesh).material as Material | undefined; return !!m && !Array.isArray(m) && m.opacity >= 1; });
+      const solid = hits.find((h) => { if (!(h.object instanceof Mesh)) return false; const m = (h.object as Mesh).material as Material | undefined; return !!m && !Array.isArray(m) && m.opacity >= 1; });
       const hit = solid ?? hits[0];
       return hit ? String(hit.object.userData.id) : null;
     },

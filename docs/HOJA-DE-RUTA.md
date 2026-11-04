@@ -59,17 +59,21 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       con dos átomos centrales (S₂Cl₂, N₂F₄) si hay geometría fiable.
 - [ ] **Rediseño, paso siguiente** (ADR 0007): revisar con estudiantes la barra de simulación, los atajos, el inicio
       por perfiles y los avisos con «Cómo corregirlo». (La medición con Lighthouse ya se hizo: `docs/v2/RENDIMIENTO.md`.)
-- [ ] **Rendimiento, siguiente paso (panel docente en pausa por decisión del docente, 2026-11-01)** (`docs/v2/RENDIMIENTO.md`): panel docente sin cargar las 65 fichas completas;
+- [ ] **Rendimiento, siguiente paso (panel docente en pausa por decisión del docente, 2026-11-01)** (`docs/v2/RENDIMIENTO.md`): panel docente sin cargar las fichas completas (hecho en v2.22.0 solo para no pasar el presupuesto de tamaño: abre sin ellas y las descarga en segundo plano; falta un archivo ligero solo para el docente);
       banco tipo Saber fuera de cada práctica; costo de pintar el catálogo; medir en un equipo real del colegio.
 - [ ] **Revisión del docente:** excepciones de la pista de control de variables y prueba de importación en el Moodle
       del colegio.
 
 ## Hecho
 
-- [x] Sin publicar · Ola 2a de prácticas nuevas (`estados-de-la-materia`, `cambios-quimicos`, `movimiento-circular`,
+- [x] v2.22.0 · Ola 2a de prácticas nuevas (`estados-de-la-materia`, `cambios-quimicos`, `movimiento-circular`,
   `lentes`, `magnetismo-imanes`), cada una con su vista 3D (79 prácticas). El panel docente abre sin las fichas completas
   y las descarga en segundo plano. Siguen las de prioridad 2 que faltan de la ola nuevas-2.
-- [x] Sin publicar · Ola 1b de prácticas nuevas (`configuracion-electronica`, `pila-electroquimica`, `meiosis`,
+- [x] v2.21.0 · Lote 3D-4: vista 3D en circuitos simples, circuitos, conductores, inducción, gases, cinética,
+  equilibrio y pH; el kit 3D dibuja opacas las aristas de las cajas («Restablecer vista» da la imagen inicial).
+- [x] v2.20.0 · Lote 3D-3: vista 3D en proyectiles, Newton, choques, energía, trabajo, máquinas y energía cinética y
+  potencial.
+- [x] v2.19.0 · Ola 1b de prácticas nuevas (`configuracion-electronica`, `pila-electroquimica`, `meiosis`,
   `sistema-nervioso`, `sistema-circulatorio`), cada una con su vista 3D: quedan construidas todas las prácticas de
   prioridad 1 del análisis curricular (74 prácticas). Siguen las de prioridad 2 (ola nuevas-2).
 - [x] v2.17.0 · Ola 1a de prácticas nuevas (`modelos-atomicos`, `tabla-periodica`, `enlace-quimico`,

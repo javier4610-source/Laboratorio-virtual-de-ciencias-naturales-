@@ -59,6 +59,13 @@ const CASES: Case[] = [
       await page.waitForTimeout(1600);
     },
   },
+  {
+    name: 'densidad', id: 'densidad', prefix: 'den3d', title: /la balanza, la probeta y cubos de igual masa/,
+    prepare: async (page) => {
+      await page.getByRole('button', { name: '1. Pesar en la balanza' }).click();
+      await page.getByRole('button', { name: '2. Sumergir en la probeta' }).click();
+    },
+  },
 ];
 
 /** Los rótulos HTML superpuestos no se encima entre sí ni se salen del lienzo. */

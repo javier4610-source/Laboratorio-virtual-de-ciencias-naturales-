@@ -4,7 +4,7 @@
  *   - el objeto con sus dimensiones reales y su base a la profundidad del modelo bajo la superficie (que sube en el vaso
  *     sobre la balanza); la línea de flotación es la superficie del líquido sobre el objeto;
  *   - flechas Peso P, Empuje E y Tensión del hilo T (= lo que marca el dinamómetro) con los valores del modelo, a la misma
- *     escala (1 N = 2 cm): cuando flota, E = P y no hay T;
+ *     escala (1 N = 3 cm): cuando flota, E = P y no hay T;
  *   - en el vaso de rebose, el colector con el volumen desalojado del modelo (V_sum) y en la probeta, el densímetro hundido
  *     la longitud de tallo del modelo para la densidad del líquido.
  * Dibujo: formas simplificadas, el resorte del dinamómetro y la probeta del densímetro.

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import { ALL_SAMPLES, CYLINDER_RESOLUTION, closestMaterial, LIMITS, MATERIALS, simulateDensity, WATER_DENSITY, densityConditions } from '../models/density';
 import { roundToResolution } from '../models/math';
 import { useMeasure } from '../components/Measurement';
@@ -11,6 +11,10 @@ import { BenchTop, Cube, DigitalBalance, GraduatedCylinder, Ruler } from './kit'
 import { DragHandle, ManipHint, ManipScene, zoneAt } from './manipulate';
 import { playSound } from '../lib/sound';
 import { usePublishModel } from '../components/Advanced';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const DensidadView3D = lazy(() => import('./lote3d5/DensidadView3D'));
 
 /** Lugares donde puede estar la muestra: 0 mesa, 1 plato de la balanza, 2 dentro de la probeta. */
 const STATION_TEXT = ['La muestra está sobre la mesa', 'La muestra está en el plato de la balanza', 'La muestra está dentro de la probeta'];
@@ -187,6 +191,10 @@ export default function DensityLab({ api }: LabProps) {
           { k: 'V desplazado', v: submerged && result.displacedVolume !== null ? `${fmt(result.displacedVolume, 1)} mL` : '—' },
           { k: '¿Flota?', v: submerged ? (result.floats ? (pushUnder ? 'Sí (hundido con alfiler)' : `Sí: sumerge ${fmt(result.submergedFraction * 100, 0)} %`) : 'No, se hunde') : '—' },
         ]} />
+        <Panel3D title="la balanza, la probeta y cubos de igual masa" summary="La mesa en 3D con la muestra donde la pusiste, la probeta dibujada a escala (el agua sube tanto como el volumen sumergido) y una fila de cubos de 50 g de cada material: a igual masa, el más denso es el más pequeño.">
+          <DensidadView3D material={m} side={side} station={station as 0 | 1 | 2} weighed={weighed} massReading={result.massReading} level={level}
+            overflow={submerged && result.finalWaterReading === null} floats={result.floats} pushUnder={pushUnder} submergedFraction={result.submergedFraction} initialWater={initialWater} />
+        </Panel3D>
         <Warnings list={densityConditions(submerged ? result.warnings : result.warnings.filter((w) => w.includes('balanza')), { materialId, side, initialWater, pushUnder })} />
         {weighed && submerged && result.massReading !== null && result.displacedVolume !== null && (
           <div className="card stack-sm">

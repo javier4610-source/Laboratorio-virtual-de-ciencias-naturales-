@@ -2044,4 +2044,43 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'efecto-invernadero': [
+    {
+      id: 'equilibrio', label: 'Planeta sin atmósfera', defaultX: 'albedo', defaultY: 'te',
+      columns: [
+        { key: 'planeta', label: 'Planeta', numeric: false, input: true },
+        { key: 'irradiancia', label: 'Irradiancia solar S', unit: 'W/m²', numeric: true, decimals: 1, input: true },
+        { key: 'albedo', label: 'Albedo α', numeric: true, decimals: 2, input: true },
+        { key: 'absorbida', label: 'Luz absorbida S(1 − α)/4', unit: 'W/m²', numeric: true, decimals: 1 },
+        { key: 'te', label: 'Temperatura de equilibrio T_e', unit: 'K', numeric: true, decimals: 1 },
+        { key: 'teC', label: 'T_e', unit: '°C', numeric: true, decimals: 1 },
+        { key: 'tReal', label: 'Temperatura media real (NASA)', unit: 'K', numeric: true, decimals: 0 },
+      ],
+    },
+    {
+      id: 'capa', label: 'Modelo de una capa', defaultX: 'eps', defaultY: 'ts',
+      columns: [
+        { key: 'eps', label: 'Absorción infrarroja ε', numeric: true, decimals: 2, input: true },
+        { key: 'ts', label: 'Temperatura de la superficie T_s', unit: 'K', numeric: true, decimals: 1 },
+        { key: 'tsC', label: 'T_s', unit: '°C', numeric: true, decimals: 1 },
+        { key: 'ta', label: 'Temperatura de la capa T_a', unit: 'K', numeric: true, decimals: 1 },
+        { key: 'superficie', label: 'Infrarrojo de la superficie', unit: 'W/m²', numeric: true, decimals: 1 },
+        { key: 'ventana', label: 'Escapa por la ventana', unit: 'W/m²', numeric: true, decimals: 1 },
+        { key: 'capaArriba', label: 'La capa emite hacia arriba', unit: 'W/m²', numeric: true, decimals: 1 },
+        { key: 'capaAbajo', label: 'La capa emite hacia abajo', unit: 'W/m²', numeric: true, decimals: 1 },
+        { key: 'saliente', label: 'Sale al espacio', unit: 'W/m²', numeric: true, decimals: 1 },
+      ],
+    },
+    {
+      id: 'co2', label: 'CO₂, forzamiento y calentamiento', defaultX: 'lnRazon', defaultY: 'forzamiento',
+      columns: [
+        { key: 'co2', label: 'Concentración de CO₂', unit: 'ppm', numeric: true, decimals: 1, input: true },
+        { key: 'razon', label: 'C/C₀', numeric: true, decimals: 3 },
+        { key: 'lnRazon', label: 'ln(C/C₀)', numeric: true, decimals: 4 },
+        { key: 'forzamiento', label: 'Forzamiento ΔF', unit: 'W/m²', numeric: true, decimals: 3 },
+        { key: 'sensibilidad', label: 'Sensibilidad climática', unit: '°C', numeric: true, decimals: 1, input: true },
+        { key: 'calentamiento', label: 'Calentamiento de equilibrio', unit: '°C', numeric: true, decimals: 2 },
+      ],
+    },
+  ],
 };

@@ -989,6 +989,18 @@ const SCENES: Record<string, () => ReactNode> = {
       <Arrow x1={74} y1={70} x2={54} y2={54} color="var(--data)" w={2.4} />
     </>
   ),
+  'efecto-invernadero': () => (
+    <>
+      <circle cx="40" cy="80" r="22" fill="#e3a008" />
+      {[56, 80, 104].map((y) => <line key={y} x1="66" y1={y} x2="176" y2={y} stroke="#e3a008" strokeWidth="2" />)}
+      <circle cx="218" cy="80" r="62" fill="var(--info)" opacity="0.18" />
+      <circle cx="218" cy="80" r="44" fill="#2f6fb0" stroke={INK} />
+      <path d="M196 64 q 10 -10 22 -4 q 8 10 -4 18 q -14 4 -18 -14 Z" fill="#5f9a46" opacity="0.9" />
+      <Arrow x1={232} y1={38} x2={252} y2={6} color="var(--bad)" w={2.4} />
+      <Arrow x1={258} y1={30} x2={244} y2={50} color="var(--series-4)" w={2.4} />
+      <rect x="290" y="38" width="5" height="84" rx="2" fill={INK} opacity="0.35" />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

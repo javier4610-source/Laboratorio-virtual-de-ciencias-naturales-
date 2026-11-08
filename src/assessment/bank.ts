@@ -1624,6 +1624,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Imanes, brújula y campo magnético», repite las tres pruebas en sus estaciones.',
     transfer: 'Si duplicas la corriente del cable, ¿la aguja gira el doble? Usa tan θ = B/H y compruébalo en la estación de la corriente.',
   },
+  {
+    id: 'saber-inv-1', grade: 11, topic: 'Balance de energía y efecto invernadero', competency: 'explicacion', component: 'fisico',
+    skill: 'Explicar la temperatura de un planeta con el balance de energía y el efecto invernadero', difficulty: 'alta', practiceId: 'efecto-invernadero',
+    context: 'Un grupo de 11.º de Apartadó compara tres planetas con los datos de la NASA. La «temperatura sin atmósfera» se calcula con la luz que absorbe cada planeta y la ley de Stefan–Boltzmann.',
+    table: {
+      caption: 'Datos de la NASA Planetary Fact Sheet',
+      headers: ['Planeta', 'Luz del Sol que llega (W/m²)', 'Albedo', 'Temperatura sin atmósfera (K)', 'Temperatura media real (K)'],
+      rows: [['Venus', '2601', '0,77', '227', '737'], ['Tierra', '1361', '0,31', '254', '288'], ['Marte', '586', '0,25', '210', '210']],
+    },
+    stem: '¿Qué explicación es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'La temperatura real depende solo de la distancia al Sol: el planeta más cercano siempre es el más caliente.', feedback: 'Sin atmósfera Venus estaría más frío que la Tierra (227 K frente a 254 K).' },
+      { id: 'b', text: 'La diferencia entre la temperatura real y la calculada sin atmósfera crece con el efecto invernadero: enorme en Venus (CO₂ denso), moderada en la Tierra y casi nula en Marte (atmósfera muy delgada).', feedback: 'Correcto: 510 K, 34 K y ≈ 0 K.' },
+      { id: 'c', text: 'Venus es más caliente porque refleja más luz que la Tierra.', feedback: 'Reflejar más luz enfría: por eso su temperatura sin atmósfera es baja.' },
+      { id: 'd', text: 'Los datos muestran que el efecto invernadero no existe, porque Marte no lo tiene.', feedback: 'Marte casi no tiene atmósfera; Venus y la Tierra sí lo muestran.' },
+    ],
+    correct: 'b',
+    explanation: 'Sin atmósfera, cada planeta se equilibraría cuando emite (σT⁴) lo que absorbe, S(1 − α)/4. La atmósfera de Venus, de CO₂ y muy densa, absorbe casi todo el infrarrojo y la superficie queda 510 K por encima; la de la Tierra la calienta 34 K; la de Marte, muy delgada, casi nada.',
+    review: 'En la práctica «Balance de energía de la Tierra y efecto invernadero», elige Venus, la Tierra y Marte en «Sin atmósfera».',
+    transfer: 'Si la Tierra tuviera albedo 0,20 en lugar de 0,30, ¿cuánto cambiaría su temperatura sin atmósfera? Calcúlalo con T = [S(1 − α)/(4σ)]^¼ y compruébalo en la práctica.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

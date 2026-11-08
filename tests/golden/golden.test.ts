@@ -23,6 +23,7 @@ import { evaluateChange } from '../../src/models/chemicalChanges';
 import { carOnCurve, ucm } from '../../src/models/circularMotion';
 import { eyeImage, thinLens } from '../../src/models/lenses';
 import { electromagnet, wireField } from '../../src/models/magnetism';
+import { co2Warming, effectiveTemp, layerModel } from '../../src/models/greenhouse';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -441,6 +442,12 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'magnetismo-imanes', origin: 'independiente', what: 'Biot-Savart: cable con 1 A a 2 cm, B = 2·10⁻⁷·1/0,02 = 1,0 × 10⁻⁵ T; con H = 26 967 nT (WMM2025, Apartadó) la brújula se desvía arctan(10/26,967) = 20,35°', run: () => {
     close(wireField(1, 0.02), 1e-5, 1e-18);
     close(electromagnet({ source: 'cable', turns: 50, current: 1, distanceCm: 2 }).deflection, (Math.atan(10 / 26.967) * 180) / Math.PI, 1e-9);
+  } },
+  { id: 'efecto-invernadero', origin: 'referencia', what: 'NASA Planetary Fact Sheet: T de cuerpo negro de la Tierra 254,0 K (S = 1361 W/m², α = 0,306), Marte 209,8 K y Venus 226,6 K; con α = 0,30, T_e = (1361·0,7/(4·5,670374419 × 10⁻⁸))^¼ = 254,58 K; una capa opaca 2^¼·T_e = 302,7 K; 2 × CO₂: 5,35·ln 2 = 3,708 W/m²', run: () => {
+    close(effectiveTemp(1361, 0.306), 254.0, 0.05); close(effectiveTemp(586.2, 0.25), 209.8, 0.05); close(effectiveTemp(2601.3, 0.77), 226.6, 0.05);
+    close(effectiveTemp(1361, 0.3), ((1361 * 0.7) / (4 * 5.670374419e-8)) ** 0.25, 1e-9); close(effectiveTemp(1361, 0.3), 254.578, 1e-3);
+    close(layerModel({ S: 1361, albedo: 0.3, eps: 1 }).Ts, 302.746, 1e-3);
+    close(co2Warming(2 * 278.3, 3).forcing, 3.70834, 1e-5); close(co2Warming(2 * 278.3, 3).dT, 3, 1e-12);
   } },
 ];
 

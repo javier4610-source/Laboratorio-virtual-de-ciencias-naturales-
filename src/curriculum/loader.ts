@@ -12,6 +12,7 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   'movimiento-circular': () => import('./practices/movimiento-circular').then((m) => m.movimientoCircular),
   lentes: () => import('./practices/lentes').then((m) => m.lentes),
   'magnetismo-imanes': () => import('./practices/magnetismo-imanes').then((m) => m.magnetismoImanes),
+  'efecto-invernadero': () => import('./practices/efecto-invernadero').then((m) => m.efectoInvernadero),
   'sistema-circulatorio': () => import('./practices/sistema-circulatorio').then((m) => m.sistemaCirculatorio),
   'sistema-nervioso': () => import('./practices/sistema-nervioso').then((m) => m.sistemaNervioso),
   meiosis: () => import('./practices/meiosis').then((m) => m.meiosis),

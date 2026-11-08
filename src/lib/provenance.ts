@@ -137,6 +137,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: noise('Ángulos y campos') + 'Campo del imán con el modelo de dos polos (momentos con remanencias típicas de fabricante), campo de la Tierra en Apartadó del Modelo Magnético Mundial WMM2025 (NOAA y BGS) y campo de una corriente con Biot-Savart: modelo calculado. Líneas de campo y brújulas 3D: calculadas con el mismo modelo.' };
   }
+  if (practiceId === 'efecto-invernadero') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Temperaturas y flujos calculados con la ley de Stefan–Boltzmann (σ de CODATA 2018), la constante solar de Kopp y Lean (2011), los planetas de la NASA Planetary Fact Sheet y el modelo de una capa de Archer; forzamiento del CO₂ con la fórmula de Myhre (1998) y sensibilidad climática del IPCC AR6: modelo calculado, no son mediciones. Los albedos de las superficies son ilustrativos. Tierra 3D: flechas con longitud proporcional a los flujos del modelo; la Tierra, la capa y el Sol son un dibujo sin escala.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

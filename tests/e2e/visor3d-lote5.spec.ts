@@ -31,6 +31,10 @@ const CASES: Case[] = [
       await page.getByRole('button', { name: 'Encender el generador' }).click();
     },
   },
+  {
+    name: 'optica', id: 'optica', prefix: 'opt3d', title: /los rayos y el plano de incidencia/,
+    prepare: async (page) => { await page.getByRole('button', { name: 'Medir con el transportador' }).click(); },
+  },
 ];
 
 /** Los rótulos HTML superpuestos no se encima entre sí ni se salen del lienzo. */

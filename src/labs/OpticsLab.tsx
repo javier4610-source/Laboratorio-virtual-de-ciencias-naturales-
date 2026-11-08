@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react';
+import { lazy, memo, useMemo, useState } from 'react';
 import { MEDIA, refract } from '../models/optics';
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
@@ -8,6 +8,10 @@ import { instrument } from './instruments';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
 import { playSound } from '../lib/sound';
 import { usePublishModel } from '../components/Advanced';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const OpticaView3D = lazy(() => import('./lote3d5/OpticaView3D'));
 
 const MEDIUM_FILL: Record<string, string> = { aire: 'rgba(200,225,240,0.10)', agua: 'rgba(70,150,220,0.28)', aceite: 'rgba(232,195,58,0.30)', vidrio: 'rgba(150,210,200,0.35)', diamante: 'rgba(210,220,240,0.55)', misterio: 'rgba(170,140,210,0.32)' };
 
@@ -181,6 +185,10 @@ export default function OpticsLab({ api }: LabProps) {
           { k: 'El rayo se acerca a…', v: measured ? r.bendsToward : '—' },
           { k: 'Ángulo crítico', v: r.criticalAngle === null ? 'no existe (n₁ < n₂)' : measured ? `${fmt(r.criticalAngle, 1)}°` : 'búscalo' },
         ]} />
+        <Panel3D title="los rayos y el plano de incidencia" summary="El láser, la superficie y los rayos reflejado y refractado en 3D, con el grosor de cada haz según la fracción de luz del modelo. Al girar la vista se comprueba que todos están en un mismo plano perpendicular a la superficie.">
+          <OpticaView3D m1={m1} m2={m2} name1={name(m1)} name2={name(m2)} n1={r.n1} n2={r.n2} angle={angle} refraction={r.refraction}
+            reflectance={r.reflectance} transmittance={r.transmittance} measured={measured} readReflection={read.reflection} readRefraction={read.refraction} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

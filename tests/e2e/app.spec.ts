@@ -37,7 +37,7 @@ test('catálogo: búsqueda y filtros', async ({ page }) => {
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(4);
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(27);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(28);
 });
 
 test('densidad (guiada): preparación, experimento sin hipótesis, cálculo, tabla y análisis de la tendencia', async ({ page }) => {

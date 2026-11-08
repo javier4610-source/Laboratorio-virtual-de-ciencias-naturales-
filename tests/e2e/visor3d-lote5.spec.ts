@@ -35,6 +35,10 @@ const CASES: Case[] = [
     name: 'optica', id: 'optica', prefix: 'opt3d', title: /los rayos y el plano de incidencia/,
     prepare: async (page) => { await page.getByRole('button', { name: 'Medir con el transportador' }).click(); },
   },
+  {
+    name: 'interferencia', id: 'interferencia', prefix: 'int3d', title: /ondas de las rendijas y patrón en la pantalla/,
+    prepare: async (page) => { await page.getByRole('button', { name: 'Encender la fuente de luz' }).click(); },
+  },
 ];
 
 /** Los rótulos HTML superpuestos no se encima entre sí ni se salen del lienzo. */

@@ -186,6 +186,11 @@ dibuja y devuelve la imagen del lienzo sin `preserveDrawingBuffer`).
   usa `useFlowClock` y `FlowControls` de `src/labs/lote3d4/flow.tsx`: arranca quieta, la inicia la persona, se pausa
   (WCAG 2.2.2) y queda desactivada con movimiento reducido. No la uses si el laboratorio ya tiene `SimControls`.
 
+- Escenas alargadas (lote 3D-6): `extent` encuadra una esfera, así que en una pantalla ancha (lienzo apaisado) manda
+  la altura y en un celular (lienzo casi cuadrado) manda el ancho. Las vistas del lote 3D-6 devuelven dos encuadres
+  (`extent`/`target` y `narrow`) y eligen con `useNarrow()` de `src/labs/lote3d6/useNarrow.ts` (≤ 600 px); el contenido
+  de la escena no cambia. Una varilla corta y muy ancha se dibuja en el respaldo SVG como una línea gruesa (casi un
+  círculo): para discos planos usa una caja delgada.
 - La vista de respaldo es ortográfica y ordena por profundidad del objeto (no por píxel): con objetos que se
   cruzan puede dibujar uno delante de otro de forma aproximada. Las cajas y elipsoides translúcidos se tratan como
   recipientes (van detrás de lo que contienen).

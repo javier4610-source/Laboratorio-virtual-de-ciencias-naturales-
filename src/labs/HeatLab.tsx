@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CONTAINERS, HEAT_INSTRUMENTS, HEAT_LIMITS, METALS, RECORD_S, ROOM_T, SERIES_STEP, SPECIFIC_HEAT_TABLE,
   analyzeReadings, closestMaterial, containerHeatCapacity, findContainer, findMetal, heatFlows, simulate, temperatureSeries, temperaturesAt,
@@ -17,6 +17,9 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, Beaker, ContactShadow, DigitalBalance, Lcd, Stopwatch, Thermometer, shade } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const CalorView3D = lazy(() => import('./lote3d6/CalorView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -253,6 +256,7 @@ export default function HeatLab({ api }: LabProps) {
   const idx = Math.min(thermoSeries.length - 1, Math.max(0, Math.floor(simT / SERIES_STEP)));
   const lcdTemp = phase === 'listo' || transfer < 1 ? readings.waterTemp : done ? readings.t10 : thermoSeries[idx].T;
   const flows = transfer >= 1 ? heatFlows(sim, simT) : { toWater: 0, toAir: 0 };
+  const temps = transfer >= 1 ? temperaturesAt(sim, simT) : { sample: sampleTemp, water: waterTemp };
 
   /* --------------------------- geometría dependiente del estado */
   const style = CUP_STYLE[container];
@@ -452,6 +456,12 @@ export default function HeatLab({ api }: LabProps) {
         </div>
         <ManipHint>Arrastra {isMetal ? 'la pieza de metal' : 'el vaso de agua caliente'} de la parrilla al calorímetro para mezclar, y gira la perilla de la parrilla para fijar su temperatura; también puedes enfocarlos con Tab y usar las flechas.</ManipHint>
 
+        <Panel3D title="partículas que se agitan y calor que pasa" summary="El calorímetro en 3D con las partículas de la muestra y del agua: su color y su agitación siguen la temperatura del modelo en el mismo instante del banco, y una flecha muestra el calor que pasa del cuerpo caliente al frío hasta el equilibrio.">
+          <CalorView3D isMetal={isMetal} metalName={metalInfo.name} metalColor={metalInfo.color} density={metalInfo.density} container={container}
+            sampleMass={sampleMass} waterMass={waterMass} transfer={transfer} simT={simT} poured={poured} sampleT={temps.sample} waterT={temps.water}
+            toWater={flows.toWater} toAir={flows.toAir} G={sim.G} L={sim.L} sampleTemp0={sampleTemp} waterTemp0={waterTemp} ambient={ROOM_T}
+            lcd={lcdTemp} clock={phase === 'midiendo' || phase === 'pausa' ? elapsed / 1000 : 0} done={done} />
+        </Panel3D>
         <div className="grid-2">
           <div className="stack">
             <h3>Lecturas antes de mezclar</h3>

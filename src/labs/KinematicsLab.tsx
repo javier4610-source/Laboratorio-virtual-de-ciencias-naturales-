@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CHALLENGES, KIN_LIMITS, MATCH_TOLERANCE, STROBE_INTERVAL, TRACK_LENGTH,
   challengeError, observationTime, sampleCurve, simulateRun, stateAt, kinematicsConditions,
@@ -14,6 +14,9 @@ import { SimControls, simStatusOf, resolutionText } from '../components/Experime
 import type { LabProps } from './registry';
 import { usePublishModel } from '../components/Advanced';
 import { Stopwatch } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+const CinematicaView3D = lazy(() => import('./lote3d6/CinematicaView3D'));
 
 type AnimSpeed = 'real' | 'x4';
 
@@ -181,6 +184,7 @@ export default function KinematicsLab({ api }: LabProps) {
   const visibleStrobe = running || done || t > 0 ? res.strobe.slice(0, done ? res.strobe.length : nStrobe) : [];
 
   const tMax = Math.max(duration, challenge?.duration ?? 0);
+  const vMax3d = useMemo(() => Math.max(v0, ...curve.map((p) => p.v)), [v0, curve]);
   const xtSeries: Series[] = [];
   if (challenge) xtSeries.push({ label: 'Reto (objetivo)', color: 'var(--ink-2)', kind: 'line', dashed: true, points: target.map((p) => ({ x: p.t, y: p.x })) });
   if (done) {
@@ -241,6 +245,11 @@ export default function KinematicsLab({ api }: LabProps) {
             <text x="640" y="26" textAnchor="end" style={{ fontSize: 11, fill: 'var(--ink-2)' }}>fotos cada {fmt(STROBE_INTERVAL, 1)} s</text>
           </svg>
         </div>
+        <Panel3D title="el ciclista, sus vectores y la pared posición–tiempo" summary="La ciclorruta en 3D en el mismo instante del banco: la flecha v (velocidad) y la flecha a (aceleración) sobre el ciclista, las fotos estroboscópicas y, detrás, una pared donde cada foto queda sobre su posición y a la altura de su instante.">
+          <CinematicaView3D x={pos} v={done && res.endReason === 'pista' ? res.finalSpeed : stateAt(v0, acc, tShown).v} t={tShown} acceleration={acc} vMax={vMax3d}
+            strobe={visibleStrobe} curve={curve} target={target} tMax={tMax} stopped={stateAt(v0, acc, tShown).v === 0 && acc <= 0} atEnd={pos >= TRACK_LENGTH - 1e-9}
+            started={running || done || t > 0} running={running} done={done} finalSpeed={res.finalSpeed} distance={res.distance} time={res.time} />
+        </Panel3D>
         <Readout items={[
           { k: 'Tiempo (cronómetro)', v: done ? `${fmt(res.time, 2)} s` : running || t > 0 ? `${fmt(tShown, 2)} s` : '—', data: true, resolution: resolutionText(0.01, 's') },
           { k: 'Distancia recorrida', v: done ? `${fmt(res.distance, 2)} m` : '—', data: true, resolution: resolutionText(0.01, 'm') },

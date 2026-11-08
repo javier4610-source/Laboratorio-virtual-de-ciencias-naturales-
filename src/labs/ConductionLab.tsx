@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   AMBIENT_T, CONDUCTION_INSTRUMENTS, CONDUCTION_LIMITS, RODS, RUN_S, SKIN, TACK_SLOTS_CM, TOUCH_MATERIALS, WAX_MELT_T,
   effusivity, finParams, findRod, findTouch, fourierFromProbes, simulateConduction, skinContact, slabHeatFlux, steadyTemperature,
@@ -17,6 +17,9 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, ContactShadow, Cube, Lcd, Ruler, Stopwatch, shade } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene, Plunger, zoneAt } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const ConduccionView3D = lazy(() => import('./lote3d6/ConduccionView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -547,6 +550,10 @@ export default function ConductionLab({ api }: LabProps) {
           </ManipScene>
         </div>
         <ManipHint>Arrastra una varilla de la gradilla al tapón del baño, gira la perilla del mechero, desliza los termopares (T1, T2, T3) a lo largo de la varilla y arrastra bajo la varilla para poner o quitar tachuelas; también puedes enfocarlos con Tab y usar las flechas.</ManipHint>
+        <Panel3D title="el mapa de temperatura de la varilla" summary="La varilla en 3D con cada centímetro coloreado según la temperatura del modelo en el mismo instante del banco (la escala es fija, así se comparan materiales), las tachuelas que caen y los termopares. Puedes poner otra varilla al lado para comparar.">
+          <ConduccionView3D rodId={rodId} rodShort={rod.short} solution={sim.solution} cover={cover} bathT={bathT} simT={simT} indicator={indicator} nTacks={nTacks}
+            probes={probes} lcd={phase === 'listo' ? [AMBIENT_T, AMBIENT_T, AMBIENT_T] : lcdT} started={phase !== 'listo'} done={done} />
+        </Panel3D>
 
         <div className="grid-2">
           <div className="stack">

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BACKGROUNDS, beetlePositions, beetleSample, findBackground, histogram, INITIAL_MEAN, SEL_LIMITS, simulateSelection,
 } from '../models/selection';
@@ -7,6 +7,9 @@ import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { Panel3D } from './lote3d/Panel3D';
+
+const SeleccionView3D = lazy(() => import('./lote3d6/SeleccionView3D'));
 
 const MAX_GEN = SEL_LIMITS.generations[1];
 const N_BEETLES = 40;
@@ -213,6 +216,10 @@ export default function SelectionLab({ api }: LabProps) {
             <text x="18" y="22" style={{ fontSize: 13, fill: 'var(--ink)', fontWeight: 700 }}>{`${background.short} · B = ${fmt(shownB, 2)} · gen. ${anim && t < 1 ? Math.round(lerp(anim.from, anim.to, t)) : gens}`}</text>
           </svg>
         </div>
+        <Panel3D title="el suelo visto desde el ave" summary="Los mismos 40 escarabajos sobre el suelo en 3D, vistos desde la rama del ave, con columnas de cuántos hay de cada color; tras la primera ronda, cuántos de cada color escaparían de las aves según el modelo.">
+          <SeleccionView3D backgroundName={background.short} B={shownB} mean={shownMean} sample={sample} positions={positions} predation={predation / 100}
+            generation={anim && t < 1 ? Math.round(lerp(anim.from, anim.to, t)) : gens} measured={measured} />
+        </Panel3D>
         <Readout items={[
           { k: 'Generación', v: String(gens) },
           { k: 'Color del fondo B', v: fmt(at(last).background, 2) },

@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as RKeyboardEvent } from 'react';
+import { lazy, memo, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as RKeyboardEvent } from 'react';
 import {
   MARK_SPACING, MIN_GAP, MOTION_INSTRUMENTS, MOTION_LIMITS, MOVERS, REACTION, TIMER_RES, TRACK_LENGTH,
   findMover, handTiming, isUniform, pathLengthAt, positionAt, race, simulateMotion, toKmh, tripPosition, motionConditions,
@@ -17,6 +17,9 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { Stopwatch } from './kit';
 import { ManipHint, ManipScene, Plunger } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const MovimientoView3D = lazy(() => import('./lote3d6/MovimientoView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -552,7 +555,7 @@ export default function MotionLab({ api }: LabProps) {
     if (running && reduce && pos > 0) pos = Math.floor(pos / MARK_SPACING) * MARK_SPACING;
     const abs = Math.max(-LEAD_MAX_M - 0.2, Math.min(TRACK_LENGTH + 1.2, start + pos));
     const returning = tr === 'idavuelta' && simT > res.time / 2;
-    return { m, x: toPx(abs), y: GROUND[isRace ? li : 0], path: reduce ? 0 : drawPath(m, d, tr, simT), dir: (returning ? -1 : 1) as 1 | -1 };
+    return { m, pos, returning, x: toPx(abs), y: GROUND[isRace ? li : 0], path: reduce ? 0 : drawPath(m, d, tr, simT), dir: (returning ? -1 : 1) as 1 | -1 };
   });
 
   const gateXs = useMemo(() => [0, ...res.splits.filter((s, i) => i > 0 && s.path <= d + 1e-9).map((s) => s.x)], [res, d]);
@@ -730,6 +733,10 @@ export default function MotionLab({ api }: LabProps) {
           </ManipScene>
         </div>
         <ManipHint>Arrastra el cono de salida, la bandera de meta y el extremo de la cinta métrica (o enfócalos con Tab y usa las flechas). Con «Tu cronómetro», pulsa el cronómetro de la escena o la barra espaciadora para arrancarlo y detenerlo.</ManipHint>
+        <Panel3D title="la pista vista desde arriba: camino y desplazamiento" summary="La pista en 3D con el móvil en el mismo instante del banco: la línea que deja sobre la pista es la distancia recorrida y la flecha desde la salida es el desplazamiento. En ida y vuelta, el camino crece y el desplazamiento vuelve a cero.">
+          <MovimientoView3D lanes={moverDraw.map((md) => ({ kind: md.m.kind, name: md.m.name, pos: md.pos, returning: md.returning }))} start={start} finish={finish} tape={tape}
+            trip={trip} isRace={isRace} gates={effTiming === 'fotopuerta' ? gateXs : []} phase={phase} />
+        </Panel3D>
 
         {isRace ? (
           <Readout items={[

@@ -1,10 +1,13 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import { applyMethod, COMPONENTS, evaluate, initialState, METHODS, MIXTURE_LIMITS, type ComponentId, type Masses, type MethodId, type MixtureState } from '../models/mixtures';
 import { fmt } from '../lib/format';
 import { Notice, RecordButton, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, shade } from './kit';
 import { playSound, type SoundName } from '../lib/sound';
+import { Panel3D } from './lote3d/Panel3D';
+
+const MezclasView3D = lazy(() => import('./lote3d6/MezclasView3D'));
 
 /** Sonido de cada técnica: agitar con agua, imán que atrae limaduras, vertido, goteo del filtro, ebullición. */
 const METHOD_SOUND: Record<MethodId, SoundName> = { agua: 'swirl', iman: 'clank', decantacion: 'pour', filtracion: 'drips', evaporacion: 'fizz' };
@@ -167,6 +170,9 @@ export default function MixturesLab({ api }: LabProps) {
             ))}
           </div>
         </div>
+        <Panel3D title="dónde queda cada componente" summary="El montaje en 3D: el vaso con lo que sigue mezclado y cada fracción en la herramienta de su técnica (imán, papel filtro, embudo de decantación o cápsula de evaporación), con tantas partículas como gramos separó el modelo.">
+          <MezclasView3D state={state} last={steps.length ? steps[steps.length - 1] : null} />
+        </Panel3D>
         <div className="card stack-sm">
           <h3>Bitácora</h3>
           {state.log.length === 0 ? <p className="small muted">Aplica un método para empezar.</p> : <ol className="list small">{state.log.map((l, i) => <li key={i}>{l}</li>)}</ol>}

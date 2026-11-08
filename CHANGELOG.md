@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.26.0] · 2026-11-08
+
+Prácticas nuevas, ola 3a (86 prácticas): gravitación y órbitas, fluidos y Bernoulli, termoquímica y ciclo del carbono; rótulos de la vista 3D del efecto invernadero sin amontonarse.
+
 Prácticas nuevas, ola 3a (86 prácticas): gravitación y órbitas, fluidos en movimiento, termoquímica y ciclo del carbono.
 
 ### Añadido
@@ -41,6 +45,30 @@ Prácticas nuevas, ola 3a (86 prácticas): gravitación y órbitas, fluidos en m
 - **Efecto invernadero 3D**: a 1280 px los nueve rótulos se encimaban entre sí y sobre las flechas del polo. Ahora las
   seis flechas llevan solo su número (la leyenda dice «1 · luz reflejada»…), están más separadas, y la Tierra y la capa se
   nombran solo en la leyenda.
+
+## [2.25.0] · 2026-11-08
+
+Lote 3D-6: vista 3D en mezclas, calor, conducción, movimiento, cinemática, selección natural y genética de poblaciones.
+
+Lote 3D-6: vista 3D en mezclas, calor, conducción, movimiento, cinemática, selección natural y genética de poblaciones.
+
+### Añadido
+- **Lote 3D-6 «materia, calor, movimiento y evolución»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas
+  `src/three`: tarjeta «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG
+  sin WebGL, teclado, tacto, descripción textual viva y estatus «Modelo calculado» en `mezclas` (cada fracción separada
+  en la herramienta de su técnica, partículas ∝ masa), `calor` (calorímetro con partículas de color según la temperatura
+  del modelo y agitación ∝ √T absoluta; flecha de calor ∝ G·(T₁ − T₂) hasta el equilibrio), `conduccion` (mapa de color
+  de la temperatura de la varilla con una escala fija, tachuelas que caen, termopares y varilla de comparación opcional:
+  otra corrida del mismo modelo), `movimiento` (pista vista desde arriba con el camino recorrido y la flecha del
+  desplazamiento), `cinematica` (ciclista con las flechas v y a, fotos estroboscópicas y una pared posición–tiempo),
+  `seleccion` (el suelo visto desde el ave con la misma muestra de 40 escarabajos, conteos por color y, tras la primera
+  ronda, cuántos escaparían) y `popgen` (isla y continente con individuos coloreados por sus alelos, la generación y la
+  población que se elijan, y migrantes). Las animaciones siguen el reloj del banco (quietas en pausa; con movimiento
+  reducido, el resultado). Pruebas: `tests/unit/lote3d6.test.ts` y `tests/e2e/visor3d-lote6.spec.ts`.
+
+### Cambiado
+- `popgen`: la cuenta de individuos de Hardy-Weinberg de la poza génica pasa a `src/labs/lote3d6/popgen3d.ts` (la usan el
+  banco y la vista 3D).
 
 ## [2.24.0] · 2026-11-08
 

@@ -1,9 +1,13 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import { hardyWeinberg, POPGEN_LIMITS, simulatePopGen, type PopGenInput } from '../models/popgen';
 import { fmt } from '../lib/format';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { Panel3D } from './lote3d/Panel3D';
+import { hwCounts } from './lote3d6/popgen3d';
+
+const PopGenView3D = lazy(() => import('./lote3d6/PopGenView3D'));
 
 const SCENARIOS: { id: string; name: string; note: string; patch: Partial<PopGenInput> }[] = [
   { id: 'neutral', name: 'Neutral (Hardy-Weinberg)', note: 'Todos los genotipos tienen la misma eficacia.', patch: { fitness: { AA: 1, Aa: 1, aa: 1 }, mutationAtoa: 0, migration: 0 } },
@@ -20,16 +24,7 @@ const N_OPTIONS = [10, 30, 100, 300, 1000, 5000];
 const COL_A = 'var(--series-2)';
 const COL_a = 'var(--series-1)';
 
-/** Cuenta de individuos AA, Aa y aa entre 100 según Hardy-Weinberg (mayores restos). */
-function hwCounts(p: number): [number, number, number] {
-  const hw = hardyWeinberg(Math.min(1, Math.max(0, p)));
-  const raw = [hw.AA * 100, hw.Aa * 100, hw.aa * 100];
-  const out = raw.map(Math.floor);
-  let left = 100 - out.reduce((a, b) => a + b, 0);
-  const order = raw.map((r, i) => [r - Math.floor(r), i]).sort((a, b) => b[0] - a[0]);
-  for (let k = 0; left > 0; k++, left--) out[order[k % 3][1]]++;
-  return [out[0], out[1], out[2]];
-}
+/* La cuenta de individuos AA, Aa y aa (Hardy-Weinberg, mayores restos) es la misma de la vista 3D: lote3d6/popgen3d.ts. */
 
 /** Individuo estilizado: la mitad izquierda lleva el primer alelo y la derecha el segundo. */
 function Person({ x, y, left, right }: { x: number; y: number; left: string; right: string }) {
@@ -122,6 +117,11 @@ export default function PopGenLab({ api }: LabProps) {
             hLines={r?.equilibriumP != null ? [{ y: r.equilibriumP, label: `equilibrio p* = ${fmt(r.equilibriumP, 2)}` }] : []} />
         </div>
         {r && <div className="bench"><GenePools p0={input.p0} pEnd={r.meanFinalP} generations={input.generations} /></div>}
+        {r && (
+          <Panel3D title="la isla, el continente y los migrantes" summary="Dos poblaciones en un paisaje 3D: la isla con los individuos de la población y la generación que elijas, coloreados por sus dos alelos, y el continente del que llegan migrantes por un puente cuando hay flujo génico.">
+            <PopGenView3D series={r.series} n={input.n} drift={input.drift} migration={input.migration} migrantP={input.migrantP} />
+          </Panel3D>
+        )}
         {'error' in res && <Notice kind="bad">{res.error}</Notice>}
         {r && hw && (
           <>

@@ -66,6 +66,8 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] v2.25.0 · Lote 3D-6: vista 3D en mezclas, calor, conducción, movimiento, cinemática, selección natural y
+  genética de poblaciones.
 - [x] v2.24.0 · Ola 2b de prácticas nuevas (`clasificacion-seres-vivos`, `homeostasis-glucosa`,
   `efecto-invernadero`), cada una con su vista 3D (82 prácticas): quedan construidas todas las prácticas de prioridad 2
   del análisis curricular. La estructura de la insulina (3I40) pasa a la segunda fase del service worker. Siguen las de

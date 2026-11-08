@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.25.0] · 2026-11-08
+
+Lote 3D-6: vista 3D en mezclas, calor, conducción, movimiento, cinemática, selección natural y genética de poblaciones.
+
 Lote 3D-6: vista 3D en mezclas, calor, conducción, movimiento, cinemática, selección natural y genética de poblaciones.
 
 ### Añadido

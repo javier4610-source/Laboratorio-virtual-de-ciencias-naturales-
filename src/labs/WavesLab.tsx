@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, memo, useEffect, useMemo, useRef, useState } from 'react';
 import { displacement, findRope, ropeWave, ROPES, soundWave, WAVE_LIMITS } from '../models/waves';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -8,6 +8,10 @@ import { usePublishModel } from '../components/Advanced';
 import { BenchTop, ContactShadow } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
 import { SimControls } from '../components/Experiment';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const OndasView3D = lazy(() => import('./lote3d5/OndasView3D'));
 
 const VIEW_M = 12; // metros de cuerda visibles
 const WX0 = 74, WX1 = 590;
@@ -193,6 +197,10 @@ function RopePart({ api }: LabProps) {
           { k: 'λ del modelo (oculta hasta medir)', v: measured !== '' ? `${fmt(res.wavelength, 3)} m` : 'mide primero' },
           { k: 'Energía relativa (∝ A²f²)', v: fmt(res.relativeEnergy, 0) },
         ]} />
+        <Panel3D title="la cuerda, la regla y la dirección de la vibración" summary="La cuerda en 3D con la misma onda del banco (se mueve y se pausa con el generador): la onda avanza a lo largo de la cuerda mientras cada punto sube y baja. La regla y los marcadores A y B están sobre la mesa.">
+          <OndasView3D ropeId={ropeId} ropeName={findRope(ropeId).name} tension={tension} frequency={f} amplitude={A} wavelength={res.wavelength} speed={res.speed}
+            t={t} markA={markA} markB={markB} revealed={measured !== ''} />
+        </Panel3D>
       </div>
       <div className="controls">
         <div className="card stack">

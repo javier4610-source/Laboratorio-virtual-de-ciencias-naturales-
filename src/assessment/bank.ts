@@ -1708,6 +1708,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Gravitación universal, órbitas y leyes de Kepler», calcula el período de satélites a varias altitudes en «Planetas y satélites».',
     transfer: '¿A qué distancia del centro de la Tierra tendría que estar un satélite para dar una vuelta en un día sidéreo (86 164 s)? Usa r = (G·M·T²/4π²)^⅓ y compruébalo con el satélite geoestacionario.',
   },
+  {
+    id: 'saber-ber-1', grade: 10, topic: 'Continuidad y Bernoulli', competency: 'explicacion', component: 'fisico',
+    skill: 'Explicar un fenómeno cotidiano con continuidad y Bernoulli', difficulty: 'alta', practiceId: 'fluidos-bernoulli',
+    context: 'En un río de Urabá un estudiante mide la rapidez del agua con un flotador en dos sitios: uno ancho y profundo y otro angosto entre piedras. El caudal del río es el mismo en los dos sitios.',
+    table: {
+      caption: 'Medidas del estudiante (valores ilustrativos)',
+      headers: ['Sitio', 'Área de la sección (m²)', 'Rapidez (m/s)'],
+      rows: [['Ancho y profundo', '6,0', '0,5'], ['Angosto', '1,5', '2,0']],
+    },
+    stem: '¿Qué explicación es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'El agua va más rápido en el sitio angosto porque allí cae por una pendiente mayor.', feedback: 'Los datos se explican sin pendiente: el producto A·v es el mismo.' },
+      { id: 'b', text: 'Como el caudal A·v se conserva (6,0 × 0,5 = 1,5 × 2,0 = 3 m³/s), en la sección angosta el agua debe ir más rápido; si fuera un fluido ideal, allí la presión sería menor.', feedback: 'Correcto: continuidad y Bernoulli.' },
+      { id: 'c', text: 'En el sitio angosto pasa más agua por segundo.', feedback: 'El caudal es el mismo: 3 m³/s en los dos sitios.' },
+      { id: 'd', text: 'La rapidez no tiene relación con el área: depende solo del viento.', feedback: 'El producto A·v constante muestra la relación.' },
+    ],
+    correct: 'b',
+    explanation: 'Q = A₁v₁ = A₂v₂: el área baja 4 veces y la rapidez sube 4 veces. Por Bernoulli, en un fluido ideal la mayor energía cinética en el angosto va con una presión menor (en un río real también cambian la profundidad y las pérdidas por fricción).',
+    review: 'En la práctica «Fluidos en movimiento: continuidad y Bernoulli», usa la manguera con boquillas de distinto diámetro.',
+    transfer: 'Si en otro tramo la sección mide 4,0 m², ¿qué rapidez esperas? Calcúlala con Q = A·v y explica qué supuesto haces.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

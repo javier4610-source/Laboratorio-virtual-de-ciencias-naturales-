@@ -153,6 +153,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: 'Fuerzas con la ley de Newton (G de CODATA 2018); órbitas integradas con Runge–Kutta de 4.º orden con el GM del Sol de la IAU; tercera ley con los semiejes, períodos y masas de las fichas de la NASA (Planetary Fact Sheets); satélites con el GM de la Tierra del IERS: modelo calculado, no son mediciones. El planeta imaginario, la masa del estudiante y las esferas son ilustrativos. Órbita 3D: trayectoria integrada, flecha de velocidad proporcional a la rapidez y de fuerza proporcional a 1/r²; el Sol y el planeta no están a escala.' };
   }
+  if (practiceId === 'fluidos-bernoulli') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Rapideces, presiones y alturas calculadas con la ecuación de continuidad y el principio de Bernoulli para un fluido ideal (sin viscosidad, incompresible y estacionario); densidades del agua y del etanol y viscosidad del agua a 20 °C del CRC Handbook; aire a 20 °C: modelo calculado, no son mediciones. Los diámetros de la manguera y del Venturi y la columna de entrada son ilustrativos. Venturi 3D: trazadores a intervalos iguales de tiempo, flechas proporcionales a la rapidez y columnas con la altura de presión del modelo.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

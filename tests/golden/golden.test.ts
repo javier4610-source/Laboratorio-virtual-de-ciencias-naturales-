@@ -27,6 +27,7 @@ import { co2Warming, effectiveTemp, layerModel } from '../../src/models/greenhou
 import { BERGMAN, ogttCategory, fastingCategory, simulateGlucose } from '../../src/models/glucose';
 import { buildKey, domainOf, findKey, findOrganism as findTaxon, identify, keyMembers } from '../../src/models/classification';
 import { geostationaryAltitude, integrateOrbit, keplerTable, satellitePeriod } from '../../src/models/gravitation';
+import { atomizer, hose, RHO_WATER, venturi } from '../../src/models/bernoulli';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -471,6 +472,13 @@ export const GOLDEN: GoldenCase[] = [
     const run = integrateOrbit(1, 0.6);
     expect(run.energy.maxRelDrift).toBeLessThan(1e-8);
     close(run.areas.reduce((s, x) => s + x, 0) / run.ellipseArea, 1, 1e-6);
+  } },
+  { id: 'fluidos-bernoulli', origin: 'independiente', what: 'Fluido ideal, agua a 20 °C (ρ = 998,2 kg/m³, CRC) y g = 9,78 m/s²: 10 L en 30 s por 12,7 mm → v = 2,631 m/s (boquilla de la mitad: × 4); Venturi 25/12,5 mm con 0,3 L/s: v₂ = 2,4446 m/s, Δp = ½ρ(v₂² − v₁²) = 2796,3 Pa, Δh = 28,64 cm y el medidor devuelve 0,3 L/s; aire a 20 m/s: ½·1,204·20² = 240,8 Pa y el agua sube 2,467 cm', run: () => {
+    close(hose(10, 30, 12.7).v1, (0.01 / 30) / (Math.PI * 0.00635 ** 2), 1e-12); close(hose(10, 30, 6.35).v2 / hose(10, 30, 6.35).v1, 4, 1e-12);
+    const r = venturi(0.3, 25, 12.5);
+    close(r.v2, 0.0003 / (Math.PI * 0.00625 ** 2), 1e-12); close(r.dp, 0.5 * RHO_WATER * (r.v2 ** 2 - r.v1 ** 2), 1e-9); close(r.dp, 2796.3, 0.1);
+    close(r.dh * 100, 28.643, 1e-3); close(r.flowFromDh * 1000, 0.3, 1e-12);
+    close(atomizer(20, 2, RHO_WATER).dp, 240.8, 1e-9); close(atomizer(20, 2, RHO_WATER).rise * 100, 2.4667, 1e-4);
   } },
 ];
 

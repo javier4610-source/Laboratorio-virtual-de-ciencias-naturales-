@@ -73,3 +73,34 @@ test('gravitacion-orbitas: fuerza Tierra–Luna, órbita con áreas iguales, pla
   await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
   await a11yAndMobile(page, 'gravitacion-orbitas');
 });
+
+test('fluidos-bernoulli: continuidad en la manguera, Venturi con piezómetros y atomizador', async ({ page }) => {
+  test.setTimeout(90_000);
+  await openFree(page, 'fluidos-bernoulli');
+  await expect(ro(page, 'Rapidez en la boquilla v₂ = Q/A₂')).toContainText('2,63 m/s');
+  await setSlider(page, 'Diámetro de la boquilla', 'mm', '6,35');
+  // Valor dorado: la mitad del diámetro → cuatro veces la rapidez (10,53 m/s).
+  await expect(ro(page, 'Rapidez en la boquilla v₂ = Q/A₂')).toContainText('10,53 m/s');
+  await page.getByRole('button', { name: 'Guardar la boquilla en la tabla' }).click();
+  await saved(page, 1);
+  await setSlider(page, 'Tiempo para llenar el balde', 's', '10');
+  await setSlider(page, 'Diámetro de la boquilla', 'mm', '2');
+  await expect(cond(page, 'pide más presión')).toContainText('Cómo corregirlo');
+  await station(page, 'Tubo de Venturi');
+  // Valor dorado: Venturi 25/12,5 mm con 0,3 L/s → Δp = 2796 Pa y Δh = 28,6 cm.
+  await expect(ro(page, 'Caída de presión Δp = ½ρ(v₂² − v₁²)')).toContainText('2.796 Pa');
+  await expect(ro(page, 'Desnivel Δh = (v₂² − v₁²)/(2g)')).toContainText('28,6 cm');
+  await expect(ro(page, 'Caudal calculado con Δh (medidor)')).toContainText('0,300 L/s');
+  await page.getByRole('button', { name: 'Guardar el Venturi en la tabla' }).click();
+  await saved(page, 1);
+  await setSlider(page, 'Caudal de agua', 'L/s', '1');
+  await setSlider(page, 'Diámetro de la garganta', 'mm', '8');
+  await expect(cond(page, 'por debajo de la atmosférica')).toContainText('Cómo corregirlo: Baja el caudal');
+  await station(page, 'Atomizador');
+  await expect(ro(page, 'Altura que sube el agua')).toContainText('2,47 cm');
+  await page.getByRole('button', { name: 'Guardar el atomizador en la tabla' }).click();
+  await saved(page, 1);
+  await page.getByRole('group', { name: /Tu respuesta: Donde el tubo se angosta/ }).getByRole('button', { name: 'Es falso' }).click();
+  await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
+  await a11yAndMobile(page, 'fluidos-bernoulli');
+});

@@ -3,6 +3,48 @@ import {
   AU_PER_YEAR_KMS, findPair, forceConditions, G_CONST, geostationaryAltitude, gravForce, integrateOrbit, keplerPeriod, keplerTable, M_EARTH, MU_SUN_AU,
   orbitAt, orbitConditions, PLANETS, R_EARTH_MEAN, satellitePeriod, surfaceGravity, visViva,
 } from '../../src/models/gravitation';
+import { atomizer, G, hose, hoseConditions, minAirSpeed, RHO_ETHANOL, RHO_WATER, venturi, venturiConditions } from '../../src/models/bernoulli';
+
+describe('continuidad y Bernoulli (fluido ideal)', () => {
+  it('continuidad: 10 L en 30 s por una manguera de ½ in y la boquilla de la mitad del diámetro cuadruplica la rapidez', () => {
+    const h = hose(10, 30, 12.7);
+    expect(h.Q * 1000).toBeCloseTo(0.3333, 4);
+    expect(h.v1).toBeCloseTo(2.631, 3);
+    const n = hose(10, 30, 6.35);
+    expect(n.v2 / n.v1).toBeCloseTo(4, 12);
+    expect(n.v2).toBeCloseTo(10.525, 3);
+    expect(n.A2 * n.v2).toBeCloseTo(n.A1 * n.v1, 15);
+    expect(hoseConditions(hose(10, 10, 2))[0].fix).toContain('boquilla más ancha');
+    expect(() => hose(10, 30, 20)).toThrow(RangeError);
+  });
+  it('Venturi 25/12,5 mm con 0,3 L/s: Δp = 2796 Pa, Δh = 28,6 cm, la energía se conserva y el medidor devuelve el caudal', () => {
+    const r = venturi(0.3, 25, 12.5);
+    expect(r.v1).toBeCloseTo(0.6112, 4);
+    expect(r.v2).toBeCloseTo(2.4446, 4);
+    expect(r.dp).toBeCloseTo(2796.3, 1);
+    expect(r.dh * 100).toBeCloseTo(28.64, 2);
+    expect(r.energy2).toBeCloseTo(r.energy1, 9);
+    expect(r.flowFromDh * 1000).toBeCloseTo(0.3, 12);
+    expect(r.dp).toBeCloseTo(RHO_WATER * G * r.dh, 9);
+    expect(r.re2).toBeGreaterThan(4000);
+    expect(venturiConditions(r).map((c) => c.level)).toEqual(['nota']);
+    // Garganta igual a la entrada: no hay caída.
+    expect(venturi(0.3, 25, 25).dh).toBeCloseTo(0, 15);
+    const vac = venturiConditions(venturi(1, 25, 8));
+    expect(vac[0].level).toBe('invalido');
+    expect(vac[0].fix).toContain('Baja el caudal');
+  });
+  it('atomizador: aire a 20 m/s sube el agua 2,47 cm y el etanol 3,12 cm; rapidez mínima para un pitillo de 2 cm', () => {
+    const w = atomizer(20, 2, RHO_WATER);
+    expect(w.dp).toBeCloseTo(240.8, 1);
+    expect(w.rise * 100).toBeCloseTo(2.467, 3);
+    expect(w.sprays).toBe(true);
+    expect(atomizer(20, 2, RHO_ETHANOL).rise * 100).toBeCloseTo(3.12, 2);
+    const vmin = minAirSpeed(2, RHO_WATER);
+    expect(atomizer(vmin, 2, RHO_WATER).rise * 100).toBeCloseTo(2, 9);
+    expect(atomizer(vmin * 0.99, 2, RHO_WATER).sprays).toBe(false);
+  });
+});
 
 describe('gravitación universal y leyes de Kepler', () => {
   it('ley de Newton: fuerza Tierra–Luna, peso de 50 kg y la ley del inverso del cuadrado', () => {

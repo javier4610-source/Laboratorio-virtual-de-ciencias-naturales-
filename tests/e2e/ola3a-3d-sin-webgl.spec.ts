@@ -37,6 +37,10 @@ test('ola 3a sin WebGL: respaldo SVG en las cuatro prácticas y sin descargar th
   await openFree(page, 'gravitacion-orbitas');
   await fallbackChecks(page, 'grav', 'gravitacion-orbitas');
   await expect(figureOf(page, 'grav').locator('svg text', { hasText: /^área 1$/ })).toBeVisible();
+
+  await openFree(page, 'fluidos-bernoulli');
+  await fallbackChecks(page, 'ven', 'fluidos-bernoulli');
+  await expect(figureOf(page, 'ven').locator('svg text', { hasText: /^h₂$/ })).toBeVisible();
   expect(loaded, 'three.js no se descarga sin WebGL').toEqual([]);
 });
 

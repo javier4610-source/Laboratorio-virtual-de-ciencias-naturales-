@@ -92,3 +92,21 @@ test('gravitacion-orbitas 3D: el planeta recorre la órbita integrada, la veloci
   expect(await description(v)).toBe(paused);
   await shots(page, () => figureOf(page, 'grav'), 'gravitacion-3d');
 });
+
+test('fluidos-bernoulli 3D: el Venturi sigue el caudal y la garganta, y la columna de la garganta baja', async ({ page }) => {
+  await openFree(page, 'fluidos-bernoulli');
+  await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Tubo de Venturi', exact: true }).click();
+  await waitEngine(page, 'ven', 'disponible');
+  const v = view(page, 'ven');
+  expect(await description(v)).toContain('Δh = 28,6 cm');
+  await keyboardAndTheme(page, 'ven', 'fluidos-bernoulli 3D');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(figureOf(page, 'ven').locator('.scene3d-label', { hasText: 'h₂' })).toBeVisible();
+  await shots(page, () => figureOf(page, 'ven'), 'bernoulli-3d');
+  const before = await pixels(v);
+  await setSlider(page, 'Caudal de agua', 'L/s', '0,1');
+  await expect.poll(() => description(v)).toContain('Δh = 3,2 cm');
+  expect((await pixels(v)).uri).not.toBe(before.uri);
+  await setSlider(page, 'Diámetro de la garganta', 'mm', '25');
+  await expect.poll(() => description(v)).toContain('Δh = 0,0 cm');
+});

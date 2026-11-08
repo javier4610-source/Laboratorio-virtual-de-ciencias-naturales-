@@ -1038,6 +1038,19 @@ const SCENES: Record<string, () => ReactNode> = {
       <Arrow x1={270} y1={54} x2={240} y2={66} color="var(--bad)" w={2.4} />
     </>
   ),
+  'fluidos-bernoulli': () => (
+    <>
+      <path d="M20 86 H110 L140 98 H180 L210 86 H300 V126 H210 L180 114 H140 L110 126 H20 Z" fill="var(--info)" opacity="0.22" stroke={INK} strokeWidth="1.4" />
+      {[30, 52, 74, 96, 140, 180, 224, 246, 268].map((x) => <circle key={x} cx={x} cy="106" r="3.2" fill="var(--series-1)" />)}
+      <rect x="56" y="22" width="8" height="64" rx="2" fill="none" stroke={INK} strokeWidth="1.2" />
+      <rect x="57" y="34" width="6" height="52" fill="var(--series-2)" />
+      <rect x="156" y="22" width="8" height="76" rx="2" fill="none" stroke={INK} strokeWidth="1.2" />
+      <rect x="157" y="66" width="6" height="32" fill="var(--series-2)" />
+      <rect x="256" y="22" width="8" height="64" rx="2" fill="none" stroke={INK} strokeWidth="1.2" />
+      <rect x="257" y="34" width="6" height="52" fill="var(--series-2)" />
+      <Arrow x1={120} y1={140} x2={200} y2={140} color="var(--data)" w={2.4} />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

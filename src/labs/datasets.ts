@@ -2183,4 +2183,39 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'fluidos-bernoulli': [
+    {
+      id: 'continuidad', label: 'Manguera y continuidad', defaultX: 'area', defaultY: 'rapidez',
+      columns: [
+        { key: 'tiempo', label: 'Tiempo para llenar 10 L', unit: 's', numeric: true, decimals: 0, input: true },
+        { key: 'boquilla', label: 'Diámetro de la boquilla', unit: 'mm', numeric: true, decimals: 2, input: true },
+        { key: 'caudal', label: 'Caudal Q', unit: 'L/s', numeric: true, decimals: 4 },
+        { key: 'area', label: 'Área de la boquilla', unit: 'mm²', numeric: true, decimals: 2 },
+        { key: 'rapidez', label: 'Rapidez en la boquilla', unit: 'm/s', numeric: true, decimals: 3 },
+      ],
+    },
+    {
+      id: 'venturi', label: 'Tubo de Venturi', defaultX: 'v2cuad', defaultY: 'dh',
+      columns: [
+        { key: 'caudal', label: 'Caudal Q', unit: 'L/s', numeric: true, decimals: 2, input: true },
+        { key: 'garganta', label: 'Diámetro de la garganta', unit: 'mm', numeric: true, decimals: 1, input: true },
+        { key: 'v1', label: 'Rapidez en la entrada v₁', unit: 'm/s', numeric: true, decimals: 3 },
+        { key: 'v2', label: 'Rapidez en la garganta v₂', unit: 'm/s', numeric: true, decimals: 3 },
+        { key: 'v2cuad', label: 'v₂² − v₁²', unit: 'm²/s²', numeric: true, decimals: 3 },
+        { key: 'dp', label: 'Caída de presión Δp', unit: 'Pa', numeric: true, decimals: 1 },
+        { key: 'dh', label: 'Desnivel de los piezómetros Δh', unit: 'cm', numeric: true, decimals: 2 },
+      ],
+    },
+    {
+      id: 'atomizador', label: 'Atomizador', defaultX: 'aire', defaultY: 'sube',
+      columns: [
+        { key: 'liquido', label: 'Líquido', numeric: false, input: true },
+        { key: 'aire', label: 'Rapidez del aire', unit: 'm/s', numeric: true, decimals: 1, input: true },
+        { key: 'pitillo', label: 'Altura de la boca del pitillo', unit: 'cm', numeric: true, decimals: 1, input: true },
+        { key: 'dp', label: 'Baja de presión ½ρv²', unit: 'Pa', numeric: true, decimals: 1 },
+        { key: 'sube', label: 'Altura que sube el líquido', unit: 'cm', numeric: true, decimals: 3 },
+        { key: 'atomiza', label: '¿Se atomiza?', numeric: false },
+      ],
+    },
+  ],
 };

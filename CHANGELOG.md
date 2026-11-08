@@ -7,6 +7,41 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+Prácticas nuevas, ola 3a (86 prácticas): gravitación y órbitas, fluidos en movimiento, termoquímica y ciclo del carbono.
+
+### Añadido
+- **Ola 3a de prácticas nuevas** (cuatro de las nueve de prioridad 3 del análisis curricular; 86 prácticas en total), con
+  el mismo patrón de la ola 2b: modelo en `src/models` con pruebas y caso dorado, conjuntos de datos con relaciones, cinco
+  preguntas tipo Saber originales y una de transferencia en el banco, ideas erróneas, avisos con «Cómo corregirlo»,
+  procedencia, vínculo curricular (formulación propia, por verificar), miniatura, guía en PDF y vista 3D con respaldo SVG:
+  - `gravitacion-orbitas` (10.º, física): ley de Newton con G de CODATA 2018 (Tierra–Luna 1,98 × 10²⁰ N, inverso del
+    cuadrado); órbita integrada con Runge–Kutta de 4.º orden desde el perihelio con la vis-viva, que conserva la energía y
+    el momento angular (< 10⁻⁸) y barre áreas iguales que suman πab; tercera ley con las fichas de la NASA de los ocho
+    planetas (Mercurio a Júpiter a menos de 0,1 %; Saturno, Urano y Neptuno a menos de 0,6 %, explicado); satélites
+    (Estación Espacial a 420 km: 93,0 min; geoestacionario a 35 786 km con el GM del IERS); barra común de simulación;
+    3D: órbita inclinada con el Sol en el foco, velocidad, fuerza ∝ 1/r² y las áreas del perihelio y el afelio rellenas.
+  - `fluidos-bernoulli` (10.º, física): fluido ideal declarado, agua a 20 °C (ρ y μ del CRC) y g = 9,78 m/s²; manguera
+    con continuidad, tubo de Venturi 25/12,5 mm con tres piezómetros (0,3 L/s: Δp = 2796 Pa, Δh = 28,6 cm), medidor de
+    caudal, número de Reynolds y aviso de presión bajo la atmosférica; atomizador; 3D: tubo de Venturi con trazadores a
+    intervalos iguales de tiempo (separación ∝ v), flechas de velocidad y columnas de presión.
+  - `termoquimica` (10.º, química): calorímetro de vaso con q = (m·c + C_cal)·ΔT y ΔH = −q/n; disolución de NaOH, NH₄NO₃,
+    CaCl₂ y NaCl (CRC, dilución infinita); neutralización −55,8 kJ/mol (valores clave de CODATA); ley de Hess con NaOH
+    sólido en HCl; curva de temperatura cada 10 s con pérdidas de Newton ilustrativas y extrapolación a t = 0; barra común
+    de simulación; 3D: calorímetro en corte con iones del sistema, agua del entorno, termómetro y flecha de energía.
+  - `ciclo-del-carbono` (7.º, ambiental): reservorios redondeados del IPCC AR5 (fig. 6.1, por contrastar con la fig.
+    5.12 del AR6), atmósfera con 2,124 PgC/ppm, balance 2010–2019 del IPCC AR6 (tabla 5.1: 46 % queda en el aire) y un
+    modelo de cajas propio hasta 2100, lineal y declarado optimista; 3D: paisaje con cubos de volumen proporcional a cada
+    reservorio y flechas con área proporcional a cada flujo.
+  Pruebas: `tests/unit/ola3aModelos.test.ts`, `tests/unit/escenas3dOla3a.test.ts`, casos dorados y
+  `tests/e2e/ola3a*.spec.ts` (flujo, valor dorado en la interfaz, 3D con y sin WebGL, axe claro/oscuro, 390 px).
+- **Kit 3D**: rótulo corto opcional `tag` en las primitivas: el rótulo superpuesto usa ese texto y la leyenda conserva
+  `label`; `''` deja el elemento solo en la leyenda. Las escenas que no lo usan no cambian.
+
+### Corregido
+- **Efecto invernadero 3D**: a 1280 px los nueve rótulos se encimaban entre sí y sobre las flechas del polo. Ahora las
+  seis flechas llevan solo su número (la leyenda dice «1 · luz reflejada»…), están más separadas, y la Tierra y la capa se
+  nombran solo en la leyenda.
+
 ## [2.24.0] · 2026-11-08
 
 Prácticas nuevas, ola 2b (82 prácticas): clasificación de los seres vivos, homeostasis de la glucosa y efecto invernadero.

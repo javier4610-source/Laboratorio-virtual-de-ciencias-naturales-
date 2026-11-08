@@ -66,6 +66,10 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] Sin publicar · Ola 3a de prácticas nuevas (`gravitacion-orbitas`, `fluidos-bernoulli`, `termoquimica`,
+  `ciclo-del-carbono`), cada una con su vista 3D (86 prácticas): cuatro de las nueve de prioridad 3. Rótulos de la vista
+  3D de `efecto-invernadero` sin amontonarse (rótulo corto opcional `tag` en el kit). Siguen las otras cinco de prioridad
+  3 (ola nuevas-3b).
 - [x] v2.24.0 · Ola 2b de prácticas nuevas (`clasificacion-seres-vivos`, `homeostasis-glucosa`,
   `efecto-invernadero`), cada una con su vista 3D (82 prácticas): quedan construidas todas las prácticas de prioridad 2
   del análisis curricular. La estructura de la insulina (3I40) pasa a la segunda fase del service worker. Siguen las de

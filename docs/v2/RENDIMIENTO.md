@@ -139,6 +139,12 @@ fase los seis bloques del banco avanzado (`bloqueA`–`bloqueF`, ≈ 580 KB que 
 Resultado: 5 990 KB (5,9 MB) al instalar y 18 archivos (5 580 KB) en segundo plano; margen ≈ 560 KB. Sin conexión,
 el banco avanzado queda disponible cuando termina la segunda fase (el resto del laboratorio, desde la instalación).
 
+**Ola 3a (sin publicar, 2026-11-08).** Las cuatro prácticas nuevas suben la precarga del service worker de 5 990 a
+6 152 KB (6,01 de 6,4 MB; ≈ 40 KB por práctica) sin mover nada a la segunda fase: el banco avanzado ya está allí desde la
+versión 2.24.0. El panel docente con las fichas completas pasa a 1 175,4 KB (límite 1 250) y la ruta del banco Saber 11 a
+195,4 KB (límite 200): es el presupuesto más justo, porque el banco crece con cada práctica nueva; la
+próxima ola tendrá que cargar las preguntas de transferencia por separado o subir el límite con su razón.
+
 ## 4. Cambios
 
 1. **Banco Saber 11 sin el currículo completo** (`src/pages/BankPage.tsx`). El título de la práctica relacionada sale

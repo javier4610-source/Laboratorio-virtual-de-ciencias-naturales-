@@ -103,6 +103,7 @@
     },
     {
       "id": "termoquimica",
+      "built": "ola 3a (2026-11-08)",
       "grade": 10,
       "area": "quimica",
       "title": "Termoquímica: calor de disolución y de neutralización",
@@ -144,6 +145,7 @@
     },
     {
       "id": "gravitacion-orbitas",
+      "built": "ola 3a (2026-11-08)",
       "grade": 10,
       "area": "fisica",
       "title": "Gravitación universal, órbitas y leyes de Kepler",
@@ -185,6 +187,7 @@
     },
     {
       "id": "fluidos-bernoulli",
+      "built": "ola 3a (2026-11-08)",
       "grade": 10,
       "area": "fisica",
       "title": "Fluidos en movimiento: continuidad y Bernoulli",
@@ -347,6 +350,7 @@
     },
     {
       "id": "ciclo-del-carbono",
+      "built": "ola 3a (2026-11-08)",
       "grade": 7,
       "area": "ambiental",
       "title": "Ciclo del carbono: reservorios y flujos",

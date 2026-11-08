@@ -184,7 +184,7 @@ está por validar).
 | 7.º | «Membrana celular, difusión y ósmosis» | `osmosis` | Cubierto |
 | 7.º | «Nutrición, circulación, respiración y excreción» | `sistema-circulatorio` (ola 1b) | Parcial (circulación cubierta en la ola 1b) → `nutricion-digestion` |
 | 7.º | «Reproducción celular: introducción a mitosis y meiosis» | `mitosis`, `meiosis` (ola 1b) | Cubierto en la ola 1b |
-| 7.º | «Relaciones ecológicas y ciclos biogeoquímicos» | `descomposicion` (`ecosistema`, `redes` en 6.º) | Parcial → `ciclo-del-carbono` |
+| 7.º | «Relaciones ecológicas y ciclos biogeoquímicos» | `descomposicion`, `ciclo-del-carbono` (ola 3a) (`ecosistema`, `redes` en 6.º) | Cubierto en la ola 3a (ciclo del carbono) |
 | 7.º | «Estructura del átomo y tabla periódica» | — | **No cubierto** → `modelos-atomicos`, `tabla-periodica` (construidas, ola 1a) |
 | 7.º | «Enlaces químicos introductorios» | — | **Cubierto en la ola 1a** → `enlace-quimico` |
 | 7.º | «Densidad, presión, temperatura y transferencia de calor» | `presion`, `flotacion`, `conduccion` | Cubierto |
@@ -210,8 +210,8 @@ está por validar).
 | 10.º | «Fisiología humana» | `homeostasis-glucosa` (ola 2b) | Parcial (homeostasis de la glucosa en la ola 2b) |
 | 10.º | «Configuración electrónica y periodicidad química» | `configuracion-electronica` (ola 1b) | Cubierto en la ola 1b |
 | 10.º | «Soluciones, concentración, molaridad y gases» | `soluciones`, `gases` | Cubierto |
-| 10.º | «Reacciones químicas y relaciones cuantitativas» | `cinetica`, `oxidos-hidroxidos`, `acidos-sales` | Cubierto → `termoquimica` amplía |
-| 10.º | «Movimiento, dinámica, energía y conservación» | `proyectiles`, `choques`, `energia`, `pendulo` | Parcial (sin movimiento circular ni gravitación) |
+| 10.º | «Reacciones químicas y relaciones cuantitativas» | `cinetica`, `oxidos-hidroxidos`, `acidos-sales`, `termoquimica` (ola 3a) | Cubierto; la ola 3a agrega la energía de las reacciones |
+| 10.º | «Movimiento, dinámica, energía y conservación» | `proyectiles`, `choques`, `energia`, `pendulo`, `movimiento-circular` (ola 2a), `gravitacion-orbitas` y `fluidos-bernoulli` (ola 3a) | Cubierto en las olas 2a y 3a (movimiento circular, gravitación y fluidos en movimiento) |
 | 11.º | «Genética molecular y regulación de la expresión génica» | `expresion`, `rastreo`, `secuencias`, `proteinas` | Cubierto |
 | 11.º | «Biotecnología, ingeniería genética y bioética» | `rastreo`, `secuencias` | Parcial |
 | 11.º | «Evolución y genética de poblaciones» | `popgen` | Cubierto |
@@ -257,7 +257,7 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | P1 | `pila-electroquimica` | 11.º | Oxidación-reducción: pila de Daniell y electrólisis | nuevas-1 · **construida (ola 1b)** |
 | P2 | `estados-de-la-materia` | 6.º | Estados de la materia y curva de calentamiento del agua | nuevas-2 · **construida (ola 2a)** |
 | P2 | `cambios-quimicos` | 7.º | Cambios físicos y químicos: evidencias de una reacción | nuevas-2 · **construida (ola 2a)** |
-| P3 | `termoquimica` | 10.º | Termoquímica: calor de disolución y de neutralización | nuevas-3 |
+| P3 | `termoquimica` | 10.º | Termoquímica: calor de disolución y de neutralización | nuevas-3 · **construida (ola 3a)** |
 
 **`modelos-atomicos` (construida en la ola 1a; ver `src/curriculum/practices/modelos-atomicos.ts`) · Modelos atómicos: de Dalton a Bohr con el experimento de Rutherford** (7.º, P1)
 
@@ -308,7 +308,7 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** Bicarbonato + ácido acético → CO₂ (estequiometría y gas ideal); CaCl₂ + Na₂CO₃ → CaCO₃↓; solubilidades de tablas (CRC).
 - **Vista 3D (obligatoria):** Reaction3D del kit químico: los mismos átomos se reorganizan en sustancias nuevas, frente a un cambio físico (disolver o fundir) en el que las moléculas no cambian; vaso 3D con burbujas o precipitado sincronizados.
 
-**`termoquimica` · Termoquímica: calor de disolución y de neutralización** (10.º, P3)
+**`termoquimica` (construida en la ola 3a; calorímetro de vaso con pérdidas de Newton ilustrativas y extrapolación; ΔH de neutralización −55,8 kJ/mol de los valores clave de CODATA y de disolución a dilución infinita del CRC; la ley de Hess con NaOH sólido en HCl; la vista 3D usa partículas del kit en lugar de iones que se hidratan uno a uno) · Termoquímica: calor de disolución y de neutralización** (10.º, P3)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos químicos): energía en los cambios químicos (formulación propia, por verificar con el documento oficial).
 - **Meta de aprendizaje:** Mide con un calorímetro de vaso el calor de disolución de NaOH y NH₄NO₃ y el de neutralización, distingue procesos exotérmicos y endotérmicos y calcula ΔH por mol.
@@ -323,8 +323,8 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | P2 | `magnetismo-imanes` | 7.º | Imanes, brújula y campo magnético | nuevas-2 · **construida (ola 2a)** |
 | P2 | `lentes` | 9.º | Lentes, formación de imágenes y el ojo humano | nuevas-2 · **construida (ola 2a)** |
 | P2 | `movimiento-circular` | 10.º | Movimiento circular uniforme y fuerza centrípeta | nuevas-2 · **construida (ola 2a)** |
-| P3 | `gravitacion-orbitas` | 10.º | Gravitación universal, órbitas y leyes de Kepler | nuevas-3 |
-| P3 | `fluidos-bernoulli` | 10.º | Fluidos en movimiento: continuidad y Bernoulli | nuevas-3 |
+| P3 | `gravitacion-orbitas` | 10.º | Gravitación universal, órbitas y leyes de Kepler | nuevas-3 · **construida (ola 3a)** |
+| P3 | `fluidos-bernoulli` | 10.º | Fluidos en movimiento: continuidad y Bernoulli | nuevas-3 · **construida (ola 3a)** |
 | P3 | `termodinamica` | 11.º | Primera ley de la termodinámica y máquinas térmicas | nuevas-3 |
 | P3 | `efecto-doppler` | 11.º | Efecto Doppler y barrera del sonido | nuevas-3 |
 
@@ -356,14 +356,14 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** v = 2πr/T, a_c = v²/r = ω²·r, F_c = m·v²/r; validación con casos calculados a mano.
 - **Vista 3D (obligatoria):** Plataforma giratoria 3D con un objeto sujeto a una cuerda y un dinamómetro; vectores v (tangente) y a_c (hacia el centro); al cortar la cuerda el objeto sale por la tangente. Cámara desde arriba y desde un lado.
 
-**`gravitacion-orbitas` · Gravitación universal, órbitas y leyes de Kepler** (10.º, P3)
+**`gravitacion-orbitas` (construida en la ola 3a; órbita integrada con RK4 que conserva la energía y el momento angular, tercera ley con las fichas de la NASA de los ocho planetas y satélites de la Tierra; la vista 3D muestra el Sol y un planeta, no el sistema Tierra–satélite) · Gravitación universal, órbitas y leyes de Kepler** (10.º, P3)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos físicos): fuerza gravitacional y movimiento de los astros (formulación propia, por verificar con el documento oficial).
 - **Meta de aprendizaje:** Relaciona el período de una órbita con su radio (tercera ley de Kepler), verifica con datos reales de los planetas y calcula la altura de un satélite geoestacionario.
 - **Modelo científico y validación:** F = G·m₁·m₂/r²; T² = 4π²·a³/(G·M); datos de la NASA Planetary Fact Sheet con fecha de consulta; integración numérica de la órbita para las áreas barridas.
 - **Vista 3D (obligatoria):** Sistema Sol–planeta y Tierra–satélite en 3D con órbitas elípticas, áreas barridas iguales coloreadas y vectores de velocidad y fuerza; inclinación de la órbita visible al girar la cámara.
 
-**`fluidos-bernoulli` · Fluidos en movimiento: continuidad y Bernoulli** (10.º, P3)
+**`fluidos-bernoulli` (construida en la ola 3a; fluido ideal con agua a 20 °C del CRC, manguera, Venturi con tres piezómetros y medidor de caudal, y atomizador en lugar de la sustentación de un ala) · Fluidos en movimiento: continuidad y Bernoulli** (10.º, P3)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos físicos): comportamiento de los fluidos (formulación propia, por verificar con el documento oficial).
 - **Meta de aprendizaje:** Comprueba con un tubo de Venturi que la rapidez aumenta y la presión disminuye en un estrechamiento, y explica la sustentación y el atomizador.
@@ -458,7 +458,7 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | Prioridad | id | Grado | Título | Ola |
 |---|---|---|---|---|
 | P2 | `efecto-invernadero` | 11.º | Balance de energía de la Tierra y efecto invernadero | nuevas-2 · **construida (ola 2b)** |
-| P3 | `ciclo-del-carbono` | 7.º | Ciclo del carbono: reservorios y flujos | nuevas-3 |
+| P3 | `ciclo-del-carbono` | 7.º | Ciclo del carbono: reservorios y flujos | nuevas-3 · **construida (ola 3a)** |
 
 **`efecto-invernadero` (construida en la ola 2b; más el forzamiento del CO₂ de Myhre, 1998, y la sensibilidad del IPCC AR6) · Balance de energía de la Tierra y efecto invernadero** (11.º, P2)
 
@@ -467,7 +467,7 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** Ley de Stefan–Boltzmann; T = [S·(1 − α)/(4·σ)]^¼ ≈ 255 K con S ≈ 1361 W/m² (Kopp y Lean, 2011) y α ≈ 0,30; modelo de una capa (Archer, Global Warming: Understanding the Forecast).
 - **Vista 3D (obligatoria):** Tierra 3D iluminada por el Sol: la sombra que proyecta es un disco (πR²) mientras la superficie que emite es la esfera (4πR²); de ahí el factor 4. Capa atmosférica 3D que absorbe y reemite infrarrojo.
 
-**`ciclo-del-carbono` · Ciclo del carbono: reservorios y flujos** (7.º, P3)
+**`ciclo-del-carbono` (construida en la ola 3a; balance 2010–2019 de la tabla 5.1 del IPCC AR6; los reservorios y flujos brutos son los redondeados de la figura 6.1 del AR5, pendientes de contrastar con la figura 5.12 del AR6; modelo de cajas propio, lineal y optimista) · Ciclo del carbono: reservorios y flujos** (7.º, P3)
 
 - **Anclaje:** EBC 6.º–7.º, entorno vivo y CTS: ciclos biogeoquímicos (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 7.º): «Relaciones ecológicas y ciclos biogeoquímicos».
 - **Meta de aprendizaje:** Representa el ciclo del carbono como reservorios y flujos, y predice qué cambia al aumentar la quema de combustibles o la deforestación.

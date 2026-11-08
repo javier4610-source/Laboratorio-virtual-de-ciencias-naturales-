@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.23.0] · 2026-11-08
+
+Lote 3D-5: vista 3D en ondas, sonido, óptica, interferencia, presión, flotación y densidad.
+
 ### Añadido
 - **Lote 3D-5 «ondas, luz y fluidos»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas `src/three`: tarjeta
   «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG sin WebGL, teclado,

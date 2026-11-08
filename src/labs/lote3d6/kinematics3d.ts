@@ -102,5 +102,5 @@ export function kinematicsScene(inp: KinematicsSceneInput): { items: SceneItem[]
     ? ` En la pared, los puntos de las fotos ${inp.acceleration > 0 ? 'se separan cada vez más a lo largo de la pista (cada vez recorre más en 0,5 s)' : inp.acceleration < 0 ? 'se juntan a lo largo de la pista (cada vez recorre menos en 0,5 s)' : 'quedan igual de separados (recorre lo mismo cada 0,5 s)'}.`
     : '';
   const description = `Ciclorruta recta de 50 m en 3D con el ciclista, la flecha v de su velocidad, la flecha a de la aceleración y, detrás, una pared con la gráfica posición–tiempo girada (la posición a lo largo de la pista y el tiempo hacia arriba). ${state}${wall}`;
-  return { items, extent: 27, target: [25, 3.5, -1], description, vLen: inp.v * kv, aLen: accelerating * A_SCALE };
+  return { items, extent: 18, target: [25, 3.5, -2], description, vLen: inp.v * kv, aLen: accelerating * A_SCALE };
 }

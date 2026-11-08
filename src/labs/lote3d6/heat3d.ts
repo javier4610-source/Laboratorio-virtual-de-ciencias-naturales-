@@ -17,7 +17,7 @@
 import { fmt } from '../../lib/format';
 import type { ContainerId } from '../../models/heat';
 import type { SceneItem, Vec3 } from '../../three/scene';
-import { cylinderPoints, hash01, tempColor } from './common';
+import { cylinderPoints, hash01, tempColor, TEMP_SCALE_TEXT } from './common';
 
 export const CUP_R = 4; // cm (radio interior; ≈ 450 mL en 9 cm)
 export const CUP_H = 9;
@@ -115,7 +115,7 @@ export function heatScene(inp: HeatSceneInput): { items: SceneItem[]; extent: nu
   const base = cylinderPoints(nW + nPoured, [0, 0, 0], r, 0.6, 1, 3);
   const inCup = (p: Vec3): Vec3 => [p[0], 0.6 + (top - 0.6) * ((p[1] - 0.6) / 0.4), p[2]];
   const waterPts = base.slice(0, nW).map((p, i) => { const j = jiggle(i, 5, ampW, tau); return [inCup(p)[0] + j[0], inCup(p)[1] + j[1], inCup(p)[2] + j[2]] as Vec3; });
-  items.push({ id: 'p-agua', kind: 'particles', points: waterPts, radius: 0.32, color: tempColor(inp.waterT), label: 'Partículas del agua del calorímetro' });
+  items.push({ id: 'p-agua', kind: 'particles', points: waterPts, radius: 0.42, color: tempColor(inp.waterT), label: 'Partículas del agua del calorímetro' });
   // Muestra.
   const sampleLabel = inp.isMetal ? `${inp.metalName}: partículas de su red` : 'Partículas del agua caliente';
   if (inp.isMetal) {
@@ -143,7 +143,7 @@ export function heatScene(inp: HeatSceneInput): { items: SceneItem[]; extent: nu
       ...base.slice(nW).map((p) => inCup(p)),
       ...inBath,
     ].map((p, i) => { const j = jiggle(i, 71, ampS, tau); return [p[0] + j[0], p[1] + j[1], p[2] + j[2]] as Vec3; });
-    if (pts.length) items.push({ id: 'p-muestra', kind: 'particles', points: pts, radius: 0.32, color: tempColor(inp.sampleT), label: sampleLabel });
+    if (pts.length) items.push({ id: 'p-muestra', kind: 'particles', points: pts, radius: 0.42, color: tempColor(inp.sampleT), label: sampleLabel });
     if (inp.transfer > 0.42 && inp.transfer < 0.75) items.push({ id: 'chorro', kind: 'rod', from: [-4, CUP_H + 5, 0], to: [-1.5, level, 0], radius: 0.35, color: '#7fbfe0', opacity: 0.6 });
   }
   // Flechas de calor (escala fija por corrida).
@@ -175,6 +175,6 @@ export function heatScene(inp: HeatSceneInput): { items: SceneItem[]; extent: nu
     : equilibrium
       ? `${inp.done ? 'Registro terminado' : `Tiempo ${fmt(inp.simT, 0)} s`}: la muestra y el agua ya tienen la misma temperatura (equilibrio térmico), así que no pasa calor entre ellas y las partículas tienen el mismo color y la misma agitación. El termómetro marca ${fmt(inp.lcd, 1)} °C${lenA > 0.05 ? `; el vaso sigue ${inp.toAir > 0 ? 'cediendo' : 'recibiendo'} un poco de calor ${inp.toAir > 0 ? 'al' : 'del'} aire del salón (${fmt(inp.ambient, 0)} °C)` : ''}.`
       : `Tiempo ${fmt(inp.simT, 0)} s: el termómetro marca ${fmt(inp.lcd, 1)} °C. Las partículas de ${who} están más ${inp.sampleT > inp.waterT ? 'calientes' : 'frías'} (color más ${inp.sampleT > inp.waterT ? 'rojo' : 'azul'}) y se agitan ${fmt(Math.abs(pct), 1)} % ${pct >= 0 ? 'más' : 'menos'} que las del agua del calorímetro; la flecha roja muestra el calor que pasa ${inp.toWater > 0 ? `de ${who} al agua` : `del agua a ${who}`}, y se acorta a medida que las temperaturas se acercan.`;
-  const description = `Calorímetro en 3D (${wall.name.toLowerCase()} con tapa, visto a través de la pared) sobre la mesa, con ${fmt(inp.waterMass, 0)} g de agua, el termómetro y el agitador; a la izquierda, la parrilla. ${state} La agitación de cada partícula es proporcional a la raíz cuadrada de su temperatura absoluta, y su color sigue la escala fija de 20 °C (azul) a 100 °C (rojo).`;
-  return { items, extent: 15, target: [-5, 5, 0], description, amps: { sample: ampS, water: ampW }, metalD };
+  const description = `Calorímetro en 3D (${wall.name.toLowerCase()} con tapa, visto a través de la pared) sobre la mesa, con ${fmt(inp.waterMass, 0)} g de agua, el termómetro y el agitador; a la izquierda, la parrilla. ${state} La agitación de cada partícula es proporcional a la raíz cuadrada de su temperatura absoluta, y su color sigue la escala fija (${TEMP_SCALE_TEXT}).`;
+  return { items, extent: 9.5, target: [-6, 5, 0], description, amps: { sample: ampS, water: ampW }, metalD };
 }

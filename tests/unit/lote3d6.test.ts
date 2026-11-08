@@ -25,8 +25,8 @@ describe('piezas comunes', () => {
     const pts = cylinderPoints(50, [1, 0, 2], 0.5, 1, 3, 9);
     for (const p of pts) { expect(Math.hypot(p[0] - 1, p[2] - 2)).toBeLessThanOrEqual(0.5 + 1e-12); expect(p[1]).toBeGreaterThanOrEqual(1); expect(p[1]).toBeLessThanOrEqual(3); }
     expect(tempColor(5)).toBe(TEMP_STOPS[0][1]);
-    expect(tempColor(100)).toBe(TEMP_STOPS[3][1]);
-    expect(tempColor(150)).toBe(TEMP_STOPS[3][1]);
+    expect(tempColor(100)).toBe(TEMP_STOPS[4][1]);
+    expect(tempColor(150)).toBe(TEMP_STOPS[4][1]);
   });
 });
 

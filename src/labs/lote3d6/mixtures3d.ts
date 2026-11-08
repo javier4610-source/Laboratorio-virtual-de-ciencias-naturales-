@@ -24,7 +24,7 @@ const BX = -20, BEAKER_H = 11, FLOOR = 0.3;
 /** Fracciones que se dibujan (las últimas); la descripción las nombra todas. */
 export const MAX_SLOTS = 8;
 
-const P_RADIUS: Record<ComponentId, number> = { hierro: 0.13, arena: 0.13, sal: 0.1, aserrin: 0.17, aceite: 0.15 };
+const P_RADIUS: Record<ComponentId, number> = { hierro: 0.2, arena: 0.2, sal: 0.15, aserrin: 0.26, aceite: 0.22 };
 const SHORT: Record<ComponentId, string> = { hierro: 'hierro', arena: 'arena', sal: 'sal', aserrin: 'aserrín', aceite: 'aceite' };
 const TOOL: Record<MethodId, string> = { iman: 'Imán', filtracion: 'Papel filtro', decantacion: 'Embudo de decantación', evaporacion: 'Cápsula de evaporación', agua: 'Agua' };
 
@@ -135,5 +135,5 @@ export function mixturesScene({ state, last }: MixturesSceneInput): { items: Sce
       ? `Fracciones separadas (${state.separated.length}${state.separated.length > MAX_SLOTS ? `; se dibujan las últimas ${MAX_SLOTS}` : ''}): ${fractions.join('; ')}.`
       : 'Aún no se ha separado nada: aplica una técnica y su herramienta aparecerá con lo que separó.')
     + ` Cada partícula representa ${fmt(1 / PER_G, 2)} g.`;
-  return { items, extent: 20, target: [-4, 4, -3], description, counts };
+  return { items, extent: 13, target: [-6, 4, -3], description, counts };
 }

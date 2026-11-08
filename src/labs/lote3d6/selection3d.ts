@@ -58,7 +58,7 @@ export function selectionScene(inp: SelectionSceneInput): { items: SceneItem[]; 
     const p = inp.positions[i] ?? { x: 0.5, y: 0.5, angle: 0 };
     const along = Math.round(p.angle / 90) % 2 === 0;
     const c: Vec3 = [-W / 2 + 1 + p.x * (W - 2), 0.2, -D / 2 + 1 + p.y * (D - 2)];
-    items.push({ id: `escarabajo-${i}`, kind: 'ellipsoid', center: c, radii: along ? [0.42, 0.22, 0.3] : [0.3, 0.22, 0.42], color: pigmentHex(z), ...(i === 0 ? { label: 'Escarabajos (muestra de 40)' } : {}) });
+    items.push({ id: `escarabajo-${i}`, kind: 'ellipsoid', center: c, radii: along ? [0.56, 0.28, 0.4] : [0.4, 0.28, 0.56], color: pigmentHex(z), ...(i === 0 ? { label: 'Escarabajos (muestra de 40)' } : {}) });
   });
   // Columnas por clase de color: cuántos hay y cuántos se espera que escapen.
   const counts = classCounts(inp.sample);
@@ -79,5 +79,5 @@ export function selectionScene(inp: SelectionSceneInput): { items: SceneItem[]; 
     : ' Avanza una generación para ver, en cada columna, cuántos escaparían de las aves.';
   const description = `Suelo de ${inp.backgroundName.toLowerCase()} en 3D (color ${fmt(inp.B, 2)} de 0 claro a 1 oscuro), visto desde la rama del ave, con la misma muestra de 40 escarabajos del banco en la generación ${inp.generation}: ${light} claros, ${mid} intermedios y ${dark} oscuros. `
     + `${contrast < 0.1 ? 'La mayoría se confunde con el suelo: el ave los ve poco.' : `La mayoría es más ${inp.mean < inp.B ? 'clara' : 'oscura'} que el suelo: resaltan y el ave los ve con facilidad.`} Al lado, columnas con cuántos hay en cada clase de color.${survText}`;
-  return { items, extent: 16, target: [0, 2, 2], description, counts, survivors };
+  return { items, extent: 12, target: [0, 1.5, 2], description, counts, survivors };
 }

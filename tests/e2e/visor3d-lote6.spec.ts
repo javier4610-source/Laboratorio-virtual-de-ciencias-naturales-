@@ -260,7 +260,7 @@ test.describe('sin WebGL', () => {
     await expect.poll(() => description(v)).toMatch(/Cayeron \d+ de 9 tachuelas/);
     await card.getByLabel('Comparar con otra varilla (vista 3D)').selectOption('madera');
     await expect.poll(() => description(v)).toContain('una varilla de madera para comparar');
-    await expect.poll(() => description(v)).toContain('la varilla de madera (comparación) sigue casi toda a la temperatura del salón');
+    await expect.poll(() => description(v)).toContain('en la varilla de madera (comparación), más de 40 °C llega hasta 1 cm');
   });
 
   test('movimiento: en ida y vuelta el camino crece y el desplazamiento vuelve a 0', async ({ page }) => {

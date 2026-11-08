@@ -22,7 +22,7 @@ export default function ConduccionView3D({ rodId, rodShort, solution, cover, bat
       </div>
       <Scene3D idPrefix="con3d" title="Varilla con su mapa de temperatura en 3D" items={scene.items} extent={scene.extent} target={scene.target}
         description={scene.description} height={340} initialOrbit={{ yaw: 0.25, pitch: 0.42 }} status="modelo"
-        statusNote="Color de cada centímetro = temperatura del modelo (ecuación de la aleta) en el mismo instante del banco, con una escala fija (20 °C azul, 45 °C amarillo, 70 °C naranja, 100 °C rojo); caída de las tachuelas y lecturas de los termopares: las del banco. La varilla de comparación es otra corrida del mismo modelo. Dibujo: grosor de la varilla (×1,5), baño, mechero y formas." />
+        statusNote="Color de cada centímetro = temperatura del modelo (ecuación de la aleta) en el mismo instante del banco, con una escala fija (20 °C azul, 40 °C turquesa, 55 °C amarillo, 75 °C naranja, 100 °C rojo); caída de las tachuelas y lecturas de los termopares: las del banco. La varilla de comparación es otra corrida del mismo modelo. Dibujo: grosor de la varilla (×1,5), baño, mechero y formas." />
     </div>
   );
 }

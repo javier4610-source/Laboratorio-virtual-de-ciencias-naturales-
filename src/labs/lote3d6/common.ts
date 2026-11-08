@@ -22,10 +22,13 @@ export function cylinderPoints(n: number, center: Vec3, r: number, y0: number, y
 }
 
 /**
- * Escala FIJA de color de temperatura de las vistas de calor (no depende de la corrida): 20 °C azul, 45 °C amarillo,
- * 70 °C naranja y 100 °C rojo, con interpolación lineal entre esas paradas (por debajo o por encima, el color del extremo).
+ * Escala FIJA de color de temperatura de las vistas de calor (no depende de la corrida): 20 °C azul, 40 °C turquesa,
+ * 55 °C amarillo, 75 °C naranja y 100 °C rojo, con interpolación lineal entre esas paradas (por debajo o por encima,
+ * el color del extremo).
  */
-export const TEMP_STOPS: readonly [number, string][] = [[20, '#3f7fd6'], [45, '#e9cf5c'], [70, '#ee8a3c'], [100, '#c8322b']];
+export const TEMP_STOPS: readonly [number, string][] = [[20, '#3b6fd8'], [40, '#35b3c4'], [55, '#e8c547'], [75, '#ee8a3c'], [100, '#c8322b']];
+/** La escala en palabras (para las descripciones y el chip de estatus). */
+export const TEMP_SCALE_TEXT = '20 °C azul, 40 °C turquesa, 55 °C amarillo, 75 °C naranja, 100 °C rojo';
 export function tempColor(T: number): `#${string}` {
   const s = TEMP_STOPS;
   if (!(T > s[0][0])) return s[0][1] as `#${string}`;

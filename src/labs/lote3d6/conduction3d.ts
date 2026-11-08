@@ -3,7 +3,7 @@
  * temperatura. Funciones PURAS con el MISMO resultado del modelo (src/models/conduction.ts → simulateConduction,
  * temperatureAt: ecuación de la aleta resuelta con Crank–Nicolson) en el mismo instante del banco:
  *   - cada centímetro de la varilla tiene el color de la temperatura del modelo en su centro, con la escala FIJA de
- *     common.ts (20 °C azul → 100 °C rojo), así que dos materiales se comparan a simple vista;
+ *     common.ts (de 20 °C azul a 100 °C rojo), así que dos materiales se comparan a simple vista;
  *   - las tachuelas caen cuando el modelo dice que su gota de cera llegó a 55 °C (`tackFall`), como en el banco;
  *   - los termopares están donde los puso el estudiante y su rótulo es la lectura del registrador del banco;
  *   - la varilla de comparación (opcional) es OTRA corrida del mismo modelo con el mismo baño, la misma funda y el mismo
@@ -13,7 +13,7 @@
 import { fmt } from '../../lib/format';
 import { TACK_SLOTS_CM, WAX_MELT_T, temperatureAt, type CoverId, type RodSolution } from '../../models/conduction';
 import type { SceneItem, Vec3 } from '../../three/scene';
-import { stackedCone, tempColor } from './common';
+import { stackedCone, tempColor, TEMP_SCALE_TEXT } from './common';
 
 export const ROD_Y = 8; // cm sobre la mesa
 export const ROD_R = 0.6; // cm (dibujo: 1,5 veces el radio real de 4 mm)
@@ -118,6 +118,6 @@ export function conductionScene(inp: ConductionSceneInput): { items: SceneItem[]
     : `${time.charAt(0).toUpperCase()}${time.slice(1)}, ${reachText(`varilla de ${inp.main.short.toLowerCase()}`, temps)}; los termopares marcan ${inp.lcd.map((T, i) => `${fmt(T, 1)} °C a ${fmt(inp.probes[i], 1)} cm`).join(', ')}.`
       + (inp.indicator === 'tachuelas' ? ` Cayeron ${fallen.length} de ${inp.nTacks} tachuelas.` : '')
       + (cmp && inp.compare ? ` En el mismo tiempo, ${reachText(`varilla de ${inp.compare.short.toLowerCase()} (comparación)`, cmp)}.` : '');
-  const description = `Varilla de ${inp.main.short.toLowerCase()} de 30 cm ${inp.cover === 'icopor' ? 'con funda de icopor ' : ''}en 3D, con un extremo en el baño a ${fmt(inp.bathT, 0)} °C${cmp && inp.compare ? ` y, al lado, una varilla de ${inp.compare.short.toLowerCase()} para comparar` : ''}. Cada centímetro tiene el color de su temperatura (escala fija: 20 °C azul, 45 °C amarillo, 70 °C naranja, 100 °C rojo). ${state}`;
-  return { items, extent: 21, target: [9, 6, bz], description, temps, compareTemps: cmp, fallen };
+  const description = `Varilla de ${inp.main.short.toLowerCase()} de 30 cm ${inp.cover === 'icopor' ? 'con funda de icopor ' : ''}en 3D, con un extremo en el baño a ${fmt(inp.bathT, 0)} °C${cmp && inp.compare ? ` y, al lado, una varilla de ${inp.compare.short.toLowerCase()} para comparar` : ''}. Cada centímetro tiene el color de su temperatura (escala fija: ${TEMP_SCALE_TEXT}). ${state}`;
+  return { items, extent: 15, target: [9, 6, bz], description, temps, compareTemps: cmp, fallen };
 }

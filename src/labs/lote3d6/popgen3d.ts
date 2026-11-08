@@ -44,8 +44,8 @@ function people(prefix: string, counts: [number, number, number], c: Vec3, R: nu
     }
   });
   const out: SceneItem[] = [];
-  if (A.length) out.push({ id: `${prefix}-A`, kind: 'particles', points: A, radius: 0.24, color: COL_A, ...(label ? { label: `Alelo A (${label})` } : {}) });
-  if (a.length) out.push({ id: `${prefix}-a`, kind: 'particles', points: a, radius: 0.24, color: COL_a, ...(label ? { label: `Alelo a (${label})` } : {}) });
+  if (A.length) out.push({ id: `${prefix}-A`, kind: 'particles', points: A, radius: 0.3, color: COL_A, ...(label ? { label: `Alelo A (${label})` } : {}) });
+  if (a.length) out.push({ id: `${prefix}-a`, kind: 'particles', points: a, radius: 0.3, color: COL_a, ...(label ? { label: `Alelo a (${label})` } : {}) });
   return out;
 }
 
@@ -92,5 +92,5 @@ export function popGenScene(inp: PopGenSceneInput): { items: SceneItem[]; extent
     + `Se dibujan ${counts[0]} AA, ${counts[1]} Aa y ${counts[2]} aa${sample}; cada individuo lleva sus dos alelos (azul A, naranja a). `
     + (inp.p >= 1 - 1e-12 ? 'El alelo A está fijado: ya no hay a en la isla. ' : inp.p <= 1e-12 ? 'El alelo A se perdió: solo queda a en la isla. ' : '')
     + (migrants ? `Del continente (p = ${fmt(inp.migrantP, 2)}) llegan por el puente ${migrants} migrantes por cada ${shown} individuos en cada generación: el flujo génico acerca la frecuencia de la isla a la del continente.` : 'Sin migración: el continente no intercambia individuos con la isla.');
-  return { items, extent: 17, target: [-2, 1, 0], description, shown, counts, copiesA, migrants };
+  return { items, extent: 12, target: [-2, 1, 0], description, shown, counts, copiesA, migrants };
 }

@@ -39,6 +39,18 @@ const CASES: Case[] = [
     name: 'interferencia', id: 'interferencia', prefix: 'int3d', title: /ondas de las rendijas y patrón en la pantalla/,
     prepare: async (page) => { await page.getByRole('button', { name: 'Encender la fuente de luz' }).click(); },
   },
+  {
+    name: 'presion', id: 'presion', prefix: 'pre3d', title: /la presión del líquido por capas y la sonda/,
+    prepare: async (page) => { await page.getByRole('button', { name: 'Leer el manómetro' }).click(); },
+  },
+  {
+    name: 'presion-chorros', id: 'presion', prefix: 'pre3d', title: /la botella, la presión y los chorros/,
+    prepare: async (page) => {
+      await page.getByRole('button', { name: 'Botella con agujeros', exact: true }).click();
+      await page.getByRole('button', { name: 'Destapar los agujeros y medir' }).click();
+      await page.waitForTimeout(2000);
+    },
+  },
 ];
 
 /** Los rótulos HTML superpuestos no se encima entre sí ni se salen del lienzo. */

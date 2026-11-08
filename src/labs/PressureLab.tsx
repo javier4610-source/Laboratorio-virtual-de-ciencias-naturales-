@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import {
   HOLE_HEIGHTS, LIQUIDS, PLACES, PRESSURE_INSTRUMENTS, PRESSURE_LIMITS, TANK_DEPTH_CM, VESSELS, analyzeManometer, atmosphere, baseAreaCm2,
   CV_ORIFICE, G, RHO_MANOMETER, findLiquid, findPlace, findVessel, jet, mercuryColumnMm, pascalVessel, simulateProbe, speedFromRange, uTubeResponse, vesselRadius,
@@ -16,6 +16,10 @@ import type { ModelState } from '../lib/advanced';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, Lcd, shade } from './kit';
 import { clockAngle, DragHandle, ManipHint, ManipScene, Plunger, toSvgPoint, zoneAt } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const PresionView3D = lazy(() => import('./lote3d5/PresionView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -907,6 +911,16 @@ export default function PressureLab({ api }: LabProps) {
           </ManipScene>
         </div>
         <ManipHint>{hint}</ManipHint>
+        {exp === 'sonda' && (
+          <Panel3D title="la presión del líquido por capas y la sonda" summary="El tanque en 3D con el líquido coloreado según la presión a cada profundidad, la sonda con su membrana y el manómetro en U con el mismo desnivel del banco.">
+            <PresionView3D exp="sonda" probe={{ liquidName: liquid.name, rho: liquid.rho, g, depth, orientation, gauge: probe.gauge, shownRise, done, riseReading: readings.rise }} />
+          </Panel3D>
+        )}
+        {isJets && (
+          <Panel3D title="la botella, la presión y los chorros" summary="La botella en 3D con el agua coloreada según la presión a cada altura; al medir, los chorros siguen la trayectoria del modelo y caen sobre la cinta métrica.">
+            <PresionView3D exp="chorros" jets={{ level, g, rho: findLiquid('dulce').rho, holes, jets, front: phase === 'listo' ? 0 : easeOut(jetFront), taped: phase === 'listo', done, ranges: readings.ranges }} />
+          </Panel3D>
+        )}
 
         {!isJets ? (
           <div className="grid-2">

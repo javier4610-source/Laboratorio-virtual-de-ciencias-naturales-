@@ -63,7 +63,7 @@
       "escenas3dOla2b.test.ts",
       "ola2bModelos.test.ts"
     ],
-    "nTests": 38,
+    "nTests": 39,
     "e2e": true,
     "a11y": false,
     "loc": 172,
@@ -87,12 +87,13 @@
     ],
     "tests": [
       "conditions.test.ts",
+      "lote3d5.test.ts",
       "models.test.ts"
     ],
-    "nTests": 89,
+    "nTests": 104,
     "e2e": true,
     "a11y": false,
-    "loc": 241,
+    "loc": 249,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -284,6 +285,32 @@
     "illustrative": true
   },
   {
+    "id": "ciclo-del-carbono",
+    "title": "Ciclo del carbono: reservorios y flujos",
+    "grade": 7,
+    "area": "ambiental",
+    "lab": "CarbonLab",
+    "models": [
+      "carbon"
+    ],
+    "tests": [
+      "escenas3dOla3a.test.ts",
+      "ola3aModelos.test.ts"
+    ],
+    "nTests": 27,
+    "e2e": true,
+    "a11y": false,
+    "loc": 164,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": false
+  },
+  {
     "id": "circuitos-simples",
     "title": "Circuitos simples con baterías, interruptores y bombillas",
     "grade": 7,
@@ -399,12 +426,13 @@
     "tests": [
       "advanced.test.ts",
       "buoyancy.test.ts",
+      "lote3d5.test.ts",
       "pressure.test.ts"
     ],
-    "nTests": 46,
+    "nTests": 61,
     "e2e": true,
     "a11y": false,
-    "loc": 620,
+    "loc": 629,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -530,12 +558,13 @@
     "tests": [
       "advanced.test.ts",
       "buoyancy.test.ts",
+      "lote3d5.test.ts",
       "pressure.test.ts"
     ],
-    "nTests": 46,
+    "nTests": 61,
     "e2e": true,
     "a11y": false,
-    "loc": 1044,
+    "loc": 1058,
     "measure": true,
     "advanced": true,
     "params": true,
@@ -742,12 +771,13 @@
       "waves"
     ],
     "tests": [
+      "lote3d5.test.ts",
       "models2.test.ts"
     ],
-    "nTests": 24,
+    "nTests": 39,
     "e2e": true,
     "a11y": false,
-    "loc": 272,
+    "loc": 280,
     "measure": false,
     "advanced": true,
     "params": false,
@@ -767,12 +797,13 @@
       "optics"
     ],
     "tests": [
+      "lote3d5.test.ts",
       "models3.test.ts"
     ],
-    "nTests": 21,
+    "nTests": 36,
     "e2e": true,
     "a11y": false,
-    "loc": 202,
+    "loc": 210,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -818,12 +849,13 @@
       "soundResonance"
     ],
     "tests": [
+      "lote3d5.test.ts",
       "soundResonance.test.ts"
     ],
-    "nTests": 13,
+    "nTests": 28,
     "e2e": true,
     "a11y": false,
-    "loc": 932,
+    "loc": 914,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -1250,6 +1282,32 @@
     "illustrative": true
   },
   {
+    "id": "fluidos-bernoulli",
+    "title": "Fluidos en movimiento: continuidad y Bernoulli",
+    "grade": 10,
+    "area": "fisica",
+    "lab": "BernoulliLab",
+    "models": [
+      "bernoulli"
+    ],
+    "tests": [
+      "escenas3dOla3a.test.ts",
+      "ola3aModelos.test.ts"
+    ],
+    "nTests": 27,
+    "e2e": true,
+    "a11y": false,
+    "loc": 144,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "fotosintesis",
     "title": "Fotosíntesis: luz, CO₂ y temperatura",
     "grade": 10,
@@ -1337,6 +1395,32 @@
     "illustrative": false
   },
   {
+    "id": "gravitacion-orbitas",
+    "title": "Gravitación universal, órbitas y leyes de Kepler",
+    "grade": 10,
+    "area": "fisica",
+    "lab": "GravitationLab",
+    "models": [
+      "gravitation"
+    ],
+    "tests": [
+      "escenas3dOla3a.test.ts",
+      "ola3aModelos.test.ts"
+    ],
+    "nTests": 27,
+    "e2e": true,
+    "a11y": false,
+    "loc": 197,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "homeostasis-glucosa",
     "title": "Homeostasis: regulación de la glucosa por insulina y glucagón",
     "grade": 10,
@@ -1349,7 +1433,7 @@
       "escenas3dOla2b.test.ts",
       "ola2bModelos.test.ts"
     ],
-    "nTests": 38,
+    "nTests": 39,
     "e2e": true,
     "a11y": false,
     "loc": 160,
@@ -1555,6 +1639,32 @@
     "illustrative": false
   },
   {
+    "id": "termoquimica",
+    "title": "Termoquímica: calor de disolución y de neutralización",
+    "grade": 10,
+    "area": "quimica",
+    "lab": "ThermochemLab",
+    "models": [
+      "thermochem"
+    ],
+    "tests": [
+      "escenas3dOla3a.test.ts",
+      "ola3aModelos.test.ts"
+    ],
+    "nTests": 27,
+    "e2e": true,
+    "a11y": false,
+    "loc": 165,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "agua",
     "title": "Contaminación del agua e indicadores fisicoquímicos y biológicos",
     "grade": 11,
@@ -1652,7 +1762,7 @@
       "escenas3dOla2b.test.ts",
       "ola2bModelos.test.ts"
     ],
-    "nTests": 38,
+    "nTests": 39,
     "e2e": true,
     "a11y": false,
     "loc": 158,
@@ -1908,12 +2018,13 @@
     ],
     "tests": [
       "conditions.test.ts",
-      "interference.test.ts"
+      "interference.test.ts",
+      "lote3d5.test.ts"
     ],
-    "nTests": 53,
+    "nTests": 68,
     "e2e": true,
     "a11y": false,
-    "loc": 596,
+    "loc": 603,
     "measure": true,
     "advanced": true,
     "params": false,

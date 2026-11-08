@@ -39,6 +39,3 @@ export function arcPoints(center: Vec3, r: number, u: Vec3, v: Vec3, a0: number,
     return [center[0] + c * u[0] + s * v[0], center[1] + c * u[1] + s * v[1], center[2] + c * u[2] + s * v[2]] as Vec3;
   });
 }
-
-/** Suavizado de la animación del banco (el mismo que usan los chorros de la botella). */
-export const easeOut = (u: number) => 1 - (1 - Math.max(0, Math.min(1, u))) ** 2;

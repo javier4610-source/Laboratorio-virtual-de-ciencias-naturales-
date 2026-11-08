@@ -28,6 +28,7 @@ import { BERGMAN, ogttCategory, fastingCategory, simulateGlucose } from '../../s
 import { buildKey, domainOf, findKey, findOrganism as findTaxon, identify, keyMembers } from '../../src/models/classification';
 import { geostationaryAltitude, integrateOrbit, keplerTable, satellitePeriod } from '../../src/models/gravitation';
 import { atomizer, hose, RHO_WATER, venturi } from '../../src/models/bernoulli';
+import { DH_NEUT, dissolution as tqDissolution, hessSolidInAcid, neutralization as tqNeutralization, runCalorimeter } from '../../src/models/thermochem';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -479,6 +480,14 @@ export const GOLDEN: GoldenCase[] = [
     close(r.v2, 0.0003 / (Math.PI * 0.00625 ** 2), 1e-12); close(r.dp, 0.5 * RHO_WATER * (r.v2 ** 2 - r.v1 ** 2), 1e-9); close(r.dp, 2796.3, 0.1);
     close(r.dh * 100, 28.643, 1e-3); close(r.flowFromDh * 1000, 0.3, 1e-12);
     close(atomizer(20, 2, RHO_WATER).dp, 240.8, 1e-9); close(atomizer(20, 2, RHO_WATER).rise * 100, 2.4667, 1e-4);
+  } },
+  { id: 'termoquimica', origin: 'referencia', what: 'CODATA Key Values: ΔH de H⁺ + OH⁻ → H₂O = −285,830 + 230,015 = −55,815 kJ/mol; CRC (dilución infinita): NaOH −44,51 y NH₄NO₃ +25,69 kJ/mol; 2,00 g de NaOH en 100 g de agua: q = (2/39,997)·44 510 = 2225,7 J y ΔT = q/(102·4,18 + 15) = 5,043 °C; 50 + 50 mL de 1,0 M: ΔT = 0,05·55 815/(100·4,18 + 15) = 6,445 °C; Hess: −100,325 kJ/mol', run: () => {
+    close(DH_NEUT, -55.815, 1e-9);
+    const naoh = runCalorimeter(tqDissolution('naoh', 2, 100), 'icopor');
+    close(naoh.q, (2 / 39.997) * 44510, 1e-9); close(naoh.dTad, 2225.7 / 441.36, 1e-3); close(naoh.dHideal, -44.51, 1e-9);
+    close(runCalorimeter(tqDissolution('nh4no3', 5, 100), 'icopor').dHideal, 25.69, 1e-9);
+    close(runCalorimeter(tqNeutralization(1, 50), 'icopor').dTad, (0.05 * 55815) / 433, 1e-9);
+    close(hessSolidInAcid(2).dHref, -100.325, 1e-9);
   } },
 ];
 

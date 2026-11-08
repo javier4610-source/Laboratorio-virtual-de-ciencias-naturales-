@@ -3,7 +3,58 @@ import {
   AU_PER_YEAR_KMS, findPair, forceConditions, G_CONST, geostationaryAltitude, gravForce, integrateOrbit, keplerPeriod, keplerTable, M_EARTH, MU_SUN_AU,
   orbitAt, orbitConditions, PLANETS, R_EARTH_MEAN, satellitePeriod, surfaceGravity, visViva,
 } from '../../src/models/gravitation';
+import { calConditions, DH_NEUT, dissolution, hessSolidInAcid, neutralization, runCalorimeter, SOLUTES, T_ROOM, tempAt } from '../../src/models/thermochem';
 import { atomizer, G, hose, hoseConditions, minAirSpeed, RHO_ETHANOL, RHO_WATER, venturi, venturiConditions } from '../../src/models/bernoulli';
+
+describe('termoquímica en el calorímetro de vaso', () => {
+  it('valores de referencia: neutralización −55,8 kJ/mol (CODATA) y disoluciones del CRC; sin pérdidas se recuperan exactos', () => {
+    expect(DH_NEUT).toBeCloseTo(-55.815, 9);
+    for (const s of SOLUTES) {
+      const run = runCalorimeter(dissolution(s.id, 2, 100), 'icopor');
+      expect(run.dHideal, s.id).toBeCloseTo(s.dH, 9);
+    }
+    expect(runCalorimeter(neutralization(1, 50), 'icopor').dHideal).toBeCloseTo(DH_NEUT, 9);
+    expect(hessSolidInAcid(2).dHref).toBeCloseTo(-44.51 - 55.815, 9);
+  });
+  it('2,00 g de NaOH en 100 g de agua: n = 0,0500 mol, q = 2226 J y ΔT_ad = 5,04 °C; NH₄NO₃ enfría', () => {
+    const run = runCalorimeter(dissolution('naoh', 2, 100), 'icopor');
+    expect(run.exp.n).toBeCloseTo(0.050004, 6);
+    expect(run.q).toBeCloseTo(2225.7, 1);
+    expect(run.Ctot).toBeCloseTo(102 * 4.18 + 15, 9);
+    expect(run.dTad).toBeCloseTo(5.043, 3);
+    const cold = runCalorimeter(dissolution('nh4no3', 5, 100), 'icopor');
+    expect(cold.dTad).toBeLessThan(0);
+    expect(cold.maxObs.T).toBeLessThan(T_ROOM);
+    expect(cold.dHmax).toBeGreaterThan(0);
+  });
+  it('neutralización 50 + 50 mL de 1,0 M: ΔT_ad = 6,45 °C; el máximo medido es menor y la extrapolación se acerca más', () => {
+    const run = runCalorimeter(neutralization(1, 50), 'icopor');
+    expect(run.exp.n).toBeCloseTo(0.05, 12);
+    expect(run.dTad).toBeCloseTo(6.445, 3);
+    expect(run.maxObs.T - T_ROOM).toBeLessThan(run.dTad);
+    expect(Math.abs(run.errExtrapPct)).toBeLessThan(Math.abs(run.errMaxPct));
+    expect(Math.abs(run.errExtrapPct)).toBeLessThan(2);
+    const glass = runCalorimeter(neutralization(1, 50), 'vidrio');
+    expect(Math.abs(glass.errMaxPct)).toBeGreaterThan(Math.abs(run.errMaxPct));
+    // Reactivo limitante: con la base más diluida reaccionan menos moles.
+    expect(neutralization(1, 50, 0.5).n).toBeCloseTo(0.025, 12);
+  });
+  it('curva de temperatura: empieza en T_aire, sube a un máximo y se enfría; lecturas cada 10 s de 0,1 °C', () => {
+    const run = runCalorimeter(dissolution('naoh', 2, 100), 'icopor');
+    expect(run.readings).toHaveLength(31);
+    expect(run.readings[0].T).toBe(T_ROOM);
+    for (const r of run.readings) expect(Math.abs(r.T * 10 - Math.round(r.T * 10))).toBeLessThan(1e-9);
+    expect(run.readings[run.readings.length - 1].T).toBeLessThan(run.maxObs.T);
+    expect(tempAt(5, 10, 0, 1e6)).toBeCloseTo(T_ROOM + 5, 9);
+    expect(tempAt(5, 10, 0.1, 10)).toBeCloseTo(T_ROOM + 5 * 10 / 10 * Math.exp(-1), 9);
+  });
+  it('avisos con su corrección: ΔT pequeño, solución concentrada y vaso de vidrio', () => {
+    expect(calConditions(runCalorimeter(dissolution('nacl', 2, 100), 'icopor'), 'icopor')[0].fix).toContain('más soluto');
+    expect(calConditions(runCalorimeter(dissolution('cacl2', 10, 20), 'icopor'), 'icopor').some((c) => c.text.includes('muy concentrada'))).toBe(true);
+    expect(calConditions(runCalorimeter(neutralization(1, 50), 'vidrio'), 'vidrio').some((c) => c.fix.includes('icopor'))).toBe(true);
+    expect(() => hessSolidInAcid(5)).toThrow(RangeError);
+  });
+});
 
 describe('continuidad y Bernoulli (fluido ideal)', () => {
   it('continuidad: 10 L en 30 s por una manguera de ½ in y la boquilla de la mitad del diámetro cuadruplica la rapidez', () => {

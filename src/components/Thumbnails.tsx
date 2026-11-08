@@ -1051,6 +1051,18 @@ const SCENES: Record<string, () => ReactNode> = {
       <Arrow x1={120} y1={140} x2={200} y2={140} color="var(--data)" w={2.4} />
     </>
   ),
+  termoquimica: () => (
+    <>
+      <path d="M90 40 L110 136 H210 L230 40 Z" fill="var(--surface-2)" stroke={INK} strokeWidth="1.6" />
+      <path d="M100 66 L114 130 H206 L220 66 Z" fill="var(--series-5)" opacity="0.25" />
+      <rect x="84" y="32" width="152" height="10" rx="3" fill={INK} opacity="0.35" />
+      {[[130, 100], [150, 112], [170, 96], [186, 116], [140, 84], [196, 88]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="5" fill={i % 2 ? 'var(--series-4)' : 'var(--series-1)'} />)}
+      <rect x="244" y="18" width="8" height="110" rx="4" fill="none" stroke={INK} strokeWidth="1.4" />
+      <rect x="246" y="62" width="4" height="64" fill="var(--bad)" />
+      <circle cx="248" cy="130" r="8" fill="var(--bad)" />
+      <Arrow x1={160} y1={74} x2={208} y2={56} color="var(--data)" w={2.4} />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

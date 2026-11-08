@@ -3,10 +3,45 @@ import { K_FORCE, K_SPEED, orbitScene, sceneScale } from '../../src/labs/gravita
 import { AU_PER_YEAR_KMS, integrateOrbit, orbitAt } from '../../src/models/gravitation';
 import { diameterAt, K_HEAD, K_RADIUS, K_VEL, tracerXs, venturiScene } from '../../src/labs/venturi3d';
 import { venturi } from '../../src/models/bernoulli';
+import { calorimeterScene, K_ENERGY, K_THERMO, N_IONS } from '../../src/labs/calorimeter3d';
+import { dissolution, neutralization, runCalorimeter, tempAt } from '../../src/models/thermochem';
 import type { ArrowItem, ParticlesItem, SceneItem, SphereItem } from '../../src/three/scene';
 
 const byId = <T extends SceneItem>(items: SceneItem[], id: string) => items.find((i) => i.id === id) as T;
 const len = (a: ArrowItem) => Math.hypot(...a.vector);
+
+describe('calorímetro 3D (termoquímica)', () => {
+  const run = runCalorimeter(dissolution('naoh', 2, 100), 'icopor');
+  it('los iones siguen la fracción disuelta y el sólido se achica', () => {
+    const start = calorimeterScene(run, 0, 'icopor');
+    expect(byId(start.items, 'cationes')).toBeUndefined();
+    expect(byId(start.items, 'energia')).toBeUndefined();
+    expect(byId(start.items, 'solido')).toBeDefined();
+    const mid = calorimeterScene(run, run.exp.tau, 'icopor');
+    const n = (s: ReturnType<typeof calorimeterScene>) => ((byId<ParticlesItem>(s.items, 'cationes')?.points.length ?? 0) + (byId<ParticlesItem>(s.items, 'aniones')?.points.length ?? 0));
+    expect(n(mid)).toBe(Math.round(N_IONS * (1 - Math.exp(-1))));
+    const end = calorimeterScene(run, 300, 'icopor');
+    expect(n(end)).toBe(N_IONS);
+    expect(byId(end.items, 'solido')).toBeUndefined();
+  });
+  it('el termómetro marca la temperatura del modelo y la flecha de energía va hacia afuera (exo) o hacia adentro (endo)', () => {
+    const sc = calorimeterScene(run, 60, 'icopor');
+    expect(sc.T).toBeCloseTo(tempAt(run.dTad, run.exp.tau, run.k, 60), 12);
+    const col = byId<Extract<SceneItem, { kind: 'rod' }>>(sc.items, 'columna');
+    expect(col.to[1] - col.from[1]).toBeCloseTo(1.2 + (sc.T - 25) * K_THERMO, 12);
+    const e = byId<ArrowItem>(sc.items, 'energia');
+    expect(e.vector[0]).toBeGreaterThan(0);
+    expect(len(e)).toBeCloseTo(run.q * sc.reacted * K_ENERGY, 12);
+    const cold = runCalorimeter(dissolution('nh4no3', 5, 100), 'icopor');
+    const sc2 = calorimeterScene(cold, 60, 'icopor');
+    expect(byId<ArrowItem>(sc2.items, 'energia').vector[0]).toBeLessThan(0);
+    expect(sc2.description).toContain('endotérmico');
+    // Vaso de vidrio: sin tapa; neutralización: sin sólido.
+    const glass = calorimeterScene(runCalorimeter(neutralization(1, 50), 'vidrio'), 10, 'vidrio');
+    expect(byId(glass.items, 'tapa')).toBeUndefined();
+    expect(byId(glass.items, 'solido')).toBeUndefined();
+  });
+});
 
 describe('tubo de Venturi 3D (Bernoulli)', () => {
   it('el radio del tubo sigue el diámetro y los trazadores se separan (D₁/D₂)² veces más en la garganta', () => {

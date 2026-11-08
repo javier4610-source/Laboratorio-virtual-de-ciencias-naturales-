@@ -89,6 +89,7 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   seleccion: () => import('./practices/seleccion').then((m) => m.seleccion),
   redes: () => import('./practices/redes').then((m) => m.redes),
   cinetica: () => import('./practices/cinetica').then((m) => m.cinetica),
+  termoquimica: () => import('./practices/termoquimica').then((m) => m.termoquimica),
   cinematica: () => import('./practices/cinematica').then((m) => m.cinematica),
   celulas: () => import('./practices/celulas').then((m) => m.celulas),
 };

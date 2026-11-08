@@ -104,3 +104,41 @@ test('fluidos-bernoulli: continuidad en la manguera, Venturi con piezómetros y 
   await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
   await a11yAndMobile(page, 'fluidos-bernoulli');
 });
+
+test('termoquimica: disolución de NaOH, NH₄NO₃ que enfría, neutralización −55,8 kJ/mol y ley de Hess', async ({ page }) => {
+  test.setTimeout(90_000);
+  await openFree(page, 'termoquimica');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const sim = page.getByRole('group', { name: 'Medición', exact: true });
+  const measure = async () => { await sim.getByRole('button', { name: /Iniciar la medición|Repetir la medición/ }).click(); await expect(sim.getByRole('status')).toHaveText('Terminada'); };
+  // Valor dorado: 2,00 g de NaOH en 100 g → n = 0,0500 mol y ΔT sin pérdidas = 2225,7/441,36 = 5,04 °C.
+  await expect(ro(page, 'Moles que reaccionan n')).toContainText('0,0500 mol');
+  await expect(ro(page, 'ΔT sin pérdidas (ideal)')).toContainText('5,04 °C');
+  await measure();
+  await expect(ro(page, 'Valor de referencia')).toContainText('-44,51 kJ/mol: exotérmico');
+  await expect(ro(page, 'ΔH con la extrapolación')).toContainText(/-4[2-5],\d kJ\/mol/);
+  await page.getByRole('button', { name: 'Guardar la medición en la tabla' }).click();
+  await saved(page, 1);
+  await page.getByLabel('Sustancia', { exact: true }).selectOption('nh4no3');
+  await measure();
+  await expect(ro(page, 'Valor de referencia')).toContainText('25,69 kJ/mol: endotérmico');
+  await page.getByLabel('Sustancia', { exact: true }).selectOption('nacl');
+  await expect(cond(page, 'muy pequeño')).toContainText('Cómo corregirlo');
+  await station(page, 'Calor de neutralización');
+  // Valor dorado: 50 + 50 mL de 1,0 M → ΔT = 0,05·55 815/433 = 6,45 °C.
+  await expect(ro(page, 'ΔT sin pérdidas (ideal)')).toContainText('6,45 °C');
+  await page.getByLabel('Vaso', { exact: true }).selectOption('vidrio');
+  await expect(cond(page, 'pierde calor rápido')).toContainText('Cómo corregirlo');
+  await page.getByLabel('Vaso', { exact: true }).selectOption('icopor');
+  await measure();
+  await expect(ro(page, 'Valor de referencia')).toContainText('-55,82 kJ/mol');
+  await station(page, 'Ley de Hess');
+  await page.getByLabel('Proceso', { exact: true }).selectOption('solido');
+  await measure();
+  await expect(ro(page, 'Valor de referencia')).toContainText('-100,3');
+  await page.getByRole('button', { name: 'Guardar la medición en la tabla' }).click();
+  await saved(page, 2);
+  await page.getByRole('group', { name: /Tu respuesta: El calor y la temperatura son lo mismo/ }).getByRole('button', { name: 'Es falso' }).click();
+  await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
+  await a11yAndMobile(page, 'termoquimica');
+});

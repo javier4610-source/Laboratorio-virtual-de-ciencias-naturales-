@@ -110,3 +110,31 @@ test('fluidos-bernoulli 3D: el Venturi sigue el caudal y la garganta, y la colum
   await setSlider(page, 'Diámetro de la garganta', 'mm', '25');
   await expect.poll(() => description(v)).toContain('Δh = 0,0 cm');
 });
+
+test('termoquimica 3D: los iones se disuelven, el termómetro sube y en pausa nada cambia; NH₄NO₃ invierte la flecha', async ({ page }) => {
+  await openFree(page, 'termoquimica');
+  await waitEngine(page, 'tq', 'disponible');
+  const v = view(page, 'tq');
+  expect(await description(v)).toContain('ha reaccionado el 0 %');
+  await keyboardAndTheme(page, 'tq', 'termoquimica 3D');
+  await page.emulateMedia({ colorScheme: 'light' });
+  const before = await pixels(v);
+  const sim = page.getByRole('group', { name: 'Medición', exact: true });
+  await sim.getByRole('button', { name: 'Iniciar la medición' }).click();
+  await page.waitForTimeout(2500);
+  await sim.getByRole('button', { name: 'Pausar' }).click();
+  await expect(sim.getByRole('status')).toHaveText('En pausa');
+  const paused = await description(v);
+  expect(paused).toContain('Es exotérmico');
+  expect((await pixels(v)).uri).not.toBe(before.uri);
+  const still = (await pixels(v)).uri;
+  await page.waitForTimeout(600);
+  expect((await pixels(v)).uri).toBe(still);
+  expect(await description(v)).toBe(paused);
+  await shots(page, () => figureOf(page, 'tq'), 'termoquimica-3d');
+  await page.getByLabel('Sustancia', { exact: true }).selectOption('nh4no3');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await sim.getByRole('button', { name: 'Iniciar la medición' }).click();
+  await expect.poll(() => description(v)).toContain('Es endotérmico');
+  await expect(figureOf(page, 'tq').locator('.scene3d-label', { hasText: '← calor' })).toBeVisible();
+});

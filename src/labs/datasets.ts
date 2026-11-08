@@ -2218,4 +2218,46 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  termoquimica: [
+    {
+      id: 'disolucion', label: 'Calor de disolución', defaultX: 'masaSoluto', defaultY: 'dTextrap',
+      columns: [
+        { key: 'sustancia', label: 'Sustancia', numeric: false, input: true },
+        { key: 'masaSoluto', label: 'Masa del soluto', unit: 'g', numeric: true, decimals: 2, input: true },
+        { key: 'masaAgua', label: 'Masa del agua', unit: 'g', numeric: true, decimals: 0, input: true },
+        { key: 'vaso', label: 'Vaso', numeric: false, input: true },
+        { key: 'moles', label: 'Moles n', unit: 'mol', numeric: true, decimals: 5 },
+        { key: 'dT', label: 'ΔT máximo medido', unit: '°C', numeric: true, decimals: 1 },
+        { key: 'dTextrap', label: 'ΔT extrapolado', unit: '°C', numeric: true, decimals: 2 },
+        { key: 'dH', label: 'ΔH (extrapolado)', unit: 'kJ/mol', numeric: true, decimals: 2 },
+        { key: 'dHref', label: 'ΔH de referencia', unit: 'kJ/mol', numeric: true, decimals: 2 },
+      ],
+    },
+    {
+      id: 'neutralizacion', label: 'Calor de neutralización', defaultX: 'concentracion', defaultY: 'dTextrap',
+      columns: [
+        { key: 'concentracion', label: 'Concentración del HCl y del NaOH', unit: 'mol/L', numeric: true, decimals: 2, input: true },
+        { key: 'volumen', label: 'Volumen de cada solución', unit: 'mL', numeric: true, decimals: 0, input: true },
+        { key: 'vaso', label: 'Vaso', numeric: false, input: true },
+        { key: 'moles', label: 'Moles de agua formada', unit: 'mol', numeric: true, decimals: 5 },
+        { key: 'dT', label: 'ΔT máximo medido', unit: '°C', numeric: true, decimals: 1 },
+        { key: 'dTextrap', label: 'ΔT extrapolado', unit: '°C', numeric: true, decimals: 2 },
+        { key: 'dH', label: 'ΔH (extrapolado)', unit: 'kJ/mol', numeric: true, decimals: 2 },
+        { key: 'dHref', label: 'ΔH de referencia', unit: 'kJ/mol', numeric: true, decimals: 2 },
+      ],
+    },
+    {
+      id: 'hess', label: 'Ley de Hess', defaultX: 'dHref', defaultY: 'dH',
+      multiInput: 'Cada fila es un proceso distinto: se comparan las entalpías, no una variable que se cambia.',
+      columns: [
+        { key: 'experimento', label: 'Proceso', numeric: false, input: true },
+        { key: 'vaso', label: 'Vaso', numeric: false, input: true },
+        { key: 'moles', label: 'Moles n', unit: 'mol', numeric: true, decimals: 5 },
+        { key: 'dT', label: 'ΔT máximo medido', unit: '°C', numeric: true, decimals: 1 },
+        { key: 'dTextrap', label: 'ΔT extrapolado', unit: '°C', numeric: true, decimals: 2 },
+        { key: 'dH', label: 'ΔH (extrapolado)', unit: 'kJ/mol', numeric: true, decimals: 2 },
+        { key: 'dHref', label: 'ΔH de referencia', unit: 'kJ/mol', numeric: true, decimals: 2 },
+      ],
+    },
+  ],
 };

@@ -157,6 +157,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: 'Rapideces, presiones y alturas calculadas con la ecuación de continuidad y el principio de Bernoulli para un fluido ideal (sin viscosidad, incompresible y estacionario); densidades del agua y del etanol y viscosidad del agua a 20 °C del CRC Handbook; aire a 20 °C: modelo calculado, no son mediciones. Los diámetros de la manguera y del Venturi y la columna de entrada son ilustrativos. Venturi 3D: trazadores a intervalos iguales de tiempo, flechas proporcionales a la rapidez y columnas con la altura de presión del modelo.' };
   }
+  if (practiceId === 'termoquimica') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Lecturas del termómetro calculadas con q = (m·c + C_cal)·ΔT, la entalpía de neutralización de los valores clave de CODATA (−55,8 kJ/mol) y las entalpías de disolución a dilución infinita del CRC Handbook, con una curva de pérdidas de calor de Newton: modelo calculado, no son mediciones. La capacidad calorífica de los vasos, la rapidez de disolución y la constante de enfriamiento son ilustrativas. Calorímetro 3D: iones en número proporcional a la fracción que reaccionó, termómetro con la temperatura del modelo y flecha de energía proporcional al calor; la agitación del agua es ilustrativa.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

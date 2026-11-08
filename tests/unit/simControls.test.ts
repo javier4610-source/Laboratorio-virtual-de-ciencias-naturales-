@@ -101,7 +101,7 @@ const ADOPTED = [
   // ola 2b
   'GlucoseLab',
   // ola 3a
-  'GravitationLab',
+  'GravitationLab', 'ThermochemLab',
 ];
 
 describe('adopción de SimControls', () => {

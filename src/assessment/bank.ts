@@ -1729,6 +1729,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Fluidos en movimiento: continuidad y Bernoulli», usa la manguera con boquillas de distinto diámetro.',
     transfer: 'Si en otro tramo la sección mide 4,0 m², ¿qué rapidez esperas? Calcúlala con Q = A·v y explica qué supuesto haces.',
   },
+  {
+    id: 'saber-tq-1', grade: 10, topic: 'Calor de disolución', competency: 'indagacion', component: 'quimico',
+    skill: 'Interpretar datos de calorimetría para elegir una sustancia', difficulty: 'alta', practiceId: 'termoquimica',
+    context: 'Un grupo de 10.º disuelve 0,050 mol de cuatro sustancias, cada una en 100 g de agua a 25 °C, en un calorímetro de icopor, para diseñar una compresa fría.',
+    table: {
+      caption: 'Entalpía de disolución a 25 °C (CRC Handbook, dilución infinita)',
+      headers: ['Sustancia', 'ΔH de disolución (kJ/mol)'],
+      rows: [['CaCl₂', '−81,3'], ['NaOH', '−44,5'], ['NaCl', '+3,9'], ['NH₄NO₃', '+25,7']],
+    },
+    stem: '¿Qué sustancia conviene para la compresa fría y qué cambio de temperatura se espera aproximadamente (c = 4,18 J/(g·°C), despreciando el vaso)?',
+    options: [
+      { id: 'a', text: 'CaCl₂, porque su ΔH es el más grande en valor absoluto: la temperatura bajaría unos 10 °C.', feedback: 'ΔH negativo significa que libera calor: el CaCl₂ calienta.' },
+      { id: 'b', text: 'NH₄NO₃, porque su disolución es endotérmica: la temperatura bajaría unos 3 °C.', feedback: 'Correcto: q = 0,050 × 25 700 ≈ 1285 J y ΔT ≈ −1285/(≈ 104 × 4,18) ≈ −3 °C.' },
+      { id: 'c', text: 'NaCl, porque la sal de cocina siempre enfría el agua unos 10 °C.', feedback: 'Su ΔH es pequeño: con 0,050 mol el agua apenas baja ≈ 0,5 °C.' },
+      { id: 'd', text: 'NaOH, porque es una base fuerte.', feedback: 'Su disolución es exotérmica y además es corrosivo.' },
+    ],
+    correct: 'b',
+    explanation: 'Solo las disoluciones con ΔH > 0 enfrían el agua. Con NH₄NO₃: q = n·ΔH = 0,050 mol × 25,7 kJ/mol ≈ 1,29 kJ que el sistema toma del agua; ΔT = −q/(m·c) ≈ −1285 J/(104 g × 4,18 J/(g·°C)) ≈ −3,0 °C. Para enfriar más se usa más sal por gramo de agua.',
+    review: 'En la práctica «Termoquímica: calor de disolución y de neutralización», disuelve NH₄NO₃ con varias masas.',
+    transfer: '¿Cuántos gramos de NH₄NO₃ (80 g/mol) harían falta en 100 g de agua para bajar la temperatura unos 10 °C? Plantea q = (m·c)·ΔT y n = q/ΔH, y compruébalo en la práctica.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

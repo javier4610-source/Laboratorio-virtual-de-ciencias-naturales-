@@ -223,4 +223,119 @@ test.describe('sin WebGL', () => {
   }
 
 
+
+  // La escena sigue el estado del laboratorio (sin WebGL basta: la descripción y las primitivas son las mismas).
+  const byName = (n: string) => CASES.find((c) => c.name === n)!;
+  const svgOf = (page: Page, prefix: string) => figureOf(page, prefix).locator('svg').first();
+
+  test('ondas: la cuerda sigue la frecuencia del generador y λ aparece solo después de medir', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await openFree(page, 'ondas');
+    await open3D(page, byName('ondas'));
+    const v = view(page, 'ond3d');
+    await expect.poll(() => description(v)).toContain('movida por el generador a 2,00 Hz');
+    expect(await description(v)).toContain('La longitud de onda queda oculta');
+    await page.getByRole('slider', { name: 'Frecuencia', exact: true }).fill('4');
+    await expect.poll(() => description(v)).toContain('movida por el generador a 4,00 Hz');
+    await page.getByLabel('λ medida (m):').fill('2,5');
+    await expect.poll(() => description(v)).toContain('La longitud de onda del modelo es 2,50 m');
+  });
+
+  test('sonido: el aire vibra solo mientras suena la fuente, y «Mover el aire» se pausa', async ({ page }) => {
+    await openFree(page, 'sonido');
+    await page.getByRole('button', { name: 'Generador y parlante', exact: true }).click();
+    await open3D(page, byName('sonido'));
+    const v = view(page, 'son3d');
+    await expect.poll(() => description(v)).toContain('La fuente está en silencio');
+    await page.getByRole('button', { name: 'Encender el generador' }).click();
+    await expect.poll(() => description(v)).toContain('Sonando: la amplitud dibujada');
+    const svg = svgOf(page, 'son3d');
+    const card = page.locator('section.lote3d');
+    await card.getByRole('button', { name: 'Mover el aire' }).click();
+    const s0 = await svg.innerHTML();
+    await expect.poll(() => svg.innerHTML()).not.toBe(s0);
+    await card.getByRole('button', { name: /^Pausar/ }).click();
+    const s1 = await svg.innerHTML();
+    await page.waitForTimeout(400);
+    expect(await svg.innerHTML()).toBe(s1);
+  });
+
+  test('sonido: con movimiento reducido «Mover el aire» está desactivado', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await openFree(page, 'sonido');
+    const card = await open3D(page, byName('sonido'));
+    await expect(card.getByRole('button', { name: 'Mover el aire' })).toBeDisabled();
+  });
+
+  test('optica: los ángulos aparecen al medir y hay reflexión total del agua al aire a 60°', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await openFree(page, 'optica');
+    await open3D(page, byName('optica'));
+    const v = view(page, 'opt3d');
+    await expect.poll(() => description(v)).toContain('Los ángulos aún no se han medido');
+    await page.getByRole('button', { name: 'Medir con el transportador' }).click();
+    await expect.poll(() => description(v)).toContain('refracción 28,8°');
+    await page.getByRole('button', { name: 'Invertir medios' }).click();
+    await page.getByRole('slider', { name: 'Ángulo de incidencia', exact: true }).fill('60');
+    await expect.poll(() => description(v)).toContain('Reflexión total interna');
+  });
+
+  test('interferencia: al encender la fuente aparece el patrón y las ondas se pausan', async ({ page }) => {
+    await openFree(page, 'interferencia');
+    await open3D(page, byName('interferencia'));
+    const v = view(page, 'int3d');
+    await expect.poll(() => description(v)).toContain('La fuente está apagada');
+    await page.getByRole('button', { name: 'Encender la fuente de luz' }).click();
+    await expect.poll(() => description(v)).toMatch(/se ven \d+ zonas brillantes/);
+    const svg = svgOf(page, 'int3d');
+    const card = page.locator('section.lote3d');
+    await card.getByRole('button', { name: 'Mover las ondas' }).click();
+    const s0 = await svg.innerHTML();
+    await expect.poll(() => svg.innerHTML()).not.toBe(s0);
+    await card.getByRole('button', { name: /^Pausar/ }).click();
+    const s1 = await svg.innerHTML();
+    await page.waitForTimeout(400);
+    expect(await svg.innerHTML()).toBe(s1);
+  });
+
+  test('presion: la sonda baja con el banco y los chorros llegan a la cinta al medir', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await openFree(page, 'presion');
+    await open3D(page, byName('presion'));
+    const v = view(page, 'pre3d');
+    await expect.poll(() => description(v)).toContain('a 10,0 cm de profundidad');
+    await page.getByRole('slider', { name: 'Profundidad de la sonda', exact: true }).fill('20');
+    await expect.poll(() => description(v)).toContain('a 20,0 cm de profundidad');
+    await page.getByRole('button', { name: 'Botella con agujeros', exact: true }).click();
+    await open3D(page, byName('presion-chorros'));
+    await expect.poll(() => description(v)).toContain('siguen tapados con cinta');
+    await page.getByRole('button', { name: 'Destapar los agujeros y medir' }).click();
+    await expect.poll(() => description(v)).toContain('la cinta marca');
+  });
+
+  test('flotacion: la madera flota con su línea de flotación; el hierro cuelga', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await openFree(page, 'flotacion');
+    await open3D(page, byName('flotacion'));
+    const v = view(page, 'flo3d');
+    await expect.poll(() => description(v)).toContain('cuelga en el aire');
+    await page.getByLabel('Objeto colgado del gancho').selectOption('madera');
+    await page.getByRole('slider', { name: 'Descenso del objeto', exact: true }).fill('6');
+    await expect.poll(() => description(v)).toMatch(/flota con el [\d,]+ % de su volumen/);
+    await page.getByLabel('Objeto colgado del gancho').selectOption('hierro');
+    await page.getByRole('slider', { name: 'Descenso del objeto', exact: true }).fill('8');
+    await expect.poll(() => description(v)).toContain('cuelga totalmente sumergido');
+  });
+
+  test('densidad: la muestra pasa de la mesa a la balanza y a la probeta', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await openFree(page, 'densidad');
+    await open3D(page, byName('densidad'));
+    const v = view(page, 'den3d');
+    await expect.poll(() => description(v)).toContain('sobre la mesa');
+    await page.getByRole('button', { name: '1. Pesar en la balanza' }).click();
+    await expect.poll(() => description(v)).toContain('en el plato de la balanza, que marca 21,6 g');
+    await page.getByRole('button', { name: '2. Sumergir en la probeta' }).click();
+    await expect.poll(() => description(v)).toContain('el agua subió de 50,0 a 58,0 mL');
+  });
 });

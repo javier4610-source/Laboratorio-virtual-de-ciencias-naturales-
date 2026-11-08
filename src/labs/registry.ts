@@ -91,4 +91,5 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   'efecto-invernadero': lazy(() => import('./GreenhouseLab')),
   'homeostasis-glucosa': lazy(() => import('./GlucoseLab')),
   'clasificacion-seres-vivos': lazy(() => import('./ClassificationLab')),
+  'gravitacion-orbitas': lazy(() => import('./GravitationLab')),
 };

@@ -79,6 +79,7 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   respiracion: () => import('./practices/respiracion').then((m) => m.respiracion),
   conservacion: () => import('./practices/conservacion').then((m) => m.conservacion),
   choques: () => import('./practices/choques').then((m) => m.choques),
+  'gravitacion-orbitas': () => import('./practices/gravitacion-orbitas').then((m) => m.gravitacionOrbitas),
   pendulo: () => import('./practices/pendulo').then((m) => m.pendulo),
   proyectiles: () => import('./practices/proyectiles').then((m) => m.proyectiles),
   equilibrio: () => import('./practices/equilibrio').then((m) => m.equilibrio),

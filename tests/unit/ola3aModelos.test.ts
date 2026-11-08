@@ -1,0 +1,73 @@
+import { describe, expect, it } from 'vitest';
+import {
+  AU_PER_YEAR_KMS, findPair, forceConditions, G_CONST, geostationaryAltitude, gravForce, integrateOrbit, keplerPeriod, keplerTable, M_EARTH, MU_SUN_AU,
+  orbitAt, orbitConditions, PLANETS, R_EARTH_MEAN, satellitePeriod, surfaceGravity, visViva,
+} from '../../src/models/gravitation';
+
+describe('gravitación universal y leyes de Kepler', () => {
+  it('ley de Newton: fuerza Tierra–Luna, peso de 50 kg y la ley del inverso del cuadrado', () => {
+    const p = findPair('tierra-luna');
+    expect(gravForce(p.m1, p.m2, p.r)).toBeCloseTo(1.98e20, -18);
+    expect(gravForce(M_EARTH, 50, R_EARTH_MEAN)).toBeCloseTo(491.0, 0);
+    expect(surfaceGravity(M_EARTH, R_EARTH_MEAN)).toBeCloseTo(9.82, 2);
+    expect(gravForce(1, 1, 2) / gravForce(1, 1, 1)).toBeCloseTo(0.25, 12);
+    expect(G_CONST).toBe(6.6743e-11);
+    expect(() => gravForce(1, 1, 0)).toThrow(RangeError);
+    expect(forceConditions(0.5, 'tierra-estudiante')[0].fix).toContain('1 radio terrestre');
+    expect(forceConditions(0.5, 'tierra-luna')).toEqual([]);
+  });
+  it('tercera ley con los datos de la NASA: todos los planetas a menos de 1 % y T²/a³ ≈ 1 año²/UA³', () => {
+    const rows = keplerTable();
+    expect(rows).toHaveLength(8);
+    for (const r of rows) {
+      expect(Math.abs(r.diffPct), r.planet.id).toBeLessThan(1);
+      expect(r.ratio, r.planet.id).toBeGreaterThan(0.98);
+      expect(r.ratio, r.planet.id).toBeLessThan(1.02);
+    }
+    // Mercurio a Júpiter: mejor que 0,1 %.
+    for (const r of rows.slice(0, 5)) expect(Math.abs(r.diffPct), r.planet.id).toBeLessThan(0.1);
+    const earth = rows.find((r) => r.planet.id === 'tierra')!;
+    expect(earth.Tcalc).toBeCloseTo(365.26, 1);
+    expect(rows.find((r) => r.planet.id === 'mercurio')!.Tcalc).toBeCloseTo(87.97, 1);
+    expect(rows.find((r) => r.planet.id === 'marte')!.Tcalc).toBeCloseTo(687.0, 0);
+    expect(PLANETS.every((p) => p.e < 0.21)).toBe(true);
+  });
+  it('μ del Sol en UA y años ≈ 4π²; la Tierra va a 29,78 km/s; vis-viva v_p/v_a = (1 + e)/(1 − e)', () => {
+    expect(MU_SUN_AU / (4 * Math.PI ** 2)).toBeCloseTo(1, 4);
+    expect(keplerPeriod(1) * 365.25).toBeCloseTo(365.257, 2);
+    expect(visViva(1, 1) * AU_PER_YEAR_KMS).toBeCloseTo(29.78, 2);
+    const e = 0.3;
+    expect(visViva(1 - e, 1) / visViva(1 + e, 1)).toBeCloseTo((1 + e) / (1 - e), 12);
+  });
+  it('órbita integrada (RK4): energía y momento angular conservados, áreas iguales en tiempos iguales y el período de Kepler', () => {
+    for (const e of [0, 0.3, 0.6]) {
+      const run = integrateOrbit(1.5, e);
+      expect(run.energy.maxRelDrift, `energía e=${e}`).toBeLessThan(1e-8);
+      expect(run.angMom.maxRelDrift, `momento e=${e}`).toBeLessThan(1e-8);
+      expect(run.energy.start).toBeCloseTo(-MU_SUN_AU / (2 * 1.5), 10);
+      const mean = run.areas.reduce((s, x) => s + x, 0) / 8;
+      for (const A of run.areas) expect(Math.abs(A - mean) / mean, `áreas e=${e}`).toBeLessThan(1e-6);
+      expect((mean * 8) / run.ellipseArea).toBeCloseTo(1, 6);
+      // Tras un período vuelve al perihelio.
+      const end = run.samples[run.samples.length - 1];
+      expect(Math.hypot(end.x - run.rp, end.y)).toBeLessThan(1e-7);
+    }
+    const run = integrateOrbit(1, 0.5);
+    const half = orbitAt(run, run.period / 2);
+    expect(half.r).toBeCloseTo(run.ra, 6);
+    expect(half.v).toBeCloseTo(run.va, 6);
+    expect(orbitAt(run, run.period * 1.25).t).toBeCloseTo(run.period / 4, 12);
+    expect(() => integrateOrbit(1, 0.5, MU_SUN_AU, 1001)).toThrow(RangeError);
+    expect(() => integrateOrbit(1, 0.95)).toThrow(RangeError);
+  });
+  it('satélites: geoestacionario a 35 786 km y la Estación Espacial a 420 km da una vuelta en ≈ 93 min', () => {
+    expect(geostationaryAltitude() / 1000).toBeCloseTo(35786, 0);
+    expect(satellitePeriod(420e3) / 60).toBeCloseTo(93.0, 1);
+  });
+  it('avisos con su corrección: perihelio dentro del Sol y órbita de cometa', () => {
+    expect(orbitConditions(0.2, 0.9)[0].level).toBe('advertencia');
+    expect(orbitConditions(0.2, 0.99).some((c) => c.level === 'invalido')).toBe(true);
+    expect(orbitConditions(1, 0.8).some((c) => c.text.includes('cometas'))).toBe(true);
+    expect(orbitConditions(1, 0.0167)).toEqual([]);
+  });
+});

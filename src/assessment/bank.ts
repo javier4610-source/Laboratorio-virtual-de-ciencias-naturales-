@@ -1687,6 +1687,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Clasificación de los seres vivos…», recorre la clave de dominios y reinos con un organismo de cada reino.',
     transfer: '¿Qué carácter agregarías a la tabla para decidir si Y es un pez, un anfibio, un reptil, un ave o un mamífero? Compruébalo con la clave de animales.',
   },
+  {
+    id: 'saber-grav-1', grade: 10, topic: 'Gravitación y satélites', competency: 'indagacion', component: 'fisico',
+    skill: 'Usar la tercera ley de Kepler para predecir el período de un satélite', difficulty: 'alta', practiceId: 'gravitacion-orbitas',
+    context: 'Un grupo de 10.º de Apartadó compara tres objetos que giran alrededor de la Tierra. La distancia r se mide desde el centro de la Tierra (radio ≈ 6371 km).',
+    table: {
+      caption: 'Radio de la órbita y período (Estación Espacial y GPS aproximados; Luna: NASA)',
+      headers: ['Objeto', 'r (miles de km)', 'Período'],
+      rows: [['Estación Espacial', '6,8', '93 min'], ['Satélite GPS', '26,6', '12 h'], ['Luna', '384', '27,3 días']],
+    },
+    stem: 'Un estudiante dice que un satélite a r = 13,6 mil km (el doble que la Estación Espacial) tardaría el doble, unos 186 min. ¿Qué responde mejor?',
+    options: [
+      { id: 'a', text: 'Tiene razón: el período es proporcional al radio de la órbita.', feedback: 'El GPS está a 3,9 veces el radio de la Estación y tarda 7,7 veces más: no es proporcional.' },
+      { id: 'b', text: 'Tardaría menos de 93 min, porque más lejos la gravedad es menor.', feedback: 'Más lejos la vuelta es más larga y la rapidez menor: tarda más.' },
+      { id: 'c', text: 'Por la tercera ley de Kepler, T² ∝ r³: al duplicar r el período se multiplica por 2^1,5 ≈ 2,8, unos 263 min.', feedback: 'Correcto: (13,6/6,8)^1,5 = 2,83 y 93 min × 2,83 ≈ 263 min.' },
+      { id: 'd', text: 'No se puede saber sin conocer la masa del satélite.', feedback: 'La masa del satélite no influye: el período depende de la masa de la Tierra y de r.' },
+    ],
+    correct: 'c',
+    explanation: 'Para todos los satélites de la Tierra T² = 4π²r³/(G·M_T). Si r se duplica, T se multiplica por √8 ≈ 2,83. Con los datos: el GPS tiene r/r_EEI ≈ 3,9 y 3,9^1,5 ≈ 7,7, y 93 min × 7,7 ≈ 12 h, como en la tabla.',
+    review: 'En la práctica «Gravitación universal, órbitas y leyes de Kepler», calcula el período de satélites a varias altitudes en «Planetas y satélites».',
+    transfer: '¿A qué distancia del centro de la Tierra tendría que estar un satélite para dar una vuelta en un día sidéreo (86 164 s)? Usa r = (G·M·T²/4π²)^⅓ y compruébalo con el satélite geoestacionario.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

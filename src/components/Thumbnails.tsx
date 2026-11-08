@@ -1027,6 +1027,17 @@ const SCENES: Record<string, () => ReactNode> = {
       <rect x="290" y="38" width="5" height="84" rx="2" fill={INK} opacity="0.35" />
     </>
   ),
+  'gravitacion-orbitas': () => (
+    <>
+      <ellipse cx="160" cy="80" rx="120" ry="58" fill="none" stroke={INK} strokeWidth="1.6" strokeDasharray="4 3" />
+      <path d="M200 80 L280 80 A120 58 0 0 0 270 54 Z" fill="var(--series-2)" opacity="0.35" />
+      <path d="M200 80 L40 80 A120 58 0 0 1 44 66 Z" fill="var(--series-3)" opacity="0.35" />
+      <circle cx="200" cy="80" r="14" fill="#e3a008" />
+      <circle cx="270" cy="54" r="8" fill="var(--series-5)" stroke={INK} />
+      <Arrow x1={270} y1={54} x2={244} y2={28} color="var(--data)" w={2.4} />
+      <Arrow x1={270} y1={54} x2={240} y2={66} color="var(--bad)" w={2.4} />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

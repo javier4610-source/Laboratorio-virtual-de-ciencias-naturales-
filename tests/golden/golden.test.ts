@@ -26,6 +26,7 @@ import { electromagnet, wireField } from '../../src/models/magnetism';
 import { co2Warming, effectiveTemp, layerModel } from '../../src/models/greenhouse';
 import { BERGMAN, ogttCategory, fastingCategory, simulateGlucose } from '../../src/models/glucose';
 import { buildKey, domainOf, findKey, findOrganism as findTaxon, identify, keyMembers } from '../../src/models/classification';
+import { geostationaryAltitude, integrateOrbit, keplerTable, satellitePeriod } from '../../src/models/gravitation';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -462,6 +463,14 @@ export const GOLDEN: GoldenCase[] = [
     close(effectiveTemp(1361, 0.3), ((1361 * 0.7) / (4 * 5.670374419e-8)) ** 0.25, 1e-9); close(effectiveTemp(1361, 0.3), 254.578, 1e-3);
     close(layerModel({ S: 1361, albedo: 0.3, eps: 1 }).Ts, 302.746, 1e-3);
     close(co2Warming(2 * 278.3, 3).forcing, 3.70834, 1e-5); close(co2Warming(2 * 278.3, 3).dT, 3, 1e-12);
+  } },
+  { id: 'gravitacion-orbitas', origin: 'referencia', what: 'NASA Planetary Fact Sheets: períodos siderales de Mercurio 87,969 d, la Tierra 365,256 d y Marte 686,98 d frente a T = 2π√(a³/G(M + m)) (a menos de 0,1 %); órbita geoestacionaria a 35 786 km; Estación Espacial a 420 km: 93,0 min; órbita integrada con e = 0,6: energía conservada (< 10⁻⁸) y áreas barridas iguales que suman πab', run: () => {
+    const rows = keplerTable();
+    for (const [id, days] of [['mercurio', 87.969], ['tierra', 365.256], ['marte', 686.98]] as [string, number][]) close(rows.find((r) => r.planet.id === id)!.Tcalc, days, days * 1e-3);
+    close(geostationaryAltitude() / 1000, 35786, 1); close(satellitePeriod(420e3) / 60, 92.97, 0.01);
+    const run = integrateOrbit(1, 0.6);
+    expect(run.energy.maxRelDrift).toBeLessThan(1e-8);
+    close(run.areas.reduce((s, x) => s + x, 0) / run.ellipseArea, 1, 1e-6);
   } },
 ];
 

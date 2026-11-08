@@ -149,6 +149,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: 'Temperaturas y flujos calculados con la ley de Stefan–Boltzmann (σ de CODATA 2018), la constante solar de Kopp y Lean (2011), los planetas de la NASA Planetary Fact Sheet y el modelo de una capa de Archer; forzamiento del CO₂ con la fórmula de Myhre (1998) y sensibilidad climática del IPCC AR6: modelo calculado, no son mediciones. Los albedos de las superficies son ilustrativos. Tierra 3D: flechas con longitud proporcional a los flujos del modelo; la Tierra, la capa y el Sol son un dibujo sin escala.' };
   }
+  if (practiceId === 'gravitacion-orbitas') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Fuerzas con la ley de Newton (G de CODATA 2018); órbitas integradas con Runge–Kutta de 4.º orden con el GM del Sol de la IAU; tercera ley con los semiejes, períodos y masas de las fichas de la NASA (Planetary Fact Sheets); satélites con el GM de la Tierra del IERS: modelo calculado, no son mediciones. El planeta imaginario, la masa del estudiante y las esferas son ilustrativos. Órbita 3D: trayectoria integrada, flecha de velocidad proporcional a la rapidez y de fuerza proporcional a 1/r²; el Sol y el planeta no están a escala.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

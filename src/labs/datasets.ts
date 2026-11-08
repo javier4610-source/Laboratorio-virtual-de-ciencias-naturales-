@@ -2139,4 +2139,48 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'gravitacion-orbitas': [
+    {
+      id: 'fuerza', label: 'Ley de gravitación', defaultX: 'distanciaRel', defaultY: 'fuerzaRel',
+      columns: [
+        { key: 'pareja', label: 'Pareja de cuerpos', numeric: false, input: true },
+        { key: 'distanciaRel', label: 'Distancia / distancia original', numeric: true, decimals: 3, input: true },
+        { key: 'distancia', label: 'Distancia entre centros r', unit: 'm', numeric: true, decimals: 0 },
+        { key: 'fuerza', label: 'Fuerza gravitacional F', unit: 'N', numeric: true, decimals: 4 },
+        { key: 'fuerzaRel', label: 'F / F original', numeric: true, decimals: 5 },
+      ],
+    },
+    {
+      id: 'orbitas', label: 'Órbitas integradas', defaultX: 'a', defaultY: 'periodo',
+      columns: [
+        { key: 'cuerpo', label: 'Cuerpo', numeric: false, input: true },
+        { key: 'a', label: 'Semieje mayor a', unit: 'UA', numeric: true, decimals: 4, input: true },
+        { key: 'e', label: 'Excentricidad e', numeric: true, decimals: 4, input: true },
+        { key: 'periodo', label: 'Período T', unit: 'años', numeric: true, decimals: 4 },
+        { key: 'vp', label: 'Rapidez en el perihelio', unit: 'km/s', numeric: true, decimals: 2 },
+        { key: 'va', label: 'Rapidez en el afelio', unit: 'km/s', numeric: true, decimals: 2 },
+        { key: 'areas', label: 'Diferencia máxima entre las 8 áreas', unit: '%', numeric: true, decimals: 8 },
+      ],
+    },
+    {
+      id: 'planetas', label: 'Planetas (NASA) y tercera ley', defaultX: 'logA', defaultY: 'logT',
+      columns: [
+        { key: 'planeta', label: 'Planeta', numeric: false, input: true },
+        { key: 'aUA', label: 'Semieje mayor a', unit: 'UA', numeric: true, decimals: 4 },
+        { key: 'periodoAnios', label: 'Período medido T', unit: 'años', numeric: true, decimals: 4 },
+        { key: 'periodoCalc', label: 'Período calculado', unit: 'días', numeric: true, decimals: 1 },
+        { key: 'razon', label: 'T²/a³', unit: 'años²/UA³', numeric: true, decimals: 4 },
+        { key: 'logA', label: 'log₁₀ a', numeric: true, decimals: 4 },
+        { key: 'logT', label: 'log₁₀ T', numeric: true, decimals: 4 },
+      ],
+    },
+    {
+      id: 'satelites', label: 'Satélites de la Tierra', defaultX: 'altitud', defaultY: 'periodo',
+      columns: [
+        { key: 'altitud', label: 'Altitud sobre el ecuador', unit: 'km', numeric: true, decimals: 0, input: true },
+        { key: 'periodo', label: 'Período', unit: 'min', numeric: true, decimals: 1 },
+        { key: 'rapidez', label: 'Rapidez orbital', unit: 'km/s', numeric: true, decimals: 3 },
+      ],
+    },
+  ],
 };

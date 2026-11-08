@@ -60,7 +60,7 @@ test('catálogo: los filtros viajan en la dirección, se quitan uno a uno y el e
   await page.getByLabel('Buscar').fill('zzzz');
   await expect(page.getByText('No hay prácticas con esos filtros')).toBeVisible();
   await page.getByRole('button', { name: 'Quitar todos los filtros' }).click();
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(79);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(82);
 });
 
 test('atajos de teclado: «?» abre la lista, «/» busca y los números cambian de etapa', async ({ page }) => {
@@ -91,7 +91,7 @@ test('práctica: navegación entre prácticas del grado y migas con área', asyn
   const crumbs = page.getByRole('navigation', { name: 'Ruta de navegación' });
   await expect(crumbs.getByRole('link', { name: 'Física' })).toHaveAttribute('href', '#/catalogo?area=fisica');
   const pager = page.getByRole('navigation', { name: 'Otras prácticas del grado' });
-  await expect(pager).toContainText('Práctica 1 de 9');
+  await expect(pager).toContainText('Práctica 1 de 10');
   await pager.getByRole('link', { name: /Siguiente/ }).click();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Separación de mezclas');
 });

@@ -908,7 +908,7 @@ test('validación curricular: registrar un DBA verificado y verlo en el resumen'
   await expect(page.getByRole('row', { name: /Genética de poblaciones/ })).toContainText('DBA 4, grado 11.º');
   await page.reload();
   await page.getByRole('tab', { name: 'Validación curricular' }).click();
-  await expect(page.locator('.kpi').first()).toContainText('1/79');
+  await expect(page.locator('.kpi').first()).toContainText('1/82');
 });
 
 test('encuesta de opinión viaja en el informe', async ({ page }) => {

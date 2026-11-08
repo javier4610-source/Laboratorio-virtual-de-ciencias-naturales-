@@ -70,10 +70,10 @@ describe('catálogo: filtros en la dirección, búsqueda y orden', () => {
     expect(filtersFromQuery(new URLSearchParams('area=magia&grado=13&estado=x&orden=y'))).toEqual({ q: '', grado: '', area: '', competencia: '', estado: '', orden: '' });
     expect(filtersFromQuery(new URLSearchParams(filtersToQuery(f).slice(1)))).toEqual(f);
   });
-  it('mantiene los conteos (adn → 4 con la meiosis; química → 27 con las olas 1a, 1b y 2a) y filtra por avance', () => {
+  it('mantiene los conteos (adn → 4 con la meiosis; química → 28 con las olas 1a, 1b, 2a y 3a) y filtra por avance', () => {
     const base = { q: '', grado: '', area: '', competencia: '', estado: '', orden: '' };
     expect(filterCatalog(CATALOG, { ...base, q: 'adn' }, {}).length).toBe(4);
-    expect(filterCatalog(CATALOG, { ...base, area: 'quimica' }, {}).length).toBe(27);
+    expect(filterCatalog(CATALOG, { ...base, area: 'quimica' }, {}).length).toBe(28);
     expect(filterCatalog(CATALOG, { ...base, estado: 'en-curso' }, { densidad: 50, mendel: 100 }).map((p) => p.id)).toEqual(['densidad']);
     expect(filterCatalog(CATALOG, { ...base, estado: 'completada' }, { densidad: 50, mendel: 100 }).map((p) => p.id)).toEqual(['mendel']);
     expect(filterCatalog(CATALOG, { ...base, estado: 'sin-iniciar' }, { densidad: 50 }).length).toBe(CATALOG.length - 1);

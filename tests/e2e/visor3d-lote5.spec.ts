@@ -22,6 +22,15 @@ const CASES: Case[] = [
     // El generador arranca solo (sin movimiento reducido): se pausa para comparar imágenes estables.
     prepare: async (page) => { await page.getByRole('button', { name: 'Pausar', exact: true }).click(); },
   },
+  {
+    name: 'sonido', id: 'sonido', prefix: 'son3d', title: /las capas de aire dentro del tubo/,
+    // Generador encendido (amplitud constante) y una columna cercana a la resonancia de 512 Hz.
+    prepare: async (page) => {
+      await page.getByRole('button', { name: 'Generador y parlante', exact: true }).click();
+      await page.getByRole('slider', { name: 'Longitud de la columna de aire', exact: true }).fill('49');
+      await page.getByRole('button', { name: 'Encender el generador' }).click();
+    },
+  },
 ];
 
 /** Los rótulos HTML superpuestos no se encima entre sí ni se salen del lienzo. */

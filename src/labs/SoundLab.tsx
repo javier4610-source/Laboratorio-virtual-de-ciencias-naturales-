@@ -1,6 +1,6 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  FORKS, FORK_TAU, SCOPE, SOUND_INSTRUMENTS, SOUND_LIMITS, SPEAKER_POWERS, TUBE_DIAMETERS, analyzeResonances, forkEnvelope,
+  FORKS, SCOPE, SOUND_INSTRUMENTS, SOUND_LIMITS, SPEAKER_POWERS, TUBE_DIAMETERS, analyzeResonances,
   freeFieldMicMv, levelToIntensity, nearestNote, octavesAbove, playbackLevel, scopeView, soundLevel, speedOfSound, tubeResponse,
   type SourceId, type SpeakerPowerId, type TubeType,
 } from '../models/soundResonance';
@@ -15,6 +15,11 @@ import { INSTRUMENTS } from './instruments';
 import { BenchTop, ContactShadow, Lcd, Thermometer } from './kit';
 import { Knob, ManipHint, ManipScene, Plunger } from './manipulate';
 import { FORK_RING_S, ToneSynth, toneSupported } from './soundTones';
+import { useEnvelope } from './soundEnvelope';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const SonidoView3D = lazy(() => import('./lote3d5/SonidoView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -67,35 +72,6 @@ const sci = (v: number) => {
   const exp = String(e).replace('-', '⁻').replace(/\d/g, (c) => '⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(c)]);
   return `${fmt(v / 10 ** e, 2)} × 10${exp}`;
 };
-
-/* ------------------------------------------------------------------ envolvente en vivo (lo que suena = lo que se ve) */
-
-/**
- * Amplitud relativa de la fuente en este instante: 1 con el generador encendido; e^(−t/τ) después del golpe del
- * diapasón; 0 en silencio. Con movimiento reducido se actualiza cuatro veces por segundo, sin animación continua.
- */
-function useEnvelope(strikeAt: number | null, genOn: boolean): number {
-  const [env, setEnv] = useState(0);
-  useEffect(() => {
-    if (genOn) { setEnv(1); return; }
-    if (strikeAt === null) { setEnv(0); return; }
-    const reduced = prefersReducedMotion();
-    const value = (now: number) => forkEnvelope(Math.min(FORK_RING_S, Math.max(0, now - strikeAt) / 1000), FORK_TAU);
-    setEnv(value(performance.now()));
-    if (reduced) {
-      const id = window.setInterval(() => setEnv(value(performance.now())), 250);
-      return () => window.clearInterval(id);
-    }
-    let raf = 0, last = 0;
-    const tick = (now: number) => {
-      if (now - last > 33) { last = now; setEnv(value(now)); }
-      if (Math.max(0, now - strikeAt) / 1000 < FORK_RING_S) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [strikeAt, genOn]);
-  return env;
-}
 
 /* ------------------------------------------------------------------ definiciones locales */
 
@@ -814,6 +790,12 @@ export default function SoundLab({ api }: LabProps) {
           </div>
         </div>
 
+        {isTube && (
+          <Panel3D title="las capas de aire dentro del tubo" summary="El tubo de resonancia en 3D: mientras suena la fuente, las capas de aire vibran con la onda estacionaria del modelo y la presión se colorea (rojo comprimido, azul enrarecido). Se ven los nodos y vientres del tubo cerrado o abierto.">
+            <SonidoView3D strikeAt={strikeAt} genOn={genOn} type={tubeType} lengthCm={L} diameterCm={diam} k={tube.k} endCm={corr} response={tube.response}
+              f={f} tempC={temp} source={src} />
+          </Panel3D>
+        )}
         {isTube ? (
           <>
             <Chart title="Curva de resonancia: tus lecturas" xLabel="Longitud de la columna de aire (cm)" yLabel="Amplitud del micrófono (mV)" xUnit="cm" yUnit="mV" height={230}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Select, Slider } from '../../components/ui';
 import { Scene3D } from '../../three';
+import { useNarrow } from './useNarrow';
 import { popGenScene } from './popgen3d';
 
 interface Props {
@@ -24,6 +25,7 @@ export default function PopGenView3D({ series, n, drift, migration, migrantP }: 
   const p = series[g]?.p[r] ?? 0.5;
   const scene = useMemo(() => popGenScene({ p, n, generation: series[g]?.generation ?? 0, replicate: r, replicates: reps, drift, migration, migrantP }),
     [p, n, series, g, r, reps, drift, migration, migrantP]);
+  const frame = useNarrow() ? scene.narrow : scene;
   return (
     <div>
       <div className="grid-2" style={{ marginBottom: 8 }}>
@@ -33,7 +35,7 @@ export default function PopGenView3D({ series, n, drift, migration, migrantP }: 
             options={Array.from({ length: reps }, (_, k) => ({ value: String(k), label: `Población ${k + 1}` }))} />
         )}
       </div>
-      <Scene3D idPrefix="pg3d" title="Isla y continente con sus alelos en 3D" items={scene.items} extent={scene.extent} target={scene.target}
+      <Scene3D idPrefix="pg3d" title="Isla y continente con sus alelos en 3D" items={scene.items} extent={frame.extent} target={frame.target}
         description={scene.description} height={320} initialOrbit={{ yaw: 0.2, pitch: 0.7 }} status="modelo"
         statusNote="Frecuencia p y copias de A (2N·p) de la isla: las del modelo en la población y la generación elegidas; individuos con las proporciones de Hardy-Weinberg de ese p (como la poza génica del banco; con N > 100, una muestra de 100); continente con la p de los migrantes y m·individuos migrantes por generación. Dibujo: paisaje, formas y lugar de cada individuo." />
     </div>

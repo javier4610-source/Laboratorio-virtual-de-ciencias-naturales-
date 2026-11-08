@@ -85,7 +85,7 @@ export function jiggle(i: number, seed: number, amp: number, tau: number): Vec3 
 const ease = (q: number) => (q < 0.5 ? 2 * q * q : 1 - (-2 * q + 2) ** 2 / 2);
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
-export function heatScene(inp: HeatSceneInput): { items: SceneItem[]; extent: number; target: Vec3; description: string; amps: { sample: number; water: number }; metalD: number } {
+export function heatScene(inp: HeatSceneInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: { extent: number; target: Vec3 }; description: string; amps: { sample: number; water: number }; metalD: number } {
   const mixed = inp.transfer >= 1;
   const metalIn = inp.isMetal && inp.transfer >= 0.85;
   const metalV = inp.sampleMass / inp.density;
@@ -164,7 +164,7 @@ export function heatScene(inp: HeatSceneInput): { items: SceneItem[]; extent: nu
     items.push({ id: 'aire-2', kind: 'arrow', from: [0, y, out ? -(CUP_R + 0.5) : -(CUP_R + 0.5 + lenA)], vector: [0, 0, out ? -lenA : lenA], radius: 0.16, color: 'warn' });
   }
   // Resistencia de la parrilla: roja mientras calienta (antes de mezclar), como en el banco.
-  items.push({ id: 'resistencia', kind: 'rod', from: [BATH_X, 1.18, 0], to: [BATH_X, 1.26, 0], radius: BATH_R + 0.6, color: inp.transfer === 0 ? '#d9534f' : '#5b6568' });
+  items.push({ id: 'resistencia', kind: 'box', center: [BATH_X, 1.22, 0], size: [7.6, 0.06, 7.2], color: inp.transfer === 0 ? '#d9534f' : '#5b6568' });
 
   const who = inp.isMetal ? `la pieza de ${inp.metalName.toLowerCase()}` : 'el agua caliente';
   const pct = (ampS / ampW - 1) * 100;
@@ -176,5 +176,5 @@ export function heatScene(inp: HeatSceneInput): { items: SceneItem[]; extent: nu
       ? `${inp.done ? 'Registro terminado' : `Tiempo ${fmt(inp.simT, 0)} s`}: la muestra y el agua ya tienen la misma temperatura (equilibrio térmico), así que no pasa calor entre ellas y las partículas tienen el mismo color y la misma agitación. El termómetro marca ${fmt(inp.lcd, 1)} °C${lenA > 0.05 ? `; el vaso sigue ${inp.toAir > 0 ? 'cediendo' : 'recibiendo'} un poco de calor ${inp.toAir > 0 ? 'al' : 'del'} aire del salón (${fmt(inp.ambient, 0)} °C)` : ''}.`
       : `Tiempo ${fmt(inp.simT, 0)} s: el termómetro marca ${fmt(inp.lcd, 1)} °C. Las partículas de ${who} están más ${inp.sampleT > inp.waterT ? 'calientes' : 'frías'} (color más ${inp.sampleT > inp.waterT ? 'rojo' : 'azul'}) y se agitan ${fmt(Math.abs(pct), 1)} % ${pct >= 0 ? 'más' : 'menos'} que las del agua del calorímetro; la flecha roja muestra el calor que pasa ${inp.toWater > 0 ? `de ${who} al agua` : `del agua a ${who}`}, y se acorta a medida que las temperaturas se acercan.`;
   const description = `Calorímetro en 3D (${wall.name.toLowerCase()} con tapa, visto a través de la pared) sobre la mesa, con ${fmt(inp.waterMass, 0)} g de agua, el termómetro y el agitador; a la izquierda, la parrilla. ${state} La agitación de cada partícula es proporcional a la raíz cuadrada de su temperatura absoluta, y su color sigue la escala fija (${TEMP_SCALE_TEXT}).`;
-  return { items, extent: 9.5, target: [-6, 5, 0], description, amps: { sample: ampS, water: ampW }, metalD };
+  return { items, extent: 10.5, target: [-5.5, 5, 0], narrow: { extent: 12, target: [-5.5, 5, 0] as Vec3 }, description, amps: { sample: ampS, water: ampW }, metalD };
 }

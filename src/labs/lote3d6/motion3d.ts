@@ -66,7 +66,7 @@ function moverItems(id: string, kind: MoverKind, x: number, z: number, color: Sc
   ];
 }
 
-export function motionScene(inp: MotionSceneInput): { items: SceneItem[]; extent: number; target: Vec3; description: string; paths: number[]; displacements: number[] } {
+export function motionScene(inp: MotionSceneInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: { extent: number; target: Vec3 }; description: string; paths: number[]; displacements: number[] } {
   const d = inp.finish - inp.start;
   const items: SceneItem[] = [
     { id: 'cancha', kind: 'plane', center: [20, -0.02, 0], size: [52, 16], color: '#3f8f4a' },
@@ -128,5 +128,5 @@ export function motionScene(inp: MotionSceneInput): { items: SceneItem[]; extent
     state = `${lane.name} ${inp.phase === 'medido' ? 'terminó el recorrido y está' : 'está'} ${where(lane.pos)}. En un recorrido de ida en línea recta, el camino recorrido y el desplazamiento miden lo mismo.`;
   }
   const description = `Pista recta de 40 m en 3D vista desde arriba, con marcas cada 5 m: cono de salida en ${fmt(inp.start, 0)} m, bandera de meta en ${fmt(inp.finish, 0)} m y cinta métrica de ${fmt(inp.tape, 1)} m${inp.gates.length ? ', con fotopuertas cada 5 m' : ''}. ${state} La línea pintada sobre la pista es la distancia recorrida (el camino) y la flecha, el desplazamiento.`;
-  return { items, extent: 16, target: [20, 0.5, 0], description, paths, displacements };
+  return { items, extent: 16, target: [20, 0.5, 0], narrow: { extent: 22, target: [20, 0.5, 0] as Vec3 }, description, paths, displacements };
 }

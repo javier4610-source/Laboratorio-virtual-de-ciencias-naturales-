@@ -44,8 +44,8 @@ function people(prefix: string, counts: [number, number, number], c: Vec3, R: nu
     }
   });
   const out: SceneItem[] = [];
-  if (A.length) out.push({ id: `${prefix}-A`, kind: 'particles', points: A, radius: 0.3, color: COL_A, ...(label ? { label: `Alelo A (${label})` } : {}) });
-  if (a.length) out.push({ id: `${prefix}-a`, kind: 'particles', points: a, radius: 0.3, color: COL_a, ...(label ? { label: `Alelo a (${label})` } : {}) });
+  if (A.length) out.push({ id: `${prefix}-A`, kind: 'particles', points: A, radius: 0.3, color: COL_A, ...(label ? { label: 'Alelo A' } : {}) });
+  if (a.length) out.push({ id: `${prefix}-a`, kind: 'particles', points: a, radius: 0.3, color: COL_a, ...(label ? { label: 'Alelo a' } : {}) });
   return out;
 }
 
@@ -61,7 +61,7 @@ export interface PopGenSceneInput {
   migrantP: number;
 }
 
-export function popGenScene(inp: PopGenSceneInput): { items: SceneItem[]; extent: number; target: Vec3; description: string; shown: number; counts: [number, number, number]; copiesA: number; migrants: number } {
+export function popGenScene(inp: PopGenSceneInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: { extent: number; target: Vec3 }; description: string; shown: number; counts: [number, number, number]; copiesA: number; migrants: number } {
   const shown = Math.min(inp.n, MAX_SHOWN);
   const counts = hwCounts(inp.p, shown);
   const copiesA = Math.round(2 * inp.n * inp.p);
@@ -70,8 +70,8 @@ export function popGenScene(inp: PopGenSceneInput): { items: SceneItem[]; extent
     { id: 'mar', kind: 'plane', center: [-2, -0.05, 0], size: [44, 26], color: '#5aa9de', opacity: 0.55 },
     { id: 'isla', kind: 'rod', from: [ISLAND[0], -0.05, ISLAND[2]], to: [ISLAND[0], 0.4, ISLAND[2]], radius: 7.2, color: '#9cc27a', label: inp.drift ? `Isla: población ${inp.replicate + 1}` : 'Isla: la población' },
     { id: 'continente', kind: 'rod', from: [CONT[0], -0.05, CONT[2]], to: [CONT[0], 0.4, CONT[2]], radius: 6, color: '#c9b27a', label: 'Continente: origen de los migrantes' },
-    ...people('isla', counts, [ISLAND[0], 0.4, ISLAND[2]], 6.4, 7),
-    ...people('cont', hwCounts(inp.migrantP, 60), [CONT[0], 0.4, CONT[2]], 5.2, 13, 'continente'),
+    ...people('isla', counts, [ISLAND[0], 0.4, ISLAND[2]], 6.4, 7, 'azul'),
+    ...people('cont', hwCounts(inp.migrantP, 60), [CONT[0], 0.4, CONT[2]], 5.2, 13),
   ];
   if (migrants) {
     items.push({ id: 'puente', kind: 'box', center: [-2.5, 0.25, 0], size: [8, 0.3, 1.6], color: '#8d6b45', label: `Migrantes: ${fmt(inp.migration * 100, 0)} % por generación` });
@@ -92,5 +92,5 @@ export function popGenScene(inp: PopGenSceneInput): { items: SceneItem[]; extent
     + `Se dibujan ${counts[0]} AA, ${counts[1]} Aa y ${counts[2]} aa${sample}; cada individuo lleva sus dos alelos (azul A, naranja a). `
     + (inp.p >= 1 - 1e-12 ? 'El alelo A está fijado: ya no hay a en la isla. ' : inp.p <= 1e-12 ? 'El alelo A se perdió: solo queda a en la isla. ' : '')
     + (migrants ? `Del continente (p = ${fmt(inp.migrantP, 2)}) llegan por el puente ${migrants} migrantes por cada ${shown} individuos en cada generación: el flujo génico acerca la frecuencia de la isla a la del continente.` : 'Sin migración: el continente no intercambia individuos con la isla.');
-  return { items, extent: 12, target: [-2, 1, 0], description, shown, counts, copiesA, migrants };
+  return { items, extent: 14, target: [-2, 1, 0], narrow: { extent: 17, target: [-2, 1, 0] as Vec3 }, description, shown, counts, copiesA, migrants };
 }

@@ -47,7 +47,7 @@ export interface MixturesSceneInput {
 
 const massText = (m: Masses) => COMPONENTS.filter((c) => m[c.id] > 0.005).map((c) => `${SHORT[c.id]} ${fmt(m[c.id], 1)} g`).join(', ');
 
-export function mixturesScene({ state, last }: MixturesSceneInput): { items: SceneItem[]; extent: number; target: Vec3; description: string; counts: { where: string; id: ComponentId; n: number }[] } {
+export function mixturesScene({ state, last }: MixturesSceneInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: { extent: number; target: Vec3 }; description: string; counts: { where: string; id: ComponentId; n: number }[] } {
   const v = state.vessel;
   const wet = state.water > 0;
   const hw = waterLevel(state.water);
@@ -135,5 +135,5 @@ export function mixturesScene({ state, last }: MixturesSceneInput): { items: Sce
       ? `Fracciones separadas (${state.separated.length}${state.separated.length > MAX_SLOTS ? `; se dibujan las últimas ${MAX_SLOTS}` : ''}): ${fractions.join('; ')}.`
       : 'Aún no se ha separado nada: aplica una técnica y su herramienta aparecerá con lo que separó.')
     + ` Cada partícula representa ${fmt(1 / PER_G, 2)} g.`;
-  return { items, extent: 13, target: [-6, 4, -3], description, counts };
+  return { items, extent: 13, target: [-6, 4, -3], narrow: { extent: 19, target: [-2, 4, -3] as Vec3 }, description, counts };
 }

@@ -57,7 +57,7 @@ function rodItems(prefix: string, temps: number[], z: number, label: string): Sc
   }));
 }
 
-export function conductionScene(inp: ConductionSceneInput): { items: SceneItem[]; extent: number; target: Vec3; description: string; temps: number[]; compareTemps: number[] | null; fallen: number[] } {
+export function conductionScene(inp: ConductionSceneInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: { extent: number; target: Vec3 }; description: string; temps: number[]; compareTemps: number[] | null; fallen: number[] } {
   const temps = segmentTemps(inp.main.solution, inp.simT);
   const cmp = inp.compare ? segmentTemps(inp.compare.solution, inp.simT) : null;
   const bz = cmp ? -3 : 0;
@@ -119,5 +119,5 @@ export function conductionScene(inp: ConductionSceneInput): { items: SceneItem[]
       + (inp.indicator === 'tachuelas' ? ` Cayeron ${fallen.length} de ${inp.nTacks} tachuelas.` : '')
       + (cmp && inp.compare ? ` En el mismo tiempo, ${reachText(`varilla de ${inp.compare.short.toLowerCase()} (comparación)`, cmp)}.` : '');
   const description = `Varilla de ${inp.main.short.toLowerCase()} de 30 cm ${inp.cover === 'icopor' ? 'con funda de icopor ' : ''}en 3D, con un extremo en el baño a ${fmt(inp.bathT, 0)} °C${cmp && inp.compare ? ` y, al lado, una varilla de ${inp.compare.short.toLowerCase()} para comparar` : ''}. Cada centímetro tiene el color de su temperatura (escala fija: ${TEMP_SCALE_TEXT}). ${state}`;
-  return { items, extent: 15, target: [9, 6, bz], description, temps, compareTemps: cmp, fallen };
+  return { items, extent: 16.5, target: [8.5, 6, bz], narrow: { extent: 21, target: [8.5, 6, bz] as Vec3 }, description, temps, compareTemps: cmp, fallen };
 }

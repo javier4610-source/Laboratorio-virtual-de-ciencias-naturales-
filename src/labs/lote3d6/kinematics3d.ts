@@ -60,7 +60,7 @@ function bike(x: number): SceneItem[] {
   ];
 }
 
-export function kinematicsScene(inp: KinematicsSceneInput): { items: SceneItem[]; extent: number; target: Vec3; description: string; vLen: number; aLen: number } {
+export function kinematicsScene(inp: KinematicsSceneInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: { extent: number; target: Vec3 }; description: string; vLen: number; aLen: number } {
   const kv = vScale(inp.vMax);
   // Detenido (frenó hasta v = 0, o nunca arrancó) o al final de la pista: ya no acelera.
   const accelerating = inp.stopped || inp.atEnd ? 0 : inp.acceleration;
@@ -102,5 +102,5 @@ export function kinematicsScene(inp: KinematicsSceneInput): { items: SceneItem[]
     ? ` En la pared, los puntos de las fotos ${inp.acceleration > 0 ? 'se separan cada vez más a lo largo de la pista (cada vez recorre más en 0,5 s)' : inp.acceleration < 0 ? 'se juntan a lo largo de la pista (cada vez recorre menos en 0,5 s)' : 'quedan igual de separados (recorre lo mismo cada 0,5 s)'}.`
     : '';
   const description = `Ciclorruta recta de 50 m en 3D con el ciclista, la flecha v de su velocidad, la flecha a de la aceleración y, detrás, una pared con la gráfica posición–tiempo girada (la posición a lo largo de la pista y el tiempo hacia arriba). ${state}${wall}`;
-  return { items, extent: 18, target: [25, 3.5, -2], description, vLen: inp.v * kv, aLen: accelerating * A_SCALE };
+  return { items, extent: 18, target: [25, 3.5, -2], narrow: { extent: 27, target: [25, 3.5, -2] as Vec3 }, description, vLen: inp.v * kv, aLen: accelerating * A_SCALE };
 }

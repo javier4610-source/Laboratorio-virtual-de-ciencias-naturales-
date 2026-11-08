@@ -14,6 +14,7 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   'magnetismo-imanes': () => import('./practices/magnetismo-imanes').then((m) => m.magnetismoImanes),
   'efecto-invernadero': () => import('./practices/efecto-invernadero').then((m) => m.efectoInvernadero),
   'homeostasis-glucosa': () => import('./practices/homeostasis-glucosa').then((m) => m.homeostasisGlucosa),
+  'clasificacion-seres-vivos': () => import('./practices/clasificacion-seres-vivos').then((m) => m.clasificacionSeresVivos),
   'sistema-circulatorio': () => import('./practices/sistema-circulatorio').then((m) => m.sistemaCirculatorio),
   'sistema-nervioso': () => import('./practices/sistema-nervioso').then((m) => m.sistemaNervioso),
   meiosis: () => import('./practices/meiosis').then((m) => m.meiosis),

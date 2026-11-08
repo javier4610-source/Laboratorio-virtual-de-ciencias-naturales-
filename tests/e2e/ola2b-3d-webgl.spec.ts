@@ -108,3 +108,23 @@ test('homeostasis-glucosa 3D: las partículas de glucosa siguen la concentració
   expect(await description(v)).toBe(paused);
   await shots(page, () => figureOf(page, 'glu'), 'homeostasis-glucosa-3d');
 });
+
+test('clasificacion-seres-vivos 3D: el ejemplar muestra sus patas y la bandeja atenúa los ya separados', async ({ page }) => {
+  await openFree(page, 'clasificacion-seres-vivos');
+  await waitEngine(page, 'cla', 'disponible');
+  const v = view(page, 'cla');
+  expect(await description(v)).toContain('Hormiga arriera (Atta cephalotes). Se ve: 6 patas, antenas');
+  await keyboardAndTheme(page, 'cla', 'clasificacion-seres-vivos 3D');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(figureOf(page, 'cla').locator('.scene3d-label', { hasText: '6 patas articuladas' })).toBeVisible();
+  await shots(page, () => figureOf(page, 'cla'), 'clasificacion-3d-hormiga');
+  const before = await pixels(v);
+  await page.getByLabel('Ejemplar', { exact: true }).selectOption('cangrejo');
+  await expect.poll(() => description(v)).toContain('10 patas');
+  expect((await pixels(v)).uri).not.toBe(before.uri);
+  await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Construir tu clave', exact: true }).click();
+  await expect.poll(() => description(view(page, 'cla'))).toContain('Bandeja con 10 ejemplares');
+  await page.getByLabel(/^Carácter para separar/).selectOption('vertebras');
+  await expect.poll(() => description(view(page, 'cla'))).toContain('Falta separar (se ven opacos): Perezoso de tres dedos, Garza blanca, Bocachico, Iguana verde, Sapo común.');
+  await shots(page, () => figureOf(page, 'cla'), 'clasificacion-3d-bandeja');
+});

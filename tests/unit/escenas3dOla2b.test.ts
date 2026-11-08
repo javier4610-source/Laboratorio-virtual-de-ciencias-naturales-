@@ -3,6 +3,8 @@ import { earthScene, K_FLUX, K_FORCING, R_EARTH, R_LAYER } from '../../src/labs/
 import { layerModel, co2Forcing } from '../../src/models/greenhouse';
 import { glucoseScene, K_GLUCOSE, K_INSULIN, PER_GLUCAGON, PER_GLUCOSE, PER_INSULIN } from '../../src/labs/glucose3d';
 import { fluxesAt, simulateGlucose, stateAt, type GlucoseInput } from '../../src/models/glucose';
+import { specimenItems, specimenScene, trayScene } from '../../src/labs/classification3d';
+import { buildKey, findOrganism, ORGANISMS } from '../../src/models/classification';
 import type { ArrowItem, EllipsoidItem, ParticlesItem, SceneItem, SphereItem } from '../../src/three/scene';
 
 const byId = <T extends SceneItem>(items: SceneItem[], id: string) => items.find((i) => i.id === id) as T;
@@ -100,5 +102,49 @@ describe('glucosa, insulina y glucagón en 3D (homeostasis)', () => {
     expect(pb[0][0]).not.toBe(pa[0][0]);
     expect(pb[0][1]).toBe(pa[0][1]);
     expect(a.description).toContain('Hay ejercicio');
+  });
+});
+
+describe('ejemplares 3D (clasificación de los seres vivos)', () => {
+  it('cada organismo se dibuja con ids únicos, dentro de su caja y con al menos un rótulo', () => {
+    for (const o of ORGANISMS) {
+      const items = specimenItems(o, [0, 0, 0], 1);
+      expect(items.length, o.id).toBeGreaterThan(0);
+      expect(new Set(items.map((i) => i.id)).size, o.id).toBe(items.length);
+      expect(items.some((i) => i.label), o.id).toBe(true);
+      for (const i of items) {
+        const pts = i.kind === 'particles' ? i.points : i.kind === 'rod' ? [i.from, i.to] : 'center' in i ? [i.center] : [];
+        for (const q of pts) expect(Math.max(...q.map(Math.abs)), `${o.id} ${i.id}`).toBeLessThan(1.6);
+      }
+    }
+  });
+  it('el número de patas y las antenas salen de los datos del modelo', () => {
+    const labels = (id: string) => specimenItems(findOrganism(id), [0, 0, 0], 1).map((i) => i.label ?? '').join(' | ');
+    expect(labels('arriera')).toContain('6 patas articuladas');
+    expect(labels('arriera')).toContain('antenas');
+    expect(labels('arana')).toContain('8 patas articuladas');
+    expect(labels('arana')).toContain('sin antenas');
+    expect(labels('cangrejo')).toContain('10 patas articuladas');
+    expect(labels('helecho')).toContain('esporas');
+    expect(labels('pino')).toContain('sin flores');
+    expect(labels('banano')).toContain('nervaduras paralelas');
+    expect(labels('ecoli')).toContain('sin núcleo');
+    // patas del insecto: 3 pares × 2 lados × 2 tramos
+    const legRods = (id: string) => specimenItems(findOrganism(id), [0, 0, 0], 1).filter((i) => i.kind === 'rod' && i.radius <= 0.035 && i.radius >= 0.03).length;
+    expect(legRods('arriera')).toBe(12);
+    expect(legRods('arana')).toBe(16);
+    expect(specimenScene(findOrganism('arriera')).description).toContain('6 patas, antenas');
+  });
+  it('la bandeja muestra el grupo, escala los ejemplares y atenúa los que ya están separados', () => {
+    const members = ['iguana', 'sapo', 'garza'].map(findOrganism);
+    const sc = trayScene(members, new Set(['iguana', 'sapo']));
+    const iguana = sc.items.filter((i) => i.id.startsWith('b-iguana-'));
+    const garza = sc.items.filter((i) => i.id.startsWith('b-garza-'));
+    expect(iguana.every((i) => (i.opacity ?? 1) > 0.5)).toBe(true);
+    expect(garza.every((i) => (i.opacity ?? 1) <= 0.25)).toBe(true);
+    expect(garza[0].label).toBe('Garza blanca');
+    expect(sc.description).toContain('Falta separar (se ven opacos): Iguana verde, Sapo común');
+    const b = buildKey('animales', {});
+    expect(trayScene(b.root.members, new Set()).description).toContain('Tu clave ya separa a todos');
   });
 });

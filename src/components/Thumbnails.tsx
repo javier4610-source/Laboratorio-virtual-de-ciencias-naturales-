@@ -989,6 +989,20 @@ const SCENES: Record<string, () => ReactNode> = {
       <Arrow x1={74} y1={70} x2={54} y2={54} color="var(--data)" w={2.4} />
     </>
   ),
+  'clasificacion-seres-vivos': () => (
+    <>
+      <rect x="128" y="14" width="64" height="22" rx="6" fill="var(--surface)" stroke={INK} />
+      <text x="160" y="29" textAnchor="middle" style={{ fontSize: 11, fill: 'var(--ink-2)', fontWeight: 700 }}>1a | 1b</text>
+      <path d="M160 36 V48 M90 48 H230 M90 48 V60 M230 48 V60" fill="none" stroke={INK} strokeWidth="1.6" />
+      <ellipse cx="62" cy="96" rx="12" ry="9" fill="#8a3b1f" /><ellipse cx="82" cy="96" rx="8" ry="7" fill="#8a3b1f" /><circle cx="96" cy="94" r="6" fill="#8a3b1f" />
+      {[70, 80, 88].flatMap((x) => [<line key={`u${x}`} x1={x} y1={100} x2={x - 6} y2={116} stroke="#8a3b1f" strokeWidth="2" />, <line key={`d${x}`} x1={x} y1={92} x2={x - 6} y2={76} stroke="#8a3b1f" strokeWidth="2" />])}
+      <line x1="100" y1="90" x2="110" y2="78" stroke="#8a3b1f" strokeWidth="1.6" />
+      <rect x="196" y="72" width="6" height="56" fill="#5b4630" />
+      <ellipse cx="199" cy="70" rx="34" ry="22" fill="#3e7a32" />
+      <ellipse cx="248" cy="118" rx="22" ry="8" fill="#e8dccb" stroke={INK} /><rect x="244" y="118" width="8" height="18" fill="#e8dccb" stroke={INK} />
+      <ellipse cx="150" cy="120" rx="16" ry="6" fill="#7fa86b" stroke={INK} />
+    </>
+  ),
   'homeostasis-glucosa': () => (
     <>
       <MiniPlot x={196} y={22} w={108} h={74} d="M0 56 C 14 56, 20 6, 34 8 S 60 46, 74 50 L 108 52" />

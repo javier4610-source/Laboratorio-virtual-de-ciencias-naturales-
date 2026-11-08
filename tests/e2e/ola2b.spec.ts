@@ -113,3 +113,50 @@ test('homeostasis-glucosa: prueba de 75 g, insulina bloqueada, ejercicio, diabet
   await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
   await a11yAndMobile(page, 'homeostasis-glucosa');
 });
+
+test('clasificacion-seres-vivos: recorrer las claves, un error con su corrección y una clave propia de n − 1 dilemas', async ({ page }) => {
+  test.setTimeout(90_000);
+  await openFree(page, 'clasificacion-seres-vivos');
+  // Clave de reinos con la hormiga arriera: núcleo sí, unicelular no, fotosíntesis no, quitina no → Animales.
+  const pick = (text: string) => page.getByRole('button', { name: text });
+  await pick('1a. Sus células tienen núcleo (eucariota)').click();
+  await pick('3b. Está formado por muchas células').click();
+  await pick('5b. No hace fotosíntesis').click();
+  await pick('6b. No tiene pared de quitina').click();
+  await expect(ro(page, 'La clave llega a')).toContainText('Animales');
+  await expect(ro(page, '¿Coincide con su clasificación?')).toContainText('sí: Animales');
+  await page.getByRole('button', { name: 'Guardar la identificación en la tabla' }).click();
+  await saved(page, 1);
+  // Clave de animales con el sapo, eligiendo mal en el dilema 5.
+  await page.getByLabel('Clave', { exact: true }).selectOption('animales');
+  await page.getByLabel('Ejemplar', { exact: true }).selectOption('sapo');
+  await pick('1a. Tiene columna vertebral (vertebrado)').click();
+  await pick('2b. No tiene pelo').click();
+  await pick('3b. No tiene plumas').click();
+  await pick('4b. No tiene aletas').click();
+  await pick('5a. Su piel es seca y está cubierta de escamas').click();
+  await expect(ro(page, 'La clave llega a')).toContainText('Reptiles');
+  await expect(cond(page, 'dilema 5')).toContainText('Cómo corregirlo: Vuelve al dilema 5');
+  await page.getByRole('button', { name: 'Deshacer el último dilema' }).click();
+  await pick('5b. Su piel es húmeda y sin escamas').click();
+  await expect(ro(page, '¿Coincide con su clasificación?')).toContainText('sí: Anfibios');
+  // Construir una clave: un carácter que no separa y luego la clave completa de las cinco plantas.
+  await station(page, 'Construir tu clave');
+  await page.getByLabel('Grupo de organismos').selectOption('plantas');
+  const sel = () => page.getByLabel(/^Carácter para separar/);
+  await sel().selectOption('fotosintesis');
+  await expect(cond(page, 'no separa este grupo')).toContainText('Cómo corregirlo');
+  await page.getByRole('button', { name: 'Quitar el carácter que no separa' }).click();
+  for (const t of ['vasos', 'semillas', 'flores', 'nervParalelas']) await sel().selectOption(t);
+  await expect(page.getByText('Tu clave separa a los 5 organismos.')).toBeVisible();
+  // Valor dorado: 5 organismos → 5 − 1 = 4 dilemas; profundidad mínima ⌈log₂ 5⌉ = 3.
+  await expect(ro(page, 'Dilemas de tu clave')).toContainText('4 (= 5 − 1)');
+  await expect(ro(page, 'Profundidad (dilemas del camino más largo)')).toContainText('4; la mínima posible es ⌈log₂ 5⌉ = 3');
+  await page.getByRole('button', { name: 'Guardar mi clave en la tabla' }).click();
+  await saved(page, 1);
+  await station(page, 'Dominios y reinos');
+  await expect(page.getByRole('region', { name: 'Organismos por dominio y reino' })).toContainText('Halobacterium salinarum');
+  await page.getByRole('group', { name: /Tu respuesta: Las arañas son insectos/ }).getByRole('button', { name: 'Es falso' }).click();
+  await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
+  await a11yAndMobile(page, 'clasificacion-seres-vivos');
+});

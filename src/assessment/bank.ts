@@ -1666,6 +1666,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Homeostasis: regulación de la glucosa…», elige «Sin comida», activa el ejercicio desde el minuto 0 y compara el glucagón activo y bloqueado.',
     transfer: '¿Qué esperarías si la persona hiciera el mismo ejercicio una hora después de tomar 75 g de glucosa? Predícelo y compruébalo en la práctica.',
   },
+  {
+    id: 'saber-cla-1', grade: 6, topic: 'Clasificación con claves dicotómicas', competency: 'indagacion', component: 'biologico',
+    skill: 'Usar caracteres observables para clasificar organismos', difficulty: 'media', practiceId: 'clasificacion-seres-vivos',
+    context: 'En una salida de campo a una finca de Apartadó, un grupo de 6.º anota lo que observa en cuatro organismos.',
+    table: {
+      caption: 'Observaciones del grupo',
+      headers: ['Organismo', '¿Células con núcleo?', '¿Hace fotosíntesis?', '¿Pared de quitina y absorbe su alimento?', '¿Tiene columna vertebral?'],
+      rows: [['W', 'Sí', 'Sí', 'No', 'No'], ['X', 'Sí', 'No', 'Sí', 'No'], ['Y', 'Sí', 'No', 'No', 'Sí'], ['Z', 'No', 'No', 'No', 'No']],
+    },
+    stem: '¿Qué clasificación es coherente con las observaciones?',
+    options: [
+      { id: 'a', text: 'W es un hongo, X una planta, Y un animal y Z un protista.', feedback: 'W hace fotosíntesis (planta) y Z no tiene núcleo (no es un protista).' },
+      { id: 'b', text: 'W es una planta, X un hongo, Y un animal vertebrado y Z un procariota (bacteria o arquea).', feedback: 'Correcto.' },
+      { id: 'c', text: 'Los cuatro son animales porque viven en la finca.', feedback: 'El lugar no define el reino.' },
+      { id: 'd', text: 'Z es un animal invertebrado porque no tiene columna vertebral.', feedback: 'Z no tiene núcleo: es un procariota, no un animal.' },
+    ],
+    correct: 'b',
+    explanation: 'Sin núcleo: dominio Bacteria o Archaea (Z). Con núcleo y fotosíntesis: planta (W). Con pared de quitina y nutrición por absorción: hongo (X), como el de la sigatoka negra. Con columna vertebral: animal vertebrado (Y). Para saber si Z es bacteria o arquea hace falta analizar su ARN ribosómico.',
+    review: 'En la práctica «Clasificación de los seres vivos…», recorre la clave de dominios y reinos con un organismo de cada reino.',
+    transfer: '¿Qué carácter agregarías a la tabla para decidir si Y es un pez, un anfibio, un reptil, un ave o un mamífero? Compruébalo con la clave de animales.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

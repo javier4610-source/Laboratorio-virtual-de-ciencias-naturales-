@@ -137,6 +137,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: noise('Ángulos y campos') + 'Campo del imán con el modelo de dos polos (momentos con remanencias típicas de fabricante), campo de la Tierra en Apartadó del Modelo Magnético Mundial WMM2025 (NOAA y BGS) y campo de una corriente con Biot-Savart: modelo calculado. Líneas de campo y brújulas 3D: calculadas con el mismo modelo.' };
   }
+  if (practiceId === 'clasificacion-seres-vivos') {
+    return { data: 'modelo', scene: 'ilustracion',
+      detail: 'Veinticinco especies reales con su nombre científico (catálogos de biodiversidad: SiB Colombia y GBIF), clasificadas en los tres dominios de Woese, Kandler y Wheelis (1990) y en los reinos de los textos; las claves y el constructor de claves son el modelo. Los caracteres son los de referencia de cada especie, no mediciones. Ejemplares 3D: formas simplificadas dibujadas con esos caracteres (número de patas, antenas, flores…), sin escala.' };
+  }
   if (practiceId === 'homeostasis-glucosa') {
     return { data: 'modelo', scene: 'modelo',
       detail: noise('Glucosas') + 'Modelo mínimo de Bergman (1979) con parámetros de un sujeto normal de la literatura (Furler y otros, 1985); la secreción de insulina, el glucagón, la absorción de la comida, el ejercicio y los perfiles de diabetes son extensiones con valores ilustrativos; rangos de la American Diabetes Association (2025): modelo calculado. No es un diagnóstico ni sirve para calcular dosis de insulina. Vista 3D: partículas en número proporcional a cada concentración y flechas con los flujos del modelo; los órganos son un esquema.' };

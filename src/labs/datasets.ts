@@ -2112,4 +2112,31 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'clasificacion-seres-vivos': [
+    {
+      id: 'identificaciones', label: 'Identificaciones con claves', defaultX: 'pasos', defaultY: 'correcto',
+      multiInput: 'Cada fila identifica un ejemplar distinto con una clave: no es un experimento de una sola variable.',
+      columns: [
+        { key: 'ejemplar', label: 'Ejemplar', numeric: false, input: true },
+        { key: 'cientifico', label: 'Nombre científico', numeric: false },
+        { key: 'clave', label: 'Clave', numeric: false, input: true },
+        { key: 'pasos', label: 'Dilemas recorridos', numeric: true, decimals: 0 },
+        { key: 'camino', label: 'Camino', numeric: false },
+        { key: 'resultado', label: 'La clave llega a', numeric: false },
+        { key: 'correcto', label: '¿Coincide con su clasificación?', numeric: false },
+      ],
+    },
+    {
+      id: 'claves', label: 'Claves construidas', defaultX: 'organismos', defaultY: 'pares',
+      columns: [
+        { key: 'grupo', label: 'Grupo', numeric: false, input: true },
+        { key: 'organismos', label: 'Organismos', numeric: true, decimals: 0, input: true, notIndependent: true },
+        { key: 'pares', label: 'Dilemas', numeric: true, decimals: 0 },
+        { key: 'profundidad', label: 'Profundidad', numeric: true, decimals: 0 },
+        { key: 'profundidadMinima', label: 'Profundidad mínima ⌈log₂ n⌉', numeric: true, decimals: 0 },
+        { key: 'separaTodos', label: '¿Separa a todos?', numeric: false },
+        { key: 'inutiles', label: 'Caracteres que no separan', numeric: true, decimals: 0 },
+      ],
+    },
+  ],
 };

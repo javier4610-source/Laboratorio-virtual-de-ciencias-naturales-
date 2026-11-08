@@ -25,6 +25,7 @@ import { eyeImage, thinLens } from '../../src/models/lenses';
 import { electromagnet, wireField } from '../../src/models/magnetism';
 import { co2Warming, effectiveTemp, layerModel } from '../../src/models/greenhouse';
 import { BERGMAN, ogttCategory, fastingCategory, simulateGlucose } from '../../src/models/glucose';
+import { buildKey, domainOf, findKey, findOrganism as findTaxon, identify, keyMembers } from '../../src/models/classification';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -443,6 +444,13 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'magnetismo-imanes', origin: 'independiente', what: 'Biot-Savart: cable con 1 A a 2 cm, B = 2·10⁻⁷·1/0,02 = 1,0 × 10⁻⁵ T; con H = 26 967 nT (WMM2025, Apartadó) la brújula se desvía arctan(10/26,967) = 20,35°', run: () => {
     close(wireField(1, 0.02), 1e-5, 1e-18);
     close(electromagnet({ source: 'cable', turns: 50, current: 1, distanceCm: 2 }).deflection, (Math.atan(10 / 26.967) * 180) / Math.PI, 1e-9);
+  } },
+  { id: 'clasificacion-seres-vivos', origin: 'referencia', what: 'Woese, Kandler y Wheelis (1990): Escherichia coli → Bacteria, Halobacterium salinarum → Archaea, Saccharomyces cerevisiae → Eukarya; la clave de reinos lleva a los 25 organismos a su reino de referencia; una clave dicotómica de 10 organismos tiene 10 − 1 = 9 dilemas', run: () => {
+    expect(['ecoli', 'halobacteria', 'levadura'].map((id) => domainOf(findTaxon(id)))).toEqual(['Bacteria', 'Archaea', 'Eukarya']);
+    const k = findKey('reinos');
+    expect(keyMembers(k).filter((o) => identify(k, o) !== o.kingdom)).toEqual([]);
+    expect(identify(findKey('animales'), findTaxon('cangrejo'))).toBe('Crustáceos');
+    expect(buildKey('animales', { '': 'vertebras', a: 'pelo', ab: 'plumas', abb: 'aletas', abbb: 'escamasSecas', b: 'patasArticuladas', ba: 'seisPatas', bab: 'ochoPatas', bb: 'segmentado' }).couplets).toBe(9);
   } },
   { id: 'homeostasis-glucosa', origin: 'independiente', what: 'modelo mínimo de Bergman con la insulina bloqueada y sin comida: G(t) = G_b + (G₀ − G_b)·e^(−p₁t); de 185 a 85 + 100·e^(−0,028735·60) = 102,83 mg/dL en 60 min; criterios de la ADA (2025): 126 mg/dL en ayunas y 200 mg/dL a las 2 h son rango de diabetes', run: () => {
     const r = simulateGlucose({ profile: 'normal', meal: 'ayuno', exerciseStart: null, bolus: 0, insulinOn: false, glucagonOn: true, G0: 185 });

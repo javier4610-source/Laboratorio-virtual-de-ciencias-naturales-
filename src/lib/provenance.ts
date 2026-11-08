@@ -161,6 +161,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: 'Lecturas del termómetro calculadas con q = (m·c + C_cal)·ΔT, la entalpía de neutralización de los valores clave de CODATA (−55,8 kJ/mol) y las entalpías de disolución a dilución infinita del CRC Handbook, con una curva de pérdidas de calor de Newton: modelo calculado, no son mediciones. La capacidad calorífica de los vasos, la rapidez de disolución y la constante de enfriamiento son ilustrativas. Calorímetro 3D: iones en número proporcional a la fracción que reaccionó, termómetro con la temperatura del modelo y flecha de energía proporcional al calor; la agitación del agua es ilustrativa.' };
   }
+  if (practiceId === 'ciclo-del-carbono') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Balance del carbono de 2010–2019 del IPCC AR6 (GT I, tabla 5.1); reservorios y flujos naturales brutos redondeados del IPCC AR5 (figura 6.1), por verificar con la figura; atmósfera con 2,124 PgC por ppm (Ballantyne y otros, 2012). Los escenarios salen de un modelo de cajas propio calibrado con ese balance: modelo calculado, no son mediciones ni proyecciones del IPCC. Paisaje 3D: volumen de los cubos proporcional al carbono y área de las flechas proporcional al flujo; las posiciones son un esquema.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

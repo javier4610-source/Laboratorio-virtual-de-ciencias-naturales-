@@ -3,12 +3,45 @@ import { K_FORCE, K_SPEED, orbitScene, sceneScale } from '../../src/labs/gravita
 import { AU_PER_YEAR_KMS, integrateOrbit, orbitAt } from '../../src/models/gravitation';
 import { diameterAt, K_HEAD, K_RADIUS, K_VEL, tracerXs, venturiScene } from '../../src/labs/venturi3d';
 import { venturi } from '../../src/models/bernoulli';
+import { carbonScene, fluxRadius, side } from '../../src/labs/carbon3d';
+import { A_1750, atmosphereRate, findReservoir, GROSS, simulateCarbon } from '../../src/models/carbon';
 import { calorimeterScene, K_ENERGY, K_THERMO, N_IONS } from '../../src/labs/calorimeter3d';
 import { dissolution, neutralization, runCalorimeter, tempAt } from '../../src/models/thermochem';
 import type { ArrowItem, ParticlesItem, SceneItem, SphereItem } from '../../src/three/scene';
 
 const byId = <T extends SceneItem>(items: SceneItem[], id: string) => items.find((i) => i.id === id) as T;
 const len = (a: ArrowItem) => Math.hypot(...a.vector);
+
+describe('ciclo del carbono 3D', () => {
+  const s = { fossil2050: 9.6, landUse: 1.6, reforest: 0 };
+  const run = simulateCarbon(s);
+  const boxSide = (sc: ReturnType<typeof carbonScene>, id: string) => byId<Extract<SceneItem, { kind: 'box' }>>(sc.items, id).size[0];
+  it('el volumen de cada cubo es proporcional al carbono del reservorio y la atmósfera crece con el año', () => {
+    const sc = carbonScene({ run, s, year: 2019, mode: 'natural' });
+    const vol = (id: string) => boxSide(sc, id) ** 3;
+    expect(vol('oceano-profundo') / vol('oceano-superficie')).toBeCloseTo(37100 / 900, 6);
+    expect(vol('suelos') / vol('vegetacion')).toBeCloseTo(findReservoir('suelos').mid / findReservoir('vegetacion').mid, 6);
+    expect(boxSide(sc, 'atmosfera')).toBeCloseTo(side(A_1750), 12); // ciclo natural: la atmósfera de 1750
+    expect(boxSide(carbonScene({ run, s, year: 2019, mode: 'humano' }), 'atmosfera')).toBeCloseTo(side(run.points[0].A), 12);
+    const later = carbonScene({ run, s, year: 2100, mode: 'humano' });
+    expect(later.atm).toBeGreaterThan(sc.atm);
+    expect(boxSide(later, 'atmosfera')).toBeGreaterThan(boxSide(sc, 'atmosfera'));
+  });
+  it('flechas: el área de la sección es proporcional al flujo; naturales en «Reservorios» y humanas con sumideros en los escenarios', () => {
+    const nat = carbonScene({ run, s, year: 2019, mode: 'natural' });
+    expect(byId<ArrowItem>(nat.items, 'fotosintesis').radius).toBeCloseTo(fluxRadius(GROSS.photosynthesis), 12);
+    expect(byId(nat.items, 'emision-fosil')).toBeUndefined();
+    const hum = carbonScene({ run, s, year: 2019, mode: 'humano' });
+    const r = atmosphereRate(run.points[0].A, s, 2019);
+    const area = (id: string) => byId<ArrowItem>(hum.items, id).radius! ** 2;
+    expect(area('emision-fosil') / area('sumidero-oceano')).toBeCloseTo(9.6 / r.ocean, 9);
+    expect(byId(hum.items, 'fotosintesis')).toBeUndefined();
+    expect(hum.description).toContain('Año 2019');
+    // Sin deforestación no hay flecha de deforestación.
+    const s0 = { fossil2050: 0, landUse: 0, reforest: 0 };
+    expect(byId(carbonScene({ run: simulateCarbon(s0), s: s0, year: 2060, mode: 'humano' }).items, 'deforestacion')).toBeUndefined();
+  });
+});
 
 describe('calorímetro 3D (termoquímica)', () => {
   const run = runCalorimeter(dissolution('naoh', 2, 100), 'icopor');

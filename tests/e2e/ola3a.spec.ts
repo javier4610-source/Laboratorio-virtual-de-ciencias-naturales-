@@ -142,3 +142,35 @@ test('termoquimica: disolución de NaOH, NH₄NO₃ que enfría, neutralización
   await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
   await a11yAndMobile(page, 'termoquimica');
 });
+
+test('ciclo-del-carbono: reservorios, balance del IPCC con 46 % en el aire y escenarios hasta 2100', async ({ page }) => {
+  test.setTimeout(90_000);
+  await openFree(page, 'ciclo-del-carbono');
+  await expect(ro(page, 'Carbono en plantas (vegetación)')).toContainText('450 a 650 PgC');
+  await page.getByLabel('Reservorio', { exact: true }).selectOption('oceano-profundo');
+  await expect(ro(page, 'Comparado con la atmósfera de 1750')).toContainText('62,8 veces');
+  await page.getByRole('button', { name: 'Guardar el reservorio en la tabla' }).click();
+  await saved(page, 1);
+  await station(page, 'Balance de un año');
+  // Valor dorado: 5,1/11,2 = 46 % y 5,1/2,124 = 2,40 ppm por año (IPCC AR6, tabla 5.1).
+  await expect(ro(page, 'Fracción que se queda en el aire')).toContainText('46 %');
+  await expect(ro(page, 'Aumento del CO₂ por año')).toContainText('2,40 ppm');
+  await page.getByRole('button', { name: 'Guardar el balance en la tabla' }).click();
+  await saved(page, 1);
+  await station(page, 'Escenarios hasta 2100');
+  await expect(ro(page, 'CO₂ en 2050 y en 2100')).toContainText('460 y 492 ppm');
+  await page.getByRole('button', { name: 'Guardar el escenario en la tabla' }).click();
+  await saved(page, 1);
+  await page.getByLabel('Escenario de partida').selectOption('doble');
+  await expect(ro(page, 'CO₂ en 2050 y en 2100')).toContainText('516 y 644 ppm');
+  await expect(cond(page, 'ppm en 2100')).toContainText('Cómo corregirlo');
+  await page.getByLabel('Escenario de partida').selectOption('cero');
+  await expect(cond(page, 'mucho más despacio')).toContainText('Cómo corregirlo');
+  await setSlider(page, 'Reforestación adicional', 'PgC/año', '3');
+  await expect(cond(page, 'más de lo que hoy se considera realista')).toContainText('Cómo corregirlo');
+  await setSlider(page, 'Años después de 2019 (año que se muestra)', 'años', '31');
+  await expect(page.locator('.readout .k', { hasText: /^CO₂ en 2050$/ })).toBeVisible();
+  await page.getByRole('group', { name: /Tu respuesta: Todo el CO₂ que emitimos/ }).getByRole('button', { name: 'Es falso' }).click();
+  await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
+  await a11yAndMobile(page, 'ciclo-del-carbono');
+});

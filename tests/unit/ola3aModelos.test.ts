@@ -3,8 +3,59 @@ import {
   AU_PER_YEAR_KMS, findPair, forceConditions, G_CONST, geostationaryAltitude, gravForce, integrateOrbit, keplerPeriod, keplerTable, M_EARTH, MU_SUN_AU,
   orbitAt, orbitConditions, PLANETS, R_EARTH_MEAN, satellitePeriod, surfaceGravity, visViva,
 } from '../../src/models/gravitation';
+import {
+  A_1750, A_2019, A_MID, AIRBORNE_FRACTION, atmosphereRate, BUDGET, carbonConditions, EMISSIONS_2010s, findReservoir, fossilAt, IMBALANCE, K_LAND, K_OCEAN, PGC_PER_PPM,
+  RESERVOIRS, SCENARIOS, simulateCarbon,
+} from '../../src/models/carbon';
 import { calConditions, DH_NEUT, dissolution, hessSolidInAcid, neutralization, runCalorimeter, SOLUTES, T_ROOM, tempAt } from '../../src/models/thermochem';
 import { atomizer, G, hose, hoseConditions, minAirSpeed, RHO_ETHANOL, RHO_WATER, venturi, venturiConditions } from '../../src/models/bernoulli';
+
+describe('ciclo del carbono: balance y modelo de cajas', () => {
+  it('atmósfera con 2,124 PgC/ppm: 591 PgC en 1750 y 871 en 2019; balance 2010–2019 y fracción en el aire', () => {
+    expect(A_1750).toBeCloseTo(591.1, 1);
+    expect(A_2019).toBeCloseTo(870.6, 1);
+    expect(EMISSIONS_2010s).toBeCloseTo(11.2, 12);
+    expect(IMBALANCE).toBeCloseTo(0.2, 12);
+    expect(AIRBORNE_FRACTION).toBeCloseTo(0.455, 3);
+    expect(BUDGET.atmosphere.value / PGC_PER_PPM).toBeCloseTo(2.40, 2);
+    expect(RESERVOIRS.find((r) => r.id === 'oceano-profundo')!.mid / A_1750).toBeGreaterThan(60);
+    expect(findReservoir('suelos').low).toBe(1500);
+    expect(() => findReservoir('luna')).toThrow(RangeError);
+  });
+  it('calibración: en 2015 los sumideros dan 2,5 y 3,4 PgC/año y el aire crece 5,3 (el desbalance de 0,2 explica la diferencia con 5,1)', () => {
+    const r = atmosphereRate(A_MID, { fossil2050: 9.6, landUse: 1.6, reforest: 0 }, 2015);
+    expect(r.ocean).toBeCloseTo(2.5, 12);
+    expect(r.land).toBeCloseTo(3.4, 12);
+    expect(r.net).toBeCloseTo(5.3, 12);
+    expect(K_OCEAN / K_LAND).toBeCloseTo(2.5 / 3.4, 12);
+  });
+  it('escenarios: más emisiones dan más CO₂ en 2100; con cero emisiones deja de subir; la masa se conserva', () => {
+    const runs = Object.fromEntries(SCENARIOS.map((x) => [x.id, simulateCarbon(x.s)]));
+    expect(runs.doble.ppm2100).toBeGreaterThan(runs.igual.ppm2100);
+    expect(runs.igual.ppm2100).toBeGreaterThan(runs.mitad.ppm2100);
+    expect(runs.mitad.ppm2100).toBeGreaterThan(runs.cero.ppm2100);
+    expect(runs.igual.points[0].ppm).toBeCloseTo(409.9, 9);
+    expect(runs.igual.points).toHaveLength(82);
+    expect(runs.cero.peak.year).toBeLessThan(2050);
+    // Conservación: lo emitido = lo que ganó el aire + lo que absorbieron el océano y la tierra (+ reforestación).
+    for (const x of SCENARIOS) {
+      const run = runs[x.id];
+      const emitted = run.cumFossil + x.s.landUse * 81 - x.s.reforest * 81;
+      expect(run.cumAtm + run.cumOcean + run.cumLand).toBeCloseTo(emitted, 1);
+    }
+    expect(fossilAt({ fossil2050: 0, landUse: 0, reforest: 0 }, 2050)).toBe(0);
+    expect(fossilAt({ fossil2050: 0, landUse: 0, reforest: 0 }, 2034.5)).toBeCloseTo(4.8, 12);
+  });
+  it('avisos con su corrección: CO₂ que baja (modelo optimista), reforestación irreal y CO₂ muy alto', () => {
+    const cero = SCENARIOS.find((x) => x.id === 'cero')!.s;
+    expect(carbonConditions(cero, simulateCarbon(cero))[0].fix).toContain('todo sigue igual');
+    const big = { fossil2050: 9.6, landUse: 1.6, reforest: 3 };
+    expect(carbonConditions(big, simulateCarbon(big)).some((c) => c.level === 'advertencia')).toBe(true);
+    const high = { fossil2050: 20, landUse: 3, reforest: 0 };
+    expect(carbonConditions(high, simulateCarbon(high)).some((c) => c.text.includes('ppm en 2100'))).toBe(true);
+    expect(() => simulateCarbon({ fossil2050: 30, landUse: 0, reforest: 0 })).toThrow(RangeError);
+  });
+});
 
 describe('termoquímica en el calorímetro de vaso', () => {
   it('valores de referencia: neutralización −55,8 kJ/mol (CODATA) y disoluciones del CRC; sin pérdidas se recuperan exactos', () => {

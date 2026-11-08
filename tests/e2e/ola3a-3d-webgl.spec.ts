@@ -138,3 +138,21 @@ test('termoquimica 3D: los iones se disuelven, el termómetro sube y en pausa na
   await expect.poll(() => description(v)).toContain('Es endotérmico');
   await expect(figureOf(page, 'tq').locator('.scene3d-label', { hasText: '← calor' })).toBeVisible();
 });
+
+test('ciclo-del-carbono 3D: cubos del tamaño de cada reservorio, flujos naturales y humanos, y la atmósfera crece con el año', async ({ page }) => {
+  await openFree(page, 'ciclo-del-carbono');
+  await waitEngine(page, 'car', 'disponible');
+  const v = view(page, 'car');
+  expect(await description(v)).toContain('Ciclo natural antes de 1750');
+  await keyboardAndTheme(page, 'car', 'ciclo-del-carbono 3D');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await shots(page, () => figureOf(page, 'car'), 'carbono-3d-natural');
+  await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Escenarios hasta 2100', exact: true }).click();
+  await expect.poll(() => description(v)).toContain('Año 2100');
+  await expect(figureOf(page, 'car').locator('.scene3d-label', { hasText: 'sumidero océano' })).toBeVisible();
+  const late = await pixels(v);
+  await setSlider(page, 'Años después de 2019 (año que se muestra)', 'años', '0');
+  await expect.poll(() => description(v)).toContain('Año 2019: la atmósfera tiene 871 PgC');
+  expect((await pixels(v)).uri).not.toBe(late.uri);
+  await shots(page, () => figureOf(page, 'car'), 'carbono-3d-escenario');
+});

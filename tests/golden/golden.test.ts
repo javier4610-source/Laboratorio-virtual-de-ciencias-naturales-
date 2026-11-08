@@ -29,6 +29,7 @@ import { buildKey, domainOf, findKey, findOrganism as findTaxon, identify, keyMe
 import { geostationaryAltitude, integrateOrbit, keplerTable, satellitePeriod } from '../../src/models/gravitation';
 import { atomizer, hose, RHO_WATER, venturi } from '../../src/models/bernoulli';
 import { DH_NEUT, dissolution as tqDissolution, hessSolidInAcid, neutralization as tqNeutralization, runCalorimeter } from '../../src/models/thermochem';
+import { A_1750, A_2019, A_MID, AIRBORNE_FRACTION, atmosphereRate, IMBALANCE, simulateCarbon } from '../../src/models/carbon';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -488,6 +489,13 @@ export const GOLDEN: GoldenCase[] = [
     close(runCalorimeter(tqDissolution('nh4no3', 5, 100), 'icopor').dHideal, 25.69, 1e-9);
     close(runCalorimeter(tqNeutralization(1, 50), 'icopor').dTad, (0.05 * 55815) / 433, 1e-9);
     close(hessSolidInAcid(2).dHref, -100.325, 1e-9);
+  } },
+  { id: 'ciclo-del-carbono', origin: 'referencia', what: 'IPCC AR6 (GT I, tabla 5.1), 2010–2019: emisiones 9,6 + 1,6 = 11,2 PgC/año, atmósfera 5,1, océano 2,5 y tierra 3,4 PgC/año → fracción en el aire 5,1/11,2 = 45,5 % y desbalance 0,2; atmósfera con 2,124 PgC/ppm: 278,3 ppm → 591,1 PgC y 409,9 ppm → 870,6 PgC; modelo de cajas calibrado: sumideros de 2,5 y 3,4 PgC/año a mitad de la década', run: () => {
+    close(A_1750, 278.3 * 2.124, 1e-9); close(A_2019, 870.6276, 1e-6);
+    close(AIRBORNE_FRACTION, 5.1 / 11.2, 1e-12); close(IMBALANCE, 0.2, 1e-12);
+    const r = atmosphereRate(A_MID, { fossil2050: 9.6, landUse: 1.6, reforest: 0 }, 2015);
+    close(r.ocean, 2.5, 1e-12); close(r.land, 3.4, 1e-12);
+    close(simulateCarbon({ fossil2050: 9.6, landUse: 1.6, reforest: 0 }).points[0].ppm, 409.9, 1e-9);
   } },
 ];
 

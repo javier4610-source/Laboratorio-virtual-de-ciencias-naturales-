@@ -1750,6 +1750,22 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Termoquímica: calor de disolución y de neutralización», disuelve NH₄NO₃ con varias masas.',
     transfer: '¿Cuántos gramos de NH₄NO₃ (80 g/mol) harían falta en 100 g de agua para bajar la temperatura unos 10 °C? Plantea q = (m·c)·ΔT y n = q/ΔH, y compruébalo en la práctica.',
   },
+  {
+    id: 'saber-car-1', grade: 7, topic: 'Ciclo del carbono', competency: 'explicacion', component: 'cts',
+    skill: 'Explicar el aumento del CO₂ con un balance de fuentes y sumideros', difficulty: 'media', practiceId: 'ciclo-del-carbono',
+    context: 'Un grupo de 7.º compara dos momentos del ciclo del carbono. Antes de 1750, la fotosíntesis sacaba del aire tanto carbono como el que devolvían la respiración y la descomposición, y el océano absorbía tanto como liberaba. En 2010–2019 se agregaron dos flujos: los combustibles fósiles (9,6 PgC por año) y la deforestación (1,6 PgC por año).',
+    stem: '¿Qué explica mejor por qué el CO₂ del aire pasó de 278 ppm en 1750 a 410 ppm en 2019?',
+    options: [
+      { id: 'a', text: 'Las plantas dejaron de hacer fotosíntesis.', feedback: 'Las plantas y el suelo siguen absorbiendo; hoy incluso absorben más que antes (≈ 3,4 PgC por año de más).' },
+      { id: 'b', text: 'Los flujos naturales siguen compensándose, pero las personas agregamos fuentes que los sumideros solo absorben en parte; el resto se acumula en el aire.', feedback: 'Correcto: entran 11,2 PgC por año y los sumideros absorben ≈ 5,9.' },
+      { id: 'c', text: 'El océano empezó a liberar más carbono del que absorbe.', feedback: 'El océano es un sumidero neto: absorbe ≈ 2,5 PgC por año más de lo que libera.' },
+      { id: 'd', text: 'Los volcanes aumentaron su actividad desde 1750.', feedback: 'Las emisiones de los volcanes son mucho menores que las humanas.' },
+    ],
+    correct: 'b',
+    explanation: 'Antes de 1750 los grandes flujos naturales se compensaban y la atmósfera casi no cambiaba. Las fuentes humanas (11,2 PgC por año en 2010–2019) superan lo que absorben los sumideros, así que el aire gana ≈ 5,1 PgC por año (≈ 2,4 ppm). Es la diferencia lo que se acumula (IPCC AR6).',
+    review: 'En la práctica «Ciclo del carbono: reservorios y flujos», compara los flujos naturales y los humanos en la vista 3D.',
+    transfer: 'Si la deforestación se detuviera y las plantas siguieran absorbiendo lo mismo, ¿cuánto carbono por año ganaría el aire? Haz la cuenta con el balance y compruébala en «Escenarios».',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

@@ -85,6 +85,7 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   proyectiles: () => import('./practices/proyectiles').then((m) => m.proyectiles),
   equilibrio: () => import('./practices/equilibrio').then((m) => m.equilibrio),
   descomposicion: () => import('./practices/descomposicion').then((m) => m.descomposicion),
+  'ciclo-del-carbono': () => import('./practices/ciclo-del-carbono').then((m) => m.cicloDelCarbono),
   conductores: () => import('./practices/conductores').then((m) => m.conductores),
   seleccion: () => import('./practices/seleccion').then((m) => m.seleccion),
   redes: () => import('./practices/redes').then((m) => m.redes),

@@ -2260,4 +2260,40 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'ciclo-del-carbono': [
+    {
+      id: 'reservorios', label: 'Reservorios de carbono', defaultX: 'minimo', defaultY: 'veces',
+      multiInput: 'Cada fila es un reservorio distinto: se comparan tamaños, no una variable que se cambia.',
+      columns: [
+        { key: 'reservorio', label: 'Reservorio', numeric: false, input: true },
+        { key: 'minimo', label: 'Carbono (mínimo del rango)', unit: 'PgC', numeric: true, decimals: 0 },
+        { key: 'maximo', label: 'Carbono (máximo del rango)', unit: 'PgC', numeric: true, decimals: 0 },
+        { key: 'veces', label: 'Veces la atmósfera de 1750', numeric: true, decimals: 2 },
+      ],
+    },
+    {
+      id: 'balance', label: 'Balance de un año (IPCC AR6)', defaultX: 'fosil', defaultY: 'atmosfera',
+      multiInput: 'Es el balance medido de un periodo: no hay una variable que se cambie.',
+      columns: [
+        { key: 'periodo', label: 'Periodo', numeric: false, input: true },
+        { key: 'fosil', label: 'Combustibles fósiles', unit: 'PgC/año', numeric: true, decimals: 1 },
+        { key: 'suelo', label: 'Deforestación y uso del suelo', unit: 'PgC/año', numeric: true, decimals: 1 },
+        { key: 'atmosfera', label: 'Queda en la atmósfera', unit: 'PgC/año', numeric: true, decimals: 1 },
+        { key: 'oceano', label: 'Sumidero del océano', unit: 'PgC/año', numeric: true, decimals: 1 },
+        { key: 'tierra', label: 'Sumidero de plantas y suelo', unit: 'PgC/año', numeric: true, decimals: 1 },
+        { key: 'fraccion', label: 'Fracción que queda en el aire', unit: '%', numeric: true, decimals: 1 },
+      ],
+    },
+    {
+      id: 'escenarios', label: 'Escenarios hasta 2100 (modelo de cajas)', defaultX: 'fosil2050', defaultY: 'ppm2100',
+      columns: [
+        { key: 'fosil2050', label: 'Emisiones fósiles en 2050', unit: 'PgC/año', numeric: true, decimals: 1, input: true },
+        { key: 'deforestacion', label: 'Deforestación', unit: 'PgC/año', numeric: true, decimals: 1, input: true },
+        { key: 'reforestacion', label: 'Reforestación adicional', unit: 'PgC/año', numeric: true, decimals: 1, input: true },
+        { key: 'ppm2050', label: 'CO₂ en 2050', unit: 'ppm', numeric: true, decimals: 1 },
+        { key: 'ppm2100', label: 'CO₂ en 2100', unit: 'ppm', numeric: true, decimals: 1 },
+        { key: 'aire', label: 'Parte de lo emitido que queda en el aire', unit: '%', numeric: true, decimals: 1 },
+      ],
+    },
+  ],
 };

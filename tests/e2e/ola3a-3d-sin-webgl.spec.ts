@@ -45,6 +45,10 @@ test('ola 3a sin WebGL: respaldo SVG en las cuatro prácticas y sin descargar th
   await openFree(page, 'termoquimica');
   await fallbackChecks(page, 'tq', 'termoquimica');
   await expect(figureOf(page, 'tq').locator('svg text', { hasText: /^entorno$/ })).toBeVisible();
+
+  await openFree(page, 'ciclo-del-carbono');
+  await fallbackChecks(page, 'car', 'ciclo-del-carbono');
+  await expect(figureOf(page, 'car').locator('svg text', { hasText: /^océano profundo$/ })).toBeVisible();
   expect(loaded, 'three.js no se descarga sin WebGL').toEqual([]);
 });
 

@@ -1063,6 +1063,19 @@ const SCENES: Record<string, () => ReactNode> = {
       <Arrow x1={160} y1={74} x2={208} y2={56} color="var(--data)" w={2.4} />
     </>
   ),
+  'ciclo-del-carbono': () => (
+    <>
+      <rect x="0" y="92" width="190" height="68" fill="var(--amb)" opacity="0.18" />
+      <rect x="190" y="92" width="130" height="68" fill="var(--series-5)" opacity="0.22" />
+      <rect x="132" y="10" width="44" height="44" rx="4" fill="var(--info)" opacity="0.3" stroke={INK} />
+      <path d="M40 92 L40 66 M28 76 L40 52 L52 76 Z" fill="var(--bio)" stroke="var(--bio)" strokeWidth="3" />
+      <rect x="80" y="122" width="34" height="30" rx="3" fill={INK} opacity="0.55" />
+      <rect x="226" y="104" width="58" height="50" rx="3" fill="var(--series-2)" opacity="0.6" />
+      <Arrow x1={130} y1={40} x2={58} y2={64} color="var(--ok)" w={3.2} />
+      <Arrow x1={98} y1={120} x2={140} y2={58} color="var(--data)" w={2.4} />
+      <Arrow x1={180} y1={44} x2={236} y2={98} color="var(--ok)" w={2.6} />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

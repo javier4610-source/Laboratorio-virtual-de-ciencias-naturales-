@@ -20,6 +20,11 @@ interface ItemBase {
   opacity?: number;
   /** Rótulo visible (superpuesto en HTML) y entrada de la leyenda. */
   label?: string;
+  /**
+   * Rótulo corto dentro de la escena (opcional). Si se da, el rótulo superpuesto usa este texto y la leyenda conserva
+   * `label` completo; la cadena vacía deja el elemento solo en la leyenda. Sirve para escenas con muchos rótulos juntos.
+   */
+  tag?: string;
   /** Se puede elegir con clic o desde la leyenda (requiere `onSelect` en <Scene3D>). */
   selectable?: boolean;
 }

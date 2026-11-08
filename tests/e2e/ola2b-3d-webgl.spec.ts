@@ -81,7 +81,7 @@ test('efecto-invernadero 3D: la sombra es un disco y las flechas siguen los fluj
   await expect.poll(() => description(v)).toContain('302,7 K');
   expect((await pixels(v)).uri).not.toBe(before.uri);
   await setSlider(page, 'Absorción infrarroja de la capa ε', '', '0,78');
-  await expect(figureOf(page, 'inv').locator('.scene3d-label', { hasText: 'capa hacia abajo' })).toBeVisible();
+  await expect(figureOf(page, 'inv').locator('.scene3d-label', { hasText: /^6$/ })).toBeVisible();
   await shots(page, () => figureOf(page, 'inv'), 'efecto-invernadero-3d-capa');
 });
 

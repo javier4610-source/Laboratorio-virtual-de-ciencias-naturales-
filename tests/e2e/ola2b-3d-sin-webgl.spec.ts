@@ -48,6 +48,6 @@ test('ola 2b sin WebGL: respaldo SVG en las tres prácticas y sin descargar thre
 
   await openFree(page, 'efecto-invernadero');
   await fallbackChecks(page, 'inv', 'efecto-invernadero');
-  await expect(figureOf(page, 'inv').locator('svg text', { hasText: /^sombra: un disco/ })).toBeVisible();
+  await expect(figureOf(page, 'inv').locator('svg text', { hasText: /^sombra: disco/ })).toBeVisible();
   expect(loaded, 'three.js no se descarga sin WebGL').toEqual([]);
 });

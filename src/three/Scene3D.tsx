@@ -279,7 +279,7 @@ export function Scene3D({
   const fallback = engine === 'sin-webgl' || engine === 'no-disponible';
   const labelled = items.filter((it) => it.label);
   const overlay = engine === 'disponible' && width > 0
-    ? spreadLabels(labelled.map((it) => ({ it, text: it.label ?? '', ...projectPerspective(labelAnchor(it), orbit, tgt, extent, width, h) })).filter((p) => p.visible), width, h)
+    ? spreadLabels(labelled.filter((it) => it.tag !== '').map((it) => ({ it, text: it.tag ?? it.label ?? '', ...projectPerspective(labelAnchor(it), orbit, tgt, extent, width, h) })).filter((p) => p.visible), width, h)
     : [];
   // En pantallas angostas, muchos rótulos tapan la escena: se muestra solo el del elemento elegido y la leyenda nombra el resto.
   const compactLabels = width > 0 && width < 520 && overlay.length > 4;
@@ -298,7 +298,7 @@ export function Scene3D({
           </div>
         )}
         {shownLabels.map(({ item: { it }, left, bottom }) => (
-          <span key={it.id} className="scene3d-label" aria-hidden="true" style={{ left, top: bottom, borderColor: paletteColor(palette, it.color), fontWeight: it.id === selectedId ? 800 : 700 }}>{it.label}</span>
+          <span key={it.id} className="scene3d-label" aria-hidden="true" style={{ left, top: bottom, borderColor: paletteColor(palette, it.color), fontWeight: it.id === selectedId ? 800 : 700 }}>{it.tag ?? it.label}</span>
         ))}
         {compactLabels && <span className="scene3d-label" aria-hidden="true" data-compact-hint style={{ left: 8, top: 30, fontWeight: 600, opacity: 0.9 }}>Nombres en la leyenda</span>}
         {engine === 'cargando' && <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}><p role="status" className="small">Cargando la vista 3D…</p></div>}

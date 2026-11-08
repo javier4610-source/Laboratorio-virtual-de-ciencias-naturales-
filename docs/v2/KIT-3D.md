@@ -51,7 +51,9 @@ src/three/
 | `particles` | `points`, `radius` | gases, cloroplastos, poblaciones |
 
 Comunes: `id` (único; es la clave para reutilizar la malla entre cuadros), `color` (token de diseño o `#rrggbb` solo
-para colores reales del objeto), `opacity?`, `label?` (rótulo y entrada de la leyenda), `selectable?`.
+para colores reales del objeto), `opacity?`, `label?` (rótulo y entrada de la leyenda), `tag?` (rótulo corto
+dentro de la escena cuando hay muchos juntos; la leyenda conserva `label`; `''` deja el elemento solo en la leyenda),
+`selectable?`.
 
 Unidades libres por escena (m, cm, µm), eje **y hacia arriba**. `extent` es el radio que debe caber en el lienzo:
 **fíjalo por corrida** (no lo recalcules cada cuadro) para que la cámara no salte.

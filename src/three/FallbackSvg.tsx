@@ -121,7 +121,7 @@ export const FallbackSvg = memo(function FallbackSvg({ items, orbit, target, ext
         break;
       }
     }
-    if (it.label) labels.push({ ...P(labelAnchor(it)), text: it.label, id: it.id, sel });
+    if (it.label && it.tag !== '') labels.push({ ...P(labelAnchor(it)), text: it.tag ?? it.label, id: it.id, sel });
   }
   draw.sort((a, b) => a.depth - b.depth);
   return (

@@ -25,37 +25,38 @@ export interface EarthSceneInput extends LayerInput { co2?: { C: number; ecs: nu
 export function earthScene(i: EarthSceneInput): { items: SceneItem[]; extent: number; target: Vec3; description: string } {
   const r = layerModel(i);
   const items: SceneItem[] = [
-    { id: 'tierra', kind: 'sphere', center: [0, 0, 0], radius: R_EARTH, color: '#2f6fb0', label: 'Tierra: emite por toda la esfera (4πR²)' },
-    { id: 'sombra', kind: 'ellipsoid', center: [2.5, 0, 0], radii: [0.02, R_EARTH, R_EARTH], color: 'ink', opacity: 0.35, label: 'sombra: un disco de área πR²' },
-    { id: 'sol', kind: 'sphere', center: [-3.4, -0.1, 0], radius: 0.28, color: SUN, label: 'luz del Sol' },
+    { id: 'tierra', kind: 'sphere', center: [0, 0, 0], radius: R_EARTH, color: '#2f6fb0', label: 'Tierra: emite por toda la esfera (4πR²)', tag: '' },
+    { id: 'sombra', kind: 'ellipsoid', center: [2.5, 0, 0], radii: [0.02, R_EARTH, R_EARTH], color: 'ink', opacity: 0.35, label: 'sombra: un disco de área πR²', tag: 'sombra: disco πR²' },
+    { id: 'sol', kind: 'sphere', center: [-3.4, -0.1, 0], radius: 0.28, color: SUN, label: 'luz del Sol', tag: 'Sol' },
   ];
-  if (i.eps > 0) items.push({ id: 'capa', kind: 'sphere', center: [0, 0, 0], radius: R_LAYER, color: 'info', opacity: 0.05 + 0.15 * i.eps, label: 'capa de atmósfera' });
+  if (i.eps > 0) items.push({ id: 'capa', kind: 'sphere', center: [0, 0, 0], radius: R_LAYER, color: 'info', opacity: 0.05 + 0.15 * i.eps, label: 'capa de atmósfera', tag: '' });
   // Rayos paralelos por debajo de y = 0,3 (no tocan la fila de flechas del polo).
   let n = 0;
   for (const [y, z] of [[0.3, 0], [0, 0], [-0.35, 0], [-0.7, 0], [0, 0.55], [0, -0.55], [-0.4, 0.45], [-0.4, -0.45]] as [number, number][]) {
     const x = -Math.sqrt(R_EARTH ** 2 - y * y - z * z);
     items.push({ id: `rayo-${n++}`, kind: 'rod', from: [-3.1, y, z], to: [x, y, z], radius: 0.018, color: SUN, opacity: 0.8 });
   }
-  // Fila de flujos sobre el polo (plano z = 0): x de −0,6 a 0,9; las de la capa salen de su superficie.
-  const flux = (id: string, x: number, value: number, dir: 1 | -1, fromLayer: boolean, color: SceneItem['color'], label: string, opacity = 1) => {
+  // Fila de flujos sobre el polo (plano z = 0): x de −0,9 a 0,9; las de la capa salen de su superficie.
+  const flux = (id: string, x: number, value: number, dir: 1 | -1, fromLayer: boolean, color: SceneItem['color'], label: string, tag: string, opacity = 1) => {
     const len = value * K_FLUX;
     if (len < 0.02) return;
     const y0 = dir === 1 ? (fromLayer ? layerY(x) : surfaceY(x)) : (fromLayer ? layerY(x) : surfaceY(x) + len);
-    items.push({ id, kind: 'arrow', from: [x, y0, 0], vector: [0, dir * len, 0], radius: 0.05, color, opacity, label });
+    items.push({ id, kind: 'arrow', from: [x, y0, 0], vector: [0, dir * len, 0], radius: 0.05, color, opacity, label, tag });
   };
-  flux('reflejada', -0.6, r.reflected, 1, false, SUN, 'luz reflejada', 0.7);
-  flux('solar-absorbida', -0.3, r.absorbed, -1, false, SUN, 'luz absorbida');
-  flux('ir-superficie', 0, r.surfaceIR, 1, false, 'bad', 'infrarrojo de la superficie');
+  // La fila de flechas es angosta: en la escena cada flecha lleva solo su número y la leyenda da el nombre completo.
+  flux('reflejada', -0.9, r.reflected, 1, false, SUN, '1 · luz reflejada', '1', 0.7);
+  flux('solar-absorbida', -0.5, r.absorbed, -1, false, SUN, '2 · luz absorbida', '2');
+  flux('ir-superficie', -0.15, r.surfaceIR, 1, false, 'bad', '3 · infrarrojo de la superficie', '3');
   if (i.eps > 0) {
-    flux('ventana', 0.3, r.window, 1, true, 'bad', 'infrarrojo al espacio', 0.6);
-    flux('capa-arriba', 0.6, r.layerUp, 1, true, 'series-4', 'capa hacia arriba');
-    flux('capa-abajo', 0.9, r.layerDown, -1, true, 'series-4', 'capa hacia abajo');
+    flux('ventana', 0.2, r.window, 1, true, 'bad', '4 · infrarrojo al espacio (ventana)', '4', 0.6);
+    flux('capa-arriba', 0.55, r.layerUp, 1, true, 'series-4', '5 · la capa emite hacia arriba', '5');
+    flux('capa-abajo', 0.9, r.layerDown, -1, true, 'series-4', '6 · la capa emite hacia abajo', '6');
   }
   let co2Txt = '';
   if (i.co2) {
     const w = co2Warming(i.co2.C, i.co2.ecs);
     const len = Math.abs(w.forcing) * K_FORCING;
-    if (len >= 0.02) items.push({ id: 'forzamiento', kind: 'arrow', from: [1.3, w.forcing > 0 ? -0.5 : 0.3, 0], vector: [0, (w.forcing > 0 ? 1 : -1) * len, 0], radius: 0.06, color: 'data', label: 'forzamiento del CO₂ (otra escala)' });
+    if (len >= 0.02) items.push({ id: 'forzamiento', kind: 'arrow', from: [1.3, w.forcing > 0 ? -0.5 : 0.3, 0], vector: [0, (w.forcing > 0 ? 1 : -1) * len, 0], radius: 0.06, color: 'data', label: 'forzamiento del CO₂ (otra escala)', tag: 'forzamiento' });
     co2Txt = ` Con ${fmt(i.co2.C, 0)} ppm de CO₂ el forzamiento es ${fmt(w.forcing, 2)} W/m² (flecha a la derecha de la Tierra, con otra escala) y el calentamiento de equilibrio, ${fmt(w.dT, 2)} °C con una sensibilidad de ${fmt(i.co2.ecs, 1)} °C.`;
   }
   const layerTxt = i.eps > 0

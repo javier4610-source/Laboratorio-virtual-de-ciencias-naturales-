@@ -53,6 +53,18 @@ describe('la Tierra y su atmósfera en 3D (efecto invernadero)', () => {
     expect(len(byId<ArrowItem>(opaque.items, 'ir-superficie'))).toBeGreaterThan(len(byId<ArrowItem>(none.items, 'ir-superficie')));
     expect(byId(opaque.items, 'ventana')).toBeUndefined();
   });
+  it('rótulos cortos en la escena: las flechas llevan su número y la leyenda el nombre completo', () => {
+    const sc = earthScene({ S: 1361, albedo: 0.3, eps: 0.78 });
+    const arrows = sc.items.filter((i) => i.kind === 'arrow');
+    expect(arrows.map((a) => a.tag)).toEqual(['1', '2', '3', '4', '5', '6']);
+    for (const a of arrows) expect(a.label?.startsWith(`${a.tag} · `)).toBe(true);
+    // La Tierra y la capa quedan solo en la leyenda (sus rótulos tapaban las flechas del polo).
+    expect(byId(sc.items, 'tierra').tag).toBe('');
+    expect(byId(sc.items, 'capa').tag).toBe('');
+    // Flechas separadas al menos 0,3 radios para que el número de una no tape la siguiente.
+    const xs = arrows.map((a) => (a as ArrowItem).from[0]).sort((p, q) => p - q);
+    for (let k = 1; k < xs.length; k++) expect(xs[k] - xs[k - 1]).toBeGreaterThanOrEqual(0.3);
+  });
   it('el forzamiento del CO₂ tiene su propia escala y su signo', () => {
     const up = earthScene({ S: 1361, albedo: 0.3, eps: 0.78, co2: { C: 556.6, ecs: 3 } });
     const f = byId<ArrowItem>(up.items, 'forzamiento');

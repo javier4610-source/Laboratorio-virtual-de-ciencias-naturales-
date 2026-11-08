@@ -51,6 +51,14 @@ const CASES: Case[] = [
       await page.waitForTimeout(2000);
     },
   },
+  {
+    name: 'flotacion', id: 'flotacion', prefix: 'flo3d', title: /línea de flotación, peso y empuje/,
+    prepare: async (page) => {
+      await page.getByLabel('Objeto colgado del gancho').selectOption('madera');
+      await page.getByRole('slider', { name: 'Descenso del objeto', exact: true }).fill('6');
+      await page.waitForTimeout(1600);
+    },
+  },
 ];
 
 /** Los rótulos HTML superpuestos no se encima entre sí ni se salen del lienzo. */

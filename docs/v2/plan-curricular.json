@@ -873,7 +873,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-6",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-6 (2026-11-08)"
         },
         {
           "id": "calor",
@@ -884,7 +885,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-6",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-6 (2026-11-08)"
         },
         {
           "id": "conduccion",
@@ -895,7 +897,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-6",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-6 (2026-11-08)"
         },
         {
           "id": "movimiento",
@@ -906,7 +909,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-6",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-6 (2026-11-08)"
         },
         {
           "id": "cinematica",
@@ -917,7 +921,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-6",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-6 (2026-11-08)"
         },
         {
           "id": "seleccion",
@@ -928,7 +933,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-6",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-6 (2026-11-08)"
         },
         {
           "id": "popgen",
@@ -939,7 +945,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-6",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-6 (2026-11-08)"
         }
       ]
     },

@@ -745,7 +745,7 @@ Plataforma: el paginador de prácticas («Anterior / Siguiente») desbordaba 2 p
 título largo (p. ej., `optica` → «Modelo interactivo de ADN…»); sus columnas ahora son `minmax(0, 1fr)` y el texto se
 parte. La referencia visual de `densidad` se actualizó solo por la tarjeta cerrada «Vista 3D» (+144 px de alto).
 
-#### Lote 3D-6 · Materia, calor, movimiento y evolución (6.º–9.º) (7 prácticas)
+#### Lote 3D-6 · Materia, calor, movimiento y evolución (6.º–9.º) (7 prácticas) — hecho
 
 | Práctica | Grado | Escena 3D propuesta (qué ve y manipula el estudiante) | Tecnología | Complejidad | Prioridad |
 |---|---|---|---|---|---|
@@ -756,6 +756,36 @@ parte. La referencia visual de `densidad` se actualizó solo por la tarjeta cerr
 | `cinematica` Velocidad, aceleración y movimiento | 9.º | Carro 3D en una pista con las gráficas x–t y v–t sincronizadas; vectores de velocidad y aceleración sobre el carro. | Kit general de escenas 3D (three.js, en construcción en paralelo) | S | 3 |
 | `seleccion` Selección natural con cambios ambientales | 9.º | Suelo 3D (claro, oscuro, volcánico) con presas de distinto color vistas desde el punto de vista del depredador: muestra por qué el camuflaje cambia la supervivencia. | Kit general de escenas 3D (three.js, en construcción en paralelo) | M | 2 |
 | `popgen` Genética de poblaciones y frecuencias alélicas | 11.º | Dos poblaciones 3D en un paisaje con individuos coloreados por genotipo y migrantes que cruzan (flujo génico). Valor 3D bajo: hacerlo simple. | Kit general de escenas 3D (three.js, en construcción en paralelo) | S | 3 |
+
+**Estado del lote 3D-6: hecho (2026-11-08).** Las siete prácticas tienen la tarjeta «Vista 3D» cerrada que se abre a
+pedido (el código de la vista, el kit `src/three` y three.js se descargan solo entonces; `npm run perf` lo comprueba), con
+el patrón de los lotes anteriores: respaldo SVG sin WebGL con las mismas primitivas, giro con ratón, dedo, teclado y
+botones, descripción textual que cambia con el estado, chip «Modelo calculado» con la frase de qué es cálculo y qué es
+dibujo, sin desbordamiento a 390 px y temas claro y oscuro. Código: `src/labs/lote3d6/` (funciones puras
+`mixtures3d.ts`, `heat3d.ts`, `conduction3d.ts`, `motion3d.ts`, `kinematics3d.ts`, `selection3d.ts`, `popgen3d.ts`;
+piezas comunes en `common.ts`, con la escala FIJA de color de temperatura 20 °C azul, 40 °C turquesa, 55 °C amarillo,
+75 °C naranja y 100 °C rojo; `useNarrow.ts` da un encuadre más amplio en pantallas angostas, porque estas escenas son
+alargadas). Pruebas: `tests/unit/lote3d6.test.ts` y `tests/e2e/visor3d-lote6.spec.ts`. Ningún número científico nuevo:
+masas de cada fracción, temperaturas y flujos de calor, perfil de la varilla y caída de las tachuelas, posiciones,
+velocidades, fotos estroboscópicas, muestra de escarabajos y su supervivencia, frecuencias alélicas y migrantes salen del
+modelo de cada práctica con el mismo estado que su banco. Las lecturas que el banco oculta hasta medir siguen ocultas:
+la curva x–t continua de `cinematica` y su velocidad final aparecen al terminar (antes, solo las fotos ya tomadas); en
+`calor` solo se dice lo que marca el termómetro (no T_e ni el tiempo de equilibrio); en `seleccion` la supervivencia por
+color aparece después de la primera ronda de depredación, como la supervivencia del banco.
+
+Movimiento: `calor`, `conduccion`, `movimiento` y `cinematica` siguen el reloj de su banco (su barra de simulación):
+quietas en pausa y, con movimiento reducido, saltan al resultado como el banco. `mezclas`, `seleccion` (sigue la
+transición de 0,7 s del banco al avanzar generaciones) y `popgen` cambian con los controles.
+
+| Práctica | Qué muestra la vista 3D (implementado) | Estatus | Desviación respecto de la propuesta |
+|---|---|---|---|
+| `mezclas` | El vaso con lo que sigue mezclado (sal disuelta repartida en toda el agua; aserrín y aceite arriba; arena y hierro al fondo) y cada fracción separada (`separated` del modelo, en el orden del banco) en la herramienta de su técnica: imán con las limaduras en los polos, embudo con papel filtro y el residuo, embudo de decantación con la capa separada, cápsula de evaporación (con llama si fue el último paso) con el residuo. Partículas ∝ masa (3 por gramo, tope 60 por lugar). | Modelo calculado | Las fracciones se ordenan en fila (últimas 8), no en un montaje único; el filtrado no va a otro recipiente porque en el modelo sigue en el vaso principal. Altura del agua ∝ masa (1 g ≈ 1 cm³ en un vaso de 4 cm de radio, dibujo); posición de cada partícula: dibujo. |
+| `calor` | El calorímetro (icopor, vidrio o lata, translúcido) con su agua, termómetro (rótulo = lectura del banco) y agitador; la parrilla con el baño o el vaso de agua caliente; la muestra (metal: cilindro con el volumen m/ρ del modelo; agua caliente: se vierte con el avance del banco). Partículas de la muestra y del agua con el color de su temperatura del modelo (`temperaturesAt`) y agitación de amplitud ∝ √T absoluta; flecha de calor muestra → agua ∝ G·(T₁ − T₂) (4 cm con el flujo inicial; desaparece en el equilibrio) y flechas vaso ↔ aire ∝ L·(T₂ − T_salón). | Modelo calculado | No hay corte geométrico: la pared es translúcida («visto a través de la pared»). La agitación ∝ √T apenas cambia entre 20 y 60 °C (7 %): el color lleva la diferencia, y el chip lo dice. Escala de las flechas fija por corrida. Las partículas solo se mueven mientras corre el registro del banco. |
+| `conduccion` | La varilla de 30 cm (grosor ×1,5) con cada centímetro coloreado por la temperatura del modelo (`temperatureAt`, ecuación de la aleta) en el mismo instante, el baño y el mechero, la funda de icopor si la hay, las tachuelas que caen cuando el modelo dice que su cera llegó a 55 °C (`tackFall`), los termopares con la lectura del registrador y la regla. Selector «Comparar con otra varilla»: otra corrida del mismo modelo (mismo baño, misma funda, mismo tiempo) al lado. | Modelo calculado | La cinta termocrómica no se dibuja aparte: el mapa de color de la varilla ya cumple esa función. La comparación lado a lado la elige el estudiante en la vista (no está en el banco). |
+| `movimiento` | La pista de 40 m vista desde arriba con las marcas cada 5 m, el cono, la bandera, la cinta métrica y las fotopuertas donde los puso el estudiante; el móvil (o los dos carriles de la carrera) en la posición que dibuja el banco; el camino recorrido como línea sobre la pista (ida y, al volver, vuelta a su lado) y el desplazamiento como flecha desde la salida, que en ida y vuelta vuelve a cero. | Modelo calculado | La bicicleta, el balón y el carrito se dibujan ampliados (las personas, a escala). En la carrera no se dibujan las flechas de desplazamiento (es un tramo de ida). |
+| `cinematica` | La ciclorruta de 50 m con el ciclista en x(t) del modelo, la flecha v ∝ v(t) (la mayor rapidez del recorrido = 6 m) y la flecha a (3 m/s² = 3 m; desaparece al detenerse o al final de la pista), las fotos estroboscópicas ya tomadas con su flecha v y, detrás, una «pared x–t» donde cada foto está sobre su posición y a la altura de su instante; la curva continua al terminar y la del reto, si lo hay. | Modelo calculado | Es un ciclista (el del banco), no un carro. Las gráficas x–t y v–t del banco no se repiten en 3D: la pared es la x–t girada (el tiempo hacia arriba) y v se ve en las flechas de cada foto. |
+| `seleccion` | El suelo con el color del fondo B del banco, visto desde la rama del ave, con la misma muestra de 40 escarabajos (cuantiles de la población del modelo, en las mismas posiciones y con su pigmento); al lado, columnas con cuántos hay en cada una de 10 clases de color y, desde la primera ronda, cuántos escaparían de las aves (n·s(z) con la supervivencia del modelo en el centro de la clase). | Modelo calculado | Un solo suelo (el que eligió el estudiante), no los tres a la vez; la cámara empieza en la rama del ave pero se puede girar. |
+| `popgen` | La isla con la población (réplica) y la generación que se eligen en la vista: p del modelo, copias de A = 2N·p y hasta 100 individuos con las proporciones de Hardy-Weinberg de ese p (la misma cuenta de la poza génica del banco, ahora compartida), cada uno con sus dos alelos; el continente con la p de los migrantes y, si hay migración, un puente con m·(individuos dibujados) migrantes. | Modelo calculado | El modelo tiene una población que recibe migrantes de una fuente fija, no dos poblaciones que intercambian: el continente es esa fuente. Con N > 100 los 100 individuos son una muestra con las proporciones de Hardy-Weinberg (los genotipos no los sigue el modelo, solo la frecuencia alélica). |
 
 #### Lote 3D-7 · Ecología, ambiente y datos (8 prácticas)
 

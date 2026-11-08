@@ -51,6 +51,32 @@
     "illustrative": true
   },
   {
+    "id": "clasificacion-seres-vivos",
+    "title": "Clasificación de los seres vivos con claves dicotómicas",
+    "grade": 6,
+    "area": "biologia",
+    "lab": "ClassificationLab",
+    "models": [
+      "classification"
+    ],
+    "tests": [
+      "escenas3dOla2b.test.ts",
+      "ola2bModelos.test.ts"
+    ],
+    "nTests": 38,
+    "e2e": true,
+    "a11y": false,
+    "loc": 172,
+    "measure": false,
+    "advanced": false,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "densidad",
     "title": "Medición de masa, volumen y densidad",
     "grade": 6,
@@ -268,12 +294,13 @@
     ],
     "tests": [
       "conditions.test.ts",
+      "lote3d4.test.ts",
       "simpleCircuits.test.ts"
     ],
-    "nTests": 50,
+    "nTests": 65,
     "e2e": true,
     "a11y": false,
-    "loc": 1054,
+    "loc": 1062,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -318,12 +345,13 @@
       "conductors"
     ],
     "tests": [
-      "conductors.test.ts"
+      "conductors.test.ts",
+      "lote3d4.test.ts"
     ],
-    "nTests": 12,
+    "nTests": 27,
     "e2e": true,
     "a11y": false,
-    "loc": 409,
+    "loc": 416,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -1119,12 +1147,13 @@
     "tests": [
       "advanced.test.ts",
       "conditions.test.ts",
-      "kinetics.test.ts"
+      "kinetics.test.ts",
+      "lote3d4.test.ts"
     ],
-    "nTests": 65,
+    "nTests": 80,
     "e2e": true,
     "a11y": false,
-    "loc": 337,
+    "loc": 346,
     "measure": false,
     "advanced": true,
     "params": true,
@@ -1259,12 +1288,13 @@
     "tests": [
       "advanced.test.ts",
       "conditions.test.ts",
+      "lote3d4.test.ts",
       "models3.test.ts"
     ],
-    "nTests": 75,
+    "nTests": 90,
     "e2e": true,
     "a11y": false,
-    "loc": 215,
+    "loc": 222,
     "measure": true,
     "advanced": true,
     "params": true,
@@ -1305,6 +1335,32 @@
     "sound": true,
     "datasets": true,
     "illustrative": false
+  },
+  {
+    "id": "homeostasis-glucosa",
+    "title": "Homeostasis: regulación de la glucosa por insulina y glucagón",
+    "grade": 10,
+    "area": "biologia",
+    "lab": "GlucoseLab",
+    "models": [
+      "glucose"
+    ],
+    "tests": [
+      "escenas3dOla2b.test.ts",
+      "ola2bModelos.test.ts"
+    ],
+    "nTests": 38,
+    "e2e": true,
+    "a11y": false,
+    "loc": 160,
+    "measure": true,
+    "advanced": true,
+    "params": false,
+    "instr": true,
+    "manip": false,
+    "sound": true,
+    "datasets": true,
+    "illustrative": true
   },
   {
     "id": "movimiento-circular",
@@ -1567,12 +1623,13 @@
     ],
     "tests": [
       "conditions.test.ts",
+      "lote3d4.test.ts",
       "models.test.ts"
     ],
-    "nTests": 89,
+    "nTests": 104,
     "e2e": true,
     "a11y": false,
-    "loc": 347,
+    "loc": 354,
     "measure": true,
     "advanced": true,
     "params": false,
@@ -1581,6 +1638,32 @@
     "sound": true,
     "datasets": true,
     "illustrative": false
+  },
+  {
+    "id": "efecto-invernadero",
+    "title": "Balance de energía de la Tierra y efecto invernadero",
+    "grade": 11,
+    "area": "ambiental",
+    "lab": "GreenhouseLab",
+    "models": [
+      "greenhouse"
+    ],
+    "tests": [
+      "escenas3dOla2b.test.ts",
+      "ola2bModelos.test.ts"
+    ],
+    "nTests": 38,
+    "e2e": true,
+    "a11y": false,
+    "loc": 158,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
   },
   {
     "id": "electrostatica",
@@ -1619,12 +1702,13 @@
     ],
     "tests": [
       "conditions.test.ts",
-      "equilibrium.test.ts"
+      "equilibrium.test.ts",
+      "lote3d4.test.ts"
     ],
-    "nTests": 45,
+    "nTests": 60,
     "e2e": true,
     "a11y": false,
-    "loc": 470,
+    "loc": 480,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1797,12 +1881,13 @@
       "induction"
     ],
     "tests": [
-      "induction.test.ts"
+      "induction.test.ts",
+      "lote3d4.test.ts"
     ],
-    "nTests": 12,
+    "nTests": 27,
     "e2e": true,
     "a11y": false,
-    "loc": 1252,
+    "loc": 1259,
     "measure": true,
     "advanced": true,
     "params": true,
@@ -1906,14 +1991,15 @@
     ],
     "tests": [
       "inorganicChemistry.test.ts",
+      "lote3d4.test.ts",
       "models.test.ts",
       "models2.test.ts",
       "mole.test.ts"
     ],
-    "nTests": 110,
+    "nTests": 125,
     "e2e": true,
     "a11y": false,
-    "loc": 280,
+    "loc": 290,
     "measure": false,
     "advanced": false,
     "params": false,

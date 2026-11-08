@@ -1,17 +1,18 @@
 # Inventario automático del laboratorio
 
-Generado por `node scripts/inventario.mjs` el 2026-11-03. No editar a mano: se regenera desde el código.
+Generado por `node scripts/inventario.mjs` el 2026-11-08. No editar a mano: se regenera desde el código.
 
-- Prácticas en el catálogo: **79**
-- Con laboratorio registrado: 79 · con prueba E2E propia: 79 · con revisión axe: 0
-- Con modo de instrumento real: 31 · con modo avanzado: 32 · con parámetros editables: 8
-- Con manipulación directa: 33 · con sonido: 57 · con texto que rotula partes ilustrativas: 34
-- Archivos de pruebas unitarias: 94 (1347 pruebas declaradas)
+- Prácticas en el catálogo: **82**
+- Con laboratorio registrado: 82 · con prueba E2E propia: 82 · con revisión axe: 0
+- Con modo de instrumento real: 32 · con modo avanzado: 34 · con parámetros editables: 8
+- Con manipulación directa: 33 · con sonido: 58 · con texto que rotula partes ilustrativas: 37
+- Archivos de pruebas unitarias: 97 (1400 pruebas declaradas)
 
 | Práctica | Grado | Área | Laboratorio (líneas) | Modelos | Pruebas unitarias | E2E | axe | Instr. real | Avanzado | Manipulación | Sonido | Rótulo ilustrativo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `calor` Calor, temperatura y equilibrio térmico | 6.º | fisica | HeatLab (569) | heat | 14 en heat.test.ts | sí | no | sí | no | sí | sí | no |
 | `celulas` Microscopio virtual: células animales y vegetales | 6.º | biologia | MicroscopeLab (345) | microscope | 29 en kit3d.test.ts, microscope.test.ts | sí | no | no | no | sí | sí | sí |
+| `clasificacion-seres-vivos` Clasificación de los seres vivos con claves dicotómicas | 6.º | biologia | ClassificationLab (172) | classification | 38 en escenas3dOla2b.test.ts, ola2bModelos.test.ts | sí | no | no | no | no | no | sí |
 | `densidad` Medición de masa, volumen y densidad | 6.º | fisica | DensityLab (241) | density | 89 en conditions.test.ts, models.test.ts | sí | no | sí | sí | sí | sí | no |
 | `ecosistema` Ecosistema: agua, luz y alimento | 6.º | ambiental | EcosystemLab (713) | ecosystem, conditions | 47 en conditions.test.ts, ecosystem.test.ts | sí | no | sí | no | sí | sí | no |
 | `estados-de-la-materia` Estados de la materia y curva de calentamiento del agua | 6.º | quimica | StatesLab (180) | statesOfMatter | 32 en escenas3dOla2a.test.ts, ola2aModelos.test.ts | sí | no | sí | sí | no | sí | no |
@@ -20,9 +21,9 @@ Generado por `node scripts/inventario.mjs` el 2026-11-03. No editar a mano: se r
 | `movimiento` Movimiento y distancia recorrida | 6.º | fisica | MotionLab (836) | motion | 43 en conditions.test.ts, motion.test.ts | sí | no | sí | sí | sí | sí | no |
 | `redes` Cadenas y redes alimentarias | 6.º | ambiental | FoodWebLab (376) | foodweb | 12 en foodweb.test.ts | sí | no | no | no | no | no | sí |
 | `cambios-quimicos` Cambios físicos y químicos: evidencias de una reacción | 7.º | quimica | ChemicalChangesLab (252) | chemicalChanges | 32 en escenas3dOla2a.test.ts, ola2aModelos.test.ts | sí | no | sí | sí | no | sí | sí |
-| `circuitos-simples` Circuitos simples con baterías, interruptores y bombillas | 7.º | fisica | SimpleCircuitsLab (1054) | simpleCircuits | 50 en conditions.test.ts, simpleCircuits.test.ts | sí | no | sí | sí | sí | sí | no |
+| `circuitos-simples` Circuitos simples con baterías, interruptores y bombillas | 7.º | fisica | SimpleCircuitsLab (1062) | simpleCircuits | 65 en conditions.test.ts, lote3d4.test.ts, simpleCircuits.test.ts | sí | no | sí | sí | sí | sí | no |
 | `conduccion` Transferencia de calor por conducción | 7.º | fisica | ConductionLab (761) | conduction | 15 en conduction.test.ts | sí | no | sí | no | sí | sí | no |
-| `conductores` Materiales conductores y aislantes | 7.º | fisica | ConductorsLab (409) | conductors | 12 en conductors.test.ts | sí | no | sí | no | no | sí | no |
+| `conductores` Materiales conductores y aislantes | 7.º | fisica | ConductorsLab (416) | conductors | 27 en conductors.test.ts, lote3d4.test.ts | sí | no | sí | no | no | sí | no |
 | `descomposicion` Factores de la descomposición de la materia orgánica | 7.º | ambiental | DecompositionLab (400) | decomposition | 10 en decomposition.test.ts | sí | no | no | no | no | no | sí |
 | `flotacion` Empuje y flotación: principio de Arquímedes | 7.º | fisica | BuoyancyLab (620) | buoyancy, pressure | 46 en advanced.test.ts, buoyancy.test.ts, pressure.test.ts | sí | no | sí | no | sí | sí | no |
 | `magnetismo-imanes` Imanes, brújula y campo magnético | 7.º | fisica | MagnetismLab (188) | magnetism | 32 en escenas3dOla2a.test.ts, ola2aModelos.test.ts | sí | no | sí | sí | no | no | no |
@@ -52,13 +53,14 @@ Generado por `node scripts/inventario.mjs` el 2026-11-03. No editar a mano: se r
 | `trabajo` Trabajo, potencia y plano inclinado | 9.º | fisica | WorkLab (823) | workPower | 30 en lote3d3.test.ts, workPower.test.ts | sí | no | sí | no | sí | sí | no |
 | `acidos-sales` Ácidos y sales: hidrácidos, oxácidos, neutralización y nomenclatura | 10.º | quimica | AcidsSaltsLab (295) | aqueousEquilibria, acidsSalts, inorganicNomenclature, oxidesHydroxides | 55 en compoundForge.test.ts, inorganicChemistry.test.ts, inorganicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
 | `choques` Choques y cantidad de movimiento | 10.º | fisica | CollisionsLab (500) | collisions | 31 en collisions.test.ts, lote3d3.test.ts | sí | no | no | sí | no | sí | no |
-| `cinetica` Factores que afectan la velocidad de reacción | 10.º | quimica | KineticsLab (337) | kinetics | 65 en advanced.test.ts, conditions.test.ts, kinetics.test.ts | sí | no | no | sí | sí | sí | sí |
+| `cinetica` Factores que afectan la velocidad de reacción | 10.º | quimica | KineticsLab (346) | kinetics | 80 en advanced.test.ts, conditions.test.ts, kinetics.test.ts, lote3d4.test.ts | sí | no | no | sí | sí | sí | sí |
 | `configuracion-electronica` Configuración electrónica y orbitales atómicos | 10.º | quimica | ElectronConfigLab (237) | electronConfiguration, periodicTrends | 38 en electronConfiguration.test.ts, escenas3dOla1a.test.ts, escenas3dOla1b.test.ts, periodicBonding.test.ts | sí | no | no | sí | no | sí | sí |
 | `energia` Conservación de la energía mecánica | 10.º | fisica | EnergyLab (492) | energy, energyTime | 74 en advanced.test.ts, energyTime.test.ts, lote3d3.test.ts, models3.test.ts | sí | no | no | sí | no | sí | no |
 | `enzimas` Actividad enzimática: temperatura, pH y concentración | 10.º | biologia | EnzymeLab (295) | enzyme | 127 en conditions.test.ts, lib.test.ts, lote3d.test.ts, models.test.ts | sí | no | no | no | sí | no | sí |
 | `fotosintesis` Fotosíntesis: luz, CO₂ y temperatura | 10.º | biologia | PhotoLab (210) | photosynthesis | 75 en conditions.test.ts, lote3d2.test.ts, models2.test.ts | sí | no | no | no | sí | no | sí |
-| `gases` Leyes de los gases: presión, volumen y temperatura | 10.º | quimica | GasLab (215) | gases | 75 en advanced.test.ts, conditions.test.ts, models3.test.ts | sí | no | sí | sí | sí | sí | no |
+| `gases` Leyes de los gases: presión, volumen y temperatura | 10.º | quimica | GasLab (222) | gases | 90 en advanced.test.ts, conditions.test.ts, lote3d4.test.ts, models3.test.ts | sí | no | sí | sí | sí | sí | no |
 | `geometria` Geometría molecular en 3D y modelo VSEPR | 10.º | quimica | GeometryLab (700) | geometry, balancing | 137 en balancing.test.ts, chemKit.test.ts, compoundForge.test.ts, geometry.test.ts, inorganicNomenclature.test.ts, lote3d.test.ts, mole.test.ts | sí | no | no | no | no | sí | no |
+| `homeostasis-glucosa` Homeostasis: regulación de la glucosa por insulina y glucagón | 10.º | biologia | GlucoseLab (160) | glucose | 38 en escenas3dOla2b.test.ts, ola2bModelos.test.ts | sí | no | sí | sí | no | sí | sí |
 | `movimiento-circular` Movimiento circular uniforme y fuerza centrípeta | 10.º | fisica | CircularMotionLab (181) | circularMotion | 32 en escenas3dOla2a.test.ts, ola2aModelos.test.ts | sí | no | sí | sí | no | sí | sí |
 | `nomenclatura-inorganica` Nomenclatura química inorgánica | 10.º | quimica | InorganicNomenclatureLab (282) | geometry, inorganicNomenclature | 76 en chemKit.test.ts, compoundForge.test.ts, geometry.test.ts, inorganicNomenclature.test.ts | sí | no | no | no | no | sí | no |
 | `oxidos-hidroxidos` Óxidos e hidróxidos: formación, nomenclatura y carácter ácido-base | 10.º | quimica | OxidesHydroxidesLab (268) | inorganicNomenclature, oxidesHydroxides | 55 en compoundForge.test.ts, inorganicChemistry.test.ts, inorganicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
@@ -68,19 +70,20 @@ Generado por `node scripts/inventario.mjs` el 2026-11-03. No editar a mano: se r
 | `soluciones` Preparación de soluciones, molaridad y colorimetría | 10.º | quimica | SolutionsLab (288) | solutions, chemistry | 134 en conditions.test.ts, lote3d.test.ts, models.test.ts, mole.test.ts | sí | no | no | no | no | sí | no |
 | `agua` Contaminación del agua e indicadores fisicoquímicos y biológicos | 11.º | ambiental | WaterQualityLab (643) | waterQuality | 49 en conditions.test.ts, waterQuality.test.ts | sí | no | sí | no | sí | sí | no |
 | `aromaticos` Hidrocarburos aromáticos | 11.º | quimica | AromaticsLab (319) | hydrocarbons, aromaticity, organicGraph, organicNomenclature, organicBuilder | 60 en functionalNomenclature.test.ts, organicFunctions.test.ts, organicModels.test.ts, organicNomenclature.test.ts | sí | no | no | no | no | no | sí |
-| `circuitos` Circuitos eléctricos: voltaje, corriente y resistencia | 11.º | fisica | CircuitLab (347) | circuits | 89 en conditions.test.ts, models.test.ts | sí | no | sí | sí | sí | sí | no |
+| `circuitos` Circuitos eléctricos: voltaje, corriente y resistencia | 11.º | fisica | CircuitLab (354) | circuits | 104 en conditions.test.ts, lote3d4.test.ts, models.test.ts | sí | no | sí | sí | sí | sí | no |
+| `efecto-invernadero` Balance de energía de la Tierra y efecto invernadero | 11.º | ambiental | GreenhouseLab (158) | greenhouse | 38 en escenas3dOla2b.test.ts, ola2bModelos.test.ts | sí | no | no | sí | no | no | sí |
 | `electrostatica` Carga, ley de Coulomb y campo eléctrico | 11.º | fisica | ElectrostaticsLab (235) | electrostatics | 17 en electrostatics.test.ts, escenas3dOla1a.test.ts | sí | no | sí | sí | no | sí | no |
-| `equilibrio` Equilibrio químico y principio de Le Châtelier | 11.º | quimica | EquilibriumLab (470) | equilibrium | 45 en conditions.test.ts, equilibrium.test.ts | sí | no | no | no | no | sí | sí |
+| `equilibrio` Equilibrio químico y principio de Le Châtelier | 11.º | quimica | EquilibriumLab (480) | equilibrium | 60 en conditions.test.ts, equilibrium.test.ts, lote3d4.test.ts | sí | no | no | no | no | sí | sí |
 | `estequiometria` Estequiometría y reactivo limitante | 11.º | quimica | StoichLab (221) | stoichiometry, chemistry | 111 en lib.test.ts, lote3d.test.ts, models.test.ts, mole.test.ts | sí | no | no | no | no | no | no |
 | `expresion` Expresión génica y efecto de mutaciones en la proteína | 11.º | biologia | ExpressionLab (871) | geneExpression, dna | 137 en geneExpression.test.ts, lote3d.test.ts, lote3d2.test.ts, models.test.ts, sequences.test.ts | sí | no | no | no | sí | sí | no |
 | `grupos-nitrogenados` Funciones orgánicas nitrogenadas: aminas y amidas | 11.º | quimica | NitrogenGroupsLab (389) | functionalGroups, functionalProperties, functionalNomenclature, organicGraph, organicReactions | 70 en chemBonds.test.ts, functionalNomenclature.test.ts, organicFunctions.test.ts, organicModels.test.ts, organicNomenclature.test.ts | sí | no | no | no | no | no | sí |
 | `grupos-oxigenados` Funciones orgánicas oxigenadas: alcoholes, fenoles, éteres, aldehídos, cetonas, ácidos carboxílicos y ésteres | 11.º | quimica | OxygenatedGroupsLab (342) | functionalGroups, functionalProperties, functionalNomenclature, organicGraph | 60 en functionalNomenclature.test.ts, organicFunctions.test.ts, organicModels.test.ts, organicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
 | `hidrocarburos` Hidrocarburos: alcanos, alquenos y alquinos | 11.º | quimica | HydrocarbonsLab (522) | hydrocarbons, organicGraph, organicNomenclature | 60 en functionalNomenclature.test.ts, organicFunctions.test.ts, organicModels.test.ts, organicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
-| `induccion` Magnetismo e inducción electromagnética | 11.º | fisica | InductionLab (1252) | induction | 12 en induction.test.ts | sí | no | sí | sí | sí | sí | no |
+| `induccion` Magnetismo e inducción electromagnética | 11.º | fisica | InductionLab (1259) | induction | 27 en induction.test.ts, lote3d4.test.ts | sí | no | sí | sí | sí | sí | no |
 | `interferencia` Interferencia y difracción de la luz | 11.º | fisica | InterferenceLab (596) | interference | 53 en conditions.test.ts, interference.test.ts | sí | no | sí | sí | sí | sí | no |
 | `metabolismo` Metabolismo celular: análisis de balance de flujos (FBA) | 11.º | biologia | MetabolismLab (502) | metabolism | 54 en conditions.test.ts, metabolism.test.ts | sí | no | no | no | no | no | no |
 | `nomenclatura-organica` Nomenclatura orgánica IUPAC | 11.º | quimica | NomenclatureLab (437) | organicBuilder, organicGraph, organicNomenclature | 60 en functionalNomenclature.test.ts, organicFunctions.test.ts, organicModels.test.ts, organicNomenclature.test.ts | sí | no | no | no | no | sí | sí |
-| `ph` pH, dilución y neutralización ácido-base | 11.º | quimica | AcidBaseLab (280) | acidbase, chemistry | 110 en inorganicChemistry.test.ts, models.test.ts, models2.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
+| `ph` pH, dilución y neutralización ácido-base | 11.º | quimica | AcidBaseLab (290) | acidbase, chemistry | 125 en inorganicChemistry.test.ts, lote3d4.test.ts, models.test.ts, models2.test.ts, mole.test.ts | sí | no | no | no | sí | sí | no |
 | `pila-electroquimica` Oxidación-reducción: pila de Daniell, ecuación de Nernst y ley de Faraday | 11.º | quimica | GalvanicCellLab (191) | electrochemicalCell | 17 en electrochemicalCell.test.ts, escenas3dOla1b.test.ts | sí | no | sí | sí | no | sí | no |
 | `poblacion` Crecimiento poblacional y capacidad de carga | 11.º | ambiental | PopulationLab (203) | population | 55 en models.test.ts | sí | no | no | no | no | no | sí |
 | `popgen` Genética de poblaciones y frecuencias alélicas | 11.º | biologia | PopGenLab (179) | popgen | 24 en models2.test.ts | sí | no | no | no | no | no | sí |

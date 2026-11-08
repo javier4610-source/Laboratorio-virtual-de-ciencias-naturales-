@@ -7,6 +7,33 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+### Añadido
+- **Ola 2b de prácticas nuevas** (las tres de prioridad 2 que faltaban del análisis curricular; 82 prácticas en total),
+  con el mismo patrón de la ola 2a: modelo en `src/models` con pruebas y caso dorado, conjuntos de datos con relaciones,
+  cinco preguntas tipo Saber originales y una de transferencia en el banco, ideas erróneas, avisos con «Cómo corregirlo»,
+  procedencia, vínculo curricular (formulación propia, por verificar), miniatura, guía en PDF y vista 3D con respaldo SVG:
+  - `clasificacion-seres-vivos` (6.º, biología): 25 organismos reales con nombre científico (muchos de Urabá: hormiga
+    arriera, bocachico, mangle rojo, hongo de la sigatoka negra, Plasmodium vivax), claves de reinos, animales y plantas
+    recorridas dilema a dilema, constructor de claves (n − 1 dilemas, profundidad ≥ ⌈log₂ n⌉), tres dominios (Woese y
+    otros, 1990) frente a cinco y seis reinos; 3D: ejemplares simplificados dibujados con los caracteres del modelo
+    (patas, antenas, aletas, flores, esporas) y bandeja del grupo que falta separar.
+  - `homeostasis-glucosa` (10.º, biología): modelo mínimo de Bergman (1979) con parámetros de un sujeto normal (Furler
+    y otros, 1985) y extensiones ilustrativas rotuladas (secreción de insulina, glucagón, absorción, ejercicio, ejemplos
+    de diabetes tipo 1 y 2, insulina rápida); prueba de tolerancia de 75 g con los criterios de la ADA 2025, insulina o
+    glucagón bloqueados, hipoglucemia con aviso; barra común de simulación; 3D: partículas de glucosa, insulina y
+    glucagón en número proporcional a la concentración y flechas de los flujos. No diagnostica.
+  - `efecto-invernadero` (11.º, ambiental): balance de energía con S₀ = 1361 W/m² (Kopp y Lean, 2011), σ de CODATA
+    2018 y α = 0,30 (T_e = 254,6 K), Marte y Venus de la NASA Planetary Fact Sheet, modelo de una capa (ε = 0,78 → 288 K),
+    forzamiento ΔF = 5,35·ln(C/C₀) (Myhre, 1998) y sensibilidad climática del IPCC AR6; 3D: la sombra de la Tierra es un
+    disco, la Tierra emite por la esfera y las flechas miden los flujos del modelo.
+  Pruebas: `tests/unit/ola2bModelos.test.ts`, `tests/unit/escenas3dOla2b.test.ts`, casos dorados y
+  `tests/e2e/ola2b*.spec.ts` (flujo, valor dorado en la interfaz, 3D con y sin WebGL, axe claro/oscuro, 390 px).
+
+### Cambiado
+- **Service worker**: los modelos de proteínas (estructuras del PDB y de AlphaFold) van siempre a la segunda fase; la
+  insulina 3I40 (85 KB) era el único en la precarga. Así la precarga queda en 6,37 de 6,4 MB con las 82 prácticas
+  (docs/v2/RENDIMIENTO.md).
+
 ## [2.22.0] · 2026-11-03
 
 Prácticas nuevas, ola 2a (79 prácticas): estados de la materia, cambios químicos, movimiento circular, lentes y magnetismo; el panel docente abre sin descargar todas las fichas.

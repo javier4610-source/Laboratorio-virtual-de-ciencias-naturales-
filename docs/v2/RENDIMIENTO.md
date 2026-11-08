@@ -122,6 +122,17 @@ El límite de 1 250 KB deja margen para unas 25 prácticas más (≈ 6 KB compri
 falla si el panel vuelve a importar el currículo de forma estática (`FORBIDDEN`). Pendiente: una ficha docente liviana
 (vínculo curricular y preguntas sin los modelos) bajaría también la segunda medida.
 
+**Ola 2b: precarga del service worker (2026-11-08).** Las tres prácticas de la ola 2b suman ≈ 100 KB crudos a la
+precarga (fichas, laboratorios, modelos y escenas, más las preguntas del banco): pasó de 6 460 a 6 607 KB y superó el
+límite de 6,4 MB (6 553,6 KB). En lugar de subir el límite, `scripts/build-sw.mjs` manda a la segunda fase también los
+**modelos de proteínas** (estructuras del PDB y modelos de AlphaFold) aunque pesen menos de 150 KB: la insulina 3I40
+(85 KB, de las prácticas de proteínas y de rastreo de genes) era el único que quedaba en la precarga; 1EMA, 2HHB, 2LZM y
+AlphaFold ya estaban en la segunda fase por tamaño. Resultado: 6 522 KB (6,37 MB) al instalar y 12 archivos (4 998 KB)
+en segundo plano. Quedan solo ≈ 31 KB de margen: la próxima ola tendrá que decidir otra medida (p. ej., llevar a la
+segunda fase los seis bloques del banco avanzado, ≈ 580 KB que solo usa una página) o subir el límite con su razón.
+El panel docente con las fichas completas pasó de 1 093,8 a 1 132,4 KB (límite 1 250) y la ruta de la práctica liviana
+de 313,7 a 319,2 KB (límite 335) por las preguntas nuevas del banco.
+
 ## 4. Cambios
 
 1. **Banco Saber 11 sin el currículo completo** (`src/pages/BankPage.tsx`). El título de la práctica relacionada sale

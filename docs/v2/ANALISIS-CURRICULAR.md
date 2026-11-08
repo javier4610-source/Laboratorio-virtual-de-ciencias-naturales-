@@ -175,7 +175,7 @@ está por validar).
 | 6.º | «Uso de instrumentos de laboratorio» | `densidad`, `celulas`, `calor` | Cubierto |
 | 6.º | «Célula y organización de los seres vivos» | `celulas` | Parcial (sin tejidos ni órganos) |
 | 6.º | «Diferencias entre células animales y vegetales» | `celulas` | Cubierto |
-| 6.º | «Clasificación básica de los seres vivos» | — | **No cubierto** → `clasificacion-seres-vivos` |
+| 6.º | «Clasificación básica de los seres vivos» | `clasificacion-seres-vivos` (ola 2b) | Cubierto en la ola 2b |
 | 6.º | «Ecosistemas: factores bióticos y abióticos» | `ecosistema`, `redes` | Cubierto |
 | 6.º | «Materia, propiedades físicas, mezclas y métodos de separación» | `densidad`, `mezclas`, `estados-de-la-materia` (ola 2a) | Cubierto en la ola 2a |
 | 6.º | «Fuerza, movimiento y máquinas simples» | `maquinas`, `movimiento` | Cubierto |
@@ -207,7 +207,7 @@ está por validar).
 | 10.º | «Biomoléculas y enzimas» | `enzimas` | Cubierto |
 | 10.º | «Fotosíntesis y respiración celular» · «Metabolismo y transformación de energía» | `fotosintesis`, `respiracion` (`metabolismo` en 11.º) | Cubierto |
 | 10.º | «Biotecnología y aplicaciones de la biología molecular» | `secuencias`, `rastreo` (11.º, bioinformática) | Parcial → `biotecnologia-pcr` |
-| 10.º | «Fisiología humana» | — | **No cubierto** → `homeostasis-glucosa` |
+| 10.º | «Fisiología humana» | `homeostasis-glucosa` (ola 2b) | Parcial (homeostasis de la glucosa en la ola 2b) |
 | 10.º | «Configuración electrónica y periodicidad química» | `configuracion-electronica` (ola 1b) | Cubierto en la ola 1b |
 | 10.º | «Soluciones, concentración, molaridad y gases» | `soluciones`, `gases` | Cubierto |
 | 10.º | «Reacciones químicas y relaciones cuantitativas» | `cinetica`, `oxidos-hidroxidos`, `acidos-sales` | Cubierto → `termoquimica` amplía |
@@ -216,7 +216,7 @@ está por validar).
 | 11.º | «Biotecnología, ingeniería genética y bioética» | `rastreo`, `secuencias` | Parcial |
 | 11.º | «Evolución y genética de poblaciones» | `popgen` | Cubierto |
 | 11.º | «Fisiología humana, inmunología y homeostasis» | — | **No cubierto** → `sistema-inmune`, `homeostasis-glucosa` |
-| 11.º | «Ecología, biodiversidad, contaminación y cambio climático» | `agua`, `poblacion` | Parcial (sin cambio climático) → `efecto-invernadero` |
+| 11.º | «Ecología, biodiversidad, contaminación y cambio climático» | `agua`, `poblacion`, `efecto-invernadero` (ola 2b) | Cubierto en la ola 2b |
 | 11.º | «Estequiometría avanzada» · «Equilibrio químico introductorio» · «Ácidos, bases y pH» | `estequiometria`, `equilibrio`, `ph` | Cubierto |
 | 11.º | «Oxidación-reducción» | `pila-electroquimica` (ola 1b) | Cubierto en la ola 1b (pila galvánica y Faraday; la electrólisis con fuente externa queda pendiente) |
 | 11.º | «Electricidad, circuitos y magnetismo» | `circuitos`, `induccion` | Cubierto en la ola 1a → `electrostatica` |
@@ -391,8 +391,8 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | P1 | `sistema-circulatorio` | 7.º | Corazón y circulación: frecuencia cardíaca y ejercicio | nuevas-1 · **construida (ola 1b)** |
 | P1 | `meiosis` | 8.º | Meiosis, entrecruzamiento y variabilidad genética | nuevas-1 · **construida (ola 1b)** |
 | P1 | `sistema-nervioso` | 8.º | Sistema nervioso: neurona, arco reflejo y tiempo de reacción | nuevas-1 · **construida (ola 1b)** |
-| P2 | `clasificacion-seres-vivos` | 6.º | Clasificación de los seres vivos con claves dicotómicas | nuevas-2 |
-| P2 | `homeostasis-glucosa` | 10.º | Homeostasis: regulación de la glucosa por insulina y glucagón | nuevas-2 |
+| P2 | `clasificacion-seres-vivos` | 6.º | Clasificación de los seres vivos con claves dicotómicas | nuevas-2 · **construida (ola 2b)** |
+| P2 | `homeostasis-glucosa` | 10.º | Homeostasis: regulación de la glucosa por insulina y glucagón | nuevas-2 · **construida (ola 2b)** |
 | P3 | `nutricion-digestion` | 7.º | Digestión: enzimas y pH a lo largo del tubo digestivo | nuevas-3 |
 | P3 | `biotecnologia-pcr` | 10.º | Biotecnología: PCR y electroforesis en gel | nuevas-3 |
 | P3 | `sistema-inmune` | 11.º | Sistema inmune, vacunas e inmunidad colectiva | nuevas-3 |
@@ -418,14 +418,14 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** t = √(2·d/g) para la regla que cae; rapidez de conducción de los axones según el tipo de fibra (rango de manual: Kandel y otros, Principios de neurociencia).
 - **Vista 3D (obligatoria):** Neurona 3D (dendritas, soma, axón con mielina) con el potencial de acción viajando por el axón; arco reflejo en la médula con receptor, interneurona y músculo seleccionables.
 
-**`clasificacion-seres-vivos` · Clasificación de los seres vivos con claves dicotómicas** (6.º, P2)
+**`clasificacion-seres-vivos` (construida en la ola 2b; 25 especies reales con nombres de SiB Colombia y GBIF; los ejemplares 3D son simplificados y la bandeja 3D reemplaza la rotación de un solo ejemplar en la estación de construir) · Clasificación de los seres vivos con claves dicotómicas** (6.º, P2)
 
 - **Anclaje:** EBC 6.º–7.º, entorno vivo: clasificación de organismos según sus características (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 6.º): «Clasificación básica de los seres vivos».
 - **Meta de aprendizaje:** Usa y construye claves dicotómicas con organismos de la región y explica el sistema de tres dominios.
 - **Modelo científico y validación:** Claves dicotómicas; sistema de tres dominios (Woese, Kandler y Wheelis, 1990). Especies de Urabá solo con registros verificables (p. ej., GBIF o SiB Colombia), sin datos inventados.
 - **Vista 3D (obligatoria):** Ejemplares 3D simplificados (insecto, arácnido, anfibio, pez, helecho, planta con flor) que el estudiante gira para observar el carácter que pide la clave: simetría, segmentación, número de patas, presencia de flores.
 
-**`homeostasis-glucosa` · Homeostasis: regulación de la glucosa por insulina y glucagón** (10.º, P2)
+**`homeostasis-glucosa` (construida en la ola 2b; modelo mínimo de Bergman con parámetros de Furler y otros, 1985, y extensiones ilustrativas; la vista 3D es el esquema de órganos y sangre del kit, sin el visor de la insulina 3I40) · Homeostasis: regulación de la glucosa por insulina y glucagón** (10.º, P2)
 
 - **Anclaje:** EBC 10.º–11.º, entorno vivo: homeostasis y regulación en el organismo (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts): «Fisiología humana» (10.º) y «Fisiología humana, inmunología y homeostasis» (11.º).
 - **Meta de aprendizaje:** Explica la retroalimentación negativa con una prueba de tolerancia a la glucosa simulada y compara la respuesta normal con la de diabetes tipo 1 y tipo 2.
@@ -457,10 +457,10 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 
 | Prioridad | id | Grado | Título | Ola |
 |---|---|---|---|---|
-| P2 | `efecto-invernadero` | 11.º | Balance de energía de la Tierra y efecto invernadero | nuevas-2 |
+| P2 | `efecto-invernadero` | 11.º | Balance de energía de la Tierra y efecto invernadero | nuevas-2 · **construida (ola 2b)** |
 | P3 | `ciclo-del-carbono` | 7.º | Ciclo del carbono: reservorios y flujos | nuevas-3 |
 
-**`efecto-invernadero` · Balance de energía de la Tierra y efecto invernadero** (11.º, P2)
+**`efecto-invernadero` (construida en la ola 2b; más el forzamiento del CO₂ de Myhre, 1998, y la sensibilidad del IPCC AR6) · Balance de energía de la Tierra y efecto invernadero** (11.º, P2)
 
 - **Anclaje:** EBC 10.º–11.º, CTS y entorno físico: cambio climático y sus causas (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 11.º): «Ecología, biodiversidad, contaminación y cambio climático».
 - **Meta de aprendizaje:** Calcula la temperatura de equilibrio de la Tierra sin atmósfera y con una capa absorbente, y explica el efecto de aumentar la absorción infrarroja.

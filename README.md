@@ -6,11 +6,12 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 
 > Simulación educativa: no reemplaza el laboratorio real. Las preguntas tipo Saber 11 son **originales** de esta plataforma y **no son preguntas oficiales del ICFES**. Las relaciones con estándares y DBA son paráfrasis y propuestas que el docente debe validar con los documentos oficiales.
 
-## Prácticas implementadas (79)
+## Prácticas implementadas (82)
 
 | Grado | Práctica | Área | Modelo |
 |---|---|---|---|
 | 6.º | Medición de masa, volumen y densidad | Física | ρ = m/V; volumen geométrico y por desplazamiento; flotación (Arquímedes); resolución de instrumentos |
+| 6.º | Clasificación de los seres vivos con claves dicotómicas | Biología | 25 organismos reales con nombre científico (hormiga arriera, bocachico, mangle rojo, hongo de la sigatoka negra, Plasmodium vivax…); claves de reinos, animales y plantas recorridas dilema a dilema con aviso del dilema equivocado; constructor de claves (n − 1 dilemas, profundidad ≥ ⌈log₂ n⌉); tres dominios (Woese, 1990) frente a cinco y seis reinos; 3D: ejemplares simplificados con sus patas, antenas, flores o esporas y bandeja del grupo |
 | 6.º | Microscopio virtual: células animales y vegetales | Biología | Aumento total, diámetro del campo (número de campo 18 mm), estimación del tamaño celular, umbral de visibilidad (tamaño aparente, contraste por tinción, profundidad de campo) |
 | 6.º | Cadenas y redes alimentarias | Ambiental | Lotka-Volterra generalizado con respuesta funcional tipo II, regla del 10 %, cascadas tróficas, pirámide de biomasa (RK4) |
 | 6.º | Separación de mezclas | Química | Propiedades de cada componente (magnetismo, solubilidad, densidad); pérdidas en filtro y embudo; energía de evaporación (c·ΔT + L) |
@@ -62,10 +63,12 @@ Los resultados se **calculan con modelos científicos explícitos** (ecuaciones 
 | 10.º | Péndulo simple y movimiento armónico | Física | Ecuación no lineal con RK4 contrastada con el período exacto, amortiguamiento, cronómetro con tiempo de reacción y fotopuerta |
 | 10.º | Movimiento circular uniforme y fuerza centrípeta | Física | Mesa de aire con sensor de fuerza: T, f, ω, v = 2πr/T, a = v²/r y F = m·v²/r (caso 3,95 N); cuerda cortada que sale por la tangente; curva plana v_máx = √(μgr) (79,6 km/h seca, 56 km/h mojada); 3D: velocidad tangente, aceleración y tensión hacia el eje |
 | 10.º | Choques y cantidad de movimiento | Física | Riel de aire con fotopuertas y balanza; choques elástico, parcial e inelástico y explosión; p se conserva y Ec se transforma; coeficiente de restitución |
+| 10.º | Homeostasis: regulación de la glucosa por insulina y glucagón | Biología | Modelo mínimo de Bergman (1979) con parámetros de un sujeto normal (Furler, 1985) y extensiones ilustrativas (secreción de insulina, glucagón, comida, ejercicio, diabetes tipo 1 y 2, insulina rápida); prueba de tolerancia de 75 g (pico ≈ 166 mg/dL, 91 mg/dL a las 2 h) con criterios de la ADA 2025; insulina o glucagón bloqueados; 3D: partículas de glucosa, insulina y glucagón en número proporcional a la concentración y flechas de los flujos. No diagnostica |
 | 10.º | Respiración celular y balance energético | Biología | Respirómetro de tres tubos con KOH y termobarómetro; Q10 y desnaturalización; cociente respiratorio; fermentación en anoxia; contabilidad del ATP (32 frente a 38) |
 | 10.º | Conservación de la energía mecánica | Física | Ep + Ec + energía disipada, fricción μ·m·g por metro, rodadura (v = √(10gh/7)), integración numérica |
 | 10.º | Geometría molecular en 3D y modelo VSEPR | Química | Visor 3D (3Dmol.js) con 12 confórmeros reales de PubChem (CID, fecha y huella SHA-256); medición de distancias y ángulos con el ratón o el teclado; predicción VSEPR (AXₘEₙ) frente al ángulo calculado; procedencia «Predicción computacional»; búsqueda opcional en PubChem |
 | 10.º | Configuración electrónica y orbitales atómicos | Química | Diagrama de cajas de Z = 1 a 54 con Aufbau (Madelung), Pauli y Hund verificados; estados fundamentales medidos de PubChem con las 8 excepciones (Cr, Cu, Nb, Mo, Ru, Rh, Pd, Ag); período, grupo y valencia deducidos; 3D: nubes |ψ|² hidrogenoides de s, p y d que se llenan electrón por electrón |
+| 11.º | Balance de energía de la Tierra y efecto invernadero | Ambiental | Stefan–Boltzmann con S₀ = 1361 W/m² (Kopp y Lean, 2011) y α = 0,30: T_e = 254,6 K; Marte y Venus (NASA); modelo de una capa (ε = 0,78 → 288 K; opaca 302,7 K) con conservación de la energía; forzamiento del CO₂ ΔF = 5,35·ln(C/C₀) (Myhre, 1998) y sensibilidad del IPCC AR6 (3 °C; 2,5–4 °C); 3D: la sombra es un disco, la Tierra emite por la esfera y las flechas miden los flujos |
 | 11.º | Contaminación del agua e indicadores | Ambiental | Ríos de Urabá simulados; sonda multiparamétrica, DBO₅ y coliformes; curva de Streeter–Phelps; BMWP/Col (Roldán); índice de calidad tipo NSF; comparación con normas colombianas |
 | 11.º | Circuitos eléctricos | Física | Ohm, serie/paralelo/mixto, resistencia interna, Kirchhoff, potencia |
 | 11.º | Estequiometría y reactivo limitante | Química | Masas molares desde la fórmula, avance de reacción, exceso, rendimiento, balanceo |
@@ -121,7 +124,7 @@ No requiere servicios de pago, cuentas ni base de datos. Las fuentes tipográfic
 
 ## Sin conexión e instalable
 
-Después de la primera visita con internet, la aplicación completa queda guardada en el navegador (service worker generado en la compilación por `scripts/build-sw.mjs`) y todas las prácticas abren sin conexión. La precarga va en dos fases: el núcleo (~5,4 MB) al instalar y los archivos más pesados de pocas prácticas (~4,2 MB: visores 3D, proteínas, taller de compuestos, química orgánica) en segundo plano cuando la página está desocupada; con «ahorro de datos» activado esos se guardan solo al usarlos (ver `docs/v2/RENDIMIENTO.md`). Se puede instalar como aplicación en Windows, Android, iPhone y Chromebook (botón «Instalar la aplicación» en el inicio y en Ayuda). Cuando se publica una versión nueva aparece un aviso para actualizar; el trabajo guardado se conserva. Enviar informes al servidor sí requiere conexión.
+Después de la primera visita con internet, la aplicación completa queda guardada en el navegador (service worker generado en la compilación por `scripts/build-sw.mjs`) y todas las prácticas abren sin conexión. La precarga va en dos fases: el núcleo (~6,4 MB) al instalar y los archivos más pesados de pocas prácticas (~4,9 MB: visores 3D, proteínas, taller de compuestos, química orgánica) en segundo plano cuando la página está desocupada; con «ahorro de datos» activado esos se guardan solo al usarlos (ver `docs/v2/RENDIMIENTO.md`). Se puede instalar como aplicación en Windows, Android, iPhone y Chromebook (botón «Instalar la aplicación» en el inicio y en Ayuda). Cuando se publica una versión nueva aparece un aviso para actualizar; el trabajo guardado se conserva. Enviar informes al servidor sí requiere conexión.
 
 ## Guías de trabajo en PDF
 

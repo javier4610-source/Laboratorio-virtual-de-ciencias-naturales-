@@ -266,6 +266,7 @@
     },
     {
       "id": "clasificacion-seres-vivos",
+      "built": "ola 2b (2026-11-08)",
       "grade": 6,
       "area": "biologia",
       "title": "Clasificación de los seres vivos con claves dicotómicas",
@@ -279,6 +280,7 @@
     },
     {
       "id": "homeostasis-glucosa",
+      "built": "ola 2b (2026-11-08)",
       "grade": 10,
       "area": "biologia",
       "title": "Homeostasis: regulación de la glucosa por insulina y glucagón",
@@ -331,6 +333,7 @@
     },
     {
       "id": "efecto-invernadero",
+      "built": "ola 2b (2026-11-08)",
       "grade": 11,
       "area": "ambiental",
       "title": "Balance de energía de la Tierra y efecto invernadero",

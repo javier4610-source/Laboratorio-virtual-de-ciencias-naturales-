@@ -249,9 +249,9 @@ siguen todas las prácticas adoptadas:
 | Inducción (generador) | `InductionLab` | La bobina gira según las rpm elegidas (0 = detenida); la lectura es instantánea. |
 | Mitosis, población, genética de poblaciones, enzimas | `MitosisLab`, `PopulationLab`, `PopGenLab`, `EnzymeLab` | Sin animación temporal: el modelo se calcula completo y se muestra como gráfica o resultado. |
 
-Las 28 prácticas restantes (densidad, mezclas, óptica, soluciones, química inorgánica y orgánica, genómica, tabla periódica,
-enlace químico, electrostática, lentes, magnetismo, etc.) no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 32
-adoptadas (con las 5 de la ola 1b y 3 de la ola 2a) + 19 sin dinámica que pausar + 28 sin animación (con lentes y magnetismo) = 79.
+Las 30 prácticas restantes (densidad, mezclas, óptica, soluciones, química inorgánica y orgánica, genómica, tabla periódica,
+enlace químico, electrostática, lentes, magnetismo, clasificación, efecto invernadero, etc.) no tienen dinámica temporal (a lo sumo una transición breve de interfaz). Total: 33
+adoptadas (con las 5 de la ola 1b, 3 de la ola 2a y 1 de la ola 2b) + 19 sin dinámica que pausar + 30 sin animación (con lentes, magnetismo, clasificación y efecto invernadero) = 82.
 
 ### `ConditionAlert` (`src/components/ConditionAlert.tsx`)
 
@@ -357,6 +357,7 @@ de rango»). Retrocompatible: los 65 laboratorios siguen funcionando sin cambios
 | Movimiento circular | Sensor de fuerza 0,01 N, cronómetro 0,01 s | En la curva: «fuera de rango» si derrapa |
 | Lentes | Regla del banco 0,1 cm | — |
 | Magnetismo | Brújula 1°, teslámetro 0,1 µT | — |
+| Homeostasis de la glucosa | Glucómetro 1 mg/dL (ISO 15197: ±15 mg/dL o ±15 %) | — |
 
 Sin resolución por no tener instrumento de lectura directa (el valor es del modelo): enzimas, fotosíntesis (las
 lecturas del registrador ya llevan su resolución), metabolismo, secuencias e indagación; tampoco la tabla periódica y el enlace químico, que muestran datos publicados con su fuente, ni la configuración electrónica y la meiosis (conteos exactos del modelo).

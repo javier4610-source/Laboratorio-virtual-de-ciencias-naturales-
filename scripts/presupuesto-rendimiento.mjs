@@ -29,11 +29,11 @@ const BUDGETS = {
     'banco avanzado: página': 160, // 139,3 (antes 373,0 con los ítems, el banco Saber y los datos de prácticas)
     'banco avanzado: con los 180 ítems': 365, // 316,5
     'panel docente': 330, // 286,9 (2026-11-03): abre sin las fichas completas, que pide en segundo plano (antes 1106,3 con 79 fichas)
-    'panel docente: con las fichas completas': 1250, // 1093,6 con 79 fichas (~6 KB más por práctica nueva); ver RENDIMIENTO.md
+    'panel docente: con las fichas completas': 1250, // 1132,4 con 82 fichas (ola 2b); 1093,6 con 79 (~6 KB más por práctica nueva); ver RENDIMIENTO.md
   },
   mayorFragmento: 185, // ningún archivo JS debería pasar de esto: 158,4 (modelo AlphaFold de la práctica de proteínas)
   motorThree: 155, // fragmento diferido con three.js r186 (kit de escenas 3D): 135,0
-  precargaInstalacionMB: 6.4, // MB crudos que el service worker descarga al instalarse: 5,43 (antes 9,6)
+  precargaInstalacionMB: 6.4, // MB crudos que el service worker descarga al instalarse: 6,37 con 82 prácticas (ola 2b; 5,43 en 2026-11-01, antes 9,6)
 };
 
 /** Rutas: módulos fuente (claves del manifiesto) que la ruta pide al abrirse, además de la entrada. */

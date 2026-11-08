@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BUOYANCY_INSTRUMENTS, BUOYANCY_LIMITS, DYNAMOMETER_MAX, HYDROMETER, OBJECTS, SPOON_G, VESSEL_AREA_CM2, analyzeReadings, findObject,
   hydrometerStemDepth, liquidVolume, objectHeight, simulateBuoyancy, type BuoyLiquidId, type BuoyObject, type SetupId,
@@ -14,6 +14,10 @@ import type { LabProps } from './registry';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, Beaker, ContactShadow, DigitalBalance, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const FlotacionView3D = lazy(() => import('./lote3d5/FlotacionView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -572,6 +576,11 @@ export default function BuoyancyLab({ api }: LabProps) {
           { k: '¿Flota?', v: show(floatText) },
         ]} />
         {objectId === 'icopor' && <Notice kind="warn">El icopor pesa unos 3 g (≈ 0,03 N): menos que la mitad de una división del dinamómetro. Para él, la medida útil es la de la balanza.</Notice>}
+        <Panel3D title="línea de flotación, peso y empuje" summary="El recipiente en 3D con el objeto a la profundidad del modelo, su línea de flotación, las flechas de peso, empuje y tensión a la misma escala, el líquido desalojado y el densímetro.">
+          <FlotacionView3D obj={obj} liquidName={LIQUID_LABEL[liquid]} liquidColor={look.color} liquidOpacity={look.opacity} rhoLiq={model.rhoLiq} setup={setup} volume={volume} descent={descent}
+            depth={model.depth} vSub={model.vSub} fraction={model.fraction} weight={model.weight} buoyancy={model.buoyancy} apparent={model.apparent} floating={model.floating}
+            submerged={model.submerged} levelRise={model.levelRise} stemDepth={stemDepth} done={done} />
+        </Panel3D>
         {done && model.floating && <Notice>El hilo quedó flojo: el objeto flota, el empuje es igual a su peso y el dinamómetro marca 0. La balanza mide la masa de líquido que desaloja (igual a la masa del objeto).</Notice>}
       </div>
 

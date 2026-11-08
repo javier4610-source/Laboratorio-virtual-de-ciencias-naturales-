@@ -699,7 +699,7 @@ Kit: las aristas de las cajas (`edges: true`) se dibujan siempre opacas, tambié
 y se volvían translúcidas en el siguiente dibujo, así que «Restablecer vista» no devolvía la misma imagen que la inicial;
 lo registró la auditoría de la ola 1b). Al elegir con el rayo, las aristas no cuentan como «sólido».
 
-#### Lote 3D-5 · Ondas, luz y fluidos (7 prácticas)
+#### Lote 3D-5 · Ondas, luz y fluidos (7 prácticas) — hecho
 
 | Práctica | Grado | Escena 3D propuesta (qué ve y manipula el estudiante) | Tecnología | Complejidad | Prioridad |
 |---|---|---|---|---|---|
@@ -710,6 +710,40 @@ lo registró la auditoría de la ola 1b). Al elegir con el rayo, las aristas no 
 | `presion` Presión en líquidos y presión atmosférica | 7.º | Columna de agua 3D con orificios a distintas alturas (chorros de Torricelli) y manómetro; la presión se colorea con la profundidad. | Kit general de escenas 3D (three.js, en construcción en paralelo) | S | 2 |
 | `flotacion` Empuje y flotación: principio de Arquímedes | 7.º | Bloque 3D en un recipiente con línea de flotación, volumen desalojado y vectores de peso y empuje; densímetro en líquidos de distinta densidad. | Kit general de escenas 3D (three.js, en construcción en paralelo) | S | 2 |
 | `densidad` Medición de masa, volumen y densidad | 6.º | Cubos 3D de distintos materiales en la balanza y en la probeta (desplazamiento de agua); comparación visual de tamaños a igual masa. | Kit general de escenas 3D (three.js, en construcción en paralelo) | S | 3 |
+
+**Estado del lote 3D-5: hecho (2026-11-08).** Las siete prácticas tienen una tarjeta «Vista 3D» cerrada que se abre a
+pedido (el código de la vista, el kit `src/three` y three.js se descargan solo entonces; `npm run perf` lo comprueba), con
+el patrón de los lotes anteriores: respaldo SVG sin WebGL con las mismas primitivas, giro con ratón, dedo, teclado y
+botones, descripción textual que cambia con el estado, chip «Modelo calculado» con la frase de qué es cálculo y qué es
+dibujo, sin desbordamiento a 390 px y sin rótulos encimados. Código: `src/labs/lote3d5/` (funciones puras `rope3d.ts`,
+`sound3d.ts`, `optics3d.ts`, `interference3d.ts`, `pressure3d.ts`, `buoyancy3d.ts`, `density3d.ts`; piezas comunes en
+`common.ts`) y `src/labs/soundEnvelope.ts` (la envolvente en vivo de la fuente de `sonido`, ahora compartida por el banco
+y su vista 3D). Pruebas: `tests/unit/lote3d5.test.ts` y `tests/e2e/visor3d-lote5.spec.ts`. Ningún número científico
+nuevo: forma de la onda, nodos y vientres, ángulos y fracciones de Fresnel, patrón de la pantalla, presiones, chorros,
+profundidad de flotación, fuerzas, tallo del densímetro, masas y niveles salen del modelo de cada práctica con el mismo
+estado que su banco; las escalas de dibujo son fijas y se dicen en el chip. Las lecturas que el banco oculta hasta medir
+(λ de la cuerda, ángulos del transportador, desnivel del manómetro, alcances, valores de los instrumentos de flotación)
+también se ocultan en la vista 3D hasta medir.
+
+Movimiento: `ondas` sigue el reloj del generador (su SimControls; quieta en pausa y, con movimiento reducido, el
+generador no arranca solo). `sonido` e `interferencia` no tienen reloj propio para la onda, así que su vista trae «Mover
+el aire» / «Mover las ondas» y «Pausar» (el patrón de `flow.tsx` del lote 3D-4: arranca quieta, se pausa, desactivado
+con movimiento reducido). `presion` sigue la animación de los chorros del banco; `optica`, `flotacion` y `densidad` son
+estáticas (cambian con los controles).
+
+| Práctica | Qué muestra la vista 3D (implementado) | Estatus | Desviación respecto de la propuesta |
+|---|---|---|---|
+| `ondas` | La cuerda de 12 m con la onda y(x, t) = A·sen 2π(x/λ − f·t) del modelo (λ = v/f, v = √(T/μ)) en el mismo instante que el banco, sobre la mesa con la regla y los marcadores A y B; el punto azul a 3 m con su recorrido ±A (sube y baja, no avanza) y la flecha v a lo largo de la cuerda (40 m/s = 3 m). Desplazamiento dibujado ×20. La descripción dice λ solo cuando el estudiante escribió su medida. | Modelo calculado | La práctica es una cuerda, no una cubeta de ondas: no hay superficie de agua ni dos fuentes (el modelo no tiene interferencia de dos fuentes; eso está en `interferencia`). Solo en el experimento «Onda en una cuerda» (la pestaña «Sonido en el aire» no tiene escena). |
+| `sonido` | El tubo de resonancia (cerrado por el agua o abierto) con capas de aire que vibran con la onda estacionaria del banco (sen k·d desde el agua o cos k·(d + e) desde la boca, con k y la corrección de extremo del modelo), rebanadas coloreadas por la presión (pendiente del desplazamiento: rojo comprimido, azul enrarecido), nodos y vientres de desplazamiento marcados, regla y la fuente sobre la boca. Amplitud = la del banco: refuerzo del tubo (tope a 25) × envolvente en vivo de la fuente; en silencio el aire está quieto. | Modelo calculado | El aire vibra 1 vez por segundo con «Mover el aire» (el real, cientos de veces); desplazamiento máximo de 1,5 cm y diámetro del tubo ampliados. Solo en el experimento «Tubo de resonancia» (no en «Nivel sonoro y distancia»). |
+| `optica` | El láser, la superficie entre los dos medios (con su color), la normal y los rayos incidente, reflejado y refractado (Snell, o reflexión total interna) con grosor y opacidad según las fracciones de Fresnel del modelo; el plano de incidencia sombreado: al girar se ve que los cuatro están en un mismo plano perpendicular a la superficie. Arcos y rótulos θ₁, θᵣ y θ₂ con las lecturas del transportador, solo después de medir. | Modelo calculado | Sin bloque de vidrio, prisma ni fibra óptica: el modelo es una sola superficie plana entre dos medios. El estudiante mueve el láser con los controles del banco (no dentro de la escena). |
+| `interferencia` | El riel con la fuente, la diapositiva (rendija, doble rendija, red o agujero) y la pantalla a la distancia L del banco (1 unidad = 20 cm). La pantalla muestra el patrón del modelo (screenColor con sen θ = y/√(y² + L²) y la misma exposición) en la misma ventana que la vista frontal (±15, ±60 o ±400 mm), ampliada; por eso la separación de las franjas de la doble rendija es λ·L/d (probado contra `fringeSpacingSmallAngle`; al doblar L se dobla). En el agujero, anillos concéntricos. Crestas que salen de cada rendija y se superponen, con «Mover las ondas». | Modelo calculado | Las crestas son dibujo: λ y la separación de las rendijas no están a escala (λ real ≈ 0,0005 mm), así que los «rayos» de interferencia constructiva del dibujo no apuntan exactamente a las franjas de la pantalla ampliada (se dice en el chip). La λ del láser desconocido y el paso de los trozos de CD/DVD no se dicen. |
+| `presion` | «Sonda en el tanque»: el líquido en capas coloreadas por su presión manométrica ρ·g·h (0 Pa claro → 4000 Pa oscuro), la cápsula con la profundidad y la orientación del banco, la flecha p sobre la membrana (4000 Pa = 6 cm, perpendicular a la membrana) y el manómetro en U con el mismo desnivel que muestra el banco (animado, a escala real). «Botella con agujeros»: el agua en capas coloreadas igual, una flecha p por agujero abierto bajo el agua y, al medir, los chorros con la trayectoria del modelo (salida horizontal, caída en t = √(2y/g)) hasta el alcance del modelo sobre la cinta métrica, con el avance de la animación del banco. | Modelo calculado | La columna con orificios y el manómetro son dos montajes distintos del banco (no un solo aparato). «Vasos de Pascal» no tiene escena 3D en este lote. |
+| `flotacion` | El vaso (de rebose o sobre la balanza) con el objeto con sus dimensiones reales a la profundidad del modelo, la línea de flotación donde la superficie corta al objeto, flechas Peso P, Empuje E y Tensión T (= lectura del dinamómetro) a la misma escala (1 N = 3 cm; si flota, E = P y no hay T), el dinamómetro con el hilo flojo cuando flota, el colector con el volumen desalojado (o la subida del nivel) y la probeta con el densímetro hundido la longitud de tallo del modelo. | Modelo calculado | El densímetro está en su probeta (como en el banco), no en el recipiente del objeto. Formas simplificadas (el barco es una caja abierta). |
+| `densidad` | La mesa con la balanza (y su lectura), la probeta y el cubo donde lo puso el estudiante (mesa, plato o probeta), con la arista elegida. La probeta está a escala en volumen (radio interior 2,5 cm: el agua sube V/A), con el nivel que muestra el banco y la fracción sumergida del modelo si flota (o entera con el alfiler). Detrás, cubos de 50 g de cada material de la tabla con arista ∛(50/ρ): a igual masa, el más denso es el más pequeño. | Modelo calculado | La probeta 3D es ancha y baja (para que quepa un cubo de 3,4 cm con el volumen a escala), no la del dibujo 2D, que no está a escala. La masa común de 50 g es una elección del dibujo. |
+
+Plataforma: el paginador de prácticas («Anterior / Siguiente») desbordaba 2 px a 390 px cuando la práctica vecina tenía un
+título largo (p. ej., `optica` → «Modelo interactivo de ADN…»); sus columnas ahora son `minmax(0, 1fr)` y el texto se
+parte. La referencia visual de `densidad` se actualizó solo por la tarjeta cerrada «Vista 3D» (+144 px de alto).
 
 #### Lote 3D-6 · Materia, calor, movimiento y evolución (6.º–9.º) (7 prácticas)
 

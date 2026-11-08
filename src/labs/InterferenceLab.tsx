@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   AIRY_ZEROS, CALIPER_RES, GRATINGS, INTERFERENCE_INSTRUMENTS, INTERFERENCE_LIMITS, SCREEN_RULER_RES, SOURCES, analyzeCursors, apertureFor,
   findGrating, findSource, intensity, interferenceConditions, lightFrequency, screenColor, sensorIntensity, sinThetaOnScreen, srgbEncode,
@@ -16,6 +16,10 @@ import { INSTRUMENTS } from './instruments';
 import { resolutionText } from '../components/Experiment';
 import { ContactShadow, Lcd } from './kit';
 import { ManipHint, ManipScene, Plunger } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+// Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
+const InterferenciaView3D = lazy(() => import('./lote3d5/InterferenciaView3D'));
 
 /* ------------------------------------------------------------------ instrumentos */
 
@@ -508,6 +512,9 @@ export default function InterferenceLab({ api }: LabProps) {
           { k: dimLabel, v: calRead && analysis ? (analysis.dimCalc === null ? '— (λ desconocida)' : kind === 'red' ? `${fmt(analysis.dimCalc, 3)} µm (${fmt(1000 / analysis.dimCalc, 0)} líneas/mm)` : `${fmt(analysis.dimCalc, 1)} µm`) : '—', data: true },
         ]} />
         <Warnings list={warnings} />
+        <Panel3D title="ondas de las rendijas y patrón en la pantalla" summary="El riel en 3D con la fuente, la diapositiva y la pantalla a la distancia L: de cada rendija salen ondas que se superponen, y la pantalla (ampliada) muestra el mismo patrón del modelo que la vista frontal.">
+          <InterferenciaView3D on={on} kind={kind} kindName={kind === 'red' ? grating.name : KIND_NAMES[kind]} source={source} ap={ap} L_cm={L} half_mm={V.half} viewName={V.name} exposure={exposure} />
+        </Panel3D>
 
         <div className="card stack-sm">
           <Chart title="Registro del sensor de luz: intensidad contra posición" xLabel="Posición en la pantalla y (mm)" yLabel="Intensidad relativa (%)" xUnit="mm" yUnit="%" height={220}

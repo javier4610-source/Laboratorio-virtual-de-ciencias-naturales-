@@ -7,6 +7,10 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.24.0] · 2026-11-08
+
+Prácticas nuevas, ola 2b (82 prácticas): clasificación de los seres vivos, homeostasis de la glucosa y efecto invernadero.
+
 ### Añadido
 - **Ola 2b de prácticas nuevas** (las tres de prioridad 2 que faltaban del análisis curricular; 82 prácticas en total),
   con el mismo patrón de la ola 2a: modelo en `src/models` con pruebas y caso dorado, conjuntos de datos con relaciones,
@@ -33,6 +37,32 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 - **Service worker**: los modelos de proteínas (estructuras del PDB y de AlphaFold) van siempre a la segunda fase; la
   insulina 3I40 (85 KB) era el único en la precarga. Así la precarga queda en 6,37 de 6,4 MB con las 82 prácticas
   (docs/v2/RENDIMIENTO.md).
+- **Service worker**: los seis bloques del banco avanzado (≈ 580 KB, una sola página) también van a la segunda fase;
+  con el lote 3D-5 y la ola 2b juntos la precarga pasaba de 6,4 MB. Queda en 5,9 MB.
+
+## [2.23.0] · 2026-11-08
+
+Lote 3D-5: vista 3D en ondas, sonido, óptica, interferencia, presión, flotación y densidad.
+
+### Añadido
+- **Lote 3D-5 «ondas, luz y fluidos»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas `src/three`: tarjeta
+  «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG sin WebGL, teclado,
+  tacto, descripción textual viva y estatus «Modelo calculado» en `ondas` (la cuerda con la onda del modelo en el mismo
+  instante del generador, regla y marcadores A y B), `sonido` (tubo de resonancia con capas de aire que vibran con la
+  onda estacionaria del banco, presión coloreada, nodos y vientres), `optica` (rayos de Snell y Fresnel en el plano de
+  incidencia; ángulos tras medir), `interferencia` (riel con la pantalla a la distancia L y el patrón del modelo
+  ampliado: franjas separadas λ·L/d; crestas de cada rendija), `presion` (sonda en el tanque con capas coloreadas por
+  ρ·g·h y manómetro en U; botella con los chorros del modelo), `flotacion` (línea de flotación, peso, empuje y tensión,
+  líquido desalojado y densímetro) y `densidad` (balanza, probeta a escala en volumen y cubos de 50 g de cada material).
+  Las ondas de `sonido` e `interferencia` se mueven solo con «Mover el aire / las ondas», se pausan y quedan quietas con
+  movimiento reducido. Pruebas: `tests/unit/lote3d5.test.ts` y `tests/e2e/visor3d-lote5.spec.ts`.
+
+### Cambiado
+- `sonido`: la envolvente en vivo de la fuente pasa a `src/labs/soundEnvelope.ts` (la usan el banco y la vista 3D).
+- Regresión visual: la referencia de `densidad` cambia solo por la tarjeta cerrada «Vista 3D» (+144 px de alto).
+
+### Corregido
+- Paginador de prácticas: con un título vecino largo (p. ej., en `optica`) desbordaba 2 px a 390 px; ahora el texto se parte.
 
 ## [2.22.0] · 2026-11-03
 

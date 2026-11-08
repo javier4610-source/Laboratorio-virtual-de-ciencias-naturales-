@@ -29,9 +29,13 @@ const DEFERRED_MIN_BYTES = 150 * 1024;
 // prácticas y van a la segunda fase aunque pesen menos de 150 KB (ola 2b: la insulina 3I40, 85 KB, era el único modelo
 // de proteína que quedaba en la precarga; así las tres prácticas nuevas caben en el límite de 6,4 MB).
 const STRUCTURE_DATA = /^assets\/(?:\d[A-Z0-9]{3}|AF-[A-Z0-9]+-F\d+-model_v\d+)-[\w-]+\.js$/;
+// Bloques del banco avanzado Saber 11 (≈ 580 KB, los usa una sola página): segunda fase (versión 2.24.0, al sumar el
+// lote 3D-5 y la ola 2b la precarga pasaba de 6,4 MB). Sin conexión, la página del banco avanzado funciona en cuanto
+// termina la segunda fase.
+const BANK_BLOCKS = /^assets\/bloque[A-F]-[\w-]+\.js$/;
 const entry = new Set([...readFileSync(join(dist, 'index.html'), 'utf8').matchAll(/(?:src|href)="\.\/([^"]+)"/g)].map((m) => m[1]));
 const size = (f) => statSync(join(dist, f)).size;
-const isDeferred = (f) => f.endsWith('.js') && !entry.has(f) && (size(f) > DEFERRED_MIN_BYTES || STRUCTURE_DATA.test(f));
+const isDeferred = (f) => f.endsWith('.js') && !entry.has(f) && (size(f) > DEFERRED_MIN_BYTES || STRUCTURE_DATA.test(f) || BANK_BLOCKS.test(f));
 
 const precache = files.filter((f) => !isDeferred(f)).map((f) => `./${f}`);
 const deferred = files.filter(isDeferred).map((f) => `./${f}`);

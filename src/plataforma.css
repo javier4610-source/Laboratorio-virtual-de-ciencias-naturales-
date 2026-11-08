@@ -77,7 +77,9 @@
 .pager-link.next { justify-content: flex-end; text-align: right; }
 .pager-pos { text-align: center; }
 @media (max-width: 719px) {
-  .practice-pager { grid-template-columns: 1fr 1fr; }
+  .practice-pager { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  /* Títulos largos de la práctica vecina (p. ej. «Modelo interactivo de ADN…»): se parten en lugar de desbordar a 390 px. */
+  .pager-link { min-width: 0; overflow-wrap: anywhere; }
   .pager-pos { grid-column: 1 / -1; grid-row: 1; }
 }
 .save-note { display: flex; gap: 8px; align-items: center; margin-top: var(--sp-4); }

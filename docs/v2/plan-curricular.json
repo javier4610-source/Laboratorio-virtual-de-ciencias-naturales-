@@ -771,6 +771,8 @@
     {
       "batch": "3d-5",
       "name": "Lote 3D-5 · Ondas, luz y fluidos",
+      "status": "hecho",
+      "statusNote": "Implementado (2026-11-08) con el kit de escenas src/three: ondas (cuerda con regla; no cubeta), sonido (tubo de resonancia), optica (rayos en el plano de incidencia; sin bloque, prisma ni fibra), interferencia (riel y patrón del modelo en la pantalla), presion (sonda con manómetro y botella con chorros), flotacion y densidad en src/labs/lote3d5/; desviaciones en docs/v2/ANALISIS-CURRICULAR.md, §6.3.",
       "practices": [
         {
           "id": "ondas",
@@ -781,7 +783,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-5",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-5 (2026-11-08)"
         },
         {
           "id": "sonido",
@@ -792,7 +795,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-5",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-5 (2026-11-08)"
         },
         {
           "id": "optica",
@@ -803,7 +807,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-5",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-5 (2026-11-08)"
         },
         {
           "id": "interferencia",
@@ -814,7 +819,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-5",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-5 (2026-11-08)"
         },
         {
           "id": "presion",
@@ -825,7 +831,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-5",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-5 (2026-11-08)"
         },
         {
           "id": "flotacion",
@@ -836,7 +843,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-5",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-5 (2026-11-08)"
         },
         {
           "id": "densidad",
@@ -847,7 +855,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-5",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-5 (2026-11-08)"
         }
       ]
     },

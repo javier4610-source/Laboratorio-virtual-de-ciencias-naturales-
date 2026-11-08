@@ -66,10 +66,11 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
-- [x] Sin publicar · Ola 2b de prácticas nuevas (`clasificacion-seres-vivos`, `homeostasis-glucosa`,
+- [x] v2.24.0 · Ola 2b de prácticas nuevas (`clasificacion-seres-vivos`, `homeostasis-glucosa`,
   `efecto-invernadero`), cada una con su vista 3D (82 prácticas): quedan construidas todas las prácticas de prioridad 2
   del análisis curricular. La estructura de la insulina (3I40) pasa a la segunda fase del service worker. Siguen las de
   prioridad 3 (ola nuevas-3).
+- [x] v2.23.0 · Lote 3D-5: vista 3D en ondas, sonido, óptica, interferencia, presión, flotación y densidad.
 - [x] v2.22.0 · Ola 2a de prácticas nuevas (`estados-de-la-materia`, `cambios-quimicos`, `movimiento-circular`,
   `lentes`, `magnetismo-imanes`), cada una con su vista 3D (79 prácticas). El panel docente abre sin las fichas completas
   y las descarga en segundo plano. Siguen las de prioridad 2 que faltan de la ola nuevas-2.

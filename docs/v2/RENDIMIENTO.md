@@ -133,6 +133,12 @@ segunda fase los seis bloques del banco avanzado, ≈ 580 KB que solo usa una p�
 El panel docente con las fichas completas pasó de 1 093,8 a 1 132,4 KB (límite 1 250) y la ruta de la práctica liviana
 de 313,7 a 319,2 KB (límite 335) por las preguntas nuevas del banco.
 
+**Versión 2.24.0: banco avanzado a la segunda fase (2026-11-08).** Al unir el lote 3D-5 (ya publicado en 2.23.0) con la
+ola 2b, la precarga volvió a pasar de 6,4 MB. Se tomó la medida prevista: `scripts/build-sw.mjs` manda a la segunda
+fase los seis bloques del banco avanzado (`bloqueA`–`bloqueF`, ≈ 580 KB que solo usa la página `#/banco/avanzado`).
+Resultado: 5 990 KB (5,9 MB) al instalar y 18 archivos (5 580 KB) en segundo plano; margen ≈ 560 KB. Sin conexión,
+el banco avanzado queda disponible cuando termina la segunda fase (el resto del laboratorio, desde la instalación).
+
 ## 4. Cambios
 
 1. **Banco Saber 11 sin el currículo completo** (`src/pages/BankPage.tsx`). El título de la práctica relacionada sale

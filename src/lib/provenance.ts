@@ -137,6 +137,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: noise('Ángulos y campos') + 'Campo del imán con el modelo de dos polos (momentos con remanencias típicas de fabricante), campo de la Tierra en Apartadó del Modelo Magnético Mundial WMM2025 (NOAA y BGS) y campo de una corriente con Biot-Savart: modelo calculado. Líneas de campo y brújulas 3D: calculadas con el mismo modelo.' };
   }
+  if (practiceId === 'homeostasis-glucosa') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: noise('Glucosas') + 'Modelo mínimo de Bergman (1979) con parámetros de un sujeto normal de la literatura (Furler y otros, 1985); la secreción de insulina, el glucagón, la absorción de la comida, el ejercicio y los perfiles de diabetes son extensiones con valores ilustrativos; rangos de la American Diabetes Association (2025): modelo calculado. No es un diagnóstico ni sirve para calcular dosis de insulina. Vista 3D: partículas en número proporcional a cada concentración y flechas con los flujos del modelo; los órganos son un esquema.' };
+  }
   if (practiceId === 'efecto-invernadero') {
     return { data: 'modelo', scene: 'modelo',
       detail: 'Temperaturas y flujos calculados con la ley de Stefan–Boltzmann (σ de CODATA 2018), la constante solar de Kopp y Lean (2011), los planetas de la NASA Planetary Fact Sheet y el modelo de una capa de Archer; forzamiento del CO₂ con la fórmula de Myhre (1998) y sensibilidad climática del IPCC AR6: modelo calculado, no son mediciones. Los albedos de las superficies son ilustrativos. Tierra 3D: flechas con longitud proporcional a los flujos del modelo; la Tierra, la capa y el Sol son un dibujo sin escala.' };

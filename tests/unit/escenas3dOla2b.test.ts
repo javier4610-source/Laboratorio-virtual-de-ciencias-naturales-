@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { earthScene, K_FLUX, K_FORCING, R_EARTH, R_LAYER } from '../../src/labs/greenhouse3d';
 import { layerModel, co2Forcing } from '../../src/models/greenhouse';
-import type { ArrowItem, EllipsoidItem, SceneItem, SphereItem } from '../../src/three/scene';
+import { glucoseScene, K_GLUCOSE, K_INSULIN, PER_GLUCAGON, PER_GLUCOSE, PER_INSULIN } from '../../src/labs/glucose3d';
+import { fluxesAt, simulateGlucose, stateAt, type GlucoseInput } from '../../src/models/glucose';
+import type { ArrowItem, EllipsoidItem, ParticlesItem, SceneItem, SphereItem } from '../../src/three/scene';
 
 const byId = <T extends SceneItem>(items: SceneItem[], id: string) => items.find((i) => i.id === id) as T;
 const len = (a: ArrowItem) => Math.hypot(...a.vector);
@@ -58,5 +60,45 @@ describe('la Tierra y su atmósfera en 3D (efecto invernadero)', () => {
     const down = earthScene({ S: 1361, albedo: 0.3, eps: 0.78, co2: { C: 185, ecs: 3 } });
     expect(byId<ArrowItem>(down.items, 'forzamiento').vector[1]).toBeLessThan(0);
     expect(byId(earthScene({ S: 1361, albedo: 0.3, eps: 0.78, co2: { C: 278.3, ecs: 3 } }).items, 'forzamiento')).toBeUndefined();
+  });
+});
+
+const gBase: GlucoseInput = { profile: 'normal', meal: 'ptog', exerciseStart: null, bolus: 0, insulinOn: true, glucagonOn: true };
+describe('glucosa, insulina y glucagón en 3D (homeostasis)', () => {
+  it('el número de partículas es proporcional a cada concentración y crece después de comer', () => {
+    const run = simulateGlucose(gBase);
+    const s0 = stateAt(run, 0), s30 = stateAt(run, 30);
+    const a = glucoseScene(run, s0), b = glucoseScene(run, s30);
+    const n = (sc: ReturnType<typeof glucoseScene>, id: string) => byId<ParticlesItem>(sc.items, id)?.points.length ?? 0;
+    expect(n(a, 'glucosa')).toBe(Math.round(85 / PER_GLUCOSE));
+    expect(n(b, 'glucosa')).toBe(Math.round(s30.G / PER_GLUCOSE));
+    expect(n(b, 'glucosa')).toBeGreaterThan(n(a, 'glucosa'));
+    expect(n(b, 'insulina')).toBe(Math.round(s30.I / PER_INSULIN));
+    expect(n(b, 'glucagon')).toBe(Math.round(s30.N / PER_GLUCAGON));
+    for (const q of byId<ParticlesItem>(b.items, 'glucosa').points) { expect(Math.hypot(q[1], q[2])).toBeLessThan(0.42); expect(Math.abs(q[0])).toBeLessThanOrEqual(3); }
+    expect(b.description).toContain(`glucosa ${Math.round(s30.G)} mg/dL`);
+  });
+  it('las flechas miden los flujos del modelo en ese minuto (escala fija)', () => {
+    const run = simulateGlucose(gBase);
+    const s = stateAt(run, 20), f = fluxesAt(run, s), sc = glucoseScene(run, s);
+    expect(len(byId<ArrowItem>(sc.items, 'entrada-intestino'))).toBeCloseTo(f.gut * K_GLUCOSE, 12);
+    expect(len(byId<ArrowItem>(sc.items, 'salida-higado'))).toBeCloseTo(f.liver * K_GLUCOSE, 12);
+    expect(len(byId<ArrowItem>(sc.items, 'captacion'))).toBeCloseTo(f.uptake * K_GLUCOSE, 12);
+    expect(len(byId<ArrowItem>(sc.items, 'secrecion-insulina'))).toBeCloseTo(f.secretion * K_INSULIN, 12);
+    // En ayunas no hay comida que entre ni insulina que secretar.
+    const fast = simulateGlucose({ ...gBase, meal: 'ayuno' });
+    const sf = glucoseScene(fast, stateAt(fast, 60));
+    expect(byId(sf.items, 'entrada-intestino')).toBeUndefined();
+    expect(byId(sf.items, 'secrecion-insulina')).toBeUndefined();
+    expect(len(byId<ArrowItem>(sf.items, 'captacion'))).toBeCloseTo(len(byId<ArrowItem>(sf.items, 'salida-higado')), 12);
+  });
+  it('la sangre avanza con el tiempo sin cambiar el número de partículas; el ejercicio se dice en la descripción', () => {
+    const run = simulateGlucose({ ...gBase, meal: 'ayuno', exerciseStart: 0 });
+    const a = glucoseScene(run, { ...stateAt(run, 10) }), b = glucoseScene(run, { ...stateAt(run, 10), t: 11 });
+    const pa = byId<ParticlesItem>(a.items, 'glucosa').points, pb = byId<ParticlesItem>(b.items, 'glucosa').points;
+    expect(pb.length).toBe(pa.length);
+    expect(pb[0][0]).not.toBe(pa[0][0]);
+    expect(pb[0][1]).toBe(pa[0][1]);
+    expect(a.description).toContain('Hay ejercicio');
   });
 });

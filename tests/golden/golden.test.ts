@@ -24,6 +24,7 @@ import { carOnCurve, ucm } from '../../src/models/circularMotion';
 import { eyeImage, thinLens } from '../../src/models/lenses';
 import { electromagnet, wireField } from '../../src/models/magnetism';
 import { co2Warming, effectiveTemp, layerModel } from '../../src/models/greenhouse';
+import { BERGMAN, ogttCategory, fastingCategory, simulateGlucose } from '../../src/models/glucose';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -442,6 +443,11 @@ export const GOLDEN: GoldenCase[] = [
   { id: 'magnetismo-imanes', origin: 'independiente', what: 'Biot-Savart: cable con 1 A a 2 cm, B = 2·10⁻⁷·1/0,02 = 1,0 × 10⁻⁵ T; con H = 26 967 nT (WMM2025, Apartadó) la brújula se desvía arctan(10/26,967) = 20,35°', run: () => {
     close(wireField(1, 0.02), 1e-5, 1e-18);
     close(electromagnet({ source: 'cable', turns: 50, current: 1, distanceCm: 2 }).deflection, (Math.atan(10 / 26.967) * 180) / Math.PI, 1e-9);
+  } },
+  { id: 'homeostasis-glucosa', origin: 'independiente', what: 'modelo mínimo de Bergman con la insulina bloqueada y sin comida: G(t) = G_b + (G₀ − G_b)·e^(−p₁t); de 185 a 85 + 100·e^(−0,028735·60) = 102,83 mg/dL en 60 min; criterios de la ADA (2025): 126 mg/dL en ayunas y 200 mg/dL a las 2 h son rango de diabetes', run: () => {
+    const r = simulateGlucose({ profile: 'normal', meal: 'ayuno', exerciseStart: null, bolus: 0, insulinOn: false, glucagonOn: true, G0: 185 });
+    close(r.points[60].G, 85 + 100 * Math.exp(-BERGMAN.p1 * 60), 1e-6); close(r.points[60].G, 102.83, 0.005);
+    expect([fastingCategory(125), fastingCategory(126), ogttCategory(199), ogttCategory(200)]).toEqual(['prediabetes', 'diabetes', 'prediabetes', 'diabetes']);
   } },
   { id: 'efecto-invernadero', origin: 'referencia', what: 'NASA Planetary Fact Sheet: T de cuerpo negro de la Tierra 254,0 K (S = 1361 W/m², α = 0,306), Marte 209,8 K y Venus 226,6 K; con α = 0,30, T_e = (1361·0,7/(4·5,670374419 × 10⁻⁸))^¼ = 254,58 K; una capa opaca 2^¼·T_e = 302,7 K; 2 × CO₂: 5,35·ln 2 = 3,708 W/m²', run: () => {
     close(effectiveTemp(1361, 0.306), 254.0, 0.05); close(effectiveTemp(586.2, 0.25), 209.8, 0.05); close(effectiveTemp(2601.3, 0.77), 226.6, 0.05);

@@ -1645,6 +1645,27 @@ const RAW_BANK: Question[] = [
     review: 'En la práctica «Balance de energía de la Tierra y efecto invernadero», elige Venus, la Tierra y Marte en «Sin atmósfera».',
     transfer: 'Si la Tierra tuviera albedo 0,20 en lugar de 0,30, ¿cuánto cambiaría su temperatura sin atmósfera? Calcúlalo con T = [S(1 − α)/(4σ)]^¼ y compruébalo en la práctica.',
   },
+  {
+    id: 'saber-glu-1', grade: 10, topic: 'Homeostasis de la glucosa', competency: 'indagacion', component: 'biologico',
+    skill: 'Interpretar un experimento sobre la regulación hormonal de la glucosa', difficulty: 'alta', practiceId: 'homeostasis-glucosa',
+    context: 'En la feria de ciencias, un grupo usa un modelo computacional de la glucosa de una persona sana de 70 kg. En cada corrida cambian una sola condición y anotan la glucosa más baja y la de las 2 h.',
+    table: {
+      caption: 'Resultados del modelo (no son mediciones de personas)',
+      headers: ['Corrida', 'Comida', 'Ejercicio', 'Glucagón', 'Glucosa mínima (mg/dL)', 'Glucosa a las 2 h (mg/dL)'],
+      rows: [['1', 'Ninguna', 'No', 'Activo', '85', '85'], ['2', 'Ninguna', 'Sí, 45 min', 'Activo', '76', '84'], ['3', 'Ninguna', 'Sí, 45 min', 'Bloqueado', '60', '82']],
+    },
+    stem: '¿Qué conclusión se apoya en las corridas?',
+    options: [
+      { id: 'a', text: 'El glucagón produce la glucosa que el músculo usa durante el ejercicio.', feedback: 'El glucagón es una señal: la glucosa la libera el hígado.' },
+      { id: 'b', text: 'Durante el ejercicio la glucosa baja; con el glucagón activo baja menos, porque el glucagón hace que el hígado libere glucosa.', feedback: 'Correcto: la diferencia entre las corridas 2 y 3 es el glucagón.' },
+      { id: 'c', text: 'El ejercicio sube la glucosa porque el cuerpo necesita más energía.', feedback: 'La glucosa mínima bajó de 85 a 76 mg/dL.' },
+      { id: 'd', text: 'Las corridas no permiten concluir nada porque cambiaron dos condiciones a la vez.', feedback: 'Entre cada corrida y la siguiente cambia una sola condición.' },
+    ],
+    correct: 'b',
+    explanation: 'Entre las corridas 1 y 2 solo cambia el ejercicio: los músculos captan más glucosa y la mínima baja. Entre la 2 y la 3 solo cambia el glucagón: sin él, el hígado no libera glucosa extra y la mínima llega a 60 mg/dL (hipoglucemia). Es la retroalimentación negativa en acción.',
+    review: 'En la práctica «Homeostasis: regulación de la glucosa…», elige «Sin comida», activa el ejercicio desde el minuto 0 y compara el glucagón activo y bloqueado.',
+    transfer: '¿Qué esperarías si la persona hiciera el mismo ejercicio una hora después de tomar 75 g de glucosa? Predícelo y compruébalo en la práctica.',
+  },
 ];
 
 /** Banco con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

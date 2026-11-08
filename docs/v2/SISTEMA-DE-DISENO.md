@@ -225,6 +225,7 @@ siguen todas las prácticas adoptadas:
 | Estados de la materia | `StatesLab` | Calentamiento del agua · Calentar | t (0 al final de la curva) | Toda la curva en ≈ 24 s; las partículas 3D quedan quietas en pausa |
 | Cambios físicos y químicos | `ChemicalChangesLab` | Observación del proceso · Iniciar el proceso | t (30 s a 72 h según el proceso) | Cada proceso en ≈ 8 s; rapidez ilustrativa |
 | Movimiento circular | `CircularMotionLab` | Disco girando · Hacer girar 10 vueltas (+ «Cortar la cuerda») | t (0 a 10 T) | Tiempo real hasta T = 1 s; 10 vueltas en ≤ 10 s |
+| Homeostasis de la glucosa | `GlucoseLab` | Prueba de glucosa · Iniciar la prueba | t (0–240 min) | Las 4 h en ≈ 20 s; las partículas 3D avanzan con la sangre y quedan quietas en pausa |
 
 **Prácticas con animación pero sin dinámica que pausar** (no se inventan controles):
 

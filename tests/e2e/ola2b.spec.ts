@@ -70,3 +70,46 @@ test('efecto-invernadero: 255 K sin atmósfera, la capa que da 288 K y el forzam
   await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
   await a11yAndMobile(page, 'efecto-invernadero');
 });
+
+test('homeostasis-glucosa: prueba de 75 g, insulina bloqueada, ejercicio, diabetes tipo 2 y tipo 1 con insulina', async ({ page }) => {
+  test.setTimeout(120_000);
+  await openFree(page, 'homeostasis-glucosa');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(ro(page, 'Glucómetro')).toContainText('85 mg/dL');
+  const sim = page.getByRole('group', { name: 'Prueba de glucosa', exact: true });
+  await sim.getByRole('button', { name: 'Iniciar la prueba' }).click();
+  await expect(sim.getByRole('status')).toHaveText('Terminada');
+  // Valor dorado del modelo: 91 mg/dL a las 2 h (< 140: rango normal de la ADA) y pico de 166 mg/dL a los 26 min.
+  await expect(ro(page, 'Glucosa a las 2 h')).toContainText('91 mg/dL: en el rango normal');
+  await expect(ro(page, 'Pico y mínima')).toContainText('pico 166 mg/dL a los 26 min');
+  await page.getByRole('button', { name: 'Guardar la prueba completa' }).click();
+  await saved(page, 1);
+  await page.getByRole('button', { name: 'Guardar el punto de la curva' }).click();
+  await saved(page, 1);
+  await page.getByRole('group', { name: 'Acción de la insulina' }).getByRole('button', { name: 'Bloqueada' }).click();
+  await expect(cond(page, 'retroalimentación negativa está roto')).toContainText('Cómo corregirlo');
+  await page.getByRole('group', { name: 'Acción de la insulina' }).getByRole('button', { name: 'Activa' }).click();
+  await page.getByLabel('Perfil').selectOption('tipo2');
+  await sim.getByRole('button', { name: 'Iniciar la prueba' }).click();
+  await expect(ro(page, 'Glucosa en ayunas (criterio de la ADA)')).toContainText('140 mg/dL: en el rango de diabetes');
+  await expect(ro(page, 'Glucosa a las 2 h')).toContainText('242 mg/dL: en el rango de diabetes');
+  await page.getByLabel('Perfil').selectOption('tipo1');
+  await setSlider(page, 'Insulina rápida inyectada con la comida', 'U', '8');
+  await sim.getByRole('button', { name: 'Iniciar la prueba' }).click();
+  await expect(cond(page, 'hipoglucemia')).toContainText('Cómo corregirlo: La dosis de insulina es alta');
+  await page.getByLabel('Perfil').selectOption('normal');
+  await expect(cond(page, 'solo para el perfil con diabetes tipo 1').or(cond(page, 'es para el perfil con diabetes tipo 1'))).toContainText('Cómo corregirlo');
+  await setSlider(page, 'Insulina rápida inyectada con la comida', 'U', '0');
+  await page.getByLabel('Comida en t = 0').selectOption('ayuno');
+  await page.getByRole('group', { name: 'Ejercicio moderado de 45 min' }).getByRole('button', { name: 'Sí' }).click();
+  await setSlider(page, 'Inicio del ejercicio', 'min', '0');
+  await sim.getByRole('button', { name: 'Iniciar la prueba' }).click();
+  await expect(ro(page, 'Pico y mínima')).toContainText('mínima 76 mg/dL');
+  await page.getByRole('group', { name: 'Glucagón' }).getByRole('button', { name: 'Bloqueado' }).click();
+  await sim.getByRole('button', { name: 'Iniciar la prueba' }).click();
+  await expect(ro(page, 'Pico y mínima')).toContainText('mínima 60 mg/dL');
+  await expect(cond(page, 'hipoglucemia')).toContainText('Cómo corregirlo');
+  await page.getByRole('group', { name: /Tu respuesta: La insulina es una hormona que sube/ }).getByRole('button', { name: 'Es falso' }).click();
+  await expect(page.getByText(/Bien\. La idea es falsa\./)).toBeVisible();
+  await a11yAndMobile(page, 'homeostasis-glucosa');
+});

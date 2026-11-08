@@ -989,6 +989,18 @@ const SCENES: Record<string, () => ReactNode> = {
       <Arrow x1={74} y1={70} x2={54} y2={54} color="var(--data)" w={2.4} />
     </>
   ),
+  'homeostasis-glucosa': () => (
+    <>
+      <MiniPlot x={196} y={22} w={108} h={74} d="M0 56 C 14 56, 20 6, 34 8 S 60 46, 74 50 L 108 52" />
+      <rect x="14" y="104" width="170" height="26" rx="13" fill="var(--bad)" opacity="0.2" stroke="var(--bad)" />
+      {[28, 52, 70, 96, 118, 140, 164].map((x, k) => <circle key={x} cx={x} cy={k % 2 ? 112 : 122} r="5" fill="var(--warn)" />)}
+      {[40, 108, 152].map((x) => <circle key={x} cx={x} cy="117" r="3.5" fill="var(--series-2)" />)}
+      <ellipse cx="60" cy="56" rx="44" ry="20" fill="#8b3a2e" opacity="0.9" />
+      <ellipse cx="148" cy="60" rx="38" ry="9" fill="#d9a07a" stroke={INK} />
+      <Arrow x1={148} y1={72} x2={148} y2={100} color="var(--series-2)" w={2.4} />
+      <Arrow x1={60} y1={78} x2={60} y2={100} color="var(--warn)" w={2.4} />
+    </>
+  ),
   'efecto-invernadero': () => (
     <>
       <circle cx="40" cy="80" r="22" fill="#e3a008" />

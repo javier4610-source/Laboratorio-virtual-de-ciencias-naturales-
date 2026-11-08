@@ -98,6 +98,8 @@ const ADOPTED = [
   'ElectronConfigLab', 'GalvanicCellLab', 'MeiosisLab', 'NervousSystemLab', 'CirculatoryLab',
   // ola 2a
   'StatesLab', 'ChemicalChangesLab', 'CircularMotionLab',
+  // ola 2b
+  'GlucoseLab',
 ];
 
 describe('adopción de SimControls', () => {

@@ -2083,4 +2083,33 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'homeostasis-glucosa': [
+    {
+      id: 'curva', label: 'Curva de glucosa e insulina', defaultX: 'tiempo', defaultY: 'glucosa',
+      columns: [
+        { key: 'perfil', label: 'Perfil', numeric: false, input: true },
+        { key: 'comida', label: 'Comida', numeric: false, input: true },
+        { key: 'tiempo', label: 'Tiempo desde la comida', unit: 'min', numeric: true, decimals: 0, input: true, notIndependent: true },
+        { key: 'glucosa', label: 'Glucosa (glucómetro)', unit: 'mg/dL', numeric: true, decimals: 0, resolution: 1 },
+        { key: 'insulina', label: 'Insulina (modelo)', unit: 'µU/mL', numeric: true, decimals: 1 },
+        { key: 'glucagon', label: 'Glucagón (modelo ilustrativo)', unit: 'pg/mL', numeric: true, decimals: 0 },
+      ],
+    },
+    {
+      id: 'pruebas', label: 'Pruebas completas', defaultX: 'dosis', defaultY: 'minima',
+      columns: [
+        { key: 'perfil', label: 'Perfil', numeric: false, input: true },
+        { key: 'comida', label: 'Comida', numeric: false, input: true },
+        { key: 'ejercicio', label: 'Ejercicio', numeric: false, input: true },
+        { key: 'dosis', label: 'Insulina rápida', unit: 'U', numeric: true, decimals: 0, input: true },
+        { key: 'insulinaActiva', label: '¿Insulina activa?', numeric: false, input: true },
+        { key: 'glucagonActivo', label: '¿Glucagón activo?', numeric: false, input: true },
+        { key: 'ayunas', label: 'Glucosa en ayunas', unit: 'mg/dL', numeric: true, decimals: 0 },
+        { key: 'pico', label: 'Pico', unit: 'mg/dL', numeric: true, decimals: 0 },
+        { key: 'minima', label: 'Mínima', unit: 'mg/dL', numeric: true, decimals: 0 },
+        { key: 'dosH', label: 'A las 2 h', unit: 'mg/dL', numeric: true, decimals: 0 },
+        { key: 'categoria', label: 'Rango según la ADA (no es diagnóstico)', numeric: false },
+      ],
+    },
+  ],
 };

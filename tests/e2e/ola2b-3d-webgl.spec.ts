@@ -84,3 +84,27 @@ test('efecto-invernadero 3D: la sombra es un disco y las flechas siguen los fluj
   await expect(figureOf(page, 'inv').locator('.scene3d-label', { hasText: 'capa hacia abajo' })).toBeVisible();
   await shots(page, () => figureOf(page, 'inv'), 'efecto-invernadero-3d-capa');
 });
+
+test('homeostasis-glucosa 3D: las partículas de glucosa siguen la concentración durante la prueba', async ({ page }) => {
+  await openFree(page, 'homeostasis-glucosa');
+  await waitEngine(page, 'glu', 'disponible');
+  const v = view(page, 'glu');
+  expect(await description(v)).toContain('glucosa 85 mg/dL (11 partículas');
+  await keyboardAndTheme(page, 'glu', 'homeostasis-glucosa 3D');
+  await page.emulateMedia({ colorScheme: 'light' });
+  const before = await pixels(v);
+  const sim = page.getByRole('group', { name: 'Prueba de glucosa', exact: true });
+  await sim.getByRole('button', { name: 'Iniciar la prueba' }).click();
+  await page.waitForTimeout(2200);
+  await sim.getByRole('button', { name: 'Pausar' }).click();
+  await expect(sim.getByRole('status')).toHaveText('En pausa');
+  const paused = await description(v);
+  expect(paused).toMatch(/Minuto \d+: glucosa 1\d\d mg\/dL/);
+  expect((await pixels(v)).uri).not.toBe(before.uri);
+  // En pausa la escena no cambia.
+  const still = (await pixels(v)).uri;
+  await page.waitForTimeout(600);
+  expect((await pixels(v)).uri).toBe(still);
+  expect(await description(v)).toBe(paused);
+  await shots(page, () => figureOf(page, 'glu'), 'homeostasis-glucosa-3d');
+});

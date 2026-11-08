@@ -151,6 +151,9 @@ export const INSTRUMENTS: Record<string, InstrumentSpec[]> = {
     { id: 'brujula', name: 'Brújula de 1°', quantity: 'Dirección de la aguja', unit: '°', resolution: 1, sigma: 1.5, note: 'Fricción del pivote, paralaje al leer y objetos de hierro cercanos.' },
     { id: 'teslametro', name: 'Teslámetro de efecto Hall (0,1 µT)', quantity: 'Campo magnético', unit: 'µT', resolution: 0.1, relSigma: 0.02, nonNegative: true, note: 'Orientación de la sonda y campo de la Tierra que se suma.' },
   ],
+  'homeostasis-glucosa': [
+    { id: 'glucometro', name: 'Glucómetro con tiras (1 mg/dL)', quantity: 'Glucosa en la sangre capilar', unit: 'mg/dL', resolution: 1, sigma: 3, relSigma: 0.04, nonNegative: true, note: 'Tira vencida o húmeda, gota pequeña, manos con azúcar y temperatura; la norma ISO 15197 acepta ±15 mg/dL o ±15 %.' },
+  ],
   'pila-electroquimica': [
     { id: 'voltimetro', name: 'Voltímetro digital de alta impedancia (0,001 V)', quantity: 'Fuerza electromotriz de la pila (circuito abierto)', unit: 'V', resolution: 0.001, sigma: 0.002, note: 'Contacto de las pinzas con los electrodos, temperatura de las soluciones y polarización de los electrodos.' },
     { id: 'balanza', name: 'Balanza de precisión (0,001 g)', quantity: 'Masa del electrodo (lavado y seco)', unit: 'g', resolution: 0.001, sigma: 0.0015, nonNegative: true, note: 'Electrodo mal secado (agua o sal adherida), depósito que se desprende y corrientes de aire.' },

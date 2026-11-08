@@ -135,5 +135,5 @@ export function mixturesScene({ state, last }: MixturesSceneInput): { items: Sce
       ? `Fracciones separadas (${state.separated.length}${state.separated.length > MAX_SLOTS ? `; se dibujan las últimas ${MAX_SLOTS}` : ''}): ${fractions.join('; ')}.`
       : 'Aún no se ha separado nada: aplica una técnica y su herramienta aparecerá con lo que separó.')
     + ` Cada partícula representa ${fmt(1 / PER_G, 2)} g.`;
-  return { items, extent: 13, target: [-6, 4, -3], narrow: { extent: 19, target: [-2, 4, -3] as Vec3 }, description, counts };
+  return { items, extent: 13, target: [-6, 4, -3], narrow: { extent: 22, target: [-3.5, 4, -3] as Vec3 }, description, counts };
 }

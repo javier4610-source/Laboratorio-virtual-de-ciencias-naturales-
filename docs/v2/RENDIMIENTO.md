@@ -188,6 +188,21 @@ banco, que era un único archivo de ≈ 190 KB crudos y por eso iba a la segunda
 van a la instalación: es a propósito, porque cada práctica necesita el de su grado para abrir sin conexión. Se sube el
 límite de 6,4 a 6,8 MB con esa razón (≈ 40 KB por práctica nueva: margen para la ola 3b y unas cinco prácticas más).
 
+**Ola 3b: cinco prácticas nuevas (sin publicar, 2026-11-23).** Con el banco ya partido por grado, las 91 prácticas
+quedan dentro de todos los límites sin subir ninguno más:
+
+| Medida | 86 prácticas (banco por grado) | 91 prácticas (ola 3b) | Límite |
+|---|---|---|---|
+| JS de entrada (catálogo liviano) | 131,9 | 134,6 | 140 |
+| Ruta: banco Saber 11 | 138,9 | 141,7 | 160 |
+| Ruta: banco Saber 11 con los seis grados | 202,1 | 208,2 | 240 |
+| Ruta: práctica liviana (densidad, con el banco de 6.º) | 277,7 | 283,2 | 335 |
+| Panel docente con las fichas completas | 1 180,8 | 1 233,3 | 1 250 |
+| Precarga del service worker al instalar | 6,24 MB | 6,45 MB (6 600 KB, 412 archivos) | 6,8 MB |
+
+El panel docente con las fichas completas queda a 17 KB de su límite (≈ 10 KB por práctica nueva): la próxima práctica
+tendrá que traer la ficha docente liviana pendiente (§5, punto 1) o subir el límite con su razón.
+
 ## 4. Cambios
 
 1. **Banco Saber 11 sin el currículo completo** (`src/pages/BankPage.tsx`). El título de la práctica relacionada sale

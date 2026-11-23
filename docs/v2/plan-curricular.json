@@ -201,6 +201,7 @@
     },
     {
       "id": "termodinamica",
+      "built": "ola 3b (2026-11-23)",
       "grade": 11,
       "area": "fisica",
       "title": "Primera ley de la termodinámica y máquinas térmicas",
@@ -214,6 +215,7 @@
     },
     {
       "id": "efecto-doppler",
+      "built": "ola 3b (2026-11-23)",
       "grade": 11,
       "area": "fisica",
       "title": "Efecto Doppler y barrera del sonido",
@@ -297,6 +299,7 @@
     },
     {
       "id": "sistema-inmune",
+      "built": "ola 3b (2026-11-23)",
       "grade": 11,
       "area": "biologia",
       "title": "Sistema inmune, vacunas e inmunidad colectiva",
@@ -310,6 +313,7 @@
     },
     {
       "id": "biotecnologia-pcr",
+      "built": "ola 3b (2026-11-23)",
       "grade": 10,
       "area": "biologia",
       "title": "Biotecnología: PCR y electroforesis en gel",
@@ -323,6 +327,7 @@
     },
     {
       "id": "nutricion-digestion",
+      "built": "ola 3b (2026-11-23)",
       "grade": 7,
       "area": "biologia",
       "title": "Digestión: enzimas y pH a lo largo del tubo digestivo",

@@ -66,6 +66,10 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] Sin publicar · Ola 3b de prácticas nuevas (`termodinamica`, `efecto-doppler`, `nutricion-digestion`,
+  `biotecnologia-pcr`, `sistema-inmune`), cada una con su vista 3D (91 prácticas): quedan construidas las nueve de
+  prioridad 3 del análisis curricular. El banco Saber 11 se carga por grado y bajo demanda (la página del banco pinta con
+  139 KB en lugar de 195 y cada práctica descarga solo el banco de su grado).
 - [x] v2.26.0 · Ola 3a de prácticas nuevas (`gravitacion-orbitas`, `fluidos-bernoulli`, `termoquimica`,
   `ciclo-del-carbono`), cada una con su vista 3D (86 prácticas): cuatro de las nueve de prioridad 3. Rótulos de la vista
   3D de `efecto-invernadero` sin amontonarse (rótulo corto opcional `tag` en el kit). Siguen las otras cinco de prioridad

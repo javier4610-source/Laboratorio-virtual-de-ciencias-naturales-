@@ -7,6 +7,51 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+Prácticas nuevas, ola 3b (91 prácticas): termodinámica, efecto Doppler, digestión, PCR y sistema inmune; el banco
+Saber 11 se carga por grado.
+
+### Añadido
+- **Ola 3b de prácticas nuevas** (las cinco últimas de prioridad 3 del análisis curricular; 91 prácticas en total), con
+  el mismo patrón de la ola 3a: modelo en `src/models` con pruebas y caso dorado, conjuntos de datos con relaciones, cinco
+  preguntas tipo Saber originales y una de transferencia en el banco, ideas erróneas, avisos con «Cómo corregirlo»,
+  procedencia, vínculo curricular (formulación propia, por verificar), miniatura, guía en PDF, barra común de simulación
+  y vista 3D con respaldo SVG:
+  - `termodinamica` (11.º, física): gas ideal con R de CODATA 2018 en un cilindro; procesos isotérmico, isobárico,
+    isocórico y adiabático con ΔU = Q − W (convención declarada: W hecho por el gas; en química ΔU = Q + W); trabajo como
+    área en el diagrama P–V; ciclo de Otto (r = 8 → 56,5 %) y de Carnot (600/300 K → 50 %), con el área encerrada igual
+    al trabajo neto; aviso de detonación con las relaciones de compresión típicas de Çengel y Boles; 3D: cilindro con
+    émbolo a la altura del volumen, partículas y flechas de calor y trabajo con el sentido de la etapa.
+  - `efecto-doppler` (11.º, física): c = 331,3·√(1 + T/273,15); f' = f·(c + v_o)/(c − v_s) (700 Hz a 25 m/s → 755,0 Hz;
+    observador que se acerca → 751,0 Hz); paso de una ambulancia con el ángulo de emisión; cono de Mach sen θ = 1/M;
+    3D: frentes de onda esféricos centrados donde se emitieron (tiempo adimensional declarado) y el cono de Mach.
+  - `nutricion-digestion` (7.º, biología): actividad contra pH de amilasa salival, pepsina, amilasa pancreática, tripsina
+    y lipasa con la curva del modelo de «enzimas» (`pHBell`, sin cambiar sus valores) y pH óptimos redondeados de los
+    manuales; pH de los tramos de Guyton y Hall y de Fallingborg (1999); recorrido de un almuerzo calibrado con dos datos
+    de Guyton y Hall (saliva ≈ 35 % del almidón, pepsina ≈ 15 % de las proteínas); antiácido, sin bilis y páncreas con
+    pocas enzimas; lugol; aviso de que no es consejo médico; 3D: tubo digestivo coloreado por pH con el bolo que avanza.
+  - `biotecnologia-pcr` (10.º, biología): molde aleatorio de 600 pb escrito para la práctica; cebadores con la regla de
+    Wallace (límites declarados) y el error del reverso sin complemento inverso; N = N₀·(1 + E)ⁿ con meseta ilustrativa;
+    gel con la escalera de 100 pb de NEB y recta de calibración log₁₀(pb) contra distancia; 3D: hélice que se separa,
+    recibe los cebadores y se copia, y gel con las bandas a la distancia del modelo.
+  - `sistema-inmune` (11.º, biología): respuesta primaria y secundaria (forma ilustrativa, Abbas); SIR con RK4 y
+    vacunación; umbral 1 − 1/R₀ con R₀ del sarampión 12–18 (Guerra y otros, 2017) y de la influenza ≈ 1,28 (Biggerstaff
+    y otros, 2014); eficacia de la vacuna contra el sarampión del CDC (93 % y 97 %); aviso de que no es consejo médico;
+    3D: anticuerpos en Y en número proporcional al título y una población de 400 esferas con las proporciones del SIR.
+  Pruebas: `tests/unit/ola3bModelos.test.ts`, `tests/unit/escenas3dOla3b.test.ts`, casos dorados y
+  `tests/e2e/ola3b*.spec.ts` (flujo, valor dorado en la interfaz, 3D con y sin WebGL, axe claro/oscuro, 390 px).
+
+### Cambiado
+- **Banco Saber 11 por grado y bajo demanda** (`src/assessment/banco/`): un archivo por grado y un cargador como el del
+  banco avanzado. La página `#/banco` pinta con 138,9 KB comprimidos (antes 195,4 de 200; el límite baja a 160) y pide
+  solo el grado elegido o los seis en paralelo; cada práctica descarga solo el archivo de su grado para sus preguntas de
+  transferencia (densidad: 327,3 → 277,7 KB). El banco queda ordenado por grado. La precarga del service worker sube a
+  ≈ 6,2 MB (límite 6,4 → 6,8 MB) porque el banco, ahora en archivos pequeños, pasa de la segunda fase a la instalación
+  (lo necesitan las prácticas sin conexión). Prueba nueva `tests/e2e/banco-saber.spec.ts`. Ver `docs/v2/RENDIMIENTO.md`.
+
+### Corregido
+- Las animaciones de las prácticas nuevas nunca usan un tiempo negativo (la marca de tiempo del primer cuadro puede ser
+  anterior al inicio), que hacía fallar la PCR al empezar.
+
 ## [2.26.0] · 2026-11-08
 
 Prácticas nuevas, ola 3a (86 prácticas): gravitación y órbitas, fluidos y Bernoulli, termoquímica y ciclo del carbono; rótulos de la vista 3D del efecto invernadero sin amontonarse.

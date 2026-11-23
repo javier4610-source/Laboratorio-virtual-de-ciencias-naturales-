@@ -182,7 +182,7 @@ está por validar).
 | 6.º | «Temperatura, calor, luz y sonido» | `calor` | Parcial (luz y sonido en 8.º) |
 | 6.º | «Cuidado del agua y del ambiente» | `ecosistema` (`agua` en 11.º) | Parcial |
 | 7.º | «Membrana celular, difusión y ósmosis» | `osmosis` | Cubierto |
-| 7.º | «Nutrición, circulación, respiración y excreción» | `sistema-circulatorio` (ola 1b) | Parcial (circulación cubierta en la ola 1b) → `nutricion-digestion` |
+| 7.º | «Nutrición, circulación, respiración y excreción» | `sistema-circulatorio` (ola 1b), `nutricion-digestion` (ola 3b) | Parcial (circulación en la ola 1b y digestión en la ola 3b; sin excreción) |
 | 7.º | «Reproducción celular: introducción a mitosis y meiosis» | `mitosis`, `meiosis` (ola 1b) | Cubierto en la ola 1b |
 | 7.º | «Relaciones ecológicas y ciclos biogeoquímicos» | `descomposicion`, `ciclo-del-carbono` (ola 3a) (`ecosistema`, `redes` en 6.º) | Cubierto en la ola 3a (ciclo del carbono) |
 | 7.º | «Estructura del átomo y tabla periódica» | — | **No cubierto** → `modelos-atomicos`, `tabla-periodica` (construidas, ola 1a) |
@@ -206,7 +206,7 @@ está por validar).
 | 9.º | «Cinemática, leyes de Newton, trabajo y energía» | `cinematica`, `newton`, `trabajo` | Cubierto |
 | 10.º | «Biomoléculas y enzimas» | `enzimas` | Cubierto |
 | 10.º | «Fotosíntesis y respiración celular» · «Metabolismo y transformación de energía» | `fotosintesis`, `respiracion` (`metabolismo` en 11.º) | Cubierto |
-| 10.º | «Biotecnología y aplicaciones de la biología molecular» | `secuencias`, `rastreo` (11.º, bioinformática) | Parcial → `biotecnologia-pcr` |
+| 10.º | «Biotecnología y aplicaciones de la biología molecular» | `biotecnologia-pcr` (ola 3b); `secuencias`, `rastreo` (11.º, bioinformática) | Cubierto en la ola 3b (PCR y electroforesis) |
 | 10.º | «Fisiología humana» | `homeostasis-glucosa` (ola 2b) | Parcial (homeostasis de la glucosa en la ola 2b) |
 | 10.º | «Configuración electrónica y periodicidad química» | `configuracion-electronica` (ola 1b) | Cubierto en la ola 1b |
 | 10.º | «Soluciones, concentración, molaridad y gases» | `soluciones`, `gases` | Cubierto |
@@ -215,12 +215,13 @@ está por validar).
 | 11.º | «Genética molecular y regulación de la expresión génica» | `expresion`, `rastreo`, `secuencias`, `proteinas` | Cubierto |
 | 11.º | «Biotecnología, ingeniería genética y bioética» | `rastreo`, `secuencias` | Parcial |
 | 11.º | «Evolución y genética de poblaciones» | `popgen` | Cubierto |
-| 11.º | «Fisiología humana, inmunología y homeostasis» | — | **No cubierto** → `sistema-inmune`, `homeostasis-glucosa` |
+| 11.º | «Fisiología humana, inmunología y homeostasis» | `sistema-inmune` (ola 3b), `homeostasis-glucosa` (ola 2b, 10.º) | Cubierto en las olas 2b y 3b |
 | 11.º | «Ecología, biodiversidad, contaminación y cambio climático» | `agua`, `poblacion`, `efecto-invernadero` (ola 2b) | Cubierto en la ola 2b |
 | 11.º | «Estequiometría avanzada» · «Equilibrio químico introductorio» · «Ácidos, bases y pH» | `estequiometria`, `equilibrio`, `ph` | Cubierto |
 | 11.º | «Oxidación-reducción» | `pila-electroquimica` (ola 1b) | Cubierto en la ola 1b (pila galvánica y Faraday; la electrólisis con fuente externa queda pendiente) |
 | 11.º | «Electricidad, circuitos y magnetismo» | `circuitos`, `induccion` | Cubierto en la ola 1a → `electrostatica` |
-| 11.º | «Ondas, óptica y fenómenos físicos» | `interferencia` | Cubierto → `efecto-doppler` amplía |
+| 11.º | Termodinámica (EBC 10.º–11.º, procesos físicos; no está en la malla de grades.ts) | `termodinamica` (ola 3b) | Cubierto en la ola 3b (primera ley y máquinas térmicas) |
+| 11.º | «Ondas, óptica y fenómenos físicos» | `interferencia`, `efecto-doppler` (ola 3b) | Cubierto; la ola 3b agrega el efecto Doppler y el cono de Mach |
 | 11.º | «Diseño experimental, análisis de datos e interpretación de evidencias» | `reto` | Cubierto |
 
 ### 3.4. Brechas por área
@@ -325,8 +326,8 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | P2 | `movimiento-circular` | 10.º | Movimiento circular uniforme y fuerza centrípeta | nuevas-2 · **construida (ola 2a)** |
 | P3 | `gravitacion-orbitas` | 10.º | Gravitación universal, órbitas y leyes de Kepler | nuevas-3 · **construida (ola 3a)** |
 | P3 | `fluidos-bernoulli` | 10.º | Fluidos en movimiento: continuidad y Bernoulli | nuevas-3 · **construida (ola 3a)** |
-| P3 | `termodinamica` | 11.º | Primera ley de la termodinámica y máquinas térmicas | nuevas-3 |
-| P3 | `efecto-doppler` | 11.º | Efecto Doppler y barrera del sonido | nuevas-3 |
+| P3 | `termodinamica` | 11.º | Primera ley de la termodinámica y máquinas térmicas | nuevas-3 · **construida (ola 3b)** |
+| P3 | `efecto-doppler` | 11.º | Efecto Doppler y barrera del sonido | nuevas-3 · **construida (ola 3b)** |
 
 **`electrostatica` (construida en la ola 1a; ver `src/curriculum/practices/electrostatica.ts`) · Carga, ley de Coulomb y campo eléctrico** (11.º, P1)
 
@@ -370,14 +371,14 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** A₁·v₁ = A₂·v₂; p + ½·ρ·v² + ρ·g·h = constante (flujo ideal); validación con casos de manual.
 - **Vista 3D (obligatoria):** Tubo de Venturi 3D transparente con líneas de corriente y partículas trazadoras que se aceleran en el estrechamiento; columnas manométricas que bajan donde la rapidez sube.
 
-**`termodinamica` · Primera ley de la termodinámica y máquinas térmicas** (11.º, P3)
+**`termodinamica` (construida en la ola 3b; gas ideal con R de CODATA 2018, cuatro procesos con ΔU = Q − W y la convención declarada, ciclos de Otto y de Carnot con el área encerrada; la vista 3D es un cilindro con émbolo propio del kit, no reutiliza la caja de «gases») · Primera ley de la termodinámica y máquinas térmicas** (11.º, P3)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos físicos): conservación y transformación de la energía (formulación propia, por verificar con el documento oficial).
 - **Meta de aprendizaje:** Aplica ΔU = Q − W a procesos de un gas en un cilindro y explica por qué ninguna máquina térmica alcanza el rendimiento de Carnot.
 - **Modelo científico y validación:** ΔU = Q − W; P·V = n·R·T; procesos isotérmico, isobárico, isocórico y adiabático (P·V^γ = constante); η_Carnot = 1 − T_f/T_c.
 - **Vista 3D (obligatoria):** Cilindro con émbolo 3D y partículas del gas (reutiliza la caja de «gases»), con fuente caliente y fría; el diagrama P–V se dibuja mientras el émbolo se mueve.
 
-**`efecto-doppler` · Efecto Doppler y barrera del sonido** (11.º, P3)
+**`efecto-doppler` (construida en la ola 3b; c = 331,3·√(1 + T/273,15), Doppler en una recta y paso de una ambulancia con el ángulo de emisión, cono de Mach; la vista 3D usa un tiempo adimensional (un frente por unidad de tiempo) y el observador no se mueve con el ratón) · Efecto Doppler y barrera del sonido** (11.º, P3)
 
 - **Anclaje:** EBC 10.º–11.º, entorno físico (procesos físicos): fenómenos ondulatorios (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 11.º): «Ondas, óptica y fenómenos físicos».
 - **Meta de aprendizaje:** Predice la frecuencia percibida cuando la fuente o el observador se mueven y explica la onda de choque cuando la fuente supera la rapidez del sonido.
@@ -393,9 +394,9 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 | P1 | `sistema-nervioso` | 8.º | Sistema nervioso: neurona, arco reflejo y tiempo de reacción | nuevas-1 · **construida (ola 1b)** |
 | P2 | `clasificacion-seres-vivos` | 6.º | Clasificación de los seres vivos con claves dicotómicas | nuevas-2 · **construida (ola 2b)** |
 | P2 | `homeostasis-glucosa` | 10.º | Homeostasis: regulación de la glucosa por insulina y glucagón | nuevas-2 · **construida (ola 2b)** |
-| P3 | `nutricion-digestion` | 7.º | Digestión: enzimas y pH a lo largo del tubo digestivo | nuevas-3 |
-| P3 | `biotecnologia-pcr` | 10.º | Biotecnología: PCR y electroforesis en gel | nuevas-3 |
-| P3 | `sistema-inmune` | 11.º | Sistema inmune, vacunas e inmunidad colectiva | nuevas-3 |
+| P3 | `nutricion-digestion` | 7.º | Digestión: enzimas y pH a lo largo del tubo digestivo | nuevas-3 · **construida (ola 3b)** |
+| P3 | `biotecnologia-pcr` | 10.º | Biotecnología: PCR y electroforesis en gel | nuevas-3 · **construida (ola 3b)** |
+| P3 | `sistema-inmune` | 11.º | Sistema inmune, vacunas e inmunidad colectiva | nuevas-3 · **construida (ola 3b)** |
 
 **`sistema-circulatorio` (construida en la ola 1b; ver `src/curriculum/practices/sistema-circulatorio.ts`) · Corazón y circulación: frecuencia cardíaca y ejercicio** (7.º, P1)
 
@@ -432,21 +433,21 @@ hasta comprobarlas. Ningún anclaje está verificado (`anchorVerified: false`).
 - **Modelo científico y validación:** Modelo mínimo de Bergman (Bergman y otros, 1979) con parámetros publicados; criterios diagnósticos de glucemia de la American Diabetes Association (Standards of Care) citados con año.
 - **Vista 3D (obligatoria):** Insulina 3D (PDB 3I40, ya en el repo) con cadenas A y B y puentes disulfuro, en 3Dmol; esquema 3D de páncreas–hígado–músculo con flechas de glucosa e insulina que siguen el modelo.
 
-**`nutricion-digestion` · Digestión: enzimas y pH a lo largo del tubo digestivo** (7.º, P3)
+**`nutricion-digestion` (construida en la ola 3b; curva de pH del modelo de «enzimas» con óptimos redondeados de los manuales, pH de Guyton y Hall y Fallingborg (1999), constantes calibradas con dos datos de Guyton y Hall; el tubo 3D es un esquema sin órganos seleccionables) · Digestión: enzimas y pH a lo largo del tubo digestivo** (7.º, P3)
 
 - **Anclaje:** EBC 6.º–7.º, entorno vivo: funciones de nutrición en los seres vivos (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 7.º): «Nutrición, circulación, respiración y excreción».
 - **Meta de aprendizaje:** Relaciona cada órgano del tubo digestivo con sus enzimas y su pH, y predice qué nutrientes se digieren en cada tramo.
 - **Modelo científico y validación:** Óptimos de pH de amilasa salival, pepsina y tripsina de manuales de bioquímica (citados); reutiliza la curva de actividad enzimática del modelo de «enzimas».
 - **Vista 3D (obligatoria):** Tubo digestivo 3D recorrible (boca → estómago → intestino) con el pH coloreado y el alimento que se transforma; órganos seleccionables con su función.
 
-**`biotecnologia-pcr` · Biotecnología: PCR y electroforesis en gel** (10.º, P3)
+**`biotecnologia-pcr` (construida en la ola 3b; molde aleatorio escrito para la práctica, regla de Wallace con sus límites, meseta ilustrativa y escalera de 100 pb de NEB; la doble hélice 3D es propia (partículas del kit), no la de «adn») · Biotecnología: PCR y electroforesis en gel** (10.º, P3)
 
 - **Anclaje:** EBC 10.º–11.º, entorno vivo y CTS: aplicaciones de la biología molecular (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 10.º): «Biotecnología y aplicaciones de la biología molecular».
 - **Meta de aprendizaje:** Explica las etapas de la PCR, calcula el número de copias tras n ciclos y estima el tamaño de un fragmento a partir de un gel con marcador.
 - **Modelo científico y validación:** N = N₀·(1 + E)ⁿ; migración en gel aproximadamente lineal con el logaritmo del tamaño en el rango del gel (Sambrook y Russell, Molecular Cloning).
 - **Vista 3D (obligatoria):** Doble hélice 3D (reutiliza la de «adn») que se desnaturaliza, recibe los cebadores y se extiende en cada ciclo; gel 3D con pozos y bandas que migran.
 
-**`sistema-inmune` · Sistema inmune, vacunas e inmunidad colectiva** (11.º, P3)
+**`sistema-inmune` (construida en la ola 3b; SIR con vacunación, R₀ del sarampión (Guerra y otros, 2017) y de la influenza (Biggerstaff y otros, 2014), eficacia del CDC; la vista 3D usa anticuerpos en Y y una población del kit en lugar de una IgG del PDB en 3Dmol) · Sistema inmune, vacunas e inmunidad colectiva** (11.º, P3)
 
 - **Anclaje:** EBC 10.º–11.º, entorno vivo y CTS: defensa del organismo y salud pública (formulación propia, por verificar con el documento oficial). Malla institucional (grades.ts, 11.º): «Fisiología humana, inmunología y homeostasis».
 - **Meta de aprendizaje:** Explica la especificidad antígeno–anticuerpo y la memoria inmunológica, y usa un modelo SIR para estimar el umbral de inmunidad colectiva.

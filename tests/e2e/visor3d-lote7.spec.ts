@@ -213,6 +213,127 @@ test.describe('sin WebGL', () => {
     });
   }
 
+  // La escena sigue el estado del laboratorio (sin WebGL basta: la descripción y las primitivas son las mismas).
+  const byName = (n: string) => CASES.find((c) => c.name === n)!;
+  const svgOf = (page: Page, prefix: string) => figureOf(page, prefix).locator('svg').first();
 
+  test('ecosistema: quieto en pausa durante la cámara rápida y los valores del día solo al medir', async ({ page }) => {
+    await openFree(page, 'ecosistema');
+    await open3D(page, byName('ecosistema'));
+    const v = view(page, 'eco3d');
+    await expect.poll(() => description(v)).toContain('Aún no corre la simulación');
+    await page.getByRole('button', { name: 'Simular y medir' }).click();
+    // La cámara rápida del banco dura poco más de 1 s para 7 días: se pausa a mitad de camino.
+    await page.waitForTimeout(350);
+    await page.getByRole('button', { name: 'Pausar', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Reanudar', exact: true })).toBeVisible();
+    const svg = svgOf(page, 'eco3d');
+    const s1 = await svg.innerHTML();
+    const d1 = await description(v);
+    expect(d1).toContain('los valores aparecen al terminar la medición');
+    expect(d1).not.toContain('Lecturas:');
+    await page.waitForTimeout(500);
+    expect(await svg.innerHTML()).toBe(s1);
+    expect(await description(v)).toBe(d1);
+    await page.getByRole('button', { name: 'Reanudar', exact: true }).click();
+    await expect.poll(() => description(v), { timeout: 10_000 }).toContain('Lecturas: oxígeno');
+  });
 
+  test('ecosistema: con movimiento reducido salta a la lectura del día', async ({ page }) => {
+    await reduce(page);
+    await openFree(page, 'ecosistema');
+    await open3D(page, byName('ecosistema'));
+    await page.getByRole('button', { name: 'Simular y medir' }).click();
+    await expect.poll(() => description(view(page, 'eco3d'))).toContain('Balance del día 7 según el modelo');
+  });
+
+  test('redes: sigue el año del banco y muestra la cascada al quitar una especie', async ({ page }) => {
+    await openFree(page, 'redes');
+    const card = await open3D(page, byName('redes'));
+    const v = view(page, 'red3d');
+    await expect.poll(() => description(v)).toContain('biomasa inicial, antes de simular');
+    await page.getByRole('button', { name: 'Simular', exact: true }).click();
+    await page.waitForTimeout(700);
+    await page.getByRole('button', { name: 'Pausar', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Reanudar', exact: true })).toBeVisible();
+    const d1 = await description(v);
+    expect(d1).toMatch(/año \d+,\d/);
+    await page.waitForTimeout(500);
+    expect(await description(v)).toBe(d1);
+    await page.getByRole('button', { name: 'Reanudar', exact: true }).click();
+    await expect.poll(() => description(v), { timeout: 10_000 }).toContain('año 30,0');
+    await card.getByLabel('Quitar una especie (vista 3D)').selectOption('gavilanes');
+    await expect.poll(() => description(v)).toContain('sin gavilanes desde el inicio');
+  });
+
+  test('descomposicion: la bolsa enterrada no se pesa hasta que el banco la pesa', async ({ page }) => {
+    await reduce(page);
+    await openFree(page, 'descomposicion');
+    await open3D(page, byName('descomposicion'));
+    const v = view(page, 'des3d');
+    await expect.poll(() => description(v)).toContain('sigue enterrada; la balanza marca 0,0 g');
+    await page.getByRole('button', { name: 'Pesar las bolsas' }).click();
+    await expect.poll(() => description(v)).toMatch(/está en la balanza, que marca \d+,\d g de los 50 g iniciales: se dibujan \d+ trozos/);
+  });
+
+  test('agua: el oxígeno del tramo y las familias aparecen solo después de medir', async ({ page }) => {
+    await reduce(page);
+    await openFree(page, 'agua');
+    await open3D(page, byName('agua'));
+    const v = view(page, 'agu3d');
+    await expect.poll(() => description(v)).toContain('Aún no hay medición');
+    expect(await description(v)).not.toContain('familias');
+    await page.getByRole('button', { name: 'Tomar muestra y medir' }).click();
+    await expect.poll(() => description(v)).toContain('Punto crítico a');
+    expect(await description(v)).toMatch(/la bandeja tiene \d+ familias de macroinvertebrados/);
+  });
+
+  test('poblacion: la pesca por encima del máximo sostenible es sobreexplotación', async ({ page }) => {
+    await openFree(page, 'poblacion');
+    await open3D(page, byName('poblacion'));
+    const v = view(page, 'pob3d');
+    await expect.poll(() => description(v)).toContain('Sin pesca, la población tiende a K = 1.000');
+    await page.getByRole('slider', { name: 'Tasa de pesca h' }).fill('0.4');
+    await expect.poll(() => description(v)).toContain('hay sobreexplotación');
+    expect(await description(v)).toContain('máximo de 125 individuos por año con h = 0,25');
+  });
+
+  test('reto: los puntos aparecen con la recolección, quietos en pausa, y la recta al terminar', async ({ page }) => {
+    await openFree(page, 'reto');
+    await open3D(page, byName('reto'));
+    const v = view(page, 'ret3d');
+    await expect.poll(() => description(v)).toContain('Gráfico de dispersión 3D vacío');
+    await page.getByRole('button', { name: 'Recolectar datos' }).click();
+    await expect.poll(() => description(v)).toMatch(/[1-5] de 6 muestras/);
+    await page.getByRole('button', { name: 'Pausar', exact: true }).click();
+    const d1 = await description(v);
+    await page.waitForTimeout(600);
+    expect(await description(v)).toBe(d1);
+    expect(d1).not.toContain('Análisis del banco');
+    await page.getByRole('button', { name: 'Reanudar', exact: true }).click();
+    await expect.poll(() => description(v), { timeout: 10_000 }).toContain('Análisis del banco: pendiente');
+  });
+
+  test('metabolismo: sin flujos hasta calcular; luego los del FBA', async ({ page }) => {
+    await openFree(page, 'metabolismo');
+    await open3D(page, byName('metabolismo'));
+    const v = view(page, 'met3d');
+    await expect.poll(() => description(v)).toContain('Aún no hay flujos');
+    await page.getByRole('button', { name: 'Calcular el óptimo' }).click();
+    await expect.poll(() => description(v)).toContain('crecimiento μ = 0,8739 h⁻¹');
+    expect(await description(v)).toMatch(/\d+ de \d+ reacciones del mapa llevan flujo/);
+  });
+
+  test('secuencias: insulina sobre 3I40 y, en ADN, la escalera', async ({ page }) => {
+    await openFree(page, 'secuencias');
+    await page.getByLabel('Herramienta').getByRole('button', { name: 'Alineamiento' }).click();
+    await open3D(page, byName('secuencias'));
+    const v = view(page, 'seq3d');
+    await expect.poll(() => description(v)).toContain('aún no hay alineamiento');
+    await page.getByRole('button', { name: 'Alinear', exact: true }).click();
+    await expect.poll(() => description(v), { timeout: 20_000 }).toContain('estructura 3I40');
+    await page.getByLabel('Comparación preparada').selectOption('hbb-hbd');
+    await page.getByRole('button', { name: 'Alinear', exact: true }).click();
+    await expect.poll(() => description(v), { timeout: 20_000 }).toContain('escalera del alineamiento');
+  });
 });

@@ -787,7 +787,7 @@ transición de 0,7 s del banco al avanzar generaciones) y `popgen` cambian con l
 | `seleccion` | El suelo con el color del fondo B del banco, visto desde la rama del ave, con la misma muestra de 40 escarabajos (cuantiles de la población del modelo, en las mismas posiciones y con su pigmento); al lado, columnas con cuántos hay en cada una de 10 clases de color y, desde la primera ronda, cuántos escaparían de las aves (n·s(z) con la supervivencia del modelo en el centro de la clase). | Modelo calculado | Un solo suelo (el que eligió el estudiante), no los tres a la vez; la cámara empieza en la rama del ave pero se puede girar. |
 | `popgen` | La isla con la población (réplica) y la generación que se eligen en la vista: p del modelo, copias de A = 2N·p y hasta 100 individuos con las proporciones de Hardy-Weinberg de ese p (la misma cuenta de la poza génica del banco, ahora compartida), cada uno con sus dos alelos; el continente con la p de los migrantes y, si hay migración, un puente con m·(individuos dibujados) migrantes. | Modelo calculado | El modelo tiene una población que recibe migrantes de una fuente fija, no dos poblaciones que intercambian: el continente es esa fuente. Con N > 100 los 100 individuos son una muestra con las proporciones de Hardy-Weinberg (los genotipos no los sigue el modelo, solo la frecuencia alélica). |
 
-#### Lote 3D-7 · Ecología, ambiente y datos (8 prácticas)
+#### Lote 3D-7 · Ecología, ambiente y datos (8 prácticas) — hecho
 
 | Práctica | Grado | Escena 3D propuesta (qué ve y manipula el estudiante) | Tecnología | Complejidad | Prioridad |
 |---|---|---|---|---|---|
@@ -799,6 +799,41 @@ transición de 0,7 s del banco al avanzar generaciones) y `popgen` cambian con l
 | `reto` Reto de indagación con interpretación de datos | 11.º | Gráfico de dispersión 3D (dos variables independientes y una respuesta) que se puede girar para detectar confusión entre variables; útil para diseño multifactorial. | Kit general de escenas 3D (three.js, en construcción en paralelo) | S | 3 |
 | `metabolismo` Metabolismo celular: análisis de balance de flujos (FBA) | 11.º | Célula de E. coli 3D esquemática con compartimentos y flechas de flujo cuyo grosor sigue el resultado del FBA. Valor 3D moderado. | Kit general de escenas 3D (three.js, en construcción en paralelo) | M | 3 |
 | `secuencias` Secuencias biológicas: análisis y alineamiento | 11.º | Conservación del alineamiento coloreada sobre la estructura 3D (2HHB): los residuos conservados se agrupan en el núcleo de la proteína. | 3Dmol.js con estructura PDB ya incluida en el repo | S | 2 |
+
+**Estado del lote 3D-7: hecho (sin publicar).** Las ocho prácticas tienen la tarjeta «Vista 3D» cerrada que se abre a
+pedido (el código de la vista, el kit `src/three` y three.js se descargan solo entonces; `npm run perf` lo comprueba), con
+el patrón de los lotes anteriores: respaldo SVG sin WebGL con las mismas primitivas, giro con ratón, dedo, teclado y
+botones, descripción textual que cambia con el estado, chip «Modelo calculado» con la frase de qué es cálculo y qué es
+dibujo, sin desbordamiento a 390 px y temas claro y oscuro. Código: `src/labs/lote3d7/` (funciones puras
+`ecosystem3d.ts`, `foodweb3d.ts`, `decomposition3d.ts`, `water3d.ts`, `population3d.ts`, `inquiry3d.ts`,
+`metabolism3d.ts`, `sequences3d.ts`; en `common.ts`, la escala FIJA de color del oxígeno disuelto: 0 mg/L rojo oscuro,
+2 rojo, 4 naranja, 6 amarillo verdoso, 8 azul; reutiliza `useNarrow` y la escala de temperatura del lote 3D-6).
+Pruebas: `tests/unit/lote3d7.test.ts` y `tests/e2e/visor3d-lote7.spec.ts`. Ningún número científico nuevo: organismos y
+balances del frasco, biomasas, masa seca de la bolsa y temperatura de la pila, perfil de oxígeno, crecimiento neto y
+equilibrios, muestras sintéticas, flujos del FBA y marcas del alineamiento salen del modelo de cada práctica con el mismo
+estado que su banco. Las lecturas que el banco oculta siguen ocultas: en `ecosistema` los balances del día y las lecturas
+aparecen al terminar la medición (mientras corre, solo el grosor de las flechas); en `descomposicion` la balanza marca
+«0,0 g» o «- - -» hasta que el banco termina de pesar; en `agua` el color del oxígeno, la cerca de Streeter–Phelps, el
+punto crítico y las familias aparecen después de medir; en `reto` solo se ven las muestras ya recolectadas y la recta al
+terminar.
+
+Movimiento: `ecosistema`, `redes` y `reto` siguen el reloj de su banco (quietas en pausa; con movimiento reducido, el
+resultado); `descomposicion` sigue el traslado de la bolsa a la balanza; `agua`, `poblacion`, `metabolismo` y
+`secuencias` cambian con los controles (no tienen animación propia).
+
+Con este lote, **las 86 prácticas del catálogo tienen vista 3D** (revisado en el código: cada componente del registro
+monta una escena del kit, una tarjeta «Vista 3D» o un visor molecular).
+
+| Práctica | Qué muestra la vista 3D (implementado) | Estatus | Desviación respecto de la propuesta |
+|---|---|---|---|
+| `ecosistema` | El frasco cerrado con la elodea (número de ramitas y tamaño según la biomasa, amarillenta si decae), caracoles y guppys vivos o muertos, restos en el sedimento, agua verdosa con las microalgas y alimento, todo del estado del modelo que dibuja el banco en ese instante; la lámpara encendida o apagada con la flecha de luz ∝ √(PAR en el vidrio); flechas del balance del día: O₂ de la fotosíntesis bruta, CO₂ de la respiración de plantas y animales y CO₂ de los descomponedores, con grosor ∝ √(mg/L) en una escala fija. | Modelo calculado | No hay flecha de «energía como calor»: el modelo no la calcula aparte. Los valores de las flechas se leen al terminar la medición, como el detalle «Dentro del frasco» del banco. |
+| `redes` | La red en cuatro niveles (productores abajo) con esferas de volumen ∝ biomasa frente al equilibrio base en el mismo año del banco, enlaces «es comido por» con flecha en el sentido de la energía, gris por debajo del 2 % (umbral del modelo); la pirámide de biomasa por nivel al lado; «Quitar una especie»: otra corrida del mismo modelo que empieza sin ella, con cada especie en verde o rojo si sube o baja frente al banco. | Modelo calculado | La pirámide usa la escala logarítmica del banco, no volúmenes lineales (entre el pasto y el gavilán hay cuatro órdenes de magnitud y el tope sería invisible). Quitar una especie es un selector de la vista (el banco no lo tiene). |
+| `descomposicion` | La compostera en corte con la tierra coloreada por la humedad, el termómetro y el centro de la pila con el color de la temperatura del modelo (escala fija del lote 3D-6), las cinco bolsas enterradas, lombrices y vapor cuando el modelo los indica; al pesar, la bolsa sale a la balanza con el avance del banco y lleva un trozo por gramo de masa seca que queda (M = M₀·e^(−k·t)), oscurecido según la pérdida, con los hongos del modelo. | Modelo calculado | Las capas son dibujo (la pila del modelo es una sola); la masa no «baja» con el tiempo dentro de la vista: se ve la de la semana elegida, como en el banco. |
+| `agua` | El tramo del km −2 al km 30 con el vertimiento y su pluma (dibujo) y el punto de muestreo; al medir, cada tramo de 0,5 km con el color del oxígeno disuelto del perfil de Streeter–Phelps del modelo, una «cerca» en la orilla con la curva en altura y la referencia de 4 mg/L, el punto crítico, la lectura de la sonda y una bandeja con una cuenta por familia del BMWP/Col coloreada por su puntaje. | Modelo calculado | Solo hay macroinvertebrados en el punto que eligió el estudiante (el banco no muestrea otros). |
+| `poblacion` | La malla del crecimiento neto dN/dt del modelo (logístico o exponencial) según N (0 a 1,3·K) y la tasa de pesca h (0 a 1), verde si crece y roja si decrece; con el logístico, la línea de equilibrio N* = K(1 − h/r), postes con la captura sostenible h·N* en la misma escala, el máximo (buscando h cada 0,01) y la pesca del estudiante; la trayectoria N(t) del banco encima. | Modelo calculado | La superficie es la del crecimiento neto (la captura sostenible va en postes sobre el equilibrio, en la misma unidad), porque así se ve por qué hay un máximo y cuándo hay sobreexplotación. |
+| `reto` | Dispersión 3D: x = variable independiente, profundidad = variable de confusión registrada, altura = respuesta, con las muestras que el banco ya recolectó, sus sombras (pared del fondo: la gráfica y–x del banco; pared lateral: y frente a la confusión), color por tercios de la confusión y, al terminar, la recta y la correlación confusión–x del análisis del banco. | Modelo calculado | — |
+| `metabolismo` | El mapa del metabolismo central acostado en una célula esquemática de E. coli con los flujos de la solución del FBA que muestra el banco (condición actual o de referencia): flecha en el sentido del flujo con grosor ∝ √\|v\| (la regla del banco) y una columna de altura ∝ \|v\| (escala lineal fija), columnas de las reacciones de energía, reacciones apagadas por las eliminaciones en rojo y esfera de biomasa con μ; los cinco mayores flujos rotulados. | Modelo calculado | No hay compartimentos internos (E. coli no los tiene y el modelo core tampoco): la célula es una caja translúcida. Los cosustratos unidos al punto medio en el mapa del banco no se dibujan. Valor 3D moderado, como preveía la propuesta: aporta la altura lineal de los flujos. |
+| `secuencias` | Si una cadena de una estructura del repositorio es un tramo exacto de una secuencia alineada (2HHB para β- y α-globina; 3I40 para la insulina humana), su traza de Cα se colorea residuo por residuo con la marca de su columna (idéntico, parecido, distinto, frente a un hueco) y el texto da la distancia media de cada grupo al centro de su cadena, calculada con el archivo. Sin estructura (ADN, secuencias propias), la vista mínima honesta es la «escalera» del alineamiento. | Modelo calculado | Se usa el kit de escenas con la traza de Cα en lugar de 3Dmol.js (mismo archivo del PDB, mismas pruebas que los demás lotes). La cadena se reconoce por su secuencia, no por una numeración fija. Para el ADN no hay 3D que añada comprensión: la escalera solo ordena las columnas. |
 
 ### 6.4. Prácticas nuevas y 3D
 
@@ -815,4 +850,4 @@ barras de energía** (toda la mecánica).
    `anchorVerified` a `true` y se reemplaza la «formulación propia» por el texto oficial.
 2. Implementar M1–M5 (cambios pequeños de datos y textos).
 3. ~~Lote 3D-1~~ (hecho el 2026-11-01, ver §6.3); sigue la ola `nuevas-1` (química básica, electrostática y fisiología).
-4. Al terminar el kit general de escenas 3D, seguir con los lotes 2 a 7 y las olas `nuevas-2` y `nuevas-3`.
+4. ~~Al terminar el kit general de escenas 3D, seguir con los lotes 2 a 7~~ (lotes 3D-2 a 3D-7 hechos; con el lote 3D-7 las 86 prácticas tienen vista 3D) y las olas `nuevas-2` y `nuevas-3`.

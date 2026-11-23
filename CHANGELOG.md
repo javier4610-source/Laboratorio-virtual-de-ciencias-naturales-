@@ -7,6 +7,25 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+Lote 3D-7 (el último): vista 3D en ecosistema, redes alimentarias, descomposición, calidad del agua, crecimiento
+poblacional, reto de indagación, metabolismo (FBA) y secuencias. Con él, las 86 prácticas tienen vista 3D.
+
+### Añadido
+- **Lote 3D-7 «ecología, ambiente y datos»** (docs/v2/ANALISIS-CURRICULAR.md, §6.3) con el kit de escenas `src/three`:
+  tarjeta «Vista 3D» que se abre a pedido (carga diferida; three.js sigue fuera de las rutas), respaldo SVG sin WebGL,
+  teclado, tacto, descripción textual viva y estatus «Modelo calculado» en `ecosistema` (el frasco con los organismos del
+  estado del modelo en el mismo instante del banco, la lámpara y flechas de luz, O₂ y CO₂ del día con grosor ∝ √ del
+  balance del modelo), `redes` (red trófica por niveles con volumen ∝ biomasa, pirámide de biomasa y cascada al quitar
+  una especie: otra corrida del mismo modelo), `descomposicion` (compostera en corte con la temperatura de la pila y la
+  bolsa que sale a la balanza con un trozo por gramo de masa seca que queda), `agua` (tramo de río con el oxígeno disuelto
+  de Streeter–Phelps en color y en altura, punto crítico y familias del BMWP/Col, después de medir), `poblacion`
+  (superficie del crecimiento neto según N y la pesca, con el equilibrio, la captura sostenible, su máximo y la corrida
+  del banco), `reto` (dispersión 3D de x, la variable de confusión y la respuesta con las sombras de las dos gráficas),
+  `metabolismo` (la red central de E. coli en una célula esquemática con los flujos del FBA en grosor y en altura) y
+  `secuencias` (marcas del alineamiento sobre la traza de Cα de 2HHB o 3I40 cuando una cadena coincide con la secuencia;
+  si no, la escalera del alineamiento). Las lecturas que el banco oculta siguen ocultas y las animaciones siguen el reloj
+  del banco. Pruebas: `tests/unit/lote3d7.test.ts` y `tests/e2e/visor3d-lote7.spec.ts`.
+
 ## [2.26.0] · 2026-11-08
 
 Prácticas nuevas, ola 3a (86 prácticas): gravitación y órbitas, fluidos y Bernoulli, termoquímica y ciclo del carbono; rótulos de la vista 3D del efecto invernadero sin amontonarse.

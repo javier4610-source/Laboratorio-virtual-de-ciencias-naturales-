@@ -7,6 +7,8 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.28.0] · 2026-11-23
+
 Prácticas nuevas, ola 3b (91 prácticas): termodinámica, efecto Doppler, digestión, PCR y sistema inmune; el banco
 Saber 11 se carga por grado.
 

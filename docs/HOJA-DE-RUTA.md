@@ -39,11 +39,11 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       plano inclinado (9.º, `trabajo`).
 - [x] **Lote 9:** empuje y flotación (7.º, `flotacion`) · movimiento y distancia recorrida (6.º, `movimiento`) · circuitos simples con
       pilas, interruptores y bombillos (7.º, física, `circuitos-simples`).
-- [ ] **Programa curricular y 3D (pedido del docente, 2026-11-01):** (1) análisis de la malla del MEN (Estándares
+- [x] **Programa curricular y 3D (pedido del docente, 2026-11-01):** (1) análisis de la malla del MEN (Estándares
       Básicos de Competencias y DBA de Ciencias Naturales, 6.º a 11.º) frente a las 65 prácticas, con brechas y mejoras,
       en `docs/v2/ANALISIS-CURRICULAR.md`; (2) kit de escenas 3D para física y biología (además del kit químico);
       (3) prácticas nuevas de química, física y biología según las brechas; (4) visor 3D en todas las prácticas, por lotes.
-      Estado: (1), (2) y (4) hechos (v2.27.0: las 86 prácticas tienen vista 3D); de (3), la ola nuevas-3b quedó construida sin publicar (91 prácticas, todas con vista 3D).
+      Estado: (1), (2) y (4) hechos (v2.27.0: las 86 prácticas tienen vista 3D); (3) hecho en v2.28.0 (91 prácticas, todas con vista 3D). Completo.
 - [ ] **T3 · Retroalimentación del docente** (espera T2: necesita el servidor publicado): comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.
 - [x] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
@@ -67,7 +67,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
-- [x] Sin publicar · Ola 3b de prácticas nuevas (`termodinamica`, `efecto-doppler`, `nutricion-digestion`,
+- [x] v2.28.0 · Ola 3b de prácticas nuevas (`termodinamica`, `efecto-doppler`, `nutricion-digestion`,
   `biotecnologia-pcr`, `sistema-inmune`), cada una con su vista 3D (91 prácticas): quedan construidas las nueve de
   prioridad 3 del análisis curricular. El banco Saber 11 se carga por grado y bajo demanda (la página del banco pinta con
   139 KB en lugar de 195 y cada práctica descarga solo el banco de su grado).

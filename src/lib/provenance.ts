@@ -165,6 +165,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: 'Balance del carbono de 2010–2019 del IPCC AR6 (GT I, tabla 5.1); reservorios y flujos naturales brutos redondeados del IPCC AR5 (figura 6.1), por verificar con la figura; atmósfera con 2,124 PgC por ppm (Ballantyne y otros, 2012). Los escenarios salen de un modelo de cajas propio calibrado con ese balance: modelo calculado, no son mediciones ni proyecciones del IPCC. Paisaje 3D: volumen de los cubos proporcional al carbono y área de las flechas proporcional al flujo; las posiciones son un esquema.' };
   }
+  if (practiceId === 'termodinamica') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Presiones, volúmenes, temperaturas, calores y trabajos calculados con la primera ley (ΔU = Q − W) para un gas ideal con R de CODATA 2018 y calores específicos constantes; ciclos ideales de Otto y de Carnot de los textos (Serway; Çengel y Boles): modelo calculado, no son mediciones. El estado inicial, las temperaturas y las relaciones de compresión son ilustrativos. Cilindro 3D: altura del gas proporcional al volumen y flechas con el sentido del calor y del trabajo; el número de partículas y su agitación son ilustrativos.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

@@ -1076,6 +1076,22 @@ const SCENES: Record<string, () => ReactNode> = {
       <Arrow x1={180} y1={44} x2={236} y2={98} color="var(--ok)" w={2.6} />
     </>
   ),
+  termodinamica: () => (
+    <>
+      <rect x="40" y="128" width="110" height="14" rx="3" fill="var(--bad)" opacity="0.75" />
+      <rect x="62" y="40" width="66" height="88" rx="4" fill="var(--surface-2)" stroke={INK} strokeWidth="1.6" />
+      <rect x="64" y="76" width="62" height="50" fill="var(--series-5)" opacity="0.25" />
+      <rect x="60" y="68" width="70" height="9" rx="2" fill={INK} opacity="0.55" />
+      <rect x="92" y="30" width="6" height="40" fill={INK} opacity="0.45" />
+      {[[76, 98], [92, 112], [108, 92], [116, 116], [84, 118], [102, 104]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="3.4" fill="var(--series-1)" />)}
+      <Arrow x1={95} y1={30} x2={95} y2={12} color="var(--data)" w={2.4} />
+      <path d="M180 40 C 200 90, 230 110, 290 118 L 290 70 C 250 62, 215 46, 196 26 Z" fill="var(--series-2)" opacity="0.18" />
+      <path d="M180 40 C 200 90, 230 110, 290 118" fill="none" stroke="var(--series-2)" strokeWidth="2" />
+      <path d="M196 26 C 215 46, 250 62, 290 70" fill="none" stroke="var(--series-1)" strokeWidth="2" />
+      <path d="M180 40 L196 26 M290 70 L290 118" stroke={INK} strokeWidth="1.6" />
+      <path d="M172 18 V140 H300" fill="none" stroke={INK} strokeWidth="1.2" />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

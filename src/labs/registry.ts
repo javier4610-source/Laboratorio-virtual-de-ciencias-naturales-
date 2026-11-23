@@ -95,4 +95,5 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   'fluidos-bernoulli': lazy(() => import('./BernoulliLab')),
   termoquimica: lazy(() => import('./ThermochemLab')),
   'ciclo-del-carbono': lazy(() => import('./CarbonLab')),
+  termodinamica: lazy(() => import('./ThermodynamicsLab')),
 };

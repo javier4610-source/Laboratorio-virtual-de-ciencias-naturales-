@@ -2296,4 +2296,32 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  termodinamica: [
+    {
+      id: 'procesos', label: 'Procesos y primera ley', defaultX: 'relacion', defaultY: 'W',
+      columns: [
+        { key: 'proceso', label: 'Proceso', numeric: false, input: true },
+        { key: 'gas', label: 'Gas', numeric: false, input: true },
+        { key: 'relacion', label: 'Relación V₂/V₁ (o T₂/T₁)', numeric: true, decimals: 2, input: true },
+        { key: 'T2', label: 'Temperatura final', unit: 'K', numeric: true, decimals: 1 },
+        { key: 'P2', label: 'Presión final', unit: 'kPa', numeric: true, decimals: 2 },
+        { key: 'W', label: 'Trabajo hecho por el gas W', unit: 'J', numeric: true, decimals: 2 },
+        { key: 'Q', label: 'Calor recibido Q', unit: 'J', numeric: true, decimals: 2 },
+        { key: 'dU', label: 'Cambio de energía interna ΔU', unit: 'J', numeric: true, decimals: 2 },
+      ],
+    },
+    {
+      id: 'ciclos', label: 'Ciclos de Otto y de Carnot', defaultX: 'r', defaultY: 'eta',
+      columns: [
+        { key: 'ciclo', label: 'Ciclo', numeric: false, input: true },
+        { key: 'r', label: 'Relación de compresión r', numeric: true, decimals: 1, input: true },
+        { key: 'Tc', label: 'Temperatura máxima o de la fuente caliente', unit: 'K', numeric: true, decimals: 0, input: true },
+        { key: 'Tf', label: 'Temperatura mínima o de la fuente fría', unit: 'K', numeric: true, decimals: 0, input: true },
+        { key: 'Wnet', label: 'Trabajo neto', unit: 'J', numeric: true, decimals: 2 },
+        { key: 'Qin', label: 'Calor que entra', unit: 'J', numeric: true, decimals: 2 },
+        { key: 'eta', label: 'Rendimiento η', unit: '%', numeric: true, decimals: 2 },
+        { key: 'etaCarnot', label: 'Rendimiento de Carnot entre las mismas temperaturas', unit: '%', numeric: true, decimals: 2 },
+      ],
+    },
+  ],
 };

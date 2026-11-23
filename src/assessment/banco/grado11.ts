@@ -521,6 +521,27 @@ const RAW: Question[] = [
     review: 'En la práctica «Balance de energía de la Tierra y efecto invernadero», elige Venus, la Tierra y Marte en «Sin atmósfera».',
     transfer: 'Si la Tierra tuviera albedo 0,20 en lugar de 0,30, ¿cuánto cambiaría su temperatura sin atmósfera? Calcúlalo con T = [S(1 − α)/(4σ)]^¼ y compruébalo en la práctica.',
   },
+  {
+    id: 'saber-td-1', grade: 11, topic: 'Máquinas térmicas', competency: 'indagacion', component: 'fisico',
+    skill: 'Interpretar datos de rendimiento de un ciclo ideal', difficulty: 'alta', practiceId: 'termodinamica',
+    context: 'Un grupo de 11.º calcula con un modelo de gas ideal el rendimiento del ciclo de Otto (el ciclo ideal de un motor de gasolina) con aire (γ = 1,4) para varias relaciones de compresión r = V_máx/V_mín.',
+    table: {
+      caption: 'Rendimiento del ciclo de Otto ideal con aire (modelo calculado)',
+      headers: ['Relación de compresión r', '4', '6', '8', '10', '12'],
+      rows: [['Rendimiento η (%)', '42,6', '51,2', '56,5', '60,2', '63,0']],
+    },
+    stem: '¿Qué conclusión es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'El rendimiento es proporcional a r: al duplicar r se duplica η.', feedback: 'De r = 4 a r = 8 el rendimiento pasa de 42,6 % a 56,5 %: no se duplica.' },
+      { id: 'b', text: 'El rendimiento aumenta con r, pero cada vez menos, y no llega al 100 %; un motor real rinde menos que estos valores ideales.', feedback: 'Correcto: η = 1 − 1/r^0,4 se acerca a 1 muy despacio.' },
+      { id: 'c', text: 'Con r = 12 el motor convierte en trabajo el 63 % del calor y no cede nada al escape.', feedback: 'El 37 % restante sale como calor hacia la fuente fría (el escape).' },
+      { id: 'd', text: 'El rendimiento no depende de r, sino solo de la gasolina.', feedback: 'Los datos muestran que cambia con r.' },
+    ],
+    correct: 'b',
+    explanation: 'En el ciclo de Otto ideal η = 1 − 1/r^(γ−1): crece con r, pero cada aumento de r sube η menos que el anterior (de 4 a 6, +8,6 puntos; de 10 a 12, +2,8). El calor que no se convierte en trabajo se cede a la fuente fría. Los motores reales tienen fricción y pérdidas, y los de gasolina no pueden usar r muy alto porque la mezcla detona.',
+    review: 'En la práctica «Primera ley de la termodinámica y máquinas térmicas», recorre el ciclo de Otto con varios valores de r.',
+    transfer: 'Si un motor ideal con r = 8 recibe 1000 J de calor por ciclo, ¿cuánto trabajo hace y cuánto calor sale por el escape? Compruébalo en la tabla de etapas del ciclo.',
+  },
 ];
 
 /** Con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

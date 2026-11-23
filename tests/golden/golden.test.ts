@@ -30,6 +30,7 @@ import { geostationaryAltitude, integrateOrbit, keplerTable, satellitePeriod } f
 import { atomizer, hose, RHO_WATER, venturi } from '../../src/models/bernoulli';
 import { DH_NEUT, dissolution as tqDissolution, hessSolidInAcid, neutralization as tqNeutralization, runCalorimeter } from '../../src/models/thermochem';
 import { A_1750, A_2019, A_MID, AIRBORNE_FRACTION, atmosphereRate, IMBALANCE, simulateCarbon } from '../../src/models/carbon';
+import { carnotCycle, gasProcess, initialState, N0, ottoCycle } from '../../src/models/thermodynamics';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -496,6 +497,15 @@ export const GOLDEN: GoldenCase[] = [
     const r = atmosphereRate(A_MID, { fossil2050: 9.6, landUse: 1.6, reforest: 0 }, 2015);
     close(r.ocean, 2.5, 1e-12); close(r.land, 3.4, 1e-12);
     close(simulateCarbon({ fossil2050: 9.6, landUse: 1.6, reforest: 0 }).points[0].ppm, 409.9, 1e-9);
+  } },
+  { id: 'termodinamica', origin: 'independiente', what: 'Gas ideal (R de CODATA 2018) desde 100 kPa, 1,00 L y 300 K: expansión isotérmica al doble W = Q = 100·ln 2 = 69,315 J y ΔU = 0; isobárica al doble W = 100 J, ΔU = 5/2·100 = 250 J y Q = 350 J; adiabática al doble P₂ = 100·0,5^1,4 = 37,893 kPa; Otto con r = 8 y γ = 1,4: η = 1 − 8^(−0,4) = 56,47 %; Carnot 600/300 K: η = 50 %', run: () => {
+    const s0 = initialState();
+    const iso = gasProcess('isotermico', N0, 'diatomico', s0, 2);
+    close(iso.W, 100 * Math.log(2), 1e-9); close(iso.Q, iso.W, 1e-9); close(iso.dU, 0, 1e-9);
+    const bar = gasProcess('isobarico', N0, 'diatomico', s0, 2);
+    close(bar.W, 100, 1e-9); close(bar.dU, 250, 1e-9); close(bar.Q, 350, 1e-9);
+    close(gasProcess('adiabatico', N0, 'diatomico', s0, 2).s2.P / 1000, 100 * 0.5 ** 1.4, 1e-9);
+    close(ottoCycle(8, 1800).eta, 1 - 8 ** -0.4, 1e-9); close(carnotCycle(600, 300).eta, 0.5, 1e-9);
   } },
 ];
 

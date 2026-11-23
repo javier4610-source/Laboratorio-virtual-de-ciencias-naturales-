@@ -2324,4 +2324,39 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'efecto-doppler': [
+    {
+      id: 'doppler', label: 'Fuente y observador', defaultX: 'vFuente', defaultY: 'fOida',
+      columns: [
+        { key: 'frecuencia', label: 'Frecuencia emitida f', unit: 'Hz', numeric: true, decimals: 0, input: true },
+        { key: 'vFuente', label: 'Velocidad de la fuente (+ si se acerca)', unit: 'm/s', numeric: true, decimals: 0, input: true },
+        { key: 'vObservador', label: 'Velocidad del observador (+ si se acerca)', unit: 'm/s', numeric: true, decimals: 0, input: true },
+        { key: 'temperatura', label: 'Temperatura del aire', unit: '°C', numeric: true, decimals: 0, input: true },
+        { key: 'c', label: 'Rapidez del sonido c', unit: 'm/s', numeric: true, decimals: 2 },
+        { key: 'fOida', label: "Frecuencia que se oye f'", unit: 'Hz', numeric: true, decimals: 1 },
+        { key: 'lambdaDelante', label: 'Longitud de onda delante de la fuente', unit: 'm', numeric: true, decimals: 4 },
+        { key: 'lambdaDetras', label: 'Longitud de onda detrás de la fuente', unit: 'm', numeric: true, decimals: 4 },
+      ],
+    },
+    {
+      id: 'paso', label: 'Paso de la ambulancia', defaultX: 'rapidez', defaultY: 'salto',
+      columns: [
+        { key: 'rapidez', label: 'Rapidez de la ambulancia', unit: 'm/s', numeric: true, decimals: 0, input: true },
+        { key: 'distancia', label: 'Distancia del peatón a la calle', unit: 'm', numeric: true, decimals: 0, input: true },
+        { key: 'frecuencia', label: 'Frecuencia de la sirena', unit: 'Hz', numeric: true, decimals: 0, input: true },
+        { key: 'fAcerca', label: 'Frecuencia al acercarse', unit: 'Hz', numeric: true, decimals: 1 },
+        { key: 'fAleja', label: 'Frecuencia al alejarse', unit: 'Hz', numeric: true, decimals: 1 },
+        { key: 'salto', label: 'Salto de frecuencia al pasar', unit: 'Hz', numeric: true, decimals: 1 },
+      ],
+    },
+    {
+      id: 'mach', label: 'Barrera del sonido', defaultX: 'mach', defaultY: 'angulo',
+      columns: [
+        { key: 'mach', label: 'Número de Mach M', numeric: true, decimals: 2, input: true },
+        { key: 'temperatura', label: 'Temperatura del aire', unit: '°C', numeric: true, decimals: 0, input: true },
+        { key: 'rapidez', label: 'Rapidez del avión', unit: 'm/s', numeric: true, decimals: 1 },
+        { key: 'angulo', label: 'Semiángulo del cono de Mach θ', unit: '°', numeric: true, decimals: 2 },
+      ],
+    },
+  ],
 };

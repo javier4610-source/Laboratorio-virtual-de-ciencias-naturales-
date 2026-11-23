@@ -101,3 +101,19 @@ test('termodinamica 3D: el émbolo sigue el volumen del ciclo, las flechas de ca
   await setSlider(page, 'Relación de compresión r', '', '4');
   await expect.poll(() => description(v)).toContain('el gas ocupa 1,00 L');
 });
+
+test('efecto-doppler 3D: los frentes se apiñan delante de la fuente, en pausa quedan quietos y a Mach 2 aparece el cono', async ({ page }) => {
+  await openFree(page, 'efecto-doppler');
+  await waitEngine(page, 'dp', 'disponible');
+  const v = view(page, 'dp');
+  expect(await description(v)).toContain('Pulsa «Emitir sonido»');
+  const paused = await pauseIsStill(page, 'dp', 'Frentes de onda', 'Emitir sonido', 3000);
+  expect(paused).toMatch(/Delante de ella los frentes quedan separados/);
+  await keyboardAndTheme(page, 'dp', 'efecto-doppler 3D');
+  await page.emulateMedia({ colorScheme: 'light', reducedMotion: 'reduce' });
+  await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Barrera del sonido', exact: true }).click();
+  await page.getByRole('group', { name: 'Frentes de onda', exact: true }).getByRole('button', { name: 'Emitir sonido' }).click();
+  await expect.poll(() => description(v)).toContain('semiángulo de 30,0°');
+  await expect(figureOf(page, 'dp').locator('.scene3d-label', { hasText: 'cono de Mach' })).toBeVisible();
+  await shots(page, () => figureOf(page, 'dp'), 'doppler-3d-mach');
+});

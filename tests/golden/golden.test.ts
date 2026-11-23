@@ -31,6 +31,7 @@ import { atomizer, hose, RHO_WATER, venturi } from '../../src/models/bernoulli';
 import { DH_NEUT, dissolution as tqDissolution, hessSolidInAcid, neutralization as tqNeutralization, runCalorimeter } from '../../src/models/thermochem';
 import { A_1750, A_2019, A_MID, AIRBORNE_FRACTION, atmosphereRate, IMBALANCE, simulateCarbon } from '../../src/models/carbon';
 import { carnotCycle, gasProcess, initialState, N0, ottoCycle } from '../../src/models/thermodynamics';
+import { dopplerLine, machCone, soundSpeed } from '../../src/models/doppler';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -506,6 +507,13 @@ export const GOLDEN: GoldenCase[] = [
     close(bar.W, 100, 1e-9); close(bar.dU, 250, 1e-9); close(bar.Q, 350, 1e-9);
     close(gasProcess('adiabatico', N0, 'diatomico', s0, 2).s2.P / 1000, 100 * 0.5 ** 1.4, 1e-9);
     close(ottoCycle(8, 1800).eta, 1 - 8 ** -0.4, 1e-9); close(carnotCycle(600, 300).eta, 0.5, 1e-9);
+  } },
+  { id: 'efecto-doppler', origin: 'independiente', what: 'Aire seco a 20 °C: c = 331,3·√(1 + 20/273,15) = 343,215 m/s; sirena de 700 Hz que se acerca a 25 m/s: f\' = 700·343,215/318,215 = 754,99 Hz; que se aleja: 652,47 Hz; observador que se acerca a 25 m/s: 750,99 Hz; Mach 2: semiángulo 30°', run: () => {
+    const c = 331.3 * Math.sqrt(1 + 20 / 273.15);
+    close(soundSpeed(20), c, 1e-12); close(c, 343.215, 1e-3);
+    close(dopplerLine(700, 25, 0, 20).fObs, (700 * c) / (c - 25), 1e-9); close(dopplerLine(700, 25, 0, 20).fObs, 754.99, 0.01);
+    close(dopplerLine(700, -25, 0, 20).fObs, 652.47, 0.01); close(dopplerLine(700, 0, 25, 20).fObs, 750.99, 0.01);
+    close(machCone(2 * c, 20).angleDeg!, 30, 1e-9);
   } },
 ];
 

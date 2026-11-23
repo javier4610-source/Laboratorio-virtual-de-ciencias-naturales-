@@ -79,3 +79,32 @@ test('termodinamica: primera ley en los cuatro procesos, ciclo de Otto (56,5 %) 
   await idea(page, 'Una máquina térmica bien hecha', 'Es falso');
   await a11yAndMobile(page, 'termodinamica');
 });
+
+test('efecto-doppler: sirena que se acerca (755,0 Hz) y se aleja, observador en movimiento, paso de la ambulancia y cono de Mach', async ({ page }) => {
+  test.setTimeout(90_000);
+  await openFree(page, 'efecto-doppler');
+  await expect(ro(page, 'Rapidez del sonido')).toContainText('343,2 m/s');
+  // Valor dorado: 700 Hz que se acercan a 25 m/s con aire a 20 °C → f' = 700·343,215/318,215 = 755,0 Hz.
+  await expect(ro(page, "Frecuencia que se oye f'")).toContainText('755,0 Hz');
+  await page.getByRole('button', { name: 'Guardar la frecuencia en la tabla' }).click();
+  await saved(page, 1);
+  await setSlider(page, 'Velocidad de la fuente (positiva si se acerca)', 'm/s', '-25');
+  await expect(ro(page, "Frecuencia que se oye f'")).toContainText('652,5 Hz');
+  await setSlider(page, 'Velocidad de la fuente (positiva si se acerca)', 'm/s', '0');
+  await setSlider(page, 'Velocidad del observador (positiva si se acerca)', 'm/s', '25');
+  await expect(ro(page, "Frecuencia que se oye f'")).toContainText('751,0 Hz');
+  await setSlider(page, 'Velocidad de la fuente (positiva si se acerca)', 'm/s', '400');
+  await expect(cond(page, 'la fórmula de Doppler no se aplica')).toContainText('Cómo corregirlo');
+  await station(page, 'Paso de la ambulancia');
+  await expect(ro(page, 'Se oye al acercarse y al alejarse')).toContainText('755,0 Hz y 652,5 Hz');
+  await page.getByRole('button', { name: 'Guardar el paso en la tabla' }).click();
+  await saved(page, 1);
+  await station(page, 'Barrera del sonido');
+  await expect(ro(page, 'Semiángulo del cono de Mach')).toContainText('30,0°');
+  await page.getByRole('button', { name: 'Guardar el cono en la tabla' }).click();
+  await saved(page, 1);
+  await setSlider(page, 'Número de Mach del avión', '', '0,9');
+  await expect(cond(page, 'no alcanza a sus propios frentes')).toContainText('Cómo corregirlo');
+  await idea(page, 'El sonido viaja más rápido en el aire caliente', 'Es cierto');
+  await a11yAndMobile(page, 'efecto-doppler');
+});

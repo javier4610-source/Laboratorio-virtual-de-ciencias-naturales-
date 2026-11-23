@@ -542,6 +542,27 @@ const RAW: Question[] = [
     review: 'En la práctica «Primera ley de la termodinámica y máquinas térmicas», recorre el ciclo de Otto con varios valores de r.',
     transfer: 'Si un motor ideal con r = 8 recibe 1000 J de calor por ciclo, ¿cuánto trabajo hace y cuánto calor sale por el escape? Compruébalo en la tabla de etapas del ciclo.',
   },
+  {
+    id: 'saber-dp-1', grade: 11, topic: 'Efecto Doppler', competency: 'indagacion', component: 'fisico',
+    skill: 'Interpretar datos del efecto Doppler y deducir una velocidad', difficulty: 'alta', practiceId: 'efecto-doppler',
+    context: 'Un estudiante graba con el celular el pito de una moto (un tono de 500 Hz cuando la moto está quieta) mientras la moto pasa frente a él por la avenida. El aire está a 30 °C, así que el sonido viaja a ≈ 349 m/s.',
+    table: {
+      caption: 'Frecuencia medida en la grabación (valores ilustrativos)',
+      headers: ['Momento', 'Frecuencia medida (Hz)'],
+      rows: [['La moto se acerca', '540'], ['La moto pasa frente a él', '500'], ['La moto se aleja', '465']],
+    },
+    stem: '¿Qué conclusión es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'El pito de la moto cambia de tono para avisar que se acerca.', feedback: 'Quien va en la moto oye siempre 500 Hz: el pito no cambia.' },
+      { id: 'b', text: 'La moto va a unos 26 m/s (≈ 93 km/h): f\' = f·c/(c − v) da 540 Hz y f·c/(c + v) da 465 Hz.', feedback: 'Correcto: con v ≈ 26 m/s, 500 × 349/323 ≈ 540 Hz y 500 × 349/375 ≈ 465 Hz.' },
+      { id: 'c', text: 'La moto va a 40 m/s, porque la frecuencia subió 40 Hz.', feedback: 'El cambio de frecuencia no es igual a la rapidez: hay que usar la fórmula de Doppler.' },
+      { id: 'd', text: 'No se puede saber la rapidez sin medir la distancia a la avenida.', feedback: 'Las frecuencias lejos del punto de paso no dependen de la distancia a la calle.' },
+    ],
+    correct: 'b',
+    explanation: 'Con la fuente que se acerca, f\' = f·c/(c − v); despejando, v = c·(1 − f/f\') = 349 × (1 − 500/540) ≈ 25,9 m/s. Al alejarse, v = c·(f/f\' − 1) = 349 × (500/465 − 1) ≈ 26,3 m/s. Las dos estimaciones coinciden: unos 26 m/s, es decir ≈ 93 km/h.',
+    review: 'En la práctica «Efecto Doppler y barrera del sonido», usa «Paso de la ambulancia» con la rapidez y la temperatura del problema.',
+    transfer: 'Si el aire estuviera a 10 °C, ¿cambiarían las frecuencias medidas para la misma moto? Calcula c(10 °C) y compruébalo en la práctica.',
+  },
 ];
 
 /** Con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

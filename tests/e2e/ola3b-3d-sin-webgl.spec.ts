@@ -38,5 +38,9 @@ test('ola 3b sin WebGL: respaldo SVG en las cinco prácticas y sin descargar thr
   await openFree(page, 'termodinamica');
   await fallbackChecks(page, 'td', 'termodinamica');
   await expect(figureOf(page, 'td').locator('svg text', { hasText: /^fuente caliente$/ })).toBeVisible();
+
+  await openFree(page, 'efecto-doppler');
+  await fallbackChecks(page, 'dp', 'efecto-doppler');
+  await expect(figureOf(page, 'dp').locator('svg text', { hasText: /^observador$/ })).toBeVisible();
   expect(loaded, 'three.js no se descarga sin WebGL').toEqual([]);
 });

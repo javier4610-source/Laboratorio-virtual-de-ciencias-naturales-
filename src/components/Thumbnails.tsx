@@ -1092,6 +1092,17 @@ const SCENES: Record<string, () => ReactNode> = {
       <path d="M172 18 V140 H300" fill="none" stroke={INK} strokeWidth="1.2" />
     </>
   ),
+  'efecto-doppler': () => (
+    <>
+      {[0, 1, 2, 3, 4].map((k) => <circle key={k} cx={150 - k * 14} cy={80} r={12 + k * 22} fill="none" stroke="var(--series-2)" strokeWidth="1.6" opacity={0.85 - k * 0.12} />)}
+      <circle cx={150} cy={80} r={8} fill="var(--data)" />
+      <Arrow x1={160} y1={80} x2={196} y2={80} color="var(--data)" w={2.4} />
+      <circle cx={262} cy={118} r={9} fill="var(--series-3)" />
+      <path d="M254 132 L262 127 L270 132" fill="none" stroke={INK} strokeWidth="1.6" />
+      <path d="M232 104 q 6 -6 0 -12 M224 108 q 10 -10 0 -20" fill="none" stroke={INK} strokeWidth="1.4" />
+      <path d="M40 22 L118 80 L40 138" fill="none" stroke="var(--bad)" strokeWidth="1.4" strokeDasharray="5 4" opacity="0.7" />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

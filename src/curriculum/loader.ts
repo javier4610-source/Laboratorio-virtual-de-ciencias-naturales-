@@ -95,6 +95,7 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   cinematica: () => import('./practices/cinematica').then((m) => m.cinematica),
   celulas: () => import('./practices/celulas').then((m) => m.celulas),
   termodinamica: () => import('./practices/termodinamica').then((m) => m.termodinamica),
+  'efecto-doppler': () => import('./practices/efecto-doppler').then((m) => m.efectoDoppler),
 };
 
 export const LOADER_IDS = Object.keys(LOADERS);

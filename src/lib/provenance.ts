@@ -169,6 +169,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: 'Presiones, volúmenes, temperaturas, calores y trabajos calculados con la primera ley (ΔU = Q − W) para un gas ideal con R de CODATA 2018 y calores específicos constantes; ciclos ideales de Otto y de Carnot de los textos (Serway; Çengel y Boles): modelo calculado, no son mediciones. El estado inicial, las temperaturas y las relaciones de compresión son ilustrativos. Cilindro 3D: altura del gas proporcional al volumen y flechas con el sentido del calor y del trabajo; el número de partículas y su agitación son ilustrativos.' };
   }
+  if (practiceId === 'efecto-doppler') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Rapidez del sonido en aire seco como gas ideal (331,3 m/s a 0 °C), frecuencias con la fórmula de Doppler clásica para el aire quieto, paso de la fuente con el ángulo de emisión y semiángulo del cono de Mach con sen θ = 1/M (Serway; Hewitt): modelo calculado, no son mediciones. La frecuencia de la sirena, las velocidades y el avión son ilustrativos. Frentes 3D: esferas centradas donde se emitió cada frente con la razón v_s/c del modelo, en un tiempo adimensional (un frente por unidad de tiempo, no uno por período real).' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

@@ -18,7 +18,8 @@ const exe = process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHRO
 /** Con movimiento reducido el banco salta al resultado: imágenes estables para comparar. */
 const reduce = (page: Page) => page.emulateMedia({ reducedMotion: 'reduce' });
 
-interface Case { name: string; id: string; prefix: string; title: RegExp; prepare?: (page: Page) => Promise<void> }
+/** `ready`: espera, ya abierta la vista, a que termine de cargar lo que la escena lee aparte (la estructura del PDB). */
+interface Case { name: string; id: string; prefix: string; title: RegExp; prepare?: (page: Page) => Promise<void>; ready?: (page: Page) => Promise<void> }
 const CASES: Case[] = [
   {
     name: 'ecosistema', id: 'ecosistema', prefix: 'eco3d', title: /el frasco con sus flujos de materia y energía/,
@@ -40,6 +41,19 @@ const CASES: Case[] = [
   {
     name: 'reto', id: 'reto', prefix: 'ret3d', title: /la nube de datos que se puede girar/,
     prepare: async (page) => { await reduce(page); await page.getByRole('button', { name: 'Recolectar datos' }).click(); },
+  },
+  {
+    name: 'metabolismo', id: 'metabolismo', prefix: 'met3d', title: /la célula con los flujos del FBA/,
+    prepare: async (page) => { await page.getByRole('button', { name: 'Calcular el óptimo' }).click(); },
+  },
+  {
+    name: 'secuencias', id: 'secuencias', prefix: 'seq3d', title: /la conservación sobre la estructura de la proteína/,
+    prepare: async (page) => {
+      await page.getByLabel('Herramienta').getByRole('button', { name: 'Alineamiento' }).click();
+      await page.getByLabel('Comparación preparada').selectOption('globinas');
+      await page.getByRole('button', { name: 'Alinear', exact: true }).click();
+    },
+    ready: async (page) => { await expect.poll(() => description(view(page, 'seq3d')), { timeout: 20_000 }).toContain('estructura 2HHB'); },
   },
 ];
 
@@ -126,6 +140,7 @@ test.describe('con WebGL (SwiftShader)', () => {
       await c.prepare?.(page);
       const card = await open3D(page, c);
       await waitEngine(page, c.prefix, 'disponible');
+      await c.ready?.(page);
       const v = view(page, c.prefix);
       await page.waitForTimeout(300);
       const a = await pixels(v);
@@ -181,6 +196,7 @@ test.describe('sin WebGL', () => {
       await c.prepare?.(page);
       const card = await open3D(page, c);
       await waitEngine(page, c.prefix, 'sin-webgl');
+      await c.ready?.(page);
       await expect(card.getByText(/este equipo no ofrece WebGL/).first()).toBeVisible();
       const svg = figureOf(page, c.prefix).locator('svg').first();
       await expect(svg).toBeVisible();

@@ -28,6 +28,14 @@ const CASES: Case[] = [
     name: 'redes', id: 'redes', prefix: 'red3d', title: /la red por niveles, la pirámide y la cascada/,
     prepare: async (page) => { await reduce(page); await page.getByRole('button', { name: 'Simular', exact: true }).click(); },
   },
+  {
+    name: 'descomposicion', id: 'descomposicion', prefix: 'des3d', title: /la compostera en corte y la bolsa que se pesa/,
+    prepare: async (page) => { await reduce(page); await page.getByRole('button', { name: 'Pesar las bolsas' }).click(); },
+  },
+  {
+    name: 'agua', id: 'agua', prefix: 'agu3d', title: /el río coloreado por su oxígeno/,
+    prepare: async (page) => { await reduce(page); await page.getByRole('button', { name: 'Tomar muestra y medir' }).click(); },
+  },
 ];
 
 /** Los rótulos HTML superpuestos no se encima entre sí ni se salen del lienzo. */

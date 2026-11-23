@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   complies, NORMS, oxygenProfile, PROBE, RANGES, RIVERS, roundSig, saturationReading, simulateRiver, SOURCES,
   waterConditions, wqiFromReadings, type Family, type NormRef, type Readings, type RiverId, type SourceId, type TaxonGroup,
@@ -13,6 +13,9 @@ import { useMeasure } from '../components/Measurement';
 import type { LabProps } from './registry';
 import { Beaker, BenchTop, ContactShadow, Lcd, TestTube, Thermometer } from './kit';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const AguaView3D = lazy(() => import('./lote3d7/AguaView3D'));
 
 /* ------------------------------------------------------------------ utilidades */
 
@@ -525,6 +528,10 @@ export default function WaterQualityLab({ api }: LabProps) {
           </ManipScene>
         </div>
         <ManipHint>Arrastra el punto de muestreo (amarillo) a lo largo del río, o enfócalo con Tab y usa las flechas.</ManipHint>
+
+        <Panel3D title="el río coloreado por su oxígeno" summary="El tramo de río en 3D, del km −2 al km 30: al medir, cada tramo toma el color del oxígeno disuelto del modelo de Streeter–Phelps, una cerca lo levanta en altura con el punto crítico, y en tu punto de muestreo aparecen las familias de macroinvertebrados.">
+          <AguaView3D res={res} profile={profile} distance={distance} dischargeFlow={dischargeFlow} sourceId={source} measured={measured} sampling={sampling} odReading={readings.od} />
+        </Panel3D>
 
         <Readout items={[
           { k: 'Temperatura', v: measured ? `${fmt(readings.temp, 1)} °C` : '—', data: true, resolution: probeRes(PROBE.temp) },

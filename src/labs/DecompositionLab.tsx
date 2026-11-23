@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   DECOMP_DEFAULTS, DECOMP_LIMITS, DECOMP_MATERIALS, INITIAL_MASS, simulateDecomposition, type DecompMaterial,
 } from '../models/decomposition';
@@ -8,6 +8,9 @@ import { prefersReducedMotion } from '../lib/prefs';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import type { LabProps } from './registry';
 import { BenchTop, DigitalBalance, Lcd, Thermometer } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+const DescomposicionView3D = lazy(() => import('./lote3d7/DescomposicionView3D'));
 
 const ANIM_MS = 1600;
 const MOVE_END = 0.72; // fracción de la animación en que la bolsa llega al plato
@@ -336,6 +339,11 @@ export default function DecompositionLab({ api }: LabProps) {
             </text>
           </svg>
         </div>
+
+        <Panel3D title="la compostera en corte y la bolsa que se pesa" summary="La compostera escolar en corte, en 3D: la humedad colorea la tierra, el termómetro marca la temperatura de la pila del modelo y, al pesar, la bolsa sale a la balanza con un trozo por cada gramo de materia que queda.">
+          <DescomposicionView3D res={res} materialId={materialId} weeks={weeks} temperature={temperature} moisture={moisture} aerated={aerated === 'si'} chopped={size === 'picado'}
+            move={ease} outOfPile={outOfPile} measured={measured} />
+        </Panel3D>
 
         <Readout items={[
           { k: 'Material', v: res.material.name },

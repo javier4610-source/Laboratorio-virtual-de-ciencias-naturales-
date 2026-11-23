@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
 import {
   BASE_EQUILIBRIUM, FOODWEB_DEFAULTS, FOODWEB_LIMITS, LEVEL_NAMES, LINKS, percentChange, simulateFoodWeb, SPECIES,
   type SpeciesId, type TrophicLevel,
@@ -9,6 +9,9 @@ import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider } from '../components/ui';
 import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
+import { Panel3D } from './lote3d/Panel3D';
+
+const RedesView3D = lazy(() => import('./lote3d7/RedesView3D'));
 
 const ANIM_MS = 2500;
 
@@ -338,6 +341,9 @@ export default function FoodWebLab({ api }: LabProps) {
             </svg>
           )}
         </div>
+        <Panel3D title="la red por niveles, la pirámide y la cascada" summary="La red trófica en 3D, con los productores abajo y el depredador tope arriba: el volumen de cada especie sigue su biomasa en el mismo año del banco, al lado está la pirámide de biomasa y puedes quitar una especie para ver la cascada.">
+          <RedesView3D rain={rain} hunting={hunting} pesticide={pesticide} years={years} idx={idx} year={tNow} current={current} started={started} />
+        </Panel3D>
         <div className="card stack">
           <Select label="Qué graficar" value={plot} onChange={(v) => setPlot(v as 'relativa' | SpeciesId)}
             options={[{ value: 'relativa', label: 'Todas las especies (% del equilibrio base)' }, ...SPECIES.map((s) => ({ value: s.id, label: `${s.name} (kg/ha)` }))]} />

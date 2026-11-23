@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import {
   BIOMASS_ID, CARBON_SOURCES, ECOLI_CORE, metabolismConditions, ESSENTIAL_THRESHOLD, FBA_LIMITS, KEY_EXCHANGES, KEY_REACTIONS, MAP_EDGES, MAP_NODES, MODEL_PROVENANCE,
   PATHWAY_LABEL, REFERENCE_CONDITION, UNLIMITED, conditionBounds, fluxVariability, geneKnockoutScan, oxygenSeries, pathwayOf, roundFlux, roundGrowth, runFba,
@@ -10,6 +10,9 @@ import { StatusChip } from '../components/Provenance';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
+import { Panel3D } from './lote3d/Panel3D';
+
+const MetabolismoView3D = lazy(() => import('./lote3d7/MetabolismoView3D'));
 
 type O2Mode = 'ilimitado' | 'limitado' | 'sin';
 type MapView = 'actual' | 'referencia';
@@ -305,6 +308,10 @@ export default function MetabolismLab({ api }: LabProps) {
         <div className="btn-row small" role="note" aria-label="Estatus de la escena">
           <StatusChip status="modelo" prefix="Mapa" /> <span className="muted">dibujado con las reacciones del modelo y los flujos calculados; la posición de los nodos es un diagrama, no la ubicación real en la célula.</span>
         </div>
+        <Panel3D title="la célula con los flujos del FBA" summary="La red del metabolismo central dentro de una célula esquemática de E. coli: cada reacción con flujo es una flecha en su sentido y una columna cuya altura es el valor que calculó el FBA, con la misma condición que muestra el mapa.">
+          <MetabolismoView3D fluxes={mapData && mapData.fba.status === 'optimal' ? mapData.fba.fluxes : null} computed={mapData !== null} disabled={mapData?.fba.disabled ?? preview}
+            view={mapView} carbonLabel={carbonLabel(mapData?.cond.carbon ?? carbon)} />
+        </Panel3D>
         {ref && result && (
           <Segmented label="Flujos que muestra el mapa" value={mapView} onChange={setMapView} options={[{ value: 'actual', label: 'Condición actual' }, { value: 'referencia', label: 'Referencia' }]} />
         )}

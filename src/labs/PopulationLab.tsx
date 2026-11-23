@@ -1,9 +1,12 @@
-import { useMemo, useState } from 'react';
+import { lazy, useMemo, useState } from 'react';
 import { POPULATION_LIMITS, simulatePopulation } from '../models/population';
 import { fmt } from '../lib/format';
 import { Chart } from '../components/Chart';
 import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/ui';
 import type { LabProps } from './registry';
+import { Panel3D } from './lote3d/Panel3D';
+
+const PoblacionView3D = lazy(() => import('./lote3d7/PoblacionView3D'));
 
 /* ------------------------------------------------------------------ ciénaga ilustrada */
 
@@ -174,6 +177,9 @@ export default function PopulationLab({ api }: LabProps) {
               ...(compare ? [{ label: model === 'logistico' ? 'Exponencial (comparación)' : 'Logístico (comparación)', kind: 'line' as const, dashed: true, points: clip(other.series) }] : []),
             ]} />
         </div>
+        <Panel3D title="la superficie del rendimiento sostenible" summary="Una superficie 3D del crecimiento neto de la población según su tamaño y la tasa de pesca, con la captura sostenible en cada equilibrio, su máximo y el riesgo de sobreexplotación; tu corrida va dibujada encima.">
+          <PoblacionView3D model={model} n0={n0} r={r} k={k} h={h} years={years} res={res} />
+        </Panel3D>
         <Readout items={[
           { k: 'Población final', v: fmt(res.finalN, 0), data: true },
           { k: 'Equilibrio N*', v: Number.isFinite(res.equilibrium) ? fmt(res.equilibrium, 0) : 'sin límite (crece siempre)' },

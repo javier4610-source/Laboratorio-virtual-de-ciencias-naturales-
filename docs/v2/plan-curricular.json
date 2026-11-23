@@ -972,7 +972,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-7",
-          "priority": 1
+          "priority": 1,
+          "built3d": "lote 3D-7 (sin publicar)"
         },
         {
           "id": "redes",
@@ -983,7 +984,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-7",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-7 (sin publicar)"
         },
         {
           "id": "descomposicion",
@@ -994,7 +996,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-7",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-7 (sin publicar)"
         },
         {
           "id": "agua",
@@ -1005,7 +1008,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-7",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-7 (sin publicar)"
         },
         {
           "id": "poblacion",
@@ -1016,7 +1020,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-7",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-7 (sin publicar)"
         },
         {
           "id": "reto",
@@ -1027,7 +1032,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "S",
           "batch": "3d-7",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-7 (sin publicar)"
         },
         {
           "id": "metabolismo",
@@ -1038,7 +1044,8 @@
           "technology": "Kit general de escenas 3D (three.js, en construcción en paralelo)",
           "complexity": "M",
           "batch": "3d-7",
-          "priority": 3
+          "priority": 3,
+          "built3d": "lote 3D-7 (sin publicar)"
         },
         {
           "id": "secuencias",
@@ -1049,7 +1056,8 @@
           "technology": "3Dmol.js con estructura PDB ya incluida en el repo",
           "complexity": "S",
           "batch": "3d-7",
-          "priority": 2
+          "priority": 2,
+          "built3d": "lote 3D-7 (sin publicar)"
         }
       ]
     }

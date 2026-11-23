@@ -1,4 +1,4 @@
-import { useMemo, useState, type ChangeEvent } from 'react';
+import { lazy, useMemo, useState, type ChangeEvent } from 'react';
 import {
   FRAMES, GENETIC_CODES, KIND_LABEL, SEQ_LIMITS, SEQUENCE_EXAMPLES, TABLE_IDS, align, alignmentText, comparisonPresets, complementSeq,
   composition, exampleCds, findExample, findOrfs, frameCodons, frameLabel, gcWindows, isStartCodon, parseSequenceText, reverseComplementSeq,
@@ -14,6 +14,9 @@ import { StatusChip } from '../components/Provenance';
 import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } from '../components/ui';
 import type { LabProps } from './registry';
 import { BlastPanel } from '../components/BlastPanel';
+import { Panel3D } from './lote3d/Panel3D';
+
+const SecuenciasView3D = lazy(() => import('./lote3d7/SecuenciasView3D'));
 
 type Tab = 'composicion' | 'traduccion' | 'alineamiento';
 type StrandView = 'original' | 'complemento' | 'reverso' | 'arn';
@@ -482,6 +485,10 @@ export default function SequencesLab({ api }: LabProps) {
               </p>
             )}
             {presets.find((p) => p.id === presetId) && <p className="small">{presets.find((p) => p.id === presetId)!.note}</p>}
+            <Panel3D title="la conservación sobre la estructura de la proteína" summary="El alineamiento en 3D: si una de las proteínas tiene su estructura en el laboratorio (hemoglobina 2HHB o insulina 3I40), cada residuo se colorea según su columna sea idéntica, parecida o distinta; si no, las columnas se ordenan en una escalera.">
+              <SecuenciasView3D al={result?.al ?? null} nameA={result?.nameA ?? ''} nameB={result?.nameB ?? ''} seqA={findCand(keyA).seq.replace(/U/g, 'T')} seqB={findCand(keyB).seq.replace(/U/g, 'T')}
+                protein={findCand(keyA).kind === 'proteina' && findCand(keyB).kind === 'proteina'} />
+            </Panel3D>
             <Notice kind="warn">La identidad alta no implica función idéntica, y una identidad baja no implica funciones distintas. El puntaje y la identidad dependen de la matriz y de las penalizaciones: repórtalos siempre con el método.</Notice>
           </div>
         )}

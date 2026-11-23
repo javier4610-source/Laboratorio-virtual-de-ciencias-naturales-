@@ -43,6 +43,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
       Básicos de Competencias y DBA de Ciencias Naturales, 6.º a 11.º) frente a las 65 prácticas, con brechas y mejoras,
       en `docs/v2/ANALISIS-CURRICULAR.md`; (2) kit de escenas 3D para física y biología (además del kit químico);
       (3) prácticas nuevas de química, física y biología según las brechas; (4) visor 3D en todas las prácticas, por lotes.
+      Estado: (1), (2) y (4) hechos (v2.27.0: las 86 prácticas tienen vista 3D); de (3) falta la ola nuevas-3b.
 - [ ] **T3 · Retroalimentación del docente** (espera T2: necesita el servidor publicado): comentarios y calificación por práctica que el estudiante ve en su
       laboratorio; asignación de prácticas con fecha y recordatorios.
 - [x] **Física D:** magnetismo e inducción electromagnética (11.º, `induccion`) · interferencia y difracción de la luz
@@ -66,6 +67,9 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] v2.27.0 · Lote 3D-7 «ecología, ambiente y datos» (`ecosistema`, `redes`, `descomposicion`, `agua`,
+  `poblacion`, `reto`, `metabolismo`, `secuencias`): con él, las 86 prácticas del catálogo tienen vista 3D. Sigue la ola
+  nuevas-3b (cinco prácticas de prioridad 3).
 - [x] v2.26.0 · Ola 3a de prácticas nuevas (`gravitacion-orbitas`, `fluidos-bernoulli`, `termoquimica`,
   `ciclo-del-carbono`), cada una con su vista 3D (86 prácticas): cuatro de las nueve de prioridad 3. Rótulos de la vista
   3D de `efecto-invernadero` sin amontonarse (rótulo corto opcional `tag` en el kit). Siguen las otras cinco de prioridad

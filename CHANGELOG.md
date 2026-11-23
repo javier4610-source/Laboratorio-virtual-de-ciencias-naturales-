@@ -7,6 +7,8 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.27.0] · 2026-11-23
+
 Lote 3D-7 (el último): vista 3D en ecosistema, redes alimentarias, descomposición, calidad del agua, crecimiento
 poblacional, reto de indagación, metabolismo (FBA) y secuencias. Con él, las 86 prácticas tienen vista 3D.
 

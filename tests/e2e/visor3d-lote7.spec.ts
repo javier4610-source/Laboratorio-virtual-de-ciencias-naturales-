@@ -36,6 +36,11 @@ const CASES: Case[] = [
     name: 'agua', id: 'agua', prefix: 'agu3d', title: /el río coloreado por su oxígeno/,
     prepare: async (page) => { await reduce(page); await page.getByRole('button', { name: 'Tomar muestra y medir' }).click(); },
   },
+  { name: 'poblacion', id: 'poblacion', prefix: 'pob3d', title: /la superficie del rendimiento sostenible/ },
+  {
+    name: 'reto', id: 'reto', prefix: 'ret3d', title: /la nube de datos que se puede girar/,
+    prepare: async (page) => { await reduce(page); await page.getByRole('button', { name: 'Recolectar datos' }).click(); },
+  },
 ];
 
 /** Los rótulos HTML superpuestos no se encima entre sí ni se salen del lienzo. */

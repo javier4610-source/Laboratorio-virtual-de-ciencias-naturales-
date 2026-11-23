@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState } from 'react';
 import {
   analyze, BUDGET, causalReflection, collect, CONFOUND_LABEL, critiqueDesign, DESIGN_LIMITS, designConditions, designLevels, SYSTEM_IDS, SYSTEMS,
   type ConfoundMode, type CritiqueItem, type Design, type Sample, type SystemDef, type SystemId,
@@ -12,6 +12,9 @@ import { SimControls, simStatusOf } from '../components/Experiment';
 import { Chart, type ChartPoint } from '../components/Chart';
 import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, Lcd } from './kit';
+import { Panel3D } from './lote3d/Panel3D';
+
+const RetoView3D = lazy(() => import('./lote3d7/RetoView3D'));
 
 /* ------------------------------------------------------------------ utilidades */
 
@@ -303,6 +306,10 @@ export default function InquiryLab({ api }: LabProps) {
           Escena esquemática (ilustrativa). Durante la recolección, los puntos se llenan en el orden de muestreo calculado; la animación es ilustrativa,
           pero cada lectura de la pantalla es el valor calculado por el modelo con su ruido.
         </p>
+
+        <Panel3D title="la nube de datos que se puede girar" summary="Un gráfico de dispersión 3D con la variable independiente, la variable de confusión registrada y la respuesta: al girarlo se ve si la respuesta sigue a x, a la otra variable o a las dos.">
+          <RetoView3D sys={SYSTEMS[run?.design.system ?? system]} samples={samples} shown={shown} confound={run?.design.confound ?? confound} analysis={analysis} seed={run?.design.seed ?? seed} />
+        </Panel3D>
 
         {phase !== 'diseno' && (
           <Notice kind="warn"><strong>Datos sintéticos generados por un modelo calculado (semilla {run?.design.seed ?? seed}).</strong> No son mediciones reales de ningún río, finca o quebrada de Urabá: sirven para practicar el diseño y el análisis. Con la misma semilla y el mismo diseño obtendrás exactamente los mismos datos.</Notice>

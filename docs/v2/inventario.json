@@ -116,12 +116,13 @@
     ],
     "tests": [
       "conditions.test.ts",
-      "ecosystem.test.ts"
+      "ecosystem.test.ts",
+      "lote3d7.test.ts"
     ],
-    "nTests": 47,
+    "nTests": 66,
     "e2e": true,
     "a11y": false,
-    "loc": 713,
+    "loc": 723,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -246,12 +247,13 @@
       "foodweb"
     ],
     "tests": [
-      "foodweb.test.ts"
+      "foodweb.test.ts",
+      "lote3d7.test.ts"
     ],
-    "nTests": 12,
+    "nTests": 31,
     "e2e": true,
     "a11y": false,
-    "loc": 376,
+    "loc": 382,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -402,12 +404,13 @@
       "decomposition"
     ],
     "tests": [
-      "decomposition.test.ts"
+      "decomposition.test.ts",
+      "lote3d7.test.ts"
     ],
-    "nTests": 10,
+    "nTests": 29,
     "e2e": true,
     "a11y": false,
-    "loc": 400,
+    "loc": 408,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1734,12 +1737,13 @@
     ],
     "tests": [
       "conditions.test.ts",
+      "lote3d7.test.ts",
       "waterQuality.test.ts"
     ],
-    "nTests": 49,
+    "nTests": 68,
     "e2e": true,
     "a11y": false,
-    "loc": 643,
+    "loc": 650,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -2129,12 +2133,13 @@
     ],
     "tests": [
       "conditions.test.ts",
+      "lote3d7.test.ts",
       "metabolism.test.ts"
     ],
-    "nTests": 54,
+    "nTests": 73,
     "e2e": true,
     "a11y": false,
-    "loc": 502,
+    "loc": 509,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -2142,7 +2147,7 @@
     "manip": false,
     "sound": false,
     "datasets": true,
-    "illustrative": false
+    "illustrative": true
   },
   {
     "id": "nomenclatura-organica",
@@ -2240,12 +2245,13 @@
       "population"
     ],
     "tests": [
+      "lote3d7.test.ts",
       "models.test.ts"
     ],
-    "nTests": 55,
+    "nTests": 74,
     "e2e": true,
     "a11y": false,
-    "loc": 203,
+    "loc": 209,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -2292,9 +2298,10 @@
     ],
     "tests": [
       "lote3d.test.ts",
+      "lote3d7.test.ts",
       "protein.test.ts"
     ],
-    "nTests": 43,
+    "nTests": 62,
     "e2e": true,
     "a11y": false,
     "loc": 1125,
@@ -2376,12 +2383,13 @@
     ],
     "tests": [
       "conditions.test.ts",
-      "inquiry.test.ts"
+      "inquiry.test.ts",
+      "lote3d7.test.ts"
     ],
-    "nTests": 44,
+    "nTests": 63,
     "e2e": true,
     "a11y": false,
-    "loc": 458,
+    "loc": 465,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -2407,13 +2415,14 @@
       "geneExpression.test.ts",
       "lote3d.test.ts",
       "lote3d2.test.ts",
+      "lote3d7.test.ts",
       "models.test.ts",
       "sequences.test.ts"
     ],
-    "nTests": 171,
+    "nTests": 190,
     "e2e": true,
     "a11y": false,
-    "loc": 596,
+    "loc": 603,
     "measure": false,
     "advanced": false,
     "params": false,

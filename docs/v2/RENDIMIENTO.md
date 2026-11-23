@@ -198,7 +198,7 @@ quedan dentro de todos los límites sin subir ninguno más:
 | Ruta: banco Saber 11 con los seis grados | 202,1 | 208,2 | 240 |
 | Ruta: práctica liviana (densidad, con el banco de 6.º) | 277,7 | 283,2 | 335 |
 | Panel docente con las fichas completas | 1 180,8 | 1 233,3 | 1 250 |
-| Precarga del service worker al instalar | 6,24 MB | 6,45 MB (6 600 KB, 412 archivos) | 6,8 MB |
+| Precarga del service worker al instalar | 6,24 MB | 6,45 MB (6 600 KB, 412 archivos); 6,51 MB (6 663 KB) tras unir el lote 3D-7 | 6,8 MB |
 
 El panel docente con las fichas completas queda a 17 KB de su límite (≈ 10 KB por práctica nueva): la próxima práctica
 tendrá que traer la ficha docente liviana pendiente (§5, punto 1) o subir el límite con su razón.

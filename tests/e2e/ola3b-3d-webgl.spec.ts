@@ -117,3 +117,20 @@ test('efecto-doppler 3D: los frentes se apiñan delante de la fuente, en pausa q
   await expect(figureOf(page, 'dp').locator('.scene3d-label', { hasText: 'cono de Mach' })).toBeVisible();
   await shots(page, () => figureOf(page, 'dp'), 'doppler-3d-mach');
 });
+
+test('nutricion-digestion 3D: el bolo recorre el tubo coloreado por pH, pierde nutrientes y en pausa queda quieto', async ({ page }) => {
+  await openFree(page, 'nutricion-digestion');
+  await waitEngine(page, 'dg', 'disponible');
+  const v = view(page, 'dg');
+  expect(await description(v)).toContain('A los 0 minutos de comer, el alimento está en boca (pH 6,8)');
+  await keyboardAndTheme(page, 'dg', 'nutricion-digestion 3D');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(figureOf(page, 'dg').locator('.scene3d-label', { hasText: 'estómago pH 2,0' })).toBeVisible();
+  await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Recorrido del almuerzo', exact: true }).click();
+  const paused = await pauseIsStill(page, 'dg', 'Recorrido', 'Comer el almuerzo', 6000);
+  expect(paused).toMatch(/el alimento está en (estómago|duodeno|yeyuno)/);
+  await shots(page, () => figureOf(page, 'dg'), 'digestion-3d');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.getByRole('group', { name: 'Recorrido', exact: true }).getByRole('button', { name: 'Reanudar' }).click();
+  await expect.poll(() => description(v)).toContain('Queda sin digerir el 2 % del almidón, el 3 % de las proteínas y el 5 % de las grasas');
+});

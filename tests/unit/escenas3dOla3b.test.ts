@@ -3,6 +3,8 @@ import { H_MAX, heightOf, N_PARTICLES, pistonScene } from '../../src/labs/thermo
 import { ottoCycle, stateAlong } from '../../src/models/thermodynamics';
 import { dopplerScene, sceneScale } from '../../src/labs/doppler3d';
 import { fmt } from '../../src/lib/format';
+import { digestionScene, N_PER_NUTRIENT, PATH, pHColor } from '../../src/labs/digestion3d';
+import { DEFAULT_MEAL, digestMeal } from '../../src/models/digestion';
 import type { ArrowItem, BoxItem, ParticlesItem, RodItem, SceneItem, SphereItem } from '../../src/three/scene';
 
 const byId = <T extends SceneItem>(items: SceneItem[], id: string) => items.find((i) => i.id === id) as T;
@@ -60,5 +62,35 @@ describe('frentes de onda 3D (efecto Doppler)', () => {
     // Distancia del extremo de la tangente al centro del frente más antiguo = su radio.
     expect(Math.hypot(rod.to[0] - oldest.center * k, rod.to[1])).toBeCloseTo(oldest.radius * k, 9);
     expect(byId(dopplerScene({ M: 0.8, t: 6, observerX: 0, showCone: true, label: 'x' }).items, 'cono-arriba')).toBeUndefined();
+  });
+});
+
+describe('tubo digestivo 3D (digestión)', () => {
+  const r = digestMeal(DEFAULT_MEAL);
+  it('los órganos tienen el color de su pH', () => {
+    const sc = digestionScene(r, 0);
+    expect(pHColor(2)).toBe('bad');
+    expect(pHColor(6)).toBe('warn');
+    expect(pHColor(6.8)).toBe('ok');
+    expect(pHColor(7.4)).toBe('info');
+    expect(byId(sc.items, 'estomago').color).toBe('bad');
+    expect(byId(sc.items, 'boca').color).toBe('ok');
+    expect(byId(sc.items, 'delgado-0').color).toBe('info');
+    // Con antiácido el estómago queda ligeramente ácido.
+    expect(byId(digestionScene(digestMeal({ ...DEFAULT_MEAL, situation: 'antiacido' }), 0).items, 'estomago').color).toBe('warn');
+  });
+  it('el bolo avanza por los tramos y sus partículas son proporcionales a lo que queda sin digerir', () => {
+    const n = (sc: ReturnType<typeof digestionScene>, id: string) => byId<ParticlesItem>(sc.items, id)?.points.length ?? 0;
+    const start = digestionScene(r, 0);
+    expect(n(start, 'bolo-almidon')).toBe(N_PER_NUTRIENT);
+    const mid = digestionScene(r, 100); // estómago mezclado
+    expect(mid.at.index).toBe(2);
+    expect(n(mid, 'bolo-almidon')).toBe(Math.round(N_PER_NUTRIENT * mid.at.remaining.almidon));
+    const end = digestionScene(r, r.totalMinutes);
+    expect(end.at.index).toBe(5);
+    expect(n(end, 'bolo-grasa')).toBe(Math.round(N_PER_NUTRIENT * r.segments[5].remaining.grasa));
+    const c = byId<ParticlesItem>(mid.items, 'bolo-proteina').points[0];
+    const [a, b] = PATH[2];
+    expect(Math.abs(c[1] - (a[1] + (b[1] - a[1]) * mid.at.within))).toBeLessThan(0.2);
   });
 });

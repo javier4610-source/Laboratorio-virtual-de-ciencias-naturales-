@@ -32,6 +32,7 @@ import { DH_NEUT, dissolution as tqDissolution, hessSolidInAcid, neutralization 
 import { A_1750, A_2019, A_MID, AIRBORNE_FRACTION, atmosphereRate, IMBALANCE, simulateCarbon } from '../../src/models/carbon';
 import { carnotCycle, gasProcess, initialState, N0, ottoCycle } from '../../src/models/thermodynamics';
 import { dopplerLine, machCone, soundSpeed } from '../../src/models/doppler';
+import { activity as dgActivity, DEFAULT_MEAL, digestMeal } from '../../src/models/digestion';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -514,6 +515,14 @@ export const GOLDEN: GoldenCase[] = [
     close(dopplerLine(700, 25, 0, 20).fObs, (700 * c) / (c - 25), 1e-9); close(dopplerLine(700, 25, 0, 20).fObs, 754.99, 0.01);
     close(dopplerLine(700, -25, 0, 20).fObs, 652.47, 0.01); close(dopplerLine(700, 0, 25, 20).fObs, 750.99, 0.01);
     close(machCone(2 * c, 20).angleDeg!, 30, 1e-9);
+  } },
+  { id: 'nutricion-digestion', origin: 'independiente', what: 'Curva de dos grupos ionizables (la del modelo de «enzimas») normalizada en el óptimo: amilasa salival (óptimo 6,8; anchura 1,6) a pH 5,0 → g(5)/g(6,8) = 0,38680/0,95217 = 0,40624; pepsina a pH 2 → 1. Almuerzo típico con k calibradas: la saliva digiere 1 − e^(−0,0078·(1 + 0,90345·60)) = 35,03 % del almidón y la pepsina 1 − e^(−0,001354·120) = 15,00 % de las proteínas', run: () => {
+    const g = (x: number) => 1 / (1 + 10 ** (5.2 - x) + 10 ** (x - 8.4));
+    close(dgActivity('amilasa-salival', 5), g(5) / g(6.8), 1e-12); close(dgActivity('amilasa-salival', 5), 0.40624, 1e-5);
+    close(dgActivity('pepsina', 2), 1, 1e-12);
+    const r = digestMeal(DEFAULT_MEAL);
+    close(r.shareStomach.proteina / 100, 1 - Math.exp(-0.001354 * 120), 1e-12); close(r.shareStomach.proteina, 15.0, 0.01);
+    close(r.shareSaliva, 35.03, 0.01);
   } },
 ];
 

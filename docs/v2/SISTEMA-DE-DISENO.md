@@ -230,6 +230,7 @@ siguen todas las prácticas adoptadas:
 | Termoquímica | `ThermochemLab` | Medición · Iniciar la medición | t (0–300 s) | Los 300 s en ≈ 15 s; los iones 3D, el termómetro y la flecha de energía quedan quietos en pausa |
 | Primera ley de la termodinámica | `ThermodynamicsLab` | Recorrido · Recorrer el proceso / el ciclo | avance (0–100 %) | Un proceso en 4 s y un ciclo en 8 s; el émbolo 3D, las partículas y las flechas de calor y trabajo quedan quietos en pausa |
 | Efecto Doppler | `DopplerLab` | Frentes de onda · Emitir sonido | frentes (0–9, tiempo adimensional) | Nueve frentes en 9 s; las esferas 3D y la fuente quedan quietas en pausa |
+| Digestión | `DigestionLab` | Recorrido · Comer el almuerzo | t (0–451 min) | Las 7,5 h en ≈ 15 s; el bolo 3D y sus partículas quedan quietos en pausa |
 
 **Prácticas con animación pero sin dinámica que pausar** (no se inventan controles):
 

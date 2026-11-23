@@ -1103,6 +1103,17 @@ const SCENES: Record<string, () => ReactNode> = {
       <path d="M40 22 L118 80 L40 138" fill="none" stroke="var(--bad)" strokeWidth="1.4" strokeDasharray="5 4" opacity="0.7" />
     </>
   ),
+  'nutricion-digestion': () => (
+    <>
+      <ellipse cx="70" cy="26" rx="22" ry="10" fill="var(--ok)" opacity="0.45" />
+      <path d="M72 34 L96 66" stroke={INK} strokeWidth="5" strokeLinecap="round" opacity="0.5" />
+      <ellipse cx="114" cy="76" rx="30" ry="20" fill="var(--bad)" opacity="0.45" stroke={INK} strokeWidth="1.2" />
+      <path d="M138 88 C 150 98, 70 100, 82 108 C 94 116, 150 112, 138 122 C 126 130, 74 126, 84 136" fill="none" stroke="var(--info)" strokeWidth="6" strokeLinecap="round" opacity="0.6" />
+      <circle cx="108" cy="72" r="4" fill="var(--series-2)" /><circle cx="118" cy="80" r="4" fill="var(--series-1)" /><circle cx="122" cy="70" r="4" fill="var(--series-6)" />
+      <TestTube x={206} y={30} w={22} h={98} fill={0.6} liquid="#1f2a6b" liquidOpacity={0.85} />
+      <TestTube x={250} y={30} w={22} h={98} fill={0.6} liquid="#d8b23a" liquidOpacity={0.85} />
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

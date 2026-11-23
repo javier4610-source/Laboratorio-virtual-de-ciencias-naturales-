@@ -2359,4 +2359,28 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'nutricion-digestion': [
+    {
+      id: 'tubos', label: 'Enzimas y pH', defaultX: 'pH', defaultY: 'actividad',
+      columns: [
+        { key: 'enzima', label: 'Enzima', numeric: false, input: true },
+        { key: 'pH', label: 'pH del tubo', numeric: true, decimals: 1, input: true },
+        { key: 'minutos', label: 'Tiempo a 37 °C', unit: 'min', numeric: true, decimals: 0, input: true },
+        { key: 'actividad', label: 'Actividad relativa', unit: '%', numeric: true, decimals: 1 },
+        { key: 'queda', label: 'Sustrato que queda', unit: '%', numeric: true, decimals: 1 },
+        { key: 'lugol', label: 'Color con lugol', numeric: false },
+      ],
+    },
+    {
+      id: 'almuerzo', label: 'Recorrido del almuerzo', defaultX: 'situacion', defaultY: 'grasa',
+      columns: [
+        { key: 'situacion', label: 'Situación', numeric: false, input: true },
+        { key: 'almidon', label: 'Almidón digerido al final del íleon', unit: '%', numeric: true, decimals: 1 },
+        { key: 'proteina', label: 'Proteínas digeridas al final del íleon', unit: '%', numeric: true, decimals: 1 },
+        { key: 'grasa', label: 'Grasas digeridas al final del íleon', unit: '%', numeric: true, decimals: 1 },
+        { key: 'saliva', label: 'Almidón digerido por la amilasa salival', unit: '%', numeric: true, decimals: 1 },
+        { key: 'pepsina', label: 'Proteínas digeridas en el estómago', unit: '%', numeric: true, decimals: 1 },
+      ],
+    },
+  ],
 };

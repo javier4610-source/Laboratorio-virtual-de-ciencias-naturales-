@@ -97,4 +97,5 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   'ciclo-del-carbono': lazy(() => import('./CarbonLab')),
   termodinamica: lazy(() => import('./ThermodynamicsLab')),
   'efecto-doppler': lazy(() => import('./DopplerLab')),
+  'nutricion-digestion': lazy(() => import('./DigestionLab')),
 };

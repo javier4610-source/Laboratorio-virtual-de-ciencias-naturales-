@@ -64,10 +64,18 @@ export function temperatureFactor(e: EnzymeInfo, tempC: number): number {
 }
 
 export function pHFactor(e: EnzymeInfo, pH: number): number {
-  const pKa1 = e.pHopt - e.pHwidth;
-  const pKa2 = e.pHopt + e.pHwidth;
+  return pHBell(e.pHopt, e.pHwidth, pH);
+}
+
+/**
+ * Curva de actividad contra pH con dos grupos ionizables (pKa = pH óptimo ∓ anchura), normalizada a 1 en el óptimo.
+ * La usan esta práctica y la de digestión (src/models/digestion.ts).
+ */
+export function pHBell(pHopt: number, width: number, pH: number): number {
+  const pKa1 = pHopt - width;
+  const pKa2 = pHopt + width;
   const f = (x: number) => 1 / (1 + 10 ** (pKa1 - x) + 10 ** (x - pKa2));
-  return f(pH) / f(e.pHopt);
+  return f(pH) / f(pHopt);
 }
 
 export function initialRate(e: EnzymeInfo, tempC: number, pH: number, substrate: number, enzymeRel: number): number {

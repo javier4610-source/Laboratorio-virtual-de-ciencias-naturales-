@@ -257,6 +257,27 @@ const RAW: Question[] = [
     review: 'En la práctica «Ciclo del carbono: reservorios y flujos», compara los flujos naturales y los humanos en la vista 3D.',
     transfer: 'Si la deforestación se detuviera y las plantas siguieran absorbiendo lo mismo, ¿cuánto carbono por año ganaría el aire? Haz la cuenta con el balance y compruébala en «Escenarios».',
   },
+  {
+    id: 'saber-dg-1', grade: 7, topic: 'Digestión y enzimas', competency: 'indagacion', component: 'biologico',
+    skill: 'Interpretar datos de actividad enzimática para relacionar una enzima con su órgano', difficulty: 'media', practiceId: 'nutricion-digestion',
+    context: 'Un grupo de 7.º prueba tres enzimas digestivas (A, B y C) en tubos de ensayo a 37 °C con distintos pH y mide qué porcentaje de su sustrato digieren en 10 minutos.',
+    table: {
+      caption: 'Sustrato digerido en 10 minutos (%) (modelo con curvas ilustrativas)',
+      headers: ['Enzima', 'pH 2', 'pH 5', 'pH 7', 'pH 8'],
+      rows: [['A', '13', '0', '0', '0'], ['B', '0', '27', '54', '44'], ['C', '0', '5', '69', '76']],
+    },
+    stem: '¿Qué conclusión es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'Las tres enzimas actúan en el estómago, porque todas digieren algo a pH 2.', feedback: 'B y C no digieren nada a pH 2.' },
+      { id: 'b', text: 'A podría ser la pepsina del estómago; B, la amilasa de la saliva, y C, la tripsina del intestino delgado.', feedback: 'Correcto: cada una trabaja mejor al pH del órgano donde actúa.' },
+      { id: 'c', text: 'C es la mejor enzima, porque digiere más que las otras.', feedback: 'Cada enzima es buena en su propio pH y con su propio sustrato.' },
+      { id: 'd', text: 'El pH no influye en la actividad de las enzimas.', feedback: 'La actividad cambia mucho con el pH.' },
+    ],
+    correct: 'b',
+    explanation: 'A solo trabaja en medio muy ácido, como la pepsina en el estómago (pH ≈ 2). B trabaja mejor cerca de pH 7, como la amilasa de la saliva (≈ 6,8). C trabaja mejor a pH 8, como la tripsina en el intestino delgado, donde el bicarbonato del páncreas neutraliza el ácido.',
+    review: 'En la práctica «Digestión: enzimas y pH a lo largo del tubo digestivo», guarda cada enzima a varios pH en «Enzimas y pH».',
+    transfer: 'Si el estómago de una persona quedara a pH 5 por un medicamento, ¿cuál de las tres enzimas perdería casi toda su actividad? Compruébalo con el antiácido en «Recorrido del almuerzo».',
+  },
 ];
 
 /** Con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

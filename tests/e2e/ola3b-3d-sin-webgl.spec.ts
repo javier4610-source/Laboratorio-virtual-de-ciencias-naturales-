@@ -42,5 +42,9 @@ test('ola 3b sin WebGL: respaldo SVG en las cinco prácticas y sin descargar thr
   await openFree(page, 'efecto-doppler');
   await fallbackChecks(page, 'dp', 'efecto-doppler');
   await expect(figureOf(page, 'dp').locator('svg text', { hasText: /^observador$/ })).toBeVisible();
+
+  await openFree(page, 'nutricion-digestion');
+  await fallbackChecks(page, 'dg', 'nutricion-digestion');
+  await expect(figureOf(page, 'dg').locator('svg text', { hasText: /^páncreas$/ })).toBeVisible();
   expect(loaded, 'three.js no se descarga sin WebGL').toEqual([]);
 });

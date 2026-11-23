@@ -173,6 +173,10 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: 'Rapidez del sonido en aire seco como gas ideal (331,3 m/s a 0 °C), frecuencias con la fórmula de Doppler clásica para el aire quieto, paso de la fuente con el ángulo de emisión y semiángulo del cono de Mach con sen θ = 1/M (Serway; Hewitt): modelo calculado, no son mediciones. La frecuencia de la sirena, las velocidades y el avión son ilustrativos. Frentes 3D: esferas centradas donde se emitió cada frente con la razón v_s/c del modelo, en un tiempo adimensional (un frente por unidad de tiempo, no uno por período real).' };
   }
+  if (practiceId === 'nutricion-digestion') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Actividad contra pH con la curva del modelo de «enzimas» y pH óptimos redondeados de los manuales (amilasa salival ≈ 6,8; pepsina ≈ 2; amilasa pancreática ≈ 7; tripsina y lipasa ≈ 8); pH típicos de los tramos de Guyton y Hall y de Fallingborg (1999); constantes calibradas con dos datos de Guyton y Hall (la saliva digiere ≈ 30–40 % del almidón y la pepsina ≈ 10–20 % de las proteínas): modelo calculado, no son mediciones de una persona. Las anchuras de las curvas, las rapideces, los tiempos, las situaciones y el color del lugol son ilustrativos. No es un modelo clínico. Tubo digestivo 3D: esquema coloreado por pH con partículas del bolo en número proporcional a lo que queda sin digerir.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

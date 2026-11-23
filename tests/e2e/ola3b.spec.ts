@@ -108,3 +108,36 @@ test('efecto-doppler: sirena que se acerca (755,0 Hz) y se aleja, observador en 
   await idea(page, 'El sonido viaja más rápido en el aire caliente', 'Es cierto');
   await a11yAndMobile(page, 'efecto-doppler');
 });
+
+test('nutricion-digestion: amilasa a pH 6,8 y a pH 2 con lugol, recorrido del almuerzo (saliva 35 %, pepsina 15 %) y sin bilis', async ({ page }) => {
+  test.setTimeout(90_000);
+  await openFree(page, 'nutricion-digestion');
+  await expect(ro(page, 'Actividad relativa de la enzima')).toContainText('100,0 %');
+  await setSlider(page, 'pH del tubo', '', '2');
+  await expect(ro(page, 'Actividad relativa de la enzima')).toContainText('0,1 %');
+  await expect(ro(page, 'Prueba con lugol')).toContainText('azul oscuro');
+  await expect(cond(page, 'casi no trabaja')).toContainText('Cómo corregirlo');
+  await page.getByRole('button', { name: 'Guardar el tubo en la tabla' }).click();
+  await saved(page, 1);
+  await setSlider(page, 'pH del tubo', '', '6,8');
+  await setSlider(page, 'Tiempo a 37 °C', 'min', '30');
+  await expect(ro(page, 'Prueba con lugol')).toContainText('amarillo');
+  await page.getByRole('button', { name: 'Guardar el tubo en la tabla' }).click();
+  await saved(page, 2);
+  await station(page, 'Recorrido del almuerzo');
+  // Valor dorado: la saliva digiere 35,0 % del almidón y la pepsina 15,0 % de las proteínas (calibración con Guyton y Hall).
+  await expect(ro(page, 'Almidón digerido por la amilasa de la saliva')).toContainText('35,0 %');
+  await expect(ro(page, 'Proteínas digeridas en el estómago (pepsina)')).toContainText('15,0 %');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const sim = page.getByRole('group', { name: 'Recorrido', exact: true });
+  await sim.getByRole('button', { name: 'Comer el almuerzo' }).click();
+  await expect(sim.getByRole('status')).toHaveText('Terminada');
+  await expect(ro(page, 'Lugar del alimento')).toContainText('Intestino grueso');
+  await page.getByRole('button', { name: 'Guardar el recorrido en la tabla' }).click();
+  await saved(page, 1);
+  await page.getByLabel('Situación', { exact: true }).selectOption('sin-bilis');
+  await expect(cond(page, 'de la grasa al intestino grueso')).toContainText('Cómo corregirlo');
+  await expect(cond(page, 'consultar al médico')).toBeVisible();
+  await idea(page, 'La bilis es una enzima', 'Es falso');
+  await a11yAndMobile(page, 'nutricion-digestion');
+});

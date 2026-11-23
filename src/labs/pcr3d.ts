@@ -95,5 +95,5 @@ export function gelScene({ product, extraBand, progress, productBrightness }: Ge
     : `Gel al ${fmt(progress * 100, 0)} % de la corrida: el ADN, con carga negativa, avanza hacia el polo positivo; las bandas pequeñas avanzan más. `
       + (prod ? `El producto (${product} pb) ha avanzado ${fmt(migration(product!) * progress, 1)} mm.` : 'El carril del producto no tiene bandas: no hubo amplificación.')
       + ' El control sin molde no tiene bandas. El brillo de las bandas es ilustrativo.';
-  return { items, extent: 1.6, target: [0.1, 0, 0.05], description, bands };
+  return { items, extent: 1.2, target: [0.1, 0, 0.05], description, bands };
 }

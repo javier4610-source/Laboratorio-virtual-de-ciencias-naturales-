@@ -563,6 +563,27 @@ const RAW: Question[] = [
     review: 'En la práctica «Efecto Doppler y barrera del sonido», usa «Paso de la ambulancia» con la rapidez y la temperatura del problema.',
     transfer: 'Si el aire estuviera a 10 °C, ¿cambiarían las frecuencias medidas para la misma moto? Calcula c(10 °C) y compruébalo en la práctica.',
   },
+  {
+    id: 'saber-inm-1', grade: 11, topic: 'Inmunidad colectiva', competency: 'indagacion', component: 'cts',
+    skill: 'Usar datos de R₀ y de eficacia para evaluar una meta de vacunación', difficulty: 'alta', practiceId: 'sistema-inmune',
+    context: 'Un grupo de 11.º compara dos enfermedades con un modelo de inmunidad colectiva. Para el sarampión se cita un R₀ de 12 a 18 (Guerra y otros, 2017) y la vacuna tiene una eficacia de ≈ 97 % con dos dosis (CDC). Para la influenza estacional se cita un R₀ ≈ 1,3 (Biggerstaff y otros, 2014).',
+    table: {
+      caption: 'Umbral de inmunidad colectiva H = 1 − 1/R₀',
+      headers: ['Enfermedad', 'R₀', 'Umbral H'],
+      rows: [['Sarampión', '12', '91,7 %'], ['Sarampión', '18', '94,4 %'], ['Influenza estacional', '1,3', '23,1 %']],
+    },
+    stem: 'Una secretaría de salud se fija la meta de vacunar al 90 % de los niños con dos dosis contra el sarampión. ¿Qué conclusión es coherente con el modelo?',
+    options: [
+      { id: 'a', text: 'La meta basta, porque 90 % es casi todos.', feedback: 'Con 90 % de cobertura y 97 % de eficacia quedan protegidos ≈ 87 %, menos que el umbral de 92–94 %.' },
+      { id: 'b', text: 'La meta no alcanza el umbral: con 97 % de eficacia los protegidos serían ≈ 87 %, y harían falta coberturas de ≈ 95 % a 97 %.', feedback: 'Correcto: V = H/e = 0,917/0,97 ≈ 95 % y 0,944/0,97 ≈ 97 %.' },
+      { id: 'c', text: 'Con esa meta la influenza también quedaría controlada, así que es suficiente.', feedback: 'La vacuna contra el sarampión no protege contra la influenza.' },
+      { id: 'd', text: 'El umbral no depende de R₀, sino solo de la eficacia de la vacuna.', feedback: 'El umbral es 1 − 1/R₀: depende de R₀.' },
+    ],
+    correct: 'b',
+    explanation: 'Los protegidos son cobertura × eficacia = 0,90 × 0,97 ≈ 0,87. El umbral para el sarampión está entre 91,7 % y 94,4 %, así que la cobertura necesaria es H/e: de 0,917/0,97 ≈ 94,5 % a 0,944/0,97 ≈ 97,4 %. Por eso las metas de vacunación contra el sarampión son tan altas. El modelo supone una población bien mezclada; no reemplaza el análisis de las autoridades de salud.',
+    review: 'En la práctica «Sistema inmune, vacunas e inmunidad colectiva», usa «Inmunidad colectiva» y «Epidemia y vacunación» con el sarampión.',
+    transfer: 'Si una vacuna tuviera solo 85 % de eficacia contra una enfermedad con R₀ = 15, ¿podría alcanzarse el umbral solo con vacunación? Calcula H/e y compruébalo en la práctica.',
+  },
 ];
 
 /** Con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

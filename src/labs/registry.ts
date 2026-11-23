@@ -98,4 +98,6 @@ export const LAB_COMPONENTS: Record<string, LazyExoticComponent<ComponentType<La
   termodinamica: lazy(() => import('./ThermodynamicsLab')),
   'efecto-doppler': lazy(() => import('./DopplerLab')),
   'nutricion-digestion': lazy(() => import('./DigestionLab')),
+  'biotecnologia-pcr': lazy(() => import('./PcrLab')),
+  'sistema-inmune': lazy(() => import('./ImmunityLab')),
 };

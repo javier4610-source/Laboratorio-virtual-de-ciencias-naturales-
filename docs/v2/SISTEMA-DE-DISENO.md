@@ -231,6 +231,8 @@ siguen todas las prácticas adoptadas:
 | Primera ley de la termodinámica | `ThermodynamicsLab` | Recorrido · Recorrer el proceso / el ciclo | avance (0–100 %) | Un proceso en 4 s y un ciclo en 8 s; el émbolo 3D, las partículas y las flechas de calor y trabajo quedan quietos en pausa |
 | Efecto Doppler | `DopplerLab` | Frentes de onda · Emitir sonido | frentes (0–9, tiempo adimensional) | Nueve frentes en 9 s; las esferas 3D y la fuente quedan quietas en pausa |
 | Digestión | `DigestionLab` | Recorrido · Comer el almuerzo | t (0–451 min) | Las 7,5 h en ≈ 15 s; el bolo 3D y sus partículas quedan quietos en pausa |
+| PCR y electroforesis | `PcrLab` | Termociclador · Correr la PCR; Electroforesis · Correr el gel | ciclos (0–40) / corrida (0–100 %) | Medio segundo por ciclo y el gel en 6 s; la hélice y las bandas 3D quedan quietas en pausa |
+| Sistema inmune | `ImmunityLab` | Días · Avanzar los días | día (0–60 en los anticuerpos; 0–300 en la epidemia) | Cada recorrido en ≈ 12 s; los anticuerpos y la población 3D quedan quietos en pausa |
 
 **Prácticas con animación pero sin dinámica que pausar** (no se inventan controles):
 

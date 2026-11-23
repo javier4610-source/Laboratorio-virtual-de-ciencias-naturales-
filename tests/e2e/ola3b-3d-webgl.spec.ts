@@ -134,3 +134,39 @@ test('nutricion-digestion 3D: el bolo recorre el tubo coloreado por pH, pierde n
   await page.getByRole('group', { name: 'Recorrido', exact: true }).getByRole('button', { name: 'Reanudar' }).click();
   await expect.poll(() => description(v)).toContain('Queda sin digerir el 2 % del almidón, el 3 % de las proteínas y el 5 % de las grasas');
 });
+
+test('biotecnologia-pcr 3D: la hélice pasa por las tres etapas del ciclo, en pausa queda quieta y en el gel las bandas bajan', async ({ page }) => {
+  await openFree(page, 'biotecnologia-pcr');
+  await waitEngine(page, 'pcr', 'disponible');
+  const v = view(page, 'pcr');
+  expect(await description(v)).toContain('Cada cebador se une al extremo de la hebra que le es complementaria');
+  await keyboardAndTheme(page, 'pcr', 'biotecnologia-pcr 3D');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Ciclos de la PCR', exact: true }).click();
+  const paused = await pauseIsStill(page, 'pcr', 'Termociclador', 'Correr la PCR', 2200);
+  expect(paused).toMatch(/Ciclo \d+ de la PCR/);
+  await shots(page, () => figureOf(page, 'pcr'), 'pcr-3d-ciclo');
+  await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Electroforesis en gel', exact: true }).click();
+  await expect.poll(() => description(v)).toContain('Pulsa «Correr el gel»');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.getByRole('group', { name: 'Electroforesis', exact: true }).getByRole('button', { name: 'Correr el gel' }).click();
+  await expect.poll(() => description(v)).toContain('El producto (350 pb) ha avanzado 36,6 mm');
+  await expect(figureOf(page, 'pcr').locator('.scene3d-label', { hasText: 'producto' })).toBeVisible();
+  await shots(page, () => figureOf(page, 'pcr'), 'pcr-3d-gel');
+});
+
+test('sistema-inmune 3D: los anticuerpos crecen con el título, la población cambia de color con la epidemia y en pausa no se mueve', async ({ page }) => {
+  await openFree(page, 'sistema-inmune');
+  await waitEngine(page, 'inm', 'disponible');
+  const v = view(page, 'inm');
+  expect(await description(v)).toContain('Día 0: título de anticuerpos 0,00');
+  await keyboardAndTheme(page, 'inm', 'sistema-inmune 3D');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await pauseIsStill(page, 'inm', 'Días', 'Avanzar los días', 3000);
+  await shots(page, () => figureOf(page, 'inm'), 'inmune-3d-anticuerpos');
+  await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Epidemia y vacunación', exact: true }).click();
+  await expect.poll(() => description(v)).toContain('Día 0: de cada 400 personas');
+  const paused = await pauseIsStill(page, 'inm', 'Días', 'Avanzar los días', 1500);
+  expect(paused).toMatch(/Día \d+: de cada 400 personas/);
+  await shots(page, () => figureOf(page, 'inm'), 'inmune-3d-poblacion');
+});

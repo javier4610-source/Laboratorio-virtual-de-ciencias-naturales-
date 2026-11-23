@@ -141,3 +141,73 @@ test('nutricion-digestion: amilasa a pH 6,8 y a pH 2 con lugol, recorrido del al
   await idea(page, 'La bilis es una enzima', 'Es falso');
   await a11yAndMobile(page, 'nutricion-digestion');
 });
+
+test('biotecnologia-pcr: cebadores con la regla de Wallace, 30 ciclos (1000·1,9³⁰ = 2,30 × 10¹¹) y gel con la escalera de 100 pb', async ({ page }) => {
+  test.setTimeout(90_000);
+  await openFree(page, 'biotecnologia-pcr');
+  await expect(ro(page, 'Tamaño del producto')).toContainText('350 pb');
+  await expect(ro(page, 'Cebador directo (5′ → 3′)')).toContainText('Tm = 56 °C');
+  await expect(ro(page, 'Temperatura de alineamiento sugerida')).toContainText('51 °C');
+  await page.getByRole('button', { name: 'Guardar los cebadores en la tabla' }).click();
+  await saved(page, 1);
+  await page.getByLabel('Par de cebadores', { exact: true }).selectOption('p4');
+  await expect(ro(page, 'Tamaño del producto')).toContainText('sin producto');
+  await expect(cond(page, 'debe ser el complemento inverso')).toContainText('Cómo corregirlo');
+  await page.getByLabel('Par de cebadores', { exact: true }).selectOption('p2');
+  await setSlider(page, 'Temperatura de alineamiento', '°C', '70');
+  await expect(cond(page, 'casi no se unen')).toContainText('Cómo corregirlo');
+  await setSlider(page, 'Temperatura de alineamiento', '°C', '51');
+  await station(page, 'Ciclos de la PCR');
+  // Valor dorado: 1000 copias, E = 0,9, 30 ciclos → 1000·1,9³⁰ = 2,30 × 10¹¹ sin meseta.
+  await expect(ro(page, 'Copias si cada ciclo duplicara')).toContainText('2,30 × 10¹¹');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const sim = page.getByRole('group', { name: 'Termociclador', exact: true });
+  await sim.getByRole('button', { name: 'Correr la PCR' }).click();
+  await expect(sim.getByRole('status')).toHaveText('Terminada');
+  await page.getByRole('button', { name: 'Guardar la PCR en la tabla' }).click();
+  await saved(page, 1);
+  await setSlider(page, 'Número de ciclos', '', '38');
+  await expect(cond(page, 'ya está en la meseta')).toContainText('Cómo corregirlo');
+  await station(page, 'Electroforesis en gel');
+  await expect(ro(page, 'Distancia del producto en el gel')).toContainText('36,6 mm');
+  await expect(ro(page, 'Tamaño estimado con la recta del marcador')).toContainText('350 pb (real: 350 pb)');
+  const gel = page.getByRole('group', { name: 'Electroforesis', exact: true });
+  await gel.getByRole('button', { name: 'Correr el gel' }).click();
+  await expect(gel.getByRole('status')).toHaveText('Terminada');
+  await page.getByRole('button', { name: 'Guardar el gel en la tabla' }).click();
+  await saved(page, 1);
+  await idea(page, 'Con 30 ciclos de PCR se obtienen 30 copias', 'Es falso');
+  await a11yAndMobile(page, 'biotecnologia-pcr');
+});
+
+test('sistema-inmune: respuesta secundaria 20 veces mayor, brote de sarampión con y sin vacuna y umbral 1 − 1/R₀', async ({ page }) => {
+  test.setTimeout(90_000);
+  await openFree(page, 'sistema-inmune');
+  await expect(page.getByText('Modelo para aprender, no consejo médico')).toBeVisible();
+  await expect(ro(page, 'Primer pico')).toContainText('día 12: 1,00');
+  await expect(ro(page, 'Segundo pico (respuesta secundaria)')).toContainText('día 36: 20,0 (20 veces el primero)');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const sim = page.getByRole('group', { name: 'Días', exact: true });
+  await sim.getByRole('button', { name: 'Avanzar los días' }).click();
+  await expect(sim.getByRole('status')).toHaveText('Terminada');
+  await page.getByRole('button', { name: 'Guardar la respuesta en la tabla' }).click();
+  await saved(page, 1);
+  await station(page, 'Epidemia y vacunación');
+  // Valor dorado: sarampión con R₀ = 15 → umbral 1 − 1/15 = 93,3 %.
+  await expect(ro(page, 'Umbral de inmunidad colectiva H = 1 − 1/R₀')).toContainText('93,3 %');
+  await expect(ro(page, 'Personas infectadas en total')).toContainText('100,0 %');
+  await page.getByRole('button', { name: 'Guardar la epidemia en la tabla' }).click();
+  await saved(page, 1);
+  await setSlider(page, 'Cobertura de vacunación', '%', '80');
+  await expect(cond(page, 'no alcanza el umbral')).toContainText('Cómo corregirlo');
+  await expect(ro(page, 'Personas infectadas en total')).toContainText('21,6 %');
+  await setSlider(page, 'Cobertura de vacunación', '%', '98');
+  await expect(ro(page, 'Número reproductivo al empezar')).toContainText('el brote se apaga');
+  await setSlider(page, 'Eficacia de la vacuna', '%', '60');
+  await expect(cond(page, 'imposible solo con esta vacuna')).toContainText('Cómo corregirlo');
+  await expect(cond(page, 'No sirve para tomar decisiones de salud')).toBeVisible();
+  await station(page, 'Inmunidad colectiva');
+  await expect(page.getByRole('table', { name: /Umbral de inmunidad colectiva/ })).toContainText('91,7 a 94,4 %');
+  await idea(page, 'Si yo estoy vacunado, no importa', 'Es falso');
+  await a11yAndMobile(page, 'sistema-inmune');
+});

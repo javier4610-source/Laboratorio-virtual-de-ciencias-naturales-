@@ -5,6 +5,10 @@ import { dopplerScene, sceneScale } from '../../src/labs/doppler3d';
 import { fmt } from '../../src/lib/format';
 import { digestionScene, N_PER_NUTRIENT, PATH, pHColor } from '../../src/labs/digestion3d';
 import { DEFAULT_MEAL, digestMeal } from '../../src/models/digestion';
+import { gelScene, helixScene, K_GEL, N_BP, Z0 } from '../../src/labs/pcr3d';
+import { migration } from '../../src/models/pcr';
+import { antibodyScene, GRID, MAX_ANTIBODIES, populationScene, splitCounts } from '../../src/labs/immunity3d';
+import { simulateSIR } from '../../src/models/immunity';
 import type { ArrowItem, BoxItem, ParticlesItem, RodItem, SceneItem, SphereItem } from '../../src/three/scene';
 
 const byId = <T extends SceneItem>(items: SceneItem[], id: string) => items.find((i) => i.id === id) as T;
@@ -92,5 +96,55 @@ describe('tubo digestivo 3D (digestión)', () => {
     const c = byId<ParticlesItem>(mid.items, 'bolo-proteina').points[0];
     const [a, b] = PATH[2];
     expect(Math.abs(c[1] - (a[1] + (b[1] - a[1]) * mid.at.within))).toBeLessThan(0.2);
+  });
+});
+
+describe('PCR y gel 3D', () => {
+  const base = { extension: 0, primersBind: true, cycle: 1, copies: 1000 };
+  it('la hélice: unida con peldaños, separada en la desnaturalización, con cebadores en el alineamiento y copia en la extensión', () => {
+    const nat = helixScene({ ...base, phase: 'nativo' });
+    expect(nat.items.filter((i) => i.id.startsWith('par-'))).toHaveLength(N_BP);
+    const den = helixScene({ ...base, phase: 'desnaturalizacion' });
+    expect(den.items.some((i) => i.id.startsWith('par-'))).toBe(false);
+    expect(byId(den.items, 'cebador-directo')).toBeUndefined();
+    const ali = helixScene({ ...base, phase: 'alineamiento' });
+    expect(byId<ParticlesItem>(ali.items, 'cebador-directo').points).toHaveLength(4);
+    expect(byId(ali.items, 'copia-abajo')).toBeUndefined();
+    const ext = helixScene({ ...base, phase: 'extension', extension: 1 });
+    expect(byId<ParticlesItem>(ext.items, 'copia-abajo').points).toHaveLength(N_BP - 4);
+    expect(byId(helixScene({ ...base, phase: 'alineamiento', primersBind: false }).items, 'cebador-directo')).toBeUndefined();
+  });
+  it('gel: cada banda baja la distancia del modelo por el avance; el producto queda entre las bandas del marcador', () => {
+    const g = gelScene({ product: 350, extraBand: null, progress: 1, productBrightness: 1 });
+    const band = (lane: string, bp: number) => g.bands.find((b) => b.lane === lane && b.bp === bp)!;
+    expect(band('producto', 350).z).toBeCloseTo(Z0 + migration(350) * K_GEL, 12);
+    expect(band('producto', 350).z).toBeGreaterThan(band('marcador', 400).z);
+    expect(band('producto', 350).z).toBeLessThan(band('marcador', 300).z);
+    const half = gelScene({ product: 350, extraBand: null, progress: 0.5, productBrightness: 1 });
+    expect(half.bands.find((b) => b.lane === 'producto')!.z - Z0).toBeCloseTo((band('producto', 350).z - Z0) / 2, 12);
+    expect(gelScene({ product: 350, extraBand: null, progress: 0, productBrightness: 1 }).bands).toHaveLength(0);
+    expect(g.bands.filter((b) => b.lane === 'control')).toHaveLength(0);
+  });
+});
+
+describe('población y anticuerpos 3D (sistema inmune)', () => {
+  it('las esferas de cada grupo siguen las proporciones del SIR y suman 400', () => {
+    const c = splitCounts({ S: 5000, I: 1000, R: 2500, V: 1500 });
+    expect(c).toEqual({ S: 200, I: 40, R: 100, V: 60 });
+    const odd = splitCounts({ S: 1, I: 1, R: 1, V: 0 });
+    expect(odd.S + odd.I + odd.R + odd.V).toBe(GRID * GRID);
+    const run = simulateSIR({ R0: 15, infectiousDays: 8, coverage: 0.8, efficacy: 0.97, N: 10000, I0: 5, days: 200 });
+    const p = run.points[30];
+    const sc = populationScene({ ...p });
+    const n = (id: string) => byId<ParticlesItem>(sc.items, id)?.points.length ?? 0;
+    expect(n('grupo-V') + n('grupo-R') + n('grupo-I') + n('grupo-S')).toBe(400);
+    expect(n('grupo-V')).toBe(sc.counts.V);
+    expect(Math.abs(n('grupo-V') - (p.V / 10000) * 400)).toBeLessThanOrEqual(1);
+  });
+  it('el número de anticuerpos crece con el título', () => {
+    expect(antibodyScene(0, 0).n).toBe(0);
+    expect(antibodyScene(1, 12).n).toBeLessThan(antibodyScene(20, 36).n);
+    expect(antibodyScene(20, 36).n).toBe(MAX_ANTIBODIES);
+    expect(antibodyScene(20, 36).items.filter((i) => i.id.endsWith('-tallo'))).toHaveLength(MAX_ANTIBODIES);
   });
 });

@@ -414,6 +414,27 @@ const RAW: Question[] = [
     review: 'En la práctica «Termoquímica: calor de disolución y de neutralización», disuelve NH₄NO₃ con varias masas.',
     transfer: '¿Cuántos gramos de NH₄NO₃ (80 g/mol) harían falta en 100 g de agua para bajar la temperatura unos 10 °C? Plantea q = (m·c)·ΔT y n = q/ΔH, y compruébalo en la práctica.',
   },
+  {
+    id: 'saber-pcr-1', grade: 10, topic: 'PCR', competency: 'indagacion', component: 'biologico',
+    skill: 'Interpretar datos de amplificación y relacionar la eficiencia con el número de copias', difficulty: 'alta', practiceId: 'biotecnologia-pcr',
+    context: 'Dos grupos de 10.º amplifican el mismo fragmento con una PCR que empieza con 1000 copias. El grupo A usa una mezcla en buen estado y el grupo B una mezcla vieja. Con un modelo calculan las copias después de cada número de ciclos.',
+    table: {
+      caption: 'Copias del fragmento según el modelo N = N₀·(1 + E)ⁿ, sin meseta',
+      headers: ['Ciclos', 'Grupo A (E = 1,0)', 'Grupo B (E = 0,8)'],
+      rows: [['10', '1,0 × 10⁶', '3,6 × 10⁵'], ['20', '1,0 × 10⁹', '1,3 × 10⁸'], ['30', '1,1 × 10¹²', '4,6 × 10¹⁰']],
+    },
+    stem: '¿Qué conclusión es coherente con los datos?',
+    options: [
+      { id: 'a', text: 'Los dos grupos obtienen casi las mismas copias, porque la eficiencia solo baja un 20 %.', feedback: 'A los 30 ciclos el grupo A tiene unas 24 veces más copias.' },
+      { id: 'b', text: 'Una diferencia pequeña de eficiencia por ciclo se multiplica en cada ciclo: a los 30 ciclos el grupo B tiene unas 24 veces menos copias que el A.', feedback: 'Correcto: (2/1,8)³⁰ ≈ 24.' },
+      { id: 'c', text: 'El grupo B tiene 20 % menos copias en todos los ciclos.', feedback: 'La razón entre los dos crece con cada ciclo.' },
+      { id: 'd', text: 'Con más ciclos el grupo B siempre alcanzará al A.', feedback: 'Con la misma cantidad de ciclos la diferencia crece; en una reacción real ambos acabarían en la meseta.' },
+    ],
+    correct: 'b',
+    explanation: 'La razón entre las copias es (1 + E_A)ⁿ/(1 + E_B)ⁿ = (2/1,8)ⁿ = 1,111ⁿ: 2,9 a los 10 ciclos, 8,2 a los 20 y 24 a los 30. Como el crecimiento es exponencial, una diferencia pequeña por ciclo se vuelve grande. En una reacción real los dos llegarían a una meseta cuando se agotan los reactivos.',
+    review: 'En la práctica «Biotecnología: PCR y electroforesis en gel», corre 30 ciclos con eficiencia 1,0 y 0,8 y compara.',
+    transfer: '¿Cuántos ciclos más necesita el grupo B para llegar a las copias que el grupo A tiene en 20 ciclos? Usa logaritmos y compruébalo en «Ciclos de la PCR».',
+  },
 ];
 
 /** Con la posición de la respuesta correcta repartida entre A–D (ver balance.ts). */

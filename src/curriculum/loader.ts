@@ -97,6 +97,8 @@ const LOADERS: Record<string, () => Promise<PracticeDef>> = {
   termodinamica: () => import('./practices/termodinamica').then((m) => m.termodinamica),
   'efecto-doppler': () => import('./practices/efecto-doppler').then((m) => m.efectoDoppler),
   'nutricion-digestion': () => import('./practices/nutricion-digestion').then((m) => m.nutricionDigestion),
+  'biotecnologia-pcr': () => import('./practices/biotecnologia-pcr').then((m) => m.biotecnologiaPcr),
+  'sistema-inmune': () => import('./practices/sistema-inmune').then((m) => m.sistemaInmune),
 };
 
 export const LOADER_IDS = Object.keys(LOADERS);

@@ -177,6 +177,14 @@ export function practiceProvenance(practiceId: string, measurement: 'ideal' | 'r
     return { data: 'modelo', scene: 'modelo',
       detail: 'Actividad contra pH con la curva del modelo de «enzimas» y pH óptimos redondeados de los manuales (amilasa salival ≈ 6,8; pepsina ≈ 2; amilasa pancreática ≈ 7; tripsina y lipasa ≈ 8); pH típicos de los tramos de Guyton y Hall y de Fallingborg (1999); constantes calibradas con dos datos de Guyton y Hall (la saliva digiere ≈ 30–40 % del almidón y la pepsina ≈ 10–20 % de las proteínas): modelo calculado, no son mediciones de una persona. Las anchuras de las curvas, las rapideces, los tiempos, las situaciones y el color del lugol son ilustrativos. No es un modelo clínico. Tubo digestivo 3D: esquema coloreado por pH con partículas del bolo en número proporcional a lo que queda sin digerir.' };
   }
+  if (practiceId === 'biotecnologia-pcr') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Copias con N = N₀·(1 + E)ⁿ y una meseta ilustrativa; temperatura de fusión de los cebadores con la regla de Wallace (Wallace y otros, 1979); migración en el gel lineal con log₁₀ del tamaño y marcador con los tamaños de la escalera de 100 pb de New England Biolabs: modelo calculado, no son mediciones. El molde es una secuencia aleatoria escrita para la práctica (no es de ningún organismo); la meseta, la unión de los cebadores a cada temperatura, la banda inespecífica y los coeficientes del gel son ilustrativos. Vista 3D: tramo de 16 pares de bases sin escala con la etapa del ciclo y bandas a la distancia del modelo.' };
+  }
+  if (practiceId === 'sistema-inmune') {
+    return { data: 'modelo', scene: 'modelo',
+      detail: 'Epidemia con el modelo SIR (Kermack y McKendrick, 1927) integrado con Runge–Kutta; umbral de inmunidad colectiva 1 − 1/R₀ (Anderson y May); R₀ del sarampión de 12 a 18 (Guerra y otros, 2017) y de la influenza estacional ≈ 1,28 (Biggerstaff y otros, 2014); eficacia de la vacuna contra el sarampión del CDC: modelo calculado, no son mediciones ni datos de un brote real. La forma de la respuesta de anticuerpos (Abbas y otros), la población de 10 000 personas, los días de contagio y la enfermedad imaginaria son ilustrativos. No es consejo médico. Vista 3D: esferas en la proporción del modelo SIR y anticuerpos en número proporcional al título; la forma en Y y el microbio son un esquema.' };
+  }
   const synthetic = SYNTHETIC_SAMPLES.has(practiceId);
   const detail = synthetic
     ? 'Datos sintéticos generados por un modelo calculado con semilla reproducible; no son mediciones reales.'

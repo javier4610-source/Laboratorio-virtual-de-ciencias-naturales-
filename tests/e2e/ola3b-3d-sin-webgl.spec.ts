@@ -46,5 +46,13 @@ test('ola 3b sin WebGL: respaldo SVG en las cinco prácticas y sin descargar thr
   await openFree(page, 'nutricion-digestion');
   await fallbackChecks(page, 'dg', 'nutricion-digestion');
   await expect(figureOf(page, 'dg').locator('svg text', { hasText: /^páncreas$/ })).toBeVisible();
+
+  await openFree(page, 'biotecnologia-pcr');
+  await fallbackChecks(page, 'pcr', 'biotecnologia-pcr');
+  await expect(figureOf(page, 'pcr').locator('svg text', { hasText: /^cebador$/ })).toBeVisible();
+
+  await openFree(page, 'sistema-inmune');
+  await fallbackChecks(page, 'inm', 'sistema-inmune');
+  await expect(figureOf(page, 'inm').locator('svg text', { hasText: /^microbio$/ })).toBeVisible();
   expect(loaded, 'three.js no se descarga sin WebGL').toEqual([]);
 });

@@ -67,7 +67,7 @@ export default function ThermodynamicsLab({ api }: LabProps) {
     const dur = SCREEN[station] * 1000;
     const start = performance.now() - frac * dur;
     const tick = (now: number) => {
-      const f = (now - start) / dur;
+      const f = Math.max(0, (now - start) / dur);
       if (f >= 1) { setFrac(1); setRunning(false); return; }
       setFrac(f);
       raf.current = requestAnimationFrame(tick);

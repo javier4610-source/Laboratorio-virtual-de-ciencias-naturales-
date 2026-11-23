@@ -53,7 +53,7 @@ export default function DopplerLab({ api }: LabProps) {
     const speed = T_SCENE / SCREEN_S;
     const start = performance.now() - (t / speed) * 1000;
     const tick = (now: number) => {
-      const el = ((now - start) / 1000) * speed;
+      const el = Math.max(0, ((now - start) / 1000) * speed);
       if (el >= T_SCENE) { setTime(T_SCENE); setRunning(false); return; }
       setTime(el);
       raf.current = requestAnimationFrame(tick);

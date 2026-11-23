@@ -2383,4 +2383,63 @@ export const DATASETS: Record<string, Dataset[]> = {
       ],
     },
   ],
+  'biotecnologia-pcr': [
+    {
+      id: 'cebadores', label: 'Diseño de cebadores', defaultX: 'Ta', defaultY: 'unidos',
+      columns: [
+        { key: 'par', label: 'Par de cebadores', numeric: false, input: true },
+        { key: 'TmDirecto', label: 'Tm del directo (Wallace)', unit: '°C', numeric: true, decimals: 0 },
+        { key: 'TmReverso', label: 'Tm del reverso (Wallace)', unit: '°C', numeric: true, decimals: 0 },
+        { key: 'Ta', label: 'Temperatura de alineamiento', unit: '°C', numeric: true, decimals: 0, input: true },
+        { key: 'producto', label: 'Tamaño del producto', unit: 'pb', numeric: true, decimals: 0 },
+        { key: 'unidos', label: 'Moldes con cebadores unidos', unit: '%', numeric: true, decimals: 0 },
+      ],
+    },
+    {
+      id: 'ciclos', label: 'Ciclos de la PCR', defaultX: 'ciclos', defaultY: 'log10',
+      columns: [
+        { key: 'ciclos', label: 'Número de ciclos n', numeric: true, decimals: 0, input: true },
+        { key: 'eficiencia', label: 'Eficiencia efectiva E', numeric: true, decimals: 3, input: true },
+        { key: 'iniciales', label: 'Copias iniciales N₀', numeric: true, decimals: 0, input: true },
+        { key: 'copias', label: 'Copias con meseta', numeric: true, decimals: 0 },
+        { key: 'log10', label: 'log₁₀ de las copias', numeric: true, decimals: 3 },
+        { key: 'log10Ideal', label: 'log₁₀ de N₀·(1 + E)ⁿ', numeric: true, decimals: 3 },
+      ],
+    },
+    {
+      id: 'gel', label: 'Electroforesis en gel', defaultX: 'distancia', defaultY: 'estimado',
+      columns: [
+        { key: 'par', label: 'Par de cebadores', numeric: false, input: true },
+        { key: 'producto', label: 'Tamaño real del producto', unit: 'pb', numeric: true, decimals: 0 },
+        { key: 'distancia', label: 'Distancia de la banda', unit: 'mm', numeric: true, decimals: 1 },
+        { key: 'estimado', label: 'Tamaño estimado con el marcador', unit: 'pb', numeric: true, decimals: 0 },
+        { key: 'error', label: 'Error de la estimación', unit: '%', numeric: true, decimals: 2 },
+      ],
+    },
+  ],
+  'sistema-inmune': [
+    {
+      id: 'anticuerpos', label: 'Respuesta de anticuerpos', defaultX: 'dia2', defaultY: 'pico2',
+      columns: [
+        { key: 'escenario', label: 'Escenario', numeric: false, input: true },
+        { key: 'dia1', label: 'Día del primer pico', unit: 'día', numeric: true, decimals: 0 },
+        { key: 'pico1', label: 'Título del primer pico', numeric: true, decimals: 2 },
+        { key: 'dia2', label: 'Día del segundo pico', unit: 'día', numeric: true, decimals: 0 },
+        { key: 'pico2', label: 'Título del segundo pico', numeric: true, decimals: 2 },
+      ],
+    },
+    {
+      id: 'epidemia', label: 'Epidemia y vacunación', defaultX: 'cobertura', defaultY: 'infectados',
+      columns: [
+        { key: 'enfermedad', label: 'Enfermedad', numeric: false, input: true },
+        { key: 'R0', label: 'R₀', numeric: true, decimals: 2, input: true },
+        { key: 'cobertura', label: 'Cobertura de vacunación', unit: '%', numeric: true, decimals: 0, input: true },
+        { key: 'eficacia', label: 'Eficacia de la vacuna', unit: '%', numeric: true, decimals: 0, input: true },
+        { key: 'protegidos', label: 'Protegidos por la vacuna', unit: '%', numeric: true, decimals: 1 },
+        { key: 'umbral', label: 'Umbral 1 − 1/R₀', unit: '%', numeric: true, decimals: 1 },
+        { key: 'infectados', label: 'Infectados en total', unit: '%', numeric: true, decimals: 2 },
+        { key: 'pico', label: 'Pico de infectados a la vez', unit: 'personas', numeric: true, decimals: 0 },
+      ],
+    },
+  ],
 };

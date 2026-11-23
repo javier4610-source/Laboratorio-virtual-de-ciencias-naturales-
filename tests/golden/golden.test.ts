@@ -33,6 +33,8 @@ import { A_1750, A_2019, A_MID, AIRBORNE_FRACTION, atmosphereRate, IMBALANCE, si
 import { carnotCycle, gasProcess, initialState, N0, ottoCycle } from '../../src/models/thermodynamics';
 import { dopplerLine, machCone, soundSpeed } from '../../src/models/doppler';
 import { activity as dgActivity, DEFAULT_MEAL, digestMeal } from '../../src/models/digestion';
+import { amplify, calibrate, checkPrimers, migration as gelMigration, wallaceTm as pcrWallaceTm } from '../../src/models/pcr';
+import { coverageNeeded, finalSize, herdThreshold, MEASLES_VACCINE, simulateSIR } from '../../src/models/immunity';
 import { describe, expect, test } from 'vitest';
 import { CATALOG } from '../../src/curriculum/catalog';
 import { solvePH } from '../../src/models/acidbase';
@@ -523,6 +525,19 @@ export const GOLDEN: GoldenCase[] = [
     const r = digestMeal(DEFAULT_MEAL);
     close(r.shareStomach.proteina / 100, 1 - Math.exp(-0.001354 * 120), 1e-12); close(r.shareStomach.proteina, 15.0, 0.01);
     close(r.shareSaliva, 35.03, 0.01);
+  } },
+  { id: 'biotecnologia-pcr', origin: 'independiente', what: 'N = N₀·(1 + E)ⁿ: 1 molde, E = 1, 30 ciclos → 2³⁰ = 1 073 741 824; 1000 moldes con E = 0,9 → 1000·1,9³⁰ = 2,3047 × 10¹¹; regla de Wallace: ATGCATGCATGCATGCATGC (10 A + T, 10 G + C) → 60 °C; el par 2 delimita 350 pb y la recta del marcador de 100 pb de NEB (100–1517 pb) lo estima en 350 pb', run: () => {
+    expect(amplify(1, 1, 30).finalIdeal).toBe(1073741824);
+    close(amplify(1000, 0.9, 30).finalIdeal / 1e11, 1000 * 1.9 ** 30 / 1e11, 1e-9); close(amplify(1000, 0.9, 30).finalIdeal / 1e11, 2.3047, 1e-4);
+    expect(pcrWallaceTm('ATGCATGCATGCATGCATGC')).toBe(60);
+    expect(checkPrimers('p2').product).toBe(350);
+    close(calibrate().estimate(gelMigration(350)), 350, 1e-6);
+  } },
+  { id: 'sistema-inmune', origin: 'referencia', what: 'R₀ del sarampión 12–18 (Guerra y otros, 2017): umbral 1 − 1/R₀ = 91,67 % a 94,44 %; influenza estacional R₀ = 1,28 (Biggerstaff y otros, 2014): 21,88 %; eficacia de dos dosis 97 % (CDC): cobertura necesaria con R₀ = 15 = (14/15)/0,97 = 96,22 %; SIR sin vacunas con R₀ = 2 termina como z = 1 − e^(−2z) = 79,68 %', run: () => {
+    close(herdThreshold(12), 11 / 12, 1e-12); close(herdThreshold(18), 17 / 18, 1e-12); close(herdThreshold(1.28), 0.21875, 1e-12);
+    close(coverageNeeded(15, MEASLES_VACCINE.twoDoses), (14 / 15) / 0.97, 1e-12); close(coverageNeeded(15, 0.97), 0.96220, 1e-5);
+    close(finalSize(2), 0.79681, 1e-5);
+    close(simulateSIR({ R0: 2, infectiousDays: 7, coverage: 0, efficacy: 1, N: 1e6, I0: 1, days: 600 }).attackRate, finalSize(2), 2e-3);
   } },
 ];
 

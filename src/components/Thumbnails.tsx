@@ -1114,6 +1114,30 @@ const SCENES: Record<string, () => ReactNode> = {
       <TestTube x={250} y={30} w={22} h={98} fill={0.6} liquid="#d8b23a" liquidOpacity={0.85} />
     </>
   ),
+  'biotecnologia-pcr': () => (
+    <>
+      <path d="M24 60 C 44 30, 64 90, 84 60 S 124 30, 144 60" fill="none" stroke="var(--series-2)" strokeWidth="3" />
+      <path d="M24 60 C 44 90, 64 30, 84 60 S 124 90, 144 60" fill="none" stroke="var(--series-5)" strokeWidth="3" />
+      {[34, 54, 74, 94, 114, 134].map((x) => <line key={x} x1={x} x2={x} y1={46} y2={74} stroke={INK} strokeWidth="1.2" opacity="0.5" />)}
+      <rect x="24" y="96" width="26" height="8" rx="3" fill="var(--data)" />
+      <rect x="118" y="112" width="26" height="8" rx="3" fill="var(--data)" />
+      <rect x="176" y="18" width="124" height="124" rx="6" fill="var(--surface-2)" stroke={INK} strokeWidth="1.4" />
+      {[202, 238, 274].map((x) => <rect key={x} x={x - 12} y={26} width={24} height={6} fill={INK} opacity="0.55" />)}
+      {[44, 54, 64, 76, 90, 106, 124].map((y, i) => <rect key={y} x={190} y={y} width={24} height={i === 4 ? 4 : 3} fill="var(--info)" opacity={i === 4 ? 0.95 : 0.7} />)}
+      <rect x="226" y="82" width="24" height="5" fill="var(--series-3)" />
+    </>
+  ),
+  'sistema-inmune': () => (
+    <>
+      <circle cx="82" cy="80" r="30" fill="var(--series-6)" opacity="0.8" />
+      {[0, 1, 2, 3, 4, 5].map((k) => {
+        const a = (k * Math.PI) / 3, x = 82 + 34 * Math.cos(a), y = 80 + 34 * Math.sin(a), ox = 82 + 58 * Math.cos(a), oy = 80 + 58 * Math.sin(a);
+        const px = -Math.sin(a) * 8, py = Math.cos(a) * 8;
+        return <g key={k} stroke="var(--info)" strokeWidth="3" strokeLinecap="round"><path d={`M${ox} ${oy} L${(x + ox) / 2} ${(y + oy) / 2} L${x + px} ${y + py} M${(x + ox) / 2} ${(y + oy) / 2} L${x - px} ${y - py}`} fill="none" /></g>;
+      })}
+      {Array.from({ length: 48 }, (_, i) => <circle key={i} cx={176 + (i % 8) * 16} cy={36 + Math.floor(i / 8) * 18} r="5" fill={i % 7 === 3 ? 'var(--bad)' : i % 3 === 0 ? 'var(--ok)' : i < 30 ? 'var(--info)' : 'var(--line-strong)'} />)}
+    </>
+  ),
 };
 
 /** Respaldo por área para prácticas futuras sin miniatura propia. */

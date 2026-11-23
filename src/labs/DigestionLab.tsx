@@ -54,7 +54,8 @@ export default function DigestionLab({ api }: LabProps) {
     const speed = run.totalMinutes / SCREEN_S;
     const start = performance.now() - (t / speed) * 1000;
     const tick = (n: number) => {
-      const el = ((n - start) / 1000) * speed;
+      // La marca de tiempo del cuadro puede ser un poco anterior a «start»: nunca un tiempo negativo.
+      const el = Math.max(0, ((n - start) / 1000) * speed);
       if (el >= run.totalMinutes) { setT(run.totalMinutes); setRunning(false); return; }
       setT(el);
       raf.current = requestAnimationFrame(tick);

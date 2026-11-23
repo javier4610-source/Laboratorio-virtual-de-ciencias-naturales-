@@ -34,7 +34,7 @@ test('inicio: navega a los seis grados', async ({ page }) => {
 test('catálogo: búsqueda y filtros', async ({ page }) => {
   await page.goto('/#/catalogo');
   await page.getByLabel('Buscar').fill('adn');
-  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(4);
+  await expect(page.locator('.pcard:not(.planned)')).toHaveCount(5); // con biotecnologia-pcr (ola 3b)
   await page.getByLabel('Buscar').fill('');
   await page.getByLabel('Asignatura').selectOption('quimica');
   await expect(page.locator('.pcard:not(.planned)')).toHaveCount(28);

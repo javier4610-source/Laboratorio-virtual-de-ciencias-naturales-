@@ -9,12 +9,13 @@
       "heat"
     ],
     "tests": [
-      "heat.test.ts"
+      "heat.test.ts",
+      "lote3d6.test.ts"
     ],
-    "nTests": 14,
+    "nTests": 33,
     "e2e": true,
     "a11y": false,
-    "loc": 569,
+    "loc": 579,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -192,12 +193,13 @@
       "mixtures"
     ],
     "tests": [
+      "lote3d6.test.ts",
       "models3.test.ts"
     ],
-    "nTests": 21,
+    "nTests": 40,
     "e2e": true,
     "a11y": false,
-    "loc": 203,
+    "loc": 209,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -218,12 +220,13 @@
     ],
     "tests": [
       "conditions.test.ts",
+      "lote3d6.test.ts",
       "motion.test.ts"
     ],
-    "nTests": 43,
+    "nTests": 62,
     "e2e": true,
     "a11y": false,
-    "loc": 836,
+    "loc": 843,
     "measure": true,
     "advanced": true,
     "params": true,
@@ -347,12 +350,13 @@
       "conduction"
     ],
     "tests": [
-      "conduction.test.ts"
+      "conduction.test.ts",
+      "lote3d6.test.ts"
     ],
-    "nTests": 15,
+    "nTests": 34,
     "e2e": true,
     "a11y": false,
-    "loc": 761,
+    "loc": 768,
     "measure": true,
     "advanced": false,
     "params": false,
@@ -519,6 +523,32 @@
     "sound": true,
     "datasets": true,
     "illustrative": false
+  },
+  {
+    "id": "nutricion-digestion",
+    "title": "Digestión: enzimas y pH a lo largo del tubo digestivo",
+    "grade": 7,
+    "area": "biologia",
+    "lab": "DigestionLab",
+    "models": [
+      "digestion"
+    ],
+    "tests": [
+      "escenas3dOla3b.test.ts",
+      "ola3bModelos.test.ts"
+    ],
+    "nTests": 33,
+    "e2e": true,
+    "a11y": false,
+    "loc": 160,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
   },
   {
     "id": "osmosis",
@@ -934,12 +964,13 @@
     ],
     "tests": [
       "conditions.test.ts",
-      "kinematics.test.ts"
+      "kinematics.test.ts",
+      "lote3d6.test.ts"
     ],
-    "nTests": 46,
+    "nTests": 65,
     "e2e": true,
     "a11y": false,
-    "loc": 303,
+    "loc": 312,
     "measure": false,
     "advanced": true,
     "params": false,
@@ -1070,12 +1101,13 @@
       "selection"
     ],
     "tests": [
+      "lote3d6.test.ts",
       "selection.test.ts"
     ],
-    "nTests": 14,
+    "nTests": 33,
     "e2e": true,
     "a11y": false,
-    "loc": 279,
+    "loc": 286,
     "measure": false,
     "advanced": false,
     "params": false,
@@ -1138,6 +1170,32 @@
     "instr": false,
     "manip": false,
     "sound": true,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "biotecnologia-pcr",
+    "title": "Biotecnología: PCR y electroforesis en gel",
+    "grade": 10,
+    "area": "biologia",
+    "lab": "PcrLab",
+    "models": [
+      "pcr"
+    ],
+    "tests": [
+      "escenas3dOla3b.test.ts",
+      "ola3bModelos.test.ts"
+    ],
+    "nTests": 33,
+    "e2e": true,
+    "a11y": false,
+    "loc": 190,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
     "datasets": true,
     "illustrative": true
   },
@@ -1266,9 +1324,10 @@
       "conditions.test.ts",
       "lib.test.ts",
       "lote3d.test.ts",
-      "models.test.ts"
+      "models.test.ts",
+      "ola3bModelos.test.ts"
     ],
-    "nTests": 127,
+    "nTests": 150,
     "e2e": true,
     "a11y": false,
     "loc": 295,
@@ -1750,6 +1809,31 @@
     "illustrative": false
   },
   {
+    "id": "efecto-doppler",
+    "title": "Efecto Doppler y barrera del sonido",
+    "grade": 11,
+    "area": "fisica",
+    "lab": "DopplerLab",
+    "models": [
+      "doppler"
+    ],
+    "tests": [
+      "ola3bModelos.test.ts"
+    ],
+    "nTests": 23,
+    "e2e": true,
+    "a11y": false,
+    "loc": 146,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
     "id": "efecto-invernadero",
     "title": "Balance de energía de la Tierra y efecto invernadero",
     "grade": 11,
@@ -2181,9 +2265,10 @@
       "popgen"
     ],
     "tests": [
+      "lote3d6.test.ts",
       "models2.test.ts"
     ],
-    "nTests": 24,
+    "nTests": 43,
     "e2e": true,
     "a11y": false,
     "loc": 179,
@@ -2337,5 +2422,57 @@
     "sound": false,
     "datasets": true,
     "illustrative": false
+  },
+  {
+    "id": "sistema-inmune",
+    "title": "Sistema inmune, vacunas e inmunidad colectiva",
+    "grade": 11,
+    "area": "biologia",
+    "lab": "ImmunityLab",
+    "models": [
+      "immunity"
+    ],
+    "tests": [
+      "escenas3dOla3b.test.ts",
+      "ola3bModelos.test.ts"
+    ],
+    "nTests": 33,
+    "e2e": true,
+    "a11y": false,
+    "loc": 184,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
+  },
+  {
+    "id": "termodinamica",
+    "title": "Primera ley de la termodinámica y máquinas térmicas",
+    "grade": 11,
+    "area": "fisica",
+    "lab": "ThermodynamicsLab",
+    "models": [
+      "thermodynamics"
+    ],
+    "tests": [
+      "escenas3dOla3b.test.ts",
+      "ola3bModelos.test.ts"
+    ],
+    "nTests": 33,
+    "e2e": true,
+    "a11y": false,
+    "loc": 180,
+    "measure": false,
+    "advanced": true,
+    "params": false,
+    "instr": false,
+    "manip": false,
+    "sound": false,
+    "datasets": true,
+    "illustrative": true
   }
 ]

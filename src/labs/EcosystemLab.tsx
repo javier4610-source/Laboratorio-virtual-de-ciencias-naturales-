@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   ECO_DEFAULT, ECO_INSTRUMENTS, ecosystemConditions, ECO_LIMITS, FOODS, MAX_DAY, O2_CRIT_FISH, PH_CHART_RANGE, READ_TIME_LABEL, SPRIG_G, bromothymolColor, bromothymolName,
   countOf, findFood, o2Saturation, phChartReading, simulateEcosystem, stateAt, waterLook, type EcoState, type FoodLevel, type ReadTime,
@@ -15,6 +15,9 @@ import type { ModelCondition } from '../models/conditions';
 import { INSTRUMENTS } from './instruments';
 import { BenchTop, Beaker, ContactShadow, Lcd, TestTube, shade } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene, Plunger, type Pt } from './manipulate';
+import { Panel3D } from './lote3d/Panel3D';
+
+const EcosistemaView3D = lazy(() => import('./lote3d7/EcosistemaView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 
@@ -403,6 +406,7 @@ export default function EcosystemLab({ api }: LabProps) {
       flakes: Array.from({ length: 14 }, () => ({ x: JAR.l + 20 + r() * (JAR.r - JAR.l - 60), dy: r() * 5, r: 1.6 + r() * 1.4, c: r() })),
     };
   }, []);
+  const ecoReadings = useMemo(() => ({ od: readings.od, ph: readings.ph, indicator: bromothymolName(measured.pH), snails: readings.snails, fish: readings.fish, elodea: readings.elodea }), [readings, measured.pH]);
   const flakeN = phase === 'listo' ? 0 : food === 'ninguno' ? 0 : food === 'poco' ? 2 : food === 'normal' ? 4 : 14;
 
   /* --------------------------- cambios con sonido (panel y escena comparten el mismo estado) */
@@ -618,6 +622,12 @@ export default function EcosystemLab({ api }: LabProps) {
           </ManipScene>
         </div>
         <ManipHint>{hint}</ManipHint>
+
+        <Panel3D title="el frasco con sus flujos de materia y energía" summary="El frasco cerrado en 3D con la elodea, los caracoles, los guppys y los descomponedores del modelo en el mismo instante del banco, la lámpara encendida o apagada y flechas de luz, oxígeno y dióxido de carbono cuyo grosor sigue el balance del día.">
+          <EcosistemaView3D vis={vis} plants={plants} snails={snails} fish={fish} decomposers={decomposers} par={sim.par} distance={distance} lit={lit} flakes={flakeN}
+            started={phase !== 'listo'} done={done} day={dIdx} clock={clockText} gpp={sim.days[dIdx].gpp} respiration={sim.days[dIdx].respiration} decomposition={sim.days[dIdx].decomposition}
+            readings={ecoReadings} readLabel={READ_TIME_LABEL[time]} />
+        </Panel3D>
 
         <div className="grid-2">
           <div className="stack">

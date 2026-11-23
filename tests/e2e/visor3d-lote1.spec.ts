@@ -99,7 +99,7 @@ test.describe('con WebGL (SwiftShader)', () => {
       const errors: string[] = [];
       for (const scheme of ['light', 'dark'] as const) {
         await page.emulateMedia({ colorScheme: scheme });
-        await page.waitForTimeout(300);
+        await page.waitForTimeout(800); // que terminen las transiciones del tema antes de axe (como en las olas)
         errors.push(...(await axe(page, `${c.id} ${scheme}`)));
       }
       expect(errors).toEqual([]);
@@ -143,7 +143,7 @@ test.describe('sin WebGL', () => {
       const errors: string[] = [];
       for (const scheme of ['light', 'dark'] as const) {
         await page.emulateMedia({ colorScheme: scheme });
-        await page.waitForTimeout(300);
+        await page.waitForTimeout(800);
         errors.push(...(await axe(page, `${c.id} sin WebGL ${scheme}`)));
       }
       expect(errors).toEqual([]);

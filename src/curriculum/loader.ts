@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { PracticeDef } from '../core/types';
 import { balancePractice } from '../assessment/balance';
+import { ensureTransferQuestions } from '../assessment/lookup';
 
 /**
  * Carga bajo demanda del contenido completo de cada práctica (texto, preguntas,
@@ -104,7 +105,9 @@ export function loadPractice(id: string): Promise<PracticeDef> {
   if (!loader) return Promise.reject(new Error(`No existe la práctica «${id}».`));
   let p = cache.get(id);
   if (!p) {
-    p = loader().then(balancePractice);
+    // Con la ficha llegan sus preguntas de transferencia (solo el archivo del banco de su grado): así la página y el
+    // informe las resuelven de forma síncrona.
+    p = loader().then(balancePractice).then(async (def) => { await ensureTransferQuestions(def); return def; });
     p.catch(() => cache.delete(id)); // permitir reintentar si falla la red
     cache.set(id, p);
   }

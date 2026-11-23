@@ -1,5 +1,6 @@
 import type { PracticeDef, Question } from '../core/types';
 import { SABER_BANK } from '../assessment/bank';
+import { registerQuestions } from '../assessment/lookup';
 import { balancePractice } from '../assessment/balance';
 import { densidad } from './practices/densidad';
 import { osmosis } from './practices/osmosis';
@@ -94,6 +95,9 @@ export const PRACTICES: PracticeDef[] = ([densidad, mezclas, estadosDeLaMateria,
 export function practiceById(id: string): PracticeDef | undefined {
   return PRACTICES.find((p) => p.id === id);
 }
+
+// Con el currículo completo, las preguntas de transferencia de todas las prácticas se resuelven sin descargas.
+registerQuestions(SABER_BANK);
 
 /** Todas las preguntas: banco tipo Saber + evaluaciones de cada práctica. */
 export const ALL_QUESTIONS: Question[] = [

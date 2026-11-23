@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { AnswerRecord, Competency, Question, SaberComponent } from '../core/types';
 import { metaById } from '../curriculum/catalog';
-import { SABER_BANK } from '../assessment/bank';
+import { BANK_GRADES, loadBankGrade, loadedBankGrade } from '../assessment/banco/cargar';
 import { COMPETENCY_LABEL, COMPONENT_LABEL, GRADES } from '../curriculum/grades';
 import { loadJSON, saveJSON } from '../lib/storage';
 import { QuestionCard } from '../components/QuestionCard';
@@ -22,6 +22,34 @@ export function BankPage() {
   const [source, setSource] = useState<'saber' | 'todas'>('saber');
   const [shown, setShown] = useState(PAGE);
   const [answers, setAnswers] = useState<Record<string, AnswerRecord>>(() => loadJSON(KEY, {}));
+  // El banco tipo Saber se descarga por grado (src/assessment/banco/cargar.ts): con un grado elegido basta su archivo;
+  // con «Todos», los seis en paralelo. La página pinta encabezado y filtros mientras tanto (ver docs/v2/RENDIMIENTO.md).
+  const [byGrade, setByGrade] = useState<Record<number, readonly Question[]>>(() => {
+    const init: Record<number, readonly Question[]> = {};
+    for (const g of BANK_GRADES) { const qs = loadedBankGrade(g); if (qs) init[g] = qs; }
+    return init;
+  });
+  const [bankError, setBankError] = useState(false);
+  const [bankAttempt, setBankAttempt] = useState(0);
+  const neededGrades = grade ? BANK_GRADES.filter((g) => String(g) === grade) : BANK_GRADES;
+  const missingGrades = neededGrades.filter((g) => !byGrade[g]);
+  const missingKey = missingGrades.join(',');
+  useEffect(() => {
+    if (source !== 'saber' || !missingKey) return;
+    let alive = true;
+    const gs = missingKey.split(',').map(Number);
+    setBankError(false);
+    // Cada grado se pinta apenas llega: si uno falla, los demás siguen disponibles.
+    for (const g of gs) {
+      loadBankGrade(g).then(
+        (qs) => { if (alive) setByGrade((b) => ({ ...b, [g]: qs })); },
+        () => { if (alive) setBankError(true); },
+      );
+    }
+    return () => { alive = false; };
+  }, [source, missingKey, bankAttempt]);
+  const saberBank = BANK_GRADES.flatMap((g) => byGrade[g] ?? []);
+  const saberTotal = BANK_GRADES.every((g) => byGrade[g]) ? saberBank.length : null;
   // Las preguntas de las 65 prácticas (opción «Todas») viven en el currículo completo, que pesa ~860 KB comprimidos en
   // más de cien archivos: se descarga solo si se elige esa opción (ver docs/v2/RENDIMIENTO.md).
   const [allQuestions, setAllQuestions] = useState<Question[] | null>(null);
@@ -37,7 +65,8 @@ export function BankPage() {
   useEffect(() => { saveJSON(KEY, answers); }, [answers]);
   useEffect(() => { document.title = 'Banco de preguntas tipo Saber 11 · Laboratorio Virtual'; }, []);
   const loadingAll = source === 'todas' && !allQuestions;
-  const pool = source === 'saber' ? SABER_BANK : allQuestions ?? [];
+  const loadingBank = source === 'saber' && missingGrades.length > 0;
+  const pool = source === 'saber' ? saberBank : allQuestions ?? [];
   const list = pool.filter((q) => (!grade || String(q.grade) === grade) && (!comp || q.competency === comp) && (!component || q.component === component) && (!difficulty || q.difficulty === difficulty));
   const filterKey = [source, grade, comp, component, difficulty].join('|');
   useEffect(() => { setShown(PAGE); }, [filterKey]);
@@ -63,7 +92,7 @@ export function BankPage() {
         <a className="btn primary" href={href('banco', 'avanzado')}><Icon name="banco" size={18} />Abrir el banco avanzado</a>
       </section>
       <div className="filters">
-        <Select label="Origen" value={source} onChange={(v) => setSource(v as 'saber' | 'todas')} options={[{ value: 'saber', label: `Banco tipo Saber (${SABER_BANK.length})` }, { value: 'todas', label: `Todas, incluidas las de las prácticas${allQuestions ? ` (${allQuestions.length})` : ''}` }]} />
+        <Select label="Origen" value={source} onChange={(v) => setSource(v as 'saber' | 'todas')} options={[{ value: 'saber', label: `Banco tipo Saber${saberTotal !== null ? ` (${saberTotal})` : ''}` }, { value: 'todas', label: `Todas, incluidas las de las prácticas${allQuestions ? ` (${allQuestions.length})` : ''}` }]} />
         <Select label="Grado recomendado" value={grade} onChange={setGrade} options={[{ value: '', label: 'Todos' }, ...GRADES.map((g) => ({ value: String(g.id), label: `${g.id}.º` }))]} />
         <Select label="Competencia" value={comp} onChange={setComp} options={[{ value: '', label: 'Todas' }, ...(Object.keys(COMPETENCY_LABEL) as Competency[]).map((c) => ({ value: c, label: COMPETENCY_LABEL[c] }))]} />
         <Select label="Componente" value={component} onChange={setComponent} options={[{ value: '', label: 'Todos' }, ...(Object.keys(COMPONENT_LABEL) as SaberComponent[]).map((c) => ({ value: c, label: COMPONENT_LABEL[c] }))]} />
@@ -98,7 +127,16 @@ export function BankPage() {
       ) : (
         <p role="status" className="loading-text"><span className="spinner" aria-hidden="true" />Cargando las preguntas de las prácticas…</p>
       ))}
-      {list.length === 0 && !loadingAll && (
+      {loadingBank && (bankError ? (
+        <div className="notice bad stack-sm" role="alert">
+          <strong>No se pudieron cargar las preguntas del banco.</strong>
+          <span className="small">Revisa tu conexión a internet y vuelve a intentarlo.</span>
+          <div className="btn-row"><button type="button" className="btn" onClick={() => setBankAttempt((n) => n + 1)}>Reintentar</button></div>
+        </div>
+      ) : (
+        <p role="status" className="loading-text"><span className="spinner" aria-hidden="true" />Cargando las preguntas del banco…</p>
+      ))}
+      {list.length === 0 && !loadingAll && !loadingBank && (
         <div className="empty-state" role="status">
           <Icon name="banco" size={32} />
           <p className="empty-title">No hay preguntas con esos filtros</p>

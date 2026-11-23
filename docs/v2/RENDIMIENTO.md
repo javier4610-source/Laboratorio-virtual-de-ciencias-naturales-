@@ -145,6 +145,49 @@ versión 2.24.0. El panel docente con las fichas completas pasa a 1 175,4 KB (l�
 195,4 KB (límite 200): es el presupuesto más justo, porque el banco crece con cada práctica nueva; la
 próxima ola tendrá que cargar las preguntas de transferencia por separado o subir el límite con su razón.
 
+**Ola 3b: banco Saber 11 por grado y bajo demanda (sin publicar, 2026-11-23).** Antes de sumar las preguntas de la ola
+3b, la ruta `#/banco` estaba en 195,4 de 200 KB y crecía ≈ 1 KB con cada pregunta nueva, y cada práctica arrastraba el
+banco entero (57,2 KB comprimidos, un solo archivo) para resolver una o dos preguntas de transferencia. En lugar de subir
+el límite:
+
+- Las preguntas pasan de `src/assessment/bank.ts` a **un archivo por grado** (`src/assessment/banco/grado6.ts` …
+  `grado11.ts`, de 6 a 18 KB comprimidos). `bank.ts` queda como agregador (`SABER_BANK`, `BANK_BY_GRADE`) para quien
+  necesita todo de una vez: el currículo completo, el panel docente con las fichas, la exportación a Moodle, las guías en
+  PDF y las pruebas.
+- `src/assessment/banco/cargar.ts` (como `avanzado/cargar.ts`) descarga cada grado con `import()` y lo guarda en caché;
+  si falla la red se puede reintentar. La página del banco pinta encabezado, aviso y filtros, y pide **solo el grado
+  elegido** o, con «Todos», los seis en paralelo («Cargando las preguntas del banco…»; sin conexión, «Reintentar»). El
+  total del banco aparece en «Origen» cuando ya llegaron los seis grados.
+- Las prácticas resuelven sus preguntas de transferencia con el **archivo de su grado**: `loadPractice`
+  (`curriculum/loader.ts`) espera, junto con la ficha, `ensureTransferQuestions` (`assessment/lookup.ts`), así la página
+  y el informe siguen siendo síncronos. Una prueba unitaria verifica que todas las preguntas de transferencia están en el
+  grado de su práctica (si no, se descarga el banco completo) y que lo cargado por grado son los mismos objetos que
+  `SABER_BANK`.
+- Cada grado se pinta apenas llega: si uno no descarga, la página avisa y muestra los demás. Pendiente observado en
+  `tests/e2e/banco-saber.spec.ts`: Chromium guarda en su caché de módulos un `import()` que falló hasta que se recarga
+  la página, así que «Reintentar» (aquí, en el banco avanzado y al abrir una práctica) solo funciona después de recargar;
+  la prueba no ejercita un reintento con éxito del mismo archivo.
+- El orden del banco pasa a ser por grado (6.º a 11.º) y, dentro de cada grado, el de siempre: cambia la primera pantalla
+  de la captura de referencia `banco`.
+
+| Medida (86 prácticas) | Antes | Después | Límite |
+|---|---|---|---|
+| Ruta: banco Saber 11 (lo que se descarga antes de pintar) | 195,4 (4 archivos) | 138,9 (3 archivos) | 200 → **160** |
+| Ruta: banco Saber 11 con los seis grados (nueva medida) | — | 202,1 (9 archivos) | 240 |
+| Ruta: práctica liviana (densidad), ya con el banco de 6.º | 327,3 | 277,7 | 335 |
+| Ruta: práctica 3D (óxidos e hidróxidos), con el banco de 10.º | 410,4 | 366,8 | 430 |
+| Ruta: práctica con escena 3D (péndulo), con el banco de 10.º | 339,2 | 295,6 | 350 |
+| Ruta: panel docente (antes de pedir las fichas) | 299,2 | 242,4 | 330 |
+| Panel docente con las fichas completas | 1 175,4 | 1 180,8 | 1 250 |
+| Precarga del service worker al instalar (MB crudos) | 6,06 | 6,24 | 6,4 → **6,8** |
+
+El límite de la página del banco **baja** de 200 a 160 KB y el script falla si algún grado vuelve a entrar en su JS
+estático, o si una práctica o el panel docente cargan de forma estática el banco de otro grado. Las rutas de práctica
+cuentan ahora el archivo del banco de su grado (lo que la práctica espera antes de pintar). La **precarga** sube porque el
+banco, que era un único archivo de ≈ 190 KB crudos y por eso iba a la segunda fase, ahora son seis archivos pequeños que
+van a la instalación: es a propósito, porque cada práctica necesita el de su grado para abrir sin conexión. Se sube el
+límite de 6,4 a 6,8 MB con esa razón (≈ 40 KB por práctica nueva: margen para la ola 3b y unas cinco prácticas más).
+
 ## 4. Cambios
 
 1. **Banco Saber 11 sin el currículo completo** (`src/pages/BankPage.tsx`). El título de la práctica relacionada sale
@@ -193,9 +236,8 @@ mejora quedó dentro del ruido. Se retiró.
 1. **Panel docente** (en parte resuelto en la ola 2a: abre con 287 KB y descarga las fichas en segundo plano): las 79
    fichas completas con sus modelos siguen pesando ≈ 1,1 MB cuando se abre una pestaña que las usa. Falta una ficha
    docente liviana (vínculo curricular y preguntas, sin los modelos).
-2. **Banco tipo Saber en cada práctica** (~44 KB comprimidos por práctica): `report.ts` → `assessment/lookup.ts` importa
-   el banco completo para resolver 2–4 preguntas de transferencia. Se podría generar un índice por práctica en la
-   compilación o cargar el banco al llegar a «Evaluación».
+2. ~~**Banco tipo Saber en cada práctica**~~ (resuelto en la ola 3b): cada práctica descarga solo el archivo del banco
+   de su grado (6–18 KB comprimidos) en lugar del banco completo (57 KB).
 3. **Costo de pintar el catálogo** (TBT 1,4–1,6 s simulado, 4 400 nodos): 65 tarjetas con miniaturas SVG detalladas.
    Opciones: paginar o virtualizar, `content-visibility: auto` en las tarjetas (revisar antes el efecto en las
    capturas de la regresión visual) o miniaturas más simples.

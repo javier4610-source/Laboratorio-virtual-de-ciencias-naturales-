@@ -22,10 +22,16 @@ const BUDGETS = {
   rutas: {
     inicio: 140, // 122,6
     catalogo: 145, // 126,0
-    'practica liviana (densidad)': 335, // 291,2 (página + ficha + laboratorio)
-    'practica 3D (oxidos-hidroxidos)': 430, // 374,5 (el visor 3Dmol se carga aparte, solo si se abre)
-    'practica con escena 3D (pendulo)': 350, // 303,7 (página + ficha + laboratorio + <Scene3D>; three.js va aparte)
-    'banco Saber 11': 200, // 195,4 con la ola 3a (172,4 en 2026-11-01; antes 860,7: cargaba el currículo completo); margen corto: crece con cada práctica nueva
+    // Las prácticas cuentan, desde la ola 3b, el archivo del banco de su grado (preguntas de transferencia) en lugar del
+    // banco completo: 327,3 → 277,7 en densidad con 86 prácticas.
+    'practica liviana (densidad)': 335, // 291,2 en 2026-11-01 (página + ficha + laboratorio); 277,7 con 86 prácticas, ya con el banco de 6.º
+    'practica 3D (oxidos-hidroxidos)': 430, // 374,5 (el visor 3Dmol se carga aparte, solo si se abre); 366,8 con el banco de 10.º
+    'practica con escena 3D (pendulo)': 350, // 303,7 (página + ficha + laboratorio + <Scene3D>; three.js va aparte); 295,6 con el banco de 10.º
+    // Ola 3b: el banco se carga por grado bajo demanda (src/assessment/banco/cargar.ts). La página pinta con 138,9 KB
+    // (antes 195,4 de 200 con la ola 3a: crecía con cada práctica); el límite BAJA de 200 a 160 para que no vuelva a
+    // importar las preguntas de forma estática. Las preguntas de los seis grados se miden aparte.
+    'banco Saber 11': 160, // 138,9 con 86 prácticas (172,4 en 2026-11-01; antes 860,7: cargaba el currículo completo)
+    'banco Saber 11: con los seis grados': 240, // 202,1 con 86 prácticas (crece ≈ 1 KB por pregunta nueva)
     'banco avanzado: página': 160, // 139,3 (antes 373,0 con los ítems, el banco Saber y los datos de prácticas)
     'banco avanzado: con los 180 ítems': 365, // 316,5
     'panel docente': 330, // 286,9 (2026-11-03): abre sin las fichas completas, que pide en segundo plano (antes 1106,3 con 79 fichas)
@@ -33,17 +39,27 @@ const BUDGETS = {
   },
   mayorFragmento: 185, // ningún archivo JS debería pasar de esto: 158,4 (modelo AlphaFold de la práctica de proteínas)
   motorThree: 155, // fragmento diferido con three.js r186 (kit de escenas 3D): 135,0
-  precargaInstalacionMB: 6.4, // MB crudos que el service worker descarga al instalarse: 6,01 con 86 prácticas (ola 3a, con el banco avanzado en la segunda fase); 6,37 con 82 (ola 2b; 5,43 en 2026-11-01, antes 9,6)
+  // MB crudos que el service worker descarga al instalarse. Ola 3b: 6,8 (antes 6,4) porque el banco Saber, al partirse por
+  // grado, pasó de la segunda fase (era un archivo de ≈ 190 KB crudos) a la instalación, a propósito: cada práctica
+  // necesita el archivo de su grado para abrir sin conexión. 6,24 con 86 prácticas tras el cambio; 6,01 con 86 (ola 3a,
+  // con el banco avanzado en la segunda fase); 6,37 con 82 (ola 2b; 5,43 en 2026-11-01, antes 9,6). Ver RENDIMIENTO.md.
+  precargaInstalacionMB: 6.8,
 };
+
+/** Archivos del banco tipo Saber 11, uno por grado (src/assessment/banco/cargar.ts). */
+const BANK_GRADE_FILES = [6, 7, 8, 9, 10, 11].map((g) => `src/assessment/banco/grado${g}.ts`);
+const otherGrades = (g) => BANK_GRADE_FILES.filter((f) => !f.endsWith(`grado${g}.ts`));
 
 /** Rutas: módulos fuente (claves del manifiesto) que la ruta pide al abrirse, además de la entrada. */
 const ROUTES = {
   inicio: [],
   catalogo: ['src/pages/CatalogPages.tsx'],
-  'practica liviana (densidad)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/densidad.ts', 'src/labs/DensityLab.tsx'],
-  'practica 3D (oxidos-hidroxidos)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/oxidos-hidroxidos.ts', 'src/labs/OxidesHydroxidesLab.tsx'],
-  'practica con escena 3D (pendulo)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/pendulo.ts', 'src/labs/PendulumLab.tsx'],
+  // Una práctica espera, con su ficha, el archivo del banco de su grado (curriculum/loader.ts → assessment/lookup.ts).
+  'practica liviana (densidad)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/densidad.ts', 'src/labs/DensityLab.tsx', 'src/assessment/banco/grado6.ts'],
+  'practica 3D (oxidos-hidroxidos)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/oxidos-hidroxidos.ts', 'src/labs/OxidesHydroxidesLab.tsx', 'src/assessment/banco/grado10.ts'],
+  'practica con escena 3D (pendulo)': ['src/pages/PracticePage.tsx', 'src/curriculum/practices/pendulo.ts', 'src/labs/PendulumLab.tsx', 'src/assessment/banco/grado10.ts'],
   'banco Saber 11': ['src/pages/BankPage.tsx'],
+  'banco Saber 11: con los seis grados': ['src/pages/BankPage.tsx', ...BANK_GRADE_FILES],
   'banco avanzado: página': ['src/pages/AdvancedBankPage.tsx'],
   'banco avanzado: con los 180 ítems': ['src/pages/AdvancedBankPage.tsx', ...['A', 'B', 'C', 'D', 'E', 'F'].map((b) => `src/assessment/avanzado/bloque${b}.ts`)],
   'panel docente': ['src/pages/TeacherPage.tsx'],
@@ -52,15 +68,17 @@ const ROUTES = {
 
 /** Módulos que una ruta NO debe arrastrar (regresiones de división de código ya corregidas). */
 const FORBIDDEN = {
-  'banco Saber 11': ['src/curriculum/index.ts'],
+  // El banco por grado se pide con import(): ningún grado en el JS estático de la página (ola 3b).
+  'banco Saber 11': ['src/curriculum/index.ts', ...BANK_GRADE_FILES],
   'banco avanzado: página': ['src/curriculum/index.ts', ...['A', 'B', 'C', 'D', 'E', 'F'].map((b) => `src/assessment/avanzado/bloque${b}.ts`)],
   catalogo: ['src/curriculum/index.ts'],
   inicio: ['src/curriculum/index.ts', 'src/pages/CatalogPages.tsx', 'src/three/renderer.ts'],
   // three.js (kit de escenas 3D, docs/v2/KIT-3D.md) solo se descarga con import() diferido al montar una escena con WebGL.
-  'practica liviana (densidad)': ['src/three/renderer.ts'],
-  'practica con escena 3D (pendulo)': ['src/three/renderer.ts'],
-  'practica 3D (oxidos-hidroxidos)': ['src/three/renderer.ts'],
-  'panel docente': ['src/three/renderer.ts', 'src/curriculum/index.ts'],
+  // Ni el banco de los otros grados (ola 3b).
+  'practica liviana (densidad)': ['src/three/renderer.ts', ...otherGrades(6)],
+  'practica con escena 3D (pendulo)': ['src/three/renderer.ts', ...otherGrades(10)],
+  'practica 3D (oxidos-hidroxidos)': ['src/three/renderer.ts', ...otherGrades(10)],
+  'panel docente': ['src/three/renderer.ts', 'src/curriculum/index.ts', ...BANK_GRADE_FILES],
   'panel docente: con las fichas completas': ['src/three/renderer.ts'],
 };
 /** Nombres de fragmentos compartidos que una ruta no debe incluir (p. ej. el banco tipo Saber o los datos de prácticas). */

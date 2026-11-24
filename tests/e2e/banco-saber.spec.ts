@@ -33,9 +33,9 @@ test('banco Saber: carga los seis grados y filtra por grado', async ({ page }) =
 
 test('banco Saber: cada grado llega por separado; si uno no descarga, avisa y los demás siguen disponibles', async ({ page }) => {
   const pedidos: string[] = [];
-  // Sin red para todos los grados salvo 8.º. (Un import() que falló queda en la caché de módulos del navegador hasta
-  // recargar la página, así que aquí no se prueba un reintento con éxito del mismo archivo.)
-  await page.route(/\/grado\d+-[\w-]+\.js$/, (route) => {
+  // Sin red para todos los grados salvo 8.º, también para los reintentos con «?reintento=n» (src/lib/importar.ts). El
+  // reintento con éxito se prueba en tests/e2e/reintento-descarga.spec.ts.
+  await page.route(/\/grado\d+-[\w-]+\.js(\?.*)?$/, (route) => {
     const g = route.request().url().match(/\/grado(\d+)-/)![1];
     pedidos.push(g);
     return g === '8' ? route.continue() : route.abort();

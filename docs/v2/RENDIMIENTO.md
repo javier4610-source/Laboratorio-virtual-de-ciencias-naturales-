@@ -163,10 +163,10 @@ el límite:
   y el informe siguen siendo síncronos. Una prueba unitaria verifica que todas las preguntas de transferencia están en el
   grado de su práctica (si no, se descarga el banco completo) y que lo cargado por grado son los mismos objetos que
   `SABER_BANK`.
-- Cada grado se pinta apenas llega: si uno no descarga, la página avisa y muestra los demás. Pendiente observado en
+- Cada grado se pinta apenas llega: si uno no descarga, la página avisa y muestra los demás. ~~Pendiente observado en
   `tests/e2e/banco-saber.spec.ts`: Chromium guarda en su caché de módulos un `import()` que falló hasta que se recarga
-  la página, así que «Reintentar» (aquí, en el banco avanzado y al abrir una práctica) solo funciona después de recargar;
-  la prueba no ejercita un reintento con éxito del mismo archivo.
+  la página, así que «Reintentar» solo funciona después de recargar.~~ Resuelto en el pulido tras el 3D completo: ver
+  «Reintentar sin recargar la página» más abajo.
 - El orden del banco pasa a ser por grado (6.º a 11.º) y, dentro de cada grado, el de siempre: cambia la primera pantalla
   de la captura de referencia `banco`.
 
@@ -202,6 +202,39 @@ quedan dentro de todos los límites sin subir ninguno más:
 
 El panel docente con las fichas completas queda a 17 KB de su límite (≈ 10 KB por práctica nueva): la próxima práctica
 tendrá que traer la ficha docente liviana pendiente (§5, punto 1) o subir el límite con su razón.
+
+**Reintentar sin recargar la página (pulido tras el 3D completo, sin publicar, 2026-11-24).** Chromium guarda en su mapa
+de módulos el error de un `import()` (lo comprobamos en la compilación: el segundo `import()` de la misma dirección falla
+al instante y no llega ninguna petición a la red), y `React.lazy` guarda también el primer error. Por eso «Reintentar»
+solo servía después de recargar. Ahora:
+
+- `src/lib/importar.ts` envuelve cada cargador: la primera vez llama al `import()` original (Vite precarga sus
+  dependencias); si falla, lee la dirección del fragmento del mensaje del error (Chromium: «Failed to fetch dynamically
+  imported module: URL»; Firefox: «error loading dynamically imported module: URL») y cada reintento importa esa misma
+  dirección con `?reintento=1`, `?reintento=2`…: para el navegador es otro módulo y lo vuelve a pedir. Lo que ya llegó se
+  reutiliza (no se crean copias del módulo). `lazyWithRetry` hace lo mismo para los componentes diferidos y crea un
+  `lazy` nuevo solo cuando la persona pulsa «Reintentar» (si se renovara al fallar, React volvería a renderizar enseguida
+  y, sin conexión, reintentaría sin parar en vez de mostrar el aviso).
+- Funciona con la compilación de Vite (el `import()` con dirección calculada lleva `/* @vite-ignore */`; el parámetro no
+  cambia cómo se resuelven las importaciones estáticas del fragmento, que siguen siendo las mismas) y con el service
+  worker: su `fetch` busca en la caché con `ignoreSearch`, así que sin conexión también sirve lo ya guardado, y GitHub
+  Pages ignora el parámetro.
+- Se usa al abrir una práctica (ficha y página), en el banco Saber 11 por grado, en «Todas» del banco (currículo
+  completo), en el banco avanzado por bloques, en las vistas 3D diferidas de las prácticas (`Panel3D` y las demás
+  `lazy`), en el motor three.js del kit (`Scene3D`) y en 3Dmol.js. El `ErrorBoundary` reconoce un fragmento que no se
+  descargó y muestra «No se pudo descargar esta sección» con «Reintentar».
+- Si el reintento también falla (sigue sin conexión, o el navegador no pone la dirección en el mensaje, como Safari, y
+  repite el `import()` original), aparece además **«Recargar la página»**, que recarga (lo guardado en el navegador no se
+  pierde).
+- Prueba unitaria `tests/unit/importarReintento.test.ts` y E2E `tests/e2e/reintento-descarga.spec.ts`: corta la red de un
+  archivo con `page.route` (la práctica `densidad`, el grado 8.º, el bloque C, la vista 3D del agua y el motor three.js),
+  la devuelve y comprueba que «Reintentar» lo descarga **sin recargar** (una marca en `window` sigue ahí) y que la
+  petición lleva `?reintento=`; otra prueba deja el reintento sin red y verifica que «Recargar la página» recarga y
+  recupera la práctica. Hay que cortar todas las peticiones del archivo, no solo la primera: Vite lo pide antes con
+  `<link rel="modulepreload">`.
+- Límite: si lo que falló es una dependencia estática del fragmento (no el fragmento pedido), el mensaje nombra el
+  fragmento pedido y el reintento vuelve a toparse con la dependencia guardada como fallida; entonces aparece «Recargar la
+  página». Tamaño: la entrada pasa de 134,6 a 135,3 KB (límite 140) y la precarga de 6 663 a 6 665 KB.
 
 ## 4. Cambios
 

@@ -7,6 +7,31 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+Pulido tras el 3D completo: «Reintentar» vuelve a descargar lo que falló sin recargar la página, y las vistas 3D del
+agua, el sistema inmune y el metabolismo se leen mejor (las dos primeras en el celular).
+
+### Corregido
+- **«Reintentar» sin recargar la página** tras una descarga fallida (sin conexión la primera vez): Chromium guardaba el
+  error del `import()` y `React.lazy` el suyo, así que el botón solo servía después de recargar. `src/lib/importar.ts`
+  vuelve a pedir el mismo fragmento con `?reintento=n` (el service worker y GitHub Pages ignoran el parámetro). Se usa al
+  abrir una práctica, en el banco Saber 11 por grado y su opción «Todas», en el banco avanzado, en las vistas 3D
+  diferidas, en el motor three.js y en 3Dmol.js; si el reintento también falla aparece «Recargar la página». Las
+  secciones que no se descargan muestran «No se pudo descargar esta sección» en lugar del mensaje técnico del navegador.
+  Pruebas `tests/unit/importarReintento.test.ts` y `tests/e2e/reintento-descarga.spec.ts`. Ver `docs/v2/RENDIMIENTO.md`.
+- **Sistema inmune 3D:** al pasar de «Respuesta de anticuerpos» a la población, la escena conservaba la cámara de los
+  anticuerpos (casi de lado); ahora cada vista arranca con su propio encuadre.
+
+### Cambiado
+- **Agua 3D en pantallas angostas (≤ 600 px):** la cámara mira el río en diagonal desde aguas arriba, con el
+  vertimiento, el muestreo y el punto crítico en primer plano; el radio del encuadre baja de 13,5 a 7,8 y los 32 km, la
+  cerca de oxígeno y la bandeja siguen dentro del lienzo (prueba unitaria en las condiciones extremas).
+- **Sistema inmune 3D en pantallas angostas:** encuadres más cercanos para la población (las 400 personas, de frente y
+  desde más arriba) y los anticuerpos (el radio justo para el anticuerpo más lejano).
+- **Metabolismo 3D:** las cinco reacciones de energía (NADH16, CYTBD, ATPS4r, THD2, ATPM) pasan a un grupo rotulado
+  «Energía» detrás de la célula, con la MISMA escala lineal que las columnas de las vías y una regla con marcas cada
+  10 mmol/gDW/h (tope en 40); cada una tiene su valor en la leyenda (la ATP sintasa y la citocromo oxidasa avisan que su
+  columna está en el tope) y la nota de la escena lo dice. Ya no tapan las columnas de las vías.
+
 ## [2.28.0] · 2026-11-23
 
 Prácticas nuevas, ola 3b (91 prácticas): termodinámica, efecto Doppler, digestión, PCR y sistema inmune; el banco

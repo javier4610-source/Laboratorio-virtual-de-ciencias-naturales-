@@ -77,9 +77,14 @@ test('práctica: sin red al abrirla, «Reintentar» la descarga sin recargar la 
 
 test('banco Saber 11: un grado sin red se recupera con «Reintentar» sin recargar', async ({ page }) => {
   const { pedidos, restore } = await cut(page, /\/assets\/grado8-[\w-]+\.js(\?.*)?$/);
+  const otros = new Set<string>();
+  page.on('requestfinished', (r) => { const m = r.url().match(/\/grado(6|7|9|10|11)-/); if (m) otros.add(m[1]); });
   await page.goto('/#/banco');
   await mark(page);
   const alerta = page.getByRole('alert').filter({ hasText: 'No se pudieron cargar las preguntas del banco' });
+  // Cada grado que llega vuelve a pedir los que faltan (8.º, aún sin red): se espera a que lleguen los otros cinco para
+  // devolver la red justo antes de pulsar «Reintentar» (si no, un pedido automático lo recupera antes del clic).
+  await expect.poll(() => otros.size, { timeout: 20_000 }).toBe(5);
   await expect(alerta).toBeVisible({ timeout: 20_000 });
   restore();
   await alerta.getByRole('button', { name: 'Reintentar' }).click();

@@ -146,7 +146,7 @@ proporcionales entre sí y entre cuadros. Usa escalas separadas para magnitudes 
 | Situación | Qué se ve |
 |---|---|
 | Sin WebGL (equipos viejos, navegador con WebGL apagado) | **Vista de respaldo en 2D**: las mismas primitivas, posiciones, flechas, rótulos y selección, en proyección ortográfica, con el mismo teclado, botones y arrastre. Aviso: «este equipo no ofrece WebGL». three.js **no se descarga**. |
-| WebGL, pero no se pudo descargar el motor (sin conexión antes de la 2.ª fase del service worker) | La misma vista de respaldo; aviso «no se pudo cargar el motor 3D» y botón «Reintentar la vista 3D». |
+| WebGL, pero no se pudo descargar el motor (sin conexión antes de la 2.ª fase del service worker) | La misma vista de respaldo; aviso «no se pudo cargar el motor 3D» y botón «Reintentar la vista 3D», que vuelve a pedir el motor sin recargar la página (`src/lib/importar.ts`); si ese reintento también falla, aparece «Recargar la página». |
 | Se pierde el contexto WebGL | Igual que el caso anterior. |
 | Pruebas | `window.__lvSinWebgl = true` (con `page.addInitScript`) fuerza el respaldo aunque haya WebGL. |
 

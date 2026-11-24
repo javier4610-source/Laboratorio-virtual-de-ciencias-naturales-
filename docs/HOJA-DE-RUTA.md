@@ -67,6 +67,9 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
+- [x] Sin publicar · Pulido tras el 3D completo: «Reintentar» vuelve a descargar un archivo que falló sin recargar la
+  página (prácticas, bancos, vistas 3D y motores 3D, con «Recargar la página» como último recurso); agua y sistema
+  inmune 3D más cerca en el celular; las columnas de energía del metabolismo en un grupo aparte con regla de escala.
 - [x] v2.28.0 · Ola 3b de prácticas nuevas (`termodinamica`, `efecto-doppler`, `nutricion-digestion`,
   `biotecnologia-pcr`, `sistema-inmune`), cada una con su vista 3D (91 prácticas): quedan construidas las nueve de
   prioridad 3 del análisis curricular. El banco Saber 11 se carga por grado y bajo demanda (la página del banco pinta con

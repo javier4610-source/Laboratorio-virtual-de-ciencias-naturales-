@@ -8,7 +8,7 @@ import { decompositionScene, piecesFor } from '../../src/labs/lote3d7/decomposit
 import { fenceY, kmX, profileAt, waterScene } from '../../src/labs/lote3d7/water3d';
 import { netGrowth, populationScene, Y_LEN } from '../../src/labs/lote3d7/population3d';
 import { axisScale, inquiryScene, X_LEN } from '../../src/labs/lote3d7/inquiry3d';
-import { COL_PER_FLUX, columnHeight, fluxRadius, mapPoint, metabolismScene } from '../../src/labs/lote3d7/metabolism3d';
+import { COL_CAP, COL_PER_FLUX, columnHeight, ENERGY_Z, fluxRadius, mapPoint, metabolismScene, RULER_STEP } from '../../src/labs/lote3d7/metabolism3d';
 import { matchChains, residueClasses, sequenceScene } from '../../src/labs/lote3d7/sequences3d';
 import { tempColor } from '../../src/labs/lote3d6/common';
 import { countOf, simulateEcosystem, stateAt } from '../../src/models/ecosystem';
@@ -17,7 +17,7 @@ import { simulateDecomposition } from '../../src/models/decomposition';
 import { oxygenProfile, simulateRiver } from '../../src/models/waterQuality';
 import { simulatePopulation } from '../../src/models/population';
 import { analyze, collect, SYSTEMS, type Design } from '../../src/models/inquiry';
-import { MAP_EDGES, REFERENCE_CONDITION, runFba } from '../../src/models/metabolism';
+import { MAP_EDGES, MAP_ENERGY, REFERENCE_CONDITION, runFba } from '../../src/models/metabolism';
 import { align, comparisonPresets, findExample } from '../../src/models/sequences';
 import { parseStructure } from '../../src/models/protein';
 
@@ -204,6 +204,26 @@ describe('metabolismo: flechas y columnas con los flujos del FBA', () => {
     expect(Math.sign(pgi.vector[2])).toBe(Math.sign(mapPoint(200, 165)[2] - mapPoint(200, 100)[2]));
     expect(columnHeight(10)).toBeCloseTo(10 * COL_PER_FLUX, 12);
     expect(s.description).toContain('μ = 0,8739');
+  });
+  it('energía: grupo aparte detrás de la membrana, la MISMA escala lineal que las vías y una regla cada 10 mmol/gDW/h', () => {
+    const s = metabolismScene({ fluxes: fba.fluxes, computed: true, disabled: [], view: 'actual', carbonLabel: 'Glucosa' });
+    const membrana = byId<BoxItem>(s.items, 'membrana')!;
+    const fondo = membrana.center[2] - membrana.size[2] / 2;
+    for (const id of MAP_ENERGY) {
+      const col = byId<BoxItem>(s.items, `en-${id}`)!;
+      expect(col.center[2], id).toBeLessThan(fondo);
+      expect(col.center[2]).toBe(ENERGY_Z);
+      if (Math.abs(fba.fluxes[id]) > 1e-6) expect(col.size[1], id).toBeCloseTo(columnHeight(fba.fluxes[id]), 12);
+      expect(col.label, id).toContain(id);
+    }
+    // La ATP sintasa supera el tope: su columna mide lo mismo que el tope de la regla y la leyenda lo dice.
+    expect(Math.abs(fba.fluxes.ATPS4r)).toBeGreaterThan(COL_CAP);
+    expect(byId<BoxItem>(s.items, 'en-ATPS4r')!.label).toContain('tope de 40');
+    const marcas = s.items.filter((i) => i.id.startsWith('regla-')) as BoxItem[];
+    expect(marcas.map((m) => +m.id.slice(6))).toEqual([10, 20, 30, 40]);
+    const base = byId<BoxItem>(s.items, 'en-NADH16')!.center[1] - byId<BoxItem>(s.items, 'en-NADH16')!.size[1] / 2;
+    for (const m of marcas) expect(m.center[1] - base).toBeCloseTo(+m.id.slice(6) * COL_PER_FLUX, 12);
+    expect(RULER_STEP * COL_PER_FLUX).toBe(2.5);
   });
   it('sin calcular: nada lleva flujo; reacción eliminada en rojo', () => {
     expect(metabolismScene({ fluxes: null, computed: false, disabled: [], view: 'actual', carbonLabel: 'Glucosa' }).active.length).toBe(0);

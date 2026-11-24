@@ -166,6 +166,8 @@ test('sistema-inmune 3D: los anticuerpos crecen con el título, la población ca
   await shots(page, () => figureOf(page, 'inm'), 'inmune-3d-anticuerpos');
   await page.getByRole('group', { name: 'Estación' }).getByRole('button', { name: 'Epidemia y vacunación', exact: true }).click();
   await expect.poll(() => description(v)).toContain('Día 0: de cada 400 personas');
+  // La población es otra escena (con su propio encuadre): espera a que su lienzo esté listo.
+  await waitEngine(page, 'inm', 'disponible');
   const paused = await pauseIsStill(page, 'inm', 'Días', 'Avanzar los días', 1500);
   expect(paused).toMatch(/Día \d+: de cada 400 personas/);
   await shots(page, () => figureOf(page, 'inm'), 'inmune-3d-poblacion');

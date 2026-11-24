@@ -26,7 +26,21 @@ export function splitCounts(f: Record<'S' | 'I' | 'R' | 'V', number>, total = GR
   return { V: out[0], R: out[1], I: out[2], S: out[3] };
 }
 
-export function populationScene({ S, I, R, V, day }: PopulationInput): { items: SceneItem[]; extent: number; target: Vec3; description: string; counts: Record<'S' | 'I' | 'R' | 'V', number> } {
+/** Encuadre de una escena en pantallas angostas (≤ 600 px): el lienzo es casi cuadrado y más chico. */
+export interface NarrowFrame { extent: number; target: Vec3; orbit: { yaw: number; pitch: number } }
+
+/**
+ * Población en pantallas angostas: de frente (sin giro) la cuadrícula de 20 × 20 ocupa menos ancho que en diagonal, así
+ * que cabe completa con la cámara más cerca (las 400 personas siguen a la vista; el suelo de esquema puede recortarse).
+ */
+export const POPULATION_NARROW: NarrowFrame = { extent: 1.7, target: [0, 0, 0.1], orbit: { yaw: 0, pitch: 1.0 } };
+/**
+ * Anticuerpos en pantallas angostas: el radio justo para la punta del anticuerpo más lejano (1,35 del centro más su
+ * grosor), en lugar del margen holgado de la vista ancha.
+ */
+export const ANTIBODY_NARROW: NarrowFrame = { extent: 1.42, target: [0, 0, 0], orbit: { yaw: 0.4, pitch: 0.3 } };
+
+export function populationScene({ S, I, R, V, day }: PopulationInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: NarrowFrame; description: string; counts: Record<'S' | 'I' | 'R' | 'V', number> } {
   const counts = splitCounts({ S, I, R, V });
   // Orden fijo y mezclado por semilla: cada posición de la cuadrícula tiene siempre el mismo rango.
   const rnd = seededRandom(9);
@@ -47,12 +61,12 @@ export function populationScene({ S, I, R, V, day }: PopulationInput): { items: 
   }
   const pct = (n: number) => fmt((n / (GRID * GRID)) * 100, 0);
   const description = `Día ${fmt(day, 0)}: de cada 400 personas, ${counts.S} son susceptibles (${pct(counts.S)} %), ${counts.I} están infectadas, ${counts.R} se recuperaron y ${counts.V} están protegidas por la vacuna. Cada esfera es 1/400 de la población del modelo; la posición es un esquema.`;
-  return { items, extent: 1.9, target: [0, 0, 0], description, counts };
+  return { items, extent: 1.9, target: [0, 0, 0], narrow: POPULATION_NARROW, description, counts };
 }
 
 export const MAX_ANTIBODIES = 14;
 /** Anticuerpos en Y alrededor de un microbio, en número proporcional al título (1 = pico primario → 2 anticuerpos; 20 → 14). */
-export function antibodyScene(titer: number, day: number, maxTiter = 20): { items: SceneItem[]; extent: number; target: Vec3; description: string; n: number } {
+export function antibodyScene(titer: number, day: number, maxTiter = 20): { items: SceneItem[]; extent: number; target: Vec3; narrow: NarrowFrame; description: string; n: number } {
   const n = Math.min(MAX_ANTIBODIES, Math.round((titer / maxTiter) * MAX_ANTIBODIES + (titer > 0.05 ? 1 : 0)));
   const items: SceneItem[] = [
     { id: 'microbio', kind: 'sphere', center: [0, 0, 0], radius: 0.45, color: 'series-6', opacity: 0.85, label: 'microbio (esquema)', tag: 'microbio' },
@@ -81,5 +95,5 @@ export function antibodyScene(titer: number, day: number, maxTiter = 20): { item
     items.push({ id: `ac-${i}-tallo`, kind: 'rod', from: fork, to: end, radius: 0.04, color: 'info', tag: '' });
   }
   const description = `Día ${fmt(day, 0)}: título de anticuerpos ${fmt(titer, 2)} veces el pico de la respuesta primaria; ${n} anticuerpos dibujados unidos a los antígenos del microbio. Cada anticuerpo se une solo a su antígeno complementario por los extremos de sus brazos. La forma y la curva son ilustrativas.`;
-  return { items, extent: 1.6, target: [0, 0, 0], description, n };
+  return { items, extent: 1.6, target: [0, 0, 0], narrow: ANTIBODY_NARROW, description, n };
 }

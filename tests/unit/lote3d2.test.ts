@@ -265,7 +265,7 @@ describe('carga diferida', () => {
     const labs: [string, string][] = [['OsmosisLab', 'OsmosisView3D'], ['MitosisLab', 'MitosisView3D'], ['DnaLab', 'DnaView3D'], ['DnaExtractionLab', 'ExtraccionView3D'], ['DnaExtractionLab', 'ComplementoView3D'], ['MendelLab', 'MendelView3D'], ['PhotoLab', 'FotosintesisView3D'], ['RespirationLab', 'RespiracionView3D']];
     for (const [lab, v] of labs) {
       const src = readFileSync(`src/labs/${lab}.tsx`, 'utf8');
-      expect(src).toContain(`lazy(() => import('./lote3d2/${v}'))`);
+      expect(src).toContain(`lazyWithRetry(() => import('./lote3d2/${v}'))`); // React.lazy reintentable (src/lib/importar.ts)
       expect(src).not.toMatch(/from '\.\.\/three'|from '\.\/lote3d2\//);
     }
   });

@@ -240,14 +240,14 @@ describe('cinetica-potencial: estaciones y barras', () => {
 });
 
 describe('carga diferida', () => {
-  it('cada práctica importa su vista con lazy() y no importa el kit directamente', () => {
+  it('cada práctica importa su vista con lazyWithRetry() y no importa el kit directamente', () => {
     const pairs: [string, string][] = [
       ['ProjectileLab', 'ProyectilesView3D'], ['NewtonLab', 'NewtonView3D'], ['CollisionsLab', 'ChoquesView3D'], ['EnergyLab', 'EnergiaView3D'],
       ['WorkLab', 'TrabajoView3D'], ['MachinesLab', 'MaquinasView3D'], ['KineticPotentialLab', 'CineticaPotencialView3D'],
     ];
     for (const [lab, v] of pairs) {
       const src = readFileSync(`src/labs/${lab}.tsx`, 'utf8');
-      expect(src).toContain(`lazy(() => import('./lote3d3/${v}'))`);
+      expect(src).toContain(`lazyWithRetry(() => import('./lote3d3/${v}'))`); // React.lazy reintentable (src/lib/importar.ts)
       expect(src).not.toMatch(/from '\.\.\/three'|from '\.\/lote3d3\//);
     }
   });

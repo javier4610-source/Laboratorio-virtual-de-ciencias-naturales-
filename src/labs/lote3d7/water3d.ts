@@ -53,7 +53,16 @@ export interface WaterSceneInput {
   odReading: number;
 }
 
-export function waterScene(inp: WaterSceneInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: { extent: number; target: Vec3 }; description: string; segments: { km: number; od: number }[] } {
+/**
+ * Encuadre en pantallas angostas (≤ 600 px). De frente, los 32 km del río solo caben a lo ancho de un lienzo casi
+ * cuadrado si se ven diminutos. Aquí la cámara mira el río en diagonal desde aguas arriba: el vertimiento, el muestreo
+ * cercano y el punto crítico quedan en primer plano y el resto del tramo se aleja en perspectiva, sin salir del cuadro
+ * (no se oculta ningún tramo ni dato: una prueba unitaria, tests/unit/encuadreAngosto.test.ts, lo verifica en las
+ * condiciones extremas; con + se acerca).
+ */
+export const NARROW_FRAME = { extent: 7.8, target: [6, 0.5, 0] as Vec3, orbit: { yaw: -1, pitch: 0.5 } };
+
+export function waterScene(inp: WaterSceneInput): { items: SceneItem[]; extent: number; target: Vec3; narrow: { extent: number; target: Vec3; orbit: { yaw: number; pitch: number } }; description: string; segments: { km: number; od: number }[] } {
   const { res } = inp;
   const items: SceneItem[] = [
     { id: 'orillas', kind: 'plane', center: [kmX((KM0 + KM1) / 2), -0.05, -0.6], size: [kmX(KM1 - KM0) + 3, 11], color: '#a9cf8c' },
@@ -120,5 +129,5 @@ export function waterScene(inp: WaterSceneInput): { items: SceneItem[]; extent: 
       + `${inp.dischargeFlow > 0 && res.tc > 0 && res.xc <= KM1 ? `Punto crítico a ${fmt(res.xc, 1)} km (mínimo ${fmt(res.odMin, 2)} mg/L). ` : ''}`
       + `La sonda marca ${fmt(inp.odReading, 2)} mg/L en el punto de muestreo y la bandeja tiene ${res.bmwp.n} familias de macroinvertebrados (BMWP/Col ${res.bmwp.score}, clase ${res.bmwp.cls.roman}).`;
   }
-  return { items, extent: 8, target: [kmX(14), 1, -0.5], narrow: { extent: 13.5, target: [kmX(14), 1, -0.5] }, description, segments };
+  return { items, extent: 8, target: [kmX(14), 1, -0.5], narrow: NARROW_FRAME, description, segments };
 }

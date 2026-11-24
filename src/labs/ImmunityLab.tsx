@@ -13,6 +13,7 @@ import { Chart } from '../components/Chart';
 import type { LabProps } from './registry';
 import { Scene3D } from '../three';
 import { antibodyScene, populationScene } from './immunity3d';
+import { useNarrow } from './lote3d6/useNarrow';
 
 type Station = 'anticuerpos' | 'epidemia' | 'colectiva';
 type Scenario = 'infeccion' | 'vacuna' | 'refuerzo';
@@ -74,6 +75,8 @@ export default function ImmunityLab({ api }: LabProps) {
 
   const titerAt = (d: number) => ab.points[Math.min(ab.points.length - 1, Math.round(d * 4))].titer;
   const popAt = (d: number) => run.points[Math.min(run.points.length - 1, Math.round(d))];
+  // En pantallas angostas cada vista usa su encuadre más cercano (immunity3d.ts).
+  const narrow = useNarrow();
   const scene = useMemo(() => {
     if (station === 'anticuerpos') return antibodyScene(titerAt(t), t);
     const p = popAt(station === 'colectiva' ? DAYS : t);
@@ -155,8 +158,10 @@ export default function ImmunityLab({ api }: LabProps) {
         {conds.map((x) => <ConditionAlert key={x.text} level={x.level} cause={x.text} fix={x.fix} />)}
         <section className="card" aria-labelledby="inm-3d-h">
           <h3 id="inm-3d-h">{station === 'anticuerpos' ? 'Vista 3D: anticuerpos unidos a un microbio' : 'Vista 3D: la población durante la epidemia'}</h3>
-          <Scene3D idPrefix="inm" title={station === 'anticuerpos' ? 'Anticuerpos y antígenos en 3D' : 'Población en 3D'} items={scene.items} extent={scene.extent} target={scene.target}
-            description={scene.description} height={330} initialOrbit={station === 'anticuerpos' ? { yaw: 0.4, pitch: 0.3 } : { yaw: 0.3, pitch: 0.8 }} status="modelo"
+          {/* Una escena por vista (anticuerpos o población): al cambiar de estación arranca con su propio encuadre. */}
+          <Scene3D key={station === 'anticuerpos' ? 'anticuerpos' : 'poblacion'} idPrefix="inm" title={station === 'anticuerpos' ? 'Anticuerpos y antígenos en 3D' : 'Población en 3D'} items={scene.items}
+            extent={narrow ? scene.narrow.extent : scene.extent} target={narrow ? scene.narrow.target : scene.target}
+            description={scene.description} height={330} initialOrbit={narrow ? scene.narrow.orbit : station === 'anticuerpos' ? { yaw: 0.4, pitch: 0.3 } : { yaw: 0.3, pitch: 0.8 }} status="modelo"
             statusNote={station === 'anticuerpos' ? 'El número de anticuerpos es proporcional al título del modelo; la forma en Y, el microbio y la curva de la respuesta son ilustrativos (no es la estructura de una IgG).' : 'Cada esfera es 1/400 de la población y los colores siguen las proporciones del modelo SIR; la posición de las personas es un esquema.'} />
         </section>
         <IdeasPanel ideas={IDEAS} idPrefix="inm" intro="Ideas frecuentes sobre el sistema inmune y las vacunas. Decide si son ciertas o falsas y compruébalo con el laboratorio." />

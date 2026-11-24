@@ -7,7 +7,9 @@
  *     banco: 1,6 + 6·√(min(|v|, 40)/20) px, 40 px = 1 unidad);
  *   - sobre la mitad de cada flecha se levanta una columna cuya ALTURA es |v| en escala lineal (10 mmol/gDW/h = 2,5
  *     unidades; tope en 40): así se comparan flujos que en el grosor (raíz) se parecen; las reacciones de energía del
- *     panel del banco (NADH16, CYTBD, ATPS4r, THD2, ATPM) van como columnas en una fila aparte con la misma escala;
+ *     panel del banco (NADH16, CYTBD, ATPS4r, THD2, ATPM) van como columnas en un grupo rotulado DETRÁS de la célula,
+ *     con la MISMA escala lineal, junto a una regla con una marca cada 10 mmol/gDW/h (la ATP sintasa y la citocromo
+ *     oxidasa llegan al tope y, dentro del mapa, tapaban las columnas de las vías);
  *   - los cosustratos y coproductos unidos al punto medio en el banco (líneas finas de unión) no se dibujan en 3D;
  *   - las reacciones sin flujo son varillas finas y las apagadas por las eliminaciones (regla GPR) son rojas;
  *   - los metabolitos de afuera (intercambios) quedan fuera de la membrana; los valores con signo (captación o
@@ -26,6 +28,11 @@ export const PX = 40;
 export const COL_PER_FLUX = 0.25;
 export const COL_CAP = 40;
 const PLANE_Y = 0.3;
+/** Grupo de las columnas de energía, detrás de la membrana (la célula llega hasta z ≈ −8,5). */
+export const ENERGY_Z = -10.4;
+export const ENERGY_X0 = 6.5;
+/** Paso de las marcas de la regla de altura (mmol/gDW/h). */
+export const RULER_STEP = 10;
 const ENERGY_LABEL: Record<string, string> = { NADH16: 'NADH deshidrogenasa', CYTBD: 'Citocromo oxidasa', ATPS4r: 'ATP sintasa', THD2: 'Transhidrogenasa', ATPM: 'ATP de mantenimiento' };
 
 export const mapPoint = (x: number, y: number, h = PLANE_Y): Vec3 => [(x - 520) / PX, h, (y - 386) / PX];
@@ -78,19 +85,30 @@ export function metabolismScene(inp: MetabolismSceneInput): { items: SceneItem[]
   for (const [id, n] of Object.entries(MAP_NODES)) (id.endsWith('_e') ? outer : inner).push(mapPoint(n.x, n.y));
   items.push({ id: 'metabolitos', kind: 'particles', points: inner, radius: 0.16, color: 'ink-3', label: 'Metabolitos del citoplasma (nodos del mapa)', tag: '' });
   items.push({ id: 'externos', kind: 'particles', points: outer, radius: 0.18, color: 'ink-2', label: 'Metabolitos del medio externo (intercambios)', tag: '' });
-  // Columnas de energía (fila aparte, misma escala de altura).
+  // Columnas de energía: grupo aparte DETRÁS de la célula (no son flechas del mapa), con la MISMA escala lineal que las
+  // columnas de las vías y una regla con una marca cada 10 mmol/gDW/h. Así la ATP sintasa y la citocromo oxidasa, cerca
+  // del tope, no tapan las columnas de las vías y se leen contra la misma regla.
+  items.push({ id: 'energia-base', kind: 'box', center: [ENERGY_X0 + 2, PLANE_Y - 0.25, ENERGY_Z], size: [5.6, 0.1, 1.4], color: 'surface-3', edges: true,
+    label: 'Reacciones de energía (fuera del mapa, misma escala que las demás columnas)', tag: 'Energía' });
   MAP_ENERGY.forEach((id, i) => {
     const v = fx ? fx[id] ?? 0 : 0;
-    const p = mapPoint(760 + i * 40, 150);
+    const p: Vec3 = [ENERGY_X0 + i, PLANE_Y, ENERGY_Z];
     const isOff = off.has(id);
+    const label = `${ENERGY_LABEL[id]} (${id})${inp.computed && fx ? `: ${fmt(Math.abs(roundFlux(v)), 2)} mmol/gDW/h${Math.abs(v) > COL_CAP ? ' (columna en el tope de 40)' : ''}` : ''}`;
     if (inp.computed && fx && Math.abs(v) > ZERO && !isOff) {
       const hgt = columnHeight(v);
-      items.push({ id: `en-${id}`, kind: 'box', center: [p[0], PLANE_Y + hgt / 2, p[2]], size: [0.5, hgt, 0.5], color: 'accent', opacity: 0.9,
-        ...(i === 0 ? { label: 'Columnas de energía: NADH16, CYTBD, ATPS4r, THD2 y ATPM (misma escala)', tag: '' } : {}) });
+      items.push({ id: `en-${id}`, kind: 'box', center: [p[0], PLANE_Y + hgt / 2, p[2]], size: [0.5, hgt, 0.5], color: 'accent', opacity: 0.9, label, tag: '' });
     } else {
-      items.push({ id: `en-${id}`, kind: 'box', center: [p[0], PLANE_Y + 0.03, p[2]], size: [0.5, 0.06, 0.5], color: isOff ? 'bad' : 'line-strong', ...(i === 0 ? { label: 'Columnas de energía: NADH16, CYTBD, ATPS4r, THD2 y ATPM (misma escala)', tag: '' } : {}) });
+      items.push({ id: `en-${id}`, kind: 'box', center: [p[0], PLANE_Y + 0.03, p[2]], size: [0.5, 0.06, 0.5], color: isOff ? 'bad' : 'line-strong', label, tag: '' });
     }
   });
+  // Regla de altura (escala lineal compartida): marcas en 10, 20, 30 y 40 (el tope).
+  const rx = ENERGY_X0 - 1.1;
+  items.push({ id: 'regla', kind: 'rod', from: [rx, PLANE_Y, ENERGY_Z], to: [rx, PLANE_Y + columnHeight(COL_CAP), ENERGY_Z], radius: 0.04, color: 'ink-2',
+    label: `Regla de altura de todas las columnas: una marca cada ${RULER_STEP} mmol/gDW/h (${fmt(RULER_STEP * COL_PER_FLUX, 1)} unidades); tope en ${COL_CAP}`, tag: `marcas cada ${RULER_STEP} mmol/gDW/h` });
+  for (let f = RULER_STEP; f <= COL_CAP; f += RULER_STEP) {
+    items.push({ id: `regla-${f}`, kind: 'box', center: [rx, PLANE_Y + columnHeight(f), ENERGY_Z], size: [0.8, 0.08, 0.08], color: 'ink-2' });
+  }
   const mu = fx ? roundGrowth(fx[BIOMASS_ID] ?? 0) : 0;
   items.push({ id: 'biomasa', kind: 'sphere', center: mapPoint(900, 150, 0.9), radius: 0.35 + Math.min(1, mu) * 0.5, color: inp.computed && fx && mu > 0 ? 'ok' : 'line-strong',
     label: inp.computed ? (fx ? `Biomasa: μ = ${fmt(mu, 3)} h⁻¹ (esfera: radio con μ, escala propia)` : 'Biomasa: sin solución factible') : 'Biomasa: sin calcular', tag: inp.computed && fx ? `μ ${fmt(mu, 3)}` : 'μ' });
@@ -117,5 +135,5 @@ export function metabolismScene(inp: MetabolismSceneInput): { items: SceneItem[]
       + `${exTxt.length ? `Intercambios: ${exTxt.join('; ')}. ` : ''}Energía: ${energy}.`
       + (inp.disabled.length ? ` Apagadas por las eliminaciones (rojas): ${inp.disabled.join(', ')}.` : '');
   }
-  return { items, extent: 11.5, target: [0, 1.2, 0], narrow: { extent: 14, target: [0, 1.2, 0] }, description, active };
+  return { items, extent: 12.5, target: [1, 2.2, -2.5], narrow: { extent: 14.5, target: [1, 2.2, -2.5] }, description, active };
 }

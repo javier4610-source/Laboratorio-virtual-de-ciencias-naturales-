@@ -13,6 +13,8 @@ Pulido tras el 3D completo: «Reintentar» vuelve a descargar lo que falló sin 
 agua, el sistema inmune y el metabolismo se leen mejor (las dos primeras en el celular).
 
 ### Corregido
+- Prueba E2E del ecosistema 3D en pausa: el reloj de la página se controla a mano; con una espera real fallaba en
+  el equipo de GitHub cuando la cámara rápida terminaba antes del clic en «Pausar».
 - **«Reintentar» sin recargar la página** tras una descarga fallida (sin conexión la primera vez): Chromium guardaba el
   error del `import()` y `React.lazy` el suyo, así que el botón solo servía después de recargar. `src/lib/importar.ts`
   vuelve a pedir el mismo fragmento con `?reintento=n` (el service worker y GitHub Pages ignoran el parámetro). Se usa al

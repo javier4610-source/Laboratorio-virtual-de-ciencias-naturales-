@@ -218,14 +218,18 @@ test.describe('sin WebGL', () => {
   const svgOf = (page: Page, prefix: string) => figureOf(page, prefix).locator('svg').first();
 
   test('ecosistema: quieto en pausa durante la cámara rápida y los valores del día solo al medir', async ({ page }) => {
+    await page.clock.install();
     await openFree(page, 'ecosistema');
     await open3D(page, byName('ecosistema'));
     const v = view(page, 'eco3d');
     await expect.poll(() => description(v)).toContain('Aún no corre la simulación');
+    // La cámara rápida del banco dura poco más de 1 s para 7 días. Con una espera real, en un equipo cargado la corrida
+    // podía terminar antes del clic en «Pausar»: el reloj de la página se detiene y se avanza 350 ms a mano.
+    await page.clock.pauseAt((await page.evaluate(() => Date.now())) + 1000);
     await page.getByRole('button', { name: 'Simular y medir' }).click();
-    // La cámara rápida del banco dura poco más de 1 s para 7 días: se pausa a mitad de camino.
-    await page.waitForTimeout(350);
+    await page.clock.runFor(350);
     await page.getByRole('button', { name: 'Pausar', exact: true }).click();
+    await page.clock.resume();
     await expect(page.getByRole('button', { name: 'Reanudar', exact: true })).toBeVisible();
     const svg = svgOf(page, 'eco3d');
     const s1 = await svg.innerHTML();

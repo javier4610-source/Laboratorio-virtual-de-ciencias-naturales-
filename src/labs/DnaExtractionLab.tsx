@@ -1,4 +1,5 @@
-import { lazy, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   BASES, BASE_NAME, DNA_EXTRACTION_INSTRUMENTS, EXTRACTION_LIMITS, FACTOR_LABEL, FRUITS, MAX_STRAND, MIN_STRAND, WALLACE_MAX_VALID,
   appearanceOf, baseCounts, checkDuplex, findFruit, gcPercent, normalizeSequence, simulateExtraction, wallaceTm, extractionConditions,
@@ -18,8 +19,8 @@ import { DragHandle, ManipHint, ManipScene, useSvgDrag, type Pt } from './manipu
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vistas 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const ExtraccionView3D = lazy(() => import('./lote3d2/ExtraccionView3D'));
-const ComplementoView3D = lazy(() => import('./lote3d2/ComplementoView3D'));
+const ExtraccionView3D = lazyWithRetry(() => import('./lote3d2/ExtraccionView3D'));
+const ComplementoView3D = lazyWithRetry(() => import('./lote3d2/ComplementoView3D'));
 
 /* ================================================================== utilidades comunes */
 

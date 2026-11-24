@@ -4,6 +4,8 @@ import type { EpistemicStatus } from '../lib/provenance';
 import { prefersReducedMotion } from '../lib/prefs';
 import { documentReader, paletteColor, readPalette } from './colors';
 import { FallbackSvg } from './FallbackSvg';
+import { retryableImport } from '../lib/importar';
+import { RetryButtons } from '../components/Reintentar';
 import type { SceneRenderer } from './renderer';
 import {
   clampOrbit, DEFAULT_ORBIT, describeOrbit, labelAnchor, orbitFromKey, projectPerspective, rotateOrbit, spreadLabels, ROTATE_STEP, zoomOrbit, ZOOM_STEP,
@@ -14,10 +16,12 @@ import {
 
 type EngineModule = typeof import('./renderer');
 let loader: Promise<EngineModule> | null = null;
+// Reintentable sin recargar la página (src/lib/importar.ts): «Reintentar la vista 3D» vuelve a pedir el fragmento.
+const importRenderer = retryableImport(() => import('./renderer'));
 /** Descarga (una sola vez) el fragmento con three.js. */
 export function loadSceneEngine(): Promise<EngineModule> {
   if (!loader) {
-    loader = import('./renderer');
+    loader = importRenderer();
     loader.catch(() => { loader = null; });
   }
   return loader;
@@ -338,7 +342,7 @@ export function Scene3D({
       {fallback && (
         <div className="notice small" role="status" style={{ marginTop: 6 }}>
           <strong>Vista de respaldo en 2D:</strong> {engine === 'sin-webgl' ? 'este equipo no ofrece WebGL;' : 'no se pudo cargar el motor 3D (por ejemplo, sin conexión);'} se dibuja la misma escena, con las mismas posiciones y vectores, en proyección plana. Gírala arrastrando, con las flechas del teclado o con los botones.
-          {engine === 'no-disponible' && <> <button type="button" className="btn small" onClick={() => setAttempt((n) => n + 1)}>Reintentar la vista 3D</button></>}
+          {engine === 'no-disponible' && <RetryButtons small label="Reintentar la vista 3D" onRetry={() => setAttempt((n) => n + 1)} retries={attempt} />}
         </div>
       )}
       {children}

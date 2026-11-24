@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   COIL, EARTH_BH, FARADAY_PATH, GENERATOR, IND_LIMITS, INDUCTION_INSTRUMENTS, LAMP, MAGNETS, MU0, SOLENOID, coilLinkage, dipoleField,
   generatorEmfAt, idealSolenoidField, sampleSeries, signedMoment, simulateFaraday, simulateGenerator, simulateTransformer, solenoidField,
@@ -21,7 +22,7 @@ import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const InduccionView3D = lazy(() => import('./lote3d4/InduccionView3D'));
+const InduccionView3D = lazyWithRetry(() => import('./lote3d4/InduccionView3D'));
 
 /* ------------------------------------------------------------------ utilidades */
 

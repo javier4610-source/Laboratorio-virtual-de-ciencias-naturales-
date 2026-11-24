@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   CIN0, DIFFUSION_LIMITS, GLUCOSE_DETECTION_LIMIT, naclOsmolarity, OSMOSIS_LIMITS, simulateDiffusion, simulateOsmosis, type CellType,
 } from '../models/osmosis';
@@ -13,7 +14,7 @@ import { SimControls } from '../components/Experiment';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const OsmosisView3D = lazy(() => import('./lote3d2/OsmosisView3D'));
+const OsmosisView3D = lazyWithRetry(() => import('./lote3d2/OsmosisView3D'));
 
 const STATE_TEXT: Record<string, string> = {
   'isotónica': 'Sin cambio apreciable de volumen',

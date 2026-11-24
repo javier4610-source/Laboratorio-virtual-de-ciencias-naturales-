@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState, type ChangeEvent } from 'react';
+import { useMemo, useState, type ChangeEvent } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   FRAMES, GENETIC_CODES, KIND_LABEL, SEQ_LIMITS, SEQUENCE_EXAMPLES, TABLE_IDS, align, alignmentText, comparisonPresets, complementSeq,
   composition, exampleCds, findExample, findOrfs, frameCodons, frameLabel, gcWindows, isStartCodon, parseSequenceText, reverseComplementSeq,
@@ -16,7 +17,7 @@ import type { LabProps } from './registry';
 import { BlastPanel } from '../components/BlastPanel';
 import { Panel3D } from './lote3d/Panel3D';
 
-const SecuenciasView3D = lazy(() => import('./lote3d7/SecuenciasView3D'));
+const SecuenciasView3D = lazyWithRetry(() => import('./lote3d7/SecuenciasView3D'));
 
 type Tab = 'composicion' | 'traduccion' | 'alineamiento';
 type StrandView = 'original' | 'complemento' | 'reverso' | 'arn';

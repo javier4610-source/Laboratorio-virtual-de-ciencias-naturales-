@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { FLASK_VOLUMES, PIPETTE_VOLUMES, prepareSolution, SOLUTES, solutionColor, unknownAbsorbance, SOLUTION_LIMITS, ABSORBANCE_MAX, COLORIMETER_RES, solutionConditions } from '../models/solutions';
 import { resolutionText } from '../components/Experiment';
 import { prettyFormula } from '../models/chemistry';
@@ -9,7 +10,7 @@ import { BenchTop, DigitalBalance, Lcd, shade } from './kit';
 import { playSound } from '../lib/sound';
 import { Panel3D } from './lote3d/Panel3D';
 
-const SolucionesView3D = lazy(() => import('./lote3d/SolucionesView3D'));
+const SolucionesView3D = lazyWithRetry(() => import('./lote3d/SolucionesView3D'));
 
 /* ---------------------------------------------------------------- instrumentos locales */
 

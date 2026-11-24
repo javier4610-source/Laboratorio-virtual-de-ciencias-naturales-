@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   BIOMASS_ID, CARBON_SOURCES, ECOLI_CORE, metabolismConditions, ESSENTIAL_THRESHOLD, FBA_LIMITS, KEY_EXCHANGES, KEY_REACTIONS, MAP_EDGES, MAP_NODES, MODEL_PROVENANCE,
   PATHWAY_LABEL, REFERENCE_CONDITION, UNLIMITED, conditionBounds, fluxVariability, geneKnockoutScan, oxygenSeries, pathwayOf, roundFlux, roundGrowth, runFba,
@@ -12,7 +13,7 @@ import { Notice, Readout, RecordButton, Segmented, Select, Slider, Warnings } fr
 import type { LabProps } from './registry';
 import { Panel3D } from './lote3d/Panel3D';
 
-const MetabolismoView3D = lazy(() => import('./lote3d7/MetabolismoView3D'));
+const MetabolismoView3D = lazyWithRetry(() => import('./lote3d7/MetabolismoView3D'));
 
 type O2Mode = 'ilimitado' | 'limitado' | 'sin';
 type MapView = 'actual' | 'referencia';

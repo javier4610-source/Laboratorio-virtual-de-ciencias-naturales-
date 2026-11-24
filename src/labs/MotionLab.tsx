@@ -1,4 +1,5 @@
-import { lazy, memo, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as RKeyboardEvent } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as RKeyboardEvent } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   MARK_SPACING, MIN_GAP, MOTION_INSTRUMENTS, MOTION_LIMITS, MOVERS, REACTION, TIMER_RES, TRACK_LENGTH,
   findMover, handTiming, isUniform, pathLengthAt, positionAt, race, simulateMotion, toKmh, tripPosition, motionConditions,
@@ -19,7 +20,7 @@ import { Stopwatch } from './kit';
 import { ManipHint, ManipScene, Plunger } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const MovimientoView3D = lazy(() => import('./lote3d6/MovimientoView3D'));
+const MovimientoView3D = lazyWithRetry(() => import('./lote3d6/MovimientoView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

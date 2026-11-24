@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   CONTAINERS, HEAT_INSTRUMENTS, HEAT_LIMITS, METALS, RECORD_S, ROOM_T, SERIES_STEP, SPECIFIC_HEAT_TABLE,
   analyzeReadings, closestMaterial, containerHeatCapacity, findContainer, findMetal, heatFlows, simulate, temperatureSeries, temperaturesAt,
@@ -19,7 +20,7 @@ import { BenchTop, Beaker, ContactShadow, DigitalBalance, Lcd, Stopwatch, Thermo
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const CalorView3D = lazy(() => import('./lote3d6/CalorView3D'));
+const CalorView3D = lazyWithRetry(() => import('./lote3d6/CalorView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   PART_INFO, SC, SIMPLE_CIRCUIT_INSTRUMENTS, lampArrangement, solveSimpleCircuit, simpleCircuitConditions,
   type MeterMode, type NetPart, type PartKind, type PartResult,
@@ -16,7 +17,7 @@ import { playSound, useLabSound, volumeToGain } from '../lib/sound';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const CircuitosSimplesView3D = lazy(() => import('./lote3d4/CircuitosSimplesView3D'));
+const CircuitosSimplesView3D = lazyWithRetry(() => import('./lote3d4/CircuitosSimplesView3D'));
 
 /* ------------------------------------------------------------------ mesa de bornes */
 

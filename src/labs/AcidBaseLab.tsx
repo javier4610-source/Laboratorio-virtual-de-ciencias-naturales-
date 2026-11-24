@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { ACIDS, dilutedPH, findAcid, INDICATORS, indicatorColor, titrate, titrationCurve } from '../models/acidbase';
 import { prettyFormula } from '../models/chemistry';
 import { fmt, fmtSig, parseLocaleNumber } from '../lib/format';
@@ -11,7 +12,7 @@ import { playSound } from '../lib/sound';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const PhView3D = lazy(() => import('./lote3d4/PhView3D'));
+const PhView3D = lazyWithRetry(() => import('./lote3d4/PhView3D'));
 
 /** Contorno del líquido dentro del Erlenmeyer del kit (misma geometría), para teñirlo con el indicador. */
 function erlLiquid(x: number, y: number, w: number, h: number, fill: number) {

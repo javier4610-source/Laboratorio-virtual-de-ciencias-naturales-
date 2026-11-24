@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   CDS_START, GENE_LENGTH, GENE_SEQ, GEL_RANGE_KDA, HBB_SEGMENTS, IVS2_JOIN, LANDMARKS, POLYA_SIGNAL, PROMOTER_ELEMENTS, SEGMENT_RANGES, TSS,
   aaClass, analyzeGeneMutation, expressGene, gelMigration, locate, migrationForMass, proteinMassKDa, relativeToTss, validateMutation,
@@ -15,7 +16,7 @@ import { BenchTop, ContactShadow, Lcd } from './kit';
 import { ManipHint, useSvgDrag } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const ExpresionView3D = lazy(() => import('./lote3d/ExpresionView3D'));
+const ExpresionView3D = lazyWithRetry(() => import('./lote3d/ExpresionView3D'));
 
 /* ------------------------------------------------------------------ paleta
  * Bases con los mismos tonos que el laboratorio de ADN (A rojo, T/U ámbar, G verde, C azul) y texto casi negro. */

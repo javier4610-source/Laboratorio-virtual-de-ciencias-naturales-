@@ -15,11 +15,15 @@ import { Notice, Readout, RecordButton, Segmented, Select } from '../components/
 import { applyMolStyle } from '../chem/molStyle';
 import { StatusChip } from '../components/Provenance';
 import type { LabProps } from './registry';
+import { retryableImport } from '../lib/importar';
 
 /* ------------------------------------------------------------------ motor 3D (3Dmol.js, carga diferida) */
 
 type ThreeDmol = typeof import('3dmol');
 let loader: Promise<ThreeDmol> | null = null;
+// Reintentable sin recargar la página (src/lib/importar.ts): «Reintentar el visor 3D» vuelve a pedir el fragmento.
+// @ts-ignore La compilación ES6 minificada no trae declaraciones propias; sus tipos son los del paquete '3dmol'.
+const import3Dmol = retryableImport(() => import('3dmol/build/3Dmol.es6-min.js'));
 
 /**
  * Carga 3Dmol.js solo al abrir este laboratorio (importación dinámica: un fragmento propio, fuera del JS inicial).
@@ -28,8 +32,7 @@ let loader: Promise<ThreeDmol> | null = null;
  */
 function load3Dmol(): Promise<ThreeDmol> {
   if (!loader) {
-    // @ts-ignore La compilación ES6 minificada no trae declaraciones propias; sus tipos son los del paquete '3dmol'.
-    loader = import('3dmol/build/3Dmol.es6-min.js').then((m: unknown) => m as ThreeDmol);
+    loader = import3Dmol().then((m: unknown) => m as ThreeDmol);
     loader.catch(() => { loader = null; });
   }
   return loader;

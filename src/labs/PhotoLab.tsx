@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { LIGHT_COLORS, PHOTO_LIMITS, photoConditions, simulatePhotosynthesis, type LightColor } from '../models/photosynthesis';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -12,7 +13,7 @@ import { ManipHint, ManipScene, Plunger } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const FotosintesisView3D = lazy(() => import('./lote3d2/FotosintesisView3D'));
+const FotosintesisView3D = lazyWithRetry(() => import('./lote3d2/FotosintesisView3D'));
 
 /** Riel óptico: x de la lámpara para una distancia (5 cm junto al tubo, 100 cm en el extremo). */
 const railX = (d: number) => 470 - (d / 100) * 330;

@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   BLOCK, DYNAMOMETER_MAX, MOTOR_MAX_SPEED, RAMP, STEP_HEIGHT, SURFACES, WORK_INSTRUMENTS, WORK_LIMITS, blockMass, rampFromReadings,
   simulateRamp, simulateStairs, type Drive, type InstrumentId, type SurfaceId, type WorkInstrumentSpec,
@@ -16,7 +17,7 @@ import { DragHandle, ManipHint, ManipScene, zoneAt, type Pt } from './manipulate
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const TrabajoView3D = lazy(() => import('./lote3d3/TrabajoView3D'));
+const TrabajoView3D = lazyWithRetry(() => import('./lote3d3/TrabajoView3D'));
 
 /* ------------------------------------------------------------------ instrumentos */
 

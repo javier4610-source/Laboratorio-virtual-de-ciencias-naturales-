@@ -1,10 +1,11 @@
-import { lazy, Suspense, useState, type ReactNode } from 'react';
+import { Suspense, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { Segmented } from '../components/ui';
 import { playSound } from '../lib/sound';
 import type { RouteId } from '../models/compoundForge';
 import type { LabProps } from './registry';
 
-const CompoundForge = lazy(() => import('./CompoundForge'));
+const CompoundForge = lazyWithRetry(() => import('./CompoundForge'));
 
 type Station = 'banco' | 'taller';
 

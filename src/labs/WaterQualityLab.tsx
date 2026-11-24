@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   complies, NORMS, oxygenProfile, PROBE, RANGES, RIVERS, roundSig, saturationReading, simulateRiver, SOURCES,
   waterConditions, wqiFromReadings, type Family, type NormRef, type Readings, type RiverId, type SourceId, type TaxonGroup,
@@ -15,7 +16,7 @@ import { Beaker, BenchTop, ContactShadow, Lcd, TestTube, Thermometer } from './k
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const AguaView3D = lazy(() => import('./lote3d7/AguaView3D'));
+const AguaView3D = lazyWithRetry(() => import('./lote3d7/AguaView3D'));
 
 /* ------------------------------------------------------------------ utilidades */
 

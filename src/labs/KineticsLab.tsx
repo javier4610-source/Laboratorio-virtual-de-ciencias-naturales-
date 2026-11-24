@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   CATALYSTS, DURATION, EA_MARBLE, K_MARBLE_25, T_REF_C, findCatalyst, findParticle, KINETICS_LIMITS, PARTICLES, SETUP, simulateKinetics, SYRINGE_RES, TARGET_VOLUME, volumeAt, kineticsConditions,
   type Catalyst, type Particle, type Reaction,
@@ -19,7 +20,7 @@ import { Knob, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const CineticaView3D = lazy(() => import('./lote3d4/CineticaView3D'));
+const CineticaView3D = lazyWithRetry(() => import('./lote3d4/CineticaView3D'));
 
 /** Frasco reactivo de vidrio ámbar con rótulo. */
 function ReagentBottle({ x, label, conc }: { x: number; label: string; conc: string }) {

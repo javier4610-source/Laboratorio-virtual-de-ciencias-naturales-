@@ -1,4 +1,5 @@
-import { lazy, useId, useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   CONSEQUENCE_LABEL, EVIDENCE_HELP, EVIDENCE_LABEL, GENES, GENES_RETRIEVED, GENE_INFO_ES, STEP_ORDER, STEP_TITLE,
   consequenceFromHgvs, ecoLabel, findGenes, geneStructure, singleBaseVariant, traceSteps, variantConsequence,
@@ -11,7 +12,7 @@ import type { LabProps } from './registry';
 import { BenchTop, ContactShadow } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
-const RastreoView3D = lazy(() => import('./lote3d/RastreoView3D'));
+const RastreoView3D = lazyWithRetry(() => import('./lote3d/RastreoView3D'));
 
 /* ------------------------------------------------------------------ paleta (solo variables de tema) */
 const EV_COLOR: Record<EvidenceKind, string> = {

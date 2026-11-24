@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   chiSquareTest, findOrganism, genotypeDistribution, normalizePair, ORGANISMS, phenotypeDistribution, phenotypeOfGene, punnettSquare, ratioString, sampleOffspring,
   type Gene, type Genotype, type Organism,
@@ -9,7 +10,7 @@ import type { LabProps } from './registry';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const MendelView3D = lazy(() => import('./lote3d2/MendelView3D'));
+const MendelView3D = lazyWithRetry(() => import('./lote3d2/MendelView3D'));
 
 const N_OPTIONS = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000];
 

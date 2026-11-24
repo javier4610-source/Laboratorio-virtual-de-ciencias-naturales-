@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   ECO_DEFAULT, ECO_INSTRUMENTS, ecosystemConditions, ECO_LIMITS, FOODS, MAX_DAY, O2_CRIT_FISH, PH_CHART_RANGE, READ_TIME_LABEL, SPRIG_G, bromothymolColor, bromothymolName,
   countOf, findFood, o2Saturation, phChartReading, simulateEcosystem, stateAt, waterLook, type EcoState, type FoodLevel, type ReadTime,
@@ -17,7 +18,7 @@ import { BenchTop, Beaker, ContactShadow, Lcd, TestTube, shade } from './kit';
 import { DragHandle, Knob, ManipHint, ManipScene, Plunger, type Pt } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const EcosistemaView3D = lazy(() => import('./lote3d7/EcosistemaView3D'));
+const EcosistemaView3D = lazyWithRetry(() => import('./lote3d7/EcosistemaView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

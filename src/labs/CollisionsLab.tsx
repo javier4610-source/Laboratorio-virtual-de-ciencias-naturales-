@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   BALANCE_RES, COLLISION_LIMITS, COLLISION_TYPES, FLAG_LENGTH, RAIL, contactSamples, simulateCollision, stateAt, timeline, TIMER_RES,
   type CollisionType,
@@ -15,7 +16,7 @@ import { BenchTop, DigitalBalance, Lcd } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const ChoquesView3D = lazy(() => import('./lote3d3/ChoquesView3D'));
+const ChoquesView3D = lazyWithRetry(() => import('./lote3d3/ChoquesView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

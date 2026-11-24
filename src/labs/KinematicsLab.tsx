@@ -1,4 +1,5 @@
-import { lazy, memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   CHALLENGES, KIN_LIMITS, MATCH_TOLERANCE, STROBE_INTERVAL, TRACK_LENGTH,
   challengeError, observationTime, sampleCurve, simulateRun, stateAt, kinematicsConditions,
@@ -16,7 +17,7 @@ import { usePublishModel } from '../components/Advanced';
 import { Stopwatch } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
-const CinematicaView3D = lazy(() => import('./lote3d6/CinematicaView3D'));
+const CinematicaView3D = lazyWithRetry(() => import('./lote3d6/CinematicaView3D'));
 
 type AnimSpeed = 'real' | 'x4';
 

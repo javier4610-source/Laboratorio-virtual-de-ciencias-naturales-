@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   BUOYANCY_INSTRUMENTS, BUOYANCY_LIMITS, DYNAMOMETER_MAX, HYDROMETER, OBJECTS, SPOON_G, VESSEL_AREA_CM2, analyzeReadings, findObject,
   hydrometerStemDepth, liquidVolume, objectHeight, simulateBuoyancy, type BuoyLiquidId, type BuoyObject, type SetupId,
@@ -17,7 +18,7 @@ import { DragHandle, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const FlotacionView3D = lazy(() => import('./lote3d5/FlotacionView3D'));
+const FlotacionView3D = lazyWithRetry(() => import('./lote3d5/FlotacionView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

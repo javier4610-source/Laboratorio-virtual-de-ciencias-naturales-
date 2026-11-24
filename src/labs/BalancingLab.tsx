@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   allSpecies, atomRadius, checkEquation, COEF_LIMITS, CPK, ELEMENT_NAME, equationText, hintFor, LAYOUTS, layoutBox,
   LEVEL_NAME, prettyFormula, reactionById, REACTIONS, solveBalance, tiltAngle,
@@ -13,7 +14,7 @@ import { BenchTop, Lcd, shade } from './kit';
 import { keyboardValue, ManipHint, ManipScene, useSvgDrag, type Pt, type RangeSpec } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const BalanceoView3D = lazy(() => import('./lote3d/BalanceoView3D'));
+const BalanceoView3D = lazyWithRetry(() => import('./lote3d/BalanceoView3D'));
 
 /* ------------------------------------------------------------------ textos */
 

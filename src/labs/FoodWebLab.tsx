@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   BASE_EQUILIBRIUM, FOODWEB_DEFAULTS, FOODWEB_LIMITS, LEVEL_NAMES, LINKS, percentChange, simulateFoodWeb, SPECIES,
   type SpeciesId, type TrophicLevel,
@@ -11,7 +12,7 @@ import { SimControls, simStatusOf } from '../components/Experiment';
 import type { LabProps } from './registry';
 import { Panel3D } from './lote3d/Panel3D';
 
-const RedesView3D = lazy(() => import('./lote3d7/RedesView3D'));
+const RedesView3D = lazyWithRetry(() => import('./lote3d7/RedesView3D'));
 
 const ANIM_MS = 2500;
 

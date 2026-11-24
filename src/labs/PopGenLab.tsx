@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { hardyWeinberg, POPGEN_LIMITS, simulatePopGen, type PopGenInput } from '../models/popgen';
 import { fmt } from '../lib/format';
 import { Chart } from '../components/Chart';
@@ -7,7 +8,7 @@ import type { LabProps } from './registry';
 import { Panel3D } from './lote3d/Panel3D';
 import { hwCounts } from './lote3d6/popgen3d';
 
-const PopGenView3D = lazy(() => import('./lote3d6/PopGenView3D'));
+const PopGenView3D = lazyWithRetry(() => import('./lote3d6/PopGenView3D'));
 
 const SCENARIOS: { id: string; name: string; note: string; patch: Partial<PopGenInput> }[] = [
   { id: 'neutral', name: 'Neutral (Hardy-Weinberg)', note: 'Todos los genotipos tienen la misma eficacia.', patch: { fitness: { AA: 1, Aa: 1, aa: 1 }, mutationAtoa: 0, migration: 0 } },

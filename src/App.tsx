@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { lazyWithRetry } from './lib/importar';
 import { useRoute, href } from './lib/router';
 import { usePrefs } from './lib/prefs';
 import { metaById } from './curriculum/catalog';
@@ -7,6 +8,7 @@ import { GRADES } from './curriculum/grades';
 import type { GradeId } from './core/types';
 import { HomePage } from './pages/HomePage';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { RetryButtons } from './components/Reintentar';
 import { PwaNotices } from './components/PwaUi';
 import { Icon, Logo, type IconName } from './components/icons';
 import { CourseButton, JoinPage } from './components/ClassroomUi';
@@ -16,16 +18,16 @@ import { SoundToggle } from './components/SoundUi';
 import { GlobalShortcuts } from './components/Shortcuts';
 
 // Páginas pesadas cargadas bajo demanda: el inicio y el catálogo abren rápido en equipos modestos.
-const PracticePage = lazy(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
-const ReportPage = lazy(() => import('./pages/ReportPage').then((m) => ({ default: m.ReportPage })));
-const BankPage = lazy(() => import('./pages/BankPage').then((m) => ({ default: m.BankPage })));
-const AdvancedBankPage = lazy(() => import('./pages/AdvancedBankPage').then((m) => ({ default: m.AdvancedBankPage })));
-const TeacherPage = lazy(() => import('./pages/TeacherPage').then((m) => ({ default: m.TeacherPage })));
-const CatalogPage = lazy(() => import('./pages/CatalogPages').then((m) => ({ default: m.CatalogPage })));
-const GradePage = lazy(() => import('./pages/CatalogPages').then((m) => ({ default: m.GradePage })));
+const PracticePage = lazyWithRetry(() => import('./pages/PracticePage').then((m) => ({ default: m.PracticePage })));
+const ReportPage = lazyWithRetry(() => import('./pages/ReportPage').then((m) => ({ default: m.ReportPage })));
+const BankPage = lazyWithRetry(() => import('./pages/BankPage').then((m) => ({ default: m.BankPage })));
+const AdvancedBankPage = lazyWithRetry(() => import('./pages/AdvancedBankPage').then((m) => ({ default: m.AdvancedBankPage })));
+const TeacherPage = lazyWithRetry(() => import('./pages/TeacherPage').then((m) => ({ default: m.TeacherPage })));
+const CatalogPage = lazyWithRetry(() => import('./pages/CatalogPages').then((m) => ({ default: m.CatalogPage })));
+const GradePage = lazyWithRetry(() => import('./pages/CatalogPages').then((m) => ({ default: m.GradePage })));
 // Definiciones SVG compartidas del kit de instrumentos (degradados, sombras): fuera del paquete inicial.
-const KitDefs = lazy(() => import('./labs/kit').then((m) => ({ default: m.KitDefs })));
-const HelpPage = lazy(() => import('./pages/HelpPage').then((m) => ({ default: m.HelpPage })));
+const KitDefs = lazyWithRetry(() => import('./labs/kit').then((m) => ({ default: m.KitDefs })));
+const HelpPage = lazyWithRetry(() => import('./pages/HelpPage').then((m) => ({ default: m.HelpPage })));
 
 /** Estado de carga: texto anunciado y un esqueleto que reserva el espacio (sin saltos al aparecer el contenido). */
 function Loading({ text = 'Cargando…' }: { text?: string }) {
@@ -45,7 +47,7 @@ function PracticeRoute({ id, report }: { id: string; report: boolean }) {
       <div className="notice bad stack-sm" role="alert">
         <strong>No se pudo cargar la práctica.</strong>
         <span className="small">{state.message} Revisa tu conexión a internet: si ya abriste esta práctica antes, funciona sin conexión; si es la primera vez, necesita descargarse una vez.</span>
-        <div className="btn-row"><button type="button" className="btn" onClick={state.retry}>Reintentar</button></div>
+        <RetryButtons onRetry={state.retry} retries={state.retries} />
       </div>
     );
   }

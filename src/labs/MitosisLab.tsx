@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState, type KeyboardEvent } from 'react';
+import { useMemo, useState, type KeyboardEvent } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   countPhases, cycleState, estimatedDuration, expectedFractions, findTissue, generateField, mitoticIndex, MITOSIS_LIMITS, PHASE_INFO, PHASES, TISSUES, type Phase,
 } from '../models/mitosis';
@@ -9,7 +10,7 @@ import type { LabProps } from './registry';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const MitosisView3D = lazy(() => import('./lote3d2/MitosisView3D'));
+const MitosisView3D = lazyWithRetry(() => import('./lote3d2/MitosisView3D'));
 
 /* Colores de una preparación de ápice de raíz teñida con orceína acética (cromatina magenta). */
 const STAIN = { chrom: '#6d1650', nucleus: '#c77fa6', nucleusRim: '#8a2f66', nucleolus: '#4f0d39', cyto: '#f4e3e8', cytoEdge: '#ecd2db', wall: '#a7836a', spindle: '#b98aa6' };

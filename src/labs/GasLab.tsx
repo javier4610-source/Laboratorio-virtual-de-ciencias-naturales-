@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { GAS_LIMITS, INITIAL, simulateGas, gasConditions, type GasLaw } from '../models/gases';
 import { R_GAS, seededRandom } from '../models/math';
 import { useModelParams, usePublishModel } from '../components/Advanced';
@@ -15,7 +16,7 @@ import { Knob, ManipHint, ManipScene, Plunger } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const GasesView3D = lazy(() => import('./lote3d4/GasesView3D'));
+const GasesView3D = lazyWithRetry(() => import('./lote3d4/GasesView3D'));
 
 /* Geometría de la jeringa (200 mL en 380 px). */
 const SYR = { x: 176, y: 98, len: 380, h: 46, cap: 200 };

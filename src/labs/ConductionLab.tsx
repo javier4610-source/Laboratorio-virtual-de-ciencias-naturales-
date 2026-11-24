@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   AMBIENT_T, CONDUCTION_INSTRUMENTS, CONDUCTION_LIMITS, RODS, RUN_S, SKIN, TACK_SLOTS_CM, TOUCH_MATERIALS, WAX_MELT_T,
   effusivity, finParams, findRod, findTouch, fourierFromProbes, simulateConduction, skinContact, slabHeatFlux, steadyTemperature,
@@ -19,7 +20,7 @@ import { BenchTop, ContactShadow, Cube, Lcd, Ruler, Stopwatch, shade } from './k
 import { DragHandle, Knob, ManipHint, ManipScene, Plunger, zoneAt } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const ConduccionView3D = lazy(() => import('./lote3d6/ConduccionView3D'));
+const ConduccionView3D = lazyWithRetry(() => import('./lote3d6/ConduccionView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

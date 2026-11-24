@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { ENERGY_LIMITS, simulateTrack, trackHeight, TRACK_X } from '../models/energy';
 import { fmt, fmtSig } from '../lib/format';
 import { flag } from '../lib/flags';
@@ -17,7 +18,7 @@ import { BenchTop } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const EnergiaView3D = lazy(() => import('./lote3d3/EnergiaView3D'));
+const EnergiaView3D = lazyWithRetry(() => import('./lote3d3/EnergiaView3D'));
 import { SimControls, simStatusOf } from '../components/Experiment';
 
 const W = 640, H = 260, X0 = 72;

@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   ATOMIC_MASS_DECIMALS, AVOGADRO, BALANCE, BOAT_MASS, MOLE_INSTRUMENTS, MOLE_LIMITS, SUBSTANCES, countEntities, findMolReaction, findSubstance,
   molarMassInfo, molarVolumeL, readingDuring, readingSigFigs, ROOM, runMolReaction, STP, weigh,
@@ -20,7 +21,7 @@ import { Beaker, BenchTop, ContactShadow, Lcd, shade } from './kit';
 import { DragHandle, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const MolView3D = lazy(() => import('./lote3d/MolView3D'));
+const MolView3D = lazyWithRetry(() => import('./lote3d/MolView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

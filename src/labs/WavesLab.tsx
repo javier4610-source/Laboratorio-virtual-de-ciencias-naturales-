@@ -1,4 +1,5 @@
-import { lazy, memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { displacement, findRope, ropeWave, ROPES, soundWave, WAVE_LIMITS } from '../models/waves';
 import { fmt, parseLocaleNumber } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -11,7 +12,7 @@ import { SimControls } from '../components/Experiment';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const OndasView3D = lazy(() => import('./lote3d5/OndasView3D'));
+const OndasView3D = lazyWithRetry(() => import('./lote3d5/OndasView3D'));
 
 const VIEW_M = 12; // metros de cuerda visibles
 const WX0 = 74, WX1 = 590;

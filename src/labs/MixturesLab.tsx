@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { applyMethod, COMPONENTS, evaluate, initialState, METHODS, MIXTURE_LIMITS, type ComponentId, type Masses, type MethodId, type MixtureState } from '../models/mixtures';
 import { fmt } from '../lib/format';
 import { Notice, RecordButton, Slider } from '../components/ui';
@@ -7,7 +8,7 @@ import { BenchTop, shade } from './kit';
 import { playSound, type SoundName } from '../lib/sound';
 import { Panel3D } from './lote3d/Panel3D';
 
-const MezclasView3D = lazy(() => import('./lote3d6/MezclasView3D'));
+const MezclasView3D = lazyWithRetry(() => import('./lote3d6/MezclasView3D'));
 
 /** Sonido de cada técnica: agitar con agua, imán que atrae limaduras, vertido, goteo del filtro, ebullición. */
 const METHOD_SOUND: Record<MethodId, SoundName> = { agua: 'swirl', iman: 'clank', decantacion: 'pour', filtracion: 'drips', evaporacion: 'fizz' };

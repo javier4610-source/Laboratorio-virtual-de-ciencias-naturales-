@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { checkBalance, findReaction, REACTIONS, simulateStoichiometry, STOICH_LIMITS, type Reaction } from '../models/stoichiometry';
 import { prettyFormula } from '../models/chemistry';
 import { fmt } from '../lib/format';
@@ -7,7 +8,7 @@ import type { LabProps } from './registry';
 import { BenchTop, DigitalBalance, Erlenmeyer, shade } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
-const EstequiometriaView3D = lazy(() => import('./lote3d/EstequiometriaView3D'));
+const EstequiometriaView3D = lazyWithRetry(() => import('./lote3d/EstequiometriaView3D'));
 
 /* ---------------------------------------------------------------- dibujo del banco */
 

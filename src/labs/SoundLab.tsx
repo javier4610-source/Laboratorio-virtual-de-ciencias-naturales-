@@ -1,4 +1,5 @@
-import { lazy, memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   FORKS, SCOPE, SOUND_INSTRUMENTS, SOUND_LIMITS, SPEAKER_POWERS, TUBE_DIAMETERS, analyzeResonances,
   freeFieldMicMv, levelToIntensity, nearestNote, octavesAbove, playbackLevel, scopeView, soundLevel, speedOfSound, tubeResponse,
@@ -19,7 +20,7 @@ import { useEnvelope } from './soundEnvelope';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const SonidoView3D = lazy(() => import('./lote3d5/SonidoView3D'));
+const SonidoView3D = lazyWithRetry(() => import('./lote3d5/SonidoView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

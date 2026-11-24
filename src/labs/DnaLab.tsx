@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   AMINO_ACIDS, analyzeMutation, cleanDNA, complement, DNA_PRESETS, GENETIC_CODE, replicate, transcribe, translate, validateDNA,
   type Base, type MutationAnalysis, type MutationType,
@@ -9,7 +10,7 @@ import type { LabProps } from './registry';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const DnaView3D = lazy(() => import('./lote3d2/DnaView3D'));
+const DnaView3D = lazyWithRetry(() => import('./lote3d2/DnaView3D'));
 
 /* ------------------------------------------------------------------ paleta de bases
  * Los mismos cuatro tonos en todo el laboratorio (A rojo, T/U ámbar, G verde, C azul), igual que

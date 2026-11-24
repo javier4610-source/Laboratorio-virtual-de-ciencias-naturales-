@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { NEWTON_LIMITS, positionAt, simulateCart, SURFACES, TRACK_LENGTH } from '../models/newton';
 import { fmt } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -11,7 +12,7 @@ import { ManipHint, ManipScene, Plunger } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const NewtonView3D = lazy(() => import('./lote3d3/NewtonView3D'));
+const NewtonView3D = lazyWithRetry(() => import('./lote3d3/NewtonView3D'));
 
 /** Alargamiento del dinamómetro (px por newton): el anillo se aleja del carrito al tirar más fuerte. */
 const PX_PER_N = 5;

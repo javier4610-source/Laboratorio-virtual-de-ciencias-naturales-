@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { ALL_SAMPLES, CYLINDER_RESOLUTION, closestMaterial, LIMITS, MATERIALS, simulateDensity, WATER_DENSITY, densityConditions } from '../models/density';
 import { roundToResolution } from '../models/math';
 import { useMeasure } from '../components/Measurement';
@@ -14,7 +15,7 @@ import { usePublishModel } from '../components/Advanced';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const DensidadView3D = lazy(() => import('./lote3d5/DensidadView3D'));
+const DensidadView3D = lazyWithRetry(() => import('./lote3d5/DensidadView3D'));
 
 /** Lugares donde puede estar la muestra: 0 mesa, 1 plato de la balanza, 2 dentro de la probeta. */
 const STATION_TEXT = ['La muestra está sobre la mesa', 'La muestra está en el plato de la balanza', 'La muestra está dentro de la probeta'];

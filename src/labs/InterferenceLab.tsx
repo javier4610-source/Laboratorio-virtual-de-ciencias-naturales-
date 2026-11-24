@@ -1,4 +1,5 @@
-import { lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   AIRY_ZEROS, CALIPER_RES, GRATINGS, INTERFERENCE_INSTRUMENTS, INTERFERENCE_LIMITS, SCREEN_RULER_RES, SOURCES, analyzeCursors, apertureFor,
   findGrating, findSource, intensity, interferenceConditions, lightFrequency, screenColor, sensorIntensity, sinThetaOnScreen, srgbEncode,
@@ -19,7 +20,7 @@ import { ManipHint, ManipScene, Plunger } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const InterferenciaView3D = lazy(() => import('./lote3d5/InterferenciaView3D'));
+const InterferenciaView3D = lazyWithRetry(() => import('./lote3d5/InterferenciaView3D'));
 
 /* ------------------------------------------------------------------ instrumentos */
 

@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   DECOMP_DEFAULTS, DECOMP_LIMITS, DECOMP_MATERIALS, INITIAL_MASS, simulateDecomposition, type DecompMaterial,
 } from '../models/decomposition';
@@ -10,7 +11,7 @@ import type { LabProps } from './registry';
 import { BenchTop, DigitalBalance, Lcd, Thermometer } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
-const DescomposicionView3D = lazy(() => import('./lote3d7/DescomposicionView3D'));
+const DescomposicionView3D = lazyWithRetry(() => import('./lote3d7/DescomposicionView3D'));
 
 const ANIM_MS = 1600;
 const MOVE_END = 0.72; // fracción de la animación en que la bolsa llega al plato

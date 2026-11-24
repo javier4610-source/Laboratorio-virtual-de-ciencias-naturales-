@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   BACKGROUNDS, beetlePositions, beetleSample, findBackground, histogram, INITIAL_MEAN, SEL_LIMITS, simulateSelection,
 } from '../models/selection';
@@ -9,7 +10,7 @@ import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui'
 import type { LabProps } from './registry';
 import { Panel3D } from './lote3d/Panel3D';
 
-const SeleccionView3D = lazy(() => import('./lote3d6/SeleccionView3D'));
+const SeleccionView3D = lazyWithRetry(() => import('./lote3d6/SeleccionView3D'));
 
 const MAX_GEN = SEL_LIMITS.generations[1];
 const N_BEETLES = 40;

@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { ENZYME_LIMITS, ENZYMES, initialRate, simulateEnzyme, findEnzyme, temperatureFactor, enzymeConditions } from '../models/enzyme';
 import { fmt } from '../lib/format';
 import { Chart } from '../components/Chart';
@@ -8,7 +9,7 @@ import { BenchTop, ContactShadow, Lcd, TestTube, Thermometer, shade } from './ki
 import { DragHandle, Knob, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
-const EnzimasView3D = lazy(() => import('./lote3d/EnzimasView3D'));
+const EnzimasView3D = lazyWithRetry(() => import('./lote3d/EnzimasView3D'));
 
 const TANK = 'M36 128 L36 266 Q36 276 46 276 L286 276 Q296 276 296 266 L296 128';
 

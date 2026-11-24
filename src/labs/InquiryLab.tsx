@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   analyze, BUDGET, causalReflection, collect, CONFOUND_LABEL, critiqueDesign, DESIGN_LIMITS, designConditions, designLevels, SYSTEM_IDS, SYSTEMS,
   type ConfoundMode, type CritiqueItem, type Design, type Sample, type SystemDef, type SystemId,
@@ -14,7 +15,7 @@ import type { LabProps } from './registry';
 import { BenchTop, ContactShadow, Lcd } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
-const RetoView3D = lazy(() => import('./lote3d7/RetoView3D'));
+const RetoView3D = lazyWithRetry(() => import('./lote3d7/RetoView3D'));
 
 /* ------------------------------------------------------------------ utilidades */
 

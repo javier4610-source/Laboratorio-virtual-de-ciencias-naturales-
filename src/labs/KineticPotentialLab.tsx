@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   CART, FLAG_WIDTH, GATE_DISTANCE, GRAVITY_PRESETS, KP_INSTRUMENTS, KP_LIMITS, PLACE_LABEL, SPRINGS, cartMass, cartStateAt, dropStateAt,
   simulateCart, simulateDrop, simulateSpring, significantDigits, springStateAt,
@@ -21,7 +22,7 @@ import { DragHandle, Knob, ManipHint, ManipScene, Plunger, verticalDragValue } f
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const CineticaPotencialView3D = lazy(() => import('./lote3d3/CineticaPotencialView3D'));
+const CineticaPotencialView3D = lazyWithRetry(() => import('./lote3d3/CineticaPotencialView3D'));
 
 const PID = 'cinetica-potencial';
 

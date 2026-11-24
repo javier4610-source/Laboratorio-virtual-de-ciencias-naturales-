@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   HOLE_HEIGHTS, LIQUIDS, PLACES, PRESSURE_INSTRUMENTS, PRESSURE_LIMITS, TANK_DEPTH_CM, VESSELS, analyzeManometer, atmosphere, baseAreaCm2,
   CV_ORIFICE, G, RHO_MANOMETER, findLiquid, findPlace, findVessel, jet, mercuryColumnMm, pascalVessel, simulateProbe, speedFromRange, uTubeResponse, vesselRadius,
@@ -19,7 +20,7 @@ import { clockAngle, DragHandle, ManipHint, ManipScene, Plunger, toSvgPoint, zon
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const PresionView3D = lazy(() => import('./lote3d5/PresionView3D'));
+const PresionView3D = lazyWithRetry(() => import('./lote3d5/PresionView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

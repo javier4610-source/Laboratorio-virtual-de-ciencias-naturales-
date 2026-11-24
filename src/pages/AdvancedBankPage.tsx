@@ -8,6 +8,7 @@ import { BLOCKS, type AdvancedItem, type BlockId, type Key, type Level } from '.
 import { GuidedItem, ItemBody, OptionsRadio, SolutionPanel, type GuidedRecord } from '../components/avanzado/AdvancedItemView';
 import { ConfirmButton, Notice, Segmented, Select } from '../components/ui';
 import { Icon } from '../components/icons';
+import { RetryButtons } from '../components/Reintentar';
 import { onTabListKeyDown } from '../lib/a11y';
 import { downloadText } from '../lib/download';
 import { href, parseHash } from '../lib/router';
@@ -417,7 +418,7 @@ export function AdvancedBankPage() {
           <div className="notice bad stack-sm" role="alert">
             <strong>No se pudieron cargar las preguntas del banco avanzado.</strong>
             <span className="small">Revisa tu conexión a internet: si ya abriste el banco antes, funciona sin conexión; si es la primera vez, necesita descargarse una vez.</span>
-            <div className="btn-row"><button type="button" className="btn" onClick={() => setAttempt((n) => n + 1)}>Reintentar</button></div>
+            <RetryButtons onRetry={() => setAttempt((n) => n + 1)} retries={attempt} />
           </div>
         ) : (
           <div className="loading-state">

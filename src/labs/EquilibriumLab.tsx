@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   ABS_MAX, ABS_RES, applyFePerturbation, compareText, INTENSITY_RES, NO2_MAX_PRESSURE, DIRECTION_TEXT, FE_INITIAL, FE_LIMITS, FE_PERTURBATION_TEXT, FE_SETUP, feResponse,
   NO2_INITIAL, NO2_LIMITS, no2Intensity, no2Q, no2Response, relaxProgress, solveFeSCN, solveNO2, feConditions, no2Conditions,
@@ -15,7 +16,7 @@ import { Beaker, BenchTop, GasSyringe, Lcd, TestTube, Thermometer } from './kit'
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const EquilibrioView3D = lazy(() => import('./lote3d4/EquilibrioView3D'));
+const EquilibrioView3D = lazyWithRetry(() => import('./lote3d4/EquilibrioView3D'));
 
 const RELAX_S = 3;
 const SYS_A = 'Fe³⁺ + SCN⁻ ⇌ FeSCN²⁺';

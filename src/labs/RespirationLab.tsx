@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   AIR_CO2, ATMOSPHERES, CAPILLARY_INSTRUMENT, CAPILLARY_SCALE, GLUCOSE_COUNTS, HEADSPACE, RESP_LIMITS, SAMPLES, SUBSTRATES,
   analyzeReadings, atpBreakdown, atpPerGlucoseAerobic, capillaryReading, findSample, gasTimeSeries, indicatorColor, indicatorPH, respirometerModel,
@@ -18,7 +19,7 @@ import { Knob, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-2): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const RespiracionView3D = lazy(() => import('./lote3d2/RespiracionView3D'));
+const RespiracionView3D = lazyWithRetry(() => import('./lote3d2/RespiracionView3D'));
 
 /* ------------------------------------------------------------------ geometría del dibujo */
 

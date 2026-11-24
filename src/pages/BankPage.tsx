@@ -9,6 +9,11 @@ import { ConfirmButton, Notice, Select } from '../components/ui';
 import { fmt } from '../lib/format';
 import { href } from '../lib/router';
 import { Icon } from '../components/icons';
+import { RetryButtons } from '../components/Reintentar';
+import { retryableImport } from '../lib/importar';
+
+/** El currículo completo (opción «Todas»), reintentable sin recargar la página (src/lib/importar.ts). */
+const loadCurriculum = retryableImport(() => import('../curriculum'));
 
 const KEY = 'lvcn:banco-respuestas';
 /** Preguntas por tanda: el banco completo pintado de una vez medía más de 50 000 px de alto. */
@@ -59,7 +64,7 @@ export function BankPage() {
     if (source !== 'todas' || allQuestions) return;
     let alive = true;
     setAllError(false);
-    import('../curriculum').then((m) => { if (alive) setAllQuestions(m.ALL_QUESTIONS); }, () => { if (alive) setAllError(true); });
+    loadCurriculum().then((m) => { if (alive) setAllQuestions(m.ALL_QUESTIONS); }, () => { if (alive) setAllError(true); });
     return () => { alive = false; };
   }, [source, allQuestions, allAttempt]);
   useEffect(() => { saveJSON(KEY, answers); }, [answers]);
@@ -122,7 +127,7 @@ export function BankPage() {
         <div className="notice bad stack-sm" role="alert">
           <strong>No se pudieron cargar las preguntas de las prácticas.</strong>
           <span className="small">Revisa tu conexión a internet y vuelve a intentarlo.</span>
-          <div className="btn-row"><button type="button" className="btn" onClick={() => setAllAttempt((n) => n + 1)}>Reintentar</button></div>
+          <RetryButtons onRetry={() => setAllAttempt((n) => n + 1)} retries={allAttempt} />
         </div>
       ) : (
         <p role="status" className="loading-text"><span className="spinner" aria-hidden="true" />Cargando las preguntas de las prácticas…</p>
@@ -131,7 +136,7 @@ export function BankPage() {
         <div className="notice bad stack-sm" role="alert">
           <strong>No se pudieron cargar las preguntas del banco.</strong>
           <span className="small">Revisa tu conexión a internet y vuelve a intentarlo.</span>
-          <div className="btn-row"><button type="button" className="btn" onClick={() => setBankAttempt((n) => n + 1)}>Reintentar</button></div>
+          <RetryButtons onRetry={() => setBankAttempt((n) => n + 1)} retries={bankAttempt} />
         </div>
       ) : (
         <p role="status" className="loading-text"><span className="spinner" aria-hidden="true" />Cargando las preguntas del banco…</p>

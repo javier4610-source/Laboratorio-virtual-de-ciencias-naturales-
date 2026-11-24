@@ -1,4 +1,5 @@
-import { lazy, memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   GATE_RES, TIMER_RES, STROBE_SCALE_RES, TAPE_RES,
   G, PROJECTILE_LIMITS, SPHERES, SPRING_LEVELS, STROBE_DT, TARGET_RADIUS, checkTarget, findSphere,
@@ -17,7 +18,7 @@ import { DragHandle, ManipHint, ManipScene } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const ProyectilesView3D = lazy(() => import('./lote3d3/ProyectilesView3D'));
+const ProyectilesView3D = lazyWithRetry(() => import('./lote3d3/ProyectilesView3D'));
 
 /* ------------------------------------------------------------------ geometría del banco */
 

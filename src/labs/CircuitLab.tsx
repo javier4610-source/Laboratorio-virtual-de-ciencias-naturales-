@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState, type KeyboardEvent } from 'react';
+import { useMemo, useState, type KeyboardEvent } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { brightness, CIRCUIT_LIMITS, MAX_SAFE_CURRENT, solveCircuit, circuitConditions, type Topology } from '../models/circuits';
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Segmented, Slider, Warnings } from '../components/ui';
@@ -12,7 +13,7 @@ import { playSound, useSoundLoop } from '../lib/sound';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const CircuitosView3D = lazy(() => import('./lote3d4/CircuitosView3D'));
+const CircuitosView3D = lazyWithRetry(() => import('./lote3d4/CircuitosView3D'));
 
 function CircuitDefs() {
   return (

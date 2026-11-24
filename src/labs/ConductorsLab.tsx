@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { AMMETER_RES_MA, CLASS_LABELS, SAMPLES, testSample, type ConductorClass, type Sample } from '../models/conductors';
 import { fmt, fmtSig } from '../lib/format';
 import { prefersReducedMotion } from '../lib/prefs';
@@ -12,7 +13,7 @@ import { BenchTop, Beaker, Lcd, shade } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-4): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const ConductoresView3D = lazy(() => import('./lote3d4/ConductoresView3D'));
+const ConductoresView3D = lazyWithRetry(() => import('./lote3d4/ConductoresView3D'));
 
 /* ------------------------------------------------------------------ geometría del banco */
 

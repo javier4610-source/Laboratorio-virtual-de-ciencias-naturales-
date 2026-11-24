@@ -1,4 +1,5 @@
-import { lazy, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { POPULATION_LIMITS, simulatePopulation } from '../models/population';
 import { fmt } from '../lib/format';
 import { Chart } from '../components/Chart';
@@ -6,7 +7,7 @@ import { Notice, Readout, RecordButton, Segmented, Slider } from '../components/
 import type { LabProps } from './registry';
 import { Panel3D } from './lote3d/Panel3D';
 
-const PoblacionView3D = lazy(() => import('./lote3d7/PoblacionView3D'));
+const PoblacionView3D = lazyWithRetry(() => import('./lote3d7/PoblacionView3D'));
 
 /* ------------------------------------------------------------------ ciénaga ilustrada */
 

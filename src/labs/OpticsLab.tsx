@@ -1,4 +1,5 @@
-import { lazy, memo, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import { MEDIA, refract } from '../models/optics';
 import { fmt } from '../lib/format';
 import { Notice, Readout, RecordButton, Select, Slider } from '../components/ui';
@@ -11,7 +12,7 @@ import { usePublishModel } from '../components/Advanced';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-5): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const OpticaView3D = lazy(() => import('./lote3d5/OpticaView3D'));
+const OpticaView3D = lazyWithRetry(() => import('./lote3d5/OpticaView3D'));
 
 const MEDIUM_FILL: Record<string, string> = { aire: 'rgba(200,225,240,0.10)', agua: 'rgba(70,150,220,0.28)', aceite: 'rgba(232,195,58,0.30)', vidrio: 'rgba(150,210,200,0.35)', diamante: 'rgba(210,220,240,0.55)', misterio: 'rgba(170,140,210,0.32)' };
 

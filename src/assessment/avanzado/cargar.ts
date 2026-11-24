@@ -1,5 +1,6 @@
 import type { AdvancedItem } from './types';
 import { assembleBank } from './scoring';
+import { retryableThen } from '../../lib/importar';
 
 /**
  * Carga bajo demanda del banco avanzado: cada bloque es un archivo aparte que el navegador descarga en paralelo,
@@ -10,12 +11,12 @@ import { assembleBank } from './scoring';
  * verifica que el banco cargado aquí es idéntico a ADVANCED_BANK.
  */
 const LOADERS: (() => Promise<readonly AdvancedItem[]>)[] = [
-  () => import('./bloqueA').then((m) => m.BLOQUE_A),
-  () => import('./bloqueB').then((m) => m.BLOQUE_B),
-  () => import('./bloqueC').then((m) => m.BLOQUE_C),
-  () => import('./bloqueD').then((m) => m.BLOQUE_D),
-  () => import('./bloqueE').then((m) => m.BLOQUE_E),
-  () => import('./bloqueF').then((m) => m.BLOQUE_F),
+  retryableThen(() => import('./bloqueA'), (m) => m.BLOQUE_A),
+  retryableThen(() => import('./bloqueB'), (m) => m.BLOQUE_B),
+  retryableThen(() => import('./bloqueC'), (m) => m.BLOQUE_C),
+  retryableThen(() => import('./bloqueD'), (m) => m.BLOQUE_D),
+  retryableThen(() => import('./bloqueE'), (m) => m.BLOQUE_E),
+  retryableThen(() => import('./bloqueF'), (m) => m.BLOQUE_F),
 ];
 
 let cache: Promise<AdvancedItem[]> | null = null;

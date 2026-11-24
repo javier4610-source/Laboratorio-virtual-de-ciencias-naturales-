@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   BAR, DYNAMOMETER_MAX, LEVER_CLASSES, LEVER_TILT_DEG, MACHINE_INSTRUMENTS, MACHINE_LIMITS, PULLEY_SETUPS, armRange,
   leverOrderError, sheaveCounts, simulateLever, simulatePulley, type LeverClass, type MachineInstrumentSpec, type PulleySetup,
@@ -16,7 +17,7 @@ import { ManipHint, ManipScene, Plunger } from './manipulate';
 import { Panel3D } from './lote3d/Panel3D';
 
 // Vista 3D (lote 3D-3): su código y el motor 3D se descargan solo al abrir la tarjeta.
-const MaquinasView3D = lazy(() => import('./lote3d3/MaquinasView3D'));
+const MaquinasView3D = lazyWithRetry(() => import('./lote3d3/MaquinasView3D'));
 
 /* ------------------------------------------------------------------ instrumentos */
 

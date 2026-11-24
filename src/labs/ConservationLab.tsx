@@ -1,4 +1,5 @@
-import { lazy, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazyWithRetry } from '../lib/importar';
 import {
   airDensity, extentAt, reactionById, readingAt, REACTIONS, simulateConservation, conservationConditions,
   type ReactionId, type SystemId, type ConservationInput,
@@ -13,7 +14,7 @@ import type { LabProps } from './registry';
 import { BenchTop, Beaker, DigitalBalance, Erlenmeyer, shade, TestTube } from './kit';
 import { Panel3D } from './lote3d/Panel3D';
 
-const ConservacionView3D = lazy(() => import('./lote3d/ConservacionView3D'));
+const ConservacionView3D = lazyWithRetry(() => import('./lote3d/ConservacionView3D'));
 
 /* ------------------------------------------------------------------ textos de la interfaz */
 

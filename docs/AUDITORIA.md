@@ -617,7 +617,7 @@ Capturas de revisión (claro y oscuro, 1280 y 390 px) revisadas por el integrado
 | Vistas 3D de la ola 2a | Unitarias de las escenas (11); E2E con WebGL (píxeles, teclado, «Restablecer vista», tema con 800 ms, axe, pausa) y sin WebGL (respaldo SVG, sin descargar three.js); capturas claro/oscuro a 1280 y 390 px revisadas | Correcto | — | — | Correcto |
 | Regresión (ola 2a, tras el merge de c10645f) | `tsc -b`; vitest (1616); build; `npm run perf` (dentro del presupuesto; panel docente 286,9 de 330 KB y con las fichas 1 093,8 de 1 250 KB; precarga 6,3 de 6,4 MB); visual 36/36 tras actualizar 16 referencias que solo cambian contadores; E2E completo (300 pasan, 1 se omite, 2 fallan) | Correcto tras corregir | «Práctica 1 de 8» en 6.º (ahora 9); `configuracion-electronica` excedió 25 s en la máquina cargada | Contador a 9; la de 1b pasa al repetirla (12/12 con plataforma) | Correcto |
 
-# Pulido tras el 3D completo (sin publicar)
+# Pulido tras el 3D completo (v2.29.0)
 
 | Componente | Prueba realizada | Resultado | Error encontrado | Corrección aplicada | Estado final |
 |---|---|---|---|---|---|

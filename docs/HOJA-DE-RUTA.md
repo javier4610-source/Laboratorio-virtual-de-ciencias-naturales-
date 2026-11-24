@@ -67,7 +67,7 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Hecho
 
-- [x] Sin publicar · Pulido tras el 3D completo: «Reintentar» vuelve a descargar un archivo que falló sin recargar la
+- [x] v2.29.0 · Pulido tras el 3D completo: «Reintentar» vuelve a descargar un archivo que falló sin recargar la
   página (prácticas, bancos, vistas 3D y motores 3D, con «Recargar la página» como último recurso); agua y sistema
   inmune 3D más cerca en el celular; las columnas de energía del metabolismo en un grupo aparte con regla de escala.
 - [x] v2.28.0 · Ola 3b de prácticas nuevas (`termodinamica`, `efecto-doppler`, `nutricion-digestion`,
@@ -146,6 +146,9 @@ manipulación directa, modo avanzado, lotes 7 a 10 y más prácticas de física 
 
 ## Bloqueos
 
+- Ronda del 2026-11-24: todos los elementos pendientes esperan una decisión o una acción del docente (cuenta de
+  Render para T2 y T3, revisión con estudiantes, prueba en el Moodle, revisión química, panel docente en pausa); la
+  ronda se dedicó al pulido v2.29.0. Las fases 8 a 10 del programa v2 se empiezan solo si el docente lo pide.
 - Taller de compuestos, siguiente paso (2026-10-26): las bases cristalográficas (AMCSD/RRUFF, COD, ICSD) y el CCCBDB
   no son accesibles desde el entorno de desarrollo; la red de la anhidrita, la densidad del SrO y la verificación de los
   parámetros «por verificar» esperan a que se puedan consultar. La revisión con un químico depende del docente.

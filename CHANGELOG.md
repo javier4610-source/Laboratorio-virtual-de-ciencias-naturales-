@@ -7,6 +7,8 @@ Cada versión se puede revertir con `git revert` sin afectar las anteriores.
 
 ## [Sin publicar]
 
+## [2.29.0] · 2026-11-24
+
 Pulido tras el 3D completo: «Reintentar» vuelve a descargar lo que falló sin recargar la página, y las vistas 3D del
 agua, el sistema inmune y el metabolismo se leen mejor (las dos primeras en el celular).
 

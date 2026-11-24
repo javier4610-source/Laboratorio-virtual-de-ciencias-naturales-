@@ -119,6 +119,9 @@ test('si el reintento también falla aparece «Recargar la página», que recarg
   await alerta.getByRole('button', { name: 'Reintentar' }).click();
   const recargar = alerta.getByRole('button', { name: 'Recargar la página' });
   await expect(recargar).toBeVisible({ timeout: 20_000 });
+  // El mensaje técnico del navegador no se muestra al estudiante.
+  await expect(alerta).toContainText('La descarga se interrumpió.');
+  await expect(alerta).not.toContainText('dynamically imported module');
   for (const w of [1280, 390]) { await page.setViewportSize({ width: w, height: 800 }); await shots(page, 'reintento-recargar'); }
   await page.setViewportSize({ width: 1280, height: 800 });
   expect(await axeBoth(page, 'práctica tras un reintento fallido')).toEqual([]);
